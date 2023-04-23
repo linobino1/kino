@@ -22,11 +22,6 @@ const Posts: CollectionConfig = {
       type: 'date',
       required: true,
       defaultValue: Date(),
-      admin: {
-        date: {
-          pickerAppearance: 'dayOnly',
-        },
-      },
     },
     {
       name: 'header',
