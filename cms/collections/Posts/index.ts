@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
-import { slugField } from '@cms/fields/slug';
+import { slugField } from '../../fields/slug';
 
 const Posts: CollectionConfig = {
   slug: 'posts',
