@@ -19,6 +19,7 @@
     "moduleResolution": "node",
     "paths": {
       "~/*": ["./app/*"],
+      "@cms/*": ["./cms/*"],
        "payload/generated-types": ["./cms/payload-types.ts"]
     },
     "resolveJsonModule": true,
