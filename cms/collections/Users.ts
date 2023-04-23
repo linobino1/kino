@@ -21,6 +21,26 @@ const Users: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    {
+      name: 'role',
+      label: t('Role'),
+      type: 'select',
+      defaultValue: 'insider',
+      options: [
+        {
+          label: t('Admin'),
+          value: 'admin',
+        },
+        {
+          label: t('Moderator'),
+          value: 'moderator',
+        },
+        {
+          label: t('Insider'),
+          value: 'insider',
+        },
+      ],
+    },
   ],
   timestamps: true,
 };
