@@ -212,7 +212,7 @@ ssh-keygen -t rsa -b 4096
     openssl rand -hex 24
 
     # create a username/password hash
-    `htpasswd -nb <username> <password>`
+    htpasswd -nb <username> <password>
     
     # paste the output into TRAEFIK_DASHBOARD_AUTH env var
     ```
