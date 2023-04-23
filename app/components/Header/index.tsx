@@ -8,7 +8,6 @@ import type { Site, Navigation as NavigationType } from 'payload/generated-types
 import classes from './index.module.css';
 import Button from '../Button';
 import Modal from '../Modal';
-import LanguageSwitch from '../LanguageSwitch';
 import { UserStatus } from '../UserStatus';
 
 type Props = {
@@ -24,23 +23,15 @@ const Header: React.FC<Props> = ({
   const [ searchParams ] = useSearchParams();
   
   return (
-    <header>
+    <header className={classes.header}>
       <div className={classes.mainHeader}>
-        <div className={`${classes.navMainContainer}`}>
-          <div className={classes.menuBody}>
-            <Navigation
-              navigation={navigations.find((x) => x.type === 'main')}
-              className={classes.navMain}
-            />
-          </div>
-        </div>
-        <Link to="/" className={classes.logoContainer}>
+        <Link to="/">
           {site.logo as Media && (
             <Image
-              className={classes.logo}
+              className={classes.mainLogo}
               image={site.logo as Media}
-              width={350}
-              height={125}
+              width={200}
+              height={50}
             />
           )}
         </Link>
@@ -50,10 +41,11 @@ const Header: React.FC<Props> = ({
           className={classes.menuButton}
           onClick={() => navigate('?modal=menu', { preventScrollReset: true })}
         />
-        <div className={classes.navSecondary}>
-          <LanguageSwitch />
-          <UserStatus />
-        </div>
+        <Navigation
+          navigation={navigations.find((x) => x.type === 'main')}
+          className={classes.navMain}
+        />
+        <UserStatus className={classes.userStatus} />
       </div>
       {content}
       { searchParams.get('modal') === 'menu' && (
@@ -67,7 +59,7 @@ const Header: React.FC<Props> = ({
         </Modal>
       )}
     </header>
-  );
+  )
 };
 
 export default Header;

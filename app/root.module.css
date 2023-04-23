@@ -26,12 +26,9 @@
 }
 
 :root {
-  --page-margin: 3vw;
+  --page-max-width: 1000px;
 
   --color-theme: #283587;
-  --color-bg: #EBEBEB;
-  /* --color-bg: #FFFFFF; */
-  --color-bg-dark: #2C2A2D;
   --color-white: #FFFFFF;
   --color-black: #000000;
   --color-theme-contrast: #F6CD03;
@@ -41,6 +38,8 @@
   --color-theme-contrast-dark: #D63312;
   --color-light-grey: #dcdcdc;
   --color-light-grey-readable: #C1C1C1;
+
+  --color-font-light: rgb(132, 132, 132);;
 
   --color-font: #000000;
   /*--color-font: #2D2A2D;  /* logo grey */
@@ -57,7 +56,7 @@
   --font-size-small: .9rem;
   --font-size-x-small: .8rem;
 
-  --font-family-sans-serif: 'Helvetica', sans-serif;
+  --font-family-sans-serif: 'DM Sans', 'Helvetica', sans-serif;
   --font-family-serif: 'Times', serif;
   --font-weight-bold: 600;
   --font-weight-semi-bold: 500;

@@ -1,7 +1,7 @@
 .nav {
   display: flex;
 }
-.nav.socialMedia {
+.nav[data-type="socialMedia"] {
   column-gap: .5rem;
 }
 

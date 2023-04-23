@@ -46,7 +46,7 @@ export const PageComponent: React.FC = () => {
   return (
     <>
       <PageHeader />
-      <main>
+      <main className={classes.main}>
         <Blocks
           layout={page?.layout}
         />

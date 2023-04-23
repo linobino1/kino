@@ -38,6 +38,9 @@ export default buildConfig({
     Media,
     Navigations,
     Users,
+    
+    // Blog
+    Posts,
   ],
   globals: [
     Site,
