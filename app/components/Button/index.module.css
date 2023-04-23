@@ -1,0 +1,84 @@
+.button {
+    position: relative;
+    appearance: none;
+    outline: 0;
+    border: 1px solid;
+    border-radius: var(--border-radius);
+    width: fit-content;
+    background: none;
+    color: var(--color-font-light);
+    font: inherit;
+    font-family: var(--font-family-sans-serif);
+    font-weight: var(--font-weight-light);
+    cursor: pointer;
+}
+.button:hover {
+    background-color: var(--color-font-light);
+    color: var(--color-bg);
+}
+
+/** big            ******************************************/
+.button[data-layout="big"] {
+    padding: 1em;
+}
+/** submit         ******************************************/
+.button[data-layout="submit"],
+.button[data-layout="cancel"] {
+    padding: 1em;
+    width: 100%;
+    font-size: var(--font-size-big);
+    min-width: min(80vw, 11em);
+}
+.button[data-layout="submit"] {
+    color: var(--color-bg);
+    background-color: green;
+    font-weight: var(--font-weight-bold);
+}
+.button[data-layout="submit"]:hover {
+    filter: brightness(1.1);
+}
+.button[data-layout="submit"]:hover::after {
+    transform: rotate(15deg);
+}
+.button[data-layout="submit"]::after,
+.button[data-layout="cancel"]::after {
+    /* content: "🍾 "; */
+    content: "🥂";
+    font-size: 1.5em;
+    position: absolute;
+    transform: translateX(0.2em);
+}
+/** cancel         ******************************************/
+.button[data-layout="cancel"] {
+    color: var(--color-font-light);
+}
+.button[data-layout="cancel"]::after {
+    content: "🫗";
+}
+.button[data-layout="cancel"]:hover {
+    color: var(--color-font-bright);
+}
+/** symbol         ******************************************/
+.button[data-layout="symbol"] {
+    border: 0;
+    color: inherit;
+    font: inherit;
+    font-size: 1.5em;
+    font-weight: var(--font-weight-bold);
+    background: transparent;
+    padding: 0.5rem 1rem;
+}
+.button[data-layout="symbol"]:hover {
+    color: inherit;
+}
+.button[data-symbol="close"]::before {
+    content: "\2715";
+}
+.button[data-symbol="menu"]::before {
+    content: "\2630";
+    font-size: 1.3em;
+}
+/** COLOR THEME    ******************************************/
+.button[data-color="white"] {
+    color: var(--color-font-bright-2);
+}

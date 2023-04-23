@@ -1,0 +1,110 @@
+.footer {
+  width: 100%;
+  background-color: var(--color-bg-dark);
+  color: var(--color-font-bright-2);
+  padding: max(5em, 3vw) var(--page-margin);
+  display: grid;
+  grid-template-columns: 25% 50% 25%;
+  font-weight: var(--font-weight-light);
+  line-height: 1.3em;
+}
+.footer > * {
+  align-self: flex-start;
+}
+.navFooter,
+.navSocial {
+  font: inherit;
+}
+/* prettify hover */
+.footer a {
+  color: inherit !important;
+}
+.footer a:hover {
+  cursor: pointer;
+  filter: brightness(0.7);
+  transition: filter 0.4s;
+}
+a[href^="mailto:"],
+a[href^="tel:"] {
+  text-decoration: underline;
+}
+/** Grid Layout ************************************************************************/
+.footerContent {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  text-align: center;
+}
+.footerContent * {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: inherit;
+}
+
+.copyright {
+  grid-column: 1;
+  grid-row: 1;
+  color: var(--color-font-bright-3);
+}
+.navFooter {
+  grid-column: 1;
+  grid-row: 2;
+  justify-self: flex-start;
+  align-self: flex-end;
+  flex-direction: column;
+}
+.navFooter a {
+  padding-left: 0;
+}
+.navSocial {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: flex-end;
+}
+.buttons {
+  grid-column: 3;
+  grid-row: 2;
+  justify-self: flex-end;
+  align-self: flex-end;
+  gap: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/** Mobile Grid Layout *****************************************************************/
+@media (max-width: 768px) {
+  .footer {
+    grid-template-columns: 1fr;
+    row-gap: 2rem;
+    padding-top: 3em;
+  }
+  .footer > * {
+    grid-column: 1 !important;
+    justify-self: center;
+  }
+  .buttons {
+    grid-row: 3;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+  .navSocial {
+    grid-row: 2;
+  }
+  .footerContent {
+    grid-row: 1;
+    text-align: center;
+  }
+  .navFooter {
+    grid-row: 4;
+  }
+  .copyright {
+    grid-row: 5;
+  } 
+  .navFooter {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

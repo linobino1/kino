@@ -1,0 +1,33 @@
+.nav {
+  display: flex;
+}
+.nav.socialMedia {
+  column-gap: .5rem;
+}
+
+/** NAVIGATION ITEM  ***************************************/
+.navItem,
+.navItem:active,
+.navItem:visited {
+  color: inherit;
+  text-decoration: inherit;
+}
+.navItem.active {
+  color: var(--color-black);
+}
+.navItem.active:hover {
+  color: inherit;
+}
+.navItem {
+  display: inline-block;
+  padding: .5rem 1rem;
+  position: relative;
+  overflow-wrap: anywhere;
+}
+.navItem:hover {
+  color: var(--color-theme-contrast);
+}
+.image {
+  height: 1.8rem;
+  width: auto;
+}

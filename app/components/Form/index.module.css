@@ -1,0 +1,84 @@
+/** General    ************************************/
+input,
+select {
+  font-size: var(--font-size-big);
+}
+textarea {
+  display: block;
+  min-height: 10em;
+  min-width: 18em;
+}
+input,
+select,
+textarea {
+    border: 1px solid var(--color-font-light);
+    border-radius: var(--border-radius);
+}
+@media screen and (min-width: 768px) {
+    input,
+    select,
+    textarea {
+        padding: 3px 5px;
+    }
+}
+/* Form *******************************************/
+.form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5em;
+}
+.submit {
+    margin-block-start: 2em;
+}
+@media screen and (max-width: 768px) {
+    .form {
+        font-size: var(--font-size-big);
+    }
+}
+/* Form Success    ********************************/
+.success {
+    color: green;
+    font-size: var(--font-size-big);
+    font-weight: var(--font-weight-bold);
+}
+/* Form Elements   ********************************/
+.formElem {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.formElem label {
+    margin-block-end: .3em;
+}
+.formElem textarea {
+    width: 100%;
+}
+.formElem[data-form-elem-type="hidden"] {
+    display: none;
+}
+.formElem[data-form-elem-type="textarea"] {
+    width: 100%;
+}
+.formElem[data-form-elem-type="hCaptcha"] {
+    margin-block: .5em;
+}
+@media screen and (max-width: 768px) {
+    .formElem textarea {
+        font-size: 16px;    /* prevent auto zoom on iOS Safari */
+    }
+}
+/* Errors ********************************************** */
+.formErrors {
+    color: red;
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-bold);
+}
+.formElem .errorMessage {
+    color: red;
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-bold);
+    margin-block-start: 0.3em;
+}
+.formElem.error input {
+    border-color: red;
+}

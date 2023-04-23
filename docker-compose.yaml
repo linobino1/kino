@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  app:
+    image: node:18-alpine
+    ports:
+      - 3000:3000
+      - 8002:8002 # remix dev websocket for live reload
+    working_dir: /app
+    command: sh -c "yarn && yarn dev"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    environment:
+      PAYLOAD_SECRET: secret123
+      MONGODB_URI: mongodb://db:27017/appTEMP
+      PAYLOAD_PUBLIC_SERVER_URL: http://localhost:3000
+    depends_on:
+      - db
+  
+  db:
+    image: mongo:latest
+    expose:
+      - 27017
+    command:
+      - --storageEngine=wiredTiger
+    volumes:
+      - data:/data/db
+      - ./dump:/dump
+  
+volumes:
+  data:

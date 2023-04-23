@@ -1,0 +1,64 @@
+version: '3.8'
+name: app
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_ENV: production
+        PAYLOAD_PUBLIC_SERVER_URL: https://${DOMAIN}
+        HCAPTCHA_SITE_KEY: ${HCAPTCHA_SITE_KEY}
+    expose:
+      - 3000
+    networks:
+      - traefik
+      - default
+    volumes:
+      - ./media:/app/dist/media
+    environment:
+      NODE_ENV: production
+      PAYLOAD_SECRET:
+      PAYLOAD_PUBLIC_SERVER_URL: https://${DOMAIN}
+      MONGODB_URI: mongodb://db:27017/app
+
+      EMAIL_FROM:
+      EMAIL_FROM_NAME:
+      CONNECTED_EMAIL_ADDRESSES:
+
+      SMTP_HOST:
+      SMTP_PORT:
+      SMTP_USER:
+      SMTP_PASS:
+
+      HCAPTCHA_SITE_KEY:
+      HCAPTCHA_SECRET_KEY:
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.app.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.app.entrypoints=websecure
+      - traefik.http.routers.app.tls=true
+      - traefik.http.routers.app.tls.certresolver=letsencrypt
+      - traefik.docker.network=traefik
+    depends_on:
+      - db
+    restart: always
+  
+  db:
+    image: mongo:4.4.18 # last version running without CPU flag AVX
+    expose:
+      - 27017
+    command:
+      - --storageEngine=wiredTiger
+    volumes:
+      - data:/data/db
+      - ./dump:/dump
+    restart: always
+      
+networks:
+  traefik:
+    external: true
+
+volumes:
+  data:

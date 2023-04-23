@@ -1,0 +1,7 @@
+.error {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-height: max(50vh, 20em);
+    align-items: center;
+}

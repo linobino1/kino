@@ -1,0 +1,20 @@
+.userStatus a,
+.userStatus a:active,
+.userStatus a:visited {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.name,
+.signIn {
+  white-space: nowrap;
+  padding: 0.5rem;
+}
+.name:hover,
+.signIn:hover {
+  color: var(--color-theme-contrast) !important;
+}
+
+.name {
+  text-transform: none;
+}

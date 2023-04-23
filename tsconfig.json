@@ -1,0 +1,30 @@
+{
+  "include": [
+    "env.d.ts",
+    "remix.env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "compilerOptions": {
+    "target": "ES2019",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2019"
+    ],
+    "allowJs": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "paths": {
+      "~/*": ["./app/*"],
+       "payload/generated-types": ["./cms/payload-types.ts"]
+    },
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "isolatedModules": true,
+    "noEmit": true
+  }
+}

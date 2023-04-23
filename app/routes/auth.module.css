@@ -1,0 +1,20 @@
+.mainWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  margin: 0;
+  padding-bottom: 23vh;
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--color-white);
+  color: var(--color-black);
+  padding: 4em;
+  row-gap: 1em;
+  width: fit-content;
+}
