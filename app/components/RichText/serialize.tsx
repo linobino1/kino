@@ -24,7 +24,9 @@ type Leaf = {
 
 const serialize = (children: Children): React.ReactElement[] => children.map((node, i) => {
   if (Text.isText(node)) {
-    let text = <span dangerouslySetInnerHTML={{ __html: escape(node.text) }} />;
+    // escape text and convert line breaks to <br />
+    let escapedText = escape(node.text).replace(/(\r\n|\n|\r)/gm, "<br />");
+    let text = <span dangerouslySetInnerHTML={{ __html: escapedText }} />;
 
     if (node.bold) {
       text = (
