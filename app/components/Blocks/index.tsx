@@ -1,17 +1,19 @@
 import React from 'react';
-import type { Page } from 'payload/generated-types';
-import { Content } from '~/components/Blocks/Content';
-import { Image } from '~/components/Blocks/Image';
+import type { StaticPage } from 'payload/generated-types';
+import { Content } from './Content';
+import { Image } from './Image';
+import { HeaderImage } from './HeaderImage';
 
-type Layout = Page['layout'];
+type Layout = StaticPage['layout'];
 
 type Props = {
   layout: Layout
   className?: string
+  children?: React.ReactNode
 }
 
 const Blocks: React.FC<Props> = ({
-  layout, className,
+  layout, className, children,
 }) => (
   <div className={className}>
     {layout?.map((block, i) => (
@@ -23,6 +25,12 @@ const Blocks: React.FC<Props> = ({
 
             case 'image':
               return <Image {...block} />;
+              
+            case 'headerImage':
+              return <HeaderImage {...block} />;
+              
+            case 'outlet':
+              return children;
           }
         })()}
       </section>

@@ -1,7 +1,0 @@
-.container {
-}
-@media screen and (max-width: 768px) {
-    .container {
-        margin-block: 0;
-    }
-}

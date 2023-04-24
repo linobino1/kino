@@ -2,17 +2,16 @@ import type { CollectionConfig } from 'payload/types';
 import { t } from '../i18n';
 import { slugField } from '../fields/slug';
 import { metaField } from '../fields/meta';
-import { Content } from '../blocks/Content';
-import { Image } from '../blocks/Image';
+import { pageLayout } from '../fields/pageLayout';
 
 const Pages: CollectionConfig = {
-  slug: 'pages',
+  slug: 'staticPages',
   labels: {
-    singular: t('Page'),
-    plural: t('Pages'),
+    singular: t('Static page'),
+    plural: t('Static pages'),
   },
   admin: {
-    group: t('Contents'),
+    group: t('Pages'),
     defaultColumns: ['title'],
     useAsTitle: 'title',
   },
@@ -31,16 +30,7 @@ const Pages: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
     },
-    {
-      name: 'layout',
-      label: t('Content'),
-      type: 'blocks',
-      minRows: 1,
-      blocks: [
-        Content,
-        Image,
-      ],
-    },
+    pageLayout(),
     metaField(t('Meta')),
   ],
 };

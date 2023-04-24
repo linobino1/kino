@@ -86,7 +86,7 @@ export const Navigations: CollectionConfig = {
           name: 'page',
           label: t('Page'),
           type: 'relationship',
-          relationTo: 'pages',
+          relationTo: 'staticPages',
           required: true,
           admin: {
             condition: (data, siblingData) => siblingData.type === 'internal',

@@ -1,30 +1,32 @@
 import type { LoaderArgs} from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import PostsList from "~/components/PostsList";
+import { PostsList } from "~/components/PostsList";
+import { Page } from "~/components/Page";
 import classes from "./index.module.css";
 
 export const loader = async ({ context: { payload }}: LoaderArgs) => {
-  const site = await payload.findGlobal({
-    slug: 'site',
+  const page = await payload.findGlobal({
+    slug: 'blog',
   });
-  
   const posts = await payload.find({
     collection: 'posts',
   });
   
   return {
-    site,
+    page,
     posts: posts.docs || [],
   }
 };
 
 export default function Index() {
-  const { posts } = useLoaderData<typeof loader>();
+  const { page, posts } = useLoaderData<typeof loader>();
 
 
   return (
-    <main className={classes.main}>
-      <PostsList posts={posts} />
-    </main>
+    <Page layout={page.layout}>
+      <div className={classes.postsWrapper}>
+        <PostsList posts={posts} />
+      </div>
+    </Page>
   );
 }

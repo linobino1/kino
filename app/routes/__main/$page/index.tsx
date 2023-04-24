@@ -16,7 +16,7 @@ import classes from './index.module.css';
 export const loader = async ({ request, params, context: { payload }}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
   const res = await payload.find({
-    collection: 'pages',
+    collection: 'staticPages',
     where: {
       slug: {
         equals: params?.page,

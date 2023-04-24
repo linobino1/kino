@@ -5,7 +5,7 @@
 /** IMAGE HEADER   ******************************************/
 .imageHeader {
   width: 100vw;
-  height: 75vh;
+  height: 50vh;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -22,8 +22,13 @@ img.headerImage {
   min-height: 2rem;
 }
 
+@media screen and (max-width: 1024px) {
+  .imageHeader {
+    height: 320px;
+  }
+}
 @media screen and (max-width: 768px) {
   .imageHeader {
-    height: 50vh;
+    height: 275px;
   }
 }
