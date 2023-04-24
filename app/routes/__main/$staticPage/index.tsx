@@ -19,7 +19,7 @@ export const loader = async ({ request, params, context: { payload }}: LoaderArg
     collection: 'staticPages',
     where: {
       slug: {
-        equals: params?.page,
+        equals: params?.staticPage,
       },
     },
     locale,
