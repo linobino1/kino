@@ -11,7 +11,7 @@ export const Blog: GlobalConfig = {
   label: t('Blog'),
   fields: [
     pageLayout(),
-    metaField(t('Global Meta')),
+    metaField(t('Meta')),
   ],
 };
 
