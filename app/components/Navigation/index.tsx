@@ -1,6 +1,6 @@
 import React from 'react';
 import type {
-  Page,
+  StaticPage,
   Media,
   Navigation as NavigationType,
 } from "payload/generated-types";
@@ -28,10 +28,10 @@ export const Navigation: React.FC<Props> = ({ navigation, className }) => {
           return <LanguageSwitch key={id} className={classes.navItem} />;
         }
 
-        const href = page as Page ? `/${(page as Page).slug}` : url;
+        const href = page as StaticPage ? `/${(page as StaticPage).slug}` : url;
 
         // const isActive = (
-          // asPath === `/${(page as Page)?.slug}`
+          // asPath === `/${(page as StaticPage)?.slug}`
         // );
         const isActive = false;
 

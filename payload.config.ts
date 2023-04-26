@@ -10,6 +10,12 @@ import Users from './cms/collections/Users';
 import Site from './cms/globals/Site';
 import Posts from './cms/collections/Posts';
 import Blog from './cms/globals/pages/Blog';
+import Persons from './cms/collections/Movies/Persons';
+import Genres from './cms/collections/Movies/Genres';
+import Movies from './cms/collections/Movies';
+import Countries from './cms/collections/Movies/Countries';
+import Stills from './cms/collections/Movies/Stills';
+import Posters from './cms/collections/Movies/Posters';
 
 export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
@@ -34,8 +40,15 @@ export default buildConfig({
     disable: true,
   },
   collections: [
-    // Movies & Screenings
-    // ...
+    // Movie Database
+    Movies,
+    Persons,
+    Genres,
+    Countries,
+    Stills,
+    Posters,
+    
+    // Screenings...
 
     // Blog
     Posts,
@@ -49,7 +62,6 @@ export default buildConfig({
 
     // Media
     Media,
-    
   ],
   globals: [
     Site,

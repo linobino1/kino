@@ -29,6 +29,18 @@ yarn start
 ```
 
 ## Migration
+
+### Seed
+
+To seed the database, run the following command in the docker container of the app:
+
+```sh
+yarn seed
+```
+
+It will exexute the script `cms/seed/index.ts` which does:
+- fill the countries collection with data from the restcountries.com api
+
 ### Database Export
 
 On the machine where docker is running, run the following command to export the database to the `dump` folder.

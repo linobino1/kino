@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import { escape } from "html-escaper";
 import { Text } from 'slate';
 import { Image } from '~/components/Image';
-import type { Media, Page } from 'payload/generated-types';
+import type { Media, StaticPage } from 'payload/generated-types';
 import classes from './index.module.css';
 import Pages from 'cms/collections/Pages';
 
@@ -151,7 +151,7 @@ const serialize = (children: Children): React.ReactElement[] => children.map((no
       // treat internal links
       if (node.linkType === 'internal') {
         if (node.doc.relationTo === Pages.slug) {
-          const page: Page = node.doc.value;
+          const page: StaticPage = node.doc.value;
           return (
             <a
               key={i}

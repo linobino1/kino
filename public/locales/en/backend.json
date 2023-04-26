@@ -1,2 +1,5 @@
 {
+  "AdminExplainFilmStill": "Header image in landscape format (16:9 or similar) with a minimum width of 200px. Use a filmstill if possible.",
+  "AdminExplainPoster": "Filmposter im Porträtformat (2:3) mit einer Mindestbreite von 200px",
+  "AdminExplainSynopsis": "Brief description of the film, max. 350 characters"
 }
