@@ -32,7 +32,7 @@ const Movies: CollectionConfig = {
       required: true,
     },
     {
-      name: 'filmStill',
+      name: 'still',
       label: t('Film Still'),
       type: 'upload',
       relationTo: 'stills',
