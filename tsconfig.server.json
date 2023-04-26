@@ -15,8 +15,7 @@
     "jsx": "react",
     "paths": {
       "~/*": ["./app/*"],
-      "@/*": ["./cms/*"],
-       "payload/generated-types": ["./cms/payload-types.ts"]
+      "payload/generated-types": ["./cms/payload-types.ts"]
     }
   },
   "include": [
