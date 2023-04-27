@@ -22,13 +22,13 @@ export const Navigation: React.FC<Props> = ({ navigation, className }) => {
       data-type={navigation.type}
     >
       {navigation?.items?.map(({
-        id, icon, subnavigation, page, url, name, type,
+        id, icon, subnavigation, page, url, name, type, relPath,
       }) => {
         if (type === 'language') {
           return <LanguageSwitch key={id} className={classes.navItem} />;
         }
 
-        const href = page as StaticPage ? `/${(page as StaticPage).slug}` : url;
+        const href = relPath || (page as StaticPage ? `/${(page as StaticPage).slug}` : url);
 
         // const isActive = (
           // asPath === `/${(page as StaticPage)?.slug}`
