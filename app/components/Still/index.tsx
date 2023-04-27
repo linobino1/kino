@@ -4,6 +4,7 @@ import Image from "~/components/Image";
 import React from "react"
 import { useTranslation } from "react-i18next"
 import { mediaUrl } from "~/util/mediaUrl"
+import classes from "./index.module.css";
 
 const url = (filename: string): string => mediaUrl(`stills/${filename}`)
 
@@ -13,13 +14,12 @@ export interface Props extends Omit<ImageProps, 'image'> {
 
 export const Still: React.FC<Props> = (props) => {
   const { t } = useTranslation();
-  
+  const _props = {...props};
+  _props.className = `${_props.className} ${classes.still}`;
+  _props.alt = t('movie still') as string;
+  _props.loader = url;
   return (
-    <Image
-      {...props}
-      alt={t('movie still') as string}
-      loader={url}
-    />
+    <Image {..._props} />
   )
 }
 

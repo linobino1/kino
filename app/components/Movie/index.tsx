@@ -10,9 +10,12 @@ import { Poster } from "~/components/Poster";
 
 export type Props = {
   movie: MovieType
+  className?: string
 };
 
-export const Movie: React.FC<Props> = ({ movie }) => {
+export const Movie: React.FC<Props> = ({
+  movie, className,
+}) => {
   const specs = [
     movie.originalTitle,
     (movie.country as Country[]).map((x) => x.name).join(', '),
@@ -21,7 +24,7 @@ export const Movie: React.FC<Props> = ({ movie }) => {
   ].filter(Boolean);
 
   return (
-    <div className={classes.movie}>
+    <div className={`${classes.movie} ${className}`}>
       <div className={classes.poster}>
         <Poster
           image={movie.poster as PosterType}
