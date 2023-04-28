@@ -16,11 +16,24 @@ import Movies from './cms/collections/Movies';
 import Countries from './cms/collections/Movies/Countries';
 import Stills from './cms/collections/Movies/Stills';
 import Posters from './cms/collections/Movies/Posters';
+import Screenings from './cms/collections/Screenings';
+import ScreeningGroups from './cms/collections/Screenings/ScreeningGroups';
+import ScreeningSeries from './cms/collections/Screenings/ScreeningSeries';
+import Locations from './cms/collections/Screenings/Locations';
+import FilmPrints from './cms/collections/FilmPrints';
+import AspectRatios from './cms/collections/FilmPrints/AspectRatios';
+import Carriers from './cms/collections/FilmPrints/Carriers';
+import Conditions from './cms/collections/FilmPrints/Conditions';
+import Formats from './cms/collections/FilmPrints/Formats';
+import LanguageVersions from './cms/collections/FilmPrints/LanguageVersions';
+import SoundFormats from './cms/collections/FilmPrints/SoundFormats';
+import ScreeningsPage from './cms/globals/pages/ScreeningsPage';
 
 export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
   admin: {
     user: Users.slug,
+    css: path.resolve(__dirname, 'cms/styles.css'),
   },
   // this is for the translation of the admin panel
   i18n: {
@@ -48,7 +61,20 @@ export default buildConfig({
     Stills,
     Posters,
     
-    // Screenings...
+    // Film Prints
+    FilmPrints,
+    AspectRatios,
+    Carriers,
+    Conditions,
+    Formats,
+    LanguageVersions,
+    SoundFormats,
+    
+    // Screenings
+    Screenings,
+    ScreeningGroups,
+    ScreeningSeries,
+    Locations,
 
     // Blog
     Posts,
@@ -66,6 +92,7 @@ export default buildConfig({
   globals: [
     Site,
     Blog,
+    ScreeningsPage,
   ],
   typescript: {
     outputFile: path.resolve(__dirname, 'cms/payload-types.ts'),

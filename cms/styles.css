@@ -1,0 +1,28 @@
+#nav-persons,
+#nav-genres,
+#nav-countries,
+#nav-stills,
+#nav-posters,
+#nav-carriers,
+#nav-conditions,
+#nav-formats,
+#nav-languageVersions,
+#nav-soundFormats,
+#nav-aspectRatios {
+  opacity: .3;
+  display: none;
+}
+.card-persons,
+.card-genres,
+.card-countries,
+.card-stills,
+.card-posters,
+.card-carriers,
+.card-conditions,
+.card-formats,
+.card-languageVersions,
+.card-soundFormats,
+.card-aspectRatios {
+  opacity: .5;
+  display: none;
+}
