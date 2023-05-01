@@ -1,3 +1,6 @@
+.page {
+    width: 100%;
+}
 .page h1 {
     width: 100%;
     color: var(--color-black);
