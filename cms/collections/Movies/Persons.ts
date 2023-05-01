@@ -12,6 +12,7 @@ const Persons: CollectionConfig = {
     group: t('Movie Database'),
     defaultColumns: ['name'],
     useAsTitle: 'name',
+    hidden: true,
   },
   access: {
     read: () => true,

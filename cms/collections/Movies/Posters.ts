@@ -13,6 +13,7 @@ export const Posters: CollectionConfig = {
   },
   admin: {
     group: t('Movie Database'),
+    hidden: true,
   },
   upload: {
     adminThumbnail: 'default',

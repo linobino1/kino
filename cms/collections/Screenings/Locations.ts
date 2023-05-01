@@ -12,6 +12,7 @@ const Locations: CollectionConfig = {
     group: t('Screenings'),
     useAsTitle: 'name',
     defaultColumns: ['name'],
+    hidden: true,
   },
   access: {
     read: () => true,

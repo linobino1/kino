@@ -33,7 +33,6 @@ export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
   admin: {
     user: Users.slug,
-    css: path.resolve(__dirname, 'cms/styles.css'),
   },
   // this is for the translation of the admin panel
   i18n: {

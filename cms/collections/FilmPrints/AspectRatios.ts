@@ -11,6 +11,7 @@ const AspectRatios: CollectionConfig = {
     group: t('Film Prints'),
     defaultColumns: ['name'],
     useAsTitle: 'name',
+    hidden: true,
   },
   access: {
     read: () => true,

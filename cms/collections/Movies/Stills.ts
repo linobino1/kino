@@ -10,6 +10,7 @@ export const Stills: CollectionConfig = {
   },
   admin: {
     group: t('Movie Database'),
+    hidden: true,
   },
   access: {
     read: (): boolean => true,
