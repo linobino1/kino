@@ -1,4 +1,5 @@
 {
+  "AdminDateFormat": "DD.MM.YYYY",
   "Title": "Titel",
   "Site Config": "Seiteneinstellungen",
   "Config": "Konfiguration",
@@ -86,5 +87,7 @@
   "Sound Formats": "Tonformate",
   "Condition": "Zustand",
   "Conditions": "Zustände",
-  "Rights Holder": "Rechteinhaber"
+  "Rights Holder": "Rechteinhaber",
+  "Genre": "Genre",
+  "Is a HfG Production?": "Ist eine HfG-Produktion?"
 }

@@ -15,7 +15,6 @@ import i18next from "~/i18next.server";
 import { useTranslation } from "react-i18next";
 import Poster from "~/components/Poster";
 import Still from "~/components/Still";
-import Page from "~/components/Page";
 
 export const loader = async ({ params, request, context: { payload }}: LoaderArgs) => {
   const data = await payload.find({
@@ -49,7 +48,7 @@ export default function Item() {
 
 
   return (
-    <Page>
+    <>
       <h1 className={classes.title}>
         <span>{(screening.group as ScreeningGroup).name}</span>
         <span className={classes.subtitle}>{screening.title}</span>
@@ -120,7 +119,7 @@ export default function Item() {
             <div key={filmprint.id}>
               <Movie
                 movie={filmprint.movie as MovieType}
-                filmprint={filmprint}
+                // filmprint={filmprint}
               />
               <hr />
             </div>
@@ -135,6 +134,6 @@ export default function Item() {
           )}
         </div>
       </main>
-    </Page>
+    </>
   );
 }

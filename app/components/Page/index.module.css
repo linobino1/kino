@@ -11,3 +11,13 @@
     text-transform: uppercase;
     padding: 1rem
 }
+.page main {
+    padding: 1rem 0;
+    max-width: var(--page-max-width);
+    margin: 0 auto;
+}
+@media screen and (max-width: 1000px) {
+    .page main {
+        padding: 1rem;
+    }    
+}

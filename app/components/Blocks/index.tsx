@@ -30,7 +30,11 @@ const Blocks: React.FC<Props> = ({
               return <HeaderImage {...block} />;
               
             case 'outlet':
-              return children;
+              return (
+                <main>
+                  {children}
+                </main>
+              )
           }
         })()}
       </section>

@@ -1,7 +1,15 @@
 /** TITLE HEADER   ******************************************/
 .title {
-  color: var(--color-white) !important;
-  background-color: var(--color-theme) !important;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 1rem;
+  color: var(--color-white);
+  background-color: var(--color-theme);
+  font-size: var(--font-size-xx-big);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-big);
+  text-transform: uppercase;
 }
 .subtitle {
   display: block;
@@ -33,14 +41,14 @@ img.headerImage {
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 1rem;
+  padding: 2rem;
   display: flex;
   justify-content: flex-end;
   background: linear-gradient(1deg, rgba(0,0,0,.8), transparent);
   color: var(--color-white);
 }
 .imageHeaderOverlayContent {
-  width: min(100vw, var(--page-max-width));
+  width: min(80vw, var(--page-max-width));
   margin: 0 auto; 
   display: flex;
   flex-direction: row;

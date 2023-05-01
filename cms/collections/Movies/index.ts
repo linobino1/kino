@@ -66,7 +66,7 @@ const Movies: CollectionConfig = {
       relationTo: 'persons',
     },
     {
-      name: 'country',
+      name: 'countries',
       label: t('Country of Production'),
       type: 'relationship',
       relationTo: 'countries',
@@ -80,11 +80,17 @@ const Movies: CollectionConfig = {
       required: true,
     },
     {
-      name: 'genres',
+      name: 'isHfgProduction',
+      label: t('Is a HfG Production?'),
+      type: 'checkbox',
+      defaultValue: false,
+    },
+    {
+      name: 'genre',
       label: t('Genre'),
       type: 'relationship',
       relationTo: 'genres',
-      hasMany: true,
+      hasMany: false,
       required: true,
     },
     {

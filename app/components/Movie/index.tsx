@@ -3,24 +3,34 @@ import type {
   Country,
   Person,
   Poster as PosterType,
+  FilmPrint,
+  Format,
+  LanguageVersion,
 } from "payload/generated-types";
 import React from "react";
 import classes from './index.module.css';
 import { Poster } from "~/components/Poster";
+import { useTranslation } from "react-i18next";
 
 export type Props = {
   movie: MovieType
+  filmprint?: FilmPrint
   className?: string
 };
 
 export const Movie: React.FC<Props> = ({
-  movie, className,
+  movie, filmprint, className,
 }) => {
+  const { t } = useTranslation();
   const specs = [
     movie.originalTitle,
-    (movie.country as Country[]).map((x) => x.name).join(', '),
+    (movie.countries as Country[]).map((x) => x.name).join(', '),
     movie.year,
     (movie.directors as Person[]).map((x) => x.name).join(', '),
+    filmprint ? (filmprint.format as Format).name : null,
+    filmprint ? `${filmprint.duration}m` : null,
+    filmprint ? (filmprint.languageVersion as LanguageVersion)?.name : null,
+    (filmprint && parseInt(filmprint.ageLimit || '') > 0) ? t('ageLimit', { age: filmprint.ageLimit}) : null
   ].filter(Boolean);
 
   return (

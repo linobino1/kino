@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload/types';
-import { t } from '../../i18n';
+import { t, fixedT } from '../../i18n';
 import { slugField } from '../../fields/slug';
 
 const Screenings: CollectionConfig = {
@@ -72,6 +72,7 @@ const Screenings: CollectionConfig = {
       admin: {
         date: {
           pickerAppearance: 'dayOnly',
+          displayFormat: 'dd.MM.yyyy',
         },
       },
     },
@@ -83,6 +84,7 @@ const Screenings: CollectionConfig = {
       admin: {
         date: {
           pickerAppearance: 'timeOnly',
+          displayFormat: 'HH:mm',
         },
       },
     },
