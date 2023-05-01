@@ -10,7 +10,7 @@ export const options: Options = {
   supportedLngs: ["en", "de"],
   // This is the language you want to use in case
   // the user language is not in the supportedLngs
-  fallbackLng: "en",
+  fallbackLng: "de",
   // The default namespace of i18next is "translation", but you can customize it here
   defaultNS: "common",
   fallbackNS: "common",
