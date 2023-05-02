@@ -25,7 +25,7 @@ export const FilmPrintsList: React.FC<Props> = ({
       ))}
     </div>
   ) : (
-    <div className={classes.empty}>{t('No upcoming screenings.')}</div>
+    <div className={classes.empty}>{t('No films matching your search.')}</div>
   );
 };
 

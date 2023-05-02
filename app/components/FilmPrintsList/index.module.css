@@ -2,7 +2,7 @@
 .list {
   display: flex;
   flex-direction: column;
-  row-gap: 1rem;
+  row-gap: 2rem;
 }
 /* ITEM  ****************************************************************/
 .item {

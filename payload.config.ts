@@ -10,6 +10,7 @@ import Users from './cms/collections/Users';
 import Site from './cms/globals/Site';
 import Posts from './cms/collections/Posts';
 import Blog from './cms/globals/pages/Blog';
+import Archive from './cms/globals/pages/Archive';
 import Persons from './cms/collections/Movies/Persons';
 import Genres from './cms/collections/Movies/Genres';
 import Movies from './cms/collections/Movies';
@@ -92,6 +93,7 @@ export default buildConfig({
     Site,
     Blog,
     ScreeningsPage,
+    Archive,
   ],
   typescript: {
     outputFile: path.resolve(__dirname, 'cms/payload-types.ts'),

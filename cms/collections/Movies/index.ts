@@ -81,7 +81,7 @@ const Movies: CollectionConfig = {
     },
     {
       name: 'isHfgProduction',
-      label: t('Is a HfG Production?'),
+      label: t('Is a HfG Production'),
       type: 'checkbox',
       defaultValue: false,
     },
