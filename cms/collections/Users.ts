@@ -32,8 +32,8 @@ const Users: CollectionConfig = {
           value: 'admin',
         },
         {
-          label: t('Moderator'),
-          value: 'moderator',
+          label: t('Editor'),
+          value: 'editor',
         },
         {
           label: t('Insider'),
