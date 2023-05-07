@@ -13,6 +13,12 @@ const Users: CollectionConfig = {
     useAsTitle: 'name',
     defaultColumns: ['name'],
   },
+  access: {
+    read: ({ req: { user }, id }) => user?.id === id || ['admin', 'editor'].includes(user?.role),
+    update: ({ req: { user } }) => ['admin', 'editor'].includes(user?.role),
+    create: ({ req: { user } }) => ['admin', 'editor'].includes(user?.role),
+    delete: ({ req: { user } }) => ['admin', 'editor'].includes(user?.role),
+  },
   fields: [
     // Email added by default
     {
