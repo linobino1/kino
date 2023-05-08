@@ -12,11 +12,39 @@ const Movies: CollectionConfig = {
     group: t('Movie Database'),
     defaultColumns: ['originalTitle', 'directors', 'publicationDate'],
     useAsTitle: 'originalTitle',
+    components: {
+      
+    }
   },
   access: {
     read: () => true,
   },
+  versions: {
+    drafts: true,
+  },
   fields: [
+    {
+      name: 'tmdbId',
+      label: t('TMDB ID'),
+      type: 'number',
+      // make sure the TMDB ID is empty or unique
+      validate: async (value, { t, payload }) => {
+        if (value === null) return true;
+        
+        // on server we need the base url, on client we don't
+        const baseUrl = payload ? payload.config.serverURL : '';
+        try {
+          const res = await fetch(`${baseUrl}/api/movies?where[tmdbId][equals]=${value}`);
+          const data = await res.json();
+          if (data.totalDocs > 0) {
+            return t('Movie already exists');
+          }
+        } catch (err) {
+          return t('Unable to validate TMDB ID');
+        }
+        return true;
+      },
+    },
     {
       name: 'title',
       label: t('Title'),
@@ -64,6 +92,7 @@ const Movies: CollectionConfig = {
       label: t('Cast'),
       type: 'relationship',
       relationTo: 'persons',
+      hasMany: true,
     },
     {
       name: 'countries',

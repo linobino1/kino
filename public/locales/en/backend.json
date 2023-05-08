@@ -1,5 +1,8 @@
 {
   "AdminExplainFilmStill": "Header image in landscape format (16:9 or similar) with a minimum width of 200px. Use a filmstill if possible.",
   "AdminExplainPoster": "Filmposter im Porträtformat (2:3) mit einer Mindestbreite von 200px",
-  "AdminExplainSynopsis": "Brief description of the film, max. 350 characters"
+  "AdminExplainSynopsis": "Brief description of the film, max. 350 characters",
+  "AdminExplainTmdbId": "Find the movie on <a href=\"https://www.themoviedb.org/\" target=\"_blank\">TMDB</a> and copy the ID from the URL. Example: https://www.themoviedb.org/movie/<strong>12345</strong>-movie-title",
+  "MovieExists": "<a href=\"/admin/collections/movies/{id}\">{title}</a> has already been created",
+  "Successfully created movie {title} {id}": "Successfully created <a href=\"/admin/collections/movies/{id}\">{title}</a>"
 }

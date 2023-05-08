@@ -6,6 +6,8 @@ import payload from "payload";
 import { createRequestHandler } from "@remix-run/express";
 import invariant from "tiny-invariant";
 import { sender, transport } from "./email";
+import { migrateMovie, previewMovie } from "./cms/scripts/migrateMovie";
+import { themoviedb } from "./cms/scripts/migrateMovie/api";
 
 require("dotenv").config();
 
@@ -19,6 +21,7 @@ async function start() {
 
   invariant(process.env.PAYLOAD_SECRET, "PAYLOAD_SECRET is required");
   invariant(process.env.MONGODB_URI, "MONGODB_URI is required");
+  invariant(process.env.THEMOVIEDB_API_KEY, "THEMOVIEDB_API_KEY is required");
 
   // Initialize Payload
   await payload.init({
@@ -34,6 +37,11 @@ async function start() {
       payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`);
     },
   });
+  
+  // init themoviedb api
+  themoviedb.defaults.params = {
+    api_key: process.env.THEMOVIEDB_API_KEY,
+  }
 
   app.use(compression());
   
@@ -52,13 +60,48 @@ async function start() {
 
   app.use(morgan("tiny"));
   
-  app.use(payload.authenticate);
-
   // robots.txt
   app.get('/robots.txt', function (req, res) {
     res.type('text/plain');
     res.send(`User-agent: *\nDisallow:${process.env.NODE_ENV === 'development' ? ' *' : ''}:`);
   });
+  
+  app.use(express.json());
+
+  // migrate movie from themoviedb.org (used in admin panel)
+  app.post('/api/tmdb-migration/preview', async (req, res) => {
+    // @ts-expect-error
+    if (!['admin', 'editor'].find((role) => role === req?.user?.role)) {
+      res.status(401).send('Unauthorized');
+      return
+    }
+    try {
+      const data = await previewMovie(req.body, payload);
+      res.status(200).send({ success: true, data });
+    } catch (error: any) {
+      res.status(400).send({ success: false, message: error.message });
+    }
+    return
+  });
+
+  app.post('/api/tmdb-migration/migrate', async (req, res) => {
+    // @ts-expect-error
+    if (!['admin', 'editor'].find((role) => role === req?.user?.role)) {
+      res.status(401).send('Unauthorized');
+      return
+    }
+    try {
+      const data = await migrateMovie(req.body, payload);
+      res.status(200).send({ success: true, data });
+      return
+    } catch (error: any) {
+      res.status(400).send({ success: false, message: error.message });
+      return
+    }
+  });
+
+  // authenticate all requests to the frontend
+  app.use(payload.authenticate);
 
   app.all(
     "*",

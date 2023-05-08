@@ -29,11 +29,17 @@ import Formats from './cms/collections/FilmPrints/Formats';
 import LanguageVersions from './cms/collections/FilmPrints/LanguageVersions';
 import SoundFormats from './cms/collections/FilmPrints/SoundFormats';
 import ScreeningsPage from './cms/globals/pages/ScreeningsPage';
+import MigrateMovie from './cms/components/MigrateMovie';
 
 export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
   admin: {
     user: Users.slug,
+    components: {
+      beforeDashboard: [
+        MigrateMovie,
+      ],
+    },
   },
   upload: {
     defCharset: 'utf8',

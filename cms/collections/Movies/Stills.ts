@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload/types';
 import { staticDir, staticURL } from '../Media';
 import { t } from '../../i18n';
+import { TmdbFilepath } from '../../fields/TmdbFilepath';
 
 export const Stills: CollectionConfig = {
   slug: 'stills',
@@ -57,7 +58,9 @@ export const Stills: CollectionConfig = {
       },
     ],
   },
-  fields: [],
+  fields: [
+    TmdbFilepath(),
+  ],
 };
 
 export default Stills;

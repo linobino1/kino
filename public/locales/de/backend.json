@@ -90,5 +90,11 @@
   "Rights Holder": "Rechteinhaber",
   "Genre": "Genre",
   "Is a HfG Production": "Ist eine HfG-Produktion",
-  "Film Archive": "Filmarchiv"
+  "Film Archive": "Filmarchiv",
+  "AdminExplainTmdbId": "Finde den Film auf <a href=\"https://www.themoviedb.org/\" target=\"_blank\">TMDB</a> und kopiere die ID aus der URL. Beispiel: https://www.themoviedb.org/movie/<strong>12345</strong>-film-title",
+  "MovieExists": "<a href=\"/admin/collections/movies/{id}\">{title}</a> wurde schon angelegt",
+  "Choose a {type}:": "Wähle ein {type}:",
+  "backdrop": "Hintergrundbild",
+  "poster": "Poster",
+  "Successfully created movie {title} {id}": "<a href=\"/admin/collections/movies/{id}\">{title}</a> wurde erfolgreich angelegt"
 }

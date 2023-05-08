@@ -13,8 +13,9 @@ services:
       - /app/node_modules
     environment:
       PAYLOAD_SECRET: secret123
-      MONGODB_URI: mongodb://db:27017/appTEMP
+      MONGODB_URI: mongodb://db:27017/app
       PAYLOAD_PUBLIC_SERVER_URL: http://localhost:3000
+      THEMOVIEDB_API_KEY: ${THEMOVIEDB_API_KEY}
     depends_on:
       - db
   
