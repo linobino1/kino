@@ -28,7 +28,7 @@ const Movies: CollectionConfig = {
       label: t('TMDB ID'),
       type: 'number',
       // make sure the TMDB ID is empty or unique
-      validate: async (value, { t, payload }) => {
+      validate: async (value, { operation, t, payload }) => {
         if (value === null) return true;
         
         // on server we need the base url, on client we don't
@@ -36,7 +36,8 @@ const Movies: CollectionConfig = {
         try {
           const res = await fetch(`${baseUrl}/api/movies?where[tmdbId][equals]=${value}`);
           const data = await res.json();
-          if (data.totalDocs > 0) {
+          const totalDocs = operation === 'update' ? 1 : 0; // when updating, the current movie is included in totalDocs
+          if (data.totalDocs > totalDocs) {
             return t('Movie already exists');
           }
         } catch (err) {
