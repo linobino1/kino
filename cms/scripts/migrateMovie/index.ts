@@ -126,11 +126,15 @@ export const migrateMovie = async (body: MigrateBody, payload: Payload): Promise
     throw new Error('Unable to create poster or still');
   }
   
-  // create cast & directors
+  // create cast, crew & directors
   const credits = await getTmdbCredits(tmdbId);
   const cast = credits.cast.map(async (person: tmdbPerson) => (
     await createOrFindPerson(person.name, payload)
   ));
+  const crew = credits.crew.map(async (person: tmdbPerson) => ({
+    role: person.job, 
+    person: (await createOrFindPerson(person.name, payload)).id,
+  }));
   const directors = credits.crew.filter((person) => person.job === 'Director').map(async (person: tmdbPerson) => (
     await createOrFindPerson(person.name, payload)
   ));
@@ -154,6 +158,9 @@ export const migrateMovie = async (body: MigrateBody, payload: Payload): Promise
         still: still.id,
         cast: (await Promise.all(cast)).map((person: Person) => person.id),
         directors: (await Promise.all(directors)).map((person: Person) => person.id),
+        crew: await Promise.all(crew),
+        duration: data.runtime,
+        ageLimit: data.adult ? '18' : '0',
       },
       draft: true,
       locale: tmdbLng,

@@ -1,15 +1,9 @@
 import payload from 'payload';
-import type { OptionObject } from 'payload/dist/fields/config/types';
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
 import { slugField, slugFormat } from '../../fields/slug';
 import analogDigitalTypeField from './fields';
 import options from '../../../app/i18n';
-
-const ageLimitOptions: OptionObject[] = [0, 6, 12, 16, 18].map((x) => ({
-  label: `FSK${x}`,
-  value: `${x}`,
-}));
 
 export const FilmPrints: CollectionConfig = {
   slug: 'filmPrints',
@@ -84,29 +78,12 @@ export const FilmPrints: CollectionConfig = {
       defaultValue: false,
     },
     {
-      name: 'duration',
-      label: t('Playing Time'),
-      type: 'number',
-      min: 0,
-      admin: {
-        description: t('Duration in minutes'),
-      },
-      required: true,
-    },
-    {
       name: 'languageVersion',
       label: t('Language Version'),
       type: 'relationship',
       relationTo: 'languageVersions',
       hasMany: false,
       required: true,
-    },
-    {
-      name: 'ageLimit',
-      label: t('Age Limit'),
-      type: 'select',
-      options: ageLimitOptions,
-      defaultValue: '0',
     },
     analogDigitalTypeField('type'),
     {
@@ -167,12 +144,6 @@ export const FilmPrints: CollectionConfig = {
           required: true,
         },
       ],
-    },
-    {
-      name: 'rightholder',
-      label: t('Rights Holder'),
-      type: 'text',
-      required: true,
     },
   ],
 };

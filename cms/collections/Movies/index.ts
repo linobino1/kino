@@ -1,6 +1,12 @@
+import type { OptionObject } from 'payload/dist/fields/config/types';
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
 import { slugField } from '../../fields/slug';
+
+const ageLimitOptions: OptionObject[] = [0, 6, 12, 16, 18].map((x) => ({
+  label: `FSK${x}`,
+  value: `${x}`,
+}));
 
 const Movies: CollectionConfig = {
   slug: 'movies',
@@ -89,11 +95,21 @@ const Movies: CollectionConfig = {
       required: true,
     },
     {
-      name: 'cast',
-      label: t('Cast'),
-      type: 'relationship',
-      relationTo: 'persons',
-      hasMany: true,
+      name: 'duration',
+      label: t('Playing Time'),
+      type: 'number',
+      min: 0,
+      admin: {
+        description: t('Duration in minutes'),
+      },
+      required: true,
+    },
+    {
+      name: 'ageLimit',
+      label: t('Age Limit'),
+      type: 'select',
+      options: ageLimitOptions,
+      defaultValue: '0',
     },
     {
       name: 'countries',
@@ -132,6 +148,49 @@ const Movies: CollectionConfig = {
         description: t('AdminExplainSynopsis'),
       },
       required: true,
+    },
+    {
+      label: t('Credits'),
+      type: 'tabs',
+      tabs: [
+        {
+          label: t('Cast'),
+          fields: [
+            {
+              name: 'cast',
+              label: t('Cast'),
+              type: 'relationship',
+              relationTo: 'persons',
+              hasMany: true,
+            },
+          ],
+        },
+        {
+          label: t('Crew'),
+          fields: [
+            {
+              name: 'crew',
+              label: t('Crew'),
+              type: 'array',
+              fields: [
+                {
+                  name: 'person',
+                  label: t('Person'),
+                  type: 'relationship',
+                  relationTo: 'persons',
+                  required: true,
+                },
+                {
+                  name: 'role',
+                  label: t('Role'),
+                  type: 'text',
+                  required: true,
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
   ],
 };
