@@ -128,7 +128,6 @@ const Movies: CollectionConfig = {
       label: t('Synopsis'),
       type: 'textarea',
       localized: true,
-      maxLength: 350,
       admin: {
         description: t('AdminExplainSynopsis'),
       },
