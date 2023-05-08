@@ -35,6 +35,11 @@ export default buildConfig({
   admin: {
     user: Users.slug,
   },
+  upload: {
+    defCharset: 'utf8',
+    defParamCharset: 'utf8',
+  },
+    
   // this is for the translation of the admin panel
   i18n: {
     supportedLngs: ['en', 'de'],
