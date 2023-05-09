@@ -3,7 +3,8 @@ import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
 import { slugField } from '../../fields/slug';
 
-const ageLimitOptions: OptionObject[] = [0, 6, 12, 16, 18].map((x) => ({
+export const ageLimitAges = [0, 6, 12, 16, 18];
+const ageLimitOptions: OptionObject[] = ageLimitAges.map((x) => ({
   label: `FSK${x}`,
   value: `${x}`,
 }));

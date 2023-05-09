@@ -18,9 +18,9 @@ import {
   createOrFindGenre,
   updateOrCreateImage,
   downloadTmdbImage,
-  addGenreTranslation,
   getTmdbCredits,
   createOrFindPerson,
+  getReleaseDates as getAgeLimit,
 } from "./helpers";
 
 export interface PreviewBody {
@@ -144,6 +144,9 @@ export const migrateMovie = async (body: MigrateBody, payload: Payload): Promise
     await createOrFindPerson(person.name, payload)
   ));
   
+  // get release date and age restriction
+  const ageLimit = await getAgeLimit(tmdbId);
+  
   // create movie
   try {
     movie = await payload.create({
@@ -165,7 +168,7 @@ export const migrateMovie = async (body: MigrateBody, payload: Payload): Promise
         directors: (await Promise.all(directors)).map((person: Person) => person.id),
         crew: await Promise.all(crew),
         duration: data.runtime,
-        ageLimit: data.adult ? '18' : '0',
+        ageLimit,
       },
       draft: true,
       locale: tmdbLng,
@@ -196,7 +199,14 @@ export const migrateMovie = async (body: MigrateBody, payload: Payload): Promise
     
     // add genre name
     // IDEA: let's hope the genres are sorted the same way in all languages
-    await addGenreTranslation(genre.id, data.genres[0].name, language, payload);
+    await payload.update({
+      collection: 'genres',
+      id: genre.id,
+      data: {
+        name: data.genres[0].name,
+      },
+      locale: language,
+    });
   }
   
   return movie;

@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLocale } from 'payload/components/utilities';
 import { fixedT } from '../../i18n';
 import './styles.scss';
-import type { tmdbPreview } from "cms/scripts/migrateMovie/api";
 import type { Movie } from "payload/generated-types";
+import type { tmdbPreview } from "cms/scripts/migrateMovie";
 
 export const MigrateMovie: React.FC = () => {
   const locale = useLocale();
