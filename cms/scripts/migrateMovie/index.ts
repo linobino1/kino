@@ -8,7 +8,8 @@ import type { Payload } from "payload";
 import type { Movie, Poster, Still, Person } from "payload/generated-types";
 import type {
   tmdbPerson,
-  tmdbPreview,
+  tmdbImages,
+  tmdbMovie,
 } from "./api";
 import { tmdbLng } from "./config";
 import {
@@ -25,6 +26,10 @@ import {
 export interface PreviewBody {
   tmdbId: number;
   locale: string;
+}
+
+export interface tmdbPreview extends tmdbMovie {
+  images: tmdbImages;
 }
 
 export interface MigrateBody extends PreviewBody {

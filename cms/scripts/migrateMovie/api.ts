@@ -65,6 +65,3 @@ export interface tmdbCredits {
   cast: tmdbPerson[];
   crew: tmdbPerson[];
 }
-export interface tmdbPreview extends tmdbMovie {
-  images: tmdbImages;
-}
