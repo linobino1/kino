@@ -59,7 +59,7 @@ export const Stills: CollectionConfig = {
     ],
   },
   fields: [
-    TmdbFilepath(),
+    TmdbFilepath('stills'),
   ],
 };
 

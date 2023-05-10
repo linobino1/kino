@@ -1,7 +1,7 @@
 import type { Field } from 'payload/types';
 import { t } from '../i18n';
 
-export const TmdbFilepath = (): Field => ({
+export const TmdbFilepath = (collection: 'posters' | 'stills'): Field => ({
   name: 'tmdbFilepath',
   type: 'text',
   label: t('TMDB Filepath'),
@@ -10,13 +10,13 @@ export const TmdbFilepath = (): Field => ({
     readOnly: true,
   },
   // make sure the images is not being migrated twice from themoviedb.org
-  validate: async (value, { t, payload }) => {
+  validate: async (value, { siblingData, t, payload }) => {
     if (value === null) return true;
     
     // on server we need the base url, on client we don't
     const baseUrl = payload ? payload.config.serverURL : '';
     try {
-      const res = await fetch(`${baseUrl}/api/movies?where[tmdbFilepath][equals]=${value}`);
+      const res = await fetch(`${baseUrl}/api/${collection}?where[tmdbFilepath][equals]=${value}`);
       const data = await res.json();
       if (data.totalDocs > 0) {
         return t('Movie already exists');

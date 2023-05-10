@@ -38,7 +38,7 @@ export const Posters: CollectionConfig = {
     ],
   },
   fields: [
-    TmdbFilepath(),
+    TmdbFilepath('posters'),
   ],
 };
 
