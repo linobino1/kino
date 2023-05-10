@@ -191,6 +191,18 @@ const Movies: CollectionConfig = {
             },
           ],
         },
+        {
+          label: t('Production Companies'),
+          fields: [
+            {
+              name: 'productionCompanies',
+              label: t('Production Companies'),
+              type: 'relationship',
+              relationTo: 'companies',
+              hasMany: true,
+            },
+          ],
+        },
       ],
     },
   ],

@@ -34,6 +34,7 @@ export interface tmdbMovie {
     iso_3166_1: string;
     name: string;
   }[];
+  production_companies: tmdbCompany[];
 }
 export interface tmdbImages {
   backdrops: {
@@ -60,6 +61,9 @@ export interface tmdbPerson {
   name: string;
   job: string;
   order: number;
+}
+export interface tmdbCompany {
+  name: string;
 }
 export interface tmdbCredits {
   cast: tmdbPerson[];

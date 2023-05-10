@@ -3,7 +3,7 @@ import fs from "fs";
 import type { Genre, Person } from "payload/generated-types";
 import type { Payload } from "payload";
 import { themoviedb } from "./api";
-import { tmdbLng, tmdbMediaUrl } from "./config";
+import { tmdbMediaUrl } from "./config";
 import type { Movie, Poster, Still } from "payload/generated-types";
 import type {
   tmdbCredits,
@@ -11,6 +11,9 @@ import type {
   tmdbReleaseDatesResponse,
 } from "./api";
 import { ageLimitAges } from "../../collections/Movies";
+import type { Document } from "payload/types";
+import type { Config } from "payload/generated-types";
+import type { Company } from "payload/generated-types";
 
 /**
  * find the movie in our database
@@ -157,65 +160,41 @@ export async function updateOrCreateImage(tmdbFilepath: string, collection: 'sti
 }
 
 /**
- * create a genre doc in the database or return the existing one
- * @param name genre name
+ * find an item by name or create it if it doesn't exist
+ * @param collection slug of the collection, it needs to have a field "name"
+ * @param name name of the item
  * @param payload Payload instance
  * @returns the created or found doc
  */
-export async function createOrFindGenre(name: string, payload: Payload): Promise<Genre> {
-  let genre = (await payload.find({
-    collection: 'genres',
-    where: {
-      name: {
-        like: name,
-      },
-    },
-    locale: tmdbLng,
-  }))?.docs[0] || null;
-  if (!genre) {
-    try {
-      genre = await payload.create({
-        collection: 'genres',
-        data: {
-          name,
-        },
-        locale: tmdbLng,
-      });
-    } catch (err) {
-      throw new Error(`Unable to create genre ${name} (${err})`);
-    }
+export async function createOrFindItemByName(collection: 'genres',name: string, payload: Payload): Promise<Genre>;
+export async function createOrFindItemByName(collection: 'persons',name: string, payload: Payload): Promise<Person>;
+export async function createOrFindItemByName(collection: 'companies',name: string, payload: Payload): Promise<Company>;
+export async function createOrFindItemByName(collection: keyof Config['collections'],name: string, payload: Payload): Promise<Document> {
+  if (!payload.collections[collection].config.fields.find(field => 'name' in field && field.name === 'name')) {
+    throw new Error(`Collection ${collection} does not have a field "name"`);
   }
-  return genre
-}
-
-/**
- * create a person doc in the database or return the existing one
- * @param name person name
- * @param payload Payload instance
- * @returns the created or found doc
- */
-export async function createOrFindPerson(name: string, payload: Payload): Promise<Person> {
-  let person = (await payload.find({
-    collection: 'persons',
+  let item = (await payload.find({
+    collection,
     where: {
       name: {
         like: name,
       },
     },
   }))?.docs[0] || null;
-  if (!person) {
+  if (!item) {
     try {
-      person = await payload.create({
-        collection: 'persons',
+      item = await payload.create({
+        collection,
         data: {
+          // @ts-expect-error
           name,
         },
       });
     } catch (err) {
-      throw new Error(`Unable to create person ${name} (${err})`);
+      throw new Error(`Unable to create ${collection} item ${name} (${err})`);
     }
   }
-  return person  
+  return item  
 }
 
 /**

@@ -10,17 +10,16 @@ import type {
   tmdbPerson,
   tmdbImages,
   tmdbMovie,
-} from "./api";
+ tmdbCompany } from "./api";
 import { tmdbLng } from "./config";
 import {
   getLocalMovie,
   getTmdbMovie,
-  createOrFindGenre,
   updateOrCreateImage,
   downloadTmdbImage,
   getTmdbCredits,
-  createOrFindPerson,
-  getReleaseDates as getAgeLimit,
+  getReleaseDates,
+  createOrFindItemByName,
 } from "./helpers";
 
 export interface PreviewBody {
@@ -96,7 +95,7 @@ export const migrateMovie = async (body: MigrateBody, payload: Payload): Promise
   let data = await getTmdbMovie(tmdbId, language);
 
   // find or create genre
-  const genre = await createOrFindGenre(data.genres[0].name, payload);
+  const genre = await createOrFindItemByName('genres', data.genres[0].name, payload);
   
   // create temp directory for images
   let tmpDir;
@@ -134,18 +133,23 @@ export const migrateMovie = async (body: MigrateBody, payload: Payload): Promise
   // create cast, crew & directors
   const credits = await getTmdbCredits(tmdbId);
   const cast = credits.cast.map(async (person: tmdbPerson) => (
-    await createOrFindPerson(person.name, payload)
+    await createOrFindItemByName('persons', person.name, payload)
   ));
   const crew = credits.crew.map(async (person: tmdbPerson) => ({
     role: person.job, 
-    person: (await createOrFindPerson(person.name, payload)).id,
+    person: (await createOrFindItemByName('persons', person.name, payload)).id,
   }));
   const directors = credits.crew.filter((person) => person.job === 'Director').map(async (person: tmdbPerson) => (
-    await createOrFindPerson(person.name, payload)
+    await createOrFindItemByName('persons', person.name, payload)
+  ));
+  
+  // create production companies
+  const productionCompanies = data.production_companies.map(async (company: tmdbCompany) => (
+    (await createOrFindItemByName('companies', company.name, payload)).id
   ));
   
   // get release date and age restriction
-  const ageLimit = await getAgeLimit(tmdbId);
+  const ageLimit = await getReleaseDates(tmdbId);
   
   // create movie
   try {
@@ -169,6 +173,7 @@ export const migrateMovie = async (body: MigrateBody, payload: Payload): Promise
         crew: await Promise.all(crew),
         duration: data.runtime,
         ageLimit,
+        productionCompanies: await Promise.all(productionCompanies),
       },
       draft: true,
       locale: tmdbLng,

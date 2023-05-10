@@ -12,6 +12,7 @@ import Posts from './cms/collections/Posts';
 import Blog from './cms/globals/pages/Blog';
 import Archive from './cms/globals/pages/Archive';
 import Persons from './cms/collections/Movies/Persons';
+import Companies from './cms/collections/Movies/Companies';
 import Genres from './cms/collections/Movies/Genres';
 import Movies from './cms/collections/Movies';
 import Countries from './cms/collections/Movies/Countries';
@@ -67,6 +68,7 @@ export default buildConfig({
     // Movie Database
     Movies,
     Persons,
+    Companies,
     Genres,
     Countries,
     Stills,
