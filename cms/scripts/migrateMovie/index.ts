@@ -5,7 +5,7 @@ import { themoviedb } from "./api";
 import { slugFormat } from "../../fields/slug";
 import { fixedT } from "../../i18n";
 import type { Payload } from "payload";
-import type { Movie, Poster, Still, Person } from "payload/generated-types";
+import type { Movie, Poster, Still, Person, Company } from "payload/generated-types";
 import type {
   tmdbPerson,
   tmdbImages,
@@ -130,23 +130,35 @@ export const migrateMovie = async (body: MigrateBody, payload: Payload): Promise
     throw new Error('Unable to create poster or still');
   }
   
-  // create cast, crew & directors
+  // create cast
   const credits = await getTmdbCredits(tmdbId);
-  const cast = credits.cast.map(async (person: tmdbPerson) => (
-    await createOrFindItemByName('persons', person.name, payload)
-  ));
-  const crew = credits.crew.map(async (person: tmdbPerson) => ({
-    role: person.job, 
-    person: (await createOrFindItemByName('persons', person.name, payload)).id,
-  }));
-  const directors = credits.crew.filter((person) => person.job === 'Director').map(async (person: tmdbPerson) => (
-    await createOrFindItemByName('persons', person.name, payload)
-  ));
+  const cast = (await Promise.all(
+    credits.cast.map(async (person: tmdbPerson) => (
+      createOrFindItemByName('persons', person.name, payload)
+    )
+  ))).map((person: Person) => person.id);
+
+  // create crew
+  const crew = await Promise.all(
+    credits.crew.map(async (person: tmdbPerson) => ({
+      role: person.job, 
+      person: (await createOrFindItemByName('persons', person.name, payload)).id,
+    }))
+  );
+  
+  // create directors
+  const directors = (await Promise.all(
+    credits.crew.filter((person) => person.job === 'Director').map(async (person: tmdbPerson) => (
+      createOrFindItemByName('persons', person.name, payload)
+    )
+  ))).map((person: Person) => person.id);
   
   // create production companies
-  const productionCompanies = data.production_companies.map(async (company: tmdbCompany) => (
-    (await createOrFindItemByName('companies', company.name, payload)).id
-  ));
+  const productionCompanies = (await Promise.all(
+    data.production_companies.map(async (company: tmdbCompany) => (
+      createOrFindItemByName('companies', company.name, payload)
+    )
+  ))).map((company: Company) => company.id);
   
   // get release date and age restriction
   const ageLimit = await getReleaseDates(tmdbId);
@@ -155,7 +167,6 @@ export const migrateMovie = async (body: MigrateBody, payload: Payload): Promise
   try {
     movie = await payload.create({
       collection: 'movies',
-      // @ts-ignore
       data: {
         originalTitle: data.original_title,
         title: data.title,
@@ -168,12 +179,12 @@ export const migrateMovie = async (body: MigrateBody, payload: Payload): Promise
         genre: genre.id,
         poster: poster.id,
         still: still.id,
-        cast: (await Promise.all(cast)).map((person: Person) => person.id),
-        directors: (await Promise.all(directors)).map((person: Person) => person.id),
-        crew: await Promise.all(crew),
+        cast,
+        directors,
+        crew,
+        productionCompanies,
         duration: data.runtime,
         ageLimit,
-        productionCompanies: await Promise.all(productionCompanies),
       },
       draft: true,
       locale: tmdbLng,

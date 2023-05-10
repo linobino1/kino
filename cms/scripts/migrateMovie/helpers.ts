@@ -175,28 +175,31 @@ export async function createOrFindItemByName(
   if (!payload.collections[collection].config.fields.find(field => 'name' in field && field.name === 'name')) {
     throw new Error(`Collection ${collection} does not have a field "name"`);
   }
-  let item = (await payload.find({
-    collection,
-    where: {
-      name: {
-        like: name,
+  // try to create the item
+  try {
+    console.log('CREATING ITEM', collection, name)
+    return await payload.create({
+      collection,
+      data: {
+        // @ts-expect-error
+        name,
       },
-    },
-  }))?.docs[0] || null;
-  if (!item) {
-    try {
-      item = await payload.create({
-        collection,
-        data: {
-          // @ts-expect-error
-          name,
+    });
+  } catch (err) {
+    // try to find the item
+    const item = (await payload.find({
+      collection,
+      where: {
+        name: {
+          like: name,
         },
-      });
-    } catch (err) {
-      throw new Error(`Unable to create ${collection} item ${name} (${err})`);
+      },
+    }))?.docs[0]
+    if (!item) {
+      throw new Error(`Could neither find or create ${collection} item ${name} (${err})`);
     }
+    return item
   }
-  return item  
 }
 
 /**
