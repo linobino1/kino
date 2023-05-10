@@ -166,10 +166,12 @@ export async function updateOrCreateImage(tmdbFilepath: string, collection: 'sti
  * @param payload Payload instance
  * @returns the created or found doc
  */
-export async function createOrFindItemByName(collection: 'genres',name: string, payload: Payload): Promise<Genre>;
-export async function createOrFindItemByName(collection: 'persons',name: string, payload: Payload): Promise<Person>;
-export async function createOrFindItemByName(collection: 'companies',name: string, payload: Payload): Promise<Company>;
-export async function createOrFindItemByName(collection: keyof Config['collections'],name: string, payload: Payload): Promise<Document> {
+export async function createOrFindItemByName(collection: 'genres', name: string, payload: Payload): Promise<Genre>;
+export async function createOrFindItemByName(collection: 'persons', name: string, payload: Payload): Promise<Person>;
+export async function createOrFindItemByName(collection: 'companies', name: string, payload: Payload): Promise<Company>;
+export async function createOrFindItemByName(
+  collection: keyof Config['collections'], name: string, payload: Payload
+): Promise<Document> {
   if (!payload.collections[collection].config.fields.find(field => 'name' in field && field.name === 'name')) {
     throw new Error(`Collection ${collection} does not have a field "name"`);
   }
