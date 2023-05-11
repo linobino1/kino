@@ -9,7 +9,7 @@ import { Form } from "~/components/Form";
 import Button from "~/components/Button";
 import type { Payload } from "payload";
 import type { Where } from "payload/types";
-import type { FilmPrint, Movie } from "payload/generated-types";
+import type { FilmPrint, Movie, Person } from "payload/generated-types";
 
 type Filter = {
   value: any
@@ -108,7 +108,7 @@ export const countWithFilter = async (payload: Payload, request: globalThis.Requ
   const res = await payload.find({
     collection: 'filmPrints',
     where: await getWhere(request, extraWhere),
-    depth: 3,
+    depth: 0,
   });
   return res.totalDocs
 }
@@ -118,17 +118,27 @@ export const countWithFilter = async (payload: Payload, request: globalThis.Requ
  */
 const getFilters = async (payload: Payload, request: globalThis.Request): Promise<Filters> => {
   // directors
-  const persons = await payload.find({
-    collection: 'persons',
-    depth: 1,
+  const filmprints = (await payload.find({
+    collection: 'filmPrints',
+    depth: 2,
+  })).docs;
+  const allDirectors: Person[] = [];
+  // collect all directors
+  filmprints.forEach((filmprint) => {
+    allDirectors.push(...((filmprint.movie as Movie).directors as Person[]));
   });
+  // remove duplicates
+  const directors = allDirectors.filter((director, index) => {
+    return allDirectors.findIndex((d) => d.id === director.id) === index;
+  });
+  
   const director: Filter[] = []; 
-  for (const doc of persons.docs) {
+  for (const doc of directors) {
     console.log('doc', doc);
     director.push({
       count: await countWithFilter(payload, request, {
-        'movie.director': {
-          // equals: doc.id,
+        'movie.directors': {
+          equals: doc.id,
         },
       }),
       value: doc.id,
