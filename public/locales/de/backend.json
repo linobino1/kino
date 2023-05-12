@@ -1,8 +1,8 @@
 {
   "AdminDateFormat": "DD.MM.YYYY",
   "Title": "Titel",
-  "Site Config": "Seiteneinstellungen",
-  "Config": "Konfiguration",
+  "Configuration": "Konfiguration",
+  "Site Configuration": "Seiteneinstellungen",
   "Static Page": "Statische Seite",
   "Static Pages": "Statische Seiten",
   "Image": "Bild",
@@ -43,8 +43,8 @@
   "Countries": "Länder",
   "alpha2 country code": "Ländercode (2-stellig)",
   "Original Title": "Originaltitel",
-  "Film Still": "Standbild",
-  "Film Stills": "Standbilder",
+  "Film Still": "Filmstill",
+  "Film Stills": "Filmstills",
   "AdminExplainFilmStill": "Titelbild im Querformat (16:9 o.ä.) mit einer Mindestbreite von 2000px. In der Regel sollte ein Standbild aus dem Film verwendet werden.",
   "AdminExplainPoster": "Filmposter im Porträtformat (2:3) mit einer Mindestbreite von 200px",
   "Director": "Regie",
@@ -99,5 +99,7 @@
   "Comapny": "Firma",
   "Companies": "Firmen",
   "Production Company": "Produktionsfirma",
-  "Production Companies": "Produktionsfirmen"
+  "Production Companies": "Produktionsfirmen",
+  "Other Media": "Weitere Medien",
+  "Other Medias": "Weitere Medien"
 }

@@ -46,9 +46,7 @@ export default buildConfig({
     defCharset: 'utf8',
     defParamCharset: 'utf8',
   },
-    
-  // this is for the translation of the admin panel
-  i18n: {
+  i18n: { // admin panel i18n
     supportedLngs: ['en', 'de'],
     fallbackLng: 'en',
     ns: ['backend'],
@@ -71,17 +69,9 @@ export default buildConfig({
     Companies,
     Genres,
     Countries,
-    Stills,
-    Posters,
     
     // Film Prints
     FilmPrints,
-    AspectRatios,
-    Carriers,
-    Conditions,
-    Formats,
-    LanguageVersions,
-    SoundFormats,
     
     // Screenings
     Screenings,
@@ -92,15 +82,25 @@ export default buildConfig({
     // Blog
     Posts,
 
+    // Media
+    Posters,
+    Stills,
+    Media,
+
     // Pages
     Pages,
 
-    // Config
+    // Configuration
+    Formats,
+    AspectRatios,
+    Carriers,
+    LanguageVersions,
+    SoundFormats,
+    Conditions,
+    
+    // System
     Navigations,
     Users,
-
-    // Media
-    Media,
   ],
   globals: [
     Site,

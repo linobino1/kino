@@ -8,10 +8,9 @@ const SoundFormats: CollectionConfig = {
     plural: t('Sound Formats'),
   },
   admin: {
-    group: t('Film Prints'),
+    group: t('Configuration'),
     defaultColumns: ['name'],
     useAsTitle: 'name',
-    hidden: true,
   },
   access: {
     read: () => true,

@@ -13,8 +13,7 @@ export const Posters: CollectionConfig = {
     read: (): boolean => true,
   },
   admin: {
-    group: t('Movie Database'),
-    hidden: true,
+    group: t('Media'),
   },
   upload: {
     adminThumbnail: 'default',

@@ -9,7 +9,7 @@ const Users: CollectionConfig = {
   },
   auth: true,
   admin: {
-    group: t('Config'),
+    group: t('System'),
     useAsTitle: 'name',
     defaultColumns: ['name'],
   },

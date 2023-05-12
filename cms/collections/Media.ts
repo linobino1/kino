@@ -8,8 +8,8 @@ export const staticURL = '/media';
 export const Media: CollectionConfig = {
   slug: 'media',
   labels: {
-    singular: t('Media'),
-    plural: t('Media'),
+    singular: t('other Media'),
+    plural: t('Other Media'),
   },
   admin: {
     group: t('Media'),

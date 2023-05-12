@@ -8,10 +8,9 @@ const AspectRatios: CollectionConfig = {
     plural: t('Aspect Ratios'),
   },
   admin: {
-    group: t('Film Prints'),
+    group: t('Configuration'),
     defaultColumns: ['name'],
     useAsTitle: 'name',
-    hidden: true,
   },
   access: {
     read: () => true,

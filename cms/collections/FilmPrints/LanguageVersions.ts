@@ -8,10 +8,9 @@ const LanguageVersions: CollectionConfig = {
     plural: t('Language Versions'),
   },
   admin: {
-    group: t('Film Prints'),
+    group: t('Configuration'),
     defaultColumns: ['name'],
     useAsTitle: 'name',
-    hidden: true,
   },
   access: {
     read: () => true,

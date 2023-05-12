@@ -10,8 +10,7 @@ export const Stills: CollectionConfig = {
     plural: t('Film Stills'),
   },
   admin: {
-    group: t('Movie Database'),
-    hidden: true,
+    group: t('Media'),
   },
   access: {
     read: (): boolean => true,

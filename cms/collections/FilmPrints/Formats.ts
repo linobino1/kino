@@ -9,10 +9,9 @@ const Formats: CollectionConfig = {
     plural: t('Film Formats'),
   },
   admin: {
-    group: t('Film Prints'),
+    group: t('Configuration'),
     defaultColumns: ['type', 'name'],
     useAsTitle: 'name',
-    hidden: true,
   },
   access: {
     read: () => true,

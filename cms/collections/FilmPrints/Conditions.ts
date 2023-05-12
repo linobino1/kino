@@ -8,10 +8,9 @@ const Conditions: CollectionConfig = {
     plural: t('Conditions'),
   },
   admin: {
-    group: t('Film Prints'),
+    group: t('Configuration'),
     defaultColumns: ['name'],
     useAsTitle: 'name',
-    hidden: true,
   },
   access: {
     read: () => true,

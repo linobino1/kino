@@ -8,10 +8,9 @@ const Carriers: CollectionConfig = {
     plural: t('Carriers'),
   },
   admin: {
-    group: t('Film Prints'),
+    group: t('Configuration'),
     defaultColumns: ['type', 'name'],
     useAsTitle: 'name',
-    hidden: true,
   },
   access: {
     read: () => true,

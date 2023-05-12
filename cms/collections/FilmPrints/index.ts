@@ -13,7 +13,7 @@ export const FilmPrints: CollectionConfig = {
   },
   defaultSort: '-createdAt',
   admin: {
-    group: t('Film Prints'),
+    group: t('Movie Database'),
     defaultColumns: ['isRental', 'title'],
     useAsTitle: 'title',
   },
