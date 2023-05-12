@@ -111,7 +111,7 @@ export const MigrateMovie: React.FC = () => {
   });
   return (
     <div className="container">
-      <h2>{fixedT('Migrate Movie', locale)}</h2>
+      <h2>{fixedT('Migrate movie from themoviedb.org', locale)}</h2>
       { state === 'loading' && (
         <div ref={loading}>Loading...</div>
       )}
@@ -169,7 +169,7 @@ export const MigrateMovie: React.FC = () => {
               required={true}
               onChange={(e) => setTmdbId(e.target.value)}
               value={tmdbId}
-              placeholder="12345"
+              placeholder="266"
             />
             <input
               type="submit"
