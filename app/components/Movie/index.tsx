@@ -30,7 +30,7 @@ export const Movie: React.FC<Props> = ({
     filmprint ? (filmprint.format as Format).name : null,
     filmprint ? `${filmprint.duration}m` : null,
     filmprint ? (filmprint.languageVersion as LanguageVersion)?.name : null,
-    (filmprint && parseInt(filmprint.ageLimit || '') > 0) ? t('ageLimit', { age: filmprint.ageLimit}) : null
+    (filmprint && parseInt(filmprint.ageRating || '') > 0) ? t('ageRating', { age: filmprint.ageRating}) : null
   ].filter(Boolean);
 
   return (

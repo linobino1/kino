@@ -2,7 +2,7 @@ import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
 import { slugField } from '../../fields/slug';
 
-export const ageLimitAges = [0, 6, 12, 16, 18];
+export const ageRatingAges = [0, 6, 12, 16, 18];
 
 const Movies: CollectionConfig = {
   slug: 'movies',
@@ -101,11 +101,11 @@ const Movies: CollectionConfig = {
       required: true,
     },
     {
-      name: 'ageLimit',
-      label: t('Age Limit'),
+      name: 'ageRating',
+      label: t('Age Rating'),
       type: 'select',
-      options: ageLimitAges.map((x) => ({
-        label: t('AgeLimit{age}', { age: `${x}` }),
+      options: ageRatingAges.map((x) => ({
+        label: t('AgeRating{age}', { age: `${x}` }),
         value: `${x}`,
       })).concat({
         label: t('Not rated'),

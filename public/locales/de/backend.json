@@ -75,7 +75,7 @@
   "Playing Time": "Laufzeit",
   "Language Version": "Sprachfassung",
   "Language Versions": "Sprachfassungen",
-  "Age Limit": "Altersfreigabe",
+  "Age Rating": "Altersfreigabe",
   "Film Format": "Filmformat",
   "Film Formats": "Filmformate",
   "Carrier": "Träger",
@@ -104,6 +104,6 @@
   "Other Media": "Weitere Medien",
   "Other Medias": "Weitere Medien",
   "is default for this collection": "ist Standard für diese Sammlung",
-  "AgeLimit{age}": "ab {age} Jahren",
+  "AgeRating{age}": "ab {age} Jahren",
   "Not rated": "nicht zertifiziert"
 }

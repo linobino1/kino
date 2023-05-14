@@ -10,7 +10,7 @@ import type {
   tmdbMovie,
   tmdbReleaseDatesResponse,
 } from "./api";
-import { ageLimitAges } from "../../collections/Movies";
+import { ageRatingAges } from "../../collections/Movies";
 import type { Document } from "payload/types";
 import type { Config } from "payload/generated-types";
 import type { Company } from "payload/generated-types";
@@ -75,7 +75,7 @@ export const getTmdbCredits = async (tmdbId: number): Promise<tmdbCredits> => {
 };
 
 /**
- * get the movie release dates from themoviedb.org, used to get the age limit
+ * get the movie release dates from themoviedb.org, used to get the age rating
  * @param tmdbId id of the movie on themoviedb.org
  * @returns the API response
  */
@@ -206,7 +206,7 @@ export async function createOrFindItemByName(
  * @param tmdbId id of the movie on themoviedb.org
  * @returns string | undefined age certification of the latest release in germany
  */
-export async function getReleaseDates(tmdbId: number): Promise<Movie['ageLimit'] | undefined> {
+export async function getReleaseDates(tmdbId: number): Promise<Movie['ageRating'] | undefined> {
   const data = await getTmdbReleaseDates(tmdbId);
   if (!data.results) {
     return undefined;
@@ -219,9 +219,9 @@ export async function getReleaseDates(tmdbId: number): Promise<Movie['ageLimit']
   }
   const { release_dates } = germany;
   
-  // filter out age limits we do not use
+  // filter out age ratings we do not use
   release_dates.filter((release_date) => {
-    return ageLimitAges.map((x) => `${x}`).includes(release_date.certification);
+    return ageRatingAges.map((x) => `${x}`).includes(release_date.certification);
   });
 
   // find the latest release
@@ -231,5 +231,5 @@ export async function getReleaseDates(tmdbId: number): Promise<Movie['ageLimit']
     return dateB.getTime() - dateA.getTime();
   });
   
-  return release_dates[0]['certification'] as Movie['ageLimit'] || undefined;
+  return release_dates[0]['certification'] as Movie['ageRating'] || undefined;
 }
