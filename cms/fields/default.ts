@@ -26,8 +26,8 @@ export const defaultField = (collection: string): Field => ({
       async ({ req, value }) => {
         // unset previous default doc to false
         if (value) {
-          // @ts-ignore collection must be a valid collection and obviously has a 'default' field
           await req.payload.update({
+            // @ts-ignore collection must be a valid collection slug
             collection,
             where: {
               default: {
