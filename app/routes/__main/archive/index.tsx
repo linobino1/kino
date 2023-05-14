@@ -94,6 +94,9 @@ const getFilters = (payload: Payload, formData?: FormData): Filters => {
     filters: [
       {
         name: 'movie.isHfgProduction',
+        labelOff: 'HfG Production yes/no',
+        labelTrue: 'only HfG Production',
+        labelFalse: 'only non-HfG Production',
       },
       {
         name: 'movie.directors.name',

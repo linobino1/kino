@@ -6,12 +6,14 @@ export type FilterProps = {
   collection: string;
   payload: Payload;
   labelOff?: string;
+  labelTrue?: string;
+  labelFalse?: string;
   parent: Filters;
 }
 
 export type FilterOption = {
   value: string;
-  label?: string;
+  label?: string | Record<string, string>;
   count: number;
 }
 
@@ -37,6 +39,8 @@ export class Filter {
   }
   
   getWhereClause(value: any): Where {
+    if (value === 'true') value = true;
+    if (value === 'false') value = false;
     if (value === null) return {
       [this.props.name]: {},
     }
@@ -101,9 +105,10 @@ export class Filter {
         count: await this.getCount(null),
       },
       ...await Promise.all(values.map(async (value) => {
+        const label = value === true ? this.props.labelTrue : value === false ? this.props.labelFalse : `${value}`;
         return {
           value,
-          label: `${value}`,
+          label,
           count: await this.getCount(value),
         }
       })),
