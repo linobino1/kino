@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
 import { slugField } from '../../fields/slug';
+import { defaultField } from '../../fields/default';
 
 const ScreeningGroups: CollectionConfig = {
   slug: 'screeningGroups',
@@ -9,7 +10,7 @@ const ScreeningGroups: CollectionConfig = {
     plural: t('Groups'),
   },
   admin: {
-    group: t('Screenings'),
+    group: t('Configuration'),
     useAsTitle: 'name',
   },
   access: {
@@ -24,6 +25,7 @@ const ScreeningGroups: CollectionConfig = {
       required: true,
     },
     slugField('name'),
+    defaultField('screeningGroups'),
   ],
 };
 

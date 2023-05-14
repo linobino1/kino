@@ -28,6 +28,7 @@ const Screenings: CollectionConfig = {
       relationTo: 'screeningGroups',
       hasMany: false,
       required: true,
+      defaultValue: () => getDefaultDocId('screeningGroups'),
     },
     {
       name: 'location',
