@@ -4,11 +4,14 @@ import { t } from '../i18n';
 /**
  * a helper function to get the id of the default doc for a collection with a 'default' field
  * @param collection collection slug
- * @returns string | null the id of the default doc for the collection or null if none is set
+ * @returns string | undefined the id of the default doc for the collection or null if none is set
  */
-export const getDefaultDocId = async (collection: string): Promise<string> => {
-  const res = await fetch(`/api/${collection}/?where[default][equals]=true`).then((res) => res.json());
-  return res.docs.length ? res.docs[0].id : null;
+export const getDefaultDocId = async (collection: string): Promise<string | undefined> => {
+  try {
+    return (await fetch(`/api/${collection}/?where[default][equals]=true`).then((res) => res.json())).docs[0].id;
+  } catch (e) {
+    return undefined;
+  }
 }
 
 /**

@@ -34,7 +34,7 @@ const Screenings: CollectionConfig = {
       label: t('Location'),
       type: 'relationship',
       relationTo: 'locations',
-      defaultValue: getDefaultDocId('locations'),
+      defaultValue: () => getDefaultDocId('locations'),
     },
     {
       name: 'series',
