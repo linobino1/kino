@@ -61,17 +61,17 @@ export const Image: React.FC<Props> = ({
   // default loader is mediaUrl
   const _loader = loader || mediaUrl;
 
-  return (
+  return image ? (
     <img
-      src={_loader(image.filename as string)}
-      alt={alt || ('alt' in image ? image.alt : '')}
+      src={image.filename && _loader(image.filename)}
+      alt={alt || image.alt || ''}
       width={width}
       height={height}
       className={className}
       srcSet={getSrcSetString(_loader, image, srcSet)}
       sizes={getSizesString(sizes)}
     />
-  );
+  ) : null;
 }
 
 export default Image;
