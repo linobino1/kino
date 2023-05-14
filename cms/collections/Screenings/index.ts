@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload/types';
-import { t, fixedT } from '../../i18n';
+import { t } from '../../i18n';
 import { slugField } from '../../fields/slug';
+import { getDefaultDocId } from '../../fields/default';
 
 const Screenings: CollectionConfig = {
   slug: 'screenings',
@@ -33,6 +34,7 @@ const Screenings: CollectionConfig = {
       label: t('Location'),
       type: 'relationship',
       relationTo: 'locations',
+      defaultValue: getDefaultDocId('locations'),
     },
     {
       name: 'series',

@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
 import { slugField } from '../../fields/slug';
+import { defaultField } from '../../fields/default';
 
 const Locations: CollectionConfig = {
   slug: 'locations',
@@ -9,10 +10,9 @@ const Locations: CollectionConfig = {
     plural: t('Locations'),
   },
   admin: {
-    group: t('Screenings'),
+    group: t('Configuration'),
     useAsTitle: 'name',
     defaultColumns: ['name'],
-    hidden: true,
   },
   access: {
     read: () => true,
@@ -25,6 +25,7 @@ const Locations: CollectionConfig = {
       type: 'text',
     },
     slugField('name'),
+    defaultField('locations'),
   ],
 };
 
