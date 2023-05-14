@@ -77,7 +77,6 @@ export default buildConfig({
     Screenings,
     ScreeningGroups,
     ScreeningSeries,
-    Locations,
 
     // Blog
     Posts,
@@ -97,6 +96,7 @@ export default buildConfig({
     LanguageVersions,
     SoundFormats,
     Conditions,
+    Locations,
     
     // System
     Navigations,
