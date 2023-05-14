@@ -105,7 +105,7 @@ const Movies: CollectionConfig = {
       label: t('Age Rating'),
       type: 'select',
       options: ageRatingAges.map((x) => ({
-        label: t('AgeRating{age}', { age: `${x}` }),
+        label: t('ageRating {age}', { age: `${x}` }),
         value: `${x}`,
       })).concat({
         label: t('Not rated'),

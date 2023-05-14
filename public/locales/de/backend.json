@@ -104,6 +104,6 @@
   "Other Media": "Weitere Medien",
   "Other Medias": "Weitere Medien",
   "is default for this collection": "ist Standard für diese Sammlung",
-  "AgeRating{age}": "ab {age} Jahren",
+  "ageRating {age}": "ab {age} Jahren",
   "Not rated": "nicht zertifiziert"
 }
