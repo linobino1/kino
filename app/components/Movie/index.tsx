@@ -4,7 +4,6 @@ import type {
   Person,
   Poster as PosterType,
   FilmPrint,
-  Format,
   LanguageVersion,
 } from "payload/generated-types";
 import React from "react";
@@ -24,13 +23,12 @@ export const Movie: React.FC<Props> = ({
   const { t } = useTranslation();
   const specs = [
     movie.originalTitle,
-    (movie.countries as Country[]).map((x) => x.name).join(', '),
+    (movie.countries as Country[])?.map((x) => x.name).join(', '),
     movie.year,
-    (movie.directors as Person[]).map((x) => x.name).join(', '),
-    filmprint ? (filmprint.format as Format).name : null,
-    filmprint ? `${filmprint.duration}m` : null,
+    (movie.directors as Person[])?.map((x) => x.name).join(', '),
+    `${movie.duration}m`,
+    movie.ageRating ? t('ageRating {age}', { age: movie.ageRating}) : null,
     filmprint ? (filmprint.languageVersion as LanguageVersion)?.name : null,
-    (filmprint && parseInt(filmprint.ageRating || '') > 0) ? t('ageRating', { age: filmprint.ageRating}) : null
   ].filter(Boolean);
 
   return (
