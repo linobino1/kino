@@ -10,6 +10,7 @@ services:
         NODE_ENV: production
         PAYLOAD_PUBLIC_SERVER_URL: https://${DOMAIN}
         HCAPTCHA_SITE_KEY: ${HCAPTCHA_SITE_KEY}
+        THEMOVIEDB_API_KEY: ${THEMOVIEDB_API_KEY}
     expose:
       - 3000
     networks:
@@ -34,6 +35,8 @@ services:
 
       HCAPTCHA_SITE_KEY:
       HCAPTCHA_SECRET_KEY:
+
+      THEMOVIEDB_API_KEY:
     labels:
       - traefik.enable=true
       - traefik.http.routers.app.rule=Host(`${DOMAIN}`)
