@@ -6,7 +6,6 @@ import { FilmPrintsList } from "~/components/FilmPrintsList";
 import classes from "./index.module.css";
 import i18next from "~/i18next.server";
 import { useTranslation } from "react-i18next";
-import Button from "~/components/Button";
 import type { Payload } from "payload";
 import type { FilmPrint } from "payload/generated-types";
 import type { AppliedFilter} from "~/util/filter";
@@ -124,28 +123,24 @@ export default function Index() {
       <filterFetcher.Form
         ref={form}
         method="POST"
-        className={classes.search}
+        className={classes.form}
       >
-        <input
-          type="search"
-          name="query"
-          defaultValue={query}
-          placeholder={t('search...') || ''}
-        />
-        <Button
-          // type="submit"
-          onClick={() => form.current?.submit()}
-        >
-          {t('submit')}
-        </Button>
+        <div className={classes.search}>
+          <input
+            type="search"
+            name="query"
+            defaultValue={query}
+            placeholder={t('search...') || ''}
+          />
+          <button onClick={() => form.current?.submit()} />
+        </div>
         { filters.map((filter) => (
           <select
             key={filter.name}
             name={filter.name}
-            // onChange={(e) => filterFetcher.submit(e.target.form, { replace: true })}
+            className={classes.filter}
             onChange={() => form.current?.submit()}
-            // onChange={() => filterFetcher.submit(form.current, { replace: true })}
-            value={filter.value}
+            value={filter.value || ''}
           >
             { filter.options.map(option => (
               <option
