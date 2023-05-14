@@ -7,6 +7,7 @@ import type {
   Location,
   Poster as PosterType,
   Still as StillType,
+  ScreeningSery,
 } from "payload/generated-types";
 import { Movie } from "~/components/Movie";
 import classes from "./index.module.css";
@@ -99,7 +100,14 @@ export default function Item() {
                 format="p"
               />
               <br />
-              <div className={classes.location}>{(screening.location as Location).name}</div>
+              <div className={`${classes.location} ${classes.tag}`}>
+                {(screening.location as Location).name}
+              </div>
+              { screening.group && (
+                <div className={`${classes.series} ${classes.tag}`}>
+                  {(screening.series as ScreeningSery).name}
+                </div>
+              )}
               { supportingFilms.map((filmprint) => (
                 <div key={filmprint.id} className={classes.movieTitle}>
                   {(filmprint.movie as MovieType).title}

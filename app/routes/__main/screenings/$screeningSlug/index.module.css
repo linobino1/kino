@@ -63,14 +63,20 @@ img.headerImage {
   font-weight: var(--font-weight-light);
   line-height: var(--line-height-big);
 }
-.location {
+.tag {
   font-weight: var(--font-weight-bold);
-  background-color: var(--color-theme-contrast);
   display: inline-block;
-  color: var(--color-black);
   padding: 0 .2rem;
   border-radius: .6em;
   margin-block-start: .5rem;
+  margin-inline-end: .5rem;
+}
+.tag.location {
+  color: var(--color-black);
+  background-color: var(--color-theme-contrast);
+}
+.tag.series {
+  background-color: var(--color-theme-contrast-light-2);
 }
 .movieTitle {
   font-size: var(--font-size-x-big);
