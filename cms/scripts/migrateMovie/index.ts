@@ -161,7 +161,7 @@ export const migrateMovie = async (body: MigrateBody, payload: Payload): Promise
   ))).map((company: Company) => company.id);
   
   // get release date and age restriction
-  const ageLimit = await getReleaseDates(tmdbId);
+  const ageLimit = await getReleaseDates(tmdbId) || '';
   
   // create movie
   try {

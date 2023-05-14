@@ -204,9 +204,9 @@ export async function createOrFindItemByName(
 /**
  * 
  * @param tmdbId id of the movie on themoviedb.org
- * @returns age certification of the latest release in germany
+ * @returns string | undefined age certification of the latest release in germany
  */
-export async function getReleaseDates(tmdbId: number): Promise<Movie['ageLimit']> {
+export async function getReleaseDates(tmdbId: number): Promise<Movie['ageLimit'] | undefined> {
   const data = await getTmdbReleaseDates(tmdbId);
   if (!data.results) {
     return undefined;
@@ -231,5 +231,5 @@ export async function getReleaseDates(tmdbId: number): Promise<Movie['ageLimit']
     return dateB.getTime() - dateA.getTime();
   });
   
-  return release_dates[0]['certification'] as Movie['ageLimit'];
+  return release_dates[0]['certification'] as Movie['ageLimit'] || undefined;
 }

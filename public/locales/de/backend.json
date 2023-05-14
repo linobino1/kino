@@ -103,5 +103,7 @@
   "Production Companies": "Produktionsfirmen",
   "Other Media": "Weitere Medien",
   "Other Medias": "Weitere Medien",
-  "is default for this collection": "ist Standard für diese Sammlung"
+  "is default for this collection": "ist Standard für diese Sammlung",
+  "AgeLimit{age}": "ab {age} Jahren",
+  "Not rated": "nicht zertifiziert"
 }

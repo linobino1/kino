@@ -1,13 +1,8 @@
-import type { OptionObject } from 'payload/dist/fields/config/types';
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
 import { slugField } from '../../fields/slug';
 
 export const ageLimitAges = [0, 6, 12, 16, 18];
-const ageLimitOptions: OptionObject[] = ageLimitAges.map((x) => ({
-  label: `FSK${x}`,
-  value: `${x}`,
-}));
 
 const Movies: CollectionConfig = {
   slug: 'movies',
@@ -109,7 +104,13 @@ const Movies: CollectionConfig = {
       name: 'ageLimit',
       label: t('Age Limit'),
       type: 'select',
-      options: ageLimitOptions,
+      options: ageLimitAges.map((x) => ({
+        label: t('AgeLimit{age}', { age: `${x}` }),
+        value: `${x}`,
+      })).concat({
+        label: t('Not rated'),
+        value: '',
+      }),
       defaultValue: '0',
     },
     {
