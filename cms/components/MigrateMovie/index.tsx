@@ -3,7 +3,7 @@ import { useLocale } from 'payload/components/utilities';
 import { fixedT } from '../../i18n';
 import './styles.scss';
 import type { Movie } from "payload/generated-types";
-import type { tmdbPreview } from "cms/scripts/migrateMovie";
+import type { tmdbPreview } from "../../scripts/migrateMovie";
 
 export const MigrateMovie: React.FC = () => {
   const locale = useLocale();
