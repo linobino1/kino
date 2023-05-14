@@ -177,7 +177,6 @@ export async function createOrFindItemByName(
   }
   // try to create the item
   try {
-    console.log('CREATING ITEM', collection, name)
     return await payload.create({
       collection,
       data: {
