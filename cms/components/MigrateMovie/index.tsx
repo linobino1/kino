@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocale } from 'payload/components/utilities';
 import { fixedT } from '../../i18n';
-import './styles.scss';
+import classes from './index.module.css';
 import type { Movie } from "payload/generated-types";
 import type { tmdbPreview } from "../../scripts/migrateMovie";
 
@@ -110,7 +110,7 @@ export const MigrateMovie: React.FC = () => {
     success.current?.scrollIntoView({ behavior: 'smooth', block: "center" });
   });
   return (
-    <div className="container">
+    <div className={classes.container}>
       <h2>{fixedT('Migrate movie from themoviedb.org', locale)}</h2>
       { state === 'loading' && (
         <div ref={loading}>Loading...</div>
@@ -124,18 +124,18 @@ export const MigrateMovie: React.FC = () => {
         }} />)
       }
       { state === 'preview' && previewData && (
-        <form onSubmit={migrate} className="preview">
-          <div className="title">{previewData.original_title}</div>
+        <form onSubmit={migrate} className={classes.preview}>
+          <div className={classes.title}>{previewData.original_title}</div>
           { ['backdrop', 'poster'].map((type: string) => (
-            <div key={type} className="image-selector" data-type={type}>
+            <div key={type} className={classes.imageSelector} data-type={type}>
               <label htmlFor={type}>
                 {fixedT('Choose a {type}:', locale, {
                   type: fixedT(type, locale),
                 })}
               </label>
-              <div className="choices" onChange={onImageChoiceChange(type)}>
+              <div className={classes.choices} onChange={onImageChoiceChange(type)}>
                 { previewData.images[`${type}s` as keyof tmdbPreview['images']].map((image: any) => (
-                  <label key={image.file_path} className="choice">
+                  <label key={image.file_path} className={classes.choice}>
                     <input
                       type="radio"
                       name={type}
@@ -160,9 +160,9 @@ export const MigrateMovie: React.FC = () => {
         </form>
       )}
       { state === 'initial' && (
-        <form onSubmit={preview} className="initial">
+        <form onSubmit={preview} className={classes.initial}>
           <label htmlFor={path} dangerouslySetInnerHTML={{ __html: fixedT('AdminExplainTmdbId', locale)}} />
-          <div className="horizontal">
+          <div className={classes.horizontal}>
             <input
               type="text"
               name={path}
@@ -177,7 +177,7 @@ export const MigrateMovie: React.FC = () => {
             />
           </div>
           { error && (
-            <div className="error" dangerouslySetInnerHTML={{ __html: error }} />
+            <div className={classes.error} dangerouslySetInnerHTML={{ __html: error }} />
           )}
         </form>
       )}

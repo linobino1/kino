@@ -1,5 +1,3 @@
-@import '~payload/scss';
-
 .container {
   margin-block: 2rem;
 }
@@ -24,7 +22,7 @@
 .container input {
   box-shadow: 0 2px 3px 0 rgb(0 2 4 / 5%), 0 10px 4px -8px rgb(0 2 4 / 2%);
   font-family: var(--font-body);
-  // width: 100%;
+  /* // width: 100%; */
   border: 1px solid var(--theme-elevation-150);
   background: var(--theme-input-bg);
   color: var(--theme-elevation-800);
@@ -48,26 +46,26 @@
   margin-block-start: .5rem;
 }
 
-// image selector
-.image-selector .choices {
+/* // image selector */
+.imageSelector .choices {
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-block: 1rem;
   flex-wrap: wrap;
 }
-.image-selector .choice img {
+.imageSelector .choice img {
   border: 4px solid transparent;
 }
-.image-selector[data-type="backdrop"] .choice {
+.imageSelector[data-type="backdrop"] .choice {
   width: 20rem;
 }
-.image-selector[data-type="poster"] .choice {
+.imageSelector[data-type="poster"] .choice {
   width: 15rem;
 }
-.image-selector .choice input {
+.imageSelector .choice input {
   display: none;
 }
-.image-selector .choice input[type="radio"]:checked + img {
+.imageSelector .choice input[type="radio"]:checked + img {
   border-color: blue;
 }
