@@ -3,7 +3,7 @@
   "sideEffects": false,
   "scripts": {
     "build": "yarn generate:types && yarn build:remix && yarn build:copyfiles && yarn build:payload && yarn build:server",
-    "build:copyfiles": "copyfiles -u 1 \"cms/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png}\" dist/",
+    "build:copyfiles": "copyfiles -u 1 \"cms/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png}\" dist/cms/",
     "build:payload": "payload build",
     "build:remix": "remix build",
     "build:server": "tsc -p tsconfig.server.json",
