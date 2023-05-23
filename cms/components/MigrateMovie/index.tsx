@@ -181,6 +181,12 @@ export const MigrateMovie: React.FC = () => {
           )}
         </form>
       )}
+      <button
+        type="button"
+        data-button-type="cancel"
+        onClick={cancel}
+        className="reset"
+      >{fixedT('Reset', locale)}</button>
     </div>
   )
 };

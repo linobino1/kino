@@ -69,3 +69,20 @@
 .imageSelector .choice input[type="radio"]:checked + img {
   border-color: blue;
 }
+button.reset {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  background: none;
+  display: inline;
+  outline: none;
+  box-shadow: 0;
+  box-shadow: none;
+  font: inherit;
+  margin: 0;
+  padding: 0;;
+}
+button.reset:hover {
+  text-decoration: underline;
+}
