@@ -68,7 +68,6 @@ export default buildConfig({
     Movies,
     Persons,
     Companies,
-    Genres,
     Countries,
     
     // Film Prints
@@ -97,6 +96,7 @@ export default buildConfig({
     SoundFormats,
     Conditions,
     ScreeningGroups,
+    Genres,
     Locations,
     Rentals,
     
