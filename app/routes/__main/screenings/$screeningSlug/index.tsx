@@ -19,6 +19,7 @@ import Still from "~/components/Still";
 import Page from "~/components/Page";
 
 export const loader = async ({ params, request, context: { payload }}: LoaderArgs) => {
+  const locale = await i18next.getLocale(request);
   const data = await payload.find({
     collection: 'screenings',
     where: {
@@ -26,7 +27,7 @@ export const loader = async ({ params, request, context: { payload }}: LoaderArg
         equals: params.screeningSlug,
       },
     },
-    locale: await i18next.getLocale(request),
+    locale,
     depth: 11,
   });
   
@@ -46,6 +47,7 @@ export default function Item() {
   const mainMovie = (screening.featureFilms[0] as FilmPrint).movie as MovieType;
   const featureFilms = (screening.featureFilms as FilmPrint[]) ?? [];
   const supportingFilms = (screening.supportingFilms as FilmPrint[]) ?? [];
+  const allFilms = [...supportingFilms, ...featureFilms];
   const { t } = useTranslation();
 
 
@@ -73,7 +75,7 @@ export default function Item() {
         <div className={classes.imageHeaderOverlay}>
           <div className={classes.imageHeaderOverlayContent}>
             <div className={classes.posters}>
-              { (screening.featureFilms as FilmPrint[]).map((filmprint) => (
+              { allFilms.map((filmprint) => (
                 <div key={filmprint.id} className={classes.poster}>
                   <Poster
                     image={(filmprint.movie as MovieType).poster as PosterType}
@@ -108,12 +110,7 @@ export default function Item() {
                   {(screening.series as ScreeningSery)?.name}
                 </div>
               )}
-              { supportingFilms.map((filmprint) => (
-                <div key={filmprint.id} className={classes.movieTitle}>
-                  {(filmprint.movie as MovieType).title}
-                </div>
-              ))}
-              { featureFilms.map((filmprint) => (
+              { allFilms.map((filmprint) => (
                 <div key={filmprint.id} className={classes.movieTitle}>
                   {(filmprint.movie as MovieType).title}
                 </div>
@@ -124,7 +121,7 @@ export default function Item() {
       </div>
       <main>
         <div className={classes.movies}>
-          { (screening.featureFilms as FilmPrint[]).map((filmprint) => (
+          { allFilms.map((filmprint) => (
             <div key={filmprint.id}>
               <Movie
                 movie={filmprint.movie as MovieType}
