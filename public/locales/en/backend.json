@@ -6,5 +6,6 @@
   "MovieExists": "<a href=\"/admin/collections/movies/{id}\">{title}</a> has already been created",
   "Successfully created movie {title} {id}": "Successfully created <a href=\"/admin/collections/movies/{id}\">{title}</a>",
   "Migrate movie from themoviedb.org": "Create new movie",
-  "Screening Series singular": "Screening Series"
+  "Screening Series singular": "Screening Series",
+  "adminWarningTimezone": "Caution: if your timezone differs from the timezone of the cinema, you need to adjust the screening times accordingly."
 }

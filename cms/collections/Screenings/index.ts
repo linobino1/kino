@@ -69,26 +69,14 @@ const Screenings: CollectionConfig = {
     slugField('title'),
     {
       name: 'date',
-      label: t('Date'),
+      label: t('Date & Time'),
       type: 'date',
       required: true,
       admin: {
         date: {
-          pickerAppearance: 'dayOnly',
-          displayFormat: 'dd.MM.yyyy',
+          pickerAppearance: 'dayAndTime',
         },
-      },
-    },
-    {
-      name: 'time',
-      label: t('Time'),
-      type: 'date',
-      required: true,
-      admin: {
-        date: {
-          pickerAppearance: 'timeOnly',
-          displayFormat: 'HH:mm',
-        },
+        description: t('adminWarningTimezone'),
       },
     },
     {

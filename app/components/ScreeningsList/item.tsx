@@ -59,7 +59,7 @@ export const ScreeningsListItem: React.FC<Props> = ({ screening }) => {
       </div>
       <div className={classes.info}>
         <Date
-          iso={screening.time as string}
+          iso={screening.date as string}
           className={classes.time}
           format="p"
         />

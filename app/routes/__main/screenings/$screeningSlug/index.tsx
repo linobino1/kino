@@ -96,7 +96,7 @@ export default function Item() {
               <br />
               <Date
                 className={classes.time}
-                iso={screening.time as string}
+                iso={screening.date as string}
                 format="p"
               />
               <br />

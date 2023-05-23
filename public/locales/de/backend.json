@@ -16,6 +16,7 @@
   "Content": "Inhalt",
   "Date": "Datum",
   "Time": "Zeit",
+  "Date & Time": "Datum & Uhrzeit",
   "Navigation": "Menü",
   "Navigations": "Menüs",
   "Subnavigation": "Untermenü",
@@ -108,5 +109,6 @@
   "Not rated": "nicht zertifiziert",
   "Reset": "Zurücksetzen",
   "Rental": "Verleih",
-  "Rentals": "Verleihe"
+  "Rentals": "Verleihe",
+  "adminWarningTimezone": "Achtung: wenn du dich in einer anderen Zeitzone als das Kino befindest, musst du den Unterschied ausgleichen."
 }
