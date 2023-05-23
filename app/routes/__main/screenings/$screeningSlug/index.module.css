@@ -78,6 +78,10 @@ img.headerImage {
 .tag.series {
   background-color: var(--color-theme-contrast-light-2);
 }
+a.tag:visited {
+  text-decoration: none;
+  color: unset;
+}
 .movieTitle {
   font-size: var(--font-size-x-big);
   font-weight: var(--font-weight-bold);

@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
 import { slugField } from '../../fields/slug';
+import pageLayout from '../../fields/pageLayout';
 
 const ScreeningSeries: CollectionConfig = {
   slug: 'screeningSeries',
@@ -24,6 +25,7 @@ const ScreeningSeries: CollectionConfig = {
       localized: true,
       required: true,
     },
+    pageLayout(),
     slugField('name'),
   ],
 };

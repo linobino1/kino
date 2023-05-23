@@ -105,10 +105,13 @@ export default function Item() {
               <div className={`${classes.location} ${classes.tag}`}>
                 {(screening.location as Location).name}
               </div>
-              { screening.group && (
-                <div className={`${classes.series} ${classes.tag}`}>
+              { screening.series && (
+                <a
+                  href={`/screening-series/${(screening.series as ScreeningSery).slug}`}
+                  className={`${classes.series} ${classes.tag}`}
+                >
                   {(screening.series as ScreeningSery)?.name}
-                </div>
+                </a>
               )}
               { allFilms.map((filmprint) => (
                 <div key={filmprint.id} className={classes.movieTitle}>
