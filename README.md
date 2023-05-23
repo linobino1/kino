@@ -4,6 +4,13 @@ Powered by [Remix](https://remix.run) and [PayloadCMS](https://payloadcms.com).
 
 ## Development
 
+install the dependencies and generate the types:
+```sh
+yarn
+yarn generate:types
+```
+
+Start the app in the dev environment:
 ```sh
 yarn dev
 ```
