@@ -95,7 +95,6 @@ export function useChangeLanguage(locale: string) {
 
 export function ErrorBoundary() {
   let error = useRouteError();
-  console.log("ROOT error boundary", error)
 
   if (isRouteErrorResponse(error)) {
     return (
