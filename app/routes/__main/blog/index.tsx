@@ -3,13 +3,17 @@ import { useLoaderData } from "@remix-run/react";
 import { PostsList } from "~/components/PostsList";
 import { Page } from "~/components/Page";
 import classes from "./index.module.css";
+import i18next from "~/i18next.server";
 
-export const loader = async ({ context: { payload }}: LoaderArgs) => {
+export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
+  const locale = await i18next.getLocale(request);
   const page = await payload.findGlobal({
     slug: 'blog',
+    locale,
   });
   const posts = await payload.find({
     collection: 'posts',
+    locale,
   });
   
   return {
