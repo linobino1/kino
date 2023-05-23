@@ -126,6 +126,15 @@ export const Navigations: CollectionConfig = {
             condition: (data, siblingData) => siblingData.type === 'subnavigation',
           },
         },
+        {
+          name: 'newTab',
+          label: t('Open in new tab'),
+          type: 'checkbox',
+          defaultValue: false,
+          admin: {
+            condition: (data, siblingData) => siblingData.type !== 'language',
+          },
+        },
       ],
     },
   ],

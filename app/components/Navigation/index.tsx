@@ -22,7 +22,7 @@ export const Navigation: React.FC<Props> = ({ navigation, className }) => {
       data-type={navigation.type}
     >
       {navigation?.items?.map(({
-        id, icon, subnavigation, page, url, name, type, relPath,
+        id, icon, subnavigation, page, url, name, type, relPath, newTab,
       }) => {
         if (type === 'language') {
           return <LanguageSwitch key={id} className={classes.navItem} />;
@@ -56,6 +56,7 @@ export const Navigation: React.FC<Props> = ({ navigation, className }) => {
               <Link
                 to={href}
                 className={`${classes.navItem} ${isActive && classes.active}`}
+                target={newTab ? '_blank' : undefined}
               >
                 {inner}
               </Link>
