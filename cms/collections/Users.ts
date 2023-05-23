@@ -31,7 +31,7 @@ const Users: CollectionConfig = {
       name: 'role',
       label: t('Role'),
       type: 'select',
-      defaultValue: 'insider',
+      defaultValue: 'subscriber',
       options: [
         {
           label: t('Admin'),
@@ -42,8 +42,8 @@ const Users: CollectionConfig = {
           value: 'editor',
         },
         {
-          label: t('Insider'),
-          value: 'insider',
+          label: t('Subscriber'),
+          value: 'subscriber',
         },
       ],
     },
