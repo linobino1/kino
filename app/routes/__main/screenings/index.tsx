@@ -36,6 +36,7 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
         },
       ],
     },
+    sort: 'date',
   });
   
   return {
@@ -50,9 +51,7 @@ export default function Index() {
 
   return (
     <Page layout={page.layout}>
-      <div className={classes.postsWrapper}>
-        <ScreeningsList items={screenings} className={classes.screeningsList} />
-      </div>
+      <ScreeningsList items={screenings} className={classes.screeningsList} />
     </Page>
   );
 }
