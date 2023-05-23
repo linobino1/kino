@@ -19,7 +19,7 @@ export const slugField = (field: string): Field => ({
   hooks: {
     beforeValidate: [
       ({ value, originalDoc, data }) => {
-        if (typeof value === 'string') {
+        if (typeof value === 'string' && value.length > 0) {
           return slugFormat(value);
         }
         const fieldData = (originalDoc && originalDoc[field]) || (data && data[field]);
