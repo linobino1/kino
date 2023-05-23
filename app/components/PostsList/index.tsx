@@ -21,7 +21,7 @@ export const PostsList: React.FC<Props> = ({ posts }) => {
       ))}
     </div>
   ) : (
-    <div className={classes.noPosts}>{t('No posts.')}</div>
+    <div className={classes.empty}>{t('No posts.')}</div>
   );
 };
 
