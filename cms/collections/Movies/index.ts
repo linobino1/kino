@@ -12,11 +12,8 @@ const Movies: CollectionConfig = {
   },
   admin: {
     group: t('Movie Database'),
-    defaultColumns: ['originalTitle', 'directors', 'publicationDate'],
+    defaultColumns: ['originalTitle', 'directors', 'year', '_status'],
     useAsTitle: 'originalTitle',
-    components: {
-      
-    }
   },
   access: {
     read: () => true,
