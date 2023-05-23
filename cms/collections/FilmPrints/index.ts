@@ -1,9 +1,8 @@
-import payload from 'payload';
 import type { CollectionConfig } from 'payload/types';
+import type { Movie, Format } from 'payload/generated-types';
 import { t } from '../../i18n';
 import { slugField, slugFormat } from '../../fields/slug';
 import analogDigitalTypeField from './fields';
-import options from '../../../app/i18n';
 
 export const FilmPrints: CollectionConfig = {
   slug: 'filmPrints',
@@ -14,7 +13,7 @@ export const FilmPrints: CollectionConfig = {
   defaultSort: '-createdAt',
   admin: {
     group: t('Movie Database'),
-    defaultColumns: ['isRented', 'title'],
+    defaultColumns: ['title', 'isRented', '_status'],
     useAsTitle: 'title',
   },
   versions: {
@@ -28,25 +27,36 @@ export const FilmPrints: CollectionConfig = {
     beforeValidate: [
       // set title and slug from movie.title and movie.format
       async ({ data, req }) => {
+        if (!req) return data;  // this hook is only used server-side
         if (!data?.movie || !data?.format) return data;
-        const locale = req?.locale || options.fallbackLng;
+        
+        if (!data.title) {
+          // create title from movie & format
+          const movie = (await req.payload.find({
+            collection: 'movies',
+            where: {
+              _id: {
+                equals: data.movie,
+              },
+            },
+          })).docs[0] as Movie;
+          const format = (await req.payload.find({
+            collection: 'formats',
+            where: {
+              _id: {
+                equals: data.format,
+              },
+            },
+          })).docs[0] as Format;
+          const title = `${movie.originalTitle} ${format.name}`;
+          data.title = title;
+        }
+        
+        // create slug from title
+        if (!data.slug) {
+          data.slug = slugFormat(data.title);
+        }
 
-        // create title from movie & format
-        const movie = await payload.findByID({
-          collection: 'movies',
-          id: data.movie,
-          locale,
-          fallbackLocale: options.fallbackLng,
-        });
-        const format = await payload.findByID({
-          collection: 'formats',
-          id: data.format,
-          locale,
-          fallbackLocale: options.fallbackLng,
-        });
-        const title = `${movie.originalTitle} ${format.name}`;
-        data.title = title;
-        data.slug = slugFormat(title);
         return data;
       },
     ],
@@ -56,7 +66,6 @@ export const FilmPrints: CollectionConfig = {
       name: 'title',
       label: t('Title'),
       type: 'text',
-      localized: true,
       unique: true,
       admin: {
         position: 'sidebar',

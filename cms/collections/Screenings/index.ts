@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
 import { slugField } from '../../fields/slug';
 import { getDefaultDocId } from '../../fields/default';
+import type { Movie } from 'payload/generated-types';
 
 const Screenings: CollectionConfig = {
   slug: 'screenings',
@@ -20,13 +21,39 @@ const Screenings: CollectionConfig = {
   access: {
     read: () => true,
   },
+  hooks: {
+    afterRead: [
+      // compute title
+      async ({ doc, req }) => {
+        if (!doc || doc.title || !doc.featureFilms) return doc;
+        console.log('afterRead input', req.locale, doc)
+        // fetch the first feature films title
+        const title = ((await req.payload.find({
+          collection: 'filmPrints',
+          where: {
+            _id: {
+              equals: doc.featureFilms[0],
+            },
+          },
+          locale: req.locale,
+          depth: 2,
+        })).docs[0].movie as Movie).title;
+        // update doc with title in this locale
+        doc.title = title;
+        console.log('afterRead output', doc)
+        return doc;
+      },
+    ],
+  },
   fields: [
     {
       name: 'title',
       label: t('Title'),
       type: 'text',
       localized: true,
-      required: true,
+      admin: {
+        description: t('Leave blank to use the title of the first feature film'),
+      },
     },
     {
       name: 'group',

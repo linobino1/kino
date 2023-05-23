@@ -22,7 +22,7 @@ export const slugField = (field: string): Field => ({
         if (typeof value === 'string') {
           return slugFormat(value);
         }
-        const fieldData = (data && data[field]) || (originalDoc && originalDoc[field]);
+        const fieldData = (originalDoc && originalDoc[field]) || (data && data[field]);
 
         if (fieldData && typeof fieldData === 'string') {
           return slugFormat(fieldData);
