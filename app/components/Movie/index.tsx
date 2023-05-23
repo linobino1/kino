@@ -57,16 +57,15 @@ export const Movie: React.FC<Props> = ({
         </div>
         <div className={classes.synopsis}>{movie.synopsis}</div>
         { (filmprint?.rental as Rental) && (
-          <p>
-            {t('rentalCredits', { rental: (filmprint?.rental as Rental)?.name })}
+          <>
+            <br />
+            <span>{t('rentalCredits', { rental: (filmprint?.rental as Rental)?.name })}</span>
             { (filmprint?.rental as Rental)?.logo && (
               <div className={classes.rentalLogo}>
-                <Image
-                  image={((filmprint?.rental as Rental)?.logo as Media)}
-                />
+                <Image image={((filmprint?.rental as Rental)?.logo as Media)} />
               </div>
             )}
-          </p>
+          </>
         )}
       </div>
     </div>
