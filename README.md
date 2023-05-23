@@ -43,6 +43,7 @@ To seed the database, run the following command in the docker container of the a
 
 ```sh
 yarn seed
+# in development use yarn seed:dev
 ```
 
 It will exexute the script `cms/seed/index.ts` which does:
