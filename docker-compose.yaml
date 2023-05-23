@@ -12,6 +12,7 @@ services:
       - ./:/app
       - /app/node_modules
     environment:
+      NODE_ENV: development
       PAYLOAD_SECRET: secret123
       MONGODB_URI: mongodb://db:27017/app
       PAYLOAD_PUBLIC_SERVER_URL: http://localhost:3000
