@@ -5,6 +5,7 @@ declare global {
     HCAPTCHA_SITE_KEY: string
     HCAPTCHA_SECRET_KEY: string
     THEMOVIEDB_API_KEY: string
+    TIMEZONE: string
   }
   interface Window {
     ENV: AppEnvironment
