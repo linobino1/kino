@@ -11,6 +11,15 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
     slug: 'screeningsPage',
     locale,
   });
+  const group = (await payload.find({
+    collection: 'screeningGroups',
+    locale,
+    where: {
+      default: {
+        equals: true,
+      },
+    },
+  })).docs[0];
   const screenings = await payload.find({
     collection: 'screenings',
     locale,
@@ -19,6 +28,13 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
       _status: {
         equals: 'published',
       },
+      and: [
+        {
+          'group': {
+            equals: group.id,
+          },
+        },
+      ],
     },
   });
   

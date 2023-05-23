@@ -7,5 +7,6 @@
   "Successfully created movie {title} {id}": "Successfully created <a href=\"/admin/collections/movies/{id}\">{title}</a>",
   "Migrate movie from themoviedb.org": "Create new movie",
   "Screening Series singular": "Screening Series",
-  "adminWarningTimezone": "Caution: if your timezone differs from the timezone of the cinema, you need to adjust the screening times accordingly."
+  "adminWarningTimezone": "Caution: if your timezone differs from the timezone of the cinema, you need to adjust the screening times accordingly.",
+  "adminExplainScreeningsPage": "The screenings page lists all screenings of the default screenings group. To change the default screenings group, go to \"Configuration\" > \"Groups\"."
 }
