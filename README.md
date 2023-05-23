@@ -59,6 +59,9 @@ from local dev to production, then see `docker-compose.dev.yaml`)
 docker exec -i <container> /usr/bin/mongodump --uri mongodb://db:27017/app --out /dump
 
 # navigate to the dump folder, it should be a docker volume defined in the docker-compose file you are using
+# if jenkins started the docker container, the dump folder should be in the jenkins workspace,
+# e.g. /var/jenkins_home/workspace/<project_name>/dump
+# you can find the path to the dump dir by running `docker inspect <container>` and looking for the volumes
 cd path/to/dump
 
 # zip the dump folder (it will be named like the database you are using)
@@ -147,7 +150,7 @@ ssh myserver
 unzip media.zip
 
 # move all files from the media folder to the media folder of the docker volume
-# check above example to see how the path to the media folder is defined
+# check above example to see where the media folder is located if you are using jenkins
 sudo mv media/* /var/jenkins_home/workspace/<project-name>/media/
 ```
 
