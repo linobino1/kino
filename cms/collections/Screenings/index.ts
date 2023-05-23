@@ -21,30 +21,6 @@ const Screenings: CollectionConfig = {
   access: {
     read: () => true,
   },
-  hooks: {
-    afterRead: [
-      // compute title
-      async ({ doc, req }) => {
-        if (!doc || doc.title || !doc.featureFilms) return doc;
-        console.log('afterRead input', req.locale, doc)
-        // fetch the first feature films title
-        const title = ((await req.payload.find({
-          collection: 'filmPrints',
-          where: {
-            _id: {
-              equals: doc.featureFilms[0],
-            },
-          },
-          locale: req.locale,
-          depth: 2,
-        })).docs[0].movie as Movie).title;
-        // update doc with title in this locale
-        doc.title = title;
-        console.log('afterRead output', doc)
-        return doc;
-      },
-    ],
-  },
   fields: [
     {
       name: 'title',
@@ -53,6 +29,26 @@ const Screenings: CollectionConfig = {
       localized: true,
       admin: {
         description: t('Leave blank to use the title of the first feature film'),
+      },
+      hooks: {
+        afterRead: [
+          // compute title
+          async ({ value, data, req }) => {
+            if (value || !data?.featureFilms?.length) return value;
+            // fetch the first feature films title
+            const title = ((await req.payload.find({
+              collection: 'filmPrints',
+              where: {
+                _id: {
+                  equals: data.featureFilms[0],
+                },
+              },
+              locale: req.locale,
+              depth: 2,
+            })).docs[0].movie as Movie).title;
+            return title;
+          },
+        ],
       },
     },
     {
@@ -93,7 +89,7 @@ const Screenings: CollectionConfig = {
       relationTo: 'filmPrints',
       hasMany: true,
     },
-    slugField('title'),
+    slugField('date'),
     {
       name: 'date',
       label: t('Date & Time'),
