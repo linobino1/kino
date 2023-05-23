@@ -105,7 +105,7 @@ export default function Item() {
               </div>
               { screening.group && (
                 <div className={`${classes.series} ${classes.tag}`}>
-                  {(screening.series as ScreeningSery).name}
+                  {(screening.series as ScreeningSery)?.name}
                 </div>
               )}
               { supportingFilms.map((filmprint) => (
