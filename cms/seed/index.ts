@@ -2,53 +2,46 @@ import express from "express";
 import payload from "payload";
 import invariant from "tiny-invariant";
 import { options } from "../../app/i18n";
+import countries from "i18n-iso-countries";
 
-const restCountries = 'https://restcountries.com/v2/all?fields=alpha2Code,translations,name';
 const locales = options.supportedLngs;
+const fallbackLocale = options.fallbackLng;
 
 export async function seedCountries() {
-  let countries = [];
-  try {
-    const res = await fetch(restCountries)
-    countries = await res.json();
-  } catch (err) {
-    payload.logger.fatal(`Could not fetch countries from ${restCountries}`);
-    return;
-  }
-  
-  for (const country of countries) {
-    const alpha2 = (country.alpha2Code as string).toLowerCase();
-    payload.logger.info(`adding ${alpha2}: ${country.name}`);
+  for (const alpha2 of Object.keys(countries.getAlpha2Codes())) {
+    payload.logger.info(`adding ${alpha2}`);
     
-    // create item if not already exists
+    // create item in fallback language if not already exists
+    const name = countries.getName(alpha2, fallbackLocale);
     try {
       await payload.create({
         collection: 'countries',
         data: {
           id: alpha2,
-          name: country.name, // name returned by restcountries.com is english
+          name,
         },
-        locale: 'en',
+        locale: fallbackLocale,
       });
-      payload.logger.info(`added ${alpha2} ${country.name}`);
+      payload.logger.info(`added ${alpha2} ${name}`);
     } catch (err) {
-      payload.logger.info(`skipping ${alpha2}: ${country.name} because it already exists`);
+      payload.logger.info(`skipping ${alpha2}: ${name} because it already exists`);
     }
 
-    // add translations for languages other than 'en'
+    // add translations for other languages
     for (const locale of locales) {
-      if (locale === 'en') continue;
+      if (locale === fallbackLocale) continue;
 
+      const name = countries.getName(alpha2, locale);
       await payload.update({
         collection: 'countries',
         id: alpha2,
         data: {
-          name: country.translations[locale],
+          name,
         },
         locale,
       });
 
-      payload.logger.info(`added ${locale} name for ${alpha2}: ${country.translations[locale]}`);
+      payload.logger.info(`added ${locale} name for ${alpha2}: ${name}`);
     };
   };
 }

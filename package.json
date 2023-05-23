@@ -31,6 +31,7 @@
     "email-validator": "^2.0.4",
     "express": "^4.18.2",
     "html-escaper": "^3.0.3",
+    "i18n-iso-countries": "^7.6.0",
     "i18next": "^22.4.10",
     "i18next-browser-languagedetector": "^7.0.1",
     "i18next-fs-backend": "^2.1.1",
