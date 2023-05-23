@@ -14,6 +14,7 @@ const Users: CollectionConfig = {
     defaultColumns: ['name'],
   },
   access: {
+    admin: ({ req: { user }, id }) => user?.id === id || ['admin', 'editor'].includes(user?.role),
     read: ({ req: { user }, id }) => user?.id === id || ['admin', 'editor'].includes(user?.role),
     update: ({ req: { user } }) => ['admin', 'editor'].includes(user?.role),
     create: ({ req: { user } }) => ['admin', 'editor'].includes(user?.role),
