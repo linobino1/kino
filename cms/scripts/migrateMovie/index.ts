@@ -172,7 +172,7 @@ export const migrateMovie = async (body: MigrateBody, payload: Payload): Promise
         title: data.title,
         synopsis: data.overview,
         year: parseInt(data.release_date?.split('-')[0]),
-        countries: data.production_countries.map((country: any) => country.iso_3166_1.toLowerCase()),
+        countries: data.production_countries.map((country: any) => country.iso_3166_1.toUpperCase()),
         slug: slugFormat(data.original_title),
         tmdbId: data.id,
         isHfgProduction: false,
