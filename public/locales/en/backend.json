@@ -5,5 +5,6 @@
   "AdminExplainTmdbId": "Find the movie on <a href=\"https://www.themoviedb.org/\" target=\"_blank\">TMDB</a> and copy the ID from the URL. Example: https://www.themoviedb.org/movie/<strong>266</strong>-le-mepris",
   "MovieExists": "<a href=\"/admin/collections/movies/{id}\">{title}</a> has already been created",
   "Successfully created movie {title} {id}": "Successfully created <a href=\"/admin/collections/movies/{id}\">{title}</a>",
-  "Migrate movie from themoviedb.org": "Create new movie"
+  "Migrate movie from themoviedb.org": "Create new movie",
+  "Screening Series singular": "Screening Series"
 }

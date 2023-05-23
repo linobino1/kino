@@ -5,8 +5,8 @@ import { slugField } from '../../fields/slug';
 const ScreeningSeries: CollectionConfig = {
   slug: 'screeningSeries',
   labels: {
-    singular: t('Screening Series'),
-    plural: t('Screening Series plural'),
+    singular: t('Screening Series singular'),
+    plural: t('Screening Series'),
   },
   admin: {
     group: t('Screenings'),
