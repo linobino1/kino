@@ -29,6 +29,7 @@ import Conditions from './cms/collections/FilmPrints/Conditions';
 import Formats from './cms/collections/FilmPrints/Formats';
 import LanguageVersions from './cms/collections/FilmPrints/LanguageVersions';
 import SoundFormats from './cms/collections/FilmPrints/SoundFormats';
+import Rentals from './cms/collections/FilmPrints/Rentals';
 import ScreeningsPage from './cms/globals/pages/ScreeningsPage';
 import MigrateMovie from './cms/components/MigrateMovie';
 
@@ -97,6 +98,7 @@ export default buildConfig({
     Conditions,
     ScreeningGroups,
     Locations,
+    Rentals,
     
     // System
     Navigations,

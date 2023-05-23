@@ -106,5 +106,7 @@
   "is default for this collection": "ist Standard für diese Sammlung",
   "ageRating {age}": "ab {age} Jahren",
   "Not rated": "nicht zertifiziert",
-  "Reset": "Zurücksetzen"
+  "Reset": "Zurücksetzen",
+  "Rental": "Verleih",
+  "Rentals": "Verleihe"
 }

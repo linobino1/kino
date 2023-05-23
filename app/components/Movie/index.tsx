@@ -5,11 +5,14 @@ import type {
   Poster as PosterType,
   FilmPrint,
   LanguageVersion,
+  Rental,
+  Media,
 } from "payload/generated-types";
 import React from "react";
 import classes from './index.module.css';
 import { Poster } from "~/components/Poster";
 import { useTranslation } from "react-i18next";
+import Image from "../Image";
 
 export type Props = {
   movie: MovieType
@@ -53,6 +56,18 @@ export const Movie: React.FC<Props> = ({
           ))}
         </div>
         <div className={classes.synopsis}>{movie.synopsis}</div>
+        { (filmprint?.rental as Rental) && (
+          <p>
+            {t('rentalCredits', { rental: (filmprint?.rental as Rental)?.name })}
+            { (filmprint?.rental as Rental)?.logo && (
+              <div className={classes.rentalLogo}>
+                <Image
+                  image={((filmprint?.rental as Rental)?.logo as Media)}
+                />
+              </div>
+            )}
+          </p>
+        )}
       </div>
     </div>
 

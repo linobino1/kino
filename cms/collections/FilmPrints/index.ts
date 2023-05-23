@@ -14,7 +14,7 @@ export const FilmPrints: CollectionConfig = {
   defaultSort: '-createdAt',
   admin: {
     group: t('Movie Database'),
-    defaultColumns: ['isRental', 'title'],
+    defaultColumns: ['isRented', 'title'],
     useAsTitle: 'title',
   },
   versions: {
@@ -59,7 +59,7 @@ export const FilmPrints: CollectionConfig = {
       localized: true,
       unique: true,
       admin: {
-        readOnly: true,
+        position: 'sidebar',
       },
     },
     slugField('title'),
@@ -72,10 +72,20 @@ export const FilmPrints: CollectionConfig = {
       hasMany: false,
     },
     {
-      name: 'isRental',
+      name: 'isRented',
       label: t('Is rental'),
       type: 'checkbox',
       defaultValue: false,
+    },
+    {
+      name: 'rental',
+      label: t('Rental'),
+      type: 'relationship',
+      relationTo: 'rentals',
+      hasMany: false,
+      admin: {
+        condition: (data) => data?.isRented,
+      },
     },
     {
       name: 'languageVersion',
@@ -139,9 +149,8 @@ export const FilmPrints: CollectionConfig = {
           type: 'relationship',
           relationTo: 'conditions',
           admin: {
-            condition: (data) => data?.type === 'analog',
+            condition: (data) => data?.type === 'analog' && !data?.isRented,
           },
-          required: true,
         },
       ],
     },

@@ -36,3 +36,16 @@
 .movieSpecsItem:not(:last-child)::after {
   content: ' | ';
 }
+
+/* Rental Credits ****************************************************************************************************/
+.rentalLogo {
+  max-width: 10em;
+  max-height: 7em;
+  margin-block: .5em;
+}
+.rentalLogo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
