@@ -22,6 +22,13 @@ const Screenings: CollectionConfig = {
   },
   fields: [
     {
+      name: 'title',
+      label: t('Title'),
+      type: 'text',
+      localized: true,
+      required: true,
+    },
+    {
       name: 'group',
       label: t('Group'),
       type: 'relationship',
@@ -58,13 +65,6 @@ const Screenings: CollectionConfig = {
       type: 'relationship',
       relationTo: 'filmPrints',
       hasMany: true,
-    },
-    {
-      name: 'title',
-      label: t('Title'),
-      type: 'text',
-      localized: true,
-      required: true,
     },
     slugField('title'),
     {
