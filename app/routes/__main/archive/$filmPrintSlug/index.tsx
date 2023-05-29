@@ -5,16 +5,14 @@ import type {
   Movie as MovieType,
   ScreeningGroup,
   Location,
-  Poster as PosterType,
-  Still as StillType,
+  Media,
 } from "payload/generated-types";
 import { Movie } from "~/components/Movie";
 import classes from "./index.module.css";
 import { Date } from "~/components/Date";
 import i18next from "~/i18next.server";
 import { useTranslation } from "react-i18next";
-import Poster from "~/components/Poster";
-import Still from "~/components/Still";
+import Image from "~/components/Image";
 
 export const loader = async ({ params, request, context: { payload }}: LoaderArgs) => {
   const data = await payload.find({
@@ -54,33 +52,35 @@ export default function Item() {
         <span className={classes.subtitle}>{screening.title}</span>
       </h1>
       <div className={classes.imageHeader}>
-        <Still
+        <Image
           className={classes.headerImage}
-          image={mainMovie.still as StillType}
+          image={mainMovie.still as Media}
           srcSet={[
-            { size: 'landscape-2560w', width: 2560 },
-            { size: 'landscape-1920w', width: 1920 },
-            { size: 'landscape-1280w', width: 1280 },
-            { size: 'square-768w', width: 768 },
-            { size: 'square-512w', width: 512 },
+            { size: '2560x1706', width: 2560 },
+            { size: '1920x1280', width: 1920 },
+            { size: '1280x853', width: 1280 },
+            { size: '768x768', width: 768 },
+            { size: '512x512', width: 512 },
           ]}
           sizes={[
             '95vw',
           ]}
+          alt={t('movie still') as string}
         />
         <div className={classes.imageHeaderOverlay}>
           <div className={classes.imageHeaderOverlayContent}>
             <div className={classes.posters}>
               { (screening.featureFilms as FilmPrint[]).map((filmprint) => (
                 <div key={filmprint.id} className={classes.poster}>
-                  <Poster
-                    image={(filmprint.movie as MovieType).poster as PosterType}
+                  <Image
+                    image={(filmprint.movie as MovieType).poster as Media}
                     srcSet={[
-                      { size: '260w', width: 260 },
+                      { size: '260x390', width: 260 },
                     ]}
                     sizes={[
                       '260px',
                     ]}
+                    alt={t('movie poster') as string}
                   />
                 </div>
               ))}

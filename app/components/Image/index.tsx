@@ -31,8 +31,8 @@ export type Props = {
 /**
  * get srcSet string from srcSet array
  * @param image Media
- * @param srcSet [{ size: 'landscape-2560w', width: 2560 }, { size: 'landscape-1920w', width: 1920 }]
- * @returns "https://example.com/landscape-2560w.jpg 2560w, https://example.com/landscape-1920w.jpg 1920w"
+ * @param srcSet [{ size: '2560x1706', width: 2560 }, { size: '1920x1280', width: 1920 }]
+ * @returns "https://example.com/2560x1706.jpg 2560w, https://example.com/1920x1280.jpg 1920w"
  */
 export const getSrcSetString = (loader: ImageLoader, image: ImageType, srcSet?: SrcSet): string => {
   return (srcSet || []).map((item) => {

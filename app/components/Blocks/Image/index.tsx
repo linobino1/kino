@@ -13,10 +13,10 @@ export const Image: React.FC<Type> = ({ image }) => {
     <ImageComponent
       image={image as Media}
       srcSet={[
-        { size: 'landscape-2560w', width: 2560 },
-        { size: 'landscape-1280w', width: 1024 },
-        { size: 'square-768w', width: 768 },
-        { size: 'square-512w', width: 512 },
+        { size: '2560x1706', width: 2560 },
+        { size: '1280x853', width: 1024 },
+        { size: '768x768', width: 768 },
+        { size: '512x512', width: 512 },
       ]}
       sizes={[
         '95vw',

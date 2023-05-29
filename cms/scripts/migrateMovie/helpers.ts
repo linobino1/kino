@@ -4,7 +4,7 @@ import type { Genre, Person } from "payload/generated-types";
 import type { Payload } from "payload";
 import { themoviedb } from "./api";
 import { tmdbMediaUrl } from "./config";
-import type { Movie, Poster, Still } from "payload/generated-types";
+import type { Movie, Media } from "payload/generated-types";
 import type {
   tmdbCredits,
   tmdbMovie,
@@ -131,11 +131,9 @@ export const downloadTmdbImage = async (tmdbFilepath: string, target: string, si
  * @param payload Payload instance
  * @returns Image instance
  */
-export async function updateOrCreateImage(tmdbFilepath: string, collection: 'posters', filePath: string, payload: Payload): Promise<Poster>;
-export async function updateOrCreateImage(tmdbFilepath: string, collection: 'stills', filePath: string, payload: Payload): Promise<Still>;
-export async function updateOrCreateImage(tmdbFilepath: string, collection: 'stills' | 'posters', filePath: string, payload: Payload): Promise<Poster | Still> {
-  let image: Poster | Still = (await payload.find({
-    collection: collection,
+export async function updateOrCreateImage(tmdbFilepath: string, filePath: string, payload: Payload): Promise<Media> {
+  let image: Media = (await payload.find({
+    collection: 'media',
     where: {
       tmdbFilepath: {
         equals: tmdbFilepath,
@@ -144,14 +142,14 @@ export async function updateOrCreateImage(tmdbFilepath: string, collection: 'sti
   })).docs[0];
   if (image) {
     return await payload.update({
-      collection: collection,
+      collection: 'media',
       id: image.id,
       filePath,
       data: {},
     });
   }
   return await payload.create({
-    collection: collection,
+    collection: 'media',
     filePath,
     data: {
       tmdbFilepath,

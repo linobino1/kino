@@ -15,11 +15,11 @@ export const PageHeader: React.FC<Type> = ({ image }) => (
           className={classes.headerImage}
           image={image as Media}
           srcSet={[
-            { size: 'landscape-2560w', width: 2560 },
-            { size: 'landscape-1920w', width: 1920 },
-            { size: 'landscape-1280w', width: 1280 },
-            { size: 'square-768w', width: 768 },
-            { size: 'square-512w', width: 512 },
+            { size: '2560x1706', width: 2560 },
+            { size: '1920x1280', width: 1920 },
+            { size: '1280x853', width: 1280 },
+            { size: '768x768', width: 768 },
+            { size: '512x512', width: 512 },
           ]}
           sizes={[
             '95vw',

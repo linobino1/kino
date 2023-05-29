@@ -2,7 +2,6 @@ import type {
   Movie as MovieType,
   Country,
   Person,
-  Poster as PosterType,
   FilmPrint,
   LanguageVersion,
   Rental,
@@ -10,9 +9,8 @@ import type {
 } from "payload/generated-types";
 import React from "react";
 import classes from './index.module.css';
-import { Poster } from "~/components/Poster";
 import { useTranslation } from "react-i18next";
-import Image from "../Image";
+import Image from "~/components/Image";
 
 export type Props = {
   movie: MovieType
@@ -37,15 +35,16 @@ export const Movie: React.FC<Props> = ({
   return (
     <div className={`${classes.movie} ${className}`}>
       <div className={classes.poster}>
-        <Poster
-          image={movie.poster as PosterType}
+        <Image
+          image={movie.poster as Media}
           srcSet={[
-            { size: '120w', width: 768 },
-            { size: '260w', width: 512 },
+            { size: '120x180', width: 768 },
+            { size: '260x390', width: 512 },
           ]}
           sizes={[
             '95vw',
           ]}
+          alt={t('movie poster') as string}
         />
       </div>
       <div className={classes.movieInfo}>

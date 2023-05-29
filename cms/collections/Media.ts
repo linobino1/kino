@@ -2,14 +2,11 @@ import type { CollectionConfig } from 'payload/types';
 import { t } from '../i18n';
 import path from 'path';
 
-export const staticDir = path.resolve(__dirname, '../../media');
-export const staticURL = '/media';
-
 export const Media: CollectionConfig = {
   slug: 'media',
   labels: {
-    singular: t('other Media'),
-    plural: t('Other Media'),
+    singular: t('Media singular'),
+    plural: t('Media'),
   },
   admin: {
     group: t('Media'),
@@ -19,70 +16,55 @@ export const Media: CollectionConfig = {
   },
   upload: {
     adminThumbnail: 'card',
-    staticDir,
-    staticURL,
+    staticDir: path.resolve(__dirname, '../../media'),
+    staticURL: '/media',
     imageSizes: [
-      // Square
+      // Film Poster
       {
-        name: 'square-360w',
-        width: 360,
-        height: 360,
+        name: '120x180',
+        width: 120,
+        height: 180,
       },
       {
-        name: 'square-512w',
+        name: '260x390',
+        width: 260,
+        height: 390,
+      },
+      // Film Still
+      {
+        name: '320x160',
+        width: 320,
+        height: 160,
+      },
+      {
+        name: '768x384',
+        width: 768,
+        height: 384,
+      },
+      // Square
+      {
+        name: '512x512',
         width: 512,
         height: 512,
       },
       {
-        name: 'square-768w',
+        name: '768x768',
         width: 768,
         height: 768,
-      },
-
-      // Portrait
-      {
-        name: 'portrait-360w',
-        width: 360,
-        height: 540,
-      },
-      {
-        name: 'portrait-512w',
-        width: 512,
-        height: 768,
-      },
-      {
-        name: 'portrait-768w',
-        width: 768,
-        height: 1152,
       },
       // Landscape
       {
-        name: 'landscape-360w',
-        width: 360,
-        height: 240,
-      },
-      {
-        name: 'landscape-512w',
-        width: 512,
-        height: 340,
-      },
-      {
-        name: 'landscape-768w',
-        width: 768,
-        height: 512,
-      },
-      {
-        name: 'landscape-1280w',
+        name: '1280x853',
         width: 1280,
         height: 853,
       },
       {
-        name: 'landscape-1920w',
+        name: '1920x1280',
         width: 1920,
         height: 1280,
       },
       {
-        name: 'landscape-2560w',
+        name: '2560x1706',
         width: 2560,
         height: 1706,
       },
@@ -111,6 +93,32 @@ export const Media: CollectionConfig = {
         ],
       },
     },
+    {
+      name: 'tmdbFilepath',
+      type: 'text',
+      label: t('TMDB Filepath'),
+      required: false,
+      admin: {
+        readOnly: true,
+      },
+      // make sure the media is not being migrated twice from themoviedb.org
+      validate: async (value, { t, payload }) => {
+        if (value === null) return true;
+        
+        // on server we need the base url, on client we don't
+        const baseUrl = payload ? payload.config.serverURL : '';
+        try {
+          const res = await fetch(`${baseUrl}/api/media?where[tmdbFilepath][equals]=${value}`);
+          const data = await res.json();
+          if (data.totalDocs > 0) {
+            return t('Media already exists');
+          }
+        } catch (err) {
+          return t(`Unable to check if media has already been imported (${err})`);
+        }
+        return true;
+      },
+    }
   ],
 };
 

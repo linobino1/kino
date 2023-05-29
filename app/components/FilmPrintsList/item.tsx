@@ -2,12 +2,12 @@ import React from 'react';
 import type {
   Country,
   FilmPrint,
+  Media,
   Movie,
-  Still as StillType,
   Person,
 } from 'payload/generated-types';
 import { useTranslation } from 'react-i18next';
-import { Still } from '~/components/Still';
+import { Image } from '~/components/Image';
 import classes from './index.module.css';
 
 type Props = {
@@ -25,16 +25,17 @@ export const FilmPrintsListItem: React.FC<Props> = ({
       className={classes.item}
     >
       <div className={classes.imgWrapper}>
-        <Still
-          image={movie.still as StillType}
+        <Image
+          image={movie.still as Media}
           srcSet={[
-            { size: '320w', width: 380 },
-            { size: '768w', width: 768 },
+            { size: '320x160', width: 380 },
+            { size: '768x384', width: 768 },
           ]}
           sizes={[
             '380px',
             '750px',
           ]}
+          alt={t('movie still') as string}
         />
         <div className={classes.overlay}>
           <div className={classes.title}>

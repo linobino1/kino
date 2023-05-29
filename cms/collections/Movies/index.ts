@@ -63,7 +63,7 @@ const Movies: CollectionConfig = {
       name: 'still',
       label: t('Film Still'),
       type: 'upload',
-      relationTo: 'stills',
+      relationTo: 'media',
       required: true,
       admin: {
         description: t('AdminExplainFilmStill'),
@@ -73,7 +73,7 @@ const Movies: CollectionConfig = {
       name: 'poster',
       label: t('Poster'),
       type: 'upload',
-      relationTo: 'posters',
+      relationTo: 'media',
       required: true,
       admin: {
         description: t('AdminExplainPoster'),

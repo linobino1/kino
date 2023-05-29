@@ -5,7 +5,7 @@ import { themoviedb } from "./api";
 import { slugFormat } from "../../fields/slug";
 import { fixedT } from "../../i18n";
 import type { Payload } from "payload";
-import type { Movie, Poster, Still, Person, Company } from "payload/generated-types";
+import type { Movie, Media, Person, Company } from "payload/generated-types";
 import type {
   tmdbPerson,
   tmdbImages,
@@ -122,10 +122,10 @@ export const migrateMovie = async (body: MigrateBody, payload: Payload): Promise
   ]);
 
   // find or create poster and still media
-  let poster: Poster, still: Still;
+  let poster: Media, still: Media;
   try {
-    poster = await updateOrCreateImage(body.images.poster, 'posters', filePoster, payload);
-    still = await updateOrCreateImage(body.images.backdrop, 'stills', fileBackdrop, payload);
+    poster = await updateOrCreateImage(body.images.poster, filePoster, payload);
+    still = await updateOrCreateImage(body.images.backdrop, fileBackdrop, payload);
   } catch (err) {
     throw new Error('Unable to create poster or still');
   }

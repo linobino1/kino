@@ -16,8 +16,6 @@ import Companies from './cms/collections/Movies/Companies';
 import Genres from './cms/collections/Movies/Genres';
 import Movies from './cms/collections/Movies';
 import Countries from './cms/collections/Movies/Countries';
-import Stills from './cms/collections/Movies/Stills';
-import Posters from './cms/collections/Movies/Posters';
 import Screenings from './cms/collections/Screenings';
 import ScreeningGroups from './cms/collections/Screenings/ScreeningGroups';
 import ScreeningSeries from './cms/collections/Screenings/ScreeningSeries';
@@ -81,8 +79,6 @@ export default buildConfig({
     Posts,
 
     // Media
-    Posters,
-    Stills,
     Media,
 
     // Pages

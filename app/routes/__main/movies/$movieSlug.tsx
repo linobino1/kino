@@ -3,9 +3,9 @@ import type { LoaderArgs} from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import i18next from "~/i18next.server";
 import Movie from "~/components/Movie";
-import Still from "~/components/Still";
-import type { Still as StillType } from "payload/generated-types";
+import Image from '~/components/Image';
 import classes from "./index.module.css";
+import type { Media } from "payload/generated-types";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => ({
   title: data.movie.title,
@@ -36,7 +36,7 @@ export default function MovieDetail() {
 
   return (
     <>
-      <Still image={movie.still as StillType} />
+      <Image image={movie.still as Media} />
       <Movie movie={movie} className={classes.movie} />
     </>
   );
