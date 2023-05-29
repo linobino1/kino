@@ -80,21 +80,16 @@ export const FilmPrints: CollectionConfig = {
       required: true,
       hasMany: false,
     },
+    analogDigitalTypeField('type'),
     {
-      name: 'isRented',
-      label: t('Is rental'),
-      type: 'checkbox',
-      defaultValue: false,
-    },
-    {
-      name: 'rental',
-      label: t('Rental'),
+      name: 'format',
+      label: t('Film Format'),
       type: 'relationship',
-      relationTo: 'rentals',
-      hasMany: false,
-      admin: {
-        condition: (data) => data?.isRented,
-      },
+      relationTo: 'formats',
+      required: true,
+      filterOptions: ({ data }) => (
+        { type: { equals: data?.type } }
+      ),
     },
     {
       name: 'languageVersion',
@@ -104,62 +99,81 @@ export const FilmPrints: CollectionConfig = {
       hasMany: false,
       required: true,
     },
-    analogDigitalTypeField('type'),
     {
-      type: 'collapsible',
-      label: t('Format'),
-      fields: [
+      name: 'isRented',
+      label: t('Is rental'),
+      type: 'checkbox',
+      defaultValue: false,
+    },
+    {
+      type: 'tabs',
+      tabs: [
         {
-          name: 'format',
-          label: t('Film Format'),
-          type: 'relationship',
-          relationTo: 'formats',
-          required: true,
-          filterOptions: ({ data }) => (
-            { type: { equals: data?.type } }
-          ),
-        },
-        {
-          name: 'carrier',
-          label: t('Carrier'),
-          type: 'relationship',
-          relationTo: 'carriers',
-          admin: {
-            condition: (data) => data?.type === 'analog',
-          },
-          required: true,
-        },
-        {
-          name: 'numActs',
-          label: t('Number of Acts'),
-          type: 'number',
-          admin: {
-            condition: (data) => data?.type === 'analog',
-          },
-          required: true,
-        },
-        {
-          name: 'aspectRatio',
-          label: t('Aspect Ratio'),
-          type: 'relationship',
-          relationTo: 'aspectRatios',
-          required: true,
-        },
-        {
-          name: 'soundFormat',
-          label: t('Sound Format'),
-          type: 'relationship',
-          relationTo: 'soundFormats',
-          required: true,
-        },
-        {
-          name: 'condition',
-          label: t('Condition'),
-          type: 'relationship',
-          relationTo: 'conditions',
-          admin: {
-            condition: (data) => data?.type === 'analog' && !data?.isRented,
-          },
+          label: t('Details'),
+          // admin: {
+          //   condition: (data) => !data?.isRented,
+          // },
+          fields: [
+            {
+              name: 'rental',
+              label: t('Rental'),
+              type: 'relationship',
+              relationTo: 'rentals',
+              hasMany: false,
+              required: true,
+              admin: {
+                condition: (data) => data?.isRented,
+              },
+            },
+            {
+              name: 'carrier',
+              label: t('Carrier'),
+              type: 'relationship',
+              relationTo: 'carriers',
+              admin: {
+                condition: (data) => data?.type === 'analog' && !data?.isRented,
+              },
+              required: true,
+            },
+            {
+              name: 'numActs',
+              label: t('Number of Acts'),
+              type: 'number',
+              admin: {
+                condition: (data) => data?.type === 'analog' && !data?.isRented,
+              },
+              required: true,
+            },
+            {
+              name: 'aspectRatio',
+              label: t('Aspect Ratio'),
+              type: 'relationship',
+              relationTo: 'aspectRatios',
+              admin: {
+                condition: (data) => !data?.isRented,
+              },
+              required: true,
+            },
+            {
+              name: 'soundFormat',
+              label: t('Sound Format'),
+              type: 'relationship',
+              relationTo: 'soundFormats',
+              admin: {
+                condition: (data) => !data?.isRented,
+              },
+              required: true,
+            },
+            {
+              name: 'condition',
+              label: t('Condition'),
+              type: 'relationship',
+              relationTo: 'conditions',
+              admin: {
+                condition: (data) => data?.type === 'analog' && !data?.isRented,
+              },
+            },
+          ],
         },
       ],
     },
