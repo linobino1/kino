@@ -55,7 +55,6 @@ export const Media: CollectionConfig = {
         width: 768,
         height: 1152,
       },
-
       // Landscape
       {
         name: 'landscape-360w',
@@ -94,7 +93,23 @@ export const Media: CollectionConfig = {
       name: 'alt',
       label: 'Alt Text',
       type: 'text',
-      required: true,
+      admin: {
+        description: t('Leave empty to use the filename as alt text'),
+      },
+      hooks: {
+        beforeValidate: [
+          // use filename as alt text if alt text is empty
+          ({ value, data }) => {
+            if (typeof value === 'string' && value.length > 0) {
+              return value;
+            }
+            if (typeof data?.filename === 'string') {
+              return data.filename.split('.')[0];
+            }
+            return value;
+          },
+        ],
+      },
     },
   ],
 };
