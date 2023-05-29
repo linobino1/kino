@@ -15,7 +15,8 @@
     "generate:types": "cross-env payload generate:types",
     "generate:images": "cross-env ts-node ./cms/scripts/mediaRegenerate",
     "seed": "cross-env PAYLOAD_CONFIG_PATH=dist/payload.config.js ts-node --require dotenv/config ./cms/seed/index.ts",
-    "seed:dev": "ts-node --require dotenv/config ./cms/seed/index.ts"
+    "seed:dev": "ts-node --require dotenv/config ./cms/seed/index.ts",
+    "import:media": "cross-env ts-node ./cms/scripts/mediaImport"
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^1.8.1",
