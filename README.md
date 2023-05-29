@@ -157,6 +157,17 @@ sudo mv media/* /var/jenkins_home/workspace/<project-name>/media/
 
 Rebuild the project.
 
+#### Regenerate Image Sizes
+
+If you need to generate the image sizes again, you can do that with the following command:
+
+```sh
+yarn generate:images
+```
+
+Make sure you have an `.env` file with `PAYLOAD_SECRET` and `MONGODB_URI` defined.  
+If you are using docker, just call the command inside the apps docker container.
+
 ## Deployment
 
 
