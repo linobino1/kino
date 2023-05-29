@@ -33,6 +33,10 @@ export const Navigations: CollectionConfig = {
           label: 'Social Media',
           value: 'socialMedia',
         },
+        {
+          label: 'Subnavigation',
+          value: 'subnavigation',
+        },
       ],
       required: true,
     },
@@ -43,7 +47,7 @@ export const Navigations: CollectionConfig = {
       minRows: 1,
       admin: {
         components: {
-          RowLabel: ({ data }: { data: any}): string => data.name,
+          RowLabel: ({ data }: { data: any}): string => data.name || data.type,
         },
       },
       fields: [

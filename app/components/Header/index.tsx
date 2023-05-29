@@ -52,8 +52,9 @@ const Header: React.FC<Props> = ({
         <Modal>
           <div className={classes.mobileMenu}>
             <Navigation
-              navigation={navigations.find((x) => x.type === 'mobile')}
+              navigation={navigations.find((x) => x.type === 'main')}
               className={classes.navMobile}
+              dataType="mobile"
             />
           </div>
         </Modal>

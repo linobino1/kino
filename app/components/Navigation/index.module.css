@@ -31,3 +31,41 @@
   height: 1.4rem;
   width: auto;
 }
+
+/** SUBNAVIGATION    ***************************************/
+.subnavHost {
+  position: relative;
+  cursor: pointer;
+}
+.subnav {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  right: 0;
+  background: var(--color-white);
+  z-index: 1;
+  width: max-content;
+  max-width: 30em;
+}
+.subnavHost:hover {
+  color: inherit;
+}
+.subnavHost:hover .subnav {
+  display: flex;
+}
+
+/** MOBILE NAVIGATION    ***********************************/
+.nav[data-type="mobile"] .subnavHost {
+  display: contents;
+}
+.nav[data-type="mobile"] .subnavHost > .navItem {
+  color: var(--color-light-grey);
+}
+.nav[data-type="mobile"] .subnavHost > .navItem::after {
+  content: "▼";
+  font-size: .8rem;
+  margin-left: .5rem;
+}
+.nav[data-type="mobile"] .subnav {
+  display: contents;
+}
