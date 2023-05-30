@@ -21,23 +21,20 @@
   transform: translate(0px, -2%);
 }
 /* IMAGE ****************************************************************/
-.imgWrapper {
-  position: relative;
+.image {
+  aspect-ratio: 16/9;
   width: 100%;
-  height: 300px;
-  overflow: hidden;
-}
-.imgWrapper img {
   object-fit: cover;
-  width: 100%;
+  grid-column: 1;
+  grid-row: 1;
 }
 /* OVERLAY  *************************************************************/
 .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
   padding: 1rem;
   color: var(--color-white);
+  grid-column: 1;
+  grid-row: 1;
+  z-index: 1;
 }
 .title {
   font-size: var(--font-size-xx-big);
@@ -50,9 +47,9 @@
 }
 /* INFO     *************************************************************/
 .info {
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto min-content;
   row-gap: 1rem;
   padding: 1rem;
   font-size: var(--font-size-small);
@@ -63,14 +60,41 @@
   font-size: var(--font-size-x-small);
   font-weight: var(--font-weight-semi-bold);
   color: var(--color-light-grey-readable);
+  justify-self: end;
 }
 .moreInfo::after {
   content: ' >';
+}
+.synopsis {
+  position: relative;
+  overflow: hidden;
+}
+.synopsis::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 5rem;
+  background: linear-gradient(transparent, var(--color-white));
 }
 /* MOBILE   *************************************************************/
 @media screen and (max-width: 1000px) {
   .item {
     grid-template-columns: 1fr 1fr;
+  }
+  .info {
+    aspect-ratio: 16/9;
+  }
+}
+@media screen and (min-width: 1000px) and (max-width: 1150px) {
+  .synopsis {
+    height: 26vw;
+  }
+}
+@media screen and (min-width: 1151px) {
+  .synopsis {
+    height: 20em;
   }
 }
 @media screen and (max-width: 768px) {

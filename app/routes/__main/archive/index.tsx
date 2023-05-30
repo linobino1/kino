@@ -58,7 +58,7 @@ export const action: ActionFunction = async ({ request, context: { payload }}) =
 
 const getFilters = (payload: Payload, formData?: FormData): Filters => {
   const query = formData && formData.get('query');
-  const globalCause: Where | undefined = query ? {
+  const queryClause: Where | undefined = query ? {
     or: [
       {
         'movie.originalTitle': {
@@ -87,6 +87,16 @@ const getFilters = (payload: Payload, formData?: FormData): Filters => {
       },
     ],
   } : undefined;
+  const globalCause: Where | undefined = {
+    and: [
+      {
+        isRented: {
+          equals: false,
+        },
+      },
+      queryClause || {},
+    ],
+  };
   const filters = new Filters({
     collection: 'filmPrints',
     payload,

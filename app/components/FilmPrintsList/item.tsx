@@ -21,39 +21,36 @@ export const FilmPrintsListItem: React.FC<Props> = ({
   const movie = item.movie as Movie;
 
   return (
-    <div
-      className={classes.item}
-    >
-      <div className={classes.imgWrapper}>
-        <Image
-          image={movie.still as Media}
-          srcSet={[
-            { size: '320x160', width: 380 },
-            { size: '768x384', width: 768 },
-          ]}
-          sizes={[
-            '380px',
-            '750px',
-          ]}
-          alt={t('movie still') as string}
-        />
-        <div className={classes.overlay}>
-          <div className={classes.title}>
-            {movie.title}
-          </div>
-          <div className={classes.subtitle}>
-            <b>
-              {(movie.directors as Person[] || []).map((x) => x.name).join(', ')}
-            </b>
-            {' '}
-            {(movie.countries as Country[] || []).map((x) => x.name).join(', ')}
-            {', '}
-            {movie.year}
-          </div>
+    <div className={classes.item}>
+      <Image
+        className={classes.image}
+        image={movie.still as Media}
+        srcSet={[
+          { size: '320x160', width: 380 },
+          { size: '768x384', width: 768 },
+        ]}
+        sizes={[
+          '380px',
+          '750px',
+        ]}
+        alt={t('movie still') as string}
+      />
+      <div className={classes.overlay}>
+        <div className={classes.title}>
+          {movie.title}
+        </div>
+        <div className={classes.subtitle}>
+          <b>
+            {(movie.directors as Person[] || []).map((x) => x.name).join(', ')}
+          </b>
+          {' '}
+          {(movie.countries as Country[] || []).map((x) => x.name).join(', ')}
+          {', '}
+          {movie.year}
         </div>
       </div>
       <div className={classes.info}>
-        { movie.synopsis }
+        <div className={classes.synopsis}>{movie.synopsis}</div>
         <div className={classes.moreInfo}>
           {t('More Info')}
         </div>

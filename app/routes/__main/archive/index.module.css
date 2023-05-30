@@ -1,12 +1,11 @@
 /* HEADER ************************************************************ */
 .form {
   display: grid;
-  max-width: 30rem;
-  margin: 0 auto;
+  max-width: min(30rem, 100%);
+  margin: 3vw auto;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
   gap: 1rem;
-  margin-block: 1rem;
 }
 /* SEARCH ************************************************************ */
 .search {
@@ -18,7 +17,6 @@
   padding-left: 8px;
   height: 40px;
   border-radius: 50px;
-  text-align: center;
   text-transform: uppercase;
   font-size: 20px;
 }
@@ -74,4 +72,13 @@
 /* LIST    *********************************************************** */
 .screeningsList {
   margin: 3vw;
+}
+/* MOBILE  *********************************************************** */
+@media screen and (max-width: 768px) {
+  .form {
+    grid-template-columns: 1fr;
+  }
+  .search {
+    grid-column: 1 / span 1;
+  }
 }
