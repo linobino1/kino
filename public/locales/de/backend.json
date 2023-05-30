@@ -112,5 +112,7 @@
   "Rentals": "Verleihe",
   "adminWarningTimezone": "Achtung: wenn du dich in einer anderen Zeitzone als das Kino befindest, musst du den Unterschied ausgleichen.",
   "adminExplainScreeningsPage": "Die Seite \"Vorstellungen\" listet alle Vorstellungen aus der Standard-Vorstellungsgruppe. Um diese zu ändern, gehe zu \"Konfiguration\" > \"Gruppen\".",
-  "Subscriber": "Abonnent"
+  "Subscriber": "Abonnent",
+  "Gallery": "Galerie",
+  "Galleries": "Galerien"
 }

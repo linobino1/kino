@@ -1,0 +1,10 @@
+.container {
+  width: 100%;
+  max-width: min(70vw, 1100px);
+  margin: 0 auto;
+}
+.image {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: contain;
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import { Content } from './Content';
 import { Image } from './Image';
 import { HeaderImage } from './HeaderImage';
-
+import Gallery from './Gallery';
 import type { PageLayout } from 'cms/fields/pageLayout';
 
 type Props = {
@@ -27,6 +27,9 @@ const Blocks: React.FC<Props> = ({
               
             case 'headerImage':
               return <HeaderImage {...block} />;
+              
+            case 'gallery':
+              return <Gallery images={block.images} />;
               
             case 'outlet':
               return (
