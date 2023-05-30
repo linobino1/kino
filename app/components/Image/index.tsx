@@ -1,11 +1,11 @@
-import type { Media, Poster, Still } from "payload/generated-types"
+import type { Media } from "payload/generated-types"
 import React from "react"
 import { mediaUrl } from "~/util/mediaUrl"
 
 /**
  * can be used for Poster, Still, and Media. Alt is optional.
  */
-export interface ImageType extends Omit<Media & Poster & Still, 'alt'> {
+export interface ImageType extends Omit<Media, 'alt'> {
   alt?: string
 }
 
