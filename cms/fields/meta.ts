@@ -7,6 +7,12 @@ export const metaField = (label: Record<string, string>): Field => ({
   type: 'group',
   fields: [
     {
+      name: 'title',
+      label: t('Title'),
+      localized: true,
+      type: 'text',
+    },
+    {
       name: 'description',
       label: t('Description'),
       localized: true,

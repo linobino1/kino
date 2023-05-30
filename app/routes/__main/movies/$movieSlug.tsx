@@ -6,10 +6,7 @@ import Movie from "~/components/Movie";
 import Image from '~/components/Image';
 import classes from "./index.module.css";
 import type { Media } from "payload/generated-types";
-
-export const meta: MetaFunction<typeof loader> = ({ data }) => ({
-  title: data.movie.title,
-})
+import { pageTitle } from "~/util/pageMeta";
 
 export const loader = async ({ request, params, context: { payload }}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
@@ -29,6 +26,11 @@ export const loader = async ({ request, params, context: { payload }}: LoaderArg
     movie: res.docs[0],
   }
 };
+
+export const meta: MetaFunction<typeof loader> = ({ data, parentsData }) => ({
+  title: pageTitle(parentsData.root?.site?.meta?.title, data.movie?.title),
+  description: data.movie?.synopsis,
+});
 
 export default function MovieDetail() {
   const { movie } = useLoaderData<typeof loader>();

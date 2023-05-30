@@ -10,13 +10,6 @@ export const Site: GlobalConfig = {
   label: t('Site Configuration'),
   fields: [
     {
-      name: 'title',
-      label: t('Title'),
-      type: 'text',
-      localized: true,
-      required: true,
-    },
-    {
       name: 'logo',
       label: t('Logo'),
       type: 'upload',

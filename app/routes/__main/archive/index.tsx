@@ -1,3 +1,4 @@
+import type { MetaFunction } from "@remix-run/node";
 import type { ActionFunction, LoaderArgs} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useActionData, useFetcher, useLoaderData } from "@remix-run/react";
@@ -12,6 +13,7 @@ import type { AppliedFilter} from "~/util/filter";
 import { Filters } from "~/util/filter";
 import { useRef } from "react";
 import type { Where } from "payload/types";
+import { pageDescription, pageKeywords, pageTitle } from "~/util/pageMeta";
 
 export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
@@ -35,6 +37,12 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
     items: filmPrints.docs || [],
   }
 };
+
+export const meta: MetaFunction<typeof loader> = ({ data, parentsData }) => ({
+  title: pageTitle(parentsData.root?.site?.meta?.title, data.page?.meta?.title),
+  description: pageDescription(parentsData.root?.site?.meta?.description, data.page?.meta?.description),
+  keywords: pageKeywords(parentsData.root?.site?.meta?.keywords, data.page?.meta?.keywords),
+});
 
 export const action: ActionFunction = async ({ request, context: { payload }}) => {
   const locale = await i18next.getLocale(request);

@@ -10,7 +10,7 @@ import {
 import { Response } from '@remix-run/node';
 import classes from './index.module.css';
 import Page from '~/components/Page';
-
+import { pageDescription, pageKeywords, pageTitle } from "~/util/pageMeta";
 
 export const loader = async ({ request, params, context: { payload }}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
@@ -31,12 +31,10 @@ export const loader = async ({ request, params, context: { payload }}: LoaderArg
   }
 }
 
-export const meta: MetaFunction = ({ data, parentsData }) => ( data && {
-  charset: "utf-8",
-  title: data.page?.title || parentsData.root?.site?.title,
-  description: data.page?.meta?.description || parentsData?.root?.site?.meta?.description,
-  keywords: `${data.page?.meta?.keywords || ''} ${parentsData?.root?.site?.meta?.keywords || ''}`.trim(),
-  viewport: "width=device-width,initial-scale=1",
+export const meta: MetaFunction<typeof loader> = ({ data, parentsData }) => ({
+  title: pageTitle(parentsData.root?.site?.meta?.title, data.page?.meta?.title),
+  description: pageDescription(parentsData.root?.site?.meta?.description, data.page?.meta?.description),
+  keywords: pageKeywords(parentsData.root?.site?.meta?.keywords, data.page?.meta?.keywords),
 });
 
 export const StaticPage: React.FC = () => {
