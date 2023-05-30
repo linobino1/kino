@@ -15,7 +15,7 @@ export default function LanguageSwitch({ className }: Props) {
   const { i18n } = useTranslation();
 
   return (
-    <div className={`${classes.container} ${className}`}>
+    <div className={className}>
       {(Object.keys(languages) as Array<keyof typeof languages>).map((lng) => {
         const query = new URLSearchParams();
         query.set('lng', lng);
