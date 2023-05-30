@@ -39,7 +39,7 @@ export const meta: MetaFunction = ({ data, parentsData }) => ( data && {
   viewport: "width=device-width,initial-scale=1",
 });
 
-export const PageComponent: React.FC = () => {
+export const StaticPage: React.FC = () => {
   const { page } = useLoaderData<typeof loader>();
   
   return (
@@ -72,4 +72,4 @@ export function ErrorBoundary() {
   }
 }
 
-export default PageComponent;
+export default StaticPage;

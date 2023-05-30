@@ -1,22 +1,21 @@
 import React from 'react';
-import type { StaticPage } from 'payload/generated-types';
 import { Content } from './Content';
 import { Image } from './Image';
 import { HeaderImage } from './HeaderImage';
 
-type Layout = StaticPage['layout'];
+import type { PageLayout } from 'cms/fields/pageLayout';
 
 type Props = {
-  layout: Layout
+  blocks: PageLayout['blocks']
   className?: string
   children?: React.ReactNode
 }
 
 const Blocks: React.FC<Props> = ({
-  layout, className, children,
+  blocks, className, children,
 }) => (
   <div className={className}>
-    {layout?.map((block, i) => (
+    {blocks?.map((block, i) => (
       <section key={i} className={block.blockType}>
         { (() => {
           switch (block.blockType) {

@@ -24,3 +24,15 @@
         padding: 1rem;
     }    
 }
+/* Type 'info'  *************************************************************/
+.page[data-layout-type="info"] {
+    color: var(--color-theme-contrast);
+}
+.page[data-layout-type="info"] h1 {
+    color: var(--color-theme-contrast);
+    background: var(--color-theme);
+    margin-block: 1.5em;
+}
+.page[data-layout-type="info"] section {
+    margin-block: 3rem;
+}
