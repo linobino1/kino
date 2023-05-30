@@ -1,9 +1,7 @@
 /* eslint-disable no-case-declarations */
 import React from 'react';
-import Blocks from '~/components/Blocks';
 import type { LoaderArgs, MetaFunction} from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
-import PageHeader from '~/components/PageHeader';
 import i18next from "~/i18next.server";
 import {
   isRouteErrorResponse,
@@ -11,6 +9,7 @@ import {
 } from "@remix-run/react";
 import { Response } from '@remix-run/node';
 import classes from './index.module.css';
+import Page from '~/components/Page';
 
 
 export const loader = async ({ request, params, context: { payload }}: LoaderArgs) => {
@@ -44,14 +43,7 @@ export const PageComponent: React.FC = () => {
   const { page } = useLoaderData<typeof loader>();
   
   return (
-    <>
-      <PageHeader />
-      <main className={classes.main}>
-        <Blocks
-          layout={page?.layout}
-        />
-      </main>
-    </>
+    <Page layout={page.layout} />
   );
 };
 
