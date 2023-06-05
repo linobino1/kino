@@ -115,5 +115,6 @@
   "adminExplainScreeningsPage": "Die Seite \"Vorstellungen\" listet alle Vorstellungen aus der Standard-Vorstellungsgruppe. Um diese zu ändern, gehe zu \"Konfiguration\" > \"Gruppen\".",
   "Subscriber": "Abonnent",
   "Gallery": "Galerie",
-  "Galleries": "Galerien"
+  "Galleries": "Galerien",
+  "Will be automatically generated if left blank.": "Wird automatisch generiert, wenn das Feld leer ist."
 }

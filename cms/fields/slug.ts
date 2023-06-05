@@ -1,5 +1,6 @@
 import type { Field } from 'payload/types';
 import slugify from 'slugify';
+import { t } from '../i18n';
 
 export const slugFormat = (s: string): string => {
   if (!s) return s;
@@ -15,6 +16,7 @@ export const slugField = (field: string): Field => ({
   index: true,
   admin: {
     position: 'sidebar',
+    description: t('Will be automatically generated if left blank.'),
   },
   hooks: {
     beforeValidate: [

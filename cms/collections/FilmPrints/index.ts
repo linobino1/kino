@@ -69,6 +69,7 @@ export const FilmPrints: CollectionConfig = {
       unique: true,
       admin: {
         position: 'sidebar',
+        description: t('Will be automatically generated if left blank.'),
       },
     },
     slugField('title'),
