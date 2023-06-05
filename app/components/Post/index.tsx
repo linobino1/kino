@@ -12,7 +12,7 @@ type Props = {
 export const Post: React.FC<Props> = ({ post }) => (
   <div className={classes.post}>
 
-    <Date className={classes.postDate} iso={post.date} />
+    <Date className={classes.postDate} iso={post.date} format='PPP' />
     <h2 className={classes.postTitle}>{post.title}</h2>
 
     <div className={classes.postPreview}>
