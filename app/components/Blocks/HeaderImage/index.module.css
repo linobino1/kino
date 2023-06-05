@@ -11,8 +11,6 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    padding-left: var(--page-margin);
-    padding-right: var(--page-margin);
 }
 img.headerImage {
     width: 100%;

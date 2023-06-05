@@ -130,7 +130,7 @@ hr {
 }
 /* improve readablity */
 p {
-  max-width: calc(100vw - 2 * var(--page-margin));
+  max-width: var(--page-max-width);
 }
 @media screen and (min-width: 768px) {
   p {
