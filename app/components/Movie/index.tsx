@@ -27,7 +27,7 @@ export const Movie: React.FC<Props> = ({
     (movie.countries as Country[])?.map((x) => x.name).join(', '),
     movie.year,
     (movie.directors as Person[])?.map((x) => x.name).join(', '),
-    `${movie.duration}m`,
+    t('duration {duration}', { duration: movie.duration }),
     movie.ageRating ? t('ageRating {age}', { age: movie.ageRating}) : null,
     filmprint ? (filmprint.languageVersion as LanguageVersion)?.name : null,
   ].filter(Boolean);

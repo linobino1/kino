@@ -8,5 +8,6 @@
   "No upcoming screenings.": "Keine bevorstehenden Vorführungen.",
   "ageRating {age}": "FSK {{age}}",
   "No films matching your search": "Keine Filme gefunden, die Ihrer Suche entsprechen",
-  "rentalCredits": "Leihgabe der Filmkopie mit freundlicher Unterstützung von {{rental}}."
+  "rentalCredits": "Leihgabe der Filmkopie mit freundlicher Unterstützung von {{rental}}.",
+  "duration {duration}": "{{duration}} min"
 }
