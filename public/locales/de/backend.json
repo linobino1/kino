@@ -45,6 +45,7 @@
   "Countries": "Länder",
   "alpha2 country code": "Ländercode (2-stellig)",
   "Original Title": "Originaltitel",
+  "Duration in minutes": "Dauer in Minuten",
   "Film Still": "Filmstill",
   "Film Stills": "Filmstills",
   "AdminExplainFilmStill": "Titelbild im Querformat (16:9 o.ä.) mit einer Mindestbreite von 2000px. In der Regel sollte ein Standbild aus dem Film verwendet werden.",
