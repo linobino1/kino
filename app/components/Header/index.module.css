@@ -39,12 +39,14 @@
 .userStatus {
     justify-self: flex-end;
 }
+@media (max-width: 1000px) {
+    .mainHeader {
+        padding: 0 1rem;;
+    }
+}
 @media (max-width: 768px) {
     .mainHeader {
         font-size: var(--font-size-normal);
-    }
-    .mainHeader {
-        padding: 0 1rem;;
     }
     .mainHeader > * {
         border-right: 0;

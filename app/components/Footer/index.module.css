@@ -54,6 +54,11 @@
 }
 
 /** Mobile Grid Layout *****************************************************************/
+@media (max-width: 1000px) {
+  .footer {
+    padding: 2% 1rem;
+  }
+}
 @media (max-width: 768px) {
   .footer {
     grid-template-columns: 1fr;
