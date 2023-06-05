@@ -131,6 +131,7 @@ hr {
 /* improve readablity */
 p {
   max-width: var(--page-max-width);
+  padding-inline: 1rem;
 }
 @media screen and (min-width: 768px) {
   p {
