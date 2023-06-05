@@ -43,10 +43,10 @@ export const ScreeningsListItem: React.FC<Props> = ({ screening }) => {
         <Image
           image={((screening.featureFilms[0] as FilmPrint)?.movie as Movie)?.still as Media}
           srcSet={[
-            { size: '320x160', width: 380 },
+            { size: '480x320', width: 380 },
           ]}
           sizes={[
-            '320px',
+            '480px',
           ]}
           alt={t('movie still') as string}
         />

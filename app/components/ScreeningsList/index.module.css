@@ -27,6 +27,7 @@
 .screening {
   position: relative;
   width: 100%;
+  max-width: 480px;
   background-color: var(--color-white);
   color: var(--color-black);
   box-shadow: 1px 1px 10px 0px rgb(0 0 0 / 50%);
@@ -80,10 +81,10 @@
 }
 .time {
   color: var(--color-theme-contrast-dark);
+  font-weight: var(--font-weight-semi-bold);
 }
 .title {
   font-size: var(--font-size-big);
-  line-height: var(--line-height-big);
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
 }

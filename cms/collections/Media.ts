@@ -37,6 +37,11 @@ export const Media: CollectionConfig = {
         height: 160,
       },
       {
+        name: '480x320',
+        width: 480,
+        height: 320,
+      },
+      {
         name: '768x384',
         width: 768,
         height: 384,
