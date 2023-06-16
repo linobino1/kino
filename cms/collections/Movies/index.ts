@@ -23,9 +23,21 @@ const Movies: CollectionConfig = {
   },
   fields: [
     {
+      name: 'title',
+      label: t('Title'),
+      type: 'text',
+      localized: true,
+      required: true,
+    },
+    slugField('title'),
+    {
       name: 'tmdbId',
       label: t('TMDB ID'),
       type: 'number',
+      admin: {
+        readOnly: true,
+        position: 'sidebar',
+      },
       // make sure the TMDB ID is empty or unique
       validate: async (value, { operation, t, payload }) => {
         if (value === null) return true;
@@ -45,14 +57,6 @@ const Movies: CollectionConfig = {
         return true;
       },
     },
-    {
-      name: 'title',
-      label: t('Title'),
-      type: 'text',
-      localized: true,
-      required: true,
-    },
-    slugField('title'),
     {
       name: 'originalTitle',
       label: t('Original Title'),
