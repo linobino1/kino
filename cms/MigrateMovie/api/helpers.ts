@@ -164,13 +164,14 @@ export async function updateOrCreateImage(tmdbFilepath: string, filePath: string
  * @param collection slug of the collection, it needs to have a field "name"
  * @param name name of the item
  * @param payload Payload instance
+ * @param locale locale in which the name should be checked
  * @returns the created or found doc
  */
-export async function createOrFindItemByName(collection: 'genres', name: string, payload: Payload): Promise<Genre>;
-export async function createOrFindItemByName(collection: 'persons', name: string, payload: Payload): Promise<Person>;
-export async function createOrFindItemByName(collection: 'companies', name: string, payload: Payload): Promise<Company>;
+export async function createOrFindItemByName(collection: 'genres', name: string, payload: Payload, locale?: string): Promise<Genre>;
+export async function createOrFindItemByName(collection: 'persons', name: string, payload: Payload, locale?: string): Promise<Person>;
+export async function createOrFindItemByName(collection: 'companies', name: string, payload: Payload, locale?: string): Promise<Company>;
 export async function createOrFindItemByName(
-  collection: keyof Config['collections'], name: string, payload: Payload
+  collection: keyof Config['collections'], name: string, payload: Payload, locale?: string
 ): Promise<Document> {
   if (!payload.collections[collection].config.fields.find(field => 'name' in field && field.name === 'name')) {
     throw new Error(`Collection ${collection} does not have a field "name"`);
@@ -195,6 +196,7 @@ export async function createOrFindItemByName(
             like: name,
           },
         },
+        locale,
       }))?.docs[0]
     } catch (err) {
       console.error(`Could not find ${collection} item ${name} (${err})`);

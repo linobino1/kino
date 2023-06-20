@@ -42,7 +42,7 @@ export const migrate = async (body: MigrateBody, payload: Payload): Promise<Movi
   let data = await getTmdbMovie(tmdbId, language);
 
   // find or create genre
-  const genre = await createOrFindItemByName('genres', data.genres[0].name, payload);
+  const genre = await createOrFindItemByName('genres', data.genres[0].name, payload, language);
   
   // create temp directory for images
   let tmpDir;
