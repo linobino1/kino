@@ -117,7 +117,7 @@ export const MigrateMovie: React.FC = () => {
       )}
       { state === 'success' && migratedMovie && (
         <div ref={success} dangerouslySetInnerHTML={{
-          __html: t('Successfully created movie {title} {id}', {
+          __html: t('Successfully created movie {{title}} {{id}}', {
               title: migratedMovie.originalTitle,
               id: migratedMovie.id,
             }) as string,
