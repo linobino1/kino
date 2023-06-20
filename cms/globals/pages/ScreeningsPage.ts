@@ -7,7 +7,7 @@ export const ScreeningsPage: GlobalConfig = {
   slug: 'screeningsPage',
   admin: {
     group: t('Pages'),
-    description: t('adminExplainScreeningsPage'),
+    description: t('AdminExplainScreeningsPage'),
   },
   label: t('Screenings'),
   fields: [

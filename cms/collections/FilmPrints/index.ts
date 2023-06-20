@@ -3,6 +3,7 @@ import type { Movie, Format } from 'payload/generated-types';
 import { t } from '../../i18n';
 import { slugField, slugFormat } from '../../fields/slug';
 import analogDigitalTypeField from './fields';
+import { MigrateMovieButton } from '../../MigrateMovie/admin/Button';
 
 export const FilmPrints: CollectionConfig = {
   slug: 'filmPrints',
@@ -62,6 +63,16 @@ export const FilmPrints: CollectionConfig = {
     ],
   },
   fields: [
+    {
+      name: "migrateMovie",
+      type: "ui",
+      admin: {
+        condition: (data) => !data?.movie,
+        components: {
+          Field: MigrateMovieButton,
+        },
+      },
+    },
     {
       name: 'title',
       label: t('Title'),

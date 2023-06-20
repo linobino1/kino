@@ -29,17 +29,46 @@ import LanguageVersions from './cms/collections/FilmPrints/LanguageVersions';
 import SoundFormats from './cms/collections/FilmPrints/SoundFormats';
 import Rentals from './cms/collections/FilmPrints/Rentals';
 import ScreeningsPage from './cms/globals/pages/ScreeningsPage';
-import MigrateMovie from './cms/components/MigrateMovie';
+import { MigrateMovieView } from './cms/MigrateMovie/admin/View';
+import { endpoints as migrateMovieEndpoints } from './cms/MigrateMovie/api/endpoints';
+import { MigrateMovieLink } from './cms/MigrateMovie/admin/Link';
+import { MigrateMovieButton } from './cms/MigrateMovie/admin/Button';
+
+const mockModulePath = path.resolve(__dirname, 'mocks/emptyObject.js');
 
 export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
+  endpoints: [
+    // path will be prefixed with /api if root is not set to true
+    ...migrateMovieEndpoints,
+  ],
   admin: {
     user: Users.slug,
     components: {
       beforeDashboard: [
-        MigrateMovie,
+        MigrateMovieButton,
+      ],
+      routes: [
+        {
+          path: '/migrate-movie',
+          Component: MigrateMovieView,
+        },
+      ],
+      beforeNavLinks: [
+        MigrateMovieLink,
       ],
     },
+    webpack: (config) => ({
+			...config,
+			resolve: {
+				...config.resolve,
+				alias: {
+					...config?.resolve?.alias,
+					fs: mockModulePath,
+          os: mockModulePath,
+				}
+			}
+		})
   },
   upload: {
     defCharset: 'utf8',

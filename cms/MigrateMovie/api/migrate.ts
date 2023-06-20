@@ -1,17 +1,15 @@
 import path from "path";
 import os from "os";
 import fs from "fs";
-import { themoviedb } from "./api";
 import { slugFormat } from "../../fields/slug";
 import { fixedT } from "../../i18n";
 import type { Payload } from "payload";
 import type { Movie, Media, Person, Company } from "payload/generated-types";
 import type {
   tmdbPerson,
-  tmdbImages,
-  tmdbMovie,
- tmdbCompany } from "./api";
-import { tmdbLng } from "./config";
+  tmdbCompany,
+} from "../tmdb/types";
+import { tmdbLng } from "../tmdb";
 import {
   getLocalMovie,
   getTmdbMovie,
@@ -21,58 +19,7 @@ import {
   getReleaseDates,
   createOrFindItemByName,
 } from "./helpers";
-
-export interface PreviewBody {
-  tmdbId: number;
-  locale: string;
-}
-
-export interface tmdbPreview extends tmdbMovie {
-  images: tmdbImages;
-}
-
-export interface MigrateBody extends PreviewBody {
-  images: {
-    poster: string;
-    backdrop: string;
-  };
-}
-
-/**
- * Check if movie exists in database, if not fetch it from themoviedb.org
- * @param body { tmdbId: number, locale: string }
- * @param payload Payload instance
- * @returns tmdbPreview the movie details and images from themoviedb.org
- */
-export const previewMovie = async (body: PreviewBody, payload: Payload): Promise<tmdbPreview> => {
-  const { tmdbId, locale } = body;
-
-  // check if movie has already been created
-  let movie = await getLocalMovie(tmdbId, payload);
-  if (movie) {
-    throw new Error(
-      fixedT('MovieExists', locale, { title: movie.originalTitle, id: movie.id }));
-  }
-  
-  // fetch movie details from TMDB in their default language
-  let tmdbMovie = await getTmdbMovie(tmdbId, tmdbLng);
-  
-  // fetch images
-  let tmdbImages;
-  try {
-    const res = await themoviedb.get(`/movie/${tmdbId}/images`);
-    tmdbImages = JSON.parse(res?.data);
-  } catch (err) {
-    throw new Error('Unable to get themoviedb images response');
-  }
-  if (!tmdbImages || tmdbImages.success === false) {
-    throw new Error(`Images of ${tmdbMovie.original_title} not found`);
-  }
-  
-  const data: Partial<tmdbPreview> = tmdbMovie;
-  data.images = tmdbImages;
-  return {...tmdbMovie, ...tmdbImages}
-}
+import type { MigrateBody } from "./types";
 
 /**
  * Create a movie in database from themoviedb.org data and user selected images 
@@ -80,7 +27,7 @@ export const previewMovie = async (body: PreviewBody, payload: Payload): Promise
  * @param payload Payload instance
  * @returns Movie the created movie
  */
-export const migrateMovie = async (body: MigrateBody, payload: Payload): Promise<Movie> => {
+export const migrate = async (body: MigrateBody, payload: Payload): Promise<Movie> => {
   const { tmdbId, locale } = body;
 
   // check if movie has already been created
@@ -102,7 +49,7 @@ export const migrateMovie = async (body: MigrateBody, payload: Payload): Promise
   try {
     tmpDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'tmdb-migrate-images-'));
   } catch (err) {
-    throw new Error('Unable to create temp directory');
+    throw new Error('Unable to create temp directory for images');
   }
 
   // download images
@@ -127,7 +74,7 @@ export const migrateMovie = async (body: MigrateBody, payload: Payload): Promise
     poster = await updateOrCreateImage(body.images.poster, filePoster, payload);
     still = await updateOrCreateImage(body.images.backdrop, fileBackdrop, payload);
   } catch (err) {
-    throw new Error('Unable to create poster or still');
+    throw new Error(`Unable to create poster or still, error: ${err}`);
   }
   
   // create cast
@@ -215,17 +162,22 @@ export const migrateMovie = async (body: MigrateBody, payload: Payload): Promise
     
     // add genre name
     // IDEA: let's hope the genres are sorted the same way in all languages
-    await payload.update({
-      collection: 'genres',
-      id: genre.id,
-      data: {
-        name: data.genres[0].name,
-      },
-      locale: language,
-    });
+    try {
+      await payload.update({
+        collection: 'genres',
+        id: genre.id,
+        data: {
+          name: data.genres[0].name,
+        },
+        locale: language,
+      });
+    } catch (err) {
+      console.log(`Unable to update genre (${err})`);
+      console.log(data.genres[0].name)
+    }
   }
   
   return movie;
 }
 
-export default migrateMovie;
+export default migrate;

@@ -3,6 +3,7 @@ import { t } from '../../i18n';
 import { slugField } from '../../fields/slug';
 import { getDefaultDocId } from '../../fields/default';
 import type { Movie } from 'payload/generated-types';
+import { MigrateMovieButton } from '../../MigrateMovie/admin/Button';
 
 const Screenings: CollectionConfig = {
   slug: 'screenings',
@@ -22,6 +23,16 @@ const Screenings: CollectionConfig = {
     read: () => true,
   },
   fields: [
+    {
+      name: "migrateMovie",
+      type: "ui",
+      admin: {
+        condition: (data) => !data?.featureFilms?.length,
+        components: {
+          Field: MigrateMovieButton,
+        },
+      },
+    },
     {
       name: 'title',
       label: t('Title'),

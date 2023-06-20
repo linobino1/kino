@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocale } from 'payload/components/utilities';
-import { fixedT } from '../../i18n';
 import './index.scss';
 import type { Movie } from "payload/generated-types";
-import type { tmdbPreview } from "../../scripts/migrateMovie";
+import type { tmdbPreview } from "../api/types";
+import { useTranslation } from "react-i18next";
 
 export const MigrateMovie: React.FC = () => {
   const locale = useLocale();
+  const { t } = useTranslation();
   const path = 'tmdbId';
   // states:
   // initial: show input for themoviedb id
@@ -39,8 +40,8 @@ export const MigrateMovie: React.FC = () => {
     e.preventDefault();
     setError('');
     if (state !== 'loading') setState('loading');
-    
-    fetch('/api/tmdb-migration/preview', {
+
+    fetch('/api/migrate-movie/preview', {
       method: 'POST',
       body: JSON.stringify({
         tmdbId: tmdbId,
@@ -62,7 +63,7 @@ export const MigrateMovie: React.FC = () => {
     })
     .catch(() => {
       setState('initial')
-      setError(fixedT('Server could not be reached', locale));
+      setError(t('Server could not be reached') as string);
     })
   };
   
@@ -77,7 +78,7 @@ export const MigrateMovie: React.FC = () => {
     setError('');
     if (state !== 'loading') setState('loading');
     
-    fetch('/api/tmdb-migration/migrate', {
+    fetch('/api/migrate-movie/migrate', {
       method: 'POST',
       body: JSON.stringify({
         tmdbId,
@@ -100,7 +101,7 @@ export const MigrateMovie: React.FC = () => {
     })
     .catch(() => {
       setState('initial')
-      setError(fixedT('Server could not be reached', locale));
+      setError(t('Server could not be reached') as string);
     })
   };
   
@@ -111,16 +112,15 @@ export const MigrateMovie: React.FC = () => {
   });
   return (
     <div className="container">
-      <h2>{fixedT('Migrate movie from themoviedb.org', locale)}</h2>
       { state === 'loading' && (
-        <div ref={loading}>Loading...</div>
+        <div ref={loading}>{ t('Loading...') }</div>
       )}
       { state === 'success' && migratedMovie && (
         <div ref={success} dangerouslySetInnerHTML={{
-          __html: fixedT('Successfully created movie {title} {id}', locale, {
-            title: migratedMovie.originalTitle,
-            id: migratedMovie.id,
-          })
+          __html: t('Successfully created movie {title} {id}', {
+              title: migratedMovie.originalTitle,
+              id: migratedMovie.id,
+            }) as string,
         }} />)
       }
       { state === 'preview' && previewData && (
@@ -129,8 +129,8 @@ export const MigrateMovie: React.FC = () => {
           { ['backdrop', 'poster'].map((type: string) => (
             <div key={type} className="imageSelector" data-type={type}>
               <label htmlFor={type}>
-                {fixedT('Choose a {type}:', locale, {
-                  type: fixedT(type, locale),
+                {t('Choose a {{type}}:', {
+                  type: t(type),
                 })}
               </label>
               <div className="choices" onChange={onImageChoiceChange(type)}>
@@ -151,17 +151,17 @@ export const MigrateMovie: React.FC = () => {
           <button
             type="submit"
             value="migrate"
-          >{fixedT('Migrate', locale)}</button>
+          >{t('Confirm')}</button>
           <button
             type="button"
             data-button-type="cancel"
             onClick={cancel}
-          >{fixedT('Cancel', locale)}</button>
+          >{t('Cancel')}</button>
         </form>
       )}
       { state === 'initial' && (
         <form onSubmit={preview} className="initial">
-          <label htmlFor={path} dangerouslySetInnerHTML={{ __html: fixedT('AdminExplainTmdbId', locale)}} />
+          <label htmlFor={path} dangerouslySetInnerHTML={{ __html: t('AdminExplainTmdbId') as string}} />
           <div className="horizontal">
             <input
               type="text"
@@ -173,7 +173,7 @@ export const MigrateMovie: React.FC = () => {
             />
             <input
               type="submit"
-              value={fixedT('Preview', locale)}
+              value={t('Proceed') as string}
             />
           </div>
           { error && (
@@ -186,7 +186,7 @@ export const MigrateMovie: React.FC = () => {
         data-button-type="cancel"
         onClick={cancel}
         className="reset"
-      >{fixedT('Reset', locale)}</button>
+      >{t('Reset')}</button>
     </div>
   )
 };

@@ -1,9 +1,3 @@
-import { Axios } from "axios";
-
-export const themoviedb = new Axios({
-  baseURL: 'https://api.themoviedb.org/3',
-});
-
 export interface tmdbMovie {
   id: number;
   title: string;

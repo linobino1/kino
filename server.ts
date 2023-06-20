@@ -6,8 +6,7 @@ import payload from "payload";
 import { createRequestHandler } from "@remix-run/express";
 import invariant from "tiny-invariant";
 import { sender, transport } from "./email";
-import { migrateMovie, previewMovie } from "./cms/scripts/migrateMovie";
-import { themoviedb } from "./cms/scripts/migrateMovie/api";
+import { themoviedb } from "./cms/MigrateMovie/tmdb";
 
 require("dotenv").config();
 
@@ -67,38 +66,6 @@ async function start() {
   });
   
   app.use(express.json());
-
-  // migrate movie from themoviedb.org (used in admin panel)
-  app.post('/api/tmdb-migration/preview', async (req, res) => {
-    // @ts-expect-error
-    if (!['admin', 'editor'].find((role) => role === req?.user?.role)) {
-      res.status(401).send('Unauthorized');
-      return
-    }
-    try {
-      const data = await previewMovie(req.body, payload);
-      res.status(200).send({ success: true, data });
-    } catch (error: any) {
-      res.status(400).send({ success: false, message: error.message });
-    }
-    return
-  });
-
-  app.post('/api/tmdb-migration/migrate', async (req, res) => {
-    // @ts-expect-error
-    if (!['admin', 'editor'].find((role) => role === req?.user?.role)) {
-      res.status(401).send('Unauthorized');
-      return
-    }
-    try {
-      const data = await migrateMovie(req.body, payload);
-      res.status(200).send({ success: true, data });
-      return
-    } catch (error: any) {
-      res.status(400).send({ success: false, message: error.message });
-      return
-    }
-  });
 
   // authenticate all requests to the frontend
   app.use(payload.authenticate);

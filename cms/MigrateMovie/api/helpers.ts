@@ -2,14 +2,14 @@ import https from "https";
 import fs from "fs";
 import type { Genre, Person } from "payload/generated-types";
 import type { Payload } from "payload";
-import { themoviedb } from "./api";
-import { tmdbMediaUrl } from "./config";
+import { themoviedb } from "../tmdb";
+import { tmdbMediaUrl } from "../tmdb";
 import type { Movie, Media } from "payload/generated-types";
 import type {
   tmdbCredits,
   tmdbMovie,
   tmdbReleaseDatesResponse,
-} from "./api";
+} from "../tmdb/types";
 import { ageRatingAges } from "../../collections/Movies";
 import type { Document } from "payload/types";
 import type { Config } from "payload/generated-types";
@@ -145,7 +145,9 @@ export async function updateOrCreateImage(tmdbFilepath: string, filePath: string
       collection: 'media',
       id: image.id,
       filePath,
-      data: {},
+      data: {
+        tmdbFilepath,
+      },
     });
   }
   return await payload.create({
@@ -184,14 +186,19 @@ export async function createOrFindItemByName(
     });
   } catch (err) {
     // try to find the item
-    const item = (await payload.find({
-      collection,
-      where: {
-        name: {
-          like: name,
+    let item;
+    try {
+      item = (await payload.find({
+        collection,
+        where: {
+          name: {
+            like: name,
+          },
         },
-      },
-    }))?.docs[0]
+      }))?.docs[0]
+    } catch (err) {
+      console.error(`Could not find ${collection} item ${name} (${err})`);
+    }
     if (!item) {
       throw new Error(`Could neither find or create ${collection} item ${name} (${err})`);
     }

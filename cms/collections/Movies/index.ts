@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
 import { slugField } from '../../fields/slug';
+import MigrateMovieButton from '../../MigrateMovie/admin/Button';
 
 export const ageRatingAges = [0, 6, 12, 16, 18];
 
@@ -14,6 +15,12 @@ const Movies: CollectionConfig = {
     group: t('Movie Database'),
     defaultColumns: ['originalTitle', 'directors', 'year', '_status'],
     useAsTitle: 'originalTitle',
+    components: {
+      BeforeListTable: [
+        // add a button to migrate a movie from TMDB
+        MigrateMovieButton,
+      ],
+    },
   },
   access: {
     read: () => true,
