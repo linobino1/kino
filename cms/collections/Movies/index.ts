@@ -1,4 +1,5 @@
-import type { CollectionConfig } from 'payload/types';
+import type { CollectionConfig, PayloadRequest } from 'payload/types';
+import type { Media, Movie } from 'payload/generated-types';
 import { t } from '../../i18n';
 import { slugField } from '../../fields/slug';
 import MigrateMovieButton from '../../MigrateMovie/admin/Button';
@@ -10,6 +11,24 @@ const Movies: CollectionConfig = {
   labels: {
     singular: t('Movie'),
     plural: t('Movies'),
+  },
+  hooks: {
+    afterDelete: [
+      async ({ doc, req }: { doc: Movie, req: PayloadRequest}) => {
+        // delete all media associated with this movie
+        await req.payload.delete({
+          collection: 'media',
+          where: {
+            id: {
+              in: [
+                (doc.still as Media).id,
+                (doc.poster as Media).id,
+              ],
+            },
+          },
+        });
+      },
+    ],
   },
   admin: {
     group: t('Movie Database'),
