@@ -1,6 +1,8 @@
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../i18n';
 import path from 'path';
+import type { Payload } from 'payload';
+import type { Media as MediaType } from 'payload/generated-types';
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -107,19 +109,23 @@ export const Media: CollectionConfig = {
         readOnly: true,
       },
       // make sure the media is not being migrated twice from themoviedb.org
-      validate: async (value, { t, payload }) => {
+      validate: async (value, { t, payload, data }: { t: any, payload?: Payload, data: Partial<MediaType>}) => {
         if (value === null) return true;
+        if (!payload) return true;  // only validate on server
         
-        // on server we need the base url, on client we don't
-        const baseUrl = payload ? payload.config.serverURL : '';
-        try {
-          const res = await fetch(`${baseUrl}/api/media?where[tmdbFilepath][equals]=${value}`);
-          const data = await res.json();
-          if (data.totalDocs > 0) {
-            return t('Media already exists');
-          }
-        } catch (err) {
-          return t(`Unable to check if media has already been imported (${err})`);
+        const { docs } = await payload.find({
+          collection: 'media',
+          where: {
+            tmdbFilepath: {
+              equals: value,
+            },
+          },
+        });
+        if (docs.length > 1) {
+          return t('Media already exists');
+        }
+        if (docs.length === 1 && docs[0].id !== data.id) {
+          return t('Media already exists');
         }
         return true;
       },

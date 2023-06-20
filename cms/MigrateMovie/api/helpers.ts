@@ -148,6 +148,7 @@ export async function updateOrCreateImage(tmdbFilepath: string, filePath: string
       data: {
         tmdbFilepath,
       },
+      overwriteExistingFiles: true,
     });
   }
   return await payload.create({

@@ -34,12 +34,16 @@ export const migrate = async (body: MigrateBody, payload: Payload): Promise<Movi
   let movie = await getLocalMovie(tmdbId, payload);
   if (movie) {
     throw new Error(
-      fixedT('MovieExists', locale, { title: movie.originalTitle, id: movie.id }));
+      fixedT('MovieExists', locale, { title: movie.internationalTitle, id: movie.id }));
   }
   
   // fetch movie details from TMDB in default language
   const language = payload.config.i18n.fallbackLng as string;
   let data = await getTmdbMovie(tmdbId, language);
+  
+  // slug
+  const slug = slugFormat(data.title);
+  console.log(`slug: ${slug}`, data.title);
 
   // find or create genre
   const genre = await createOrFindItemByName('genres', data.genres[0].name, payload, language);
@@ -53,8 +57,8 @@ export const migrate = async (body: MigrateBody, payload: Payload): Promise<Movi
   }
 
   // download images
-  const filePoster = path.join(tmpDir, `${data.original_title}-poster.jpg`);
-  const fileBackdrop = path.join(tmpDir, `${data.original_title}-backdrop.jpg`);
+  const filePoster = path.join(tmpDir, `${slug}-poster.jpg`);
+  const fileBackdrop = path.join(tmpDir, `${slug}-backdrop.jpg`);
   await Promise.all([
     downloadTmdbImage(
       body.images.poster,
@@ -117,6 +121,7 @@ export const migrate = async (body: MigrateBody, payload: Payload): Promise<Movi
       data: {
         originalTitle: data.original_title,
         title: data.title,
+        internationalTitle: data.title,
         synopsis: data.overview,
         year: parseInt(data.release_date?.split('-')[0]),
         countries: data.production_countries.map((country: any) => country.iso_3166_1.toUpperCase()),
