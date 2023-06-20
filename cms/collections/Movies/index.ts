@@ -35,8 +35,29 @@ const Movies: CollectionConfig = {
       type: 'text',
       localized: true,
       required: true,
+      admin: {
+        description: t('AdminExplainMovieTitle'),
+      },
     },
-    slugField('title'),
+    {
+      name: 'internationalTitle',
+      label: t('International Title'),
+      type: 'text',
+      required: true,
+      admin: {
+        description: t('AdminExplainInternationalTitle'),
+      },
+    },
+    slugField('internationalTitle'),
+    {
+      name: 'originalTitle',
+      label: t('Original Title'),
+      type: 'text',
+      required: true,
+      admin: {
+        description: t('AdminExplainOriginalTitle'),
+      },
+    },
     {
       name: 'tmdbId',
       label: t('TMDB ID'),
@@ -63,12 +84,6 @@ const Movies: CollectionConfig = {
         }
         return true;
       },
-    },
-    {
-      name: 'originalTitle',
-      label: t('Original Title'),
-      type: 'text',
-      required: true,
     },
     {
       name: 'still',

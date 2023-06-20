@@ -49,6 +49,26 @@ yarn seed
 It will exexute the script `cms/seed/index.ts` which does:
 - fill the countries collection with data from the restcountries.com api
 
+### Apply Database Migrations
+
+To apply database migrations, run the following command in the docker container of the app:
+
+```sh
+yarn migrate
+```
+
+#### Dev: Create a new Migration
+
+install `migrate-mongo` globally:
+```sh
+sudo yarn global add migrate-mongo --prefix /usr/local
+```
+
+In the project root, run the following command to create a new migration:
+```sh
+migrate-mongo create <migration-name>
+```
+
 ### Database Export
 
 On the machine where docker is running, run the following command to export the database to the `dump` folder.
