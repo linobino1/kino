@@ -32,7 +32,7 @@ const Movies: CollectionConfig = {
   },
   admin: {
     group: t('Movie Database'),
-    defaultColumns: ['originalTitle', 'directors', 'year', '_status'],
+    defaultColumns: ['internationalTitle', 'directors', 'year', '_status'],
     useAsTitle: 'originalTitle',
     components: {
       BeforeListTable: [
