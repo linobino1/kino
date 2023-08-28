@@ -36,6 +36,7 @@ ul.posts li > img {
   grid-row: 1 / span 3;
   height: auto;
   width: 100%;
+  margin-bottom: 1.2rem;
 }
 ul.posts li img.link {
   cursor: pointer;
@@ -55,7 +56,6 @@ ul.posts li hr {
 @media (max-width: 768px) {
   ul.posts li {
     grid-template-columns: 1fr;
-    row-gap: 1.2rem;
   }
   ul.posts li > * {
     grid-column: 1;
