@@ -31,7 +31,7 @@ export const ScreeningsListItem: React.FC<Props> = ({ screening }) => {
         <Date
           iso={screening.date as string}
           className={classes.dayNumber}
-          format="ii"
+          format="dd"
         />
         <Date
           iso={screening.date as string}
