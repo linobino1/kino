@@ -39,7 +39,7 @@
 .title {
   font-size: var(--font-size-xx-big);
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-normal);
+  line-height: var(--line-height);
   text-transform: uppercase;
 }
 .subtitle {

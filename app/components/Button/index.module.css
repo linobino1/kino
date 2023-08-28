@@ -8,7 +8,7 @@
     background: none;
     color: var(--color-font-light);
     font: inherit;
-    font-family: var(--font-family-sans-serif);
+    font-family: var(--font-family);
     font-weight: var(--font-weight-light);
     cursor: pointer;
 }

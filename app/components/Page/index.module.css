@@ -9,7 +9,7 @@
     margin: 0;
     font-size: var(--font-size-xxx-big);
     font-weight: var(--font-weight-bold);
-    line-height: var(--line-height-normal);
+    line-height: var(--line-height);
     letter-spacing: var(--letter-spacing-big);
     text-transform: uppercase;
     padding: 1rem

@@ -57,20 +57,28 @@
   --font-size-small: .9rem;
   --font-size-x-small: .8rem;
 
-  --font-family-sans-serif: 'DM Sans', 'Helvetica', sans-serif;
+  --font-family: 'DM Sans', 'Helvetica', sans-serif;
   --font-family-serif: 'Times', serif;
   --font-weight-bold: 600;
   --font-weight-semi-bold: 500;
   --font-weight-normal: 400;
   --font-weight-light: 200;
-
+  
   --line-height-xxx-big: 2em;
   --line-height-big: 1.5em;
-  --line-height-normal: 1.4em;
+  --line-height: 1.4em;
 
   --letter-spacing-big: .1em;
   --letter-spacing-x-big: .11em;
   
+  --font-xxx-big: normal 300 2.5rem/1 var(--font-family);
+  --font-xx-big: normal 300 1.9rem/1 var(--font-family);
+  --font-x-big: normal 300 1.7rem/1.2 var(--font-family);
+  --font-big: normal 300 1.3rem/1.2 var(--font-family);
+  --font: normal 300 1rem/1.4 var(--font-family);
+  --font-small: normal 300 .9rem/1.4 var(--font-family);
+  --font-x-small: normal 300 .8rem/1.4 var(--font-family);
+
   --border-radius: 2px;
   --box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.15);
 }
@@ -92,9 +100,9 @@
   -webkit-font-smoothing: antialiased;
 }
 html {
-  font-family: var(--font-family-sans-serif);
+  font-family: var(--font-family);
   font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-normal);
+  line-height: var(--line-height);
 }
 html,
 body {
@@ -108,7 +116,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-family-sans-serif);
+  font-family: var(--font-family);
   text-transform: capitalize;
 }
 

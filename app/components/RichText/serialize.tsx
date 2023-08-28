@@ -182,14 +182,14 @@ const serialize = (children: Children): React.ReactElement[] => children.map((no
         <div className={classes.imageWrapper} key={i}>
           <Image
             image={node.value as Media}
-            srcSet={[
+            srcSet_={[
               { size: '2560x1706', width: 2560 },
               { size: '1920x1280', width: 1920 },
               { size: '1280x853', width: 1280 },
               { size: '768x768', width: 768 },
               { size: '512x512', width: 512 },
             ]}
-            sizes={[
+            sizes_={[
               '70vw',
             ]}
           />

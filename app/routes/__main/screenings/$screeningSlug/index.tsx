@@ -59,14 +59,14 @@ export default function Item() {
         <Image
           className={classes.headerImage}
           image={mainMovie.still as Media}
-          srcSet={[
+          srcSet_={[
             { size: '2560x1706', width: 2560 },
             { size: '1920x1280', width: 1920 },
             { size: '1280x853', width: 1280 },
             { size: '768x768', width: 768 },
             { size: '512x512', width: 512 },
           ]}
-          sizes={[
+          sizes_={[
             '95vw',
           ]}
           alt={t('movie still') as string}
@@ -78,10 +78,10 @@ export default function Item() {
                 <div key={filmprint.id} className={classes.poster}>
                   <Image
                     image={(filmprint.movie as MovieType).poster as Media}
-                    srcSet={[
+                    srcSet_={[
                       { size: '260x390', width: 260 },
                     ]}
-                    sizes={[
+                    sizes_={[
                       '260px',
                     ]}
                     alt={t('movie poster') as string}

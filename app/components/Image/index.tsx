@@ -16,15 +16,10 @@ export type SrcSet = {
   width: number 
 }[]
 
-export type Props = {
+export interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {
   image: ImageType
-  width?: number
-  height?: number
-  className?: string
-  fill?: boolean
-  srcSet?: SrcSet
-  sizes?: string[]
-  alt?: string
+  srcSet_?: SrcSet
+  sizes_?: string[]
   loader?: ImageLoader
 }
 
@@ -55,21 +50,20 @@ export const getSrcSetString = (loader: ImageLoader, image: ImageType, srcSet?: 
  */
 export const getSizesString = (sizes?: string[]): string => sizes?.join(', ') || '';
 
-export const Image: React.FC<Props> = ({
-  width, height, className, image, srcSet, sizes, alt, loader,
-}) => {
+export const Image: React.FC<Props> = (props) => {
   // default loader is mediaUrl
-  const _loader = loader || mediaUrl;
+  const loader = props.loader || mediaUrl;
+  const { image, alt, srcSet_, sizes_ } = props;
+  const srcSet = props.srcSet || getSrcSetString(loader, image, srcSet_);
+  const sizes = props.sizes || getSizesString(sizes_);
 
   return image ? (
     <img
-      src={image.filename && _loader(image.filename)}
+      src={image.filename && loader(image.filename)}
       alt={alt || image.alt || ''}
-      width={width}
-      height={height}
-      className={className}
-      srcSet={getSrcSetString(_loader, image, srcSet)}
-      sizes={getSizesString(sizes)}
+      srcSet={srcSet}
+      sizes={sizes}
+      {...props}
     />
   ) : null;
 }

@@ -18,7 +18,7 @@
     justify-content: space-between;
     padding: 3vw;
     font-size: var(--font-size-xxx-big);
-    line-height: var(--line-height-normal);
+    line-height: var(--line-height);
     font-weight: var(--font-weight-bold);
 }
 .close {
