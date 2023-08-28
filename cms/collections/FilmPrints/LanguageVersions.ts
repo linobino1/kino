@@ -9,7 +9,7 @@ const LanguageVersions: CollectionConfig = {
   },
   admin: {
     group: t('Configuration'),
-    defaultColumns: ['name'],
+    defaultColumns: ['abbreviation', 'name'],
     useAsTitle: 'name',
   },
   access: {
@@ -23,6 +23,13 @@ const LanguageVersions: CollectionConfig = {
       localized: true,
       required: true,
     },
+    {
+      name: 'abbreviation',
+      label: t('Abbreviation'),
+      type: 'text',
+      localized: true,
+      required: true,
+    }
   ],
 };
 

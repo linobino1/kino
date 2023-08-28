@@ -128,5 +128,6 @@
   "International Title": "Internationaler Titel",
   "AdminExplainMovieTitle": "Titel des Films, wie er auf der Webseite verwendet wird. Übersetzungen können in den Sprachversionen angelegt werden.",
   "AdminExplainOriginalTitle": "Originaltitel des Films",
-  "AdminExplainInternationalTitle": "Internationaler Titel des Films, gewöhnlich der englische Titel"
+  "AdminExplainInternationalTitle": "Internationaler Titel des Films, gewöhnlich der englische Titel",
+  "Abbreviation": "Kürzel"
 }
