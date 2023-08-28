@@ -25,7 +25,7 @@
   overflow-wrap: anywhere;
 }
 .navItem:hover {
-  color: var(--color-theme-contrast);
+  color: var(--color-black);
 }
 .image {
   height: 1.4rem;

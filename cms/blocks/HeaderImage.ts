@@ -14,6 +14,13 @@ export const HeaderImage: Block = {
       required: true,
       relationTo: 'media',
     },
+    {
+      name: 'navigation',
+      type: 'relationship',
+      relationTo: 'navigations',
+      hasMany: false,
+      required: false,
+    }
   ],
 }
 

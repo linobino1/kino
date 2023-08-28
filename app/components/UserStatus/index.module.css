@@ -12,7 +12,7 @@
 }
 .name:hover,
 .signIn:hover {
-  color: var(--color-theme-contrast) !important;
+  color: var(--color-black) !important;
 }
 
 .name {

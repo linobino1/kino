@@ -1,15 +1,18 @@
 import React from 'react';
+import type { Navigation as NavigationType } from 'payload/generated-types';
 import type { Media } from 'payload/generated-types';
 import Image from "~/components/Image";
 import classes from "./index.module.css";
+import { Navigation } from '~/components/Navigation';
 
 export type Type = {
   blockType: 'headerImage'
   blockName?: string
   image?: Media | string
+  navigation?: NavigationType
 }
 
-export const HeaderImage: React.FC<Type> = ({ image }) => {
+export const HeaderImage: React.FC<Type> = ({ image, navigation }) => {
   return (
     <header className={classes.pageHeader}>
       { image as Media && (
@@ -18,11 +21,9 @@ export const HeaderImage: React.FC<Type> = ({ image }) => {
             className={classes.headerImage}
             image={image as Media}
             srcset_={[
-              { size: '2560x1706', width: 2560 },
-              { size: '1920x1280', width: 1920 },
-              { size: '1280x853', width: 1280 },
-              { size: '768x768', width: 768 },
-              { size: '512x512', width: 512 },
+              { size: '2560p', width: 2560 },
+              { size: '1920p', width: 1920 },
+              { size: '1280p', width: 1280 },
             ]}
             sizes_={[
               '95vw',
@@ -30,6 +31,14 @@ export const HeaderImage: React.FC<Type> = ({ image }) => {
           />
         </div>
       )}
+      <div className={classes.overlay}>
+        { navigation && (
+          <Navigation
+            navigation={navigation}
+            className={classes.navSocial}
+          />
+        )}
+      </div>
     </header>
   )
 };
