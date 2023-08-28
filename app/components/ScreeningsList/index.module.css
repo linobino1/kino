@@ -26,7 +26,6 @@
 .screening {
   position: relative;
   width: 100%;
-  max-width: 480px;
   background-color: var(--color-white);
   color: var(--color-black);
   box-shadow: 1px 1px 10px 0px rgb(0 0 0 / 50%);
@@ -38,27 +37,23 @@
   transition: all .3s ease-in-out;
   transform: translate(0px, -2%);
 }
-.imgWrapper {
-  position: relative;
-  width: 100%;
-  height: 280px;
-  overflow: hidden;
-}
-.imgWrapper img {
+img {
   object-fit: cover;
   width: 100%;
-  height: 17.5rem;
+  aspect-ratio: 1/1;
 }
 .info {
-  height: 15.5rem;
-  padding: 0 1.5rem 1.5rem 1.5rem;
   display: flex;
   flex-direction: column;
-  row-gap: 1rem;
+  aspect-ratio: 3/2;
+}
+.info >  * {
+  margin-block-end: 1rem;
+  margin-inline: 1rem;
 }
 .tags {
   height: 2rem;
-  padding: 0 .3rem;
+  margin: .3rem;
   overflow-x: auto;
   display: flex;
   flex-direction: row;

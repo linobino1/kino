@@ -39,26 +39,24 @@ export const ScreeningsListItem: React.FC<Props> = ({ screening }) => {
           format="MMM"
         />
       </div>
-      <div className={classes.imgWrapper}>
-        <Image
-          image={((screening.featureFilms[0] as FilmPrint)?.movie as Movie)?.still as Media}
-          srcset_={[
-            { size: '480x320', width: 380 },
-          ]}
-          sizes_={[
-            '480px',
-          ]}
-          alt={t('movie still') as string}
-        />
-      </div>
-      <div className={classes.tags}>
-        { screening.series && (
-          <div className={`${classes.tag} ${classes.series}`}>
-            {(screening.series as ScreeningSery).name}
-          </div>
-        )}
-      </div>
+      <Image
+        image={((screening.featureFilms[0] as FilmPrint)?.movie as Movie)?.still as Media}
+        srcset_={[
+          { size: '480x320', width: 380 },
+        ]}
+        sizes_={[
+          '480px',
+        ]}
+        alt={t('movie still') as string}
+      />
       <div className={classes.info}>
+        <div className={classes.tags}>
+          { screening.series && (
+            <div className={`${classes.tag} ${classes.series}`}>
+              {(screening.series as ScreeningSery).name}
+            </div>
+          )}
+        </div>
         <Date
           iso={screening.date as string}
           className={classes.time}
