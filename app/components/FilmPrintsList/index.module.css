@@ -35,11 +35,11 @@
   grid-column: 1;
   grid-row: 1;
   z-index: 1;
+  background: linear-gradient(180deg, #000000 -50%, #00000000 54%);
 }
 .title {
-  font-size: var(--font-size-xx-big);
+  font: var(--font-xx-big);
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height);
   text-transform: uppercase;
 }
 .subtitle {
