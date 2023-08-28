@@ -42,7 +42,7 @@ export const ScreeningsListItem: React.FC<Props> = ({ screening }) => {
       <div className={classes.imgWrapper}>
         <Image
           image={((screening.featureFilms[0] as FilmPrint)?.movie as Movie)?.still as Media}
-          srcSet_={[
+          srcset_={[
             { size: '480x320', width: 380 },
           ]}
           sizes_={[

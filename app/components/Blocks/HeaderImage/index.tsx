@@ -17,7 +17,7 @@ export const HeaderImage: React.FC<Type> = ({ image }) => {
           <Image
             className={classes.headerImage}
             image={image as Media}
-            srcSet_={[
+            srcset_={[
               { size: '2560x1706', width: 2560 },
               { size: '1920x1280', width: 1920 },
               { size: '1280x853', width: 1280 },

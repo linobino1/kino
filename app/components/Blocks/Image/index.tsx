@@ -12,7 +12,7 @@ export const Image: React.FC<Type> = ({ image }) => {
   return image as Media ? (
     <ImageComponent
       image={image as Media}
-      srcSet_={[
+      srcset_={[
         { size: '2560x1706', width: 2560 },
         { size: '1280x853', width: 1024 },
         { size: '768x768', width: 768 },

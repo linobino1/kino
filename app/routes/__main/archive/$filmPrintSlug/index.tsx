@@ -48,7 +48,7 @@ export default function Item() {
         <Image
           className={classes.headerImage}
           image={movie.still as Media}
-          srcSet_={[
+          srcset_={[
             { size: '2560x1706', width: 2560 },
             { size: '1920x1280', width: 1920 },
             { size: '1280x853', width: 1280 },
@@ -66,7 +66,7 @@ export default function Item() {
               <div className={classes.poster}>
                 <Image
                   image={movie.poster as Media}
-                  srcSet_={[
+                  srcset_={[
                     { size: '260x390', width: 260 },
                   ]}
                   sizes_={[

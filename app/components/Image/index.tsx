@@ -18,7 +18,7 @@ export type SrcSet = {
 
 export interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {
   image: ImageType
-  srcSet_?: SrcSet
+  srcset_?: SrcSet
   sizes_?: string[]
   loader?: ImageLoader
 }
@@ -53,8 +53,8 @@ export const getSizesString = (sizes?: string[]): string => sizes?.join(', ') ||
 export const Image: React.FC<Props> = (props) => {
   // default loader is mediaUrl
   const loader = props.loader || mediaUrl;
-  const { image, alt, srcSet_, sizes_ } = props;
-  const srcSet = props.srcSet || getSrcSetString(loader, image, srcSet_);
+  const { image, alt, srcset_, sizes_ } = props;
+  const srcSet = props.srcSet || getSrcSetString(loader, image, srcset_);
   const sizes = props.sizes || getSizesString(sizes_);
 
   return image ? (
