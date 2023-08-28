@@ -30,13 +30,13 @@ export const ScreeningsListItem: React.FC<Props> = ({ screening }) => {
         />
         <Date
           iso={screening.date as string}
-          className={classes.dayNumber}
-          format="dd"
+          className={classes.month}
+          format="MMM"
         />
         <Date
           iso={screening.date as string}
-          className={classes.month}
-          format="MMM"
+          className={classes.dayNumber}
+          format="dd"
         />
       </div>
       <Image
