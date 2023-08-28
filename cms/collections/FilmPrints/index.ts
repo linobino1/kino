@@ -14,7 +14,7 @@ export const FilmPrints: CollectionConfig = {
   defaultSort: '-createdAt',
   admin: {
     group: t('Movie Database'),
-    defaultColumns: ['title', 'isRented', '_status'],
+    defaultColumns: ['title', 'format', 'languageVersion', 'isRented', '_status'],
     useAsTitle: 'title',
   },
   versions: {
@@ -132,7 +132,7 @@ export const FilmPrints: CollectionConfig = {
               type: 'relationship',
               relationTo: 'rentals',
               hasMany: false,
-              required: true,
+              required: false,
               admin: {
                 condition: (data) => data?.isRented,
               },
