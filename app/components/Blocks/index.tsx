@@ -1,6 +1,5 @@
 import React from 'react';
 import { Content } from './Content';
-import { Image } from './Image';
 import { HeaderImage } from './HeaderImage';
 import Gallery from './Gallery';
 import type { PageLayout } from 'cms/fields/pageLayout';
@@ -21,9 +20,6 @@ const Blocks: React.FC<Props> = ({
           switch (block.blockType) {
             case 'content':
               return <Content {...block} />;
-
-            case 'image':
-              return <Image {...block} />;
               
             case 'headerImage':
               return <HeaderImage {...block} />;
