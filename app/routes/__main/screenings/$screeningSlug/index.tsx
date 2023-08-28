@@ -51,10 +51,6 @@ export default function Item() {
 
   return (
     <Page>
-      <h1 className={classes.title}>
-        <span>{(screening.group as ScreeningGroup).name}</span>
-        <span className={classes.subtitle}>{screening.title}</span>
-      </h1>
       <div className={classes.imageHeader}>
         <Image
           className={classes.headerImage}
