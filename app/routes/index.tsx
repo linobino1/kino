@@ -1,10 +1,10 @@
 import { redirect } from "@remix-run/router";
 
 /**
- * Redirect to /blog
+ * Redirect to /news
  */
 export const loader = () => {
-  throw redirect('/blog');
+  throw redirect('/news');
 };
 
 export default function Index() {
