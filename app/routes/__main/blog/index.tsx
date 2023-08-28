@@ -19,6 +19,7 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
   });
   const posts = await payload.find({
     collection: 'posts',
+    sort: '-date',
     locale,
   });
   

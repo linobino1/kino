@@ -43,7 +43,6 @@ ul.posts li img.link {
 }
 ul.posts li .date {
   font: var(--font-small);
-  color: var(--color-theme-contrast-light);
 }
 ul.posts li h2 {
   font: var(--font-xxx-big);
