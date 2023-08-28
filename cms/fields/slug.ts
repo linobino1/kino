@@ -14,6 +14,7 @@ export const slugField = (field: string): Field => ({
   type: 'text',
   unique: true,
   index: true,
+  label: t('Slug'),
   admin: {
     position: 'sidebar',
     description: t('Will be automatically generated if left blank.'),

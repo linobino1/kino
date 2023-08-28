@@ -133,5 +133,6 @@
   "Category": "Kategorie",
   "Color": "Farbe",
   "Colors": "Farben",
-  "Comma-separated list of tags.": "Komma-getrennte Tags."
+  "Comma-separated list of tags.": "Komma-getrennte Tags.",
+  "Slug": "URL Slug"
 }
