@@ -29,6 +29,8 @@ import LanguageVersions from './cms/collections/FilmPrints/LanguageVersions';
 import SoundFormats from './cms/collections/FilmPrints/SoundFormats';
 import Rentals from './cms/collections/FilmPrints/Rentals';
 import ScreeningsPage from './cms/globals/pages/ScreeningsPage';
+import Colors from './cms/collections/FilmPrints/Colors';
+import Categories from './cms/collections/FilmPrints/Categories';
 import { MigrateMovieView } from './cms/MigrateMovie/admin/View';
 import { endpoints as migrateMovieEndpoints } from './cms/MigrateMovie/api/endpoints';
 import { MigrateMovieLink } from './cms/MigrateMovie/admin/Link';
@@ -124,6 +126,8 @@ export default buildConfig({
     Genres,
     Locations,
     Rentals,
+    Colors,
+    Categories,
     
     // System
     Navigations,

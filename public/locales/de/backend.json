@@ -129,5 +129,9 @@
   "AdminExplainMovieTitle": "Titel des Films, wie er auf der Webseite verwendet wird. Übersetzungen können in den Sprachversionen angelegt werden.",
   "AdminExplainOriginalTitle": "Originaltitel des Films",
   "AdminExplainInternationalTitle": "Internationaler Titel des Films, gewöhnlich der englische Titel",
-  "Abbreviation": "Kürzel"
+  "Abbreviation": "Kürzel",
+  "Category": "Kategorie",
+  "Color": "Farbe",
+  "Colors": "Farben",
+  "Comma-separated list of tags.": "Komma-getrennte Tags."
 }

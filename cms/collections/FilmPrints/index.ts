@@ -148,6 +148,16 @@ export const FilmPrints: CollectionConfig = {
               required: true,
             },
             {
+              name: 'category',
+              label: t('Category'),
+              type: 'relationship',
+              relationTo: 'categories',
+              admin: {
+                condition: (data) => data?.type === 'analog' && !data?.isRented,
+              },
+              required: true,
+            },
+            {
               name: 'numActs',
               label: t('Number of Acts'),
               type: 'number',
@@ -165,6 +175,16 @@ export const FilmPrints: CollectionConfig = {
                 condition: (data) => !data?.isRented,
               },
               required: true,
+            },
+            {
+              name: 'color',
+              label: t('Color'),
+              type: 'relationship',
+              relationTo: 'colors',
+              required: true,
+              admin: {
+                condition: (data) => !data?.isRented,
+              },
             },
             {
               name: 'soundFormat',
@@ -185,6 +205,15 @@ export const FilmPrints: CollectionConfig = {
                 condition: (data) => data?.type === 'analog' && !data?.isRented,
               },
             },
+            {
+              name: 'tags',
+              label: t('Tags'),
+              type: 'text',
+              admin: {
+                description: t('Comma-separated list of tags.'),
+                condition: (data) => !data?.isRented,
+              },
+            }
           ],
         },
       ],
