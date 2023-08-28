@@ -6,6 +6,7 @@ import type {
   LanguageVersion,
   Rental,
   Media,
+  Format,
 } from "payload/generated-types";
 import React from "react";
 import classes from './index.module.css';
@@ -28,6 +29,7 @@ export const Movie: React.FC<Props> = ({
     movie.year,
     (movie.directors as Person[])?.map((x) => x.name).join(', '),
     t('duration {duration}', { duration: movie.duration }),
+    (filmprint?.format as Format).name,
     movie.ageRating ? t('ageRating {age}', { age: movie.ageRating}) : null,
     filmprint ? (filmprint.languageVersion as LanguageVersion)?.name : null,
   ].filter(Boolean);
