@@ -19,9 +19,7 @@ export const ScreeningsListItem: React.FC<Props> = ({ screening }) => {
   const { t } = useTranslation();
 
   return (
-    <div
-      className={classes.screening}
-    >
+    <div className={classes.screening}>
       <div className={classes.date}>
         <Date
           iso={screening.date as string}

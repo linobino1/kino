@@ -28,7 +28,7 @@
   transition: all .3s ease-in-out;
   transform: translate(0px, -2%);
 }
-img {
+.screening img {
   object-fit: cover;
   width: 100%;
   aspect-ratio: 1/1;
