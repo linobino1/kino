@@ -1,11 +1,22 @@
 import payload from "payload";
-import path from "path";
 import fs from "fs";
 import invariant from "tiny-invariant";
 
 require('dotenv').config();
 
-const importDir = path.resolve(__dirname, '../../../mediaimport');
+// dev: project_root/mediaimport
+// prod: project_root/dist/mediaimport
+const importDir = process.argv[2];
+if (!importDir) {
+  console.log('no import directory specified. Exiting.');
+  process.exit(1);
+}
+
+// check if import directory exists
+if (!fs.existsSync(importDir)) {
+  console.log(`import directory does not exist: ${importDir}`);
+  process.exit(1);
+}
 
 /**
  * add all files from the media folder to the media collection

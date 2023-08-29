@@ -22,7 +22,8 @@
     "env.d.ts",
     "server.ts",
     "payload.config.ts",
-    "migrate-mongo-config.js"
+    "migrate-mongo-config.js",
+    "./cms/scripts/**/*.ts"
   ],
   "ts-node": {
     "transpileOnly": true
