@@ -17,7 +17,7 @@ services:
       - traefik
       - default
     volumes:
-      - ./media:/app/dist/media
+      - media:/app/dist/media
     environment:
       NODE_ENV: production
       PAYLOAD_SECRET:
@@ -65,3 +65,5 @@ networks:
 
 volumes:
   data:
+  media:
+    name: media
