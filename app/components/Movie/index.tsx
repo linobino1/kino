@@ -60,7 +60,11 @@ export const Movie: React.FC<Props> = ({
         { (filmprint?.rental as Rental) && (
           <>
             <br />
-            <span>{t('rentalCredits', { rental: (filmprint?.rental as Rental)?.name })}</span>
+            <span
+              dangerouslySetInnerHTML={{
+                __html: t('rentalCredits', { rental: (filmprint?.rental as Rental)?.name }) as string,
+              }}
+            />
             { (filmprint?.rental as Rental)?.logo && (
               <div className={classes.rentalLogo}>
                 <Image image={((filmprint?.rental as Rental)?.logo as Media)} />
