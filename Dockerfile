@@ -43,6 +43,10 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/public ./public
 
+# copy mongo-migrate files
+COPY migrations ./migrations
+COPY migrate-mongo-config.js ./migrate-mongo-config.js
+
 EXPOSE 3000
 
 CMD ["yarn", "start"]
