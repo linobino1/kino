@@ -23,57 +23,43 @@ export const Media: CollectionConfig = {
     imageSizes: [
       // Film Poster
       {
-        name: '120x180',
+        name: '120w',
         width: 120,
         height: 180,
       },
       {
-        name: '260x390',
+        name: '260w',
         width: 260,
         height: 390,
       },
       // Film Still
       {
-        name: '320x160',
+        name: '250w',
         width: 320,
-        height: 160,
       },
       {
-        name: '480x320',
+        name: '400w',
         width: 480,
-        height: 320,
       },
       {
-        name: '768x384',
-        width: 768,
-        height: 384,
-      },
-      // Square
-      {
-        name: '512x512',
+        name: '500w',
         width: 512,
-        height: 512,
       },
       {
-        name: '768x768',
+        name: '750w',
         width: 768,
-        height: 768,
       },
-      // Landscape
       {
-        name: '1280x853',
+        name: '1000w',
         width: 1280,
-        height: 853,
       },
       {
-        name: '1920x1280',
+        name: '1500w',
         width: 1920,
-        height: 1280,
       },
       {
-        name: '2560x1706',
+        name: '2560w',
         width: 2560,
-        height: 1706,
       },
     ],
   },
@@ -105,30 +91,31 @@ export const Media: CollectionConfig = {
       type: 'text',
       label: t('TMDB Filepath'),
       required: false,
+      unique: false,
       admin: {
         readOnly: true,
       },
       // make sure the media is not being migrated twice from themoviedb.org
-      validate: async (value, { t, payload, data }: { t: any, payload?: Payload, data: Partial<MediaType>}) => {
-        if (value === null) return true;
-        if (!payload) return true;  // only validate on server
+      // validate: async (value, { t, payload, data }: { t: any, payload?: Payload, data: Partial<MediaType>}) => {
+      //   if (value === null) return true;
+      //   if (!payload) return true;  // only validate on server
         
-        const { docs } = await payload.find({
-          collection: 'media',
-          where: {
-            tmdbFilepath: {
-              equals: value,
-            },
-          },
-        });
-        if (docs.length > 1) {
-          return t('Media already exists');
-        }
-        if (docs.length === 1 && docs[0].id !== data.id) {
-          return t('Media already exists');
-        }
-        return true;
-      },
+      //   const { docs } = await payload.find({
+      //     collection: 'media',
+      //     where: {
+      //       tmdbFilepath: {
+      //         equals: value,
+      //       },
+      //     },
+      //   });
+      //   if (docs.length > 1) {
+      //     return t('Media already exists');
+      //   }
+      //   if (docs.length === 1 && docs[0].id !== data.id) {
+      //     return t('Media already exists');
+      //   }
+      //   return true;
+      // },
     }
   ],
 };

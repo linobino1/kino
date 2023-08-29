@@ -21,9 +21,9 @@ export const HeaderImage: React.FC<Type> = ({ image, navigation }) => {
             className={classes.headerImage}
             image={image as Media}
             srcset_={[
-              { size: '2560p', width: 2560 },
-              { size: '1920p', width: 1920 },
-              { size: '1280p', width: 1280 },
+              { size: '2560w', width: 2560 },
+              { size: '1500w', width: 1920 },
+              { size: '1000w', width: 1280 },
             ]}
             sizes_={[
               '95vw',

@@ -183,11 +183,11 @@ const serialize = (children: Children): React.ReactElement[] => children.map((no
           <Image
             image={node.value as Media}
             srcset_={[
-              { size: '2560x1706', width: 2560 },
-              { size: '1920x1280', width: 1920 },
-              { size: '1280x853', width: 1280 },
-              { size: '768x768', width: 768 },
-              { size: '512x512', width: 512 },
+              { size: '2560w', width: 2560 },
+              { size: '1500w', width: 1920 },
+              { size: '1000w', width: 1280 },
+              { size: '750w', width: 768 },
+              { size: '500w', width: 512 },
             ]}
             sizes_={[
               '70vw',

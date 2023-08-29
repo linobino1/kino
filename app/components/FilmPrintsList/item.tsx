@@ -26,8 +26,8 @@ export const FilmPrintsListItem: React.FC<Props> = ({
         className={classes.image}
         image={movie.still as Media}
         srcset_={[
-          { size: '320x160', width: 380 },
-          { size: '768x384', width: 768 },
+          { size: '250w', width: 380 },
+          { size: '750w', width: 768 },
         ]}
         sizes_={[
           '380px',

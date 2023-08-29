@@ -40,8 +40,8 @@ export const Movie: React.FC<Props> = ({
         <Image
           image={movie.poster as Media}
           srcset_={[
-            { size: '120x180', width: 768 },
-            { size: '260x390', width: 512 },
+            { size: '120w', width: 768 },
+            { size: '260w', width: 512 },
           ]}
           sizes_={[
             '95vw',
