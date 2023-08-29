@@ -17,8 +17,10 @@
     "seed": "cross-env PAYLOAD_CONFIG_PATH=dist/payload.config.js ts-node --require dotenv/config ./cms/seed/index.ts",
     "seed:dev": "ts-node --require dotenv/config ./cms/seed/index.ts",
     "import:media": "cross-env ts-node ./cms/scripts/mediaImport",
-    "migrate": "migrate-mongo up",
-    "migrate:down": "migrate-mongo down"
+    "migrate": "cross-env MIGRATE_MONGO_CONFIG_FILENAME=dist/migrate-mongo-config.js migrate-mongo up",
+    "migrate:down": "cross-env MIGRATE_MONGO_CONFIG_FILENAME=dist/migrate-mongo-config.js migrate-mongo down",
+    "dev:migrate": "migrate-mongo up",
+    "dev:migrate:down": "migrate-mongo down"
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^1.8.1",
