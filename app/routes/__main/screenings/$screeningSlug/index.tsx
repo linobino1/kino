@@ -3,7 +3,6 @@ import { useLoaderData } from "@remix-run/react";
 import type {
   FilmPrint,
   Movie as MovieType,
-  ScreeningGroup,
   Location,
   ScreeningSery,
   Media,
@@ -15,6 +14,7 @@ import i18next from "~/i18next.server";
 import { useTranslation } from "react-i18next";
 import Page from "~/components/Page";
 import Image from "~/components/Image";
+import { Response } from '@remix-run/node';
 
 export const loader = async ({ params, request, context: { payload }}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
@@ -29,6 +29,10 @@ export const loader = async ({ params, request, context: { payload }}: LoaderArg
     depth: 11,
   });
   
+  if (!data.docs.length) {
+    throw new Response('Screening not found', { status: 404 });
+  }
+  
   return {
     screening: data.docs[0],
   }
@@ -36,7 +40,7 @@ export const loader = async ({ params, request, context: { payload }}: LoaderArg
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return {
-    title: data.screening.title,
+    title: data?.screening.title,
   }
 };
 

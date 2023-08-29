@@ -4,6 +4,9 @@ import classes from "./index.module.css";
 import i18next from "~/i18next.server";
 import Page from "~/components/Page";
 import ScreeningsList from "~/components/ScreeningsList";
+import { ErrorPage } from "~/components/ErrorPage";
+
+export const ErrorBoundary = ErrorPage;
 
 export const loader = async ({ params, request, context: { payload }}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
@@ -17,6 +20,11 @@ export const loader = async ({ params, request, context: { payload }}: LoaderArg
     locale,
     depth: 11,
   })).docs[0];
+  
+  if (!screeningSeries) {
+    throw new Response('Screening series not found', { status: 404 });
+  }
+  
   const screenings = (await payload.find({
     collection: 'screenings',
     where: {

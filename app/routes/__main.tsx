@@ -5,6 +5,9 @@ import Footer from "~/components/Footer";
 import Header from "~/components/Header";
 import i18next from "~/i18next.server";
 import classes from "./__main.module.css";
+import { ErrorPage } from "~/components/ErrorPage";
+
+export const ErrorBoundary = ErrorPage;
 
 export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);

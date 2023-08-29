@@ -28,11 +28,7 @@ const Blocks: React.FC<Props> = ({
               return <Gallery images={block.images} />;
               
             case 'outlet':
-              return (
-                <main>
-                  {children}
-                </main>
-              )
+              return children;
           }
         })()}
       </section>

@@ -6,6 +6,10 @@ import classes from "./index.module.css";
 import { ScreeningsList } from "~/components/ScreeningsList";
 import i18next from "~/i18next.server";
 import { pageDescription, pageKeywords, pageTitle } from "~/util/pageMeta";
+import { Response } from '@remix-run/node';
+import { ErrorPage } from "~/components/ErrorPage";
+
+export const ErrorBoundary = ErrorPage;
 
 export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
@@ -22,6 +26,9 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
       },
     },
   })).docs[0];
+  if (!group) {
+    throw new Response('Page not found', { status: 404 });
+  }
   const screenings = await payload.find({
     collection: 'screenings',
     locale,
@@ -41,6 +48,10 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
     sort: 'date',
   });
   
+  if (!screenings.docs.length) {
+    throw new Response('Page not found', { status: 404 });
+  }
+  
   return {
     page,
     screenings: screenings.docs || [],
@@ -48,9 +59,9 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data, parentsData }) => ({
-  title: pageTitle(parentsData.root?.site?.meta?.title, data.page?.meta?.title),
-  description: pageDescription(parentsData.root?.site?.meta?.description, data.page?.meta?.description),
-  keywords: pageKeywords(parentsData.root?.site?.meta?.keywords, data.page?.meta?.keywords),
+  title: pageTitle(parentsData.root?.site?.meta?.title, data?.page?.meta?.title),
+  description: pageDescription(parentsData.root?.site?.meta?.description, data?.page?.meta?.description),
+  keywords: pageKeywords(parentsData.root?.site?.meta?.keywords, data?.page?.meta?.keywords),
 });
 
 export default function Index() {

@@ -30,9 +30,9 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data, parentsData }) => ({
-  title: pageTitle(parentsData.root?.site?.meta?.title, data.page?.meta?.title),
-  description: pageDescription(parentsData.root?.site?.meta?.description, data.page?.meta?.description),
-  keywords: pageKeywords(parentsData.root?.site?.meta?.keywords, data.page?.meta?.keywords),
+  title: pageTitle(parentsData.root?.site?.meta?.title, data?.page?.meta?.title),
+  description: pageDescription(parentsData.root?.site?.meta?.description, data?.page?.meta?.description),
+  keywords: pageKeywords(parentsData.root?.site?.meta?.keywords, data?.page?.meta?.keywords),
 });
 
 export default function Index() {

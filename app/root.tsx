@@ -7,9 +7,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  isRouteErrorResponse,
   useLoaderData,
-  useRouteError,
 } from "@remix-run/react";
 import type { LoaderArgs } from "@remix-run/node";
 import i18next from "~/i18next.server";
@@ -27,6 +25,9 @@ import type { Media} from "payload/generated-types";
 import environment from "./util/environment";
 import CookieConsent from "react-cookie-consent";
 import classes from "./root.module.css";
+import { ErrorPage } from "~/components/ErrorPage";
+
+export const ErrorBoundary = ErrorPage;
 
 export const links: LinksFunction = () => {
   return [
@@ -91,37 +92,6 @@ export function useChangeLanguage(locale: string) {
   useEffect(() => {
     i18n.changeLanguage(locale);
   }, [locale, i18n]);
-}
-
-export function ErrorBoundary() {
-  let error = useRouteError();
-
-  if (isRouteErrorResponse(error)) {
-    return (
-      <div>
-        <h1>
-          {error.status} {error.statusText}
-        </h1>
-        <p>{error.data}</p>
-      </div>
-    );
-  }
-  
-  // display info about the error in development
-  return environment().NODE_ENV === 'development' ? (
-    error instanceof Error ? (
-      <div>
-        <h1>Error</h1>
-        <p>{error.message}</p>
-        <p>The stack trace is:</p>
-        <pre>{error.stack}</pre>
-      </div>
-    ) : (
-      <pre>{'Unknown Error'}</pre>
-    )
-  ) : (
-    <h1>Something went wrong</h1>
-  );
 }
 
 export default function App() {
