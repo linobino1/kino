@@ -106,6 +106,11 @@ const Screenings: CollectionConfig = {
       label: t('Date & Time'),
       type: 'date',
       required: true,
+      defaultValue: () => {
+        const res = new Date();
+        res.setHours(19, 0, 0, 0);
+        return res.toISOString();
+      },
       admin: {
         date: {
           pickerAppearance: 'dayAndTime',
