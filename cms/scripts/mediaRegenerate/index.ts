@@ -16,6 +16,8 @@ const mediaCollections: {
     relDir: '',
   },
 ];
+// only regenerate these extensions
+const extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
 
 const regenerateMediaSizes = async () => {
   try {
@@ -41,6 +43,11 @@ const regenerateMediaSizes = async () => {
     });
 
     await Promise.all(media.docs.map(async (mediaDoc: any) => {
+      // skip files that are not images
+      if (!extensions.some((ext) => mediaDoc.filename?.toLowerCase().endsWith(ext))) {
+        console.log(`skipping ${mediaDoc.filename}`);
+        return;
+      }
       const filePath = `${mediaDir}${collection.relDir}/${mediaDoc.filename}`;
       const tempFilePath = `${mediaDir}${collection.relDir}/temp_${mediaDoc.filename}`;
       
