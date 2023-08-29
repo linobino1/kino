@@ -21,7 +21,8 @@
   "include": [
     "env.d.ts",
     "server.ts",
-    "payload.config.ts"
+    "payload.config.ts",
+    "migrate-mongo-config.js"
   ],
   "ts-node": {
     "transpileOnly": true
