@@ -20,6 +20,7 @@ const Categories: CollectionConfig = {
       name: 'name',
       label: t('Name'),
       type: 'text',
+      localized: true,
       required: true,
     },
   ],

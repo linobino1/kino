@@ -20,6 +20,7 @@ const Colors: CollectionConfig = {
       name: 'name',
       label: t('Name'),
       type: 'text',
+      localized: true,
       required: true,
     },
   ],
