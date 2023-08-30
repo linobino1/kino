@@ -31,10 +31,14 @@ export const FilmPrints: CollectionConfig = {
         if (!req) return data;  // this hook is only used server-side
         if (!data?.movie || !data?.format) return data;
         
+        // we'll name all filmprints in fallback language
+        const locale = req.payload.config.i18n.fallbackLng as string;
+        
         if (!data.title) {
-          // create title from movie & format
+          // create title from movie, format & language version (short)
           const movie = (await req.payload.find({
             collection: 'movies',
+            locale,
             where: {
               _id: {
                 equals: data.movie,
@@ -43,14 +47,23 @@ export const FilmPrints: CollectionConfig = {
           })).docs[0] as Movie;
           const format = (await req.payload.find({
             collection: 'formats',
+            locale,
             where: {
               _id: {
                 equals: data.format,
               },
             },
           })).docs[0] as Format;
-          const title = `${movie.originalTitle} ${format.name}`;
-          data.title = title;
+          const languageVersion = (await req.payload.find({
+            collection: 'languageVersions',
+            locale,
+            where: {
+              _id: {
+                equals: data.languageVersion,
+              },
+            },
+          })).docs[0];
+          data.title = `${movie.internationalTitle} ${format.name} ${languageVersion.abbreviation}`;
         }
         
         // create slug from title
