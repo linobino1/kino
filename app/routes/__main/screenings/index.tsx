@@ -70,7 +70,10 @@ export default function Index() {
 
   return (
     <Page layout={page.layout}>
-      <ScreeningsList items={screenings} className={classes.screeningsList} />
+      <ScreeningsList
+        items={screenings}
+        className={classes.screeningsList}
+      />
     </Page>
   );
 }

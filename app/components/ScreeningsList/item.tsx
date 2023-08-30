@@ -13,9 +13,12 @@ import Image from '~/components/Image';
 
 type Props = {
   screening: Screening
+  activeScreeningSery?: ScreeningSery
 };
 
-export const ScreeningsListItem: React.FC<Props> = ({ screening }) => {
+export const ScreeningsListItem: React.FC<Props> = ({
+  screening, activeScreeningSery,
+}) => {
   const { t } = useTranslation();
 
   return (
@@ -50,10 +53,13 @@ export const ScreeningsListItem: React.FC<Props> = ({ screening }) => {
       <div className={classes.info}>
         <div className={classes.tags}>
           { screening.series && (
-            <div className={`${classes.tag} ${classes.series}`}>
-              {(screening.series as ScreeningSery).name}
-            </div>
-          )}
+              activeScreeningSery?.id !== (screening.series as ScreeningSery)?.id
+            ) && (
+              <div className={`${classes.tag} ${classes.series}`}>
+                {(screening.series as ScreeningSery).name}
+              </div>
+            )
+          }
         </div>
         <Date
           iso={screening.date as string}

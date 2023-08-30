@@ -1,10 +1,10 @@
 import type { LoaderArgs, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import classes from "./index.module.css";
 import i18next from "~/i18next.server";
 import Page from "~/components/Page";
 import ScreeningsList from "~/components/ScreeningsList";
 import { ErrorPage } from "~/components/ErrorPage";
+import classes from "./index.module.css";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -55,7 +55,11 @@ export default function Item() {
 
   return (
     <Page layout={screeningSeries.layout}>
-      <ScreeningsList items={screenings} className={classes.screeningsList} />
+      <ScreeningsList
+        items={screenings}
+        className={classes.screeningsList}
+        activeScreeningSery={screeningSeries}
+      />
     </Page>
   )
 }
