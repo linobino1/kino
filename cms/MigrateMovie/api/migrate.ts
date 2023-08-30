@@ -18,6 +18,7 @@ import {
   getTmdbCredits,
   getReleaseDates,
   createOrFindItemByName,
+  getTmdbVideos,
 } from "./helpers";
 import type { MigrateBody } from "./types";
 
@@ -114,6 +115,13 @@ export const migrate = async (body: MigrateBody, payload: Payload): Promise<Movi
   // get release date and age restriction
   const ageRating = await getReleaseDates(tmdbId) || '';
   
+  // get trailer URL
+  const videos = await getTmdbVideos(tmdbId);
+  const tmdbTrailer = videos.results.find((video) => (
+    video.type === 'Trailer' && video.site === 'YouTube'
+  ))?.key;
+  const trailer = tmdbTrailer ? `https://www.youtube.com/watch?v=${tmdbTrailer}` : undefined;
+  
   // create movie
   try {
     movie = await payload.create({
@@ -137,6 +145,7 @@ export const migrate = async (body: MigrateBody, payload: Payload): Promise<Movi
         productionCompanies,
         duration: data.runtime,
         ageRating,
+        trailer,
       },
       draft: true,
       locale: tmdbLng,

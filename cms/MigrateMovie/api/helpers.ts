@@ -8,6 +8,7 @@ import type { Movie, Media } from "payload/generated-types";
 import type {
   tmdbCredits,
   tmdbMovie,
+  tmdbVideos,
   tmdbReleaseDatesResponse,
 } from "../tmdb/types";
 import { ageRatingAges } from "../../collections/Movies";
@@ -67,6 +68,25 @@ export const getTmdbCredits = async (tmdbId: number): Promise<tmdbCredits> => {
     data = JSON.parse(res?.data);
   } catch (err) {
     throw new Error('Unable to get themoviedb response for credits');
+  }
+  if (!data || data.success === false) {
+    throw new Error(`Movie ${tmdbId} not found`);
+  }
+  return data
+};
+
+/**
+ * get the movie credits from themoviedb.org
+ * @param tmdbId id of the movie on themoviedb.org
+ * @returns the API response
+ */
+export const getTmdbVideos = async (tmdbId: number): Promise<tmdbVideos> => {
+  let data;
+  try {
+    const res = await themoviedb.get(`/movie/${tmdbId}/videos`);
+    data = JSON.parse(res?.data);
+  } catch (err) {
+    throw new Error('Unable to get themoviedb response for videos');
   }
   if (!data || data.success === false) {
     throw new Error(`Movie ${tmdbId} not found`);

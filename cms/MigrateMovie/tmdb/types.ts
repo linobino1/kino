@@ -76,3 +76,18 @@ export interface tmdbRelease {
 export interface tmdbReleaseDatesResponse {
   results: tmdbRelease[];
 }
+export interface tmdbVideo {
+  iso_639_1: string;
+  iso_3166_1: string;
+  name: string;
+  key: string;
+  site: 'YouTube' | string;
+  size: number;
+  type: 'Trailer' | string;
+  official: boolean;
+  published_at: string;
+  id: string;
+}
+export interface tmdbVideos {
+  results: tmdbVideo[];
+}

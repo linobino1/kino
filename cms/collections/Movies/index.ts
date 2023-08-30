@@ -194,6 +194,12 @@ const Movies: CollectionConfig = {
       required: true,
     },
     {
+      name: 'trailer',
+      label: t('Trailer'),
+      type: 'text',
+      required: false,
+    },
+    {
       label: t('Credits'),
       type: 'tabs',
       tabs: [
