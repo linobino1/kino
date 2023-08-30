@@ -15,7 +15,7 @@ export interface Props extends React.HTMLAttributes<HTMLElement> {
 }
 
 export const Pagination: React.FC<Props> = (props) => {
-  return (
+  return props.totalPages > 1 ? (
     <div className={classes.container}>
       <Link
         to={`?page=${props.prevPage || props.totalPages}`}
@@ -35,7 +35,7 @@ export const Pagination: React.FC<Props> = (props) => {
         aria-disabled={!props.hasNextPage}
       >&gt;</Link>
     </div>
-  )
+  ) : null;
 };
 
 export default Pagination;
