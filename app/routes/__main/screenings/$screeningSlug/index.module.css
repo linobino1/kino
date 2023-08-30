@@ -121,3 +121,8 @@ a.tag:visited {
 .discussion::before {
   content: "💬 ";
 }
+@media screen and (max-width: 768px) {
+  .posters {
+    display: none;
+  }
+}

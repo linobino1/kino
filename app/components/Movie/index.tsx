@@ -35,46 +35,42 @@ export const Movie: React.FC<Props> = ({
   ].filter(Boolean);
 
   return (
-    <div className={`${classes.movie} ${className}`}>
-      <div className={classes.poster}>
-        <Image
-          image={movie.poster as Media}
-          srcset_={[
-            { size: '120w', width: 768 },
-            { size: '260w', width: 512 },
-          ]}
-          sizes_={[
-            '95vw',
-          ]}
-          alt={t('movie poster') as string}
-        />
-      </div>
-      <div className={classes.movieInfo}>
-        <h2 className={classes.movieTitle}>{movie.title}</h2>
-        <div className={classes.movieSpecs}>
-          { specs.map((spec, i) => (
-            <div className={classes.movieSpecsItem} key={i}>{spec}</div>
-          ))}
-        </div>
-        <div className={classes.synopsis}>{movie.synopsis}</div>
-        { (filmprint?.rental as Rental) && (
-          <>
-            <br />
-            <span
-              dangerouslySetInnerHTML={{
-                __html: t('rentalCredits', { rental: (filmprint?.rental as Rental)?.name }) as string,
-              }}
+    <div className={`${classes.container} ${className}`}>
+      <Image
+        className={classes.poster}
+        image={movie.poster as Media}
+        srcset_={[
+          { size: '120w', width: 768 },
+          { size: '260w', width: 512 },
+        ]}
+        sizes_={[
+          '95vw',
+        ]}
+        alt={t('movie poster') as string}
+      />
+      <h2>{movie.title}</h2>
+      <ul className={classes.specs}>
+        { specs.map((spec, i) => (
+          <li key={i}>{spec}</li>
+        ))}
+      </ul>
+      <div className={classes.synopsis}>{movie.synopsis}</div>
+      { (filmprint?.rental as Rental) && (
+        <div className={classes.rental}>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: t('rentalCredits', { rental: (filmprint?.rental as Rental)?.name }) as string,
+            }}
+          />
+          { (filmprint?.rental as Rental)?.logo && (
+            <Image
+              className={classes.rentalLogo}
+              image={((filmprint?.rental as Rental)?.logo as Media)}
             />
-            { (filmprint?.rental as Rental)?.logo && (
-              <div className={classes.rentalLogo}>
-                <Image image={((filmprint?.rental as Rental)?.logo as Media)} />
-              </div>
-            )}
-          </>
-        )}
-      </div>
+          )}
+        </div>
+      )}
     </div>
-
   );
 };
 

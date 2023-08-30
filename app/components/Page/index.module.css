@@ -19,11 +19,6 @@
     max-width: var(--page-max-width);
     margin: 0 auto;
 }
-@media screen and (max-width: 1000px) {
-    .page main {
-        padding: 1rem;
-    }    
-}
 /* Type 'info'  *************************************************************/
 .page[data-layout-type="info"] {
     color: var(--color-theme-contrast);
