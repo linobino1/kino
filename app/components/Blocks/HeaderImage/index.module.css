@@ -49,3 +49,8 @@ img.headerImage {
     margin-right: 0;
     padding-right: 0;
 }
+@media screen and (max-width: 768px) {
+    .pageHeader .overlay {
+        padding: .5rem 1rem;
+    }
+}
