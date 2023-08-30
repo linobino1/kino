@@ -1,8 +1,8 @@
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../i18n';
 import path from 'path';
-import type { Payload } from 'payload';
-import type { Media as MediaType } from 'payload/generated-types';
+// import type { Payload } from 'payload';
+// import type { Media as MediaType } from 'payload/generated-types';
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -12,10 +12,15 @@ export const Media: CollectionConfig = {
   },
   admin: {
     group: t('Media'),
+    pagination: {
+      defaultLimit: 100,
+      limits: [50, 100, 250, 500],
+    },
   },
   access: {
     read: (): boolean => true, // Everyone can read Media
   },
+  
   upload: {
     adminThumbnail: 'card',
     staticDir: path.resolve(__dirname, '../../media'),
