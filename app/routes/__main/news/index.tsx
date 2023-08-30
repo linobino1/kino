@@ -22,7 +22,7 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
   const posts = await payload.find({
     collection: 'posts',
     sort: '-date',
-    limit: 1,
+    limit: 10,
     pagination: true,
     page: postsPage,
     locale,
