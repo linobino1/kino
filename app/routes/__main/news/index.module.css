@@ -6,10 +6,9 @@ ul.posts {
   list-style: none;
   margin: 0;
   padding: 3rem 1rem 3rem 1rem;
-  row-gap: 2rem;
   width: 100%;
 }
-ul.posts li:last-child > hr {
+ul.posts > li:last-child > hr {
   display: none;
 }
 .empty {
@@ -21,45 +20,44 @@ ul.posts li:last-child > hr {
 }
 
 /* POST ********************************************************************/
-ul.posts li {
+ul.posts > li {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  justify-content: flex-start;
+  align-items: start;
   column-gap: 2rem;
 }
-ul.posts li > * {
+ul.posts > li > * {
   grid-row: auto;
   grid-column: 2;
 }
-ul.posts li > img {
+ul.posts > li > img {
+  grid-row: 1 / span 4;
   grid-column: 1;
-  grid-row: 1 / span 3;
   height: auto;
   width: 100%;
-  margin-bottom: 1.2rem;
 }
-ul.posts li img.link {
+ul.posts > li img.link {
   cursor: pointer;
 }
-ul.posts li .date {
+ul.posts > li .date {
   font: var(--font-small);
 }
-ul.posts li h2 {
+ul.posts > li h2 {
   font: var(--font-xxx-big);
   text-transform: uppercase;
-  margin: 0;
+  margin-block: .2em .4em;
 }
-ul.posts li hr {
+ul.posts > li hr {
   grid-column: 1 / span 2;
 }
 @media (max-width: 768px) {
-  ul.posts li {
+  ul.posts > li {
     grid-template-columns: 1fr;
   }
-  ul.posts li > * {
-    grid-column: 1;
+  ul.posts > li > * {
+    grid-column: 1 !important;
   }
-  ul.posts li .imageWrapper {
-    grid-row: 1;
+  ul.posts > li > img {
+    margin-bottom: 1.2em;
   }
 }
