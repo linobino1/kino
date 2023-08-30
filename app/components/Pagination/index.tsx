@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from './index.module.css';
+import { Link } from '@remix-run/react';
 
 export interface Props extends React.HTMLAttributes<HTMLElement> {
   hasNextPage: boolean;
@@ -13,28 +14,26 @@ export interface Props extends React.HTMLAttributes<HTMLElement> {
   totalPages: number;
 }
 
-const onPaginate = (page: number) => {
-  window.open(`?page=${page}`, '_self');
-}
-
 export const Pagination: React.FC<Props> = (props) => {
   return (
     <div className={classes.container}>
-      <button
-        type='button'
+      <Link
+        to={`?page=${props.prevPage || props.totalPages}`}
         className={classes.prev}
-        disabled={!props.hasPrevPage}
-        onClick={() => onPaginate(props.prevPage as number)}
-      >&lt;</button>
+        prefetch='intent'
+        preventScrollReset={true}
+        aria-disabled={!props.hasPrevPage}
+      >&lt;</Link>
       <div className={classes.current}>
         {props.page} / {props.totalPages}
       </div>
-      <button
-        type='button'
+      <Link
+        to={`?page=${props.nextPage || props.totalPages}`}
         className={classes.next}
-        disabled={!props.hasNextPage}
-        onClick={() => onPaginate(props.nextPage as number)}
-      >&gt;</button>
+        prefetch='intent'
+        preventScrollReset={true}
+        aria-disabled={!props.hasNextPage}
+      >&gt;</Link>
     </div>
   )
 };

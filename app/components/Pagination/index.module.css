@@ -11,17 +11,12 @@
   align-self: center;
   width: fit-content;
 }
-.container button {
-  -webkit-appearance: none;
-  appearance: none;
+.container a {
   color: inherit;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  cursor: pointer;
   font-size: 1.5em;
 }
-.container button:disabled {
+.container a[aria-disabled="true"] {
+  pointer-events: none;
   cursor: default;
   opacity: 0.5;
 }
