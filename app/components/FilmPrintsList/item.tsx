@@ -23,7 +23,6 @@ export const FilmPrintsListItem: React.FC<Props> = ({
   return (
     <div className={classes.item}>
       <Image
-        className={classes.image}
         image={movie.still as Media}
         srcset_={[
           { size: '250w', width: 380 },

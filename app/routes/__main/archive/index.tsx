@@ -169,7 +169,10 @@ export default function Index() {
           </select>
         ))}
       </filterFetcher.Form>
-      <FilmPrintsList items={items} className={classes.screeningsList} />
+      <FilmPrintsList
+        items={items}
+        className={classes.list}
+      />
     </Page>
   );
 }

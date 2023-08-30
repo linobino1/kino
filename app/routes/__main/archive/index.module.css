@@ -70,8 +70,10 @@
   background-repeat: no-repeat;
 }
 /* LIST    *********************************************************** */
-.screeningsList {
-  margin: 3vw;
+.list {
+  max-width: min(70em, 94vw);
+  margin-inline: auto;
+  margin-block: 3vw;
 }
 /* MOBILE  *********************************************************** */
 @media screen and (max-width: 768px) {

@@ -17,13 +17,18 @@ export const FilmPrintsList: React.FC<Props> = ({
   const { t } = useTranslation(); 
 
   return items?.length ? (
-    <div className={`${classes.list} ${className || ''}`}>
+    <ul className={`${classes.list} ${className || ''}`}>
       {items.map((item) => (
-        <Link to={`${item.slug as string}`} key={item.id}>
-          <FilmPrintsListItem item={item} />
-        </Link>
+        <li key={item.id}>
+          <Link
+            to={`${item.slug as string}`}
+            key={item.id}
+          >
+            <FilmPrintsListItem item={item} />
+          </Link>
+        </li>
       ))}
-    </div>
+    </ul>
   ) : (
     <div className={classes.empty}>{t('No films matching your search.')}</div>
   );
