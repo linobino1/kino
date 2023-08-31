@@ -67,24 +67,7 @@ export default function Item() {
           ]}
           alt={t('movie still') as string}
         />
-        <div className={classes.imageHeaderOverlay}>
-          <div className={classes.imageHeaderOverlayContent}>
-            <div className={classes.posters}>
-              <div className={classes.poster}>
-                <Image
-                  image={movie.poster as Media}
-                  srcset_={[
-                    { size: '260w', width: 260 },
-                  ]}
-                  sizes_={[
-                    '260px',
-                  ]}
-                  alt={t('movie poster') as string}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        <div className={classes.imageHeaderOverlay} />
       </div>
       <main>
         <div className={classes.movies}>
