@@ -6,19 +6,26 @@ import classes from "./index.module.css";
 import { ScreeningsList } from "~/components/ScreeningsList";
 import i18next from "~/i18next.server";
 import { pageDescription, pageKeywords, pageTitle } from "~/util/pageMeta";
+import { Response } from '@remix-run/node';
 import { ErrorPage } from "~/components/ErrorPage";
+import { getFixedT } from "i18next";
 
 export const ErrorBoundary = ErrorPage;
 
-let today = new Date();
-today.setHours(0,0,0,0);
-
-export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
+export const loader = async ({ request, params, context: { payload }}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
-  const page = await payload.findGlobal({
-    slug: 'screeningsPage',
+  const season = (await payload.find({
+    collection: 'screeningSeasons',
     locale,
-  });
+    where: {
+      slug: {
+        equals: params.seasonSlug,
+      },
+    },
+  })).docs[0];
+  if (!season) {
+    throw new Response('Page not found', { status: 404 });
+  }
   const screenings = await payload.find({
     collection: 'screenings',
     locale,
@@ -29,33 +36,31 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
       },
       and: [
         {
-          date: {
-            greater_than_equal: today,
+          season: {
+            equals: season.id,
           },
         },
       ],
     },
-    sort: '-date',
+    sort: 'date',
   });
   
   return {
-    page,
+    season,
     screenings: screenings.docs || [],
   }
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data, parentsData }) => ({
-  title: pageTitle(parentsData.root?.site?.meta?.title, data?.page?.meta?.title),
-  description: pageDescription(parentsData.root?.site?.meta?.description, data?.page?.meta?.description),
-  keywords: pageKeywords(parentsData.root?.site?.meta?.keywords, data?.page?.meta?.keywords),
+    title: pageTitle(parentsData.root?.site?.meta?.title, data?.season.name),
 });
 
 export default function Index() {
-  const { page, screenings } = useLoaderData<typeof loader>();
-
+  const { season, screenings } = useLoaderData<typeof loader>();
 
   return (
-    <Page layout={page.layout}>
+    <Page>
+      <h1>{season.name}</h1>
       <ScreeningsList
         items={screenings}
         className={classes.screeningsList}

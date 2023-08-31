@@ -17,7 +17,7 @@ import Genres from './cms/collections/Movies/Genres';
 import Movies from './cms/collections/Movies';
 import Countries from './cms/collections/Movies/Countries';
 import Screenings from './cms/collections/Screenings';
-import ScreeningGroups from './cms/collections/Screenings/ScreeningGroups';
+import ScreeningSeasons from './cms/collections/Screenings/ScreeningSeasons';
 import ScreeningSeries from './cms/collections/Screenings/ScreeningSeries';
 import Locations from './cms/collections/Screenings/Locations';
 import FilmPrints from './cms/collections/FilmPrints';
@@ -148,7 +148,7 @@ export default buildConfig({
     LanguageVersions,
     SoundFormats,
     Conditions,
-    ScreeningGroups,
+    ScreeningSeasons,
     Genres,
     Locations,
     Rentals,

@@ -63,13 +63,13 @@ const Screenings: CollectionConfig = {
       },
     },
     {
-      name: 'group',
-      label: t('Group'),
+      name: 'season',
+      label: t('Season'),
       type: 'relationship',
-      relationTo: 'screeningGroups',
+      relationTo: 'screeningSeasons',
       hasMany: false,
       required: true,
-      defaultValue: () => getDefaultDocId('screeningGroups'),
+      defaultValue: () => fetch(`/api/screeningSeasons/`).then((res) => res.json()).then((res) => res.docs[0].id),
     },
     {
       name: 'location',

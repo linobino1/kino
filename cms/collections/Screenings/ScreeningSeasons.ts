@@ -1,18 +1,18 @@
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
 import { slugField } from '../../fields/slug';
-import { defaultField } from '../../fields/default';
 
-const ScreeningGroups: CollectionConfig = {
-  slug: 'screeningGroups',
+const ScreeningSeasons: CollectionConfig = {
+  slug: 'screeningSeasons',
   labels: {
-    singular: t('Group'),
-    plural: t('Groups'),
+    singular: t('Season'),
+    plural: t('Seasons'),
   },
   admin: {
     group: t('Configuration'),
     useAsTitle: 'name',
   },
+  defaultSort: '-createdAt',
   access: {
     read: () => true,
   },
@@ -25,8 +25,7 @@ const ScreeningGroups: CollectionConfig = {
       required: true,
     },
     slugField('name'),
-    defaultField('screeningGroups'),
   ],
 };
 
-export default ScreeningGroups;
+export default ScreeningSeasons;
