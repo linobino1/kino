@@ -21,8 +21,9 @@ export const FilmPrintsList: React.FC<Props> = ({
       {items.map((item) => (
         <li key={item.id}>
           <Link
-            to={`${item.slug as string}`}
             key={item.id}
+            to={`${item.slug as string}`}
+            prefetch='intent'
           >
             <FilmPrintsListItem item={item} />
           </Link>

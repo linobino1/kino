@@ -20,7 +20,11 @@ export const ScreeningsList: React.FC<Props> = ({
   return items?.length ? (
     <div className={`${classes.list} ${className || ''}`}>
       {items.map((item) => (
-        <Link to={`/screenings/${item.slug as string}`} key={item.id}>
+        <Link
+          key={item.id}
+          to={`/screenings/${item.slug as string}`}
+          prefetch='intent'
+        >
           <ScreeningsListItem screening={item} activeScreeningSery={activeScreeningSery}/>
         </Link>
       ))}

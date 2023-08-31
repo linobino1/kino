@@ -64,6 +64,7 @@ export const Navigation: React.FC<Props> = ({
                 to={href}
                 className={`${classes.navItem} ${isActive && classes.active}`}
                 target={item.newTab ? '_blank' : undefined}
+                prefetch='intent'
               >
                 {inner}
               </Link>
