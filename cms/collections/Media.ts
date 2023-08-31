@@ -26,29 +26,28 @@ export const Media: CollectionConfig = {
     staticDir: path.resolve(__dirname, '../../media'),
     imageSizes: [
       {
-        name: '120w',
+        name: '120w', // small filmposter on desktop
         width: 120,
-        height: 180,
       },
       {
-        name: '250w',
-        width: 320,
+        name: '260w', // big filmposter on desktop
+        width: 260,
       },
       {
         name: '500w',
-        width: 512,
+        width: 500,
       },
       {
         name: '750w',
-        width: 768,
+        width: 750,
       },
       {
         name: '1000w',
-        width: 1280,
+        width: 1000,
       },
       {
         name: '1500w',
-        width: 1920,
+        width: 1500,
       },
       {
         name: '2560w',
