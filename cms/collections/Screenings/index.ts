@@ -100,7 +100,29 @@ const Screenings: CollectionConfig = {
       relationTo: 'filmPrints',
       hasMany: true,
     },
-    slugField('date'),
+    slugField('date', async ({ data, req }) => {
+      // we need the date and at least one feature film
+      if (!data || !('date' in data) || !('featureFilms' in data) || !(data.featureFilms.length)) {
+        return undefined;
+      }
+      
+      // date is an ISO string, let's just use the first 10 characters (YYYY-MM-DD)
+      const date = data.date.substr(0, 10);
+      
+      // movie is just an id
+      const filmPrint = await req.payload.findByID({
+        collection: 'filmPrints',
+        id: data.featureFilms[0],
+        locale: req.locale, 
+        depth: 2,
+      });
+      
+      // if we cannot find the movie title we abort
+      if (!filmPrint || !(filmPrint.movie)) return undefined;
+
+      // e.g. 2021-01-01-My Movie
+      return `${date}-${(filmPrint.movie as Movie)?.internationalTitle}`;
+    }),
     {
       name: 'date',
       label: t('Date & Time'),
