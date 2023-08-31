@@ -20,7 +20,6 @@ import { i18nCookie } from "./cookie";
 import type { DynamicLinksFunction } from "remix-utils";
 import { ExternalScripts } from "remix-utils";
 import { DynamicLinks } from "remix-utils";
-import { mediaUrl } from "./util/mediaUrl";
 import type { Media} from "payload/generated-types";
 import environment from "./util/environment";
 import CookieConsent from "react-cookie-consent";
@@ -69,7 +68,7 @@ export const dynamicLinks: DynamicLinksFunction<SerializeFrom<typeof loader>> = 
   return [
     {
       rel: "icon",
-      href: mediaUrl((data.site.favicon as Media)?.filename as string),
+      href: (data.site.favicon as Media)?.url as string,
       type: (data.site.logo as Media)?.mimeType,
     },
   ]

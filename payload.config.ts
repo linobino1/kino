@@ -35,14 +35,41 @@ import { MigrateMovieView } from './cms/MigrateMovie/admin/View';
 import { endpoints as migrateMovieEndpoints } from './cms/MigrateMovie/api/endpoints';
 import { MigrateMovieLink } from './cms/MigrateMovie/admin/Link';
 import { MigrateMovieButton } from './cms/MigrateMovie/admin/Button';
+import { cloudStorage } from '@payloadcms/plugin-cloud-storage';
+import { s3Adapter } from '@payloadcms/plugin-cloud-storage/s3';
 
 const mockModulePath = path.resolve(__dirname, 'mocks/emptyObject.js');
+console.log(process.env.S3_BUCKET, process.env.S3_ACCESS_KEY, process.env.S3_SECRET_KEY, process.env.S3_REGION)
 
 export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
   endpoints: [
     // path will be prefixed with /api if root is not set to true
     ...migrateMovieEndpoints,
+  ],
+  plugins: [
+    cloudStorage({
+      enabled: process.env.NODE_ENV === 'production',
+      collections: {
+        'media': {
+          // uncomment to link to the S3 object directly:
+          // disablePayloadAccessControl: true,
+          // generateFileURL: (file) => {
+          //   return `https://${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com/${file.filename}`;
+          // },
+          adapter: s3Adapter({
+            bucket: process.env.S3_BUCKET || 'bucket',
+            config: {
+              credentials: {
+                accessKeyId: process.env.S3_ACCESS_KEY || 'dummy',
+                secretAccessKey: process.env.S3_SECRET_KEY || 'dummy',
+              },
+              region: process.env.S3_REGION || 'us-east-1',
+            },
+          }),
+        },
+      },
+    }),
   ],
   admin: {
     user: Users.slug,

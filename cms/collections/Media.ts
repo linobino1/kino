@@ -22,29 +22,17 @@ export const Media: CollectionConfig = {
   },
   
   upload: {
-    adminThumbnail: 'card',
+    adminThumbnail: '120w',
     staticDir: path.resolve(__dirname, '../../media'),
-    staticURL: '/media',
     imageSizes: [
-      // Film Poster
       {
         name: '120w',
         width: 120,
         height: 180,
       },
       {
-        name: '260w',
-        width: 260,
-        height: 390,
-      },
-      // Film Still
-      {
         name: '250w',
         width: 320,
-      },
-      {
-        name: '400w',
-        width: 480,
       },
       {
         name: '500w',

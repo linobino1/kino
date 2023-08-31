@@ -11,7 +11,6 @@ export interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   symbol?: 'close' | 'menu'
 }
 
-// export const imageUrl = (image: Media, width: number, height: number): string => mediaUrl(`${image.sizes.card.}`)
 export const Button: React.FC<Props> = (props) => {
   let { t } = useTranslation();
   let { layout, color, symbol } = props;
