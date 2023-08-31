@@ -35,7 +35,7 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
         },
       ],
     },
-    sort: '-date',
+    sort: 'date',
   });
   
   return {
