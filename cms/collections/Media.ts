@@ -7,7 +7,7 @@ import path from 'path';
 export const Media: CollectionConfig = {
   slug: 'media',
   labels: {
-    singular: t('Media singular'),
+    singular: t('Media file'),
     plural: t('Media'),
   },
   admin: {
