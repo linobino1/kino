@@ -53,10 +53,10 @@ export default buildConfig({
       collections: {
         'media': {
           // uncomment to link to the S3 object directly:
-          // disablePayloadAccessControl: true,
-          // generateFileURL: (file) => {
-          //   return `https://${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com/${file.filename}`;
-          // },
+          disablePayloadAccessControl: true,
+          generateFileURL: (file) => {
+            return `https://${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com/${file.filename}`;
+          },
           adapter: s3Adapter({
             bucket: process.env.S3_BUCKET || 'bucket',
             config: {
