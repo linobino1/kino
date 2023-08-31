@@ -1,3 +1,4 @@
+import type { RemixLinkProps } from '@remix-run/react/dist/components';
 import React from 'react';
 import classes from './index.module.css';
 import { Link } from '@remix-run/react';
@@ -12,6 +13,7 @@ export interface Props extends React.HTMLAttributes<HTMLElement> {
   pagingCounter: number;
   totalDocs: number;
   totalPages: number;
+  linkProps?: Omit<RemixLinkProps, 'to'>;
 }
 
 export const Pagination: React.FC<Props> = (props) => {
@@ -21,8 +23,8 @@ export const Pagination: React.FC<Props> = (props) => {
         to={`?page=${props.prevPage || props.totalPages}`}
         className={classes.prev}
         prefetch='intent'
-        preventScrollReset={true}
         aria-disabled={!props.hasPrevPage}
+        {...props.linkProps}
       >&lt;</Link>
       <div className={classes.current}>
         {props.page} / {props.totalPages}
@@ -30,9 +32,8 @@ export const Pagination: React.FC<Props> = (props) => {
       <Link
         to={`?page=${props.nextPage || props.totalPages}`}
         className={classes.next}
-        prefetch='intent'
-        preventScrollReset={true}
         aria-disabled={!props.hasNextPage}
+        {...props.linkProps}
       >&gt;</Link>
     </div>
   ) : null;

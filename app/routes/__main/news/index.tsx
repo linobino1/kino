@@ -74,7 +74,7 @@ export default function Index() {
       ) : (
         <div className={classes.empty}>{t('No posts.')}</div>
       )}
-      <Pagination {...posts} />
+      <Pagination {...posts} linkProps={{ prefetch: 'intent' }}/>
     </Page>
   );
 }
