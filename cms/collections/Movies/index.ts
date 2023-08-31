@@ -33,7 +33,7 @@ const Movies: CollectionConfig = {
   admin: {
     group: t('Movie Database'),
     defaultColumns: ['internationalTitle', 'directors', 'year', '_status'],
-    useAsTitle: 'originalTitle',
+    useAsTitle: 'internationalTitle',
     components: {
       BeforeListTable: [
         // add a button to migrate a movie from TMDB
