@@ -29,7 +29,8 @@ export const getSrcSetString = (image: Media, srcSet?: SrcSet): string => {
     ) {
       return undefined;
     }
-    return `${image.sizes[item.size]?.url} ${image.sizes[item.size]?.width}w`;
+    const url = encodeURI(image.sizes[item.size]?.url as string);
+    return `${url} ${image.sizes[item.size]?.width}w`;
   }).filter(Boolean).join(', ');
 }
 
