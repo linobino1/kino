@@ -1,8 +1,15 @@
 import type { CollectionConfig } from 'payload/types';
+import type { ImageUploadFormatOptions } from 'payload/dist/uploads/types';
 import { t } from '../i18n';
 import path from 'path';
-// import type { Payload } from 'payload';
-// import type { Media as MediaType } from 'payload/generated-types';
+
+export const formatOptions: ImageUploadFormatOptions = {
+  format: 'webp',
+  options: {
+    quality: 100,
+    force: true,
+  },
+};
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -20,38 +27,55 @@ export const Media: CollectionConfig = {
   access: {
     read: (): boolean => true, // Everyone can read Media
   },
-  
   upload: {
-    adminThumbnail: '120w',
+    adminThumbnail: '175w',
     staticDir: path.resolve(__dirname, '../../media'),
+    formatOptions,
     imageSizes: [
       {
         name: '120w', // small filmposter on desktop
         width: 120,
+        formatOptions,
+      },
+      {
+        name: '175w', // backend thumbnail
+        width: 175,
+        formatOptions,
       },
       {
         name: '260w', // big filmposter on desktop
         width: 260,
+        formatOptions,
       },
       {
-        name: '500w',
-        width: 500,
+        name: '350w', // small filmposter on retina desktop
+        width: 350,
+        formatOptions,
+      },
+      {
+        name: '520w', // big filmpost on retina desktop
+        width: 520,
+        formatOptions,
       },
       {
         name: '750w',
         width: 750,
+        formatOptions,
       },
       {
         name: '1000w',
         width: 1000,
+        formatOptions,
       },
       {
         name: '1500w',
         width: 1500,
+        formatOptions,
       },
       {
         name: '2560w',
         width: 2560,
+        formatOptions,
       },
     ],
   },
@@ -87,27 +111,6 @@ export const Media: CollectionConfig = {
       admin: {
         readOnly: true,
       },
-      // make sure the media is not being migrated twice from themoviedb.org
-      // validate: async (value, { t, payload, data }: { t: any, payload?: Payload, data: Partial<MediaType>}) => {
-      //   if (value === null) return true;
-      //   if (!payload) return true;  // only validate on server
-        
-      //   const { docs } = await payload.find({
-      //     collection: 'media',
-      //     where: {
-      //       tmdbFilepath: {
-      //         equals: value,
-      //       },
-      //     },
-      //   });
-      //   if (docs.length > 1) {
-      //     return t('Media already exists');
-      //   }
-      //   if (docs.length === 1 && docs[0].id !== data.id) {
-      //     return t('Media already exists');
-      //   }
-      //   return true;
-      // },
     }
   ],
 };
