@@ -39,7 +39,6 @@ import { cloudStorage } from '@payloadcms/plugin-cloud-storage';
 import { s3Adapter } from '@payloadcms/plugin-cloud-storage/s3';
 
 const mockModulePath = path.resolve(__dirname, 'mocks/emptyObject.js');
-console.log(process.env.S3_BUCKET, process.env.S3_ACCESS_KEY, process.env.S3_SECRET_KEY, process.env.S3_REGION)
 
 export default buildConfig({
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
