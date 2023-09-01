@@ -28,7 +28,6 @@ export const Media: CollectionConfig = {
     read: (): boolean => true, // Everyone can read Media
   },
   upload: {
-    adminThumbnail: '175w',
     staticDir: path.resolve(__dirname, '../../media'),
     formatOptions,
     mimeTypes: ['image/*'],
