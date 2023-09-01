@@ -31,6 +31,7 @@ const Movies: CollectionConfig = {
     ],
   },
   admin: {
+    listSearchableFields: ['title', 'internationalTitle', 'originalTitle'],
     group: t('Movie Database'),
     defaultColumns: ['internationalTitle', 'directors', 'year', '_status'],
     useAsTitle: 'internationalTitle',
