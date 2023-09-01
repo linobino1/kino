@@ -4,7 +4,7 @@ import type {
   Media,
   Navigation as NavigationType,
 } from "payload/generated-types";
-import { Link } from '@remix-run/react';
+import { NavLink } from '@remix-run/react';
 import { Image } from '~/components/Image';
 import classes from './index.module.css';
 import LanguageSwitch from '../LanguageSwitch';
@@ -31,11 +31,6 @@ export const Navigation: React.FC<Props> = ({
 
         const href = item.relPath || (item.page as StaticPage ? `/${(item.page as StaticPage).slug}` : item.url);
 
-        // const isActive = (
-          // asPath === `/${(page as StaticPage)?.slug}`
-        // );
-        const isActive = false;
-
         // image or plain text
         const inner: React.ReactNode = item.icon ? (
           <Image
@@ -60,14 +55,14 @@ export const Navigation: React.FC<Props> = ({
                 </div>
               </div>
             ) : (
-              <Link
+              <NavLink
                 to={href}
-                className={`${classes.navItem} ${isActive && classes.active}`}
+                className={({ isActive }) => `${classes.navItem} ${isActive && classes.active}`}
                 target={item.newTab ? '_blank' : undefined}
                 prefetch='intent'
               >
                 {inner}
-              </Link>
+              </NavLink>
             )}
           </div>
         );
