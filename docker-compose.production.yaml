@@ -36,6 +36,8 @@ services:
 
       THEMOVIEDB_API_KEY:
 
+      TIMEZONE: Europe/Berlin
+
       S3_ENABLED: ${S3_ENABLED}
       S3_BUCKET: ${S3_BUCKET}
       S3_REGION: ${S3_REGION}
