@@ -18,6 +18,7 @@
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
   margin: 0;
+  word-wrap: break-word;
 }
 .container ul.specs {
   appearance: none;
