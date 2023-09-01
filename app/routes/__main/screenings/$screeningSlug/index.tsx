@@ -66,16 +66,16 @@ export default function Item() {
           <div className={classes.imageHeaderOverlayContent}>
             <div className={classes.posters}>
               { allFilms.map((filmprint) => (
-                <div key={filmprint.id} className={classes.poster}>
-                  <Image
-                    image={(filmprint.movie as MovieType).poster as Media}
-                    srcset_={[
-                      { size: '120w', css: '120w' },
-                      { size: '260w', css: '260w' },
-                    ]}
-                    alt={t('movie poster') as string}
-                  />
-                </div>
+                <Image
+                  key={filmprint.id}
+                  className={classes.poster}
+                  image={(filmprint.movie as MovieType).poster as Media}
+                  srcset_={[
+                    { size: '120w', css: '120w' },
+                    { size: '260w', css: '260w' },
+                  ]}
+                  alt={t('movie poster') as string}
+                />
               ))}
             </div>
             <div className={classes.infoTitle}>
