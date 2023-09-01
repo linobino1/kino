@@ -12,7 +12,7 @@ export type Type = {
   }[]
 }
 
-export const HeaderImage: React.FC<Type> = ({ images }) => {
+export const Gallery: React.FC<Type> = ({ images }) => {
   return images ? (
   <>
     <link rel="stylesheet" href={carouselStyles} />
@@ -36,4 +36,4 @@ export const HeaderImage: React.FC<Type> = ({ images }) => {
   ) : null;
 };
 
-export default HeaderImage;
+export default Gallery;

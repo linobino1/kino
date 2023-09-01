@@ -2,6 +2,7 @@ import type { Field } from 'payload/types';
 import { Content } from '../blocks/Content';
 import { HeaderImage } from '../blocks/HeaderImage';
 import { Outlet } from '../blocks/Outlet';
+import { Heading } from '../blocks/Heading';
 import { t } from '../i18n';
 import Gallery from '../blocks/Gallery';
 import type { StaticPage } from 'payload/generated-types';
@@ -20,10 +21,11 @@ export const pageLayout = (): Field => ({
       required: true,
       minRows: 1,
       blocks: [
-        Content,
+        Heading,
         HeaderImage,
-        Gallery,
+        Content,
         Outlet,
+        Gallery,
       ],
     },
     {
