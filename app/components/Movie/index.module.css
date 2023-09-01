@@ -38,8 +38,7 @@
   margin-block: 1.2em;
 }
 .container img.rentalLogo {
-  max-width: 10em;
-  max-height: 7em;
+  max-height: 4em;
   margin-block: .4em;
 }
 @media screen and (max-width: 768px) {
