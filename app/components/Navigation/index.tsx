@@ -26,7 +26,11 @@ export const Navigation: React.FC<Props> = ({
     >
       {navigation?.items?.map((item) => {
         if (item.type === 'language') {
-          return <LanguageSwitch key={item.id} className={classes.navItem} />;
+          return (
+            <LanguageSwitch
+              key={item.id}
+              className={`${classes.navItem} ${classes.language}`} />
+          )
         }
 
         const href = item.relPath || (item.page as StaticPage ? `/${(item.page as StaticPage).slug}` : item.url);
