@@ -1,39 +1,32 @@
-.pageHeader {
+.container {
     width: 100%;
     position: relative;
 }
-
-/** IMAGE HEADER   ******************************************/
-.imageHeader {
-    width: 100vw;
-    height: 50vh;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.wrapper {
+    width: 100%;
+    aspect-ratio: 16/9;
+    max-height: 50vh;
 }
-img.headerImage {
+/** IMAGE HEADER   ******************************************/
+img.header {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
-    min-height: 2rem;
-}
-.imageHeader::after {
 }
 @media screen and (max-width: 1024px) {
-    .imageHeader {
+    .wrapper {
         height: 320px;
     }
 }
 @media screen and (max-width: 768px) {
-    .imageHeader {
+    .wrapper {
         height: 275px;
     }
 }
 
 /** OVERLAY        ******************************************/
-.pageHeader .overlay {
+.overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -45,12 +38,12 @@ img.headerImage {
     justify-content: flex-end;
     padding: 1rem 10%;
 }
-.pageHeader nav > *:last-child{
+.container nav > *:last-child{
     margin-right: 0;
     padding-right: 0;
 }
 @media screen and (max-width: 768px) {
-    .pageHeader .overlay {
+    .container .overlay {
         padding: .5rem 1rem;
     }
 }

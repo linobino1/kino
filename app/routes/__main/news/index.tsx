@@ -62,6 +62,7 @@ export default function Index() {
                 image={post.header as Media}
                 onClick={post.link ? () => window.open(post.link, '_self') : undefined}
                 className={post.link ? classes.link : undefined}
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
               <Date className={classes.date} iso={post.date} format='PPP' />
               <h2>{post.title}</h2>

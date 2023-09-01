@@ -40,10 +40,10 @@ export const Movie: React.FC<Props> = ({
         className={classes.poster}
         image={movie.poster as Media}
         srcset_={[
-          { size: '120w', width: 120 },
-          { size: '260w', width: 260 },
-          { size: '350w', width: 350 },
-          { size: '520w', width: 520 },
+          { size: '120w', css: '120w' },
+          { size: '260w', css: '260w' },
+          { size: '350w', css: '350w' },
+          { size: '520w', css: '520w' },
         ]}
         alt={t('movie poster') as string}
       />

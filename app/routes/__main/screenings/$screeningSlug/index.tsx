@@ -60,14 +60,11 @@ export default function Item() {
           className={classes.headerImage}
           image={mainMovie.still as Media}
           srcset_={[
-            { size: '2560w', width: 2560 },
-            { size: '1500w', width: 1500 },
-            { size: '1000w', width: 1000 },
-            { size: '750w', width: 750 },
-            { size: '520w', width: 520 },
-          ]}
-          sizes_={[
-            '95vw',
+            { size: '2560w' },
+            { size: '1500w' },
+            { size: '1000w' },
+            { size: '750w' },
+            { size: '520w' },
           ]}
           alt={t('movie still') as string}
         />
@@ -79,8 +76,8 @@ export default function Item() {
                   <Image
                     image={(filmprint.movie as MovieType).poster as Media}
                     srcset_={[
-                      { size: '120w', width: 120 },
-                      { size: '260w', width: 260 },
+                      { size: '120w', css: '120w' },
+                      { size: '260w', css: '260w' },
                     ]}
                     alt={t('movie poster') as string}
                   />

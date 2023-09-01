@@ -57,13 +57,13 @@ export default buildConfig({
             return `https://${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com/${file.filename}`;
           },
           adapter: s3Adapter({
-            bucket: process.env.S3_BUCKET,
+            bucket: process.env.S3_BUCKET || '',
             config: {
               credentials: {
-                accessKeyId: process.env.S3_ACCESS_KEY,
-                secretAccessKey: process.env.S3_SECRET_KEY,
+                accessKeyId: process.env.S3_ACCESS_KEY || '',
+                secretAccessKey: process.env.S3_SECRET_KEY || '',
               },
-              region: process.env.S3_REGION,
+              region: process.env.S3_REGION || '',
             },
           }),
         },

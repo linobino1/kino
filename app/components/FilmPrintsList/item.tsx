@@ -25,12 +25,8 @@ export const FilmPrintsListItem: React.FC<Props> = ({
       <Image
         image={movie.still as Media}
         srcset_={[
-          { size: '250w', width: 380 },
-          { size: '750w', width: 768 },
-        ]}
-        sizes_={[
-          '380px',
-          '750px',
+          { size: '260w' },
+          { size: '750w' },
         ]}
         alt={t('movie still') as string}
       />
