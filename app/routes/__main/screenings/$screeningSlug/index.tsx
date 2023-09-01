@@ -59,13 +59,7 @@ export default function Item() {
         <Image
           className={classes.headerImage}
           image={mainMovie.still as Media}
-          srcset_={[
-            { size: '2560w' },
-            { size: '1500w' },
-            { size: '1000w' },
-            { size: '750w' },
-            { size: '520w' },
-          ]}
+          sizes="100vw"
           alt={t('movie still') as string}
         />
         <div className={classes.imageHeaderOverlay}>
