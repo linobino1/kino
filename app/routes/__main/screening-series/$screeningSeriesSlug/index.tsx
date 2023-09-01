@@ -34,6 +34,7 @@ export const loader = async ({ params, request, context: { payload }}: LoaderArg
     },
     locale,
     depth: 11,
+    sort: 'date',
   })
   ).docs;
   
