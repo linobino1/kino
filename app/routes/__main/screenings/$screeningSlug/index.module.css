@@ -86,6 +86,7 @@ a.tag:visited {
   font-size: var(--font-size-x-big);
   font-weight: var(--font-weight-bold);
   margin-block: 1rem;
+  text-transform: uppercase;
 }
 .posters {
   display: flex;
