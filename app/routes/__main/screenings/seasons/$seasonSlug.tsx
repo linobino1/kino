@@ -5,10 +5,9 @@ import { Page } from "~/components/Page";
 import classes from "./index.module.css";
 import { ScreeningsList } from "~/components/ScreeningsList";
 import i18next from "~/i18next.server";
-import { pageDescription, pageKeywords, pageTitle } from "~/util/pageMeta";
+import { pageTitle } from "~/util/pageMeta";
 import { Response } from '@remix-run/node';
 import { ErrorPage } from "~/components/ErrorPage";
-import { getFixedT } from "i18next";
 
 export const ErrorBoundary = ErrorPage;
 
