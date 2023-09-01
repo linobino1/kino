@@ -20,7 +20,8 @@ export const HeaderImage: Block = {
       relationTo: 'navigations',
       hasMany: false,
       required: false,
-    }
+      defaultValue: () => fetch(`/api/navigations/?[where][type][equals]=socialMedia`).then((res) => res.json()).then((res) => res.docs[0].id),
+    },
   ],
 }
 
