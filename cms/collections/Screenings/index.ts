@@ -120,8 +120,8 @@ const Screenings: CollectionConfig = {
       // if we cannot find the movie title we abort
       if (!filmPrint || !(filmPrint.movie)) return undefined;
 
-      // e.g. 2021-01-01-My Movie
-      return `${date}-${(filmPrint.movie as Movie)?.internationalTitle}`;
+      // e.g. My Movie-2021-01-01-
+      return `${(filmPrint.movie as Movie)?.internationalTitle}-${date}`;
     }),
     {
       name: 'date',
