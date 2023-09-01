@@ -8,6 +8,8 @@
   grid-column: 2;
 }
 .container img.poster {
+  grid-row: 1 / span 6;
+  grid-column: 1;
   width: 260px;
   height: auto;
 }
