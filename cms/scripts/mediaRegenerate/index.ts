@@ -6,6 +6,13 @@ import type { Config } from "payload/generated-types";
 
 require('dotenv').config();
 
+/**
+ * This script is paginated, so you can run it in chunks. Defaults to page 1, limit 300.
+ * e.g. yarn generate-media-sizes 2 300 will run page 2, limit 300
+**/
+const page = parseInt(process.argv[2] || '1');
+const limit = parseInt(process.argv[3] || '300');
+
 const mediaDir = path.resolve(__dirname, '../../../media');
 const mediaCollections: {
   slug: keyof Config['collections']
@@ -34,12 +41,13 @@ const regenerateMediaSizes = async () => {
     console.error(err);
     process.exit(0);
   }
-  
+
   await Promise.all(mediaCollections.map(async (collection) => {
     const media = await payload.find({
       collection: collection.slug,
       depth: 0,
-      limit: 300,
+      limit,
+      page,
     });
 
     await Promise.all(media.docs.map(async (mediaDoc: any) => {
@@ -48,55 +56,94 @@ const regenerateMediaSizes = async () => {
         console.log(`skipping ${mediaDoc.filename}`);
         return;
       }
-      const filePath = `${mediaDir}${collection.relDir}/${mediaDoc.filename}`;
-      const tempFilePath = `${mediaDir}${collection.relDir}/temp_${mediaDoc.filename}`;
       
-      if (!fs.existsSync(filePath)) {
-        console.log(`does not exist: ${filePath}`);
-        return;
-      }
-      
-      // copy original (not sure why, but payload deletes the original ...)
-      try {
-        fs.copyFileSync(filePath, tempFilePath);
-        console.log(`${filePath} => ${tempFilePath}`)
-      } catch (err) {
-        console.log(`could not create a copy of the original ${filePath} at ${tempFilePath}`)
-        console.log(err)
-      }
-
-      try {
-        await payload.update({
-          collection: collection.slug,
-          id: mediaDoc.id,
-          data: mediaDoc,
-          filePath,
-          overwriteExistingFiles: true,
-        });
-        console.log(`Media ${mediaDoc.filename} regenerated successfully`);
-      } catch (err) {
-        console.error(`Media ${mediaDoc.filename} failed to regenerate`);
-        console.error(err);
-      } finally {
-        try {
-          // restore original from copy
-          fs.renameSync(tempFilePath, filePath);
-          console.log(`${tempFilePath} => ${filePath}`)
-        } catch (err) {
-          console.log(`could not restore original ${tempFilePath} to ${filePath}`)
-          console.log(err)
-        }
-        try {
-          // remove temp file
-          fs.rmSync(tempFilePath);
-        } catch {}
-      }
-     }));
-         
-   }));
+      process.env.S3_ENABLED === 'true'
+        ? await regenerateS3File(mediaDoc, collection)
+        : await regenerateLocalFile(mediaDoc, collection);
+    }));
+  }));
 
   console.log('Media size regeneration completed!');
   process.exit(0);
 };
 
 regenerateMediaSizes();
+
+const regenerateLocalFile = async (mediaDoc: any, collection: any) => {
+  const path = `${mediaDir}${collection.relDir}/${mediaDoc.filename}`;
+  const tmpPath = `${mediaDir}${collection.relDir}/temp_${mediaDoc.filename}`;
+  
+  if (!fs.existsSync(path)) {
+    console.log(`does not exist: ${path}`);
+    return;
+  }
+  
+  // copy original (not sure why, but payload deletes the original ...)
+  try {
+    fs.copyFileSync(path, tmpPath);
+  } catch (err) {
+    console.log(`could not create a copy of the original ${path} at ${tmpPath}`)
+    console.log(err)
+  }
+
+  try {
+    await payload.update({
+      collection: collection.slug,
+      id: mediaDoc.id,
+      data: mediaDoc,
+      filePath: path,
+      overwriteExistingFiles: true,
+    });
+    console.log(`Media ${mediaDoc.filename} regenerated successfully`);
+  } catch (err) {
+    console.error(`Media ${mediaDoc.filename} failed to regenerate`);
+    console.error(err);
+  } finally {
+    try {
+      // restore original from copy
+      fs.renameSync(tmpPath, path);
+    } catch (err) {
+      console.log(`could not restore original ${tmpPath} to ${path}`)
+      console.log(err)
+    }
+    try {
+      // remove temp file
+      fs.rmSync(tmpPath);
+    } catch {}
+  }
+}
+
+const regenerateS3File = async (mediaDoc: any, collection: any) => {
+  try {
+    await fetch(mediaDoc.url)
+      .then((response) => response.blob())
+      .then(async (blob) => {
+        const arrayBuffer = await blob.arrayBuffer();
+        const buffer = Buffer.from(new Uint8Array(arrayBuffer));
+
+        const file = {
+          data: buffer,
+          mimetype: blob.type,
+          name: mediaDoc.filename,
+          size: mediaDoc.filesize,
+        };
+
+        await payload.update({
+          collection: collection.slug,
+          id: mediaDoc.id,
+          data: mediaDoc,
+          file,
+          overwriteExistingFiles: true,
+        });
+
+        console.log(
+          `Media ${mediaDoc.filename} regenerated successfully on S3`
+        );
+      });
+  } catch (err) {
+    console.error(
+      `Media ${mediaDoc.filename} failed to regenerate on S3`
+    );
+    console.error(err);
+  }
+}

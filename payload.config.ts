@@ -48,7 +48,7 @@ export default buildConfig({
   ],
   plugins: [
     cloudStorage({
-      enabled: process.env.NODE_ENV === 'production',
+      enabled: process.env.S3_ENABLED === 'true',
       collections: {
         'media': {
           // uncomment to link to the S3 object directly:
