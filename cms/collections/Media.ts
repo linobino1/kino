@@ -31,6 +31,7 @@ export const Media: CollectionConfig = {
     adminThumbnail: '175w',
     staticDir: path.resolve(__dirname, '../../media'),
     formatOptions,
+    mimeTypes: ['image/*'],
     imageSizes: [
       {
         name: '120w', // small filmposter on desktop
