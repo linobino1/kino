@@ -104,6 +104,11 @@ export const FilmPrints: CollectionConfig = {
       relationTo: 'movies',
       required: true,
       hasMany: false,
+      filterOptions: {
+        _status: {
+          equals: 'published',
+        },
+      },
     },
     analogDigitalTypeField('type'),
     {

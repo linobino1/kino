@@ -116,13 +116,18 @@ export const MigrateMovie: React.FC = () => {
         <div ref={loading}>{ t('Loading...') }</div>
       )}
       { state === 'success' && migratedMovie && (
-        <div ref={success} dangerouslySetInnerHTML={{
-          __html: t('Successfully created movie {{title}} {{id}}', {
-              title: migratedMovie.originalTitle,
-              id: migratedMovie.id,
-            }) as string,
-        }} />)
-      }
+        <div ref={success}>
+          <p dangerouslySetInnerHTML={{
+            __html: t('Successfully created movie {{link}}', {
+              link: `<a href="/admin/collections/movies/${migratedMovie.id}">${migratedMovie.title}</a>`,
+            }) as string
+          }} />
+          <button
+            type="button"
+            onClick={() => window.open(`/admin/collections/movies/${migratedMovie.id}`)}
+          >{t('Review & publish')}</button>
+        </div>
+      )}
       { state === 'preview' && previewData && (
         <form onSubmit={migrate} className="preview">
           <div className="title">{previewData.original_title}</div>

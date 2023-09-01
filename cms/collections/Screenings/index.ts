@@ -92,6 +92,11 @@ const Screenings: CollectionConfig = {
       relationTo: 'filmPrints',
       hasMany: true,
       required: true,
+      filterOptions: {
+        _status: {
+          equals: 'published',
+        },
+      },
     },
     {
       name: 'supportingFilms',
@@ -99,6 +104,11 @@ const Screenings: CollectionConfig = {
       type: 'relationship',
       relationTo: 'filmPrints',
       hasMany: true,
+      filterOptions: {
+        _status: {
+          equals: 'published',
+        },
+      },
     },
     slugField('date', async ({ data, req }) => {
       // we need the date and at least one feature film

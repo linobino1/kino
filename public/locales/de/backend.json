@@ -99,7 +99,7 @@
   "Choose a {{type}}:": "Wähle ein {{type}}:",
   "backdrop": "Hintergrundbild",
   "poster": "Poster",
-  "Successfully created movie {{title}} {{id}}": "<a href=\"/admin/collections/movies/{{id}}\">{{title}}</a> wurde erfolgreich angelegt",
+  "Successfully created movie {{link}}": "{{link}} wurde erfolgreich als Entwurf angelegt.",
   "Comapny": "Firma",
   "Companies": "Firmen",
   "Production Company": "Produktionsfirma",
