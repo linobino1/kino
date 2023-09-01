@@ -9,7 +9,7 @@ export type Type = {
   blockType: 'headerImage'
   blockName?: string
   image?: Media | string
-  navigation?: NavigationType
+  navigation?: NavigationType | string
 }
 
 export const HeaderImage: React.FC<Type> = ({ image, navigation }) => {
@@ -22,9 +22,9 @@ export const HeaderImage: React.FC<Type> = ({ image, navigation }) => {
         />
       )}
       <div className={classes.overlay}>
-        { navigation && (
+        { navigation as NavigationType && (
           <Navigation
-            navigation={navigation}
+            navigation={navigation as NavigationType}
             className={classes.navSocial}
           />
         )}
