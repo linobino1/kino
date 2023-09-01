@@ -18,7 +18,7 @@ export interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {
 export const getSrcSetString = (image: Media, srcset: SrcSetItem[]): string => {
   return (srcset || []).map((item) => {
     const cropped = image.sizes?.[item.size];
-    return cropped && [cropped.url, item.css].filter(Boolean).join(' ');
+    return cropped && cropped.url && [encodeURI(cropped.url || ''), item.css].filter(Boolean).join(' ');
   }).filter(Boolean).join(', ');
 }
 
