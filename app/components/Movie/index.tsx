@@ -12,6 +12,7 @@ import React from "react";
 import classes from './index.module.css';
 import { useTranslation } from "react-i18next";
 import Image from "~/components/Image";
+import { Link } from "@remix-run/react";
 
 export type Props = {
   movie: MovieType
@@ -66,6 +67,13 @@ export const Movie: React.FC<Props> = ({
               className={classes.rentalLogo}
               image={((filmprint?.rental as Rental)?.logo as Media)}
             />
+          )}
+          { movie.trailer && (
+            <Link
+              className={classes.trailer}
+              to={movie.trailer}
+              target="_blank"
+            >{t('Trailer')}</Link>
           )}
         </div>
       )}

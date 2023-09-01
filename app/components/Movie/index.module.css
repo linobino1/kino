@@ -41,6 +41,24 @@
   max-height: 4em;
   margin-block: .4em;
 }
+.container a.trailer {
+  display: inline-flex;
+  margin-block: 1.2em;
+  border: 1px solid;
+  color: inherit;
+  border-radius: var(--border-radius);
+  padding: 9px 9px 7px 12px;
+  align-items: center;
+  text-transform: uppercase;
+}
+.container a.trailer::after {
+  content: "\25B6";
+  margin-left: .5em;
+}
+.container a.trailer:hover {
+  background-color: var(--color-white);
+  color: var(--color-theme);
+}
 @media screen and (max-width: 768px) {
   .container {
     display: block;
