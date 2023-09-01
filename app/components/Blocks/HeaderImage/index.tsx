@@ -15,14 +15,12 @@ export type Type = {
 export const HeaderImage: React.FC<Type> = ({ image, navigation }) => {
   return (
     <header className={classes.container}>
-      <div className={classes.wrapper}>
-        { image as Media && (
-          <Image
-            className={classes.header}
-            image={image as Media}
-          />
-        )}
-      </div>
+      { image as Media && (
+        <Image
+          className={classes.header}
+          image={image as Media}
+        />
+      )}
       <div className={classes.overlay}>
         { navigation && (
           <Navigation

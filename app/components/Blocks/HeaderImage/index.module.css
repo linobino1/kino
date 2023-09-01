@@ -1,18 +1,14 @@
 .container {
-    width: 100%;
     position: relative;
-}
-.wrapper {
-    width: 100%;
-    aspect-ratio: 16/9;
-    max-height: 50vh;
 }
 /** IMAGE HEADER   ******************************************/
 img.header {
     width: 100%;
-    height: 100%;
+    aspect-ratio: 16/9;
+    max-height: 50vh;
     object-fit: cover;
     object-position: center;
+    vertical-align: bottom;
 }
 @media screen and (max-width: 1024px) {
     .wrapper {
