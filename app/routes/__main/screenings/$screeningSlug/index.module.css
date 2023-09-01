@@ -100,21 +100,10 @@ img.poster {
 }
 
 /** MOVIES   ************************************************/
-.movies > *:last-child > hr {
-  display: none;
-}
-.discussion {
-  padding: .5rem;
-  font-weight: var(--font-weight-semi-bold);
-  font-style: italic;
-  background-color: var(--color-theme-contrast-light);
-  color: var(--color-white);
-  text-transform: uppercase;
-  width: fit-content;
-  margin: 0 auto;
-}
-.discussion::before {
-  content: "💬 ";
+.movies > *:not(:last-child) {
+  padding-bottom: 1.8rem;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--color-font-light);
 }
 @media screen and (max-width: 768px) {
   .posters {

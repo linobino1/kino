@@ -151,6 +151,12 @@ const Screenings: CollectionConfig = {
       },
     },
     {
+      name: 'info',
+      label: t('Info'),
+      type: 'text',
+      required: false,
+    },
+    {
       name: 'moderator',
       label: t('Moderator'),
       type: 'text',

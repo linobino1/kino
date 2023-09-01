@@ -7,23 +7,26 @@ import type {
   Rental,
   Media,
   Format,
+  Screening,
 } from "payload/generated-types";
 import React from "react";
 import classes from './index.module.css';
 import { useTranslation } from "react-i18next";
 import Image from "~/components/Image";
 import { Link } from "@remix-run/react";
+import ScreeningInfo from "../ScreeningInfo";
 
-export type Props = {
+export interface Props extends React.HTMLAttributes<HTMLElement> {
   movie: MovieType
   filmprint?: FilmPrint
-  className?: string
+  screening?: Screening
+  showScreeningInfo?: boolean
 };
 
-export const Movie: React.FC<Props> = ({
-  movie, filmprint, className,
-}) => {
+export const Movie: React.FC<Props> = (props) => {
+  const { movie, filmprint, className, showScreeningInfo } = props;
   const { t } = useTranslation();
+
   const specs = [
     movie.originalTitle,
     (movie.countries as Country[])?.map((x) => x.name).join(', '),
@@ -36,7 +39,7 @@ export const Movie: React.FC<Props> = ({
   ].filter(Boolean);
 
   return (
-    <div className={`${classes.container} ${className}`}>
+    <div className={`${classes.container} ${className}`} {...props}>
       <Image
         className={classes.poster}
         image={movie.poster as Media}
@@ -54,7 +57,15 @@ export const Movie: React.FC<Props> = ({
           <li key={i}>{spec}</li>
         ))}
       </ul>
-      <div className={classes.synopsis}>{movie.synopsis}</div>
+      <p
+        className={classes.synopsis}
+        dangerouslySetInnerHTML={{
+          __html: movie.synopsis as string
+        }}
+      />
+      { showScreeningInfo && props.screening && (
+        <ScreeningInfo screening={props.screening as Screening} />
+      )}
       { (filmprint?.rental as Rental) && (
         <div className={classes.rental}>
           <div
@@ -68,14 +79,14 @@ export const Movie: React.FC<Props> = ({
               image={((filmprint?.rental as Rental)?.logo as Media)}
             />
           )}
-          { movie.trailer && (
-            <Link
-              className={classes.trailer}
-              to={movie.trailer}
-              target="_blank"
-            >{t('Trailer')}</Link>
-          )}
         </div>
+      )}
+      { movie.trailer && (
+        <Link
+          className={classes.trailer}
+          to={movie.trailer}
+          target="_blank"
+        >{t('Trailer')}</Link>
       )}
     </div>
   );

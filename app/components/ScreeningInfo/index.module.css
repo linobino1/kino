@@ -1,0 +1,13 @@
+.discussion {
+  padding: .5rem;
+  font-weight: var(--font-weight-semi-bold);
+  font-style: italic;
+  background-color: var(--color-theme-contrast-light);
+  color: var(--color-white);
+  text-transform: uppercase;
+  width: fit-content;
+  margin-inline: auto;
+}
+.discussion::before {
+  content: "💬 ";
+}

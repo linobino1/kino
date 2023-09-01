@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import Page from "~/components/Page";
 import Image from "~/components/Image";
 import { Response } from '@remix-run/node';
+import { ScreeningInfo } from "~/components/ScreeningInfo";
 
 export const loader = async ({ params, request, context: { payload }}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
@@ -52,6 +53,7 @@ export default function Item() {
   const allFilms = [...supportingFilms, ...featureFilms];
   const { t } = useTranslation();
 
+  const inlineScreeningInfo = allFilms.length <= 1;
 
   return (
     <Page>
@@ -113,24 +115,19 @@ export default function Item() {
       </div>
       <main>
         <div className={classes.movies}>
-          { allFilms.map((filmprint) => (
-            <div key={filmprint.id}>
-              <Movie
-                movie={filmprint.movie as MovieType}
-                filmprint={filmprint}
-              />
-              <hr />
-            </div>
+          { allFilms.map((filmprint, i) => (
+            <Movie
+              key={filmprint.id}
+              movie={filmprint.movie as MovieType}
+              filmprint={filmprint}
+              screening={screening}
+              showScreeningInfo={inlineScreeningInfo}
+            />
           ))}
-          { screening.guest && (
-            <div className={classes.discussion}>
-              { t('Film talk with {{guests}} moderated by {{moderator}}', {
-                guests: screening.guest,
-                moderator: screening.moderator,
-              })}
-            </div>
-          )}
         </div>
+        { !inlineScreeningInfo && (
+          <ScreeningInfo screening={screening} />
+        )}
       </main>
     </Page>
   );
