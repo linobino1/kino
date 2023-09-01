@@ -60,6 +60,7 @@
 }
 .nav[data-type="mobile"] .subnavHost > .navItem {
   color: var(--color-light-grey);
+  padding-block-end: 0;
 }
 .nav[data-type="mobile"] .subnavHost > .navItem::after {
   content: "▼";
@@ -68,4 +69,15 @@
 }
 .nav[data-type="mobile"] .subnav {
   display: contents;
+}
+.nav[data-type="mobile"] .subnav .navItem{
+  padding-block: 0;
+}
+.nav[data-type="mobile"] .subnav .navItem::after {
+  content: "|";
+  display: inline-block;
+  width: 0.4em;
+  margin-left: .5rem;
+  text-align: center;
+  color: var(--color-light-grey);
 }
