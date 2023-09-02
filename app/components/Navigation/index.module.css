@@ -1,5 +1,6 @@
 .nav {
   display: flex;
+  flex-wrap: wrap;
 }
 .nav[data-type="socialMedia"] {
   column-gap: .5rem;
@@ -80,4 +81,11 @@
   margin-left: .5rem;
   text-align: center;
   color: var(--color-light-grey);
+}
+
+@media screen and (max-width: 768px) {
+  .navItem {
+    padding: .5rem;
+  } 
+  
 }

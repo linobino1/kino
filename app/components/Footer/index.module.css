@@ -80,5 +80,6 @@
   }
   .navFooter {
     grid-row: 4;
+    justify-content: center;
   }
 }
