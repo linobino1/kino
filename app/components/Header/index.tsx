@@ -35,11 +35,11 @@ const Header: React.FC<Props> = ({
             />
           )}
         </Link>
-        <Button
-          layout="symbol"
-          symbol="menu"
+        {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
+        <Link
           className={classes.menuButton}
-          onClick={() => navigate('?modal=menu', { preventScrollReset: true })}
+          to={'?modal=menu'}
+          aria-label='Menu'
         />
         <Navigation
           navigation={navigations.find((x) => x.type === 'main')}

@@ -68,6 +68,14 @@
 .menuButton {
     grid-row: 1;
     justify-self: end;
+    font: inherit;
+    font-size: 1.9em;
+    color: inherit;
+    padding: 0.5rem 1rem;
+}
+.menuButton::after {
+    content: "\2630";
+    transform: translateY(-8%);
 }
 @media screen and (min-width: 768px) {
     .menuButton {

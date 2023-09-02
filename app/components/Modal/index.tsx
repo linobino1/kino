@@ -38,9 +38,7 @@ export const Modal: React.FC<Props> = ({
     <div ref={modal} className={classes.container}>
       <div className={classes.header}>
         <div>{ title }</div>
-        <Button
-          layout="symbol"
-          symbol="close"
+        <button
           className={classes.close}
           onClick={() => navigate(-1)}
         />

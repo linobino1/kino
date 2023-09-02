@@ -23,6 +23,17 @@
 }
 .close {
     align-self: flex-end;
+    font: inherit;
+    color: inherit;
+    appearance: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.close::after {
+    content: "\2715";
+    font-size: 1.5em;
+    transform: translateY(-8%);
 }
 .centerer {
     display: flex;
