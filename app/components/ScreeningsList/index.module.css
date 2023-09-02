@@ -73,6 +73,7 @@
   font-size: var(--font-size-big);
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
+  word-wrap: break-word;
 }
 .footer {
   color: var(--color-light-grey-readable);
