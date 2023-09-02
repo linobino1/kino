@@ -43,6 +43,7 @@ ul.posts h2 {
   font: var(--font-xxx-big);
   text-transform: uppercase;
   margin-block: .2em 0;
+  word-wrap: break-word;
 }
 ul.posts hr {
   grid-column: 1 / span 2;
@@ -53,7 +54,8 @@ ul.posts > li:last-child > hr {
 }
 @media (max-width: 768px) {
   ul.posts > li {
-    grid-template-columns: 1fr;
+    display: block;
+    overflow-y: hidden;
   }
   ul.posts > li > * {
     grid-column: 1 !important;
