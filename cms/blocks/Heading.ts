@@ -12,6 +12,7 @@ export const Heading: Block = {
       name: 'text',
       label: t('Text'),
       type: 'text',
+      localized: true,
     }
   ],
 }
