@@ -1,33 +1,40 @@
 .container {
+  display: flex;
+  flex-direction: column;
+}
+.title {
+  margin-bottom: .2em;
+}
+.form {
   display: grid;
   grid-template-columns: auto auto;
-  /* border: 2px solid var(--color-theme); */
 }
-.container button,
-.container input {
+.form button,
+.form input {
   font: var(--font-small);
   height: 2em;
   border: none;
   border-radius: 0;
   padding-inline: .5em;
-  background-color: white;
+  background-color: var(--color-white);
+  color: var(--color-black);
 }
-.container input::placeholder {
-  color: var(--color-theme);
+.form input::placeholder {
+  color: var(--color-font-light);
 }
-.container button {
+.form button {
   max-width: 2em;
   cursor: pointer;
 }
-.container button::after {
+.form button::after {
   content: '\21E8';
-  color: var(--color-theme);
+  /* color: var(--color-theme); */
 }
-.container div {
+.form div {
   grid-row: 2;
   grid-column: 1 / span 2;
 }
-.container div p {
+.form div p {
   background: white;
   text-align: center;
   width: 100%;

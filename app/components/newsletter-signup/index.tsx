@@ -13,28 +13,31 @@ export const NewsletterSignup: React.FC<Props> = ({ className }) => {
   const { t } = useTranslation();
   
   return (
-    <Mailchimp
-      className={`${classes.container} ${className}`}
-      action={url}
-      fields={[
-        {
-          name: 'EMAIL',
-          placeholder: t("newsletter.placeholder"),
-          type: 'email',
-          required: true
+    <div className={`${classes.container} ${className}`}>
+      <div className={classes.title}>{t("newsletter.title")}</div>
+      <Mailchimp
+        className={classes.form}
+        action={url}
+        fields={[
+          {
+            name: 'EMAIL',
+            placeholder: t("newsletter.placeholder"),
+            type: 'email',
+            required: true
+          }
+        ]}
+        messages = {
+          {
+            sending: t("newsletter.sending"),
+            success: t("newsletter.success"),
+            error: t("newsletter.error"),
+            empty: t("newsletter.empty"),
+            duplicate: t("newsletter.duplicate"),
+            button: '',
+          }
         }
-      ]}
-      messages = {
-        {
-          sending: t("newsletter.sending"),
-          success: t("newsletter.success"),
-          error: t("newsletter.error"),
-          empty: t("newsletter.empty"),
-          duplicate: t("newsletter.duplicate"),
-          button: '',
-        }
-      }
-    />
+      />
+    </div>
 );
 }
   

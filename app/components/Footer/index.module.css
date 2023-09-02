@@ -48,7 +48,7 @@
 
 .newsletter {
   grid-column: 3;
-  grid-row: 1;
+  grid-row: 1 / span 2;
   display: flex;
   justify-self: flex-end;
 }
