@@ -51,29 +51,22 @@ img.headerImage {
 .infoTitle {
   display: block;
 }
+.infoTitle > *:last-child {
+  margin-bottom: 0;
+}
 .date {
-  color: var(--color-black);
-  background-color: var(--color-theme-contrast-strong);
-  font-size: var(--font-size-big);
+  font: var(--font-big);
   font-weight: var(--font-weight-bold);
 }
-.time {
-  font-size: var(--font-size-big);  
-  font-style: italic;
-  font-weight: var(--font-weight-light);
-  line-height: var(--line-height-big);
+.location {
+  font: var(--font-big);
 }
 .tag {
   font-weight: var(--font-weight-bold);
   display: inline-block;
   padding: 0 .2rem;
   border-radius: .6em;
-  margin-block-start: .5rem;
   margin-inline-end: .5rem;
-}
-.tag.location {
-  color: var(--color-black);
-  background-color: var(--color-theme-contrast);
 }
 .tag.series {
   background-color: var(--color-theme-contrast-light-2);

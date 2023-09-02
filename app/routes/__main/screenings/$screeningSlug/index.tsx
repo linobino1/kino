@@ -84,18 +84,17 @@ export default function Item() {
               <Date
                 className={classes.date}
                 iso={screening.date as string}
-                format="P"
+                format="P / p"
               />
               <br />
-              <Date
-                className={classes.time}
-                iso={screening.date as string}
-                format="p"
-              />
-              <br />
-              <div className={`${classes.location} ${classes.tag}`}>
+              <div className={classes.location}>
                 {(screening.location as Location).name}
               </div>
+              { allFilms.map((filmprint) => (
+                <div key={filmprint.id} className={classes.movieTitle}>
+                  {(filmprint.movie as MovieType).title}
+                </div>
+              ))}
               { screening.series && (
                 <a
                   href={`/screening-series/${(screening.series as ScreeningSery).slug}`}
@@ -104,11 +103,6 @@ export default function Item() {
                   {(screening.series as ScreeningSery)?.name}
                 </a>
               )}
-              { allFilms.map((filmprint) => (
-                <div key={filmprint.id} className={classes.movieTitle}>
-                  {(filmprint.movie as MovieType).title}
-                </div>
-              ))}
             </div>
           </div>
         </div>
