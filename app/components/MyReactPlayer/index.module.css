@@ -1,0 +1,11 @@
+.container {
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+.container.loading {
+  background-color: #000;
+}
+.container.loading > * {
+  display: none;
+}
