@@ -13,7 +13,7 @@
     display: grid;
     grid-template-columns: min-content 1fr min-content;
     align-items: center;
-    font-size: var(--font-size-small);
+    font: var(--font-small);
 }
 .mainHeader > * {
     padding: .5rem;
@@ -48,7 +48,7 @@
 }
 @media (max-width: 768px) {
     .mainHeader {
-        font-size: var(--font-size-normal);
+        font: var(--font);
     }
     .mainHeader > * {
         border-right: 0;
@@ -90,10 +90,7 @@
     height: 100%;
     overflow-y: auto;
     padding-bottom: 2em;
-    font-size: var(--font-size-xx-big);
-    /* font-weight: var(--font-weight-bold); */
-    line-height: var(--line-height);
-    /* letter-spacing: var(--letter-spacing-big); */
+    font: var(--font-xx-big);
 }
 .navMobile {
     display: flex;

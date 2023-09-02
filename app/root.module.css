@@ -49,14 +49,6 @@
   --color-font-bright-2: #E8E8E8;
   --color-font-bright-3: #9A969B;
 
-  --font-size-xxx-big: 2.5rem;
-  --font-size-xx-big: 1.9rem;
-  --font-size-x-big: 1.7rem;
-  --font-size-big: 1.3rem;
-  --font-size-normal: 1rem;
-  --font-size-small: .9rem;
-  --font-size-x-small: .8rem;
-
   --font-family: 'DM Sans', 'Helvetica', sans-serif;
   --font-family-serif: 'Times', serif;
   --font-weight-bold: 600;
@@ -64,10 +56,6 @@
   --font-weight-normal: 400;
   --font-weight-light: 200;
   
-  --line-height-xxx-big: 2em;
-  --line-height-big: 1.5em;
-  --line-height: 1.4em;
-
   --letter-spacing-big: .1em;
   --letter-spacing-x-big: .11em;
   
@@ -84,13 +72,11 @@
 }
 @media (max-width: 768px) {
   :root {
-    --font-size-xxx-big: 1.9rem;
-    --font-size-xx-big: 1.7rem;
-    --font-size-x-big: 1.3rem;
-    --font-size-big: 1.15rem;
-    --font-size-normal: 1rem;
-    --font-size-small: .9rem;
-    --font-size-x-small: .8rem;
+    --font-xxx-big: normal 300 1.9rem/1 var(--font-family);
+    --font-xx-big: normal 300 1.7rem/1 var(--font-family);
+    --font-x-big: normal 300 1.3rem/1.2 var(--font-family);
+    --font-big: normal 300 1.15rem/1.2 var(--font-family);
+    --font: normal 300 1rem/1.4 var(--font-family);
 
     --border-radius: 5px;
   }
@@ -100,9 +86,7 @@
   -webkit-font-smoothing: antialiased;
 }
 html {
-  font-family: var(--font-family);
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height);
+  font: var(--font);
 }
 html,
 body {

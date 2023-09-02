@@ -76,7 +76,7 @@ a.tag:visited {
   color: unset;
 }
 .movieTitle {
-  font-size: var(--font-size-x-big);
+  font: var(--font-x-big);
   font-weight: var(--font-weight-bold);
   margin-block: 1rem;
   text-transform: uppercase;

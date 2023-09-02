@@ -47,7 +47,7 @@ ul.list {
   text-transform: uppercase;
 }
 .subtitle {
-  font-size: var(--font-size-small);
+  font: var(--font-small);
 }
 /* INFO     *************************************************************/
 .info {
@@ -56,12 +56,12 @@ ul.list {
   grid-template-rows: auto min-content;
   row-gap: 1rem;
   padding: 1rem;
-  font-size: var(--font-size-small);
+  font: var(--font-small);
 }
 .moreInfo {
   align-self: end;
   text-transform: uppercase;
-  font-size: var(--font-size-x-small);
+  font: var(--font-x-small);
   font-weight: var(--font-weight-semi-bold);
   color: var(--color-light-grey-readable);
   justify-self: end;
