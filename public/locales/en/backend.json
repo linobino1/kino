@@ -9,7 +9,7 @@
   "Migrate movie from themoviedb.org": "Create new movie",
   "Screening Series singular": "Screening Series",
   "adminWarningTimezone": "Caution: if your timezone differs from the timezone of the cinema, you need to adjust the screening times accordingly.",
-  "AdminExplainScreeningsPage": "The screenings page lists all screenings of the default screenings group. To change the default screenings group, go to \"Configuration\" > \"Groups\".",
+  "AdminExplainScreeningsPage": "The screenings page lists all screenings taking place in the future or today.",
   "AdminExplainMovieTitle": "Translated field. Is used as the movies title on the website",
   "AdminExplainOriginalTitle": "Original title of the movie",
   "AdminExplainInternationalTitle": "International title of the movie, usually the English title, used to identify the movie"

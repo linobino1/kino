@@ -111,7 +111,7 @@
   "Rental": "Verleih",
   "Rentals": "Verleihe",
   "adminWarningTimezone": "Achtung: wenn du dich in einer anderen Zeitzone als das Kino befindest, musst du den Unterschied ausgleichen.",
-  "AdminExplainScreeningsPage": "Die Seite \"Vorstellungen\" listet alle Vorstellungen aus der Standard-Vorstellungsgruppe. Um diese zu ändern, gehe zu \"Konfiguration\" > \"Gruppen\".",
+  "AdminExplainScreeningsPage": "Die Seite \"Vorstellungen\" listet alle Vorstellungen ab dem heutigen Tage.",
   "Subscriber": "Abonnent",
   "Gallery": "Galerie",
   "Galleries": "Galerien",
