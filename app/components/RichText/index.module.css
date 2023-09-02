@@ -25,3 +25,8 @@
         margin-right: auto;
     }
 }
+
+.videoWrapper {
+    aspect-ratio: 16/9;
+    width: 100%;
+}

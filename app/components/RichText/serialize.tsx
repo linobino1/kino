@@ -6,6 +6,8 @@ import { Image } from '~/components/Image';
 import type { Media, StaticPage } from 'payload/generated-types';
 import classes from './index.module.css';
 import Pages from 'cms/collections/Pages';
+import type { Source } from 'cms/fields/richtext/video';
+import ReactPlayer from 'react-player'
 
 // eslint-disable-next-line no-use-before-define
 type Children = Leaf[];
@@ -20,6 +22,10 @@ type Leaf = {
   url?: string
   [key: string]: unknown
   doc?: any
+  
+  // type video
+  id?: string
+  source?: Source['source']
 };
 
 const serialize = (children: Children): React.ReactElement[] => children.map((node, i) => {
@@ -182,6 +188,18 @@ const serialize = (children: Children): React.ReactElement[] => children.map((no
         <div className={classes.imageWrapper} key={i}>
           <Image
             image={node.value as Media}
+          />
+        </div>
+      );
+    case 'video':
+        console.log(node)
+      return (
+        <div className={classes.videoWrapper} key={i}>
+          <ReactPlayer
+            url={node.url}
+            controls
+            width="100%"
+            height="100%"
           />
         </div>
       );

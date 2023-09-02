@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
 import { slugField } from '../../fields/slug';
+import video from '../../fields/richtext/video';
 
 const Posts: CollectionConfig = {
   slug: 'posts',
@@ -42,6 +43,22 @@ const Posts: CollectionConfig = {
       type: 'richText',
       localized: true,
       required: true,
+      admin: {
+        elements: [
+          'h2',
+          'h3',
+          'h4',
+          'h5',
+          'h6',
+          'link',
+          'ol',
+          'ul',
+          'indent',
+          'upload',
+          video,
+        ],
+        leaves: ['bold', 'italic', 'underline', 'strikethrough'],
+      },
     },
     {
       name: 'link',
