@@ -24,9 +24,11 @@
   flex-direction: column;
   grid-column: auto;
 }
-.screening:hover {
-  transition: all .3s ease-in-out;
-  transform: translate(0px, -2%);
+@media screen and (min-width: 768px) {
+  .screening:hover {
+    transition: all .3s ease-in-out;
+    transform: translate(0px, -2%);
+  }
 }
 .screening img {
   object-fit: cover;
