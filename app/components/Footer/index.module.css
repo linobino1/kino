@@ -2,7 +2,7 @@
   width: 100%;
   background-color: var(--color-black);
   color: var(--color-white);
-  padding: 2% 10%;
+  padding: 1rem 10%;
   display: grid;
   grid-template-columns: 25% 50% 25%;
   row-gap: 1rem;
@@ -56,7 +56,7 @@
 /** Mobile Grid Layout *****************************************************************/
 @media (max-width: 1000px) {
   .footer {
-    padding: 2% 1rem;
+    padding: 2rem 1rem;
   }
 }
 @media (max-width: 768px) {

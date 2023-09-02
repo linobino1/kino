@@ -1,0 +1,35 @@
+.container {
+  display: grid;
+  grid-template-columns: auto auto;
+  /* border: 2px solid var(--color-theme); */
+}
+.container button,
+.container input {
+  font: var(--font-small);
+  height: 2em;
+  border: none;
+  border-radius: 0;
+  padding-inline: .5em;
+  background-color: white;
+}
+.container input::placeholder {
+  color: var(--color-theme);
+}
+.container button {
+  max-width: 2em;
+  cursor: pointer;
+}
+.container button::after {
+  content: '\21E8';
+  color: var(--color-theme);
+}
+.container div {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+}
+.container div p {
+  background: white;
+  text-align: center;
+  width: 100%;
+  padding: .5em;
+}

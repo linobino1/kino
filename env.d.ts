@@ -11,6 +11,7 @@ declare global {
     S3_REGION: string
     S3_ACCESS_KEY: string
     S3_SECRET_KEY: string
+    MAILCHIMP_SIGNUP_URL: string
   }
   interface Window {
     ENV: AppEnvironment

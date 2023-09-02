@@ -3,5 +3,11 @@
   "CookieBannerText": "This website uses cookies to ensure you get the best experience on our website.",
   "rentalCredits": "Loan of the film print with kind support of {{rental}}.",
   "ageRating {age}": "FSK {{age}}",
-  "duration {duration}": "{{duration}} min"
+  "duration {duration}": "{{duration}} min",
+  "newsletter.placeholder": "email newsletter",
+  "newsletter.sending": "Sending...",
+  "newsletter.success": "Thank you for subscribing!",
+  "newsletter.error": "An unexpected internal error has occurred.",
+  "newsletter.empty": "Please enter a valid email address.",
+  "newsletter.duplicate": "Too many subscribe attempts for this email address."
 }
