@@ -47,26 +47,19 @@ export default function Item() {
   const { t } = useTranslation();
 
   return (
-    <Page>
-      <h1 className={classes.title}>
-        <span className={classes.subtitle}>{movie.title}</span>
-      </h1>
-      <div className={classes.imageHeader}>
-        <Image
-          className={classes.headerImage}
-          image={movie.still as Media}
-          sizes="100vw"
-          alt={t('movie still') as string}
-        />
-        <div className={classes.imageHeaderOverlay} />
-      </div>
+    <Page className={classes.container}>
+      <h1>{movie.title}</h1>
+      <Image
+        className={classes.header}
+        image={movie.still as Media}
+        sizes="100vw"
+        alt={t('movie still') as string}
+      />
       <main>
-        <div className={classes.movies}>
-          <Movie
-            movie={movie}
-            filmprint={filmPrint}
-          />
-        </div>
+        <Movie
+          movie={movie}
+          filmprint={filmPrint}
+        />
       </main>
     </Page>
   );
