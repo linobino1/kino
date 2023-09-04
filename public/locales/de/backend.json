@@ -3,8 +3,8 @@
   "Title": "Titel",
   "Configuration": "Konfiguration",
   "Site Configuration": "Seiteneinstellungen",
-  "Static Page": "Statische Seite",
-  "Static Pages": "Statische Seiten",
+  "Static page": "Statische Seite",
+  "Static pages": "Statische Seiten",
   "Image": "Bild",
   "Images": "Bilder",
   "Footer Content": "Inhalt im Footer",
@@ -133,5 +133,7 @@
   "Colors": "Farben",
   "Comma-separated list of tags.": "Komma-getrennte Tags.",
   "Slug": "URL Slug",
-  "Rented by": "Entliehen von"
+  "Rented by": "Entliehen von",
+  "Header": "Titelbild",
+  "Heading": "Überschrift"
 }
