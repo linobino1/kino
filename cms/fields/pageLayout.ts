@@ -1,11 +1,12 @@
 import type { Field } from 'payload/types';
+import type { StaticPage } from 'payload/generated-types';
 import { Content } from '../blocks/Content';
 import { HeaderImage } from '../blocks/HeaderImage';
 import { Outlet } from '../blocks/Outlet';
 import { Heading } from '../blocks/Heading';
+import { Gallery } from '../blocks/Gallery';
+import { Video } from '../blocks/Video';
 import { t } from '../i18n';
-import Gallery from '../blocks/Gallery';
-import type { StaticPage } from 'payload/generated-types';
 
 export type PageLayout = StaticPage['layout'];
 
@@ -26,6 +27,7 @@ export const pageLayout = (): Field => ({
         Content,
         Outlet,
         Gallery,
+        Video,
       ],
     },
     {

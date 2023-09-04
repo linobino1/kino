@@ -1,9 +1,10 @@
+import type { PageLayout } from 'cms/fields/pageLayout';
 import React from 'react';
 import { Heading } from './Heading';
 import { HeaderImage } from './HeaderImage';
 import { Content } from './Content';
 import { Gallery } from './Gallery';
-import type { PageLayout } from 'cms/fields/pageLayout';
+import { MyReactPlayer } from '../MyReactPlayer';
 
 type Props = {
   blocks: PageLayout['blocks']
@@ -30,6 +31,9 @@ const Blocks: React.FC<Props> = ({
               
             case 'gallery':
               return <Gallery images={block.images} />;
+            
+            case 'video':
+              return <MyReactPlayer url={block.url} />;
               
             case 'outlet':
               return children;
