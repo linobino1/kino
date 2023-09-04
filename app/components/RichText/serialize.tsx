@@ -23,7 +23,7 @@ type Leaf = {
   doc?: any
 };
 
-const serialize = (children: Children): React.ReactElement[] => children.map((node, i) => {
+const serialize = (children?: Children): React.ReactElement[] => children?.length ? children.map((node, i) => {
   if (Text.isText(node)) {
     // escape text and convert line breaks to <br />
     let escapedText = escape(node.text).replace(/(\r\n|\n|\r)/gm, "<br />");
@@ -202,6 +202,6 @@ const serialize = (children: Children): React.ReactElement[] => children.map((no
         </p>
       );
   }
-});
+}) : [];
 
 export default serialize;
