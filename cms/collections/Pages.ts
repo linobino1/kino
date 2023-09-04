@@ -24,12 +24,6 @@ const Pages: CollectionConfig = {
       required: true,
     },
     slugField('title'),
-    {
-      name: 'image',
-      label: t('Header Image'),
-      type: 'upload',
-      relationTo: 'media',
-    },
     pageLayout(),
     metaField(t('Meta')),
   ],
