@@ -9,8 +9,6 @@
   text-decoration: none;
   color: inherit;
 }
-.language:hover,
 .language.active {
-  border-bottom: 1px solid;
-  color: var(--color-black);
+  display: none;
 }

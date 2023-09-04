@@ -25,7 +25,7 @@
   position: relative;
   overflow-wrap: anywhere;
 }
-.navItem:not(.language):hover {
+.navItem:hover {
   color: var(--color-black);
 }
 .image {
