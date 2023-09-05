@@ -2,11 +2,10 @@
 import React from 'react';
 import type { Media } from "payload/generated-types";
 import { Navigation } from '../Navigation';
-import { Link, useNavigate, useSearchParams } from '@remix-run/react';
+import { Link, useSearchParams } from '@remix-run/react';
 import { Image } from '~/components/Image';
 import type { Site, Navigation as NavigationType } from 'payload/generated-types';
 import classes from './index.module.css';
-import Button from '../Button';
 import Modal from '../Modal';
 import { UserStatus } from '../UserStatus';
 
@@ -19,7 +18,6 @@ type Props = {
 const Header: React.FC<Props> = ({
   site, navigations, content,
 }) => {
-  const navigate = useNavigate();
   const [ searchParams ] = useSearchParams();
   
   return (
