@@ -31,9 +31,14 @@
     border-right: 0;
     justify-self: flex-end;
 }
-.mainLogo {
+.logo {
     width: 8rem;
     height: auto;
+}
+.logoMobile {
+    width: 18rem;
+    height: auto;
+    display: none;
 }
 .navMain {
     justify-self: flex-end;
@@ -43,10 +48,14 @@
 }
 @media (max-width: 1000px) {
     .mainHeader {
-        padding: 0 1rem;;
+        padding: 0;
+        padding-left: 1rem;
     }
 }
 @media (max-width: 768px) {
+    .mainHeader {
+        grid-template-columns: auto auto;
+    }
     .mainHeader {
         font: var(--font);
     }
@@ -62,6 +71,15 @@
     }
     .navMain {
         display: none !important;
+    }
+    .userStatus {
+        display: none;
+    }
+    .logo {
+        display: none;
+    }
+    .logoMobile {
+        display: block;
     }
 }
 /** MOBILE MENU    ******************************************/

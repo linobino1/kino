@@ -26,8 +26,16 @@ const Header: React.FC<Props> = ({
         <Link to="/">
           {site.logo as Media && (
             <Image
-              className={classes.mainLogo}
+              className={classes.logo}
               image={site.logo as Media}
+              width={200}
+              height={50}
+            />
+          )}
+          {site.logoMobile as Media && (
+            <Image
+              className={classes.logoMobile}
+              image={site.logoMobile as Media}
               width={200}
               height={50}
             />
@@ -49,6 +57,7 @@ const Header: React.FC<Props> = ({
       { searchParams.get('modal') === 'menu' && (
         <Modal>
           <div className={classes.mobileMenu}>
+            <UserStatus />
             <Navigation
               navigation={navigations.find((x) => x.type === 'main')}
               className={classes.navMobile}

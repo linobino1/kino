@@ -16,6 +16,12 @@ export const Site: GlobalConfig = {
       relationTo: 'media',
     },
     {
+      name: 'logoMobile',
+      label: t('Logo (mobile)'),
+      type: 'upload',
+      relationTo: 'media',
+    },
+    {
       name: 'favicon',
       type: 'upload',
       relationTo: 'media',
