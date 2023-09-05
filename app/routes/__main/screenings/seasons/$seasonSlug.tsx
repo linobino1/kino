@@ -2,7 +2,6 @@ import type { MetaFunction } from "@remix-run/node";
 import type { LoaderArgs} from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { Page } from "~/components/Page";
-import classes from "./index.module.css";
 import { ScreeningsList } from "~/components/ScreeningsList";
 import i18next from "~/i18next.server";
 import { pageTitle } from "~/util/pageMeta";
@@ -60,10 +59,7 @@ export default function Index() {
   return (
     <Page>
       <h1>{season.name}</h1>
-      <ScreeningsList
-        items={screenings}
-        className={classes.screeningsList}
-      />
+      <ScreeningsList items={screenings} />
     </Page>
   );
 }

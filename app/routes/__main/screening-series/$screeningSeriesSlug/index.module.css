@@ -1,8 +1,0 @@
-.screeningsList {
-  margin: 3vw;
-}
-@media screen and (max-width: 768px) {
-  .screeningsList {
-    margin: 6vw;
-  }
-}

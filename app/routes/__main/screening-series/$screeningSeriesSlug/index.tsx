@@ -4,7 +4,6 @@ import i18next from "~/i18next.server";
 import Page from "~/components/Page";
 import ScreeningsList from "~/components/ScreeningsList";
 import { ErrorPage } from "~/components/ErrorPage";
-import classes from "./index.module.css";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -58,7 +57,6 @@ export default function Item() {
     <Page layout={screeningSeries.layout}>
       <ScreeningsList
         items={screenings}
-        className={classes.screeningsList}
         activeScreeningSery={screeningSeries}
       />
     </Page>

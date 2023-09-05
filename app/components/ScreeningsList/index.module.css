@@ -3,7 +3,7 @@
   display: grid;
   gap: 15px;
   grid-template-columns: repeat(auto-fill, minmax(15em, auto));
-  margin-inline: auto;
+  margin: 2.8em;
 }
 .empty {
   display: flex;
@@ -12,9 +12,21 @@
   justify-content: center;
   height: 50vh;
 }
+@media screen and (max-width: 768px) {
+  .list {
+    grid-template-columns: repeat(auto-fill, minmax(13em, auto));
+    margin: 2em 3vw;
+  }
+}
+@media screen and (max-width: 500px) {
+  .list {
+    grid-template-columns: 1fr;
+    gap: 2em;
+  }
+}
 
 /* ITEM  ****************************************************************/
-.screening {
+.item {
   position: relative;
   width: 100%;
   background-color: var(--color-white);
@@ -25,12 +37,12 @@
   grid-column: auto;
 }
 @media screen and (min-width: 768px) {
-  .screening:hover {
+  .item:hover {
     transition: all .3s ease-in-out;
     transform: translate(0px, -2%);
   }
 }
-.screening img {
+.item img {
   object-fit: cover;
   width: 100%;
   aspect-ratio: 1/1;
@@ -72,7 +84,6 @@
   font-weight: var(--font-weight-semi-bold);
 }
 .title {
-  font: var(--font-big);
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
   word-wrap: break-word;
@@ -103,8 +114,19 @@
   text-transform: uppercase;
 }
 .date .dayNumber {
+  font: var(--font-xxx-big);
   font-family: 'Tahoma', sans-serif;
-  font-size: 2.5rem;
   font-weight: var(--font-weight-bold);
-  line-height: 2.5rem;
+  line-height: 1;
+}
+@media screen and (max-width: 500px) {
+  .item img {
+    aspect-ratio: 16 / 9;
+  }
+  .info {
+    aspect-ratio: unset;
+  }
+  .tags {
+    min-height: unset;
+  }
 }
