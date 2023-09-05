@@ -1,8 +1,11 @@
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
 import { slugField } from '../../fields/slug';
+import { Content } from '../../blocks/Content';
+import { Gallery } from '../../blocks/Gallery';
+import { Video } from '../..//blocks/Video';
 import video from '../../fields/richtext/video';
-import { urlField } from '../../fields/url';
+import { urlField, LinkableCollectionSlugs } from '../../fields/url';
 
 const Posts: CollectionConfig = {
   slug: 'posts',
@@ -62,9 +65,70 @@ const Posts: CollectionConfig = {
       },
     },
     {
-      name: 'link',
+      name: 'details',
+      label: t('Detail'),
+      type: 'blocks',
+      localized: true,
+      blocks: [
+        Content,
+        Gallery,
+        Video,
+      ],
+      admin: {
+        description: t('Add a detail page for the post'),
+      },
+    },
+    {
+      type: 'group',
       label: t('Link'),
-      type: 'text',
+      name: 'link',
+      admin: {
+        description: t('Add a link to the post header.'),
+      },
+      fields: [
+        {
+          name: 'type',
+          label: t('Type'),
+          type: 'radio',
+          defaultValue: 'self',
+          admin: {
+            description: t( 'AdminExplainPostLinkType'),
+          },
+          options: [
+            {
+              label: t('None'),
+              value: 'none',
+            },
+            {
+              label: t('Internal Link'),
+              value: 'internal',
+            },
+            {
+              label: t('External Link'),
+              value: 'external',
+            },
+          ],
+        },
+        // internal link
+        {
+          name: 'doc',
+          type: 'relationship',
+          relationTo: LinkableCollectionSlugs,
+          required: true,
+          admin: {
+            condition: (siblingData) => siblingData.link?.type === 'internal',
+          },
+        },
+        // external link
+        {
+          name: 'url',
+          type: 'text',
+          required: true,
+          admin: {
+            condition: (siblingData) => siblingData.link?.type === 'external',
+          },
+        },
+      ],
     },
     urlField(({ data }) => `/news/${data?.slug}`),
   ],

@@ -135,5 +135,8 @@
   "Slug": "URL Slug",
   "Rented by": "Entliehen von",
   "Header": "Titelbild",
-  "Heading": "Überschrift"
+  "Heading": "Überschrift",
+  "Add a link to the post header.": "Verlinke das Titelbild.",
+  "AdminExplainPostLinkType": "Wähle 'Keine(r)' um das Titelbild mit der Detailseite zu verlinken, falls diese existiert.",
+  "None": "Keine(r)"
 }

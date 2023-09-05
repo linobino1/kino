@@ -15,52 +15,9 @@ ul.posts {
   width: 100%;
   height: 20rem;
 }
-
-/* POST ********************************************************************/
-ul.posts > li {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: start;
-  column-gap: 2rem;
+ul.posts > li hr {
+  margin-block: 3em;
 }
-ul.posts > li > * {
-  grid-row: auto;
-  grid-column: 2;
-}
-ul.posts img {
-  grid-row: 1 / span 4;
-  grid-column: 1;
-  height: auto;
-  width: 100%;
-}
-ul.posts img.link {
-  cursor: pointer;
-}
-ul.posts .date {
-  font: var(--font-small);
-}
-ul.posts h2 {
-  font: var(--font-xxx-big);
-  text-transform: uppercase;
-  margin-block: .2em 0;
-  word-wrap: break-word;
-}
-ul.posts hr {
-  grid-column: 1 / span 2;
-  margin-block: 1em 3em;
-}
-ul.posts > li:last-child > hr {
+ul.posts > li:last-child hr {
   display: none;
-}
-@media (max-width: 768px) {
-  ul.posts > li {
-    display: block;
-    overflow-y: hidden;
-  }
-  ul.posts > li > * {
-    grid-column: 1 !important;
-  }
-  ul.posts img {
-    margin-bottom: 1.2em;
-  }
 }

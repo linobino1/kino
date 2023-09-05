@@ -12,9 +12,9 @@ export const Page: React.FC<Props> = (props) => {
   const { layout, children } = props;
   return (
     <div
-      className={`${classes.page} ${props.className}`}
-      data-layout-type={layout?.type}
       {...props}
+      data-layout-type={layout?.type}
+      className={`${classes.page} ${props.className}`}
     >
       { layout?.blocks ? (
         <Blocks

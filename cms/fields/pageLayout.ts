@@ -10,38 +10,46 @@ import { t } from '../i18n';
 
 export type PageLayout = StaticPage['layout'];
 
-export const pageLayout = (): Field => ({
-  name: 'layout',
-  label: t('Layout'),
-  type: 'group',
-  fields: [
-    {
-      name: 'blocks',
-      label: t('Blocks'),
-      type: 'blocks',
-      required: true,
-      minRows: 1,
-      blocks: [
-        Heading,
-        HeaderImage,
-        Content,
-        Outlet,
-        Gallery,
-        Video,
-      ],
-    },
-    {
-      name: 'type',
-      label: t('Layout Type'),
-      type: 'select',
-      defaultValue: 'default',
-      required: true,
-      options: [
-        { label: t('Default'), value: 'default' },
-        { label: t('Info'), value: 'info' },
-      ],
-    },
-  ],
-});
+export type Props = {
+  defaultLayout?: any
+}
+
+export const pageLayout = (props?: Props): Field => {
+  const { defaultLayout } = props || {};
+  return {
+    name: 'layout',
+    label: t('Layout'),
+    type: 'group',
+    fields: [
+      {
+        name: 'blocks',
+        label: t('Blocks'),
+        type: 'blocks',
+        required: true,
+        minRows: 1,
+        blocks: [
+          Heading,
+          HeaderImage,
+          Content,
+          Outlet,
+          Gallery,
+          Video,
+        ],
+        defaultValue: defaultLayout,
+      },
+      {
+        name: 'type',
+        label: t('Layout Type'),
+        type: 'select',
+        defaultValue: 'default',
+        required: true,
+        options: [
+          { label: t('Default'), value: 'default' },
+          { label: t('Info'), value: 'info' },
+        ],
+      },
+    ],
+  }
+};
 
 export default pageLayout;

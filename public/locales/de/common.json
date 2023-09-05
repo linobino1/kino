@@ -16,5 +16,6 @@
   "newsletter.success": "Danke für Ihre Anmeldung!",
   "newsletter.error": "Ups, da ist etwas schiefgelaufen. Bitte versuchen Sie es später noch einmal.",
   "newsletter.empty": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
-  "newsletter.duplicate": "Zu viele Anfragen für diese E-Mail-Adresse."
+  "newsletter.duplicate": "Zu viele Anfragen für diese E-Mail-Adresse.",
+  "Read more": "Weiterlesen"
 }

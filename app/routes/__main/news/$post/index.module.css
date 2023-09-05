@@ -1,0 +1,10 @@
+.image {
+  width: 100%;
+  vertical-align: bottom;
+}
+.container h1 {
+  background: inherit;
+  color: inherit;
+  text-align: start;
+  padding: unset;
+}

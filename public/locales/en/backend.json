@@ -12,5 +12,6 @@
   "AdminExplainScreeningsPage": "The screenings page lists all screenings taking place in the future or today.",
   "AdminExplainMovieTitle": "Translated field. Is used as the movies title on the website",
   "AdminExplainOriginalTitle": "Original title of the movie",
-  "AdminExplainInternationalTitle": "International title of the movie, usually the English title, used to identify the movie"
+  "AdminExplainInternationalTitle": "International title of the movie, usually the English title, used to identify the movie",
+  "AdminExplainPostLinkType": "Select 'None' to link the post header to the post detail page (if exists)."
 }
