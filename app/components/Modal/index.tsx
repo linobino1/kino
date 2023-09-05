@@ -1,8 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import classes from "./index.module.css";
 import { useNavigate } from "@remix-run/react";
-import Button from "~/components/Button";
-
 
 export type Props = {
   title?: string
