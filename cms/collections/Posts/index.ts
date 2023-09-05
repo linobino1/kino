@@ -43,7 +43,7 @@ const Posts: CollectionConfig = {
     },
     {
       name: 'content',
-      label: t('Content'),
+      label: t('Preview'),
       type: 'richText',
       localized: true,
       required: true,

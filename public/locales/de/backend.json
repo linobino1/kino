@@ -139,5 +139,6 @@
   "Add a link to the post header.": "Verlinke das Titelbild.",
   "AdminExplainPostLinkType": "Wähle 'Keine(r)' um das Titelbild mit der Detailseite zu verlinken, falls diese existiert.",
   "None": "Keine(r)",
-  "Logo (mobile)": "Logo (mobil)"
+  "Logo (mobile)": "Logo (mobil)",
+  "Preview": "Vorschau"
 }
