@@ -4,6 +4,7 @@ import { t } from '../../i18n';
 import { slugField, slugFormat } from '../../fields/slug';
 import analogDigitalTypeField from './fields';
 import { MigrateMovieButton } from '../../MigrateMovie/admin/Button';
+import { urlField } from '../../fields/url';
 
 export const FilmPrints: CollectionConfig = {
   slug: 'filmPrints',
@@ -236,6 +237,7 @@ export const FilmPrints: CollectionConfig = {
         },
       ],
     },
+    urlField(({ data }) => `/archive/${data?.slug}`),
   ],
 };
 

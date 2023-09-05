@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
 import { slugField } from '../../fields/slug';
 import video from '../../fields/richtext/video';
+import { urlField } from '../../fields/url';
 
 const Posts: CollectionConfig = {
   slug: 'posts',
@@ -65,6 +66,7 @@ const Posts: CollectionConfig = {
       label: t('Link'),
       type: 'text',
     },
+    urlField(({ data }) => `/news/${data?.slug}`),
   ],
 };
 
