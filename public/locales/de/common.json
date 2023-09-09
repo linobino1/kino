@@ -18,5 +18,7 @@
   "newsletter.empty": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
   "newsletter.duplicate": "Zu viele Anfragen für diese E-Mail-Adresse.",
   "Read more": "Weiterlesen",
-  "signed in as {{name}}": "angemeldet als {{name}}"
+  "signed in as {{name}}": "angemeldet als {{name}}",
+  "Video is not available.": "Video ist nicht verfügbar.",
+  "Loading...": "Lade..."
 }
