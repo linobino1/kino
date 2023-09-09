@@ -36,8 +36,8 @@
     height: auto;
 }
 .logoMobile {
-    width: 18rem;
-    height: auto;
+    height: min(1.2em, 6vw);
+    width: auto;
     display: none;
 }
 .navMain {
