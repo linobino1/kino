@@ -41,7 +41,7 @@ import { s3Adapter } from '@payloadcms/plugin-cloud-storage/s3';
 const mockModulePath = path.resolve(__dirname, 'mocks/emptyObject.js');
 
 export default buildConfig({
-  serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
+  serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || '',
   endpoints: [
     // path will be prefixed with /api if root is not set to true
     ...migrateMovieEndpoints,
