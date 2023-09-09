@@ -17,13 +17,15 @@ export const PostPreview: React.FC<Props> = (props) => {
   const { t } = useTranslation();
   const { post } = props;
   let link: string | undefined;
+  let target = '_self';
   switch (post.link?.type) {
     case 'internal':
       link = (post.link.doc?.value as LinkableCollection)?.url;
       break;
     case 'external':
       link = post.link?.url;
-      break;
+      target = '_blank';
+break;
     case 'none':
       link = post.details?.length ? post.url : undefined;
   }
@@ -34,8 +36,8 @@ export const PostPreview: React.FC<Props> = (props) => {
     >
       <Image
         image={post.header as Media}
-        onClick={link ? () => window.open(link, '_self') : undefined}
-        className={post.link ? classes.link : undefined}
+        onClick={link ? () => window.open(link, target) : undefined}
+        className={link ? classes.link : undefined}
         sizes="(max-width: 768px) 100vw, 50vw"
       />
       <Date className={classes.date} iso={post.date} format='PPP' />
