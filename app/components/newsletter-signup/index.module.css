@@ -44,7 +44,8 @@
   .container {
     align-items: center;
   }
-  .form {
+  .form button,
+  .form input {
     font-size: 16px;  /* prevent iOS auto zoom */
   }
   
