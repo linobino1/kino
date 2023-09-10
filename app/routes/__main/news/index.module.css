@@ -21,3 +21,6 @@ ul.posts > li hr {
 ul.posts > li:last-child hr {
   display: none;
 }
+ul.posts > li p {
+  margin-left: 0;
+}
