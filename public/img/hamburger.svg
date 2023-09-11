@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="25.5" viewBox="0 0 30 25.5">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #000000;
+        stroke-width: .8px;
+      }
+    </style>
+  </defs>
+  <line class="cls-1" x1="26" transform="translate(3 6)" />
+  <line class="cls-1" x1="26" transform="translate(3 15)" />
+  <line class="cls-1" x1="26" transform="translate(3 24)" />
+</svg>
