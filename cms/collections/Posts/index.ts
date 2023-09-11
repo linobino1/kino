@@ -6,7 +6,8 @@ import { Image } from '../../blocks/Image';
 import { Gallery } from '../../blocks/Gallery';
 import { Video } from '../..//blocks/Video';
 import video from '../../fields/richtext/video';
-import { urlField, LinkableCollectionSlugs } from '../../fields/url';
+import { LinkableCollectionSlugs } from '../../Linkable/types';
+import { UrlField } from '../../Linkable/fields/UrlField';
 
 const Posts: CollectionConfig = {
   slug: 'posts',
@@ -132,7 +133,7 @@ const Posts: CollectionConfig = {
         },
       ],
     },
-    urlField(({ data }) => `/news/${data?.slug}`),
+    UrlField(({ data }) => `/news/${data?.slug}`),
   ],
 };
 

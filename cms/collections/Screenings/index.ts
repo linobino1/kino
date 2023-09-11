@@ -4,7 +4,7 @@ import { slugField } from '../../fields/slug';
 import { getDefaultDocId } from '../../fields/default';
 import type { Movie } from 'payload/generated-types';
 import { MigrateMovieButton } from '../../MigrateMovie/admin/Button';
-import { urlField } from '../../fields/url';
+import { UrlField } from '../../Linkable/fields/UrlField';
 
 const Screenings: CollectionConfig = {
   slug: 'screenings',
@@ -169,7 +169,7 @@ const Screenings: CollectionConfig = {
       type: 'text',
       required: false,
     },
-    urlField(({ data }) => `/screenings/${data?.slug}`),
+    UrlField(({ data }) => `/screenings/${data?.slug}`),
   ],
 };
 

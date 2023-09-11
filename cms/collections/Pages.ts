@@ -3,7 +3,7 @@ import { t } from '../i18n';
 import { slugField } from '../fields/slug';
 import { metaField } from '../fields/meta';
 import { pageLayout } from '../fields/pageLayout';
-import { urlField } from '../fields/url';
+import { UrlField } from '../Linkable/fields/UrlField';
 
 const Pages: CollectionConfig = {
   slug: 'staticPages',
@@ -36,7 +36,7 @@ const Pages: CollectionConfig = {
       ]
     }),
     metaField(t('Meta')),
-    urlField(({ data }) => `/${data?.slug}`),
+    UrlField(({ data }) => `/${data?.slug}`),
   ],
 };
 

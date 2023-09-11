@@ -7,7 +7,7 @@ import RichText from '~/components/RichText';
 import classes from './index.module.css';
 import { useTranslation } from 'react-i18next';
 import { Link } from '@remix-run/react';
-import type { LinkableCollection } from 'cms/fields/url';
+import type { LinkableCollection } from 'cms/Linkable/types';
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   post: Post;
