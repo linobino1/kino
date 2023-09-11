@@ -17,6 +17,7 @@ export const Gallery: Block = {
           name: 'image',
           type: 'upload',
           relationTo: 'media',
+          required: true,
         },
       ],
     },
