@@ -37,6 +37,9 @@ const ScreeningSeries: CollectionConfig = {
         {
           blockType: 'content',
         },
+        {
+          blockType: 'outlet',
+        },
       ],
     }),
     slugField('name'),
