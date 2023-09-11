@@ -33,7 +33,7 @@ export const NewsletterSignup: React.FC<Props> = ({ className }) => {
             error: t("newsletter.error"),
             empty: t("newsletter.empty"),
             duplicate: t("newsletter.duplicate"),
-            button: '',
+            button: 'OK',
           }
         }
       />
