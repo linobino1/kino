@@ -25,7 +25,16 @@ const Pages: CollectionConfig = {
       required: true,
     },
     slugField('title'),
-    pageLayout(),
+    pageLayout({
+      defaultLayout: [
+        {
+          blockType: 'heading',
+        },
+        {
+          blockType: 'content',
+        },
+      ]
+    }),
     metaField(t('Meta')),
     urlField(({ data }) => `/${data?.slug}`),
   ],

@@ -26,7 +26,19 @@ const ScreeningSeries: CollectionConfig = {
       localized: true,
       required: true,
     },
-    pageLayout(),
+    pageLayout({
+      defaultLayout: [
+        {
+          blockType: 'headerImage',
+        },
+        {
+          blockType: 'heading',
+        },
+        {
+          blockType: 'content',
+        },
+      ],
+    }),
     slugField('name'),
     urlField(({ data }) => `/screening-series/${data?.slug}`),
   ],
