@@ -15,6 +15,7 @@ const Posts: CollectionConfig = {
     defaultColumns: ['date', 'title'],
     useAsTitle: 'title',
   },
+  defaultSort: '-date',
   fields: [
     {
       name: 'title',
