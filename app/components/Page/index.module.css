@@ -7,6 +7,7 @@
     background: var(--color-white);
     text-align: center;
     margin: 0;
+    margin-bottom: 1rem;
     font: var(--font-xxx-big);
     font-weight: var(--font-weight-bold);
     line-height: 1.1;
