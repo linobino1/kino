@@ -77,7 +77,7 @@ export const Movie: React.FC<Props> = (props) => {
         <div className={classes.rental}>
           <div
             dangerouslySetInnerHTML={{
-              __html: t('rentalCredits', { rental: (filmprint?.rental as Rental)?.name }) as string,
+              __html: (filmprint?.rental as Rental).credits as string,
             }}
           />
           { (filmprint?.rental as Rental)?.logo && (

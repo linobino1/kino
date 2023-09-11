@@ -140,5 +140,7 @@
   "AdminExplainPostLinkType": "Wähle 'Keine(r)' um das Titelbild mit der Detailseite zu verlinken, falls diese existiert.",
   "None": "Keine(r)",
   "Logo (mobile)": "Logo (mobil)",
-  "Preview": "Vorschau"
+  "Preview": "Vorschau",
+  "rentalCreditsDefault": "Leihgabe der Filmkopie mit freundlicher Unterstützung von XXX.",
+  "Edit in all languages!": "In allen Sprachen bearbeiten!"
 }

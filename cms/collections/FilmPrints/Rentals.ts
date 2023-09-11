@@ -27,7 +27,18 @@ const Rentals: CollectionConfig = {
       label: t('Logo'),
       type: 'upload',
       relationTo: 'media',
-    }
+    },
+    {
+      name: 'credits',
+      label: t('Credits'),
+      type: 'textarea',
+      localized: true,
+      required: true,
+      defaultValue: ({ locale }: { locale: string}) => t('rentalCreditsDefault')[locale],
+      admin: {
+        description: t('Edit in all languages!'),
+      },
+    },
   ],
 };
 
