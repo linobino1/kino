@@ -10,5 +10,6 @@
   "newsletter.success": "Thank you for subscribing!",
   "newsletter.error": "An unexpected internal error has occurred.",
   "newsletter.empty": "Please enter a valid email address.",
-  "newsletter.duplicate": "Too many subscribe attempts for this email address."
+  "newsletter.duplicate": "Too many subscribe attempts for this email address.",
+  "More Info": "More Info"
 }
