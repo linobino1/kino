@@ -66,6 +66,13 @@ export const Movie: React.FC<Props> = (props) => {
       { showScreeningInfo && props.screening && (
         <ScreeningInfo screening={props.screening as Screening} />
       )}
+      { movie.trailer && (
+        <Link
+          className={classes.trailer}
+          to={movie.trailer}
+          target="_blank"
+        >{t('Trailer')}</Link>
+      )}
       { (filmprint?.rental as Rental) && (
         <div className={classes.rental}>
           <div
@@ -80,13 +87,6 @@ export const Movie: React.FC<Props> = (props) => {
             />
           )}
         </div>
-      )}
-      { movie.trailer && (
-        <Link
-          className={classes.trailer}
-          to={movie.trailer}
-          target="_blank"
-        >{t('Trailer')}</Link>
       )}
     </div>
   );
