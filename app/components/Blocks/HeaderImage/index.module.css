@@ -34,9 +34,15 @@ img.header {
     justify-content: flex-end;
     padding: 1rem 10%;
 }
+.container nav {
+    height: fit-content;
+}
 .container nav > *:last-child{
     margin-right: 0;
     padding-right: 0;
+}
+.container nav *:hover {
+    filter: brightness(0);
 }
 @media screen and (max-width: 768px) {
     .container .overlay {
