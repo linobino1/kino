@@ -38,7 +38,7 @@ export const links: LinksFunction = () => {
 };
 
 export async function loader({ request, context: { payload, user } }: LoaderArgs) {
-  let locale = await i18next.getLocale(request);
+  const locale = await i18next.getLocale(request);
   const [site, localeCookie] = await Promise.all([
     payload.findGlobal({
       slug: 'site',
@@ -96,8 +96,8 @@ export function useChangeLanguage(locale: string) {
 
 export default function App() {
   // Get the locale from the loader
-  let { locale, publicKeys } = useLoaderData<typeof loader>();
-  let { t, i18n } = useTranslation();
+  const { locale, publicKeys } = useLoaderData<typeof loader>();
+  const { t, i18n } = useTranslation();
 
   // handle locale change
   useChangeLanguage(locale);
