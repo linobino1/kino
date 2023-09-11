@@ -16,7 +16,7 @@ ul.posts {
   height: 20rem;
 }
 ul.posts > li hr {
-  margin-block: 3em;
+  margin-block: 2em;
 }
 ul.posts > li:last-child hr {
   display: none;
