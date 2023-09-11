@@ -9,10 +9,11 @@
     margin: 0;
     font: var(--font-xxx-big);
     font-weight: var(--font-weight-bold);
-    line-height: 1.4;
+    line-height: 1.1;
     letter-spacing: var(--letter-spacing-big);
     text-transform: uppercase;
-    padding: 1rem
+    padding: 1rem;
+    word-wrap: break-word;
 }
 .page main {
     padding: 1rem 0;
