@@ -69,7 +69,6 @@ const Posts: CollectionConfig = {
       name: 'details',
       label: t('Detail'),
       type: 'blocks',
-      localized: true,
       blocks: [
         Content,
         Image,
