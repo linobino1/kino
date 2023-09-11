@@ -9,6 +9,7 @@ import classes from './index.module.css';
 import { Image } from '~/components/Image';
 import Date from '~/components/Date';
 import Blocks from '~/components/Blocks';
+import RichText from '~/components/RichText';
 
 export const loader = async ({ request, params, context: { payload }}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
@@ -41,14 +42,24 @@ export default function Index() {
 
   return (
     <Page className={classes.container}>
+    <div className={classes.header}>
+      <Date iso={post.date} format='PPP' />
+      { ' ' }
+      { post.title }
+    </div>
     <Image
       className={classes.image}
       image={post.header as Media}
     />
     <main>
       <h1>{post.title}</h1>
-      <Date iso={post.date} format='PPP' />
-      <Blocks blocks={post.details as []} />
+      <RichText
+        content={post.content}
+        className={classes.preview}
+      />
+      <Blocks
+        blocks={post.details as []}
+      />
     </main>
     </Page>
   );

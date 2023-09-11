@@ -1,10 +1,26 @@
-.image {
-  width: 100%;
-  vertical-align: bottom;
+.container {
+  max-width: min(70vw, 1100px);
+  padding-block: 2rem;
+}
+.header {
+  font: var(--font-small);
+  color: var(--color-light-grey);
+  margin-block: 1em;
 }
 .container h1 {
   background: inherit;
   color: inherit;
   text-align: start;
   padding: unset;
+}
+.image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: contain;
+  object-position: left;
+  vertical-align: bottom;
+}
+.preview {
+  font-weight: var(--font-weight-semi-bold);
+  font: var(--font-big);
 }

@@ -50,21 +50,23 @@ export default function Index() {
 
   return (
     <Page layout={page.layout}>
-      { posts.docs?.length ? (
-      <>
-        <ul className={classes.posts}>
-          {posts.docs.map((post) => (
-            <li key={post.slug}>
-              <PostPreview post={post} />
-              <hr />
-            </li>
-          ))}
-        </ul>
-      </>
-      ) : (
-        <div className={classes.empty}>{t('No posts.')}</div>
-      )}
-      <Pagination {...posts} linkProps={{ prefetch: 'intent' }}/>
+      <main>
+        { posts.docs?.length ? (
+        <>
+          <ul className={classes.posts}>
+            {posts.docs.map((post) => (
+              <li key={post.slug}>
+                <PostPreview post={post} />
+                <hr />
+              </li>
+            ))}
+          </ul>
+        </>
+        ) : (
+          <div className={classes.empty}>{t('No posts.')}</div>
+        )}
+        <Pagination {...posts} linkProps={{ prefetch: 'intent' }}/>
+      </main>
     </Page>
   );
 }
