@@ -14,11 +14,10 @@
   height: auto;
 }
 .container h2 {
-  font: var(--font-xx-big);
-  font-weight: var(--font-weight-bold);
   text-transform: uppercase;
   margin: 0;
   word-wrap: break-word;
+  font: var(--font-h2);
 }
 .container ul.specs {
   appearance: none;

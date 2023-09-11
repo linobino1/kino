@@ -22,7 +22,7 @@
   font: var(--font-small);
 }
 .container h2 {
-  font: var(--font-xxx-big);
+  font: var(--font-h2);
   text-transform: uppercase;
   margin-block: .2em 0;
   word-wrap: break-word;

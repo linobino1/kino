@@ -66,6 +66,7 @@
   --font: normal 300 1rem/1.4 var(--font-family);
   --font-small: normal 300 .9rem/1.4 var(--font-family);
   --font-x-small: normal 300 .8rem/1.4 var(--font-family);
+  --font-h2: var(--font-weight-bold) 1.9rem/1 var(--font-family);
 
   --border-radius: 2px;
   --box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.15);

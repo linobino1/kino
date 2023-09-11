@@ -8,6 +8,7 @@
   margin-block: 1em;
 }
 .container h1 {
+  font: var(--font-h2);
   background: inherit;
   color: inherit;
   text-align: start;
