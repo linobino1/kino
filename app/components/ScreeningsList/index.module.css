@@ -3,7 +3,7 @@
   display: grid;
   gap: 15px;
   grid-template-columns: repeat(auto-fill, minmax(15em, auto));
-  margin-block: 2em;
+  margin-block: 3em;
   margin-inline: auto;
   max-width: 1340px;
   padding-inline: 3vw;
