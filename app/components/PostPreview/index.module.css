@@ -12,11 +12,8 @@
 .container img {
   grid-row: 1 / span 99;
   grid-column: 1;
+  height: auto;
   width: 100%;
-  aspect-ratio: 16/9;
-  object-fit: contain;
-  object-position: right;
-  vertical-align: bottom;
 }
 .container img.link {
   cursor: pointer;
