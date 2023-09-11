@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
 import { slugField } from '../../fields/slug';
 import { Content } from '../../blocks/Content';
+import { Image } from '../../blocks/Image';
 import { Gallery } from '../../blocks/Gallery';
 import { Video } from '../..//blocks/Video';
 import video from '../../fields/richtext/video';
@@ -71,6 +72,7 @@ const Posts: CollectionConfig = {
       localized: true,
       blocks: [
         Content,
+        Image,
         Gallery,
         Video,
       ],

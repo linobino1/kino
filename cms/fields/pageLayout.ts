@@ -4,6 +4,7 @@ import { Content } from '../blocks/Content';
 import { HeaderImage } from '../blocks/HeaderImage';
 import { Outlet } from '../blocks/Outlet';
 import { Heading } from '../blocks/Heading';
+import { Image } from '../blocks/Image';
 import { Gallery } from '../blocks/Gallery';
 import { Video } from '../blocks/Video';
 import { t } from '../i18n';
@@ -32,6 +33,7 @@ export const pageLayout = (props?: Props): Field => {
           HeaderImage,
           Content,
           Outlet,
+          Image,
           Gallery,
           Video,
         ],
