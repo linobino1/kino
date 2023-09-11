@@ -48,7 +48,6 @@ export default function Item() {
 
   return (
     <Page className={classes.container}>
-      <h1>{movie.title}</h1>
       <Image
         className={classes.header}
         image={movie.still as Media}
