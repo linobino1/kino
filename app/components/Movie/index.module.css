@@ -36,6 +36,7 @@
 }
 .container .synopsis {
   margin-block: 1.2em;
+  margin-left: 0;
 }
 .container img.rentalLogo {
   max-height: 3em;
