@@ -11,7 +11,7 @@ export const Gallery: Block = {
     {
       name: 'images',
       type: 'array',
-      minRows: 1,
+      minRows: 2,
       fields: [
         {
           name: 'image',
