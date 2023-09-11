@@ -50,7 +50,7 @@
     "migrate-mongo": "^10.0.0",
     "morgan": "^1.10.0",
     "nodemailer": "^6.9.1",
-    "payload": "^1.15.2",
+    "payload": "^1.15.5",
     "react": "^18.2.0",
     "react-cookie-consent": "^8.0.1",
     "react-dom": "^18.2.0",
