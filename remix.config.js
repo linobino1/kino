@@ -7,7 +7,6 @@ module.exports = {
     "**/*.css",
   ],
   future: {
-    unstable_cssModules: true,
     v2_errorBoundary: true,
   },
   // appDirectory: "app",
