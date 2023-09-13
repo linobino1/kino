@@ -1,4 +1,14 @@
-import type { MetaFunction, SerializeFrom } from "@remix-run/node";
+import {
+  DynamicLinks,
+  ExternalScripts,
+  type DynamicLinksFunction
+} from "remix-utils";
+import type {
+  MetaFunction,
+  SerializeFrom,
+  LoaderArgs,
+  LinksFunction
+} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
   Links,
@@ -9,20 +19,14 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
-import type { LoaderArgs } from "@remix-run/node";
 import i18next from "~/i18next.server";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
-import type { LinksFunction } from "@remix-run/node";
+import CookieConsent from "react-cookie-consent";
 import { cssBundleHref } from "@remix-run/css-bundle";
-import styles from "./root.module.css";
 import { i18nCookie } from "./cookie";
-import type { DynamicLinksFunction } from "remix-utils";
-import { ExternalScripts } from "remix-utils";
-import { DynamicLinks } from "remix-utils";
 import type { Media} from "payload/generated-types";
 import environment from "./util/environment";
-import CookieConsent from "react-cookie-consent";
 import classes from "./root.module.css";
 import { ErrorPage } from "~/components/ErrorPage";
 
@@ -109,7 +113,7 @@ export default function App() {
         <Links />
         <DynamicLinks />
       </head>
-      <body className={styles.body}>
+      <body className={classes.body}>
         <ExternalScripts />
         <script
           dangerouslySetInnerHTML={{
