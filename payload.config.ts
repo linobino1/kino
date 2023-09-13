@@ -37,6 +37,7 @@ import { MigrateMovieLink } from './cms/MigrateMovie/admin/Link';
 import { MigrateMovieButton } from './cms/MigrateMovie/admin/Button';
 import { cloudStorage } from '@payloadcms/plugin-cloud-storage';
 import { s3Adapter } from '@payloadcms/plugin-cloud-storage/s3';
+import { addUrlField } from './cms/plugins/addUrlField';
 
 const mockModulePath = path.resolve(__dirname, 'mocks/emptyObject.js');
 
@@ -47,6 +48,7 @@ export default buildConfig({
     ...migrateMovieEndpoints,
   ],
   plugins: [
+    addUrlField,
     cloudStorage({
       enabled: process.env.S3_ENABLED === 'true',
       collections: {

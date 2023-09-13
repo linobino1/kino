@@ -6,8 +6,7 @@ import { Image } from '../../blocks/Image';
 import { Gallery } from '../../blocks/Gallery';
 import { Video } from '../..//blocks/Video';
 import video from '../../fields/richtext/video';
-import { LinkableCollectionSlugs } from '../../Linkable/types';
-import { UrlField } from '../../Linkable/fields/UrlField';
+import { LinkableCollectionSlugs } from '../../types';
 
 const Posts: CollectionConfig = {
   slug: 'posts',
@@ -17,6 +16,11 @@ const Posts: CollectionConfig = {
     useAsTitle: 'title',
   },
   defaultSort: '-date',
+  custom: {
+    addUrlField: {
+      hook: (slug: string) => `/news/${slug}`,
+    },
+  },
   fields: [
     {
       name: 'title',
@@ -133,7 +137,6 @@ const Posts: CollectionConfig = {
         },
       ],
     },
-    UrlField(({ data }) => `/news/${data?.slug}`),
   ],
 };
 

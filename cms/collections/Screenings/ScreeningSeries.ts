@@ -2,7 +2,6 @@ import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
 import { slugField } from '../../fields/slug';
 import pageLayout from '../../fields/pageLayout';
-import { UrlField } from '../../Linkable/fields/UrlField';
 
 const ScreeningSeries: CollectionConfig = {
   slug: 'screeningSeries',
@@ -17,6 +16,11 @@ const ScreeningSeries: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  custom: {
+    addUrlField: {
+      hook: (slug: string) => `/screening-series/${slug}`,
+    },
   },
   fields: [
     {
@@ -43,7 +47,6 @@ const ScreeningSeries: CollectionConfig = {
       ],
     }),
     slugField('name'),
-    UrlField(({ data }) => `/screening-series/${data?.slug}`),
   ],
 };
 

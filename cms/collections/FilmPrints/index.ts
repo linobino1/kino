@@ -4,7 +4,6 @@ import { t } from '../../i18n';
 import { slugField, slugFormat } from '../../fields/slug';
 import analogDigitalTypeField from './fields';
 import { MigrateMovieButton } from '../../MigrateMovie/admin/Button';
-import { UrlField } from '../../Linkable/fields/UrlField';
 
 export const FilmPrints: CollectionConfig = {
   slug: 'filmPrints',
@@ -25,6 +24,11 @@ export const FilmPrints: CollectionConfig = {
     read: () => true,
   },
   timestamps: true,
+  custom: {
+    addUrlField: {
+      hook: (slug: string) => `/archive/${slug}`,
+    },
+  },
   hooks: {
     beforeValidate: [
       // set title and slug from movie.title and movie.format
@@ -237,7 +241,6 @@ export const FilmPrints: CollectionConfig = {
         },
       ],
     },
-    UrlField(({ data }) => `/archive/${data?.slug}`),
   ],
 };
 

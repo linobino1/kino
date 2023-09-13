@@ -1,5 +1,4 @@
-import type { Post } from 'payload/generated-types';
-import type { Media } from 'payload/generated-types';
+import type { Post, Media } from 'payload/generated-types';
 import React from 'react';
 import Date from '~/components/Date';
 import Image from '~/components/Image';
@@ -7,7 +6,7 @@ import RichText from '~/components/RichText';
 import classes from './index.module.css';
 import { useTranslation } from 'react-i18next';
 import { Link } from '@remix-run/react';
-import type { LinkableCollection } from 'cms/Linkable/types';
+import type { LinkableCollection } from 'cms/types';
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   post: Post;

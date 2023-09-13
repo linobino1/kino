@@ -1,3 +1,5 @@
+// manually created types go here
+
 import type {
   Post,
   StaticPage,
