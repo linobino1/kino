@@ -19,6 +19,11 @@ export const addUrlField: Plugin = (incomingConfig: Config): Config => {
     collections: [
       ...incomingConfig.collections?.map((collection) => collection.custom?.addUrlField ? {
         ...collection,
+        admin: {
+          ...collection.admin,
+          enableRichTextLink: true,
+          enableRichTextRelationship: true,
+        },
         fields: [
           ...collection.fields,
           {
@@ -58,7 +63,14 @@ export const addUrlField: Plugin = (incomingConfig: Config): Config => {
             },
           },
         ],
-      } : collection) || [],
+      } : {
+        ...collection,
+        admin: {
+          ...collection.admin,
+          enableRichTextLink: false,
+          enableRichTextRelationship: false,
+        },
+      }) || [],
     ],
   };
 
