@@ -72,7 +72,7 @@ const Screenings: CollectionConfig = {
         description: t('Leave blank to use the title of the first feature film'),
       },
       hooks: {
-        afterRead: [
+        beforeValidate: [
           // compute title
           async ({ value, data, req }) => {
             if (value || !data?.featureFilms?.length) return value;
