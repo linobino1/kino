@@ -153,7 +153,7 @@ const serialize = (children?: Children): React.ReactElement[] => children?.lengt
         return (
           <Link
             key={i}
-            to={node.doc.url as string}
+            to={node.doc.value.url as string}
             target={target}
           >
             {serialize(node.children as Children)}
