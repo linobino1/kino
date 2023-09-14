@@ -36,3 +36,8 @@
 .container a:visited {
     color: inherit;
 }
+
+.container p {
+    max-width: min(70vw, 1100px);
+    margin-inline: auto;
+}

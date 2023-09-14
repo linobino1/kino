@@ -1,5 +1,5 @@
 .container {
-  max-width: min(70vw, 1100px);
+  max-width: var(--page-max-width);
   padding-block: 2rem;
 }
 .header {
@@ -24,10 +24,4 @@
 .preview {
   font-weight: var(--font-weight-semi-bold);
   font: var(--font-big);
-}
-@media screen and (max-width: 768px) {
-  .container {
-    max-width: 100%;
-    padding-inline: 3vw;
-  }
 }

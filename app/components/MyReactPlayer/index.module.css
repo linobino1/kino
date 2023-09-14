@@ -4,6 +4,7 @@
   overflow: hidden;
   background-color: #000;
   color: #fff;
+  max-width: var(--page-max-width);
 }
 .container.loading > *:not(.message) {
   display: none;

@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  max-width: min(70vw, 1100px);
+  max-width: var(--page-max-width);
   margin: 0 auto;
   margin-block: 1.5rem;
 }

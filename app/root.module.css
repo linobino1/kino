@@ -125,8 +125,6 @@ hr {
 /* improve readablity */
 p {
   max-width: var(--page-max-width);
-  margin-left: auto;
-  margin-right: auto;
 }
 @media screen and (min-width: 768px) {
   p {
