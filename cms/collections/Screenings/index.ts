@@ -1,9 +1,9 @@
 import type { CollectionConfig } from 'payload/types';
+import type { Movie } from 'payload/generated-types';
+import type { slugGeneratorArgs } from '../../plugins/addSlugField';
 import { t } from '../../i18n';
 import { getDefaultDocId } from '../../fields/default';
-import type { Movie } from 'payload/generated-types';
 import { MigrateMovieButton } from '../../MigrateMovie/admin/Button';
-import { type slugGeneratorArgs } from 'cms/plugins/addSlugField';
 
 const Screenings: CollectionConfig = {
   slug: 'screenings',
