@@ -162,6 +162,7 @@ const Screenings: CollectionConfig = {
       label: t('Info'),
       type: 'text',
       required: false,
+      localized: true,
     },
     {
       name: 'moderator',
