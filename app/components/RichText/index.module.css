@@ -38,6 +38,6 @@
 }
 
 .container p {
-    max-width: min(70vw, 1100px);
+    max-width: var(--page-max-width);
     margin-inline: auto;
 }
