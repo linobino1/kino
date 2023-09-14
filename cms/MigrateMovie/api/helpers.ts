@@ -241,7 +241,7 @@ export async function createOrFindItemByName(
         locale,
       });
     } catch (err) {
-      throw new Error(`Could neitherXX find or create ${collection} item ${name} (${err})`);
+      throw new Error(`Could neither find or create ${collection} item ${name} (${err})`);
     }
   }
   return item;
