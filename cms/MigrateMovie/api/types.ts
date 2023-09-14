@@ -1,3 +1,5 @@
+import type { Payload } from "payload";
+import type { Movie } from "payload/generated-types";
 import type {
   tmdbImages,
   tmdbMovie,
@@ -17,4 +19,16 @@ export interface MigrateBody extends PreviewBody {
     poster: string;
     backdrop: string;
   };
+}
+
+export interface MigrateResult {
+  movie: Movie;
+  warnings: Error[];
+}
+
+export interface MigrateFunction {
+  (
+    body: MigrateBody,
+    payload: Payload
+  ): Promise<MigrateResult>;
 }

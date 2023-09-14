@@ -16,6 +16,7 @@ export const MigrateMovie: React.FC = () => {
   // success: show success message and link to the created movie
   const [state, setState] = useState<string>('initial');
   const [error, setError] = useState<string>('');
+  const [warnings, setWarnings] = useState<[]>([]);
   const [tmdbId, setTmdbId] = useState<string>('');
   const [images, setImages] = useState<{
     backdrop?: string;
@@ -92,8 +93,10 @@ export const MigrateMovie: React.FC = () => {
     .then(res => res.json())
     .then(res => {
       if (res.success) {
-        setMigratedMovie(res.data);
+        setMigratedMovie(res.data.movie);
+        setWarnings(res.data.warnings);
         setState('success');
+        console.log(res.data);
       } else {
         setState('initial')
         setError(res.message);
@@ -122,6 +125,13 @@ export const MigrateMovie: React.FC = () => {
               link: `<a href="/admin/collections/movies/${migratedMovie.id}">${migratedMovie.title}</a>`,
             }) as string
           }} />
+          { warnings.length > 0 && (
+            <ul className="error">
+              { warnings.map((message: string, i) => (
+                <li key={i}>{message}</li>
+              ))}
+            </ul>
+          )}
           <button
             type="button"
             onClick={() => window.open(`/admin/collections/movies/${migratedMovie.id}`)}

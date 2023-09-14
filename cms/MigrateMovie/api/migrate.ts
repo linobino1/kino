@@ -3,8 +3,7 @@ import os from "os";
 import fs from "fs";
 import { slugFormat } from "../../fields/slug";
 import { fixedT } from "../../i18n";
-import type { Payload } from "payload";
-import type { Movie, Media, Person, Company } from "payload/generated-types";
+import type { Media, Person, Company, Genre } from "payload/generated-types";
 import type {
   tmdbPerson,
   tmdbCompany,
@@ -14,22 +13,22 @@ import {
   getLocalMovie,
   getTmdbMovie,
   updateOrCreateImage,
-  downloadTmdbImage,
   getTmdbCredits,
   getReleaseDates,
   createOrFindItemByName,
   getTmdbVideos,
 } from "./helpers";
-import type { MigrateBody } from "./types";
+import type { MigrateFunction } from "./types";
 
 /**
  * Create a movie in database from themoviedb.org data and user selected images 
- * @param body MigrateBody { tmdbId: number, locale: string, images: { poster: string, backdrop: string } }
+ * @param body { tmdbId: number, locale: string, images: { poster: string, backdrop: string } }
  * @param payload Payload instance
  * @returns Movie the created movie
  */
-export const migrate = async (body: MigrateBody, payload: Payload): Promise<Movie> => {
+export const migrate: MigrateFunction = async (body, payload) => {
   const { tmdbId, locale } = body;
+  const warnings: Error[] = [];
 
   // check if movie has already been created
   let movie = await getLocalMovie(tmdbId, payload);
@@ -40,14 +39,18 @@ export const migrate = async (body: MigrateBody, payload: Payload): Promise<Movi
   
   // fetch movie details from TMDB in default language
   const language = payload.config.i18n.fallbackLng as string;
-  let data = await getTmdbMovie(tmdbId, language);
+  let tmdb = await getTmdbMovie(tmdbId, language);
   
   // slug
-  const slug = slugFormat(data.title);
-  console.log(`slug: ${slug}`, data.title);
+  const slug = slugFormat(tmdb.title);
 
   // find or create genre
-  const genre = await createOrFindItemByName('genres', data.genres[0].name, payload, language);
+  let genre: Genre | undefined;
+  try {
+    genre = await createOrFindItemByName('genres', tmdb.genres[0].name, payload, language);
+  } catch (err) {
+    warnings.push(new Error(`Unable to create genre (${err})`));
+  }
   
   // create temp directory for images
   let tmpDir;
@@ -57,29 +60,29 @@ export const migrate = async (body: MigrateBody, payload: Payload): Promise<Movi
     throw new Error('Unable to create temp directory for images');
   }
 
-  // download images
-  const filePoster = path.join(tmpDir, `${slug}-poster.jpg`);
-  const fileBackdrop = path.join(tmpDir, `${slug}-backdrop.jpg`);
-  await Promise.all([
-    downloadTmdbImage(
-      body.images.poster,
-      filePoster,
-      'w500',
-    ),
-    downloadTmdbImage(
-      body.images.backdrop,
-      fileBackdrop,
-      'original',
-    ),
-  ]);
-
-  // find or create poster and still media
-  let poster: Media, still: Media;
+  // find or create poster
+  let poster: Media | undefined, still: Media | undefined;
   try {
-    poster = await updateOrCreateImage(body.images.poster, filePoster, payload);
-    still = await updateOrCreateImage(body.images.backdrop, fileBackdrop, payload);
+    poster = await updateOrCreateImage(
+      body.images.poster,
+      'w500',
+      path.join(tmpDir, `${slug}-poster.jpg`),
+      payload
+    );
   } catch (err) {
-    throw new Error(`Unable to create poster or still, error: ${err}`);
+    warnings.push(new Error(`Unable to create poster (${err})`));
+  }
+
+  // find or create still
+  try {  
+    still = await updateOrCreateImage(
+      body.images.backdrop,
+      'original',
+      path.join(tmpDir, `${slug}-backdrop.jpg`),
+      payload
+    );
+  } catch (err) {
+    warnings.push(new Error(`Unable to create still (${err})`));
   }
   
   // create cast
@@ -107,7 +110,7 @@ export const migrate = async (body: MigrateBody, payload: Payload): Promise<Movi
   
   // create production companies
   const productionCompanies = (await Promise.all(
-    data.production_companies.map(async (company: tmdbCompany) => (
+    tmdb.production_companies.map(async (company: tmdbCompany) => (
       createOrFindItemByName('companies', company.name, payload)
     )
   ))).map((company: Company) => company.id);
@@ -127,25 +130,25 @@ export const migrate = async (body: MigrateBody, payload: Payload): Promise<Movi
     movie = await payload.create({
       collection: 'movies',
       data: {
-        originalTitle: data.original_title,
-        title: data.title,
-        internationalTitle: data.title,
-        synopsis: data.overview,
-        year: parseInt(data.release_date?.split('-')[0]),
-        countries: data.production_countries.map((country: any) => country.iso_3166_1.toUpperCase()),
-        slug: slugFormat(data.original_title),
-        tmdbId: data.id,
+        originalTitle: tmdb.original_title,
+        title: tmdb.title,
+        internationalTitle: tmdb.title,
+        synopsis: tmdb.overview,
+        year: parseInt(tmdb.release_date?.split('-')[0]),
+        countries: tmdb.production_countries.map((country: any) => country.iso_3166_1.toUpperCase()),
+        slug: slugFormat(tmdb.original_title),
+        tmdbId: tmdb.id,
         isHfgProduction: false,
-        genre: genre.id,
-        poster: poster.id,
-        still: still.id,
         cast,
         directors,
         crew,
         productionCompanies,
-        duration: data.runtime,
+        duration: tmdb.runtime,
         ageRating,
         trailer,
+        genre: genre?.id || '',
+        poster: poster?.id || '',
+        still: still?.id || '',
       },
       draft: true,
       locale: tmdbLng,
@@ -176,22 +179,26 @@ export const migrate = async (body: MigrateBody, payload: Payload): Promise<Movi
     
     // add genre name
     // IDEA: let's hope the genres are sorted the same way in all languages
-    try {
-      await payload.update({
-        collection: 'genres',
-        id: genre.id,
-        data: {
-          name: data.genres[0].name,
-        },
-        locale: language,
-      });
-    } catch (err) {
-      console.log(`Unable to update genre (${err})`);
-      console.log(data.genres[0].name)
+    if (genre) {
+      try {
+        await payload.update({
+          collection: 'genres',
+          id: genre.id,
+          data: {
+            name: data.genres[0].name,
+          },
+          locale: language,
+        });
+      } catch (err) {
+        warnings.push(new Error(`Unable to update genre (${err})`));
+      }
     }
   }
   
-  return movie;
+  return {
+    movie,
+    warnings,
+  }
 }
 
 export default migrate;

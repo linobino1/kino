@@ -39,7 +39,10 @@ export const endpoints: Endpoint[]  = [
 
       try {
         const data = await migrate(req.body, payload);
-        res.status(200).send({ success: true, data });
+        res.status(200).send({ success: true, data: {
+          movie: data.movie,
+          warnings: data.warnings.map((warning) => warning.message),
+        }});
         return
       } catch (error: any) {
         res.status(400).send({ success: false, message: error.message });

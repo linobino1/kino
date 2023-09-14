@@ -1,20 +1,23 @@
 import https from "https";
 import fs from "fs";
-import type { Genre, Person } from "payload/generated-types";
 import type { Payload } from "payload";
-import { themoviedb } from "../tmdb";
-import { tmdbMediaUrl } from "../tmdb";
-import type { Movie, Media } from "payload/generated-types";
+import type {
+  Genre,
+  Person,
+  Config,
+  Company,
+  Movie,
+  Media,
+} from "payload/generated-types";
 import type {
   tmdbCredits,
   tmdbMovie,
   tmdbVideos,
   tmdbReleaseDatesResponse,
 } from "../tmdb/types";
-import { ageRatingAges } from "../../collections/Movies";
 import type { Document } from "payload/types";
-import type { Config } from "payload/generated-types";
-import type { Company } from "payload/generated-types";
+import { ageRatingAges } from "../../collections/Movies";
+import { themoviedb, tmdbMediaUrl } from "../tmdb";
 
 /**
  * find the movie in our database
@@ -151,7 +154,20 @@ export const downloadTmdbImage = async (tmdbFilepath: string, target: string, si
  * @param payload Payload instance
  * @returns Image instance
  */
-export async function updateOrCreateImage(tmdbFilepath: string, filePath: string, payload: Payload): Promise<Media> {
+export async function updateOrCreateImage(
+  tmdbFilepath: string,
+  size: 'original' | 'w500',
+  filePath: string,
+  payload: Payload
+): Promise<Media> {
+  // download image from themoviedb.org to given path
+  try {
+    await downloadTmdbImage(tmdbFilepath, filePath, size);
+  } catch (err) {
+    return Promise.reject(new Error(`Unable to download image from themoviedb.org (${err})`));
+  }
+  
+  // upload image to payload
   let image: Media = (await payload.find({
     collection: 'media',
     where: {
@@ -197,36 +213,38 @@ export async function createOrFindItemByName(
   if (!payload.collections[collection].config.fields.find(field => 'name' in field && field.name === 'name')) {
     throw new Error(`Collection ${collection} does not have a field "name"`);
   }
-  // try to create the item
+  // find the item
+  let item;
   try {
-    return await payload.create({
+    item = (await payload.find({
       collection,
-      data: {
-        // @ts-expect-error
-        name,
+      where: {
+        name: {
+          like: name,
+        },
       },
-    });
-  } catch (err) {
-    // try to find the item
-    let item;
+      locale,
+    }))?.docs[0]
+    
+    if (!item) {
+      throw new Error('not found')
+    }
+  } catch (_) {
+    // ok, we didn't find it, let's create it
     try {
-      item = (await payload.find({
+      return await payload.create({
         collection,
-        where: {
-          name: {
-            like: name,
-          },
+        data: {
+          // @ts-expect-error
+          name,
         },
         locale,
-      }))?.docs[0]
+      });
     } catch (err) {
-      console.error(`Could not find ${collection} item ${name} (${err})`);
+      throw new Error(`Could neitherXX find or create ${collection} item ${name} (${err})`);
     }
-    if (!item) {
-      throw new Error(`Could neither find or create ${collection} item ${name} (${err})`);
-    }
-    return item
   }
+  return item;
 }
 
 /**
