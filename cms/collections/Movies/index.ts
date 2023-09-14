@@ -262,6 +262,15 @@ const Movies: CollectionConfig = {
         },
       ],
     },
+    {
+      name: 'tags',
+      label: t('Tags'),
+      type: 'text',
+      admin: {
+        description: t('Comma-separated list of tags.'),
+        condition: (data) => !data?.isRented,
+      },
+    }
   ],
 };
 

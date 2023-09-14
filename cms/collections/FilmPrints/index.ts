@@ -224,15 +224,6 @@ export const FilmPrints: CollectionConfig = {
                 condition: (data) => data?.type === 'analog' && !data?.isRented,
               },
             },
-            {
-              name: 'tags',
-              label: t('Tags'),
-              type: 'text',
-              admin: {
-                description: t('Comma-separated list of tags.'),
-                condition: (data) => !data?.isRented,
-              },
-            }
           ],
         },
       ],
