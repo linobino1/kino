@@ -1,4 +1,4 @@
-.discussion {
+/* .discussion {
   padding: .5rem;
   font-weight: var(--font-weight-semi-bold);
   font-style: italic;
@@ -10,4 +10,4 @@
 }
 .discussion::before {
   content: "💬 ";
-}
+} */
