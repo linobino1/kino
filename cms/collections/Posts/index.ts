@@ -18,7 +18,7 @@ const Posts: CollectionConfig = {
   defaultSort: '-date',
   custom: {
     addUrlField: {
-      hook: (slug: string) => `/news/${slug}`,
+      hook: (slug?: string) => `/news/${slug || ''}`,
     },
   },
   fields: [

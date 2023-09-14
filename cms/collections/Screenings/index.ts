@@ -24,7 +24,7 @@ const Screenings: CollectionConfig = {
   },
   custom: {
     addUrlField: {
-      hook: (slug: string) => `/screenings/${slug}`,
+      hook: (slug?: string) => `/screenings/${slug || ''}`,
     },
   },
   fields: [

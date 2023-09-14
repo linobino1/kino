@@ -17,7 +17,7 @@ const Pages: CollectionConfig = {
   },
   custom: {
     addUrlField: {
-      hook: (slug: string) => `/${slug}`,
+      hook: (slug?: string) => `/${slug || ''}`,
     },
   },
   fields: [

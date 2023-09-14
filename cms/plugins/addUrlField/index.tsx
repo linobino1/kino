@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
  * this plugin adds a url field to a collection if you add the following to the collection config:
  * custom: {
  *  addUrlField: {
- *   hook: (slug: string) => `my/path/${slug}`,
+ *   hook: (slug?: string) => `my/path/${slug || ''}`,
  * },
  */
 export const addUrlField: Plugin = (incomingConfig: Config): Config => {
@@ -47,7 +47,7 @@ export const addUrlField: Plugin = (incomingConfig: Config): Config => {
                 Field: () => {
                   const { t } = useTranslation();
                   const { value: slug } = useField<string>({ path: 'slug' });
-                  const url = collection.custom?.addUrlField.hook(slug);
+                  const url = collection.custom?.addUrlField.hook(slug) || '';
                   return (
                     <div className='field-type text'>
                       <label className='field-label'>{t('URL Frontend')}</label>

@@ -19,7 +19,7 @@ const ScreeningSeries: CollectionConfig = {
   },
   custom: {
     addUrlField: {
-      hook: (slug: string) => `/screening-series/${slug}`,
+      hook: (slug?: string) => `/screening-series/${slug || ''}`,
     },
   },
   fields: [
