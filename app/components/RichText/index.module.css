@@ -29,3 +29,10 @@
 .videoWrapper {
     width: 100%;
 }
+
+.container a {
+    text-decoration: underline;
+}
+.container a:visited {
+    color: inherit;
+}

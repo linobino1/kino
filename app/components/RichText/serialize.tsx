@@ -1,12 +1,11 @@
-/* eslint-disable react/no-array-index-key */
 import React, { Fragment } from 'react';
 import { escape } from "html-escaper";
 import { Text } from 'slate';
 import { Image } from '~/components/Image';
-import type { Media, StaticPage } from 'payload/generated-types';
+import type { Media } from 'payload/generated-types';
 import classes from './index.module.css';
-import Pages from 'cms/collections/Pages';
 import { MyReactPlayer } from '../MyReactPlayer';
+import { Link } from '@remix-run/react';
 
 // eslint-disable-next-line no-use-before-define
 type Children = Leaf[];
@@ -151,22 +150,14 @@ const serialize = (children?: Children): React.ReactElement[] => children?.lengt
       const target = node.newTab ? '_blank' : '_self';
       // treat internal links
       if (node.linkType === 'internal') {
-        if (node.doc.relationTo === Pages.slug) {
-          const page: StaticPage = node.doc.value;
-          return (
-            <a
-              key={i}
-              href={`/${page.slug}`}
-              target={target}
-            >
-              {serialize(node.children as Children)}
-            </a>
-          );
-        }
         return (
-          <span key={i}>
+          <Link
+            key={i}
+            to={node.doc.url as string}
+            target={target}
+          >
             {serialize(node.children as Children)}
-          </span>
+          </Link>
         );
       }
       return (
