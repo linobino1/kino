@@ -8,10 +8,9 @@ const Companies: CollectionConfig = {
     plural: t('Companies'),
   },
   admin: {
-    group: t('Movie Database'),
+    group: t('Configuration'),
     defaultColumns: ['name'],
     useAsTitle: 'name',
-    hidden: true,
   },
   access: {
     read: () => true,

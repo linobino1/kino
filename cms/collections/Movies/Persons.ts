@@ -8,10 +8,9 @@ const Persons: CollectionConfig = {
     plural: t('Persons'),
   },
   admin: {
-    group: t('Movie Database'),
+    group: t('Configuration'),
     defaultColumns: ['name'],
     useAsTitle: 'name',
-    hidden: true,
   },
   access: {
     read: () => true,

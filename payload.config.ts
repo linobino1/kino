@@ -125,9 +125,6 @@ export default buildConfig({
   collections: [
     // Movie Database
     Movies,
-    Persons,
-    Companies,
-    Countries,
     
     // Film Prints
     FilmPrints,
@@ -158,6 +155,9 @@ export default buildConfig({
     Rentals,
     Colors,
     Categories,
+    Persons,
+    Companies,
+    Countries,
     
     // System
     Navigations,
