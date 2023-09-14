@@ -1,8 +1,8 @@
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
 
-const ScreeningSeasons: CollectionConfig = {
-  slug: 'screeningSeasons',
+const Seasons: CollectionConfig = {
+  slug: 'seasons',
   labels: {
     singular: t('Season'),
     plural: t('Seasons'),
@@ -31,4 +31,4 @@ const ScreeningSeasons: CollectionConfig = {
   ],
 };
 
-export default ScreeningSeasons;
+export default Seasons;

@@ -13,7 +13,7 @@ export const ErrorBoundary = ErrorPage;
 export const loader = async ({ request, params, context: { payload }}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
   const season = (await payload.find({
-    collection: 'screeningSeasons',
+    collection: 'seasons',
     locale,
     where: {
       slug: {

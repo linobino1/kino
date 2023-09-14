@@ -96,10 +96,10 @@ const Screenings: CollectionConfig = {
       name: 'season',
       label: t('Season'),
       type: 'relationship',
-      relationTo: 'screeningSeasons',
+      relationTo: 'seasons',
       hasMany: false,
       required: true,
-      defaultValue: () => fetch(`/api/screeningSeasons/`).then((res) => res.json()).then((res) => res.docs[0].id),
+      defaultValue: () => fetch(`/api/seasons/`).then((res) => res.json()).then((res) => res.docs[0].id),
     },
     {
       name: 'location',
