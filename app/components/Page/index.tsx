@@ -17,9 +17,7 @@ export const Page: React.FC<Props> = (props) => {
       className={`${classes.page} ${props.className}`}
     >
       { layout?.blocks ? (
-        <Blocks
-          blocks={layout.blocks}
-        >
+        <Blocks blocks={layout.blocks} className={classes.blocks}>
           {children}
         </Blocks>
       ) : children}
