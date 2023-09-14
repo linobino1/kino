@@ -1,6 +1,5 @@
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
-import { slugField } from '../../fields/slug';
 import pageLayout from '../../fields/pageLayout';
 
 const ScreeningSeries: CollectionConfig = {
@@ -20,6 +19,9 @@ const ScreeningSeries: CollectionConfig = {
   custom: {
     addUrlField: {
       hook: (slug?: string) => `/screening-series/${slug || ''}`,
+    },
+    addSlugField: {
+      from: 'name',
     },
   },
   fields: [
@@ -46,7 +48,6 @@ const ScreeningSeries: CollectionConfig = {
         },
       ],
     }),
-    slugField('name'),
   ],
 };
 

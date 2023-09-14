@@ -1,6 +1,5 @@
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
-import { slugField } from '../../fields/slug';
 import { defaultField } from '../../fields/default';
 
 const Locations: CollectionConfig = {
@@ -17,6 +16,11 @@ const Locations: CollectionConfig = {
   access: {
     read: () => true,
   },
+  custom: {
+    addSlugField: {
+      from: 'name',
+    },
+  },
   fields: [
     {
       name: 'name',
@@ -24,7 +28,6 @@ const Locations: CollectionConfig = {
       localized: true,
       type: 'text',
     },
-    slugField('name'),
     defaultField('locations'),
   ],
 };

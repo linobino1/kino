@@ -1,9 +1,9 @@
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
-import { slugField } from '../../fields/slug';
 import { getDefaultDocId } from '../../fields/default';
 import type { Movie } from 'payload/generated-types';
 import { MigrateMovieButton } from '../../MigrateMovie/admin/Button';
+import { type slugGeneratorArgs } from 'cms/plugins/addSlugField';
 
 const Screenings: CollectionConfig = {
   slug: 'screenings',
@@ -25,6 +25,31 @@ const Screenings: CollectionConfig = {
   custom: {
     addUrlField: {
       hook: (slug?: string) => `/screenings/${slug || ''}`,
+    },
+    addSlugField: {
+      generator: async ({ data, req }: slugGeneratorArgs) => {
+        // we need the date and at least one feature film
+        if (!data || !('date' in data) || !('featureFilms' in data) || !(data.featureFilms.length)) {
+          return undefined;
+        }
+        
+        // date is an ISO string, let's just use the first 10 characters (YYYY-MM-DD)
+        const date = data.date.substr(0, 10);
+        
+        // movie is just an id
+        const filmPrint = await req.payload.findByID({
+          collection: 'filmPrints',
+          id: data.featureFilms[0],
+          locale: req.locale, 
+          depth: 2,
+        });
+        
+        // if we cannot find the movie title we abort
+        if (!filmPrint || !(filmPrint.movie)) return undefined;
+
+        // e.g. My Movie-2021-01-01-
+        return `${(filmPrint.movie as Movie)?.internationalTitle}-${date}`;
+      },
     },
   },
   fields: [
@@ -115,29 +140,6 @@ const Screenings: CollectionConfig = {
         },
       },
     },
-    slugField('date', async ({ data, req }) => {
-      // we need the date and at least one feature film
-      if (!data || !('date' in data) || !('featureFilms' in data) || !(data.featureFilms.length)) {
-        return undefined;
-      }
-      
-      // date is an ISO string, let's just use the first 10 characters (YYYY-MM-DD)
-      const date = data.date.substr(0, 10);
-      
-      // movie is just an id
-      const filmPrint = await req.payload.findByID({
-        collection: 'filmPrints',
-        id: data.featureFilms[0],
-        locale: req.locale, 
-        depth: 2,
-      });
-      
-      // if we cannot find the movie title we abort
-      if (!filmPrint || !(filmPrint.movie)) return undefined;
-
-      // e.g. My Movie-2021-01-01-
-      return `${(filmPrint.movie as Movie)?.internationalTitle}-${date}`;
-    }),
     {
       name: 'date',
       label: t('Date & Time'),

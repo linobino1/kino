@@ -1,7 +1,6 @@
 import path from "path";
 import os from "os";
 import fs from "fs";
-import { slugFormat } from "../../fields/slug";
 import { fixedT } from "../../i18n";
 import type { Media, Person, Company, Genre } from "payload/generated-types";
 import type {
@@ -19,6 +18,7 @@ import {
   getTmdbVideos,
 } from "./helpers";
 import type { MigrateFunction } from "./types";
+import { slugFormat } from "../../plugins/addSlugField";
 
 /**
  * Create a movie in database from themoviedb.org data and user selected images 
@@ -41,7 +41,7 @@ export const migrate: MigrateFunction = async (body, payload) => {
   const language = payload.config.i18n.fallbackLng as string;
   let tmdb = await getTmdbMovie(tmdbId, language);
   
-  // slug
+  // slug (used for images, the movies slug will be created later)
   const slug = slugFormat(tmdb.title);
 
   // find or create genre
@@ -136,7 +136,6 @@ export const migrate: MigrateFunction = async (body, payload) => {
         synopsis: tmdb.overview,
         year: parseInt(tmdb.release_date?.split('-')[0]),
         countries: tmdb.production_countries.map((country: any) => country.iso_3166_1.toUpperCase()),
-        slug: slugFormat(tmdb.original_title),
         tmdbId: tmdb.id,
         isHfgProduction: false,
         cast,

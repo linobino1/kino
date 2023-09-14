@@ -1,6 +1,5 @@
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
-import { slugField } from '../../fields/slug';
 
 const ScreeningSeasons: CollectionConfig = {
   slug: 'screeningSeasons',
@@ -16,6 +15,11 @@ const ScreeningSeasons: CollectionConfig = {
   access: {
     read: () => true,
   },
+  custom: {
+    addSlugField: {
+      from: 'name',
+    },
+  },
   fields: [
     {
       name: 'name',
@@ -24,7 +28,6 @@ const ScreeningSeasons: CollectionConfig = {
       localized: true,
       required: true,
     },
-    slugField('name'),
   ],
 };
 

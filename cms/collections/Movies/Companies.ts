@@ -1,6 +1,5 @@
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
-import { slugField } from '../../fields/slug';
 
 const Companies: CollectionConfig = {
   slug: 'companies',
@@ -17,6 +16,11 @@ const Companies: CollectionConfig = {
   access: {
     read: () => true,
   },
+  custom: {
+    addSlugField: {
+      from: 'name',
+    },
+  },
   fields: [
     {
       name: 'name',
@@ -25,7 +29,6 @@ const Companies: CollectionConfig = {
       required: true,
       unique: true,
     },
-    slugField('name'),
   ],
 };
 

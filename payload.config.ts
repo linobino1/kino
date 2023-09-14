@@ -38,17 +38,19 @@ import { MigrateMovieButton } from './cms/MigrateMovie/admin/Button';
 import { cloudStorage } from '@payloadcms/plugin-cloud-storage';
 import { s3Adapter } from '@payloadcms/plugin-cloud-storage/s3';
 import { addUrlField } from './cms/plugins/addUrlField';
+import { addSlugField } from './cms/plugins/addSlugField';
 
 const mockModulePath = path.resolve(__dirname, 'mocks/emptyObject.js');
 
 export default buildConfig({
-  serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || '',
+  serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
   endpoints: [
     // path will be prefixed with /api if root is not set to true
     ...migrateMovieEndpoints,
   ],
   plugins: [
     addUrlField,
+    addSlugField,
     cloudStorage({
       enabled: process.env.S3_ENABLED === 'true',
       collections: {

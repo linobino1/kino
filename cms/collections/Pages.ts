@@ -1,6 +1,5 @@
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../i18n';
-import { slugField } from '../fields/slug';
 import { metaField } from '../fields/meta';
 import { pageLayout } from '../fields/pageLayout';
 
@@ -19,6 +18,9 @@ const Pages: CollectionConfig = {
     addUrlField: {
       hook: (slug?: string) => `/${slug || ''}`,
     },
+    addSlugField: {
+      from: 'title',
+    },
   },
   fields: [
     {
@@ -28,7 +30,6 @@ const Pages: CollectionConfig = {
       localized: true,
       required: true,
     },
-    slugField('title'),
     pageLayout({
       defaultLayout: [
         {

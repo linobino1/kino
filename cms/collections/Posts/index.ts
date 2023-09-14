@@ -1,6 +1,5 @@
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../../i18n';
-import { slugField } from '../../fields/slug';
 import { Content } from '../../blocks/Content';
 import { Image } from '../../blocks/Image';
 import { Gallery } from '../../blocks/Gallery';
@@ -20,6 +19,9 @@ const Posts: CollectionConfig = {
     addUrlField: {
       hook: (slug?: string) => `/news/${slug || ''}`,
     },
+    addSlugField: {
+      from: 'title',
+    },
   },
   fields: [
     {
@@ -28,7 +30,6 @@ const Posts: CollectionConfig = {
       localized: true,
       required: true,
     },
-    slugField('title'),
     {
       name: 'date',
       type: 'date',

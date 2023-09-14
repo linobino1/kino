@@ -1,7 +1,6 @@
 import type { CollectionConfig } from 'payload/types';
 import type { Movie, Format } from 'payload/generated-types';
 import { t } from '../../i18n';
-import { slugField, slugFormat } from '../../fields/slug';
 import analogDigitalTypeField from './fields';
 import { MigrateMovieButton } from '../../MigrateMovie/admin/Button';
 
@@ -27,6 +26,9 @@ export const FilmPrints: CollectionConfig = {
   custom: {
     addUrlField: {
       hook: (slug?: string) => `/archive/${slug || ''}`,
+    },
+    addSlugField: {
+      from: 'title',
     },
   },
   hooks: {
@@ -70,11 +72,6 @@ export const FilmPrints: CollectionConfig = {
           })).docs[0];
           data.title = `${movie.internationalTitle} ${format.name} ${languageVersion.abbreviation}`;
         }
-        
-        // create slug from title
-        if (!data.slug) {
-          data.slug = slugFormat(data.title);
-        }
 
         return data;
       },
@@ -101,7 +98,6 @@ export const FilmPrints: CollectionConfig = {
         description: t('Will be automatically generated if left blank.'),
       },
     },
-    slugField('title'),
     {
       name: 'movie',
       label: t('Movie'),

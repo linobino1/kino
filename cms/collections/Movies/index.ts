@@ -1,7 +1,6 @@
 import type { CollectionConfig, PayloadRequest } from 'payload/types';
 import type { Media, Movie } from 'payload/generated-types';
 import { t } from '../../i18n';
-import { slugField } from '../../fields/slug';
 import MigrateMovieButton from '../../MigrateMovie/admin/Button';
 
 export const ageRatingAges = [0, 6, 12, 16, 18];
@@ -49,6 +48,11 @@ const Movies: CollectionConfig = {
   access: {
     read: () => true,
   },
+  custom: {
+    addSlugField: {
+      from: 'internationalTitle',
+    },
+  },
   versions: {
     drafts: true,
   },
@@ -72,7 +76,6 @@ const Movies: CollectionConfig = {
         description: t('AdminExplainInternationalTitle'),
       },
     },
-    slugField('internationalTitle'),
     {
       name: 'originalTitle',
       label: t('Original Title'),
