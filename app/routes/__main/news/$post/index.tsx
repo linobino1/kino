@@ -1,5 +1,4 @@
-import { type MetaFunction } from '@remix-run/node';
-import type { LoaderArgs} from '@remix-run/node';
+import type { LoaderArgs, MetaFunction } from '@remix-run/node';
 import type { Media } from 'payload/generated-types';
 import { useLoaderData } from '@remix-run/react';
 import { Page } from '~/components/Page';
