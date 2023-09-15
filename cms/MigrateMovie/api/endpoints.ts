@@ -1,14 +1,12 @@
 import type { Endpoint } from "payload/config";
+import type { PayloadRequest } from "payload/types";
 import { migrate } from "./migrate";
 import { preview } from "./preview";
 
 const prefix = '/migrate-movie';
-
-const checkAccess = (req: any, res: any) => {
-  if (!['admin', 'editor'].find((role) => role === req?.user?.role)) {
-    res.status(401).send('Unauthorized');
-    throw new Error('Unauthorized');
-  }
+  
+const hasAccess = (req: PayloadRequest) => {
+  return ['admin', 'editor'].find((role) => role === req?.user?.role);
 };
 
 export const endpoints: Endpoint[]  = [
@@ -17,9 +15,12 @@ export const endpoints: Endpoint[]  = [
     method: 'post',
     handler: async (req, res) => {
       const { payload } = req;
-      
-      checkAccess(req, res);
 
+      if (!hasAccess(req)) {
+        res.status(401).send('Unauthorized');
+        return
+      }
+      
       try {
         const data = await preview({
           tmdbId: req.body.tmdbId,
@@ -39,7 +40,10 @@ export const endpoints: Endpoint[]  = [
     handler: async (req, res) => {
       const { payload } = req;
 
-      checkAccess(req, res);
+      if (!hasAccess(req)) {
+        res.status(401).send('Unauthorized');
+        return
+      }
 
       try {
         const data = await migrate({
