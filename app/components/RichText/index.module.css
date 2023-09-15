@@ -30,11 +30,15 @@
     width: 100%;
 }
 
-.container a {
+.container a span {
     text-decoration: underline;
 }
 .container a:visited {
     color: inherit;
+}
+.container a[target="_blank"]::after {
+    content: " \2197";
+    text-decoration: none !important;
 }
 
 .container p {
