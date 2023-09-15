@@ -134,7 +134,7 @@ export const MigrateMovie: React.FC = () => {
           )}
           <button
             type="button"
-            onClick={() => window.open(`/admin/collections/movies/${migratedMovie.id}`)}
+            onClick={() => window.open(`/admin/collections/movies/${migratedMovie.id}`, '_self')}
           >{t('Review & publish')}</button>
         </div>
       )}
