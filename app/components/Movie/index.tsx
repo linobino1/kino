@@ -8,6 +8,7 @@ import type {
   Media,
   Format,
   Screening,
+  Genre,
 } from "payload/generated-types";
 import React from "react";
 import classes from './index.module.css';
@@ -27,9 +28,12 @@ export const Movie: React.FC<Props> = ({
   movie, filmprint, className, showScreeningInfo, ...props 
 }) => {
   const { t } = useTranslation();
+  
+  console.log(movie.genres as Genre[]);
 
   const specs = [
     movie.originalTitle,
+    (movie.genres as Genre[]).map((x) => x.name).join(', '),
     (movie.countries as Country[])?.map((x) => x.name).join(', '),
     movie.year,
     (movie.directors as Person[])?.map((x) => x.name).join(', '),
