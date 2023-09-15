@@ -104,7 +104,8 @@ const Movies: CollectionConfig = {
           const data = await res.json();
           const totalDocs = operation === 'update' ? 1 : 0; // when updating, the current movie is included in totalDocs
           if (data.totalDocs > totalDocs) {
-            return t('Movie already exists');
+            const movie = data.docs[0];
+            return t('MovieExists', { title: movie.internationalTitle, id: movie.id });
           }
         } catch (err) {
           return t('Unable to validate TMDB ID');

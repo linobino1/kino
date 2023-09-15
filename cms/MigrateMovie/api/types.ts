@@ -10,25 +10,45 @@ export interface PreviewBody {
   locale: string;
 }
 
-export interface tmdbPreview extends tmdbMovie {
+export interface tmdbPreviewResult {
+  movie: tmdbMovie;
   images: tmdbImages;
 }
 
-export interface MigrateBody extends PreviewBody {
-  images: {
-    poster: string;
-    backdrop: string;
-  };
+export interface PreviewFunction {
+  (
+    args: {
+      payload: Payload,
+    } & PreviewBody,
+  ): Promise<tmdbPreviewResult>;
 }
 
-export interface MigrateResult {
-  movie: Movie;
-  warnings: Error[];
-}
+export type MigratedMovie = Partial<Movie> & Pick<Movie, 'id' | 'tmdbId'>;
 
 export interface MigrateFunction {
   (
-    body: MigrateBody,
-    payload: Payload
-  ): Promise<MigrateResult>;
+    args: {
+      images: {
+        poster: string,
+        backdrop: string,
+      },
+      payload: Payload,
+      tmdbId: number,
+    },
+  ): Promise<{
+    movie: MigratedMovie;
+    warnings: Error[];
+  }>;
+}
+
+export type Endpoint = 'movie' | 'credits' | 'videos' | 'keywords' | 'releaseDates' | 'images';
+
+export interface MigrationFunction {
+  (
+    context: {
+      payload: Payload;
+      movie: Partial<Movie> & Pick<Movie, 'id' | 'tmdbId'>;
+      warnings: Error[];
+    }
+  ): Promise<void>;
 }

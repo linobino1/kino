@@ -73,7 +73,7 @@ export interface tmdbRelease {
     type: number;
   }[];
 }
-export interface tmdbReleaseDatesResponse {
+export interface tmdbReleaseDates {
   results: tmdbRelease[];
 }
 export interface tmdbVideo {
@@ -90,4 +90,11 @@ export interface tmdbVideo {
 }
 export interface tmdbVideos {
   results: tmdbVideo[];
+}
+
+export interface tmdbKeywords {
+  keywords: {
+    id: number;
+    name: string;
+  }[];
 }

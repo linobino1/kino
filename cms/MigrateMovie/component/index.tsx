@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLocale } from 'payload/components/utilities';
 import './index.scss';
 import type { Movie } from "payload/generated-types";
-import type { tmdbPreview } from "../api/types";
+import type { tmdbPreviewResult } from "../api/types";
 import { useTranslation } from "react-i18next";
 
 export const MigrateMovie: React.FC = () => {
@@ -25,7 +25,7 @@ export const MigrateMovie: React.FC = () => {
     backdrop: undefined,
     poster: undefined,
   });
-  const [previewData, setPreviewData] = useState<tmdbPreview>();
+  const [previewData, setPreviewData] = useState<tmdbPreviewResult>();
   const [migratedMovie, setMigratedMovie] = useState<Movie>();
   const success = useRef<HTMLDivElement>(null);
   const loading = useRef<HTMLDivElement>(null);
@@ -96,7 +96,6 @@ export const MigrateMovie: React.FC = () => {
         setMigratedMovie(res.data.movie);
         setWarnings(res.data.warnings);
         setState('success');
-        console.log(res.data);
       } else {
         setState('initial')
         setError(res.message);
@@ -140,7 +139,7 @@ export const MigrateMovie: React.FC = () => {
       )}
       { state === 'preview' && previewData && (
         <form onSubmit={migrate} className="preview">
-          <div className="title">{previewData.original_title}</div>
+          <div className="title">{previewData.movie.original_title}</div>
           { ['backdrop', 'poster'].map((type: string) => (
             <div key={type} className="imageSelector" data-type={type}>
               <label htmlFor={type}>
@@ -149,7 +148,7 @@ export const MigrateMovie: React.FC = () => {
                 })}
               </label>
               <div className="choices" onChange={onImageChoiceChange(type)}>
-                { previewData.images[`${type}s` as keyof tmdbPreview['images']].map((image: any) => (
+                { previewData.images[`${type}s` as keyof tmdbPreviewResult['images']].map((image: any) => (
                   <label key={image.file_path} className="choice">
                     <input
                       type="radio"

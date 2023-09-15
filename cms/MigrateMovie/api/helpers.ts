@@ -1,5 +1,3 @@
-import https from "https";
-import fs from "fs";
 import type { Payload } from "payload";
 import type {
   Genre,
@@ -7,44 +5,51 @@ import type {
   Config,
   Company,
   Movie,
-  Media,
 } from "payload/generated-types";
 import type {
   tmdbCredits,
   tmdbMovie,
   tmdbVideos,
-  tmdbReleaseDatesResponse,
+  tmdbReleaseDates,
+  tmdbKeywords,
+  tmdbImages,
 } from "../tmdb/types";
 import type { Document } from "payload/types";
+import type { Endpoint } from "./types";
 import { ageRatingAges } from "../../collections/Movies";
-import { themoviedb, tmdbMediaUrl } from "../tmdb";
+import { themoviedb } from "../tmdb";
 
 /**
- * find the movie in our database
- * @param tmdbId the movie id from themoviedb.org
- * @param payload Payload instance
+ * 
+ * @param tmdbId the movie id
+ * @param endpoint the endpoint to get the url for 
  */
-export const getLocalMovie = async (tmdbId: number, payload: Payload): Promise<Movie> => {
-  return (await payload.find({
-    collection: 'movies',
-    where: {
-      tmdbId: {
-        equals: tmdbId,
-      },
-    },
-  }))?.docs[0];
+export const getPath = (tmdbId: number, endpoint: Endpoint) => {
+  switch (endpoint) {
+      
+    case 'movie': return `/movie/${tmdbId}`;
+    case 'credits': return `/movie/${tmdbId}/credits`;
+    case 'videos': return `/movie/${tmdbId}/videos`;
+    case 'keywords': return `/movie/${tmdbId}/keywords`;
+    case 'releaseDates': return `/movie/${tmdbId}/release_dates`;
+    case 'images': return `/movie/${tmdbId}/images`;
+  }
 }
 
 /**
- * get the movie details from themoviedb.org
- * @param tmdbId id of the movie on themoviedb.org
- * @param language response language
- * @returns the API response
+ * get data from themoviedb.org for a movie
  */
-export const getTmdbMovie = async (tmdbId: number, language: string): Promise<tmdbMovie> => {
-  let data;
+export async function getTmdbData(endpoint: 'movie', tmdbId: number, language?: string): Promise<tmdbMovie>;
+export async function getTmdbData(endpoint: 'credits', tmdbId: number, language?: string): Promise<tmdbCredits>;
+export async function getTmdbData(endpoint: 'videos', tmdbId: number, language?: string): Promise<tmdbVideos>;
+export async function getTmdbData(endpoint: 'keywords', tmdbId: number, language?: string): Promise<tmdbKeywords>;
+export async function getTmdbData(endpoint: 'releaseDates', tmdbId: number, language?: string): Promise<tmdbReleaseDates>;
+export async function getTmdbData(endpoint: 'images', tmdbId: number, language?: string): Promise<tmdbImages>;
+export async function getTmdbData(endpoint: Endpoint, tmdbId: number, language?: string): Promise<Document> {
+  let data: Document;
+  const path = getPath(tmdbId, endpoint);
   try {
-    const res = await themoviedb.get(`/movie/${tmdbId}`, {
+    const res = await themoviedb.get(path, {
       params: {
         language,
       },
@@ -54,146 +59,9 @@ export const getTmdbMovie = async (tmdbId: number, language: string): Promise<tm
     throw new Error('Unable to get themoviedb response for movie');
   }
   if (!data || data.success === false) {
-    throw new Error(`Movie ${tmdbId} not found`);
+    throw new Error(`No data found for movie '${tmdbId}' at endpoint '${path}'`);
   }
-  return data
-};
-
-/**
- * get the movie credits from themoviedb.org
- * @param tmdbId id of the movie on themoviedb.org
- * @returns the API response
- */
-export const getTmdbCredits = async (tmdbId: number): Promise<tmdbCredits> => {
-  let data;
-  try {
-    const res = await themoviedb.get(`/movie/${tmdbId}/credits`);
-    data = JSON.parse(res?.data);
-  } catch (err) {
-    throw new Error('Unable to get themoviedb response for credits');
-  }
-  if (!data || data.success === false) {
-    throw new Error(`Movie ${tmdbId} not found`);
-  }
-  return data
-};
-
-/**
- * get the movie credits from themoviedb.org
- * @param tmdbId id of the movie on themoviedb.org
- * @returns the API response
- */
-export const getTmdbVideos = async (tmdbId: number): Promise<tmdbVideos> => {
-  let data;
-  try {
-    const res = await themoviedb.get(`/movie/${tmdbId}/videos`);
-    data = JSON.parse(res?.data);
-  } catch (err) {
-    throw new Error('Unable to get themoviedb response for videos');
-  }
-  if (!data || data.success === false) {
-    throw new Error(`Movie ${tmdbId} not found`);
-  }
-  return data
-};
-
-/**
- * get the movie release dates from themoviedb.org, used to get the age rating
- * @param tmdbId id of the movie on themoviedb.org
- * @returns the API response
- */
-export const getTmdbReleaseDates = async (tmdbId: number): Promise<tmdbReleaseDatesResponse> => {
-  let data;
-  try {
-    const res = await themoviedb.get(`/movie/${tmdbId}/release_dates`);
-    data = JSON.parse(res?.data);
-  } catch (err) {
-    throw new Error('Unable to get themoviedb response for release dates');
-  }
-  if (!data || data.success === false) {
-    throw new Error(`Movie ${tmdbId} not found`);
-  }
-  return data
-};
-
-/**
- * download an image from themoviedb.org
- * @param tmdbFilepath necessary to identify the image on themoviedb.org
- * @param target target filepath
- * @param size image dimensions
- */
-export const downloadTmdbImage = async (tmdbFilepath: string, target: string, size: 'original' | 'w500') => {  
-  await new Promise((resolve, reject) => {
-    const url = `${tmdbMediaUrl}/t/p/${size}/${tmdbFilepath}`;
-
-    https.get(url, response => {
-      const code = response.statusCode ?? 0
-      if (code >= 300) {  // we don't do redirects
-        return reject(new Error(response.statusMessage))
-      }
-
-      // save the file to disk
-      const fileWriter = fs
-        .createWriteStream(target)
-        .on('finish', () => {
-          resolve({})
-        })
-
-      response.pipe(fileWriter)
-    }).on('error', error => {
-      reject(error)
-    })
-  })
-}
-
-/**
- * update or create a poster or still
- * @param tmdbFilepath the filepath of the image on themoviedb.org (acts as an id)
- * @param collection slug of Poster or Still collection
- * @param filePath path of the image to be uploaded
- * @param payload Payload instance
- * @returns Image instance
- */
-export async function updateOrCreateImage(
-  tmdbFilepath: string,
-  size: 'original' | 'w500',
-  filePath: string,
-  payload: Payload
-): Promise<Media> {
-  // download image from themoviedb.org to given path
-  try {
-    await downloadTmdbImage(tmdbFilepath, filePath, size);
-  } catch (err) {
-    return Promise.reject(new Error(`Unable to download image from themoviedb.org (${err})`));
-  }
-  
-  // upload image to payload
-  let image: Media = (await payload.find({
-    collection: 'media',
-    where: {
-      tmdbFilepath: {
-        equals: tmdbFilepath,
-      },
-    }
-  })).docs[0];
-  if (image) {
-    return await payload.update({
-      collection: 'media',
-      id: image.id,
-      filePath,
-      data: {
-        tmdbFilepath,
-      },
-      overwriteExistingFiles: true,
-    });
-  }
-  return await payload.create({
-    collection: 'media',
-    filePath,
-    data: {
-      tmdbFilepath,
-    },
-  });
+  return data;
 }
 
 /**
@@ -252,8 +120,8 @@ export async function createOrFindItemByName(
  * @param tmdbId id of the movie on themoviedb.org
  * @returns string | undefined age certification of the latest release in germany
  */
-export async function getReleaseDates(tmdbId: number): Promise<Movie['ageRating'] | undefined> {
-  const data = await getTmdbReleaseDates(tmdbId);
+export async function getAgeRating(tmdbId: number): Promise<Movie['ageRating'] | undefined> {
+  const data = await getTmdbData('releaseDates', tmdbId);
   if (!data.results) {
     return undefined;
   }

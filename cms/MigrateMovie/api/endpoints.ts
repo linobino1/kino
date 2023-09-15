@@ -21,7 +21,11 @@ export const endpoints: Endpoint[]  = [
       checkAccess(req, res);
 
       try {
-        const data = await preview(req.body, payload);
+        const data = await preview({
+          tmdbId: req.body.tmdbId,
+          locale: req.body.locale,
+          payload,
+        });
         res.status(200).send({ success: true, data });
       } catch (error: any) {
         res.status(400).send({ success: false, message: error.message });
@@ -38,7 +42,11 @@ export const endpoints: Endpoint[]  = [
       checkAccess(req, res);
 
       try {
-        const data = await migrate(req.body, payload);
+        const data = await migrate({
+          tmdbId: req.body.tmdbId,
+          payload,
+          images: req.body.images,
+        });
         res.status(200).send({ success: true, data: {
           movie: data.movie,
           warnings: data.warnings.map((warning) => warning.message),
