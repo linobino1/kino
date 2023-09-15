@@ -6,7 +6,6 @@
   margin-block: 3em;
   margin-inline: auto;
   max-width: min(100%, 1340px);
-  padding-inline: 3vw;
 }
 .empty {
   display: flex;
