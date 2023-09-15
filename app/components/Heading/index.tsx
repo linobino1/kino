@@ -1,8 +1,6 @@
 import React from 'react';
 
 export type Type = {
-  blockType: 'heading'
-  blockName?: string
   text?: string
 }
 

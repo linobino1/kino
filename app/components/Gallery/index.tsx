@@ -7,7 +7,7 @@ import { Carousel } from 'react-responsive-carousel';
 
 export type Type = {
   images?: {
-    image?: Media | string
+    image?: Media | string
     id?: string
   }[]
 }

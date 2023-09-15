@@ -1,13 +1,10 @@
 import React from 'react';
-import type { Navigation as NavigationType } from 'payload/generated-types';
-import type { Media } from 'payload/generated-types';
+import type { Media, Navigation as NavigationType } from 'payload/generated-types';
 import Image from "~/components/Image";
 import classes from "./index.module.css";
 import { Navigation } from '~/components/Navigation';
 
 export type Type = {
-  blockType: 'headerImage'
-  blockName?: string
   image?: Media | string
   navigation?: NavigationType | string
 }

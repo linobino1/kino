@@ -1,12 +1,12 @@
 import type { PageLayout } from 'cms/fields/pageLayout';
 import React from 'react';
 import type { Media } from 'payload/generated-types';
-import { Heading } from './Heading';
-import { HeaderImage } from './HeaderImage';
-import { Content } from './Content';
-import { Gallery } from './Gallery';
+import { Heading } from '../Heading';
+import { HeaderImage } from '../HeaderImage';
+import { Gallery } from '../Gallery';
 import { MyReactPlayer } from '../MyReactPlayer';
 import { Image } from '../Image';
+import { RichText } from '../RichText';
 import classes from './index.module.css';
 
 export interface BlockProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -16,56 +16,40 @@ export interface BlockProps extends React.HTMLAttributes<HTMLDivElement> {
 export const Block: React.FC<BlockProps> = (props) => {
   const { block, children } = props;
   if (!block) return null;
-  switch (block.blockType) {
-    case 'content':
-      return (
-        <section className={classes.block} data-type={block.blockType}>
-          <Content {...block} />;
-        </section>
-      );
-    case 'heading':
-      return (
-        <section className={classes.block} data-type={block.blockType}>
-          <Heading {...block} />
-        </section>
-      );
-      
-    case 'headerImage':
-      return (
-        <section className={classes.block} data-type={block.blockType}>
-          <HeaderImage {...block} />
-        </section>
-      );
-    case 'image':
-      return (
-        <section className={classes.block} data-type={block.blockType}>
-          <Image
-            image={block.image as Media}
-            width={'100%'}
-            height={'auto'}
-            style={{ marginBlock: '1rem' }}
-          />
-        </section>
-      );
-    case 'gallery':
-      return (
-        <section className={classes.block} data-type={block.blockType}>
-          <Gallery images={block.images} />
-        </section>
-      );
-    case 'video':
-      return (
-        <section className={classes.block} data-type={block.blockType}>
-          <MyReactPlayer url={block.url} />
-        </section>
-      );
-    case 'outlet':
-      return (
-        <section className={classes.block} data-type={block.blockType}>
-          {children}
-        </section>
-      );
-  }
+  return (
+    <div className={classes.block} data-type={block.blockType}>
+      { (() => {
+        switch (block.blockType) {
+          case 'content':
+            return <RichText content={block.content} />;
+            
+          case 'heading':
+            return <Heading {...block} />;
+            
+          case 'headerImage':
+            return <HeaderImage {...block} />;
+            
+          case 'image':
+            return <Image
+              image={block.image as Media}
+              width={'100%'}
+              height={'auto'}
+              style={{ marginBlock: '1rem' }}
+            />;
+            
+          case 'gallery':
+            return <Gallery images={block.images} />;
+          
+          case 'video':
+            return <MyReactPlayer url={block.url} />;
+    
+          default:
+          case 'outlet':
+            return children as React.ReactElement;
+        }
+      })()}
+    </div>
+  )
 }
 
 export interface BlocksProps extends React.HTMLAttributes<HTMLDivElement> {
