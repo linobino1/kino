@@ -21,10 +21,11 @@ export interface Props extends React.HTMLAttributes<HTMLElement> {
   filmprint?: FilmPrint
   screening?: Screening
   showScreeningInfo?: boolean
-};
+}
 
-export const Movie: React.FC<Props> = (props) => {
-  const { movie, filmprint, className, showScreeningInfo } = props;
+export const Movie: React.FC<Props> = ({
+  movie, filmprint, className, showScreeningInfo, ...props 
+}) => {
   const { t } = useTranslation();
 
   const specs = [
