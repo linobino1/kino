@@ -53,8 +53,13 @@
   width: fit-content;
 }
 .container a.trailer::after {
-  content: "\25B6";
+  content: '';
+  background-image: url(/img/play.svg);
   margin-left: .5em;
+  width: .8em;
+  aspect-ratio: 1/1;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 .container a.trailer:hover {
   background-color: var(--color-white);
