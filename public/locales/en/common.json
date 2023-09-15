@@ -11,5 +11,6 @@
   "newsletter.empty": "Please enter a valid email address.",
   "newsletter.duplicate": "Too many subscribe attempts for this email address.",
   "More Info": "More Info",
-  "Read more": "Read more"
+  "Read more": "Read more",
+  "No screenings for this season.": "No screenings for this season."
 }

@@ -29,6 +29,7 @@ export const addUrlField: Plugin = (incomingConfig: Config): Config => {
           {
             name: 'url',
             type: 'text',
+            required: true,
             hooks: {
               beforeChange: [
                 ({ siblingData }: FieldHookArgs): void => {

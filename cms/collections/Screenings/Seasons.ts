@@ -19,6 +19,9 @@ const Seasons: CollectionConfig = {
     addSlugField: {
       from: 'name',
     },
+    addUrlField: {
+      hook: (slug?: string) => `/seasons/${slug || ''}`,
+    },
   },
   fields: [
     {
@@ -26,6 +29,13 @@ const Seasons: CollectionConfig = {
       label: t('Name'),
       type: 'text',
       localized: true,
+      required: true,
+    },
+    {
+      name: 'header',
+      label: t('Header'),
+      type: 'upload',
+      relationTo: 'media',
       required: true,
     },
   ],

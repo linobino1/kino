@@ -5,6 +5,7 @@ import type { PageLayout } from "cms/fields/pageLayout";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   layout?: PageLayout
+  layoutType?: PageLayout['type']
   children?: React.ReactNode
 }
 
@@ -13,7 +14,7 @@ export const Page: React.FC<Props> = (props) => {
   return (
     <div
       {...props}
-      data-layout-type={layout?.type}
+      data-layout-type={layout?.type || props.layoutType || 'default'}
       className={`${classes.page} ${props.className}`}
     >
       { layout?.blocks ? (

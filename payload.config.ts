@@ -39,6 +39,7 @@ import { cloudStorage } from '@payloadcms/plugin-cloud-storage';
 import { s3Adapter } from '@payloadcms/plugin-cloud-storage/s3';
 import { addUrlField } from './cms/plugins/addUrlField';
 import { addSlugField } from './cms/plugins/addSlugField';
+import { SeasonsPage } from './cms/globals/pages/Seasons';
 
 const mockModulePath = path.resolve(__dirname, 'mocks/emptyObject.js');
 
@@ -167,6 +168,7 @@ export default buildConfig({
     Site,
     Blog,
     ScreeningsPage,
+    SeasonsPage,
     Archive,
   ],
   typescript: {

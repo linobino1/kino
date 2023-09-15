@@ -10,10 +10,11 @@ export type Props = {
   items: Screening[]
   className?: string
   activeScreeningSery?: ScreeningSery
+  emptyMessage?: string
 }
 
 export const ScreeningsList: React.FC<Props> = ({
-  items, className, activeScreeningSery,
+  items, className, activeScreeningSery, emptyMessage,
 }) => {
   const { t } = useTranslation(); 
 
@@ -30,7 +31,9 @@ export const ScreeningsList: React.FC<Props> = ({
       ))}
     </div>
   ) : (
-    <div className={classes.empty}>{t('No upcoming screenings.')}</div>
+    <div className={classes.empty}>
+      { emptyMessage || t('No upcoming screenings.') }
+    </div>
   );
 };
 
