@@ -1,3 +1,8 @@
+.container main {
+  max-width: var(--page-max-width);
+  margin-inline: auto;
+  padding-block: 0;
+}
 /** TITLE HEADER   ******************************************/
 .title {
   color: var(--color-white) !important;
@@ -7,7 +12,6 @@
   display: block;
   color: var(--color-theme-contrast);
 }
-
 /** IMAGE HEADER   ******************************************/
 .imageHeader {
   width: 100vw;
@@ -83,10 +87,12 @@ a.tag {
 }
 
 /** MOVIES   ************************************************/
+.movies > * {
+  margin-block: 2rem;
+}
 .movies > *:not(:last-child) {
-  padding-bottom: 1.8rem;
-  margin-bottom: 3rem;
   border-bottom: 1px solid var(--color-font-light);
+  padding-block-end: 2rem;
 }
 @media screen and (max-width: 768px) {
   .posters {

@@ -56,7 +56,7 @@ export default function Item() {
   const inlineScreeningInfo = allFilms.length <= 1;
 
   return (
-    <Page>
+    <Page className={classes.container}>
       <div className={classes.imageHeader}>
         <Image
           className={classes.headerImage}
