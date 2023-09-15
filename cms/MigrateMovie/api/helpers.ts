@@ -1,11 +1,4 @@
-import type { Payload } from "payload";
-import type {
-  Genre,
-  Person,
-  Config,
-  Company,
-  Movie,
-} from "payload/generated-types";
+import type { Movie } from "payload/generated-types";
 import type {
   tmdbCredits,
   tmdbMovie,
@@ -64,56 +57,6 @@ export async function getTmdbData(endpoint: Endpoint, tmdbId: number, language?:
   return data;
 }
 
-/**
- * find an item by name or create it if it doesn't exist
- * @param collection slug of the collection, it needs to have a field "name"
- * @param name name of the item
- * @param payload Payload instance
- * @param locale locale in which the name should be checked
- * @returns the created or found doc
- */
-export async function createOrFindItemByName(collection: 'genres', name: string, payload: Payload, locale?: string): Promise<Genre>;
-export async function createOrFindItemByName(collection: 'persons', name: string, payload: Payload, locale?: string): Promise<Person>;
-export async function createOrFindItemByName(collection: 'companies', name: string, payload: Payload, locale?: string): Promise<Company>;
-export async function createOrFindItemByName(
-  collection: keyof Config['collections'], name: string, payload: Payload, locale?: string
-): Promise<Document> {
-  if (!payload.collections[collection].config.fields.find(field => 'name' in field && field.name === 'name')) {
-    throw new Error(`Collection ${collection} does not have a field "name"`);
-  }
-  // find the item
-  let item;
-  try {
-    item = (await payload.find({
-      collection,
-      where: {
-        name: {
-          like: name,
-        },
-      },
-      locale,
-    }))?.docs[0]
-    
-    if (!item) {
-      throw new Error('not found')
-    }
-  } catch (_) {
-    // ok, we didn't find it, let's create it
-    try {
-      return await payload.create({
-        collection,
-        data: {
-          // @ts-expect-error
-          name,
-        },
-        locale,
-      });
-    } catch (err) {
-      throw new Error(`Could neither find or create ${collection} item ${name} (${err})`);
-    }
-  }
-  return item;
-}
 
 /**
  * 

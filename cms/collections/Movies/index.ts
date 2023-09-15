@@ -185,11 +185,12 @@ const Movies: CollectionConfig = {
       defaultValue: false,
     },
     {
-      name: 'genre',
+      name: 'genres',
       label: t('Genre'),
       type: 'relationship',
       relationTo: 'genres',
-      hasMany: false,
+      hasMany: true,
+      minRows: 1,
       required: true,
     },
     {

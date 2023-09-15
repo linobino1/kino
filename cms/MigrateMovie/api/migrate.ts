@@ -19,8 +19,9 @@ export const migrate: MigrateFunction = async ({
   // migrate base data
   let movie: MigratedMovie | undefined;
   try {
-    movie = await migrateMovie(payload, tmdbId);
+    movie = await migrateMovie(payload, tmdbId, warnings);
   } catch (err) {
+    console.error(err);
     throw new Error(`Unable to create movie (${err})`);
   }
   

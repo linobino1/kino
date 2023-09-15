@@ -1,37 +1,83 @@
-import type { Person } from "payload/generated-types";
+import type { Movie, Person } from "payload/generated-types";
 import type { tmdbPerson } from "../../tmdb/types";
-import { createOrFindItemByName, getTmdbData } from "../helpers";
+import { getTmdbData } from "../helpers";
 import type { MigrationFunction } from "../types";
 
 export const migrateCredits: MigrationFunction = async ({
-  payload, movie,
+  payload, movie, warnings,
 }) => {
   if (!movie.tmdbId) throw new Error('Cannot migrate credits without tmdbId');
 
   const data = await getTmdbData('credits', movie.tmdbId);
 
-  // create cast
-  const cast = (await Promise.all(
-    data.cast.map(async (person: tmdbPerson) => (
-      createOrFindItemByName('persons', person.name, payload)
-    )
-  ))).map((person: Person) => person.id);
+  // cast
+  const cast: Person[] = [];
+  await Promise.all(
+    data.cast.map(async (person: tmdbPerson) => {
+      let doc: Person;
 
-  // create crew
-  const crew = await Promise.all(
-    data.crew.map(async (person: tmdbPerson) => ({
-      role: person.job, 
-      person: (await createOrFindItemByName('persons', person.name, payload)).id,
-    }))
+      // try to create person
+      try {
+        doc = await payload.create({
+          collection: 'persons',
+          data: {
+            name: person.name,
+          },
+        });
+      } catch (err) {
+        // could not be created, try to find it
+        doc = (await payload.find({
+          collection: 'persons',
+          where: {
+            name: {
+              equals: person.name,
+            },
+          },
+          limit: 1,
+        })).docs[0];
+      }
+      if (!doc) warnings.push(new Error(`Could neither find or create person ${person.name}`));
+      cast.push(doc);
+    })
   );
-  
-  // create directors
-  const directors = (await Promise.all(
-    data.crew.filter((person) => person.job === 'Director').map(async (person: tmdbPerson) => (
-      createOrFindItemByName('persons', person.name, payload)
-    )
-  ))).map((person: Person) => person.id);
-  
+
+  // crew and directors
+  const crew: Movie['crew'] = [];
+  const directors: Person[] = [];
+  await Promise.all(
+    data.crew.map(async (person: tmdbPerson) => {
+      let doc: Person;
+
+      // try to create person
+      try {
+        doc = await payload.create({
+          collection: 'persons',
+          data: {
+            name: person.name,
+          },
+        });
+      } catch (err) {
+        // could not be created, try to find it
+        doc = (await payload.find({
+          collection: 'persons',
+          where: {
+            name: {
+              equals: person.name,
+            },
+          },
+          limit: 1,
+        })).docs[0];
+      }
+      
+      if (!doc) warnings.push(new Error(`Could neither find or create person ${person.name}`));
+      crew.push({
+        person: doc,
+        role: person.job, 
+      });
+      if (person.job === 'Director') directors.push(doc);
+    })
+  );
+
   // update movie
   await payload.update({
     collection: 'movies',
