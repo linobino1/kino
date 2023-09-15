@@ -67,8 +67,8 @@ export const migrateMovie = async (
       countries: data.production_countries.map((country: any) => country.iso_3166_1.toUpperCase()),
       tmdbId: data.id,
       duration: data.runtime,
-      genres: genres.map((genre) => genre.id),
-      productionCompanies: productionCompanies.map((company) => company.id),
+      genres,
+      productionCompanies,
     },
     locale: tmdbLng,
   });

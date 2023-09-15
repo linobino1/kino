@@ -12,6 +12,7 @@ import Posts from './cms/collections/Posts';
 import Blog from './cms/globals/pages/Blog';
 import Archive from './cms/globals/pages/Archive';
 import Persons from './cms/collections/Movies/Persons';
+import Jobs from './cms/collections/Movies/Jobs';
 import Companies from './cms/collections/Movies/Companies';
 import Genres from './cms/collections/Movies/Genres';
 import Movies from './cms/collections/Movies';
@@ -157,6 +158,7 @@ export default buildConfig({
     Colors,
     Categories,
     Persons,
+    Jobs,
     Companies,
     Countries,
     
