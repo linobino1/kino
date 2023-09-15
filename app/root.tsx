@@ -60,6 +60,7 @@ export async function loader({ request, context: { payload, user } }: LoaderArgs
       HCAPTCHA_SITE_KEY: environment().HCAPTCHA_SITE_KEY,
       TIMEZONE: environment().TIMEZONE,
       NODE_ENV: environment().NODE_ENV,
+      MAILCHIMP_SIGNUP_URL: environment().MAILCHIMP_SIGNUP_URL,
     },
   }, {
     headers: {
