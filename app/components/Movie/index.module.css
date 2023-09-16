@@ -43,7 +43,7 @@
 }
 .container a.trailer {
   display: inline-flex;
-  margin-block: 1.2em;
+  margin-block-end: 1.2em;
   border: 1px solid;
   color: inherit;
   border-radius: var(--border-radius);

@@ -10,7 +10,7 @@ export interface Props extends React.HTMLAttributes<HTMLElement> {
 export const ScreeningInfo: React.FC<Props> = (props) => {
   const { screening } = props;
   // const { t } = useTranslation();
-  return (
+  return screening.info ? (
     <div {...props}>
       {screening.info && (
         <p
@@ -29,7 +29,7 @@ export const ScreeningInfo: React.FC<Props> = (props) => {
         </p>
       )} */}
     </div>
-  )
+  ) : null;
 };
 
 export default ScreeningInfo;
