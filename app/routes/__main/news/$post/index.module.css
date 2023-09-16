@@ -9,8 +9,9 @@
 }
 .container h1 {
   font: var(--font-h2);
-  background: inherit;
-  color: inherit;
+  background: inherit !important;
+  color: inherit !important;
+  margin-block: .8em;
   text-align: start;
   padding: unset;
 }

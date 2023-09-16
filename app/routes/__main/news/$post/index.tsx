@@ -50,16 +50,14 @@ export default function Index() {
       className={classes.image}
       image={post.header as Media}
     />
-    <main>
-      <h1>{post.title}</h1>
-      <RichText
-        content={post.content}
-        className={classes.preview}
-      />
-      <Blocks
-        blocks={post.details as []}
-      />
-    </main>
+    <h1>{post.title}</h1>
+    <RichText
+      content={post.content}
+      className={classes.preview}
+    />
+    <Blocks
+      blocks={post.details as []}
+    />
     </Page>
   );
 }
