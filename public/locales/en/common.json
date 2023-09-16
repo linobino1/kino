@@ -21,5 +21,6 @@
   "filter.decade": "All Decades",
   "filter.genre": "All Genres",
   "filter.languageVersion": "All Languages",
-  "filter.format": "All Formats"
+  "filter.format": "All Formats",
+  "search...": "search..."
 }

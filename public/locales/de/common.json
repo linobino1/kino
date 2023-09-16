@@ -30,5 +30,6 @@
   "filter.decade": "Alle Jahrzehnte",
   "filter.genre": "Alle Genres",
   "filter.languageVersion": "Alle Sprachen",
-  "filter.format": "Alle Formate"
+  "filter.format": "Alle Formate",
+  "search...": "Suche..."
 }
