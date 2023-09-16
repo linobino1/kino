@@ -18,5 +18,8 @@
   "filter.isHfgProduction.false": "no",
   "filter.directors": "All Directors",
   "filter.countries": "All Countries",
-  "filter.decade": "All Decades"
+  "filter.decade": "All Decades",
+  "filter.genre": "All Genres",
+  "filter.languageVersion": "All Languages",
+  "filter.format": "All Formats"
 }

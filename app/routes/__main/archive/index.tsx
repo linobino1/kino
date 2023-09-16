@@ -137,10 +137,16 @@ const getFilters = ({payload, formData} : {
     payload,
     filters: [
       {
-        name: 'movie.isHfgProduction',
-        label: 'filter.isHfgProduction',
-        labelTrue: 'filter.isHfgProduction.true',
-        labelFalse: 'filter.isHfgProduction.false',
+        name: 'languageVersion.name',
+        label: 'filter.languageVersion',
+      },
+      {
+        name: 'format.name',
+        label: 'filter.format',
+      },
+      {
+        name: 'movie.genres.name',
+        label: 'filter.genre',
       },
       {
         name: 'movie.directors.name',
@@ -170,6 +176,12 @@ const getFilters = ({payload, formData} : {
         } : {
           and: [],
         }),
+      },
+      {
+        name: 'movie.isHfgProduction',
+        label: 'filter.isHfgProduction',
+        labelTrue: 'filter.isHfgProduction.true',
+        labelFalse: 'filter.isHfgProduction.false',
       },
     ],
     globalCause,

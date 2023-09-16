@@ -27,5 +27,8 @@
   "filter.isHfgProduction.false": "nein",
   "filter.directors": "Alle Regisseure",
   "filter.countries": "Alle Länder",
-  "filter.decade": "Alle Jahrzehnte"
+  "filter.decade": "Alle Jahrzehnte",
+  "filter.genre": "Alle Genres",
+  "filter.languageVersion": "Alle Sprachen",
+  "filter.format": "Alle Formate"
 }

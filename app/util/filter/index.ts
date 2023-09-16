@@ -68,20 +68,20 @@ export class Filter {
    * @param name a field name or a dot separated path to a field
    * @returns the value of the field
    */
-  getField(item: any, name: string): any {
+  getField(item: any): any {
     const fields = this.props.name.split('.');
-    if (fields.length > 1) {
-      return fields.reduce((acc, field) => {
-        if (Array.isArray(acc)) {
-          // treat hasMany and array fields, return an array of values of the field for each item
-          return acc.map((x) => x[field]);
-        } else {
-          return acc[field];
-        }
-      }, item);
-    } else {
-      return item[name];
-    }
+    return fields.reduce((acc, field) => {
+      if (acc === undefined) {
+        console.warn(`field ${field} is undefined in ${this.props.name}`);
+        return undefined;
+      }
+      if (Array.isArray(acc)) {
+        // treat hasMany and array fields, return an array of values of the field for each item
+        return acc.map((x) => x[field]);
+      } else {
+        return acc[field];
+      }
+    }, item);
   }
   
   async getPossibleValues(): Promise<any[]> {
@@ -92,7 +92,7 @@ export class Filter {
     })).docs;
     
     // remove duplicate values
-    const values = items.map((item) => this.getField(item, this.props.name)).flat();
+    const values = items.map((item) => this.getField(item)).flat();
     const uniqueValues  = values.filter((value, index) => {
       const _value = JSON.stringify(value);
       return index === values.findIndex(obj => {
