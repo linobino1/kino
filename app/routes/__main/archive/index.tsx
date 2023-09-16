@@ -1,5 +1,4 @@
-import type { MetaFunction } from "@remix-run/node";
-import type { ActionFunction, LoaderArgs} from "@remix-run/node";
+import type { MetaFunction, ActionFunction, LoaderArgs} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useActionData, useFetcher, useLoaderData } from "@remix-run/react";
 import { Page } from "~/components/Page";
@@ -23,7 +22,9 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
   });
   
   // get all published film prints
-  const filters = getFilters(payload);
+  const filters = getFilters({
+    payload,
+  });
   const filmPrints = await payload.find({
     collection: 'filmPrints',
     locale,
@@ -47,7 +48,10 @@ export const meta: MetaFunction<typeof loader> = ({ data, parentsData }) => ({
 export const action: ActionFunction = async ({ request, context: { payload }}) => {
   const locale = await i18next.getLocale(request);
   const formData = await request.formData();
-  const filters = getFilters(payload, formData);
+  const filters = getFilters({
+    payload,
+    formData,
+  });
   const filmPrints = await payload.find({
     collection: 'filmPrints',
     locale,
@@ -64,10 +68,18 @@ export const action: ActionFunction = async ({ request, context: { payload }}) =
   return json(data, { status: 200 });
 }
 
-const getFilters = (payload: Payload, formData?: FormData): Filters => {
+const getFilters = ({payload, formData} : {
+  payload: Payload,
+  formData?: FormData
+}): Filters => {
   const query = formData && formData.get('query');
   const queryClause: Where | undefined = query ? {
     or: [
+      {
+        'movie.internationalTitle': {
+          contains: query,
+        },
+      },
       {
         'movie.originalTitle': {
           contains: query,
@@ -89,7 +101,17 @@ const getFilters = (payload: Payload, formData?: FormData): Filters => {
         },
       },
       {
+        'movie.crew.person.name': {
+          contains: query,
+        },
+      },
+      {
         'movie.synopsis': {
+          contains: query,
+        },
+      },
+      {
+        'movie.tags': {
           contains: query,
         },
       },
@@ -102,6 +124,11 @@ const getFilters = (payload: Payload, formData?: FormData): Filters => {
           equals: false,
         },
       },
+      {
+        _status: {
+          equals: 'published',
+        },
+      },
       queryClause || {},
     ],
   };
@@ -111,13 +138,38 @@ const getFilters = (payload: Payload, formData?: FormData): Filters => {
     filters: [
       {
         name: 'movie.isHfgProduction',
-        labelOff: 'HfG Production yes/no',
-        labelTrue: 'only HfG Production',
-        labelFalse: 'only non-HfG Production',
+        label: 'filter.isHfgProduction',
+        labelTrue: 'filter.isHfgProduction.true',
+        labelFalse: 'filter.isHfgProduction.false',
       },
       {
         name: 'movie.directors.name',
-        labelOff: 'All Directors',
+        label: 'filter.directors',
+      },
+      {
+        name: 'movie.countries.id',
+        label: 'filter.countries',
+      },
+      {
+        name: 'movie.decade',
+        label: 'filter.decade',
+        type: 'number',
+        where: (value: any) => ((typeof value === 'number') ? {
+          and: [
+            {
+              'movie.year': {
+                greater_than_equal: value,
+              },
+            },
+            {
+              'movie.year': {
+                less_than: value + 10,
+              },
+            },
+          ],
+        } : {
+          and: [],
+        }),
       },
     ],
     globalCause,
@@ -164,7 +216,7 @@ export default function Index() {
               <option
                 key={option.value}
                 value={option.value}
-              >{`${option.label} (${option.count})`}</option>
+              >{`${t(option.label || '')} (${option.count})`}</option>
             ))}
           </select>
         ))}

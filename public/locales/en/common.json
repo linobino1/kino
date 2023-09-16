@@ -12,5 +12,11 @@
   "newsletter.duplicate": "Too many subscribe attempts for this email address.",
   "More Info": "More Info",
   "Read more": "Read more",
-  "No screenings for this season.": "No screenings for this season."
+  "No screenings for this season.": "No screenings for this season.",
+  "filter.isHfgProduction": "HfG Production",
+  "filter.isHfgProduction.true": "yes",
+  "filter.isHfgProduction.false": "no",
+  "filter.directors": "All Directors",
+  "filter.countries": "All Countries",
+  "filter.decade": "All Decades"
 }

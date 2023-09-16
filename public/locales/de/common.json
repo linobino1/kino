@@ -21,5 +21,11 @@
   "Video is not available.": "Video ist nicht verfügbar.",
   "Loading...": "Lade...",
   "More Info": "Mehr Infos",
-  "No screenings for this season.": "Keine Vorstellungen in dieser Spielzeit."
+  "No screenings for this season.": "Keine Vorstellungen in dieser Spielzeit.",
+  "filter.isHfgProduction": "HfG Produktion",
+  "filter.isHfgProduction.true": "ja",
+  "filter.isHfgProduction.false": "nein",
+  "filter.directors": "Alle Regisseure",
+  "filter.countries": "Alle Länder",
+  "filter.decade": "Alle Jahrzehnte"
 }

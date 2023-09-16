@@ -5,15 +5,17 @@ export type FilterProps = {
   name: string;
   collection: string;
   payload: Payload;
-  labelOff?: string;
+  label?: string;
   labelTrue?: string;
   labelFalse?: string;
+  where?: (value: any) => Where;
   parent: Filters;
+  type?: 'number' | 'text' | 'boolean';
 }
 
 export type FilterOption = {
   value: string;
-  label?: string | Record<string, string>;
+  label?: string;
   count: number;
 }
 
@@ -41,19 +43,23 @@ export class Filter {
   getWhereClause(value: any): Where {
     if (value === 'true') value = true;
     if (value === 'false') value = false;
-    if (value === null) return {
-      [this.props.name]: {},
+    if (this.props.type === 'number' && value !== undefined && value !== null) {
+      value = parseInt(value); 
     }
-    if (value.length) return {
-      [this.props.name]: {
-        contains: value,
-      },
-    }
-    return {
-      [this.props.name]: {
-        equals: value,
-      },
-    }
+    
+    return this.props.where
+      ? this.props.where(value)
+      : (value === null || value === undefined) ? {
+        [this.props.name]: {},
+      } : value.length ? {
+        [this.props.name]: {
+          contains: value,
+        },
+      } : {
+        [this.props.name]: {
+          equals: value,
+        },
+      }
   }
  
   /**
@@ -99,11 +105,13 @@ export class Filter {
   async getOptions(): Promise<FilterOption[]> {
     const values = await this.getPossibleValues();
     return [
+      // please select ...
       {
         value: '',
-        label: this.props.labelOff || 'off',
+        label: this.props.label || 'off',
         count: await this.getCount(null),
       },
+      // all possible values
       ...await Promise.all(values.map(async (value) => {
         const label = value === true ? this.props.labelTrue : value === false ? this.props.labelFalse : `${value}`;
         return {
@@ -112,28 +120,15 @@ export class Filter {
           count: await this.getCount(value),
         }
       })),
-    ];
+    ].filter((option) => option.count > 0);
   }
   
   async getCount(value: any): Promise<number> {
-    const where = this.props.parent.getWhereClause();
-    
-    // TODO somewhere here seems to be a bug, the count is not correct for some
-    // docs if a global cause is applied and true
-    // replace this fields value in the where clause with the probe value
-    if (where.and) {
-      const clause = where.and.find((item) => item[this.props.name] !== undefined);
-      if (clause) {
-        if (value === null) {
-          // remove the clause
-          where.and = where.and.filter((item) => item !== clause);
-        }
-        clause[this.props.name] = this.getWhereClause(value)[this.props.name];
-      } else if (value !== null) {
-        where.and.push(this.getWhereClause(value));
-      }
-    }
-    
+    const where = this.props.parent.getWhereClause({
+      except: this.props.name,
+      add: this.getWhereClause(value),
+    });
+
     const res = (await this.props.payload.find({
       // @ts-ignore this.collection must be a valid collection slug
       collection: this.props.collection,
@@ -148,6 +143,7 @@ export class Filter {
     //   { $group: { _id: null, count: { $sum: 1 } } },
     // ]);
     // return res[0]?.count || 0;
+    // ------> this won't work with implicit fields like movies.decade
   }
   
   async getApplied(): Promise<AppliedFilter> {
@@ -178,21 +174,29 @@ export class Filters {
     }));
   }
   
-  getWhereClauses(): Where[] {
-    const res = this.filters
+  getWhereClause({ except, add }: {
+    except?: string,
+    add?: Where
+  } = {}): Where {
+    // TODO write a function that combines where clauses properly
+    let clauses = this.filters
       .filter((filter) => filter.activeValue !== null)
+      .filter((filter) => filter.props.name !== except)
       .map((filter) => filter.getWhereClause(filter.activeValue));
-    if (this.props.globalCause) {
-      res.push(this.props.globalCause);
+    
+    clauses.push(add || {});
+    clauses = clauses.filter(Boolean);
+    
+    let and;
+    if (this.props.globalCause?.and) {
+      and = this.props.globalCause.and.concat(clauses);
+    } else {
+      and = clauses;
     }
-    return res;  
-  }
 
-  getWhereClause(): Where {
-    const res = {
-      and: this.getWhereClauses(),
-    }
-    return res;
+    return {
+      and,
+    };
   }
   
   /**

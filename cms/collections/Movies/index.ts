@@ -179,6 +179,27 @@ const Movies: CollectionConfig = {
       required: true,
     },
     {
+      name: 'decade',
+      type: 'number',
+      required: true,
+      validate: () => true,
+      hidden: true,
+      hooks: {
+        beforeChange: [
+          ({ siblingData }): void => {
+            // ensures data is not stored in DB
+            delete siblingData['decade'];
+          },
+        ],
+        afterRead: [
+          async ({ siblingData }) => {
+            if (!siblingData.year) return null;
+            return Math.floor((siblingData.year as number) / 10) * 10;
+          },
+        ],
+      }
+    },
+    {
       name: 'isHfgProduction',
       label: t('Is a HfG Production'),
       type: 'checkbox',
