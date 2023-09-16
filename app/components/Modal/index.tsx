@@ -18,7 +18,6 @@ export const Modal: React.FC<Props> = ({
     // close modal on click outside
     document.body.addEventListener('click', (e) => {
       if (modal.current && !modal.current?.contains(e.target as Node)) {
-        console.log('close modal')
         navigate(-1);
       }
     });
