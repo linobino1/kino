@@ -146,8 +146,8 @@ const getFilters = ({payload, locale, params} : {
         label: 'filter.genre',
       },
       {
-        name: 'movie.directors.name',
-        label: 'filter.directors',
+        name: 'color.name',
+        label: 'filter.color',
       },
       {
         name: 'movie.countries.id',
@@ -179,6 +179,10 @@ const getFilters = ({payload, locale, params} : {
         label: 'filter.isHfgProduction',
         labelTrue: 'filter.isHfgProduction.true',
         labelFalse: 'filter.isHfgProduction.false',
+      },
+      {
+        name: 'movie.directors.name',
+        label: 'filter.directors',
       },
     ],
     globalCause,
