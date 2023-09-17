@@ -7,6 +7,12 @@ ul.list {
   flex-direction: column;
   row-gap: 2rem;
 }
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-block: 2em;
+}
 /* ITEM  ****************************************************************/
 .item {
   position: relative;
@@ -88,7 +94,7 @@ ul.list {
     grid-template-columns: 1fr 1fr;
   }
   .info {
-    aspect-ratio: 16/9;
+    aspect-ratio: 32/9;
   }
 }
 @media screen and (min-width: 1000px) and (max-width: 1150px) {
