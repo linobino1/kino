@@ -28,7 +28,7 @@ export const Pagination: React.FC<Props> = (props) => {
   return props.totalPages > 1 ? (
     <div className={classes.container}>
       <Link
-        to={next}
+        to={prev}
         className={classes.prev}
         prefetch='intent'
         aria-disabled={!props.hasPrevPage}
@@ -38,7 +38,7 @@ export const Pagination: React.FC<Props> = (props) => {
         {props.page} / {props.totalPages}
       </div>
       <Link
-        to={prev}
+        to={next}
         className={classes.next}
         aria-disabled={!props.hasNextPage}
         {...props.linkProps}
