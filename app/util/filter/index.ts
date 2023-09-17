@@ -202,9 +202,19 @@ export class Filters {
   
   /**
    * apply the filters from a form data
+   * @param params request body
+   */
+  applySearchParams(params?: URLSearchParams): void {
+    this.filters.forEach((filter) => {
+      filter.activeValue = params?.get(filter.props.name) || null;
+    });
+  }
+  
+  /**
+   * apply the filters from a form data
    * @param formData request body
    */
-  apply(formData?: FormData): void {
+  applyFormData(formData?: FormData): void {
     this.filters.forEach((filter) => {
       filter.activeValue = formData?.get(filter.props.name) || null;
     });

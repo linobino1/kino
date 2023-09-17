@@ -1,18 +1,19 @@
-import type { MetaFunction, ActionFunction, LoaderArgs} from "@remix-run/node";
-import { json } from "@remix-run/node";
-import { useActionData, useFetcher, useLoaderData } from "@remix-run/react";
+import type { MetaFunction, LoaderArgs} from "@remix-run/node";
+import { redirect } from "@remix-run/node";
+import { Form, useLoaderData } from "@remix-run/react";
 import { Page } from "~/components/Page";
 import { FilmPrintsList } from "~/components/FilmPrintsList";
 import classes from "./index.module.css";
 import i18next from "~/i18next.server";
 import { useTranslation } from "react-i18next";
 import type { Payload } from "payload";
-import type { FilmPrint } from "payload/generated-types";
-import type { AppliedFilter} from "~/util/filter";
 import { Filters } from "~/util/filter";
 import { useRef } from "react";
 import type { Where } from "payload/types";
 import { pageDescription, pageKeywords, pageTitle } from "~/util/pageMeta";
+import Pagination from "~/components/Pagination";
+
+const limit = 10;
 
 export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
@@ -20,23 +21,39 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
     slug: 'archive',
     locale,
   });
+  const params = new URL(request.url).searchParams;
+  console.log('params', params)
+  const pageNumber  = parseInt(params.get('page') || '1');
+  const query = params.get('query') || '';
   
   // get all published film prints
   const filters = getFilters({
     payload,
     locale,
+    params,
   });
+  filters.applySearchParams(params);
   const filmPrints = await payload.find({
     collection: 'filmPrints',
     locale,
     depth: 7,
+    limit,
+    page: pageNumber,
     where: filters.getWhereClause(),
   });
+
+  // Redirect to the last page if the requested page is greater than the total number of page
+  if (pageNumber > filmPrints.totalPages) {
+    throw redirect(`?page=${filmPrints.totalPages}`, {
+      status: 302,
+    });
+  }
   
   return {
     page,
+    query,
     filters: await filters.getApplied(),
-    items: filmPrints.docs || [],
+    filmPrints,
   }
 };
 
@@ -46,36 +63,12 @@ export const meta: MetaFunction<typeof loader> = ({ data, parentsData }) => ({
   keywords: pageKeywords(parentsData.root?.site?.meta?.keywords, data?.page?.meta?.keywords),
 });
 
-export const action: ActionFunction = async ({ request, context: { payload }}) => {
-  const locale = await i18next.getLocale(request);
-  const formData = await request.formData();
-  const filters = getFilters({
-    payload,
-    locale,
-    formData,
-  });
-  const filmPrints = await payload.find({
-    collection: 'filmPrints',
-    locale,
-    depth: 7,
-    where: filters.getWhereClause(),
-  });
-  
-  const data = {
-    items: filmPrints.docs || [],
-    filters: await filters.getApplied(),
-    query: formData.get('query') || '',
-    depth: 7,
-  }
-  return json(data, { status: 200 });
-}
-
-const getFilters = ({payload, locale, formData} : {
+const getFilters = ({payload, locale, params} : {
   payload: Payload,
   locale: string,
-  formData?: FormData
+  params?: URLSearchParams,
 }): Filters => {
-  const query = formData && formData.get('query');
+  const query = params && params.get('query');
   const queryClause: Where | undefined = query ? {
     or: [
       {
@@ -190,25 +183,22 @@ const getFilters = ({payload, locale, formData} : {
     ],
     globalCause,
   });
-  filters.apply(formData);
+  filters.applySearchParams(params);
   return filters;
 }
 
 export default function Index() {
-  const loaderData = useLoaderData<typeof loader>();
-  const actionData = useActionData<typeof action>();
-  const { page } = loaderData;
-  const data: { items: FilmPrint[], filters: AppliedFilter[], query?: string } = actionData || loaderData;
-  const { items, filters, query } = data;
+  const data = useLoaderData<typeof loader>();
+  const { page } = data;
+  const { filmPrints, filters, query } = data;
   const { t } = useTranslation();
   const form = useRef<HTMLFormElement>(null);
-  const filterFetcher = useFetcher();
   
   return (
     <Page layout={page.layout}>
-      <filterFetcher.Form
+      <Form
         ref={form}
-        method="POST"
+        method="GET"
         className={classes.form}
       >
         <div className={classes.search}>
@@ -236,11 +226,12 @@ export default function Index() {
             ))}
           </select>
         ))}
-      </filterFetcher.Form>
+      </Form>
       <FilmPrintsList
-        items={items}
+        items={filmPrints.docs || []}
         className={classes.list}
       />
+      <Pagination {...filmPrints} linkProps={{ prefetch: 'intent' }}/>
     </Page>
   );
 }
