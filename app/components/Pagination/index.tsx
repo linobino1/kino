@@ -1,7 +1,7 @@
 import type { RemixLinkProps } from '@remix-run/react/dist/components';
 import React from 'react';
 import classes from './index.module.css';
-import { Link } from '@remix-run/react';
+import { Link, useSearchParams } from '@remix-run/react';
 
 export interface Props extends React.HTMLAttributes<HTMLElement> {
   hasNextPage: boolean;
@@ -17,10 +17,18 @@ export interface Props extends React.HTMLAttributes<HTMLElement> {
 }
 
 export const Pagination: React.FC<Props> = (props) => {
+  const [searchParams] = useSearchParams();
+
+  searchParams.set('page', `${props.nextPage || props.totalPages}`);
+  const next = `?${searchParams.toString()}`;
+
+  searchParams.set('page', `${props.prevPage || props.totalPages}`);
+  const prev = `?${searchParams.toString()}`;
+
   return props.totalPages > 1 ? (
     <div className={classes.container}>
       <Link
-        to={`?page=${props.prevPage || props.totalPages}`}
+        to={next}
         className={classes.prev}
         prefetch='intent'
         aria-disabled={!props.hasPrevPage}
@@ -30,7 +38,7 @@ export const Pagination: React.FC<Props> = (props) => {
         {props.page} / {props.totalPages}
       </div>
       <Link
-        to={`?page=${props.nextPage || props.totalPages}`}
+        to={prev}
         className={classes.next}
         aria-disabled={!props.hasNextPage}
         {...props.linkProps}
