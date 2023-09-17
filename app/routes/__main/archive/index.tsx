@@ -24,6 +24,7 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
   // get all published film prints
   const filters = getFilters({
     payload,
+    locale,
   });
   const filmPrints = await payload.find({
     collection: 'filmPrints',
@@ -50,6 +51,7 @@ export const action: ActionFunction = async ({ request, context: { payload }}) =
   const formData = await request.formData();
   const filters = getFilters({
     payload,
+    locale,
     formData,
   });
   const filmPrints = await payload.find({
@@ -68,8 +70,9 @@ export const action: ActionFunction = async ({ request, context: { payload }}) =
   return json(data, { status: 200 });
 }
 
-const getFilters = ({payload, formData} : {
+const getFilters = ({payload, locale, formData} : {
   payload: Payload,
+  locale: string,
   formData?: FormData
 }): Filters => {
   const query = formData && formData.get('query');
@@ -135,6 +138,7 @@ const getFilters = ({payload, formData} : {
   const filters = new Filters({
     collection: 'filmPrints',
     payload,
+    locale,
     filters: [
       {
         name: 'languageVersion.name',

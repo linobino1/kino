@@ -5,6 +5,7 @@ export type FilterProps = {
   name: string;
   collection: string;
   payload: Payload;
+  locale: string;
   label?: string;
   labelTrue?: string;
   labelFalse?: string;
@@ -21,8 +22,9 @@ export type FilterOption = {
 
 export type FiltersProps = {
   payload: Payload;
+  locale: string;
   collection: string;
-  filters: Omit<FilterProps, 'payload' | 'collection' | 'parent'>[];
+  filters: Omit<FilterProps, 'payload' | 'locale' | 'collection' | 'parent'>[];
   globalCause?: Where;
 }
 
@@ -51,10 +53,6 @@ export class Filter {
       ? this.props.where(value)
       : (value === null || value === undefined) ? {
         [this.props.name]: {},
-      } : value.length ? {
-        [this.props.name]: {
-          contains: value,
-        },
       } : {
         [this.props.name]: {
           equals: value,
@@ -89,6 +87,7 @@ export class Filter {
     const items = (await this.props.payload.find({
       // @ts-ignore this.collection must be a valid collection slug
       collection: this.props.collection,
+      locale: this.props.locale,
     })).docs;
     
     // remove duplicate values
@@ -108,7 +107,7 @@ export class Filter {
       // please select ...
       {
         value: '',
-        label: this.props.label || 'off',
+        label: this.props.label || '',
         count: await this.getCount(null),
       },
       // all possible values
@@ -134,6 +133,7 @@ export class Filter {
       collection: this.props.collection,
       where,
       depth: 7,
+      locale: this.props.locale,
     })).totalDocs;
     return res;
     // IDEA: use aggregate to get the count, might be faster
@@ -169,6 +169,7 @@ export class Filters {
     this.filters = this.props.filters.map((filter) => new Filter({
       ...filter,
       payload: this.props.payload,
+      locale: this.props.locale,
       collection: this.props.collection,
       parent: this,
     }));
