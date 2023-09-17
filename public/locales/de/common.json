@@ -31,5 +31,6 @@
   "filter.genre": "Alle Genres",
   "filter.languageVersion": "Alle Sprachen",
   "filter.format": "Alle Formate",
-  "search...": "Suche..."
+  "search...": "Suche...",
+  "reset filters": "Filter zurücksetzen"
 }

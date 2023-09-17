@@ -1,6 +1,6 @@
 import type { MetaFunction, LoaderArgs} from "@remix-run/node";
 import { redirect } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react";
+import { Form, useLoaderData, useNavigate, useSearchParams } from "@remix-run/react";
 import { Page } from "~/components/Page";
 import { FilmPrintsList } from "~/components/FilmPrintsList";
 import classes from "./index.module.css";
@@ -193,7 +193,17 @@ export default function Index() {
   const { filmPrints, filters, query } = data;
   const { t } = useTranslation();
   const form = useRef<HTMLFormElement>(null);
+  const navigate = useNavigate();
+  const [ params ] = useSearchParams();
   
+  const resetFilters = () => {
+    filters.forEach(filter => {
+      params.delete(filter.name);
+    });
+    params.delete('page');
+    navigate(`?${params.toString()}`)
+  }
+
   return (
     <Page layout={page.layout}>
       <Form
@@ -226,6 +236,11 @@ export default function Index() {
             ))}
           </select>
         ))}
+        <button
+          type="button"
+          className={classes.reset}
+          onClick={resetFilters}
+        >{t('reset filters')}</button>
       </Form>
       <FilmPrintsList
         items={filmPrints.docs || []}

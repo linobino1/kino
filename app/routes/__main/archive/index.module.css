@@ -50,6 +50,7 @@
   content: ">";
 }
 /* FILTERS *********************************************************** */
+.reset,
 .filter {
   border: 1px solid var(--color-light-grey);
   background-color: var(--color-light-grey);
@@ -68,6 +69,15 @@
   background-position: calc(100% - 12px) 50%, calc(100% - 7px) 50%, calc(100% - 136px) 0.5em;
   background-size: 5px 5px, 5px 5px, 1px 1.5em;
   background-repeat: no-repeat;
+}
+.reset {
+  background: transparent;
+  color: inherit;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 100%;
+  grid-column: 1 / -1;
 }
 /* LIST    *********************************************************** */
 .list {

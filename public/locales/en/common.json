@@ -22,5 +22,6 @@
   "filter.genre": "All Genres",
   "filter.languageVersion": "All Languages",
   "filter.format": "All Formats",
-  "search...": "search..."
+  "search...": "search...",
+  "reset filters": "reset filters"
 }
