@@ -42,19 +42,13 @@ const Seasons: CollectionConfig = {
     // HACK: order the seasons by their name
     // a season is typically called "Summer term 2021" or "Winter term 2021/22"
     // so we can sort by the numbers in the name and then by the name itself
-    // -> the sort field returns "2021Summer term 2021" or "2021/22Winter term 2021/22
+    // -> the sort field returns "2021Summer term 2021" or "202122Winter term 2021/22
     {
       name: 'sort',
-      hidden: true,
       type: 'text',
+      hidden: true,
       hooks: {
-        beforeChange: [
-          ({ siblingData }: FieldHookArgs): void => {
-            // ensures data is not stored in DB
-            delete siblingData['sort'];
-          },
-        ],
-        afterRead: [
+        beforeValidate: [
           ({ siblingData }: FieldHookArgs) => {
             if (!siblingData || !(typeof siblingData.name === 'string')) return;
             // get numbers from name
