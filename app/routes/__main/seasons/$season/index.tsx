@@ -40,10 +40,20 @@ export const loader = async ({ params, request, context: { payload }}: LoaderArg
     sort: 'date',
   })
   ).docs;
+
+  const navigation = (await payload.find({
+    collection: 'navigations',
+    where: {
+      type: {
+        equals: 'socialMedia',
+      },
+    },
+  })).docs[0];
   
   return {
     season,
     screenings,
+    navigation,
   }
 }
 
@@ -55,12 +65,13 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 export default function Season() {
   const { t } = useTranslation();
-  const { season, screenings } = useLoaderData<typeof loader>();
+  const { season, screenings, navigation } = useLoaderData<typeof loader>();
 
   return (
     <Page layoutType='default'>
       <HeaderImage
         image={season.header as Media}
+        navigation={navigation}
       />
       <Heading>{season.name}</Heading>
       <ScreeningsList

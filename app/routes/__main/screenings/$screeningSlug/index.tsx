@@ -5,7 +5,6 @@ import type {
   Movie as MovieType,
   Location,
   ScreeningSery,
-  Media,
 } from "payload/generated-types";
 import { Movie } from "~/components/Movie";
 import classes from "./index.module.css";
@@ -13,12 +12,21 @@ import { Date } from "~/components/Date";
 import i18next from "~/i18next.server";
 import { useTranslation } from "react-i18next";
 import Page from "~/components/Page";
-import Image from "~/components/Image";
 import { Response } from '@remix-run/node';
 import { ScreeningInfo } from "~/components/ScreeningInfo";
+import HeaderImage from "~/components/HeaderImage";
 
 export const loader = async ({ params, request, context: { payload }}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
+  const navigation = (await payload.find({
+    collection: 'navigations',
+    where: {
+      type: {
+        equals: 'socialMedia',
+      },
+    },
+  })).docs[0];
+    
   const data = await payload.find({
     collection: 'screenings',
     where: {
@@ -36,6 +44,7 @@ export const loader = async ({ params, request, context: { payload }}: LoaderArg
   
   return {
     screening: data.docs[0],
+    navigation,
   }
 }
 
@@ -46,7 +55,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export default function Item() {
-  const { screening } = useLoaderData<typeof loader>();
+  const { screening, navigation } = useLoaderData<typeof loader>();
   const mainMovie = (screening.featureFilms[0] as FilmPrint).movie as MovieType;
   const featureFilms = (screening.featureFilms as FilmPrint[]) ?? [];
   const supportingFilms = (screening.supportingFilms as FilmPrint[]) ?? [];
@@ -57,42 +66,32 @@ export default function Item() {
 
   return (
     <Page className={classes.container}>
-      <div className={classes.imageHeader}>
-        <Image
-          className={classes.headerImage}
-          image={mainMovie.still as Media}
-          sizes="100vw"
-          alt={t('movie still') as string}
-        />
-        <div className={classes.imageHeaderOverlay}>
-          <div className={classes.imageHeaderOverlayContent}>
-            <div className={classes.infoTitle}>
-              <Date
-                className={classes.date}
-                iso={screening.date as string}
-                format="P / p"
-              />
-              <br />
-              <div className={classes.location}>
-                {(screening.location as Location).name}
-              </div>
-              { allFilms.map((filmprint) => (
-                <div key={filmprint.id} className={classes.movieTitle}>
-                  {(filmprint.movie as MovieType).title}
-                </div>
-              ))}
-              { screening.series && (
-                <a
-                  href={`/screening-series/${(screening.series as ScreeningSery).slug}`}
-                  className={`${classes.series} ${classes.tag}`}
-                >
-                  {(screening.series as ScreeningSery)?.name}
-                </a>
-              )}
-            </div>
+      <HeaderImage image={mainMovie.still} navigation={navigation} >
+        <div className={classes.infoTitle}>
+          <Date
+            className={classes.date}
+            iso={screening.date as string}
+            format="P / p"
+          />
+          <br />
+          <div className={classes.location}>
+            {(screening.location as Location).name}
           </div>
+          { allFilms.map((filmprint) => (
+            <div key={filmprint.id} className={classes.movieTitle}>
+              {(filmprint.movie as MovieType).title}
+            </div>
+          ))}
+          { screening.series && (
+            <a
+              href={`/screening-series/${(screening.series as ScreeningSery).slug}`}
+              className={`${classes.series} ${classes.tag}`}
+            >
+              {(screening.series as ScreeningSery)?.name}
+            </a>
+          )}
         </div>
-      </div>
+      </HeaderImage>
       <main>
         <div className={classes.movies}>
           { allFilms.map((filmprint, i) => (

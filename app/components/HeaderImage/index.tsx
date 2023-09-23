@@ -7,9 +7,10 @@ import { Navigation } from '~/components/Navigation';
 export type Type = {
   image?: Media | string
   navigation?: NavigationType | string
+  children?: React.ReactNode
 }
 
-export const HeaderImage: React.FC<Type> = ({ image, navigation }) => {
+export const HeaderImage: React.FC<Type> = ({ image, navigation, children }) => {
   return (
     <header className={classes.container}>
       { image as Media && (
@@ -18,13 +19,15 @@ export const HeaderImage: React.FC<Type> = ({ image, navigation }) => {
           image={image as Media}
         />
       )}
-      <div className={classes.overlay}>
+      <div className={classes.overlay} />
+      <div className={classes.content}>
         { navigation as NavigationType && (
           <Navigation
             navigation={navigation as NavigationType}
             className={classes.navSocial}
           />
         )}
+        { children }
       </div>
     </header>
   )

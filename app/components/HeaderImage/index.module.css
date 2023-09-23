@@ -1,15 +1,31 @@
 .container {
     position: relative;
     width: 100vw;
+    aspect-ratio: 16/9;
+    max-height: 50vh;
+    z-index: 1;
+    display: grid;
 }
 /** IMAGE HEADER   ******************************************/
 img.header {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    aspect-ratio: 16/9;
-    max-height: 50vh;
+    height: 100%;
     object-fit: cover;
     object-position: center;
     vertical-align: bottom;
+    z-index: -2;
+}
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.2);
+    z-index: -1;
 }
 @media screen and (max-width: 1024px) {
     .wrapper {
@@ -22,21 +38,17 @@ img.header {
     }
 }
 
-/** OVERLAY        ******************************************/
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,.2);
-    z-index: 1;
+/** CONTENT        ******************************************/
+.content {
+    width: var(--page-max-width);
+    margin-inline: auto;
+    padding-block: 1rem;
     display: flex;
-    justify-content: flex-end;
-    padding: 1rem 10%;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .container nav {
-    height: fit-content;
+    align-self: flex-end;
 }
 .container nav > *:last-child{
     margin-right: 0;
@@ -44,9 +56,4 @@ img.header {
 }
 .container nav *:hover {
     filter: brightness(0);
-}
-@media screen and (max-width: 768px) {
-    .container .overlay {
-        padding: .5rem 1rem;
-    }
 }
