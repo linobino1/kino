@@ -45,4 +45,5 @@ ul.seasons > li h2 {
   font: var(--font-big);
   font-weight: bold;
   color: var(--color-white);
+  text-transform: uppercase;
 }
