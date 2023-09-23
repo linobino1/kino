@@ -24,6 +24,7 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
     depth: 3,
     limit: 10,
     pagination: true,
+    sort: '-sort',
     page: pageNumber,
   }));
   

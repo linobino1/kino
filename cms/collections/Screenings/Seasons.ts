@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload/types';
+import type { FieldHookArgs } from 'payload/dist/fields/config/types';
 import { t } from '../../i18n';
 
 const Seasons: CollectionConfig = {
@@ -11,7 +12,7 @@ const Seasons: CollectionConfig = {
     group: t('Configuration'),
     useAsTitle: 'name',
   },
-  defaultSort: '-createdAt',
+  defaultSort: '-sort',
   access: {
     read: () => true,
   },
@@ -37,6 +38,31 @@ const Seasons: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
       required: true,
+    },
+    // HACK: order the seasons by their name
+    // a season is typically called "Summer term 2021" or "Winter term 2021/22"
+    // so we can sort by the numbers in the name and then by the name itself
+    // -> the sort field returns "2021Summer term 2021" or "2021/22Winter term 2021/22
+    {
+      name: 'sort',
+      hidden: true,
+      type: 'text',
+      hooks: {
+        beforeChange: [
+          ({ siblingData }: FieldHookArgs): void => {
+            // ensures data is not stored in DB
+            delete siblingData['sort'];
+          },
+        ],
+        afterRead: [
+          ({ siblingData }: FieldHookArgs) => {
+            if (!siblingData || !(typeof siblingData.name === 'string')) return;
+            // get numbers from name
+            const numbers = siblingData.name.match(/\d+/g)?.join('') || '';
+            return numbers + siblingData.name;
+          },
+        ],
+      }
     },
   ],
 };
