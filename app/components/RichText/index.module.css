@@ -36,8 +36,8 @@
 .container a:visited {
     color: inherit;
 }
-.container a[target="_blank"]::after {
-    content: " \2197";
+.container a::after {
+    content: "\2197";
     text-decoration: none !important;
 }
 
