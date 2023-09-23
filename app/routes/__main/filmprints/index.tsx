@@ -22,7 +22,6 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
     locale,
   });
   const params = new URL(request.url).searchParams;
-  console.log('params', params)
   const pageNumber  = parseInt(params.get('page') || '1');
   const query = params.get('query') || '';
   

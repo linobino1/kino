@@ -28,8 +28,6 @@ export const Movie: React.FC<Props> = ({
   movie, filmprint, className, showScreeningInfo, ...props 
 }) => {
   const { t } = useTranslation();
-  
-  console.log(movie.genres as Genre[]);
 
   const specs = [
     movie.originalTitle,
