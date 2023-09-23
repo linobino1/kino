@@ -33,6 +33,7 @@
 .container a span {
     text-decoration: underline;
 }
+.container a,
 .container a:visited {
     color: inherit;
 }
