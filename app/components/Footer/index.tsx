@@ -15,16 +15,18 @@ export const Footer: React.FC<Props> = ({
 }) => {
   return (
     <footer className={classes.footer}>
-      <RichText content={site.footerContent} className={classes.address} />
-      <Navigation
-        navigation={navigations.find((x) => x.type === 'footer')}
-        className={classes.navFooter}
-      />
-      <Navigation
-        navigation={navigations.find((x) => x.type === 'socialMedia')}
-        className={classes.navSocial}
-      />
-      <NewsletterSignup className={classes.newsletter} />
+      <div className={classes.content}>
+        <RichText content={site.footerContent} className={classes.address} />
+        <Navigation
+          navigation={navigations.find((x) => x.type === 'footer')}
+          className={classes.navFooter}
+        />
+        <Navigation
+          navigation={navigations.find((x) => x.type === 'socialMedia')}
+          className={classes.navSocial}
+        />
+        <NewsletterSignup className={classes.newsletter} />
+      </div>
     </footer>
   )
 };

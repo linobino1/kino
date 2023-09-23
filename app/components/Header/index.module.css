@@ -8,8 +8,8 @@
 }
 /** MAIN HEADER  ********************************************/
 .mainHeader {
-    width: 100%;
-    padding: 0 10%;
+    width: var(--page-max-width);
+    margin-inline: auto;
     display: grid;
     grid-template-columns: min-content 1fr min-content;
     align-items: center;
@@ -45,12 +45,6 @@
 }
 .userStatus {
     justify-self: flex-end;
-}
-@media (max-width: 1000px) {
-    .mainHeader {
-        padding: 0;
-        padding-left: 1rem;
-    }
 }
 @media (max-width: 768px) {
     .mainHeader {
@@ -90,6 +84,7 @@
     font-size: 1.9em;
     color: inherit;
     padding: 0.5rem 1rem;
+    padding-right: 0;
 }
 .menuButton::after {
     content: url('../../../public/img/hamburger.svg');

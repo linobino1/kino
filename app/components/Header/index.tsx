@@ -1,13 +1,16 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React from 'react';
-import type { Media } from "payload/generated-types";
+import type {
+  Media,
+  Site,
+  Navigation as NavigationType,
+} from "payload/generated-types";
 import { Navigation } from '../Navigation';
 import { Link, useSearchParams } from '@remix-run/react';
 import { Image } from '~/components/Image';
-import type { Site, Navigation as NavigationType } from 'payload/generated-types';
-import classes from './index.module.css';
-import Modal from '../Modal';
+import { Modal } from '../Modal';
 import { UserStatus } from '../UserStatus';
+import classes from './index.module.css';
 
 type Props = {
   site: Site
