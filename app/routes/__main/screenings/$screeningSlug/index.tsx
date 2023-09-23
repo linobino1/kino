@@ -1,16 +1,16 @@
 import type { LoaderArgs, MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import type {
   FilmPrint,
   Movie as MovieType,
   Location,
   ScreeningSery,
+  Season,
 } from "payload/generated-types";
 import { Movie } from "~/components/Movie";
 import classes from "./index.module.css";
 import { Date } from "~/components/Date";
 import i18next from "~/i18next.server";
-import { useTranslation } from "react-i18next";
 import Page from "~/components/Page";
 import { Response } from '@remix-run/node';
 import { ScreeningInfo } from "~/components/ScreeningInfo";
@@ -35,7 +35,7 @@ export const loader = async ({ params, request, context: { payload }}: LoaderArg
       },
     },
     locale,
-    depth: 11,
+    depth: 6,
   });
   
   if (!data.docs.length) {
@@ -60,7 +60,6 @@ export default function Item() {
   const featureFilms = (screening.featureFilms as FilmPrint[]) ?? [];
   const supportingFilms = (screening.supportingFilms as FilmPrint[]) ?? [];
   const allFilms = [...supportingFilms, ...featureFilms];
-  const { t } = useTranslation();
 
   const inlineScreeningInfo = allFilms.length <= 1;
 
@@ -77,6 +76,9 @@ export default function Item() {
           <div className={classes.location}>
             {(screening.location as Location).name}
           </div>
+          <Link className={classes.season} to={(screening.season as Season).url}>
+            {(screening.season as Season).name}
+          </Link>
           { allFilms.map((filmprint) => (
             <div key={filmprint.id} className={classes.movieTitle}>
               {(filmprint.movie as MovieType).title}

@@ -47,13 +47,21 @@ img.header {
     flex-direction: column;
     justify-content: space-between;
 }
-.container nav {
+.content nav {
     align-self: flex-end;
 }
-.container nav > *:last-child{
+.content nav > *:last-child{
     margin-right: 0;
     padding-right: 0;
 }
-.container nav *:hover {
+.content nav *:hover {
     filter: brightness(0);
+}
+
+.content a,
+.content a:visited {
+    color: inherit;
+}
+.content a:hover {
+    text-decoration: underline;
 }
