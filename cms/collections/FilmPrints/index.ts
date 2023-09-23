@@ -25,7 +25,7 @@ export const FilmPrints: CollectionConfig = {
   timestamps: true,
   custom: {
     addUrlField: {
-      hook: (slug?: string) => `/archive/${slug || ''}`,
+      hook: (slug?: string) => `/filmprints/${slug || ''}`,
     },
     addSlugField: {
       from: 'title',
