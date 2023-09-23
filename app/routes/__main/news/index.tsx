@@ -1,5 +1,4 @@
-import { redirect, type MetaFunction } from '@remix-run/node';
-import type { LoaderArgs} from '@remix-run/node';
+import { redirect, type MetaFunction, type LoaderArgs } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { useTranslation } from 'react-i18next';
 import { Page } from '~/components/Page';
