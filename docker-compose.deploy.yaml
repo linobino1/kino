@@ -37,6 +37,10 @@ services:
       - --certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web
       - --certificatesresolvers.letsencrypt.acme.email=${EMAIL_ADMIN}
       - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
+
+      # enable access logs
+      - --accesslog=true
+      - --accesslog.filepath=/logs/access.log
     labels:
       - traefik.enable=true
       # Redirect all HTTP traffic to HTTPS
@@ -53,7 +57,6 @@ services:
 
       - traefik.http.middlewares.to-https.redirectscheme.scheme=https
       - traefik.http.middlewares.auth.basicauth.users=${TRAEFIK_DASHBOARD_AUTH}
-
     ports:
       - 80:80
       - 443:443
