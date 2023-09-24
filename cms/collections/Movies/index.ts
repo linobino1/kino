@@ -2,6 +2,7 @@ import type { CollectionConfig, PayloadRequest } from 'payload/types';
 import type { Media, Movie } from 'payload/generated-types';
 import { t } from '../../i18n';
 import MigrateMovieButton from '../../MigrateMovie/admin/Button';
+import { isAdminOrEditor } from '../../access';
 
 export const ageRatingAges = [0, 6, 12, 16, 18];
 
@@ -46,7 +47,14 @@ const Movies: CollectionConfig = {
     },
   },
   access: {
-    read: () => true,
+    read: (args) => {
+      if (isAdminOrEditor(args)) return true;
+      return {
+        _status: {
+          equals: 'published',
+        },
+      }
+    },
   },
   custom: {
     addSlugField: {

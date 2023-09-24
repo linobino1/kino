@@ -4,6 +4,7 @@ import type { slugGeneratorArgs } from '../../plugins/addSlugField';
 import { t } from '../../i18n';
 import { getDefaultDocId } from '../../fields/default';
 import { MigrateMovieButton } from '../../MigrateMovie/admin/Button';
+import { isAdminOrEditor } from '../../access';
 
 const Screenings: CollectionConfig = {
   slug: 'screenings',
@@ -20,7 +21,14 @@ const Screenings: CollectionConfig = {
     drafts: true,
   },
   access: {
-    read: () => true,
+    read: (args) => {
+      if (isAdminOrEditor(args)) return true;
+      return {
+        _status: {
+          equals: 'published',
+        },
+      }
+    },
   },
   custom: {
     addUrlField: {

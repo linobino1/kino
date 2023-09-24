@@ -3,6 +3,7 @@ import type { Movie, Format } from 'payload/generated-types';
 import { t } from '../../i18n';
 import analogDigitalTypeField from './fields';
 import { MigrateMovieButton } from '../../MigrateMovie/admin/Button';
+import { isAdminOrEditor } from '../../access';
 
 export const FilmPrints: CollectionConfig = {
   slug: 'filmPrints',
@@ -20,7 +21,14 @@ export const FilmPrints: CollectionConfig = {
     drafts: true,
   },
   access: {
-    read: () => true,
+    read: (args) => {
+      if (isAdminOrEditor(args)) return true;
+      return {
+        _status: {
+          equals: 'published',
+        },
+      }
+    },
   },
   timestamps: true,
   custom: {

@@ -1,6 +1,9 @@
 import type { CollectionConfig } from 'payload/types';
 import { t } from '../i18n';
 
+/**
+ * Backend users
+ */
 const Users: CollectionConfig = {
   slug: 'users',
   labels: {
@@ -14,11 +17,12 @@ const Users: CollectionConfig = {
     defaultColumns: ['name'],
   },
   access: {
-    admin: ({ req: { user }, id }) => user?.id === id || ['admin', 'editor'].includes(user?.role),
-    read: ({ req: { user }, id }) => user?.id === id || ['admin', 'editor'].includes(user?.role),
-    update: ({ req: { user } }) => ['admin', 'editor'].includes(user?.role),
-    create: ({ req: { user } }) => ['admin', 'editor'].includes(user?.role),
-    delete: ({ req: { user } }) => ['admin', 'editor'].includes(user?.role),
+    read: ({ req: { user }, id }) => Boolean(user) && (user?.id === id || user?.role === 'admin'),
+    update: ({ req: { user } }) => user?.role === 'admin',
+    create: ({ req: { user } }) => user?.role === 'admin',
+    delete: ({ req: { user } }) => user?.role === 'admin',
+    admin: ({ req: { user }, id }) => Boolean(user) && (user?.id === id || user?.role === 'admin'),
+    unlock: ({ req: { user }, id }) => Boolean(user) && (user?.id === id || user?.role === 'admin'),
   },
   fields: [
     // Email added by default
@@ -32,7 +36,6 @@ const Users: CollectionConfig = {
       name: 'role',
       label: t('Role'),
       type: 'select',
-      defaultValue: 'subscriber',
       options: [
         {
           label: t('Admin'),
@@ -41,10 +44,6 @@ const Users: CollectionConfig = {
         {
           label: t('Editor'),
           value: 'editor',
-        },
-        {
-          label: t('Subscriber'),
-          value: 'subscriber',
         },
       ],
     },
