@@ -4,6 +4,7 @@ import type { Screening, ScreeningSery } from 'payload/generated-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classes from './index.module.css';
+import { JsonLd, screeningsListMarkup } from 'cms/schemaorg';
 
 export type Props = {
   from?: string
@@ -20,6 +21,7 @@ export const ScreeningsList: React.FC<Props> = ({
 
   return items?.length ? (
     <div className={`${classes.list} ${className || ''}`}>
+      { JsonLd(screeningsListMarkup(items)) }
       {items.map((item) => (
         <Link
           key={item.id}
