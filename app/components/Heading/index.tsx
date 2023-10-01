@@ -5,11 +5,8 @@ export interface Type extends React.HTMLAttributes<HTMLHeadingElement> {
   children?: React.ReactNode
 }
 
-export const Heading: React.FC<Type> = (props) => {
-  const { text, children } = props;
-  return (
-    <h1 {...props}>{text || children}</h1>
-  );
-};
+export const Heading: React.FC<Type> = ({ text, children, ...props }) => (
+  <h1 {...props}>{text || children}</h1>
+);
 
 export default Heading;

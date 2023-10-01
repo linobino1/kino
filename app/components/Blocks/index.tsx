@@ -13,8 +13,8 @@ export interface BlockProps extends React.HTMLAttributes<HTMLDivElement> {
   block?: PageLayout['blocks'][0]
 }
 
-export const Block: React.FC<BlockProps> = (props) => {
-  const { block, children } = props;
+export const Block: React.FC<BlockProps> = ({ block, ...props }) => {
+  const { children } = props;
   if (!block) return null;
   return (
     <div className={classes.block} data-type={block.blockType}>
@@ -24,7 +24,7 @@ export const Block: React.FC<BlockProps> = (props) => {
             return <RichText content={block.content} />;
             
           case 'heading':
-            return <Heading {...block} />;
+            return <Heading text={block.text} />;
             
           case 'headerImage':
             return <HeaderImage {...block} />;
@@ -56,18 +56,15 @@ export interface BlocksProps extends React.HTMLAttributes<HTMLDivElement> {
   blocks: PageLayout['blocks']
 }
 
-export const Blocks: React.FC<BlocksProps> = (props) => {
-  const { blocks, children } = props;
-  return (
-    <div {...props}>
-      {blocks?.map((block, i) => (
-        <Block key={i} block={block}>
-          {children}
-        </Block>
-      ))}
-    </div>
-  );
-};
+export const Blocks: React.FC<BlocksProps> = ({ blocks, children, ...props }) => (
+  <div {...props}>
+    {blocks?.map((block, i) => (
+      <Block key={i} block={block}>
+        {children}
+      </Block>
+    ))}
+  </div>
+);
 
 
 export default Blocks;
