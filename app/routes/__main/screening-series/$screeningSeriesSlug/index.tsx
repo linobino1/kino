@@ -37,10 +37,14 @@ export const loader = async ({ params, request, context: { payload }}: LoaderArg
   })
   ).docs;
   
+  const site = await payload.findGlobal({
+    slug: 'site',
+  });
   
   return {
     screeningSeries,
     screenings,
+    site,
   }
 }
 
@@ -51,13 +55,14 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export default function Item() {
-  const { screeningSeries, screenings } = useLoaderData<typeof loader>();
+  const { screeningSeries, screenings, site } = useLoaderData<typeof loader>();
 
   return (
     <Page layout={screeningSeries.layout}>
       <ScreeningsList
         items={screenings}
         activeScreeningSery={screeningSeries}
+        site={site}
       />
     </Page>
   )

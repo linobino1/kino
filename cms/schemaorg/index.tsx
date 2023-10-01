@@ -1,6 +1,29 @@
 import React from "react";
-import type { FilmPrint, Genre, Media, Movie, Person, Screening } from "payload/generated-types";
-import type { ItemList, Movie as SchemaOrgMovie, ScreeningEvent, Thing, WithContext } from "schema-dts";
+import { parseISO } from 'date-fns';
+import type { Country, FilmPrint, Genre, Media, Movie, Person, Screening, Site } from "payload/generated-types";
+import type {
+  ItemList,
+  Movie as SchemaOrgMovie,
+  ScreeningEvent,
+  Thing,
+  WithContext,
+  MovieTheater
+} from "schema-dts";
+
+export const locationMarkup = (site: Site): MovieTheater => {
+  return {
+    "@type": "MovieTheater",
+    name: site.location.name,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: site.location.street,
+      addressCountry: (site.location.country as Country).id,
+      addressRegion: site.location.region,
+      addressLocality: site.location.city,
+      postalCode: site.location.zip,
+    },
+  }
+}
 
 export const movieMarkup = (movie: Movie): SchemaOrgMovie => {
   const res: SchemaOrgMovie = {
@@ -20,17 +43,24 @@ export const movieMarkup = (movie: Movie): SchemaOrgMovie => {
   return res;
 }
 
-export const screeningMarkup = (screening: Screening): ScreeningEvent => ({
-  '@type': 'ScreeningEvent',
-  name: screening.title,
-  startDate: screening.date,
-  workPresented: movieMarkup((screening.featureFilms[0] as FilmPrint).movie as Movie),
-});
+export const screeningMarkup = (screening: Screening, site: Site): ScreeningEvent => {
+  const movie = (screening.featureFilms[0] as FilmPrint).movie as Movie;
+  return {
+    "@type": "Event",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    name: screening.title,
+    startDate: screening.date,
+    endDate: new Date(parseISO(screening.date).getTime() + (movie.duration * 60 * 1000)).toISOString(),
+    location: locationMarkup(site),
+    workPresented: movieMarkup(movie),
+  };
+};
 
-export const screeningsListMarkup = (screenings: Screening[]): ItemList => {
+export const screeningsListMarkup = (screenings: Screening[], site: Site): ItemList => {
   return {
     '@type': 'ItemList',
-    itemListElement: screenings.map((screening) => screeningMarkup(screening)),
+    itemListElement: screenings.map((screening) => screeningMarkup(screening, site)),
   };
 }
 

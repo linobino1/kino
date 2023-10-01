@@ -32,6 +32,62 @@ export const Site: GlobalConfig = {
       type: 'richText',
       localized: true,
     },
+    {
+      name: 'location',
+      label: t('Location'),
+      type: 'group',
+      fields: [
+        {
+          name: 'country',
+          label: t('Country'),
+          type: 'relationship',
+          relationTo: 'countries',
+          required: true,
+        },
+        {
+          name: 'region',
+          label: t('Region'),
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'city',
+          label: t('City'),
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'zip',
+          label: t('Zip'),
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'street',
+          label: t('Street'),
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'name',
+          label: t('Name'),
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'latitude',
+          label: t('Latitude'),
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'longitude',
+          label: t('Longitude'),
+          type: 'text',
+          required: true,
+        },
+      ],
+    },
     metaField(t('Global Meta')),
   ],
 };
