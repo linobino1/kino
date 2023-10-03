@@ -50,10 +50,15 @@ export const loader = async ({ params, request, context: { payload }}: LoaderArg
     },
   })).docs[0];
   
+  const site = await payload.findGlobal({
+    slug: 'site',
+  });
+  
   return {
     season,
     screenings,
     navigation,
+    site,
   }
 }
 
@@ -65,7 +70,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 export default function Season() {
   const { t } = useTranslation();
-  const { season, screenings, navigation } = useLoaderData<typeof loader>();
+  const { season, screenings, navigation, site } = useLoaderData<typeof loader>();
 
   return (
     <Page layoutType='default'>
@@ -77,6 +82,7 @@ export default function Season() {
       <ScreeningsList
         items={screenings}
         emptyMessage={t('No screenings for this season.')}
+        site={site}
       />
     </Page>
   )

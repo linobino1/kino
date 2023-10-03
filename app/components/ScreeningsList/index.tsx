@@ -32,7 +32,6 @@ export const ScreeningsList: React.FC<Props> = ({
           <ScreeningsListItem
             screening={item}
             activeScreeningSery={activeScreeningSery}
-            site={site}
           />
         </Link>
       ))}
