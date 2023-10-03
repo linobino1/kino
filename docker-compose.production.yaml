@@ -48,11 +48,19 @@ services:
       MAILCHIMP_SIGNUP_URL:
     labels:
       - traefik.enable=true
-      - traefik.http.routers.app.rule=Host(`${DOMAIN}`)
+      - traefik.docker.network=traefik
+      - traefik.http.routers.app.rule=(Host(`${DOMAIN}`) || Host(`www.${DOMAIN}`))
       - traefik.http.routers.app.entrypoints=websecure
       - traefik.http.routers.app.tls=true
       - traefik.http.routers.app.tls.certresolver=letsencrypt
-      - traefik.docker.network=traefik
+      - traefik.http.routers.app.tls.domains[0].main=${DOMAIN}
+      - traefik.http.routers.app.tls.domains[0].sans=www.${DOMAIN}
+
+      # Redirect all www to non-www middleware
+      - "traefik.http.middlewares.to-nonwww.redirectregex.regex=^https?://www\\.${DOMAIN}(.*)"
+      - "traefik.http.middlewares.to-nonwww.redirectregex.replacement=https://${DOMAIN}$${1}"
+      - traefik.http.middlewares.to-nonwww.redirectregex.permanent=false
+      - traefik.http.routers.app.middlewares=to-nonwww
     depends_on:
       - db
     restart: always
