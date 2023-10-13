@@ -46,7 +46,7 @@ export const movieMarkup = (movie: Movie): SchemaOrgMovie => {
 export const screeningMarkup = (screening: Screening, site: Site): ScreeningEvent => {
   const movie = (screening.featureFilms[0] as FilmPrint).movie as Movie;
   return {
-    "@type": "Event",
+    "@type": "ScreeningEvent",
     "eventStatus": "https://schema.org/EventScheduled",
     "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
     name: screening.title,
