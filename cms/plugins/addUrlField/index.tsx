@@ -3,6 +3,7 @@ import type { Config, Plugin } from 'payload/config';
 import type { FieldHookArgs } from 'payload/dist/fields/config/types';
 import { useField } from 'payload/components/forms';
 import { useTranslation } from 'react-i18next';
+import payload from 'payload';
 
 /**
  * this plugin adds a url field to a collection if you add the following to the collection config:
@@ -39,7 +40,11 @@ export const addUrlField: Plugin = (incomingConfig: Config): Config => {
                 },
               ],
               afterRead: [
-                ({ siblingData }: FieldHookArgs): string => collection.custom?.addUrlField.hook(siblingData.slug) || '',
+                ({ siblingData }: FieldHookArgs): string => {
+                  const relativeUrl = collection.custom?.addUrlField.hook(siblingData.slug) || '';
+                  if (!relativeUrl) return '';
+                  return payload.config.serverURL + relativeUrl;
+                },
               ],
             },
             admin: {
@@ -49,15 +54,15 @@ export const addUrlField: Plugin = (incomingConfig: Config): Config => {
                 Field: () => {
                   const { t } = useTranslation();
                   const { value: slug } = useField<string>({ path: 'slug' });
-                  const url = collection.custom?.addUrlField.hook(slug) || '';
+                  const relativeUrl = collection.custom?.addUrlField.hook(slug) || '';
                   return (
                     <div className='field-type text'>
                       <label className='field-label'>{t('URL Frontend')}</label>
                       <a
-                        href={url}
+                        href={relativeUrl}
                         target='_blank'
                         rel='noreferrer'
-                      >{url}</a>
+                      >{relativeUrl}</a>
                     </div>
                   )
                 },
