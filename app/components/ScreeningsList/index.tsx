@@ -4,7 +4,8 @@ import type { Screening, ScreeningSery, Site } from 'payload/generated-types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classes from './index.module.css';
-import { JsonLd, screeningsListMarkup } from 'cms/schemaorg';
+import { JsonLd } from 'cms/structured-data';
+import { screeningsListSchema as screeningsListMarkup} from 'cms/structured-data/screening';
 
 export type Props = {
   from?: string

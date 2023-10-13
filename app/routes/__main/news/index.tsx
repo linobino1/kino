@@ -7,6 +7,8 @@ import classes from './index.module.css';
 import i18next from '~/i18next.server';
 import Pagination from '~/components/Pagination';
 import PostPreview from '~/components/PostPreview';
+import { JsonLd } from 'cms/structured-data';
+import { postsListSchema } from 'cms/structured-data/post';
 
 export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
@@ -52,6 +54,7 @@ export default function Index() {
       <main>
         { posts.docs?.length ? (
         <>
+          { JsonLd(postsListSchema(posts.docs)) }
           <ul className={classes.posts}>
             {posts.docs.map((post) => (
               <li key={post.slug}>
