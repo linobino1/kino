@@ -9,6 +9,8 @@ import { Image } from '~/components/Image';
 import Date from '~/components/Date';
 import Blocks from '~/components/Blocks';
 import RichText from '~/components/RichText';
+import { JsonLd } from 'cms/structured-data';
+import { postPreviewSchema } from 'cms/structured-data/post';
 
 export const loader = async ({ request, params, context: { payload }}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
@@ -41,23 +43,24 @@ export default function Index() {
 
   return (
     <Page className={classes.container}>
-    <div className={classes.header}>
-      <Date iso={post.date} format='PPP' />
-      { ' ' }
-      { post.title }
-    </div>
-    <Image
-      className={classes.image}
-      image={post.header as Media}
-    />
-    <h1>{post.title}</h1>
-    <RichText
-      content={post.content}
-      className={classes.preview}
-    />
-    <Blocks
-      blocks={post.details as []}
-    />
+      { JsonLd(postPreviewSchema(post)) }
+      <div className={classes.header}>
+        <Date iso={post.date} format='PPP' />
+        { ' ' }
+        { post.title }
+      </div>
+      <Image
+        className={classes.image}
+        image={post.header as Media}
+      />
+      <h1>{post.title}</h1>
+      <RichText
+        content={post.content}
+        className={classes.preview}
+      />
+      <Blocks
+        blocks={post.details as []}
+      />
     </Page>
   );
 }
