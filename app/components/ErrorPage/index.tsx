@@ -1,6 +1,5 @@
 import React from "react";
-import { isRouteErrorResponse } from "@remix-run/react";
-import { useRouteError } from "@remix-run/react";
+import { useRouteError, isRouteErrorResponse } from "@remix-run/react";
 import environment from "~/util/environment";
 import Page from "../Page";
 
@@ -35,7 +34,7 @@ export const ErrorPage: React.FC = () => {
             blockType: "outlet"
           },
         ],
-        type: "info",
+        type: "default",
       }}
     >
       {children}
