@@ -1,8 +1,9 @@
 // In this file you can configure migrate-mongo
+require('dotenv').config();
 
 const config = {
   mongodb: {
-    url: "mongodb://db:27017/app",
+    url: process.env.MONGODB_URI || "mongodb://localhost:27017/app",
     databaseName: "app",
 
     options: {
