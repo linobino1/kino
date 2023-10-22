@@ -12,6 +12,7 @@ declare global {
     S3_ACCESS_KEY: string
     S3_SECRET_KEY: string
     MAILCHIMP_SIGNUP_URL: string
+    HEROKU_APP_NAME: string | undefined
   }
   interface Window {
     ENV: AppEnvironment

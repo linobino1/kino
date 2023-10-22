@@ -45,7 +45,7 @@ import { SeasonsPage } from './cms/globals/pages/Seasons';
 const mockModulePath = path.resolve(__dirname, 'mocks/emptyObject.js');
 
 export default buildConfig({
-  serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
+  serverURL: (process.env.HEROKU_APP_NAME && `https://${process.env.HEROKU_APP_NAME}.herokuapp.com`) || process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
   endpoints: [
     // path will be prefixed with /api if root is not set to true
     ...migrateMovieEndpoints,
