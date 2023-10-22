@@ -1,47 +1,28 @@
 FROM node:18-alpine as base
 
-# cache node_modules
-FROM base as deps
-
-WORKDIR /app
-COPY package*.json ./
-COPY yarn.lock ./
-RUN yarn install
-
-# build
-FROM base as builder
-
-ARG NODE_ENV
-ENV NODE_ENV=${NODE_ENV}
-
 ARG PAYLOAD_PUBLIC_SERVER_URL
 ENV PAYLOAD_PUBLIC_SERVER_URL=${PAYLOAD_PUBLIC_SERVER_URL}
 
-ARG HCAPTCHA_SITE_KEY
-ENV HCAPTCHA_SITE_KEY=${HCAPTCHA_SITE_KEY}
+FROM base as builder
 
-ENV PAYLOAD_CONFIG_PATH=/app/payload.config.ts
+WORKDIR /home/node
+COPY package*.json ./
 
-WORKDIR /app
 COPY . .
-COPY --from=deps /app/node_modules ./node_modules
+RUN yarn install
 RUN yarn build
 
-# run
-FROM base as runner
+FROM base as runtime
 
-ARG NODE_ENV
-ENV NODE_ENV=${NODE_ENV}
+ENV NODE_ENV=production
 
-ENV PAYLOAD_CONFIG_PATH=/app/dist/payload.config.js
+WORKDIR /home/node
+COPY package*.json  ./
 
-WORKDIR /app
-
-COPY package*.json ./
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/build ./build
-COPY --from=builder /app/public ./public
+RUN yarn install --production
+COPY --from=builder /home/node/public ./public
+COPY --from=builder /home/node/dist ./dist
+COPY --from=builder /home/node/build ./build
 
 # copy mongo-migrate files
 COPY migrations ./migrations
