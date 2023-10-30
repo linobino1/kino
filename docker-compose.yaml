@@ -14,7 +14,7 @@ services:
     environment:
       NODE_ENV: development
       PAYLOAD_SECRET: secret123
-      MONGODB_URI: mongodb://db:27017/app
+      MONGO_URL: mongodb://db:27017/app
       THEMOVIEDB_API_KEY: ${THEMOVIEDB_API_KEY}
       TIMEZONE: Europe/Berlin
     depends_on:

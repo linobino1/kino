@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const config = {
   mongodb: {
-    url: process.env.MONGODB_URI || "mongodb://localhost:27017/app",
+    url: process.env.MONGO_URL || "mongodb://localhost:27017/app",
     databaseName: "app",
 
     options: {

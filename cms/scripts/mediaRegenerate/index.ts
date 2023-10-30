@@ -29,11 +29,11 @@ const extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
 const regenerateMediaSizes = async () => {
   try {
     invariant(process.env.PAYLOAD_SECRET, "PAYLOAD_SECRET is required");
-    invariant(process.env.MONGODB_URI, "MONGODB_URI is required");
+    invariant(process.env.MONGO_URL, "MONGO_URL is required");
 
     await payload.init({
       secret: process.env.PAYLOAD_SECRET,
-      mongoURL: process.env.MONGODB_URI,
+      mongoURL: process.env.MONGO_URL,
       local: true,
     });
   } catch (err) {

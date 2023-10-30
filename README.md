@@ -186,7 +186,7 @@ If you need to generate the image sizes again, you can do that with the followin
 yarn generate:images
 ```
 
-Make sure you have an `.env` file with `PAYLOAD_SECRET` and `MONGODB_URI` defined.  
+Make sure you have an `.env` file with `PAYLOAD_SECRET` and `MONGO_URL` defined.  
 If you are using docker, just call the command inside the apps docker container.
 
 ## Deployment

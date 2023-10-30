@@ -48,15 +48,15 @@ export async function seedCountries() {
 
 export async function seed() {
   invariant(process.env.PAYLOAD_SECRET, "PAYLOAD_SECRET is required");
-  invariant(process.env.MONGODB_URI, "MONGODB_URI is required");
+  invariant(process.env.MONGO_URL, "MONGO_URL is required");
   
   // Initialize Payload
   console.log('initializing payload...')
-  console.log('MONGODB_URI', process.env.MONGODB_URI)
+  console.log('MONGO_URL', process.env.MONGO_URL)
   const app = express();
   await payload.init({
     secret: process.env.PAYLOAD_SECRET,
-    mongoURL: process.env.MONGODB_URI,
+    mongoURL: process.env.MONGO_URL,
     express: app,
     onInit: () => console.log('Done.')
   });
