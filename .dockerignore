@@ -5,3 +5,5 @@ build
 public/build
 media
 mediaimport
+.env
+.env.server

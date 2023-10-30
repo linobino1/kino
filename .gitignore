@@ -22,3 +22,4 @@ cms/payload-types.ts
 /dist
 /public/build
 .env
+.env.server
