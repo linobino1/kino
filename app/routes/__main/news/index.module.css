@@ -1,3 +1,9 @@
+.page section {
+  margin-block: 2em;
+}
+.page a:visited {
+  color: inherit;
+}
 ul.posts {
   display: flex;
   flex-direction: column;

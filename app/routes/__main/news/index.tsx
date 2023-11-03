@@ -1,5 +1,5 @@
 import { redirect, type MetaFunction, type LoaderArgs } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { Link, useLoaderData } from '@remix-run/react';
 import { useTranslation } from 'react-i18next';
 import { Page } from '~/components/Page';
 import { pageDescription, pageKeywords, pageTitle } from '~/util/pageMeta';
@@ -9,9 +9,16 @@ import Pagination from '~/components/Pagination';
 import PostPreview from '~/components/PostPreview';
 import { JsonLd } from 'cms/structured-data';
 import { postsListSchema } from 'cms/structured-data/post';
+import ScreeningsList from '~/components/ScreeningsList';
+
+let today = new Date();
+today.setHours(0,0,0,0);
 
 export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
+  const site = await payload.findGlobal({
+    slug: 'site',
+  });
   const page = await payload.findGlobal({
     slug: 'blog',
     locale,
@@ -25,6 +32,25 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
     page: postsPage,
     locale,
   });
+  const screenings = await payload.find({
+    collection: 'screenings',
+    locale,
+    depth: 7,
+    where: {
+      _status: {
+        equals: 'published',
+      },
+      and: [
+        {
+          date: {
+            greater_than_equal: today,
+          },
+        },
+      ],
+    },
+    sort: 'date',
+    limit: 3,
+  });
 
   // Redirect to the last page if the requested page is greater than the total number of page
   if (postsPage > posts.totalPages) {
@@ -34,8 +60,10 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
   }
 
   return {
+    site,
     page,
     posts,
+    screenings: screenings.docs || [],
   }
 };
 
@@ -46,12 +74,22 @@ export const meta: MetaFunction<typeof loader> = ({ data, parentsData }) => ({
 });
 
 export default function Index() {
-  const { page, posts } = useLoaderData<typeof loader>();
+  const { site, page, posts, screenings } = useLoaderData<typeof loader>();
   const { t } = useTranslation(); 
 
   return (
-    <Page layout={page.layout}>
-      <main>
+    <Page layout={page.layout} className={classes.page}>
+      <section className={classes.hero}>
+      </section>
+      <section className={classes.upcoming}>
+        <h2>{ t('Upcoming Screenings') }</h2>
+        <ScreeningsList items={screenings} site={site} />
+        <p>
+          <Link to='/screenings'>{ t('See all screenings') }</Link>
+        </p>
+      </section>
+      <section className={classes.news}>
+        <h2>{ t('News') }</h2>
         { posts.docs?.length ? (
         <>
           { JsonLd(postsListSchema(posts.docs)) }
@@ -68,7 +106,7 @@ export default function Index() {
           <div className={classes.empty}>{t('No posts.')}</div>
         )}
         <Pagination {...posts} linkProps={{ prefetch: 'intent' }}/>
-      </main>
+      </section>
     </Page>
   );
 }
