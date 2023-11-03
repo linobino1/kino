@@ -12,7 +12,7 @@ export const locationSchema = (site: Site): MovieTheater => {
       addressRegion: site.location.region,
       addressLocality: site.location.city,
       postalCode: site.location.zip,
-      image: (site.meta?.image as any)?.url,
+      image: site.meta?.image ? encodeURI((site.meta?.image as any)?.url) : undefined,
     },
   }
 }
