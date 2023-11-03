@@ -88,7 +88,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => ({
   description: data.site.meta?.description,
   keywords: data.site.meta?.keywords,
   viewport: "width=device-width,initial-scale=1",
-  'og:image': data.site.meta?.image && encodeURI((data.site.meta.image as any)?.url),
+  'og:image': data.site.meta?.image && encodeURI((data.site.meta.image as any)?.sizes['1500w'].url),
   'og:title': data.site.meta?.title,
   'og:description': data.site.meta?.description,
 });
