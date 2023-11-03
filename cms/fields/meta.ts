@@ -23,5 +23,11 @@ export const metaField = (label: Record<string, string>): Field => ({
       label: t('Keywords'),
       type: 'text',
     },
+    {
+      name: 'image',
+      label: t('Image'),
+      type: 'upload',
+      relationTo: 'media',
+    }
   ],
 });

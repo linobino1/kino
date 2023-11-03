@@ -46,7 +46,7 @@ export async function loader({ request, context: { payload, user } }: LoaderArgs
   const [site, localeCookie] = await Promise.all([
     payload.findGlobal({
       slug: 'site',
-      depth: 1,
+      depth: 3,
     }),
     i18nCookie.serialize(locale),
   ]);
@@ -85,6 +85,9 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => ({
   description: data.site.meta?.description,
   keywords: data.site.meta?.keywords,
   viewport: "width=device-width,initial-scale=1",
+  'og:image': (data.site.meta?.image as any)?.url,
+  'og:title': data.site.meta?.title,
+  'og:description': data.site.meta?.description,
 });
 
 export const handle = {
