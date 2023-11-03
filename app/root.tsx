@@ -29,6 +29,9 @@ import type { Media} from "payload/generated-types";
 import environment from "./util/environment";
 import classes from "./root.module.css";
 import { ErrorPage } from "~/components/ErrorPage";
+import type { MovieTheater, WithContext } from "schema-dts";
+import { locationSchema } from "cms/structured-data/location";
+import { addContext } from "cms/structured-data";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -104,11 +107,14 @@ export function useChangeLanguage(locale: string) {
 
 export default function App() {
   // Get the locale from the loader
-  const { locale, publicKeys } = useLoaderData<typeof loader>();
+  const { locale, publicKeys, site } = useLoaderData<typeof loader>();
   const { t, i18n } = useTranslation();
 
   // handle locale change
   useChangeLanguage(locale);
+  
+
+  const structuredData: WithContext<MovieTheater> = addContext(locationSchema(site));
 
   return (
     <html lang={locale} dir={i18n.dir()}>
@@ -116,6 +122,13 @@ export default function App() {
         <Meta />
         <Links />
         <DynamicLinks />
+        
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData),
+          }}
+        />
       </head>
       <body className={classes.body}>
         <ExternalScripts />
