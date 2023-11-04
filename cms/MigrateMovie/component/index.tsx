@@ -2,21 +2,22 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLocale } from 'payload/components/utilities';
 import './index.scss';
 import type { Movie } from "payload/generated-types";
-import type { tmdbPreviewResult } from "../api/types";
+import type { tmdbFindResult, tmdbPreviewResult } from "../api/types";
 import { useTranslation } from "react-i18next";
 
 export const MigrateMovie: React.FC = () => {
   const locale = useLocale();
   const { t } = useTranslation();
-  const path = 'tmdbId';
   // states:
-  // initial: show input for themoviedb id
+  // initial: show search input
   // loading: show loading
+  // results: show results of tmdb find
   // preview: show preview of movie with form to select backdrop and poster image
   // success: show success message and link to the created movie
   const [state, setState] = useState<string>('initial');
   const [error, setError] = useState<string>('');
   const [warnings, setWarnings] = useState<[]>([]);
+  const [query, setQuery] = useState<string>('');
   const [tmdbId, setTmdbId] = useState<string>('');
   const [images, setImages] = useState<{
     backdrop?: string;
@@ -25,6 +26,7 @@ export const MigrateMovie: React.FC = () => {
     backdrop: undefined,
     poster: undefined,
   });
+  const [searchResults, setSearchResults] = useState<tmdbFindResult>();
   const [previewData, setPreviewData] = useState<tmdbPreviewResult>();
   const [migratedMovie, setMigratedMovie] = useState<Movie>();
   const success = useRef<HTMLDivElement>(null);
@@ -32,20 +34,54 @@ export const MigrateMovie: React.FC = () => {
   
   const cancel = () => {
     setState('initial');
+    setSearchResults(undefined);
     setTmdbId('');
     setPreviewData(undefined);
     setError('');
   };
   
-  const preview = async (e: React.FormEvent<HTMLFormElement>) => {
+  const search = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     if (state !== 'loading') setState('loading');
 
+    fetch('/api/migrate-movie/search', {
+      method: 'POST',
+      body: JSON.stringify({
+        query,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(res => res.json())
+    .then(res => {
+      if (res.success) {
+        setState('results');
+        setSearchResults(res.data);
+      } else {
+        setState('initial')
+        setError(res.message);
+      }
+    })
+    .catch(() => {
+      setState('initial')
+      setError(t('Server could not be reached') as string);
+    })
+  }
+  
+  const preview = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError('');
+    if (state !== 'loading') setState('loading');
+    
+    const tmdbId = ('tmdbId' in e.target && (e.target.tmdbId as any).value);
+    setTmdbId(tmdbId);
+
     fetch('/api/migrate-movie/preview', {
       method: 'POST',
       body: JSON.stringify({
-        tmdbId: tmdbId,
+        tmdbId,
         locale,
       }),
       headers: {
@@ -137,6 +173,64 @@ export const MigrateMovie: React.FC = () => {
           >{t('Review & publish')}</button>
         </div>
       )}
+      { (state === 'initial' || (state === 'results' && !searchResults?.results.length)) && (
+        <form onSubmit={search} className="initial">
+          <label htmlFor="query" dangerouslySetInnerHTML={{ __html: t('AdminExplainTmdbId') as string}} />
+          <div className="horizontal">
+            <input
+              type="text"
+              name="query"
+              required={true}
+              onChange={(e) => setQuery(e.target.value)}
+              value={query}
+              placeholder={t('Search for a movie') as string}
+            />
+            <input
+              type="submit"
+              value={t('Proceed') as string}
+            />
+          </div>
+          { error && (
+            <div className="error" dangerouslySetInnerHTML={{ __html: error }} />
+          )}
+        </form>
+      )}
+      { state === 'results' && (
+        <form onSubmit={preview}>
+          { searchResults?.results.length ? (
+          <>
+            <ul className="results">
+              { searchResults.results.map((result: any) => (
+                <li key={result.id}>
+                  <label>
+                    <input
+                      type="radio"
+                      name="tmdbId"
+                      value={result.id}
+                      required={true}
+                    />
+                    <div className="movie">
+                      <img alt="" src={`https://image.tmdb.org/t/p/w500${result.poster_path}`} />
+                      <div className="info">
+                        <h3>{result.original_title}</h3>
+                        <span>{result.release_date.split('-')[0]}</span>
+                        <p>{result.overview}</p>
+                      </div>
+                    </div>
+                  </label>
+                </li>
+              ))}
+            </ul>
+            <input
+              type="submit"
+              value={t('Proceed') as string}
+            />
+          </>
+          ) : (
+            <p className="error">{t('No results found')}</p>
+          )}
+        </form>
+      )}
       { state === 'preview' && previewData && (
         <form onSubmit={migrate} className="preview">
           <div className="title">{previewData.movie.original_title}</div>
@@ -148,7 +242,7 @@ export const MigrateMovie: React.FC = () => {
                 })}
               </label>
               <div className="choices" onChange={onImageChoiceChange(type)}>
-                { previewData.images[`${type}s` as keyof tmdbPreviewResult['images']].map((image: any) => (
+                { previewData.images[`${type}s` as keyof tmdbPreviewResult['images']].slice(0,5).map((image: any) => (
                   <label key={image.file_path} className="choice">
                     <input
                       type="radio"
@@ -171,28 +265,6 @@ export const MigrateMovie: React.FC = () => {
             data-button-type="cancel"
             onClick={cancel}
           >{t('Cancel')}</button>
-        </form>
-      )}
-      { state === 'initial' && (
-        <form onSubmit={preview} className="initial">
-          <label htmlFor={path} dangerouslySetInnerHTML={{ __html: t('AdminExplainTmdbId') as string}} />
-          <div className="horizontal">
-            <input
-              type="text"
-              name={path}
-              required={true}
-              onChange={(e) => setTmdbId(e.target.value)}
-              value={tmdbId}
-              placeholder="266"
-            />
-            <input
-              type="submit"
-              value={t('Proceed') as string}
-            />
-          </div>
-          { error && (
-            <div className="error" dangerouslySetInnerHTML={{ __html: error }} />
-          )}
         </form>
       )}
       <button

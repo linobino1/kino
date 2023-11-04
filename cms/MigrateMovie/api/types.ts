@@ -15,6 +15,18 @@ export interface tmdbPreviewResult {
   images: tmdbImages;
 }
 
+export interface tmdbFindResult {
+  results: Array<tmdbMovie>;
+}
+export interface FindFunction {
+  (
+    args: {
+      payload: Payload,
+      query: string,
+    }
+  ): Promise<tmdbFindResult>;
+}
+
 export interface PreviewFunction {
   (
     args: {

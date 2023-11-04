@@ -3,7 +3,7 @@
   "AdminExplainPoster": "Filmposter im Porträtformat (2:3) mit einer Mindestbreite von 200px",
   "AdminExplainSynopsis": "Brief description of the film, max. 350 characters",
   "TMDB ID": "themoviedb.org ID",
-  "AdminExplainTmdbId": "Use this tool to migrate movie data from <a href=\"https://www.themoviedb.org/\" target=\"_blank\">The Movie Database</a> to the system, in order to be used it in a film print or a screening.<br>Find the movie on <a href=\"https://www.themoviedb.org/\" target=\"_blank\">The Movie Database</a> and copy the ID from the URL (e.g. https://www.themoviedb.org/movie/<strong>266</strong>-le-mepris)",
+  "AdminExplainTmdbId": "Use this tool to migrate movie data from <a href=\"https://www.themoviedb.org/\" target=\"_blank\">The Movie Database</a> to the system, in order to be used it in a film print or a screening.",
   "MovieExists": "<a href=\"/admin/collections/movies/{id}\">{title}</a> has already been created",
   "Successfully created movie {{link}}": "Successfully created draft {{link}}.",
   "Migrate movie from themoviedb.org": "Create new movie",

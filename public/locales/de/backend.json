@@ -94,7 +94,7 @@
   "Film Archive": "Filmarchiv",
   "Migrate movie from themoviedb.org": "Neuen Film anlegen",
   "TMDB ID": "themoviedb.org ID",
-  "AdminExplainTmdbId": "Mit diesem Tool können Filmdaten von <a href=\"https://www.themoviedb.org/\" target=\"_blank\">The Movie Database</a> in das System migriert werden um dann für eine Filmkopie bzw. Vorstellung verwendet werden zu können.<br>Finde zunächst den Film bei <a href=\"https://www.themoviedb.org/\" target=\"_blank\">The Movie Database</a> und kopiere die ID aus der URL (z.B. https://www.themoviedb.org/movie/<strong>266</strong>-le-mepris)",
+  "AdminExplainTmdbId": "Mit diesem Tool können Filmdaten von <a href=\"https://www.themoviedb.org/\" target=\"_blank\">The Movie Database</a> in das System migriert werden um dann für eine Filmkopie bzw. Vorstellung verwendet werden zu können.",
   "MovieExists": "<a href=\"/admin/collections/movies/{id}\">{title}</a> wurde schon angelegt",
   "Choose a {{type}}:": "Wähle ein {{type}}:",
   "backdrop": "Hintergrundbild",

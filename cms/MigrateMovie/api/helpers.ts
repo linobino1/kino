@@ -8,9 +8,33 @@ import type {
   tmdbImages,
 } from "../tmdb/types";
 import type { Document } from "payload/types";
-import type { Endpoint } from "./types";
+import type { Endpoint, FindFunction } from "./types";
 import { ageRatingAges } from "../../collections/Movies";
 import { themoviedb } from "../tmdb";
+
+export const findInTmdb: FindFunction = async ({ query }) => {
+  let data: Document;
+  const path = '/search/movie';
+
+  try {
+    const res = await themoviedb.get(path, {
+      params: {
+        query,
+      },
+    });
+    data = JSON.parse(res?.data);
+  } catch (err) {
+    throw new Error('Unable to get themoviedb response');
+  }
+  
+  if (data.success === false) {
+    throw new Error(`Search for '${query}' failed at endpoint '${path}'`);
+  }
+  
+  return {
+    results: data.results,
+  };
+}
 
 /**
  * 

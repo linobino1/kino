@@ -45,7 +45,47 @@
   font-size: 1rem;
   margin-block-start: .5rem;
 }
+/** RESULTS *******************************************************/
+ul.results {
+  margin-block: 1rem;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+ul.results li .movie {
+  display: flex;
+  border: 1px solid lightgray;
+  cursor: pointer;
+  min-height: 10em;
+  align-items: center;
+}
+ul.results li input[type="radio"] {
+  display: none;
+}
+ul.results li input[type="radio"]:checked + .movie {
+  border-color: blue;
+}
+ul.results li .info {
+  padding: .8em;
+}
+ul.results li h3 {
+  margin-block-end: .2em;
+}
+ul.results li p {
+  margin-block: .2em;
+  
+}
+ul.results li img {
+  width: 8em;
+  height: auto;
+  flex-shrink: 0;
+  object-fit: contain;
+  object-position: top;
+}
 
+/** PREVIEW *******************************************************/
 /* // image selector */
 .imageSelector .choices {
   display: flex;
