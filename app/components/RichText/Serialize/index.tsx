@@ -36,7 +36,9 @@ export const Serialize: SerializeFunction = ({ content }) => {
     <Fragment>
       {content?.map((node, i) => {
         if (isText(node)) {
-          let text = <span dangerouslySetInnerHTML={{ __html: escape(node.text as string).replace('\n', '<br />') }} />
+          // escape text and convert line breaks to <br />
+          let escapedText = escape(node.text as string).replace(/(\r\n|\n|\r)/gm, "<br />");
+          let text = <span dangerouslySetInnerHTML={{ __html: escapedText }} />
 
           if (node.bold) {
             text = <strong key={i}>{text}</strong>
