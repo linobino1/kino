@@ -36,7 +36,7 @@ export const Serialize: SerializeFunction = ({ content }) => {
     <Fragment>
       {content?.map((node, i) => {
         if (isText(node)) {
-          let text = <span dangerouslySetInnerHTML={{ __html: escape(node.text as string) }} />
+          let text = <span dangerouslySetInnerHTML={{ __html: escape(node.text as string).replace('\n', '<br />') }} />
 
           if (node.bold) {
             text = <strong key={i}>{text}</strong>
