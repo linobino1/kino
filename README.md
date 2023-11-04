@@ -1,5 +1,7 @@
-# Remix-PayloadCMS Starter
+# Kino im Blauen Salon
 
+Web application to administer the cinema program and film archive of the [Kino im Blauen
+Salon](https://kinoimblauensalon.de/).  
 Powered by [Remix](https://remix.run) and [PayloadCMS](https://payloadcms.com).
 
 ## Development
