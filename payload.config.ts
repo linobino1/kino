@@ -64,7 +64,6 @@ export default buildConfig({
           },
           adapter: s3Adapter({
             bucket: process.env.S3_BUCKET || '',
-            acl: 'public-read',
             config: {
               credentials: {
                 accessKeyId: process.env.S3_ACCESS_KEY || '',
