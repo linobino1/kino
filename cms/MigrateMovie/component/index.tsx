@@ -221,10 +221,10 @@ export const MigrateMovie: React.FC = () => {
                 </li>
               ))}
             </ul>
-            <input
+            <button
               type="submit"
-              value={t('Proceed') as string}
-            />
+              value="search"
+            >{t('Proceed')}</button>
           </>
           ) : (
             <p className="error">{t('No results found')}</p>

@@ -56,7 +56,7 @@ ul.results {
 }
 ul.results li .movie {
   display: flex;
-  border: 1px solid lightgray;
+  border: 1px solid var(--theme-elevation-100);
   cursor: pointer;
   min-height: 10em;
   align-items: center;
