@@ -100,11 +100,6 @@ body {
   color: var(--color-font-bright);
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-family);
-  text-transform: capitalize;
-}
-
 a {
   text-decoration: none;
   transition: 0.4s;
