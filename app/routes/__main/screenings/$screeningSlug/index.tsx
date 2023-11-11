@@ -15,6 +15,8 @@ import Page from "~/components/Page";
 import { Response } from '@remix-run/node';
 import { ScreeningInfo } from "~/components/ScreeningInfo";
 import HeaderImage from "~/components/HeaderImage";
+import { JsonLd } from "cms/structured-data";
+import { screeningSchema } from "cms/structured-data/screening";
 
 export const loader = async ({ params, request, context: { payload }}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
@@ -26,6 +28,9 @@ export const loader = async ({ params, request, context: { payload }}: LoaderArg
       },
     },
   })).docs[0];
+  const site = await payload.findGlobal({
+    slug: 'site'
+  });
     
   const data = await payload.find({
     collection: 'screenings',
@@ -45,6 +50,7 @@ export const loader = async ({ params, request, context: { payload }}: LoaderArg
   return {
     screening: data.docs[0],
     navigation,
+    site,
   }
 }
 
@@ -55,7 +61,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export default function Item() {
-  const { screening, navigation } = useLoaderData<typeof loader>();
+  const { screening, navigation, site } = useLoaderData<typeof loader>();
   const mainMovie = (screening.featureFilms[0] as FilmPrint).movie as MovieType;
   const featureFilms = (screening.featureFilms as FilmPrint[]) ?? [];
   const supportingFilms = (screening.supportingFilms as FilmPrint[]) ?? [];
@@ -65,6 +71,7 @@ export default function Item() {
 
   return (
     <Page className={classes.container}>
+      { JsonLd(screeningSchema(screening, site)) }
       <HeaderImage image={mainMovie.still} navigation={navigation} >
         <div className={classes.infoTitle}>
           <Date
