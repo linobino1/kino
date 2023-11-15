@@ -5,21 +5,15 @@
   transition: all 0.3s ease-in-out;
 }
 
-/* upper line fade out to the left */
-.svg.collapsed .line1 {
-  /* transform: translateX(-100%); */
-  opacity: 0;
-}
-
-/* bottom line fade out the right */
+/* fade out upper and bottom line */
+.svg.collapsed .line1,
 .svg.collapsed .line4 {
-  /* transform: translateX(100%); */
   opacity: 0;
 }
 
 /* middle lines rotate 45 degrees and -45 degrees respectively */
-.svg.collapsed .line2,
-.svg.collapsed .line3 {
+.svg .line2,
+.svg .line3 {
   transform-origin: center;
 }
 .svg.collapsed .line2 {
