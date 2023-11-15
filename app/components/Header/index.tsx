@@ -22,44 +22,46 @@ const Header: React.FC<Props> = ({ site, navigations }) => {
   const { toggleModal, isModalOpen } = useModal();
 
   return (
-    <header className={classes.header}>
-      <Link to="/">
-        {(site.logo as Media) && (
-          <Image
-            className={classes.logo}
-            image={site.logo as Media}
-            width={200}
-            height={50}
-          />
-        )}
-        {(site.logoMobile as Media) && (
-          <Image
-            className={classes.logoMobile}
-            image={site.logoMobile as Media}
-            width={200}
-            height={50}
-          />
-        )}
-      </Link>
-      <Hamburger
-        onClick={() => toggleModal("menu")}
-        className={classes.menuButton}
-        aria-label="Menu"
-        collapsed={isModalOpen("menu")}
-      />
-      <Navigation
-        navigation={navigations.find((x) => x.type === "main")}
-        className={classes.navMain}
-      />
-      <UserStatus className={classes.userStatus} />
-      <Modal slug="menu" className={classes.mobileMenu}>
-        <UserStatus />
+    <header className={classes.headerWrapper}>
+      <div className={classes.header}>
+        <Link to="/">
+          {(site.logo as Media) && (
+            <Image
+              className={classes.logo}
+              image={site.logo as Media}
+              width={200}
+              height={50}
+            />
+          )}
+          {(site.logoMobile as Media) && (
+            <Image
+              className={classes.logoMobile}
+              image={site.logoMobile as Media}
+              width={200}
+              height={50}
+            />
+          )}
+        </Link>
+        <Hamburger
+          onClick={() => toggleModal("menu")}
+          className={classes.menuButton}
+          aria-label="Menu"
+          collapsed={isModalOpen("menu")}
+        />
         <Navigation
           navigation={navigations.find((x) => x.type === "main")}
-          className={classes.navMobile}
-          dataType="mobile"
+          className={classes.navMain}
         />
-      </Modal>
+        <UserStatus className={classes.userStatus} />
+        <Modal slug="menu" className={classes.mobileMenu}>
+          <UserStatus />
+          <Navigation
+            navigation={navigations.find((x) => x.type === "main")}
+            className={classes.navMobile}
+            dataType="mobile"
+          />
+        </Modal>
+      </div>
     </header>
   );
 };
