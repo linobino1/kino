@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React from 'react';
+import React, { useEffect } from 'react';
 import type {
   Media,
   Site,
   Navigation as NavigationType,
 } from "payload/generated-types";
 import { Navigation } from '../Navigation';
-import { Link } from '@remix-run/react';
+import { Link, useLocation } from '@remix-run/react';
 import { Image } from '~/components/Image';
 import { UserStatus } from '../UserStatus';
 import classes from './index.module.css';
@@ -19,7 +19,13 @@ type Props = {
 };
 
 const Header: React.FC<Props> = ({ site, navigations }) => {
-  const { toggleModal, isModalOpen } = useModal();
+  const { toggleModal, isModalOpen, closeModal } = useModal();
+
+  const location = useLocation();
+  
+  useEffect(() => {
+      closeModal('menu');
+  }, [location, closeModal]);
 
   return (
     <header className={classes.headerWrapper}>
