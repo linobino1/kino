@@ -48,12 +48,13 @@ const Header: React.FC<Props> = ({ site, navigations }) => {
             />
           )}
         </Link>
-        <Hamburger
+        <button
           onClick={() => toggleModal("menu")}
           className={classes.menuButton}
           aria-label="Menu"
-          collapsed={isModalOpen("menu")}
-        />
+        >
+          <Hamburger collapsed={isModalOpen("menu")} />
+        </button>
         <Navigation
           navigation={navigations.find((x) => x.type === "main")}
           className={classes.navMain}
