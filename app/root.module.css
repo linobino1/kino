@@ -70,6 +70,10 @@
 
   --border-radius: 2px;
   --box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.15);
+  
+  --z-index-header: 300;
+  --z-index-modal: 200;
+  --z-index-cookies: 400;
 }
 @media (max-width: 768px) {
   :root {
@@ -145,7 +149,7 @@ p {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 9999;
+  z-index: var(--z-index-cookies);
   display: flex;
   justify-content: center;
 }

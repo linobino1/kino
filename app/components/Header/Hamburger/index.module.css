@@ -1,0 +1,30 @@
+.svg line {
+  fill: none;
+  stroke: #000000;
+  stroke-width: 1px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* upper line fade out to the left */
+.svg.collapsed .line1 {
+  /* transform: translateX(-100%); */
+  opacity: 0;
+}
+
+/* bottom line fade out the right */
+.svg.collapsed .line4 {
+  /* transform: translateX(100%); */
+  opacity: 0;
+}
+
+/* middle lines rotate 45 degrees and -45 degrees respectively */
+.svg.collapsed .line2,
+.svg.collapsed .line3 {
+  transform-origin: center;
+}
+.svg.collapsed .line2 {
+  transform: rotate(45deg) scale(0.8);
+}
+.svg.collapsed .line3 {
+  transform: rotate(-45deg) scale(0.8);
+}

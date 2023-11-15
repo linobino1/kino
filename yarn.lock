@@ -2560,7 +2560,7 @@
 
 "@faceless-ui/modal@^2.0.1":
   version "2.0.1"
-  resolved "https://registry.npmjs.org/@faceless-ui/modal/-/modal-2.0.1.tgz"
+  resolved "https://registry.yarnpkg.com/@faceless-ui/modal/-/modal-2.0.1.tgz#8a47299442eff450c09432cfaef35c5471becad6"
   integrity sha512-z1PaaLxwuX+1In4vhUxODZndGKdCY+WIqzvtnas3CaYGGCVJBSJ4jfv9UEEGZzcahmSy+71bEL89cUT6d36j1Q==
   dependencies:
     body-scroll-lock "^3.1.5"

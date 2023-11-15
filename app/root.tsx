@@ -32,6 +32,7 @@ import { ErrorPage } from "~/components/ErrorPage";
 import type { MovieTheater, WithContext } from "schema-dts";
 import { locationSchema } from "cms/structured-data/location";
 import { addContext } from "cms/structured-data";
+import { ModalContainer, ModalProvider } from "@faceless-ui/modal";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -137,7 +138,10 @@ export default function App() {
             __html: `window.ENV = ${JSON.stringify(publicKeys)}`,
           }}
         />
-        <Outlet />
+        <ModalProvider transTime={200} zIndex={200}>
+          <Outlet />
+          <ModalContainer />
+        </ModalProvider>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

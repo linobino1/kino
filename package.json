@@ -25,6 +25,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.400.0",
     "@aws-sdk/lib-storage": "^3.400.0",
+    "@faceless-ui/modal": "^2.0.1",
     "@hcaptcha/react-hcaptcha": "^1.8.1",
     "@payloadcms/plugin-cloud-storage": "^1.0.19",
     "@remix-run/css-bundle": "^1.19.3",

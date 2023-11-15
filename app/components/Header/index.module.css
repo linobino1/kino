@@ -1,13 +1,10 @@
 .header {
+    position: relative;
     background-color: var(--color-white);
-    width: 100%;
     color: var(--color-font-light);
     text-transform: uppercase;
-    z-index: 100;
+    z-index: var(--z-index-header);
     border-bottom: 1px solid var(--color-light-grey);
-}
-/** MAIN HEADER  ********************************************/
-.mainHeader {
     width: var(--page-max-width);
     margin-inline: auto;
     display: grid;
@@ -15,18 +12,29 @@
     align-items: center;
     font: var(--font-small);
 }
-.mainHeader > * {
-    padding: .5rem;
-    border-right: 1px solid var(--color-light-grey);
+.header > * {
+    position: relative;
+    padding: 0.5rem;
     grid-row: 1;
     display: flex;
     align-items: center;
-    height: 100%;
 }
-.mainHeader > *:first-child {
+/* add white bar to the left and right of the header */
+.header::after {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: -100vw;
+    right: -100vw;
+    height: 100%;
+    content: "";
+    background-color: var(--color-white);
+    border-bottom: 1px solid var(--color-light-grey);
+}
+.header > *:first-child {
     padding-left: 0;
 }
-.mainHeader > *:last-child {
+.header > *:last-child {
     padding-right: 0;
     border-right: 0;
     justify-self: flex-end;
@@ -42,25 +50,29 @@
 }
 .navMain {
     justify-self: flex-end;
+    border-right: 1px solid var(--color-light-grey);
 }
 .userStatus {
     justify-self: flex-end;
 }
 @media (max-width: 768px) {
-    .mainHeader {
+    .header {
+        position: sticky;
+        top: 0;
+        padding-block: 0.3rem;
         grid-template-columns: auto auto;
     }
-    .mainHeader {
+    .header {
         font: var(--font);
     }
-    .mainHeader > * {
+    .header > * {
         border-right: 0;
     }
-    .mainHeader > *:last-child {
+    .header > *:last-child {
         padding-left: 0;
         grid-column: 2;
     }
-    .mainHeader > *:last-child > * {
+    .header > *:last-child > * {
         padding-left: 0;
     }
     .navMain {
@@ -78,6 +90,9 @@
 }
 /** MOBILE MENU    ******************************************/
 .menuButton {
+    appearance: none;
+    border: none;
+    background: none;
     grid-row: 1;
     justify-self: end;
     font: inherit;
@@ -85,9 +100,6 @@
     color: inherit;
     padding: 0.5rem 1rem;
     padding-right: 0;
-}
-.menuButton::after {
-    content: url('../../../public/img/hamburger.svg');
 }
 @media screen and (min-width: 768px) {
     .menuButton {
@@ -99,15 +111,26 @@
     flex-direction: column;
     row-gap: 1em;
     align-items: flex-end;
+    width: 100%;
     height: 100%;
     overflow-y: auto;
-    padding-bottom: 2em;
+    padding: 5.5rem 1rem 2rem 1rem;
     font: var(--font-xx-big);
+    border: none;
+    opacity: 0;
+    transition: opacity 200ms linear;
 }
+.mobileMenu[open] {
+    opacity: 1;
+}
+
 .navMobile {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     border: 0 !important;
     row-gap: 1em;
+}
+.mobileMenu a {
+    padding-right: 0 !important;
 }
