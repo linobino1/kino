@@ -1,6 +1,6 @@
 import { Form, Link, useActionData } from "@remix-run/react";
-import type { ActionArgs} from "@remix-run/node";
-import { json} from "@remix-run/node";
+import type { ActionArgs } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import classes from "./index.module.css";
 import { useTranslation } from "react-i18next";
@@ -9,26 +9,29 @@ import i18next from "~/i18next.server";
 // i18n namespace
 const ns = "auth";
 
-export const action = async ({ request, context: { payload, res }}: ActionArgs ) => {
+export const action = async ({
+  request,
+  context: { payload, res },
+}: ActionArgs) => {
   const form = await request.formData();
   const t = await i18next.getFixedT(request, ns);
-  
+
   try {
     await payload.login({
-      collection: 'users',
+      collection: "users",
       data: {
-        email: form.get('email') as string,
-        password: form.get('password') as string,
+        email: form.get("email") as string,
+        password: form.get("password") as string,
       },
       res,
     });
-    return redirect('/');
+    return redirect("/");
   } catch (err) {
     return json({
-      error: t('email and/or password invalid'),
+      error: t("email and/or password invalid"),
     });
   }
-}
+};
 
 export default function SignIn() {
   const actionData = useActionData<typeof action>();
@@ -36,27 +39,25 @@ export default function SignIn() {
 
   return (
     <>
-      <h1>{t('sign in')}</h1>
+      <h1>{t("sign in")}</h1>
       <Form method="post" className={classes.form}>
-        { actionData?.error && (
-          <p>{actionData.error}</p>
-        )}
+        {actionData?.error && <p>{actionData.error}</p>}
         <label>
-          {t('email')}
+          {t("email")}
           <input type="email" name="email" />
         </label>
 
         <label>
-          {t('password')}
+          {t("password")}
           <input type="password" name="password" />
-        </label>       
+        </label>
 
-        <button type="submit">{t('sign in')}</button>
+        <button type="submit">{t("sign in")}</button>
       </Form>
       <nav className={classes.nav}>
-        <Link to="/auth/forgot-password">{t('forgot password?')}</Link>
-        <Link to="/auth/signup">{t('sign up')}</Link>
+        <Link to="/auth/forgot-password">{t("forgot password?")}</Link>
+        <Link to="/auth/signup">{t("sign up")}</Link>
       </nav>
     </>
-  )
+  );
 }

@@ -1,1 +1,1 @@
-declare module 'react-mailchimp-form';
+declare module "react-mailchimp-form";

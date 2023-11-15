@@ -7,51 +7,58 @@ import { ErrorPage } from "~/components/ErrorPage";
 
 export const ErrorBoundary = ErrorPage;
 
-export const loader = async ({ params, request, context: { payload }}: LoaderArgs) => {
+export const loader = async ({
+  params,
+  request,
+  context: { payload },
+}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
-  const screeningSeries = (await payload.find({
-    collection: 'screeningSeries',
-    where: {
-      slug: {
-        equals: params.screeningSeriesSlug,
+  const screeningSeries = (
+    await payload.find({
+      collection: "screeningSeries",
+      where: {
+        slug: {
+          equals: params.screeningSeriesSlug,
+        },
       },
-    },
-    locale,
-    depth: 11,
-  })).docs[0];
-  
+      locale,
+      depth: 11,
+    })
+  ).docs[0];
+
   if (!screeningSeries) {
-    throw new Response('Screening series not found', { status: 404 });
+    throw new Response("Screening series not found", { status: 404 });
   }
-  
-  const screenings = (await payload.find({
-    collection: 'screenings',
-    where: {
-      series: {
-        equals: screeningSeries.id,
+
+  const screenings = (
+    await payload.find({
+      collection: "screenings",
+      where: {
+        series: {
+          equals: screeningSeries.id,
+        },
       },
-    },
-    locale,
-    depth: 11,
-    sort: 'date',
-  })
+      locale,
+      depth: 11,
+      sort: "date",
+    })
   ).docs;
-  
+
   const site = await payload.findGlobal({
-    slug: 'site',
+    slug: "site",
   });
-  
+
   return {
     screeningSeries,
     screenings,
     site,
-  }
-}
+  };
+};
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return {
     title: data.screeningSeries.name,
-  }
+  };
 };
 
 export default function Item() {
@@ -65,5 +72,5 @@ export default function Item() {
         site={site}
       />
     </Page>
-  )
+  );
 }

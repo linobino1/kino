@@ -4,12 +4,18 @@ export const pageTitle = (siteTitle: string, title?: string): string => {
   }
 
   return `${title} | ${siteTitle}`;
-}
+};
 
-export const pageDescription = (siteDescription: string, description?: string): string => {
+export const pageDescription = (
+  siteDescription: string,
+  description?: string
+): string => {
   return description || siteDescription;
-}
+};
 
-export const pageKeywords = (siteKeywords: string, keywords?: string): string => {
+export const pageKeywords = (
+  siteKeywords: string,
+  keywords?: string
+): string => {
   return `${keywords}, ${siteKeywords}`;
-}
+};

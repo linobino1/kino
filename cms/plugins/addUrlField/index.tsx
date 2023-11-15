@@ -1,9 +1,9 @@
-import React from 'react';
-import type { Config, Plugin } from 'payload/config';
-import type { FieldHookArgs } from 'payload/dist/fields/config/types';
-import { useField } from 'payload/components/forms';
-import { useTranslation } from 'react-i18next';
-import payload from 'payload';
+import React from "react";
+import type { Config, Plugin } from "payload/config";
+import type { FieldHookArgs } from "payload/dist/fields/config/types";
+import { useField } from "payload/components/forms";
+import { useTranslation } from "react-i18next";
+import payload from "payload";
 
 /**
  * this plugin adds a url field to a collection if you add the following to the collection config:
@@ -18,66 +18,80 @@ export const addUrlField: Plugin = (incomingConfig: Config): Config => {
     ...incomingConfig,
     // @ts-ignore
     collections: [
-      ...incomingConfig.collections?.map((collection) => collection.custom?.addUrlField ? {
-        ...collection,
-        admin: {
-          ...collection.admin,
-          enableRichTextLink: true,
-          enableRichTextRelationship: true,
-        },
-        fields: [
-          ...collection.fields,
-          {
-            name: 'url',
-            type: 'text',
-            required: true,
-            validate: () => true,
-            hooks: {
-              beforeChange: [
-                ({ siblingData }: FieldHookArgs): void => {
-                  // ensures data is not stored in DB
-                  delete siblingData['url'];
+      ...(incomingConfig.collections?.map((collection) =>
+        collection.custom?.addUrlField
+          ? {
+              ...collection,
+              admin: {
+                ...collection.admin,
+                enableRichTextLink: true,
+                enableRichTextRelationship: true,
+              },
+              fields: [
+                ...collection.fields,
+                {
+                  name: "url",
+                  type: "text",
+                  required: true,
+                  validate: () => true,
+                  hooks: {
+                    beforeChange: [
+                      ({ siblingData }: FieldHookArgs): void => {
+                        // ensures data is not stored in DB
+                        delete siblingData["url"];
+                      },
+                    ],
+                    afterRead: [
+                      ({ siblingData }: FieldHookArgs): string => {
+                        const relativeUrl =
+                          collection.custom?.addUrlField.hook(
+                            siblingData.slug
+                          ) || "";
+                        if (!relativeUrl) return "";
+                        return payload.config.serverURL + relativeUrl;
+                      },
+                    ],
+                  },
+                  admin: {
+                    position: "sidebar",
+                    readOnly: true,
+                    components: {
+                      Field: () => {
+                        const { t } = useTranslation();
+                        const { value: slug } = useField<string>({
+                          path: "slug",
+                        });
+                        const relativeUrl =
+                          collection.custom?.addUrlField.hook(slug) || "";
+                        return (
+                          <div className="field-type text">
+                            <label className="field-label">
+                              {t("URL Frontend")}
+                            </label>
+                            <a
+                              href={relativeUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              {relativeUrl}
+                            </a>
+                          </div>
+                        );
+                      },
+                    },
+                  },
                 },
               ],
-              afterRead: [
-                ({ siblingData }: FieldHookArgs): string => {
-                  const relativeUrl = collection.custom?.addUrlField.hook(siblingData.slug) || '';
-                  if (!relativeUrl) return '';
-                  return payload.config.serverURL + relativeUrl;
-                },
-              ],
-            },
-            admin: {
-              position: 'sidebar',
-              readOnly: true,
-              components: {
-                Field: () => {
-                  const { t } = useTranslation();
-                  const { value: slug } = useField<string>({ path: 'slug' });
-                  const relativeUrl = collection.custom?.addUrlField.hook(slug) || '';
-                  return (
-                    <div className='field-type text'>
-                      <label className='field-label'>{t('URL Frontend')}</label>
-                      <a
-                        href={relativeUrl}
-                        target='_blank'
-                        rel='noreferrer'
-                      >{relativeUrl}</a>
-                    </div>
-                  )
-                },
-              }
-            },
-          },
-        ],
-      } : {
-        ...collection,
-        admin: {
-          ...collection.admin,
-          enableRichTextLink: false,
-          enableRichTextRelationship: false,
-        },
-      }) || [],
+            }
+          : {
+              ...collection,
+              admin: {
+                ...collection.admin,
+                enableRichTextLink: false,
+                enableRichTextRelationship: false,
+              },
+            }
+      ) || []),
     ],
   };
 

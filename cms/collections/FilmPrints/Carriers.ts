@@ -1,25 +1,25 @@
-import type { CollectionConfig } from 'payload/types';
-import { t } from '../../i18n';
+import type { CollectionConfig } from "payload/types";
+import { t } from "../../i18n";
 
 const Carriers: CollectionConfig = {
-  slug: 'carriers',
+  slug: "carriers",
   labels: {
-    singular: t('Carrier'),
-    plural: t('Carriers'),
+    singular: t("Carrier"),
+    plural: t("Carriers"),
   },
   admin: {
-    group: t('Configuration'),
-    defaultColumns: ['type', 'name'],
-    useAsTitle: 'name',
+    group: t("Configuration"),
+    defaultColumns: ["type", "name"],
+    useAsTitle: "name",
   },
   access: {
     read: () => true,
   },
   fields: [
     {
-      name: 'name',
-      label: t('Name'),
-      type: 'text',
+      name: "name",
+      label: t("Name"),
+      type: "text",
       localized: true,
       required: true,
     },

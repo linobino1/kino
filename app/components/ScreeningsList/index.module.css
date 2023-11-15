@@ -39,7 +39,7 @@
 }
 @media screen and (min-width: 768px) {
   .item:hover {
-    transition: all .3s ease-in-out;
+    transition: all 0.3s ease-in-out;
     transform: translate(0px, -2%);
   }
 }
@@ -53,13 +53,13 @@
   flex-direction: column;
   aspect-ratio: 3/2;
 }
-.info >  * {
+.info > * {
   margin-block-end: 1rem;
   margin-inline: 1rem;
 }
 .tags {
   min-height: 1.4rem;
-  margin: .3rem;
+  margin: 0.3rem;
   overflow-x: auto;
   display: flex;
   flex-direction: row;
@@ -72,8 +72,8 @@
   font-weight: var(--font-weight-bold);
   line-height: 1;
   border-radius: 100px;
-  padding-inline: .5em;
-  padding-block: .2em;
+  padding-inline: 0.5em;
+  padding-block: 0.2em;
   white-space: nowrap;
 }
 .series {
@@ -100,8 +100,8 @@
   left: 0.5rem;
   top: -0.6rem;
   text-shadow: 0px 0px 10px rgb(0 0 0 / 30%);
-  background-color: rgba(255, 255, 255, .8);
-  padding: .75rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 0.75rem;
   padding-bottom: 1rem;
   display: flex;
   flex-direction: column;
@@ -116,7 +116,7 @@
 }
 .date .dayNumber {
   font: var(--font-xxx-big);
-  font-family: 'Tahoma', sans-serif;
+  font-family: "Tahoma", sans-serif;
   font-weight: var(--font-weight-bold);
   line-height: 1;
 }

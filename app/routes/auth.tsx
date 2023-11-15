@@ -14,5 +14,5 @@ export default function Auth() {
 
       <p>TODO footer</p>
     </>
-  )
+  );
 }

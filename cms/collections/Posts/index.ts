@@ -1,139 +1,134 @@
-import type { CollectionConfig } from 'payload/types';
-import { t } from '../../i18n';
-import { Content } from '../../blocks/Content';
-import { Image } from '../../blocks/Image';
-import { Gallery } from '../../blocks/Gallery';
-import { Video } from '../..//blocks/Video';
-import video from '../../fields/richtext/video';
-import { LinkableCollectionSlugs } from '../../types';
+import type { CollectionConfig } from "payload/types";
+import { t } from "../../i18n";
+import { Content } from "../../blocks/Content";
+import { Image } from "../../blocks/Image";
+import { Gallery } from "../../blocks/Gallery";
+import { Video } from "../..//blocks/Video";
+import video from "../../fields/richtext/video";
+import { LinkableCollectionSlugs } from "../../types";
 
 const Posts: CollectionConfig = {
-  slug: 'posts',
+  slug: "posts",
   admin: {
-    group: t('Blog'),
-    defaultColumns: ['date', 'title'],
-    useAsTitle: 'title',
+    group: t("Blog"),
+    defaultColumns: ["date", "title"],
+    useAsTitle: "title",
   },
-  defaultSort: '-date',
+  defaultSort: "-date",
   custom: {
     addUrlField: {
-      hook: (slug?: string) => `/news/${slug || ''}`,
+      hook: (slug?: string) => `/news/${slug || ""}`,
     },
     addSlugField: {
-      from: 'title',
+      from: "title",
     },
   },
   fields: [
     {
-      name: 'title',
-      type: 'text',
+      name: "title",
+      type: "text",
       localized: true,
       required: true,
     },
     {
-      name: 'date',
-      type: 'date',
+      name: "date",
+      type: "date",
       required: true,
       defaultValue: Date(),
       admin: {
         date: {
-          pickerAppearance: 'dayOnly',
-          displayFormat: 'dd.MM.yyyy',
+          pickerAppearance: "dayOnly",
+          displayFormat: "dd.MM.yyyy",
         },
       },
     },
     {
-      name: 'header',
-      label: t('Header Image'),
-      type: 'upload',
-      relationTo: 'media',
+      name: "header",
+      label: t("Header Image"),
+      type: "upload",
+      relationTo: "media",
       required: true,
     },
     {
-      name: 'content',
-      label: t('Preview'),
-      type: 'richText',
+      name: "content",
+      label: t("Preview"),
+      type: "richText",
       localized: true,
       required: true,
       admin: {
         elements: [
-          'h2',
-          'h3',
-          'h4',
-          'h5',
-          'h6',
-          'link',
-          'ol',
-          'ul',
-          'indent',
-          'upload',
+          "h2",
+          "h3",
+          "h4",
+          "h5",
+          "h6",
+          "link",
+          "ol",
+          "ul",
+          "indent",
+          "upload",
           video,
         ],
-        leaves: ['bold', 'italic', 'underline', 'strikethrough'],
+        leaves: ["bold", "italic", "underline", "strikethrough"],
       },
     },
     {
-      name: 'details',
-      label: t('Detail'),
-      type: 'blocks',
-      blocks: [
-        Content,
-        Image,
-        Gallery,
-        Video,
-      ],
+      name: "details",
+      label: t("Detail"),
+      type: "blocks",
+      blocks: [Content, Image, Gallery, Video],
       admin: {
-        description: t('Add a detail page for the post'),
+        description: t("Add a detail page for the post"),
       },
     },
     {
-      type: 'group',
-      label: t('Link'),
-      name: 'link',
+      type: "group",
+      label: t("Link"),
+      name: "link",
       admin: {
-        description: t('Add a link to the post header.'),
+        description: t("Add a link to the post header."),
       },
       fields: [
         {
-          name: 'type',
-          label: t('Type'),
-          type: 'radio',
-          defaultValue: 'self',
+          name: "type",
+          label: t("Type"),
+          type: "radio",
+          defaultValue: "self",
           admin: {
-            description: t( 'AdminExplainPostLinkType'),
+            description: t("AdminExplainPostLinkType"),
           },
           options: [
             {
-              label: t('None'),
-              value: 'none',
+              label: t("None"),
+              value: "none",
             },
             {
-              label: t('Internal Link'),
-              value: 'internal',
+              label: t("Internal Link"),
+              value: "internal",
             },
             {
-              label: t('External Link'),
-              value: 'external',
+              label: t("External Link"),
+              value: "external",
             },
           ],
         },
         // internal link
         {
-          name: 'doc',
-          type: 'relationship',
+          name: "doc",
+          type: "relationship",
           relationTo: LinkableCollectionSlugs,
           required: true,
           admin: {
-            condition: (siblingData) => siblingData.link?.type === 'internal',
+            condition: (siblingData) => siblingData.link?.type === "internal",
           },
         },
         // external link
         {
-          name: 'url',
-          type: 'text',
+          name: "url",
+          type: "text",
           required: true,
           admin: {
-            condition: (siblingData) => siblingData.link?.type === 'external',
+            condition: (siblingData) => siblingData.link?.type === "external",
           },
         },
       ],

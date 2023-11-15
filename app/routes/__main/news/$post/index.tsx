@@ -1,21 +1,25 @@
-import type { LoaderArgs, MetaFunction } from '@remix-run/node';
-import type { Media } from 'payload/generated-types';
-import { useLoaderData } from '@remix-run/react';
-import { Page } from '~/components/Page';
-import { pageTitle } from '~/util/pageMeta';
-import i18next from '~/i18next.server';
-import classes from './index.module.css';
-import { Image } from '~/components/Image';
-import Date from '~/components/Date';
-import Blocks from '~/components/Blocks';
-import RichText from '~/components/RichText';
-import { JsonLd } from 'cms/structured-data';
-import { postPreviewSchema } from 'cms/structured-data/post';
+import type { LoaderArgs, MetaFunction } from "@remix-run/node";
+import type { Media } from "payload/generated-types";
+import { useLoaderData } from "@remix-run/react";
+import { Page } from "~/components/Page";
+import { pageTitle } from "~/util/pageMeta";
+import i18next from "~/i18next.server";
+import classes from "./index.module.css";
+import { Image } from "~/components/Image";
+import Date from "~/components/Date";
+import Blocks from "~/components/Blocks";
+import RichText from "~/components/RichText";
+import { JsonLd } from "cms/structured-data";
+import { postPreviewSchema } from "cms/structured-data/post";
 
-export const loader = async ({ request, params, context: { payload }}: LoaderArgs) => {
+export const loader = async ({
+  request,
+  params,
+  context: { payload },
+}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
   const data = await payload.find({
-    collection: 'posts',
+    collection: "posts",
     locale,
     where: {
       slug: {
@@ -25,17 +29,17 @@ export const loader = async ({ request, params, context: { payload }}: LoaderArg
   });
 
   if (!data.docs.length) {
-    throw new Response('Post not found', { status: 404 });
+    throw new Response("Post not found", { status: 404 });
   }
-  
+
   return {
     post: data.docs[0],
-  }
+  };
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data, parentsData }) => ({
   title: pageTitle(parentsData.root?.site?.meta?.title, data.post.title),
-  'og:image': (data.post.header as Media)?.url,
+  "og:image": (data.post.header as Media)?.url,
 });
 
 export default function Index() {
@@ -43,24 +47,14 @@ export default function Index() {
 
   return (
     <Page className={classes.container}>
-      { JsonLd(postPreviewSchema(post)) }
+      {JsonLd(postPreviewSchema(post))}
       <div className={classes.header}>
-        <Date iso={post.date} format='PPP' />
-        { ' ' }
-        { post.title }
+        <Date iso={post.date} format="PPP" /> {post.title}
       </div>
-      <Image
-        className={classes.image}
-        image={post.header as Media}
-      />
+      <Image className={classes.image} image={post.header as Media} />
       <h1>{post.title}</h1>
-      <RichText
-        content={post.content}
-        className={classes.preview}
-      />
-      <Blocks
-        blocks={post.details as []}
-      />
+      <RichText content={post.content} className={classes.preview} />
+      <Blocks blocks={post.details as []} />
     </Page>
   );
 }

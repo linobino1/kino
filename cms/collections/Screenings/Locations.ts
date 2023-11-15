@@ -1,34 +1,34 @@
-import type { CollectionConfig } from 'payload/types';
-import { t } from '../../i18n';
-import { defaultField } from '../../fields/default';
+import type { CollectionConfig } from "payload/types";
+import { t } from "../../i18n";
+import { defaultField } from "../../fields/default";
 
 const Locations: CollectionConfig = {
-  slug: 'locations',
+  slug: "locations",
   labels: {
-    singular: t('Location'),
-    plural: t('Locations'),
+    singular: t("Location"),
+    plural: t("Locations"),
   },
   admin: {
-    group: t('Configuration'),
-    useAsTitle: 'name',
-    defaultColumns: ['name'],
+    group: t("Configuration"),
+    useAsTitle: "name",
+    defaultColumns: ["name"],
   },
   access: {
     read: () => true,
   },
   custom: {
     addSlugField: {
-      from: 'name',
+      from: "name",
     },
   },
   fields: [
     {
-      name: 'name',
-      label: t('Name'),
+      name: "name",
+      label: t("Name"),
       localized: true,
-      type: 'text',
+      type: "text",
     },
-    defaultField('locations'),
+    defaultField("locations"),
   ],
 };
 

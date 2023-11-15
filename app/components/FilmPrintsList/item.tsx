@@ -1,22 +1,20 @@
-import React from 'react';
+import React from "react";
 import type {
   Country,
   FilmPrint,
   Media,
   Movie,
   Person,
-} from 'payload/generated-types';
-import { useTranslation } from 'react-i18next';
-import { Image } from '~/components/Image';
-import classes from './index.module.css';
+} from "payload/generated-types";
+import { useTranslation } from "react-i18next";
+import { Image } from "~/components/Image";
+import classes from "./index.module.css";
 
 type Props = {
-  item: FilmPrint
+  item: FilmPrint;
 };
 
-export const FilmPrintsListItem: React.FC<Props> = ({
-  item,
-}) => {
+export const FilmPrintsListItem: React.FC<Props> = ({ item }) => {
   const { t } = useTranslation();
   const movie = item.movie as Movie;
 
@@ -24,28 +22,25 @@ export const FilmPrintsListItem: React.FC<Props> = ({
     <div className={classes.item}>
       <Image
         image={movie.still as Media}
-        sizes='50vw'
-        alt={t('movie still') as string}
+        sizes="50vw"
+        alt={t("movie still") as string}
       />
       <div className={classes.overlay}>
-        <div className={classes.title}>
-          {movie.title}
-        </div>
+        <div className={classes.title}>{movie.title}</div>
         <div className={classes.subtitle}>
           <b>
-            {(movie.directors as Person[] || []).map((x) => x.name).join(', ')}
-          </b>
-          {' '}
-          {(movie.countries as Country[] || []).map((x) => x.name).join(', ')}
-          {', '}
+            {((movie.directors as Person[]) || [])
+              .map((x) => x.name)
+              .join(", ")}
+          </b>{" "}
+          {((movie.countries as Country[]) || []).map((x) => x.name).join(", ")}
+          {", "}
           {movie.year}
         </div>
       </div>
       <div className={classes.info}>
         <div className={classes.synopsis}>{movie.synopsis}</div>
-        <div className={classes.moreInfo}>
-          {t('More Info')}
-        </div>
+        <div className={classes.moreInfo}>{t("More Info")}</div>
       </div>
     </div>
   );

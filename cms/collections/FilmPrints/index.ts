@@ -1,21 +1,27 @@
-import type { CollectionConfig } from 'payload/types';
-import type { Movie, Format } from 'payload/generated-types';
-import { t } from '../../i18n';
-import analogDigitalTypeField from './fields';
-import { MigrateMovieButton } from '../../MigrateMovie/admin/Button';
-import { isAdminOrEditor } from '../../access';
+import type { CollectionConfig } from "payload/types";
+import type { Movie, Format } from "payload/generated-types";
+import { t } from "../../i18n";
+import analogDigitalTypeField from "./fields";
+import { MigrateMovieButton } from "../../MigrateMovie/admin/Button";
+import { isAdminOrEditor } from "../../access";
 
 export const FilmPrints: CollectionConfig = {
-  slug: 'filmPrints',
+  slug: "filmPrints",
   labels: {
-    singular: t('Film Print'),
-    plural: t('Film Prints'),
+    singular: t("Film Print"),
+    plural: t("Film Prints"),
   },
-  defaultSort: '-createdAt',
+  defaultSort: "-createdAt",
   admin: {
-    group: t('Movie Database'),
-    defaultColumns: ['title', 'format', 'languageVersion', 'isRented', '_status'],
-    useAsTitle: 'title',
+    group: t("Movie Database"),
+    defaultColumns: [
+      "title",
+      "format",
+      "languageVersion",
+      "isRented",
+      "_status",
+    ],
+    useAsTitle: "title",
   },
   versions: {
     drafts: true,
@@ -25,59 +31,65 @@ export const FilmPrints: CollectionConfig = {
       if (isAdminOrEditor(args)) return true;
       return {
         _status: {
-          equals: 'published',
+          equals: "published",
         },
-      }
+      };
     },
   },
   timestamps: true,
   custom: {
     addUrlField: {
-      hook: (slug?: string) => `/filmprints/${slug || ''}`,
+      hook: (slug?: string) => `/filmprints/${slug || ""}`,
     },
     addSlugField: {
-      from: 'title',
+      from: "title",
     },
   },
   hooks: {
     beforeValidate: [
       // set title and slug from movie.title and movie.format
       async ({ data, req }) => {
-        if (!req) return data;  // this hook is only used server-side
+        if (!req) return data; // this hook is only used server-side
         if (!data?.movie || !data?.format) return data;
-        
+
         // we'll name all filmprints in fallback language
         const locale = req.payload.config.i18n.fallbackLng as string;
-        
+
         if (!data.title) {
           // create title from movie, format & language version (short)
-          const movie = (await req.payload.find({
-            collection: 'movies',
-            locale,
-            where: {
-              _id: {
-                equals: data.movie,
+          const movie = (
+            await req.payload.find({
+              collection: "movies",
+              locale,
+              where: {
+                _id: {
+                  equals: data.movie,
+                },
               },
-            },
-          })).docs[0] as Movie;
-          const format = (await req.payload.find({
-            collection: 'formats',
-            locale,
-            where: {
-              _id: {
-                equals: data.format,
+            })
+          ).docs[0] as Movie;
+          const format = (
+            await req.payload.find({
+              collection: "formats",
+              locale,
+              where: {
+                _id: {
+                  equals: data.format,
+                },
               },
-            },
-          })).docs[0] as Format;
-          const languageVersion = (await req.payload.find({
-            collection: 'languageVersions',
-            locale,
-            where: {
-              _id: {
-                equals: data.languageVersion,
+            })
+          ).docs[0] as Format;
+          const languageVersion = (
+            await req.payload.find({
+              collection: "languageVersions",
+              locale,
+              where: {
+                _id: {
+                  equals: data.languageVersion,
+                },
               },
-            },
-          })).docs[0];
+            })
+          ).docs[0];
           data.title = `${movie.internationalTitle} ${format.name} ${languageVersion.abbreviation}`;
         }
 
@@ -97,67 +109,65 @@ export const FilmPrints: CollectionConfig = {
       },
     },
     {
-      name: 'title',
-      label: t('Title'),
-      type: 'text',
+      name: "title",
+      label: t("Title"),
+      type: "text",
       unique: true,
       admin: {
-        position: 'sidebar',
-        description: t('Will be automatically generated if left blank.'),
+        position: "sidebar",
+        description: t("Will be automatically generated if left blank."),
       },
     },
     {
-      name: 'movie',
-      label: t('Movie'),
-      type: 'relationship',
-      relationTo: 'movies',
+      name: "movie",
+      label: t("Movie"),
+      type: "relationship",
+      relationTo: "movies",
       required: true,
       hasMany: false,
       filterOptions: {
         _status: {
-          equals: 'published',
+          equals: "published",
         },
       },
     },
-    analogDigitalTypeField('type'),
+    analogDigitalTypeField("type"),
     {
-      name: 'format',
-      label: t('Film Format'),
-      type: 'relationship',
-      relationTo: 'formats',
+      name: "format",
+      label: t("Film Format"),
+      type: "relationship",
+      relationTo: "formats",
       required: true,
-      filterOptions: ({ data }) => (
-        { type: { equals: data?.type } }
-      ),
+      filterOptions: ({ data }) => ({ type: { equals: data?.type } }),
     },
     {
-      name: 'languageVersion',
-      label: t('Language Version'),
-      type: 'relationship',
-      relationTo: 'languageVersions',
+      name: "languageVersion",
+      label: t("Language Version"),
+      type: "relationship",
+      relationTo: "languageVersions",
       hasMany: false,
       required: true,
     },
     {
-      name: 'isRented',
-      label: t('Is rental'),
-      type: 'checkbox',
+      name: "isRented",
+      label: t("Is rental"),
+      type: "checkbox",
       defaultValue: false,
     },
     {
-      type: 'tabs',
+      type: "tabs",
       tabs: [
         {
-          label: t('Details'),
+          label: t("Details"),
           // admin: {
           //   condition: (data) => !data?.isRented,
           // },
           fields: [
             {
-              name: 'rental',
-              label: t('Rented by'),
-              type: 'relationship',
-              relationTo: 'rentals',
+              name: "rental",
+              label: t("Rented by"),
+              type: "relationship",
+              relationTo: "rentals",
               hasMany: false,
               required: false,
               admin: {
@@ -165,71 +175,71 @@ export const FilmPrints: CollectionConfig = {
               },
             },
             {
-              name: 'carrier',
-              label: t('Carrier'),
-              type: 'relationship',
-              relationTo: 'carriers',
+              name: "carrier",
+              label: t("Carrier"),
+              type: "relationship",
+              relationTo: "carriers",
               admin: {
-                condition: (data) => data?.type === 'analog' && !data?.isRented,
+                condition: (data) => data?.type === "analog" && !data?.isRented,
               },
               required: true,
             },
             {
-              name: 'category',
-              label: t('Category'),
-              type: 'relationship',
-              relationTo: 'categories',
+              name: "category",
+              label: t("Category"),
+              type: "relationship",
+              relationTo: "categories",
               admin: {
-                condition: (data) => data?.type === 'analog' && !data?.isRented,
+                condition: (data) => data?.type === "analog" && !data?.isRented,
               },
               required: true,
             },
             {
-              name: 'numActs',
-              label: t('Number of Acts'),
-              type: 'number',
+              name: "numActs",
+              label: t("Number of Acts"),
+              type: "number",
               admin: {
-                condition: (data) => data?.type === 'analog' && !data?.isRented,
+                condition: (data) => data?.type === "analog" && !data?.isRented,
               },
               required: true,
             },
             {
-              name: 'aspectRatio',
-              label: t('Aspect Ratio'),
-              type: 'relationship',
-              relationTo: 'aspectRatios',
+              name: "aspectRatio",
+              label: t("Aspect Ratio"),
+              type: "relationship",
+              relationTo: "aspectRatios",
               admin: {
                 condition: (data) => !data?.isRented,
               },
               required: true,
             },
             {
-              name: 'color',
-              label: t('Color'),
-              type: 'relationship',
-              relationTo: 'colors',
+              name: "color",
+              label: t("Color"),
+              type: "relationship",
+              relationTo: "colors",
               required: true,
               admin: {
                 condition: (data) => !data?.isRented,
               },
             },
             {
-              name: 'soundFormat',
-              label: t('Sound Format'),
-              type: 'relationship',
-              relationTo: 'soundFormats',
+              name: "soundFormat",
+              label: t("Sound Format"),
+              type: "relationship",
+              relationTo: "soundFormats",
               admin: {
                 condition: (data) => !data?.isRented,
               },
               required: true,
             },
             {
-              name: 'condition',
-              label: t('Condition'),
-              type: 'relationship',
-              relationTo: 'conditions',
+              name: "condition",
+              label: t("Condition"),
+              type: "relationship",
+              relationTo: "conditions",
               admin: {
-                condition: (data) => data?.type === 'analog' && !data?.isRented,
+                condition: (data) => data?.type === "analog" && !data?.isRented,
               },
             },
           ],

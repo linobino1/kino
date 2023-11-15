@@ -1,11 +1,11 @@
 module.exports = {
   async up(db, client) {
     // screenings.info -> screenings.info.en
-    await db.collection('screenings').updateMany({}, [
+    await db.collection("screenings").updateMany({}, [
       {
         $addFields: {
-          'info': {
-            'en': "$info",
+          info: {
+            en: "$info",
           },
         },
       },
@@ -14,10 +14,10 @@ module.exports = {
 
   async down(db, client) {
     // screenings.info.en -> screenings.info
-    await db.collection('screenings').updateMany({}, [
+    await db.collection("screenings").updateMany({}, [
       {
         $addFields: {
-          'info': "$info.en",
+          info: "$info.en",
         },
       },
     ]);

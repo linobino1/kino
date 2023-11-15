@@ -1,28 +1,28 @@
 .container ul {
-    max-width: var(--page-max-width);
-    text-align: left;
+  max-width: var(--page-max-width);
+  text-align: left;
 }
 @media screen and (min-width: 768px) {
-    .container ul {
-      max-width: min(70vw, 1100px);
-      margin-left: auto;
-      margin-right: auto;
-    }
+  .container ul {
+    max-width: min(70vw, 1100px);
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 .container a span {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 .container a,
 .container a:visited {
-    color: inherit;
+  color: inherit;
 }
 .container a::after {
-    content: "\2197";
-    text-decoration: none !important;
+  content: "\2197";
+  text-decoration: none !important;
 }
 
 .container p {
-    max-width: var(--page-max-width);
-    margin-inline: auto;
+  max-width: var(--page-max-width);
+  margin-inline: auto;
 }

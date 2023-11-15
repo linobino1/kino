@@ -1,30 +1,30 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import type {
   Media,
   Site,
   Navigation as NavigationType,
 } from "payload/generated-types";
-import { Navigation } from '../Navigation';
-import { Link, useLocation } from '@remix-run/react';
-import { Image } from '~/components/Image';
-import { UserStatus } from '../UserStatus';
-import classes from './index.module.css';
+import { Navigation } from "../Navigation";
+import { Link, useLocation } from "@remix-run/react";
+import { Image } from "~/components/Image";
+import { UserStatus } from "../UserStatus";
+import classes from "./index.module.css";
 import { Modal, useModal } from "@faceless-ui/modal";
 import { Hamburger } from "./Hamburger";
 
 type Props = {
-  site: Site
-  navigations: NavigationType[]
+  site: Site;
+  navigations: NavigationType[];
 };
 
 const Header: React.FC<Props> = ({ site, navigations }) => {
   const { toggleModal, isModalOpen, closeModal } = useModal();
 
   const location = useLocation();
-  
+
   useEffect(() => {
-      closeModal('menu');
+    closeModal("menu");
   }, [location, closeModal]);
 
   return (

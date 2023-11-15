@@ -8,15 +8,15 @@ import { ErrorPage } from "~/components/ErrorPage";
 
 export const ErrorBoundary = ErrorPage;
 
-export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
+export const loader = async ({ request, context: { payload } }: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
 
   const [site, navigations] = await Promise.all([
     payload.findGlobal({
-      slug: 'site',
+      slug: "site",
     }),
     payload.find({
-      collection: 'navigations',
+      collection: "navigations",
       depth: 12,
       locale,
     }),
@@ -25,10 +25,10 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
     site,
     navigations: navigations.docs,
   };
-}
+};
 
 export const handle = {
-  i18n: ['common']
+  i18n: ["common"],
 };
 
 export default function Layout() {
@@ -37,16 +37,10 @@ export default function Layout() {
   return (
     <>
       <div className={classes.aboveFooter}>
-        <Header
-          site={site}
-          navigations={navigations}
-        />
+        <Header site={site} navigations={navigations} />
         <Outlet />
       </div>
-      <Footer
-        site={site}
-        navigations={navigations}
-      />
+      <Footer site={site} navigations={navigations} />
     </>
   );
 }

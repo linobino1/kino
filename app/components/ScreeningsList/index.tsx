@@ -1,34 +1,38 @@
-import { ScreeningsListItem } from './item';
-import { Link } from '@remix-run/react';
-import type { Screening, ScreeningSery, Site } from 'payload/generated-types';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import classes from './index.module.css';
-import { JsonLd } from 'cms/structured-data';
-import { screeningsListSchema as screeningsListMarkup} from 'cms/structured-data/screening';
+import { ScreeningsListItem } from "./item";
+import { Link } from "@remix-run/react";
+import type { Screening, ScreeningSery, Site } from "payload/generated-types";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import classes from "./index.module.css";
+import { JsonLd } from "cms/structured-data";
+import { screeningsListSchema as screeningsListMarkup } from "cms/structured-data/screening";
 
 export type Props = {
-  from?: string
-  items: Screening[]
-  site: Site
-  className?: string
-  activeScreeningSery?: ScreeningSery
-  emptyMessage?: string
-}
+  from?: string;
+  items: Screening[];
+  site: Site;
+  className?: string;
+  activeScreeningSery?: ScreeningSery;
+  emptyMessage?: string;
+};
 
 export const ScreeningsList: React.FC<Props> = ({
-  items, className, activeScreeningSery, emptyMessage, site,
+  items,
+  className,
+  activeScreeningSery,
+  emptyMessage,
+  site,
 }) => {
-  const { t } = useTranslation(); 
+  const { t } = useTranslation();
 
   return items?.length ? (
-    <div className={`${classes.list} ${className || ''}`}>
-      { JsonLd(screeningsListMarkup(items, site)) }
+    <div className={`${classes.list} ${className || ""}`}>
+      {JsonLd(screeningsListMarkup(items, site))}
       {items.map((item) => (
         <Link
           key={item.id}
           to={`/screenings/${item.slug as string}`}
-          prefetch='intent'
+          prefetch="intent"
         >
           <ScreeningsListItem
             screening={item}
@@ -39,7 +43,7 @@ export const ScreeningsList: React.FC<Props> = ({
     </div>
   ) : (
     <div className={classes.empty}>
-      { emptyMessage || t('No upcoming screenings.') }
+      {emptyMessage || t("No upcoming screenings.")}
     </div>
   );
 };

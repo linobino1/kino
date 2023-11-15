@@ -10,9 +10,13 @@ import classes from "./index.module.css";
 
 export const ErrorBoundary = ErrorPage;
 
-export const loader = async ({ params, request, context: { payload }}: LoaderArgs) => {
+export const loader = async ({
+  params,
+  request,
+  context: { payload },
+}: LoaderArgs) => {
   const data = await payload.find({
-    collection: 'filmPrints',
+    collection: "filmPrints",
     where: {
       slug: {
         equals: params.filmPrintSlug,
@@ -21,29 +25,31 @@ export const loader = async ({ params, request, context: { payload }}: LoaderArg
     locale: await i18next.getLocale(request),
     depth: 11,
   });
-  const navigation = (await payload.find({
-    collection: 'navigations',
-    where: {
-      type: {
-        equals: 'socialMedia',
+  const navigation = (
+    await payload.find({
+      collection: "navigations",
+      where: {
+        type: {
+          equals: "socialMedia",
+        },
       },
-    },
-  })).docs[0];
-  
+    })
+  ).docs[0];
+
   if (!data.docs.length) {
-    throw new Response('Film print not found', { status: 404 });
+    throw new Response("Film print not found", { status: 404 });
   }
-  
+
   return {
     filmPrint: data.docs[0],
     navigation,
-  }
-}
+  };
+};
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return {
     title: data?.filmPrint?.title,
-  }
+  };
 };
 
 export default function Item() {
@@ -52,15 +58,9 @@ export default function Item() {
 
   return (
     <Page className={classes.container}>
-      <HeaderImage
-        image={movie.still}
-        navigation={navigation}
-      />
+      <HeaderImage image={movie.still} navigation={navigation} />
       <main>
-        <Movie
-          movie={movie}
-          filmprint={filmPrint}
-        />
+        <Movie movie={movie} filmprint={filmPrint} />
       </main>
     </Page>
   );

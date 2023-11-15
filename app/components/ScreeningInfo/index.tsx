@@ -1,10 +1,10 @@
-import type { Screening } from 'payload/generated-types';
-import React from 'react';
+import type { Screening } from "payload/generated-types";
+import React from "react";
 // import { useTranslation } from 'react-i18next';
-import classes from './index.module.css';
+import classes from "./index.module.css";
 
 export interface Props extends React.HTMLAttributes<HTMLElement> {
-  screening: Screening
+  screening: Screening;
 }
 
 export const ScreeningInfo: React.FC<Props> = (props) => {
@@ -16,7 +16,7 @@ export const ScreeningInfo: React.FC<Props> = (props) => {
         <p
           className={classes.info}
           dangerouslySetInnerHTML={{
-            __html: screening.info as string
+            __html: screening.info as string,
           }}
         />
       )}

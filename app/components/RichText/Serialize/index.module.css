@@ -1,21 +1,21 @@
 /* Image ***************************************************/
 .imageWrapper {
-    width: 100%;
+  width: 100%;
 }
 .imageWrapper img {
-    object-fit: contain;
-    width: 100%;
-    max-height: 25em;
+  object-fit: contain;
+  width: 100%;
+  max-height: 25em;
 }
 @media screen and (min-width: 768px) {
-    .imageWrapper {
-        max-width: min(70vw, 1100px);
-        margin-left: auto;
-        margin-right: auto;
-    }
+  .imageWrapper {
+    max-width: min(70vw, 1100px);
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 /* Video ***************************************************/
 .videoWrapper {
-    width: 100%;
+  width: 100%;
 }

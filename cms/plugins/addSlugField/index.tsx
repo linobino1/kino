@@ -1,8 +1,11 @@
-import type { Field } from 'payload/types';
-import type { Config, Plugin } from 'payload/config';
-import type { BeforeChangeHook, CollectionConfig } from 'payload/dist/collections/config/types';
-import slugify from 'slugify';
-import { t } from '../../i18n';
+import type { Field } from "payload/types";
+import type { Config, Plugin } from "payload/config";
+import type {
+  BeforeChangeHook,
+  CollectionConfig,
+} from "payload/dist/collections/config/types";
+import slugify from "slugify";
+import { t } from "../../i18n";
 
 export const slugFormat = (s: string): string => {
   if (!s) return s;
@@ -12,8 +15,8 @@ export const slugFormat = (s: string): string => {
 };
 
 export type slugGeneratorArgs = Parameters<BeforeChangeHook>[0] & {
-  from?: string
-}
+  from?: string;
+};
 
 export interface slugGenerator {
   (args: slugGeneratorArgs): Promise<string | undefined>;
@@ -23,47 +26,50 @@ export interface slugGenerator {
  * default slug generator (uses the given fields value)
  * @returns unformatted string that will be formatted by slugFormat
  */
-const defaultGenerator: slugGenerator = async ({
-  data, originalDoc, from,
-}) => {
-  if (!from) throw new Error('from is required in addSlugField config if no generator is given');
+const defaultGenerator: slugGenerator = async ({ data, originalDoc, from }) => {
+  if (!from)
+    throw new Error(
+      "from is required in addSlugField config if no generator is given"
+    );
   const res = (originalDoc && originalDoc[from]) || (data && data[from]);
-  return typeof res === 'string' ? res : undefined;
-}
+  return typeof res === "string" ? res : undefined;
+};
 
-const hook = (collection: CollectionConfig): BeforeChangeHook  => async (props) => {
-  const { data } = props;
-  
-  // do nothing if the slug is already set
-  if (!data || data.slug) return data;
-  
-  // generate raw slug
-  const generator: slugGenerator = collection.custom?.addSlugField?.generator || defaultGenerator;
-  const raw = await generator({
-    ...props,
-    from: collection.custom?.addSlugField?.from,
-  });
-  
-  // slugify raw slug
-  const slug = raw ? slugFormat(raw) : undefined;
-  
-  data.slug = slug;
-  
-  return data;
-  
-}
+const hook =
+  (collection: CollectionConfig): BeforeChangeHook =>
+  async (props) => {
+    const { data } = props;
+
+    // do nothing if the slug is already set
+    if (!data || data.slug) return data;
+
+    // generate raw slug
+    const generator: slugGenerator =
+      collection.custom?.addSlugField?.generator || defaultGenerator;
+    const raw = await generator({
+      ...props,
+      from: collection.custom?.addSlugField?.from,
+    });
+
+    // slugify raw slug
+    const slug = raw ? slugFormat(raw) : undefined;
+
+    data.slug = slug;
+
+    return data;
+  };
 
 const field: Field = {
-  name: 'slug',
-  type: 'text',
+  name: "slug",
+  type: "text",
   unique: true,
   index: true,
-  label: t('Slug'),
+  label: t("Slug"),
   admin: {
-    position: 'sidebar',
-    description: t('Will be automatically generated if left blank.'),
+    position: "sidebar",
+    description: t("Will be automatically generated if left blank."),
   },
-}
+};
 /**
  * this plugin adds a url field to a collection if you add the following to the collection config:
  *
@@ -85,20 +91,21 @@ export const addSlugField: Plugin = (incomingConfig: Config): Config => {
     ...incomingConfig,
     // @ts-ignore
     collections: [
-      ...incomingConfig.collections?.map((collection) => collection.custom?.addSlugField ? {
-        ...collection,
-        hooks: {
-          ...collection.hooks,
-          beforeChange: [
-            ...collection.hooks?.beforeChange || [],
-            hook(collection),
-          ],
-        },
-        fields: [
-          ...collection.fields,
-          field,
-        ],
-      } : collection) || [],
+      ...(incomingConfig.collections?.map((collection) =>
+        collection.custom?.addSlugField
+          ? {
+              ...collection,
+              hooks: {
+                ...collection.hooks,
+                beforeChange: [
+                  ...(collection.hooks?.beforeChange || []),
+                  hook(collection),
+                ],
+              },
+              fields: [...collection.fields, field],
+            }
+          : collection
+      ) || []),
     ],
   };
 

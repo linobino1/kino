@@ -81,9 +81,9 @@ export interface tmdbVideo {
   iso_3166_1: string;
   name: string;
   key: string;
-  site: 'YouTube' | string;
+  site: "YouTube" | string;
   size: number;
-  type: 'Trailer' | string;
+  type: "Trailer" | string;
   official: boolean;
   published_at: string;
   id: string;

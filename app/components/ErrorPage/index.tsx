@@ -18,20 +18,18 @@ export const ErrorPage: React.FC = () => {
       <>
         <h1>Error</h1>
         <p>{error.message}</p>
-        {environment().NODE_ENV === 'development' && (
-          <pre>{error.stack}</pre>
-        )}
+        {environment().NODE_ENV === "development" && <pre>{error.stack}</pre>}
       </>
     );
   } else {
-    children = (<h1>Unknown Error</h1>);
+    children = <h1>Unknown Error</h1>;
   }
   return (
     <Page
       layout={{
         blocks: [
           {
-            blockType: "outlet"
+            blockType: "outlet",
           },
         ],
         type: "default",

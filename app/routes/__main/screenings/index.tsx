@@ -9,21 +9,21 @@ import { ErrorPage } from "~/components/ErrorPage";
 export const ErrorBoundary = ErrorPage;
 
 let today = new Date();
-today.setHours(0,0,0,0);
+today.setHours(0, 0, 0, 0);
 
-export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
+export const loader = async ({ request, context: { payload } }: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
   const page = await payload.findGlobal({
-    slug: 'screeningsPage',
+    slug: "screeningsPage",
     locale,
   });
   const screenings = await payload.find({
-    collection: 'screenings',
+    collection: "screenings",
     locale,
     depth: 7,
     where: {
       _status: {
-        equals: 'published',
+        equals: "published",
       },
       and: [
         {
@@ -33,24 +33,33 @@ export const loader = async ({ request, context: { payload }}: LoaderArgs) => {
         },
       ],
     },
-    sort: 'date',
+    sort: "date",
   });
-  
+
   const site = await payload.findGlobal({
-    slug: 'site',
+    slug: "site",
   });
-  
+
   return {
     page,
     screenings: screenings.docs || [],
     site,
-  }
+  };
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data, parentsData }) => ({
-  title: pageTitle(parentsData.root?.site?.meta?.title, data?.page?.meta?.title),
-  description: pageDescription(parentsData.root?.site?.meta?.description, data?.page?.meta?.description),
-  keywords: pageKeywords(parentsData.root?.site?.meta?.keywords, data?.page?.meta?.keywords),
+  title: pageTitle(
+    parentsData.root?.site?.meta?.title,
+    data?.page?.meta?.title
+  ),
+  description: pageDescription(
+    parentsData.root?.site?.meta?.description,
+    data?.page?.meta?.description
+  ),
+  keywords: pageKeywords(
+    parentsData.root?.site?.meta?.keywords,
+    data?.page?.meta?.keywords
+  ),
 });
 
 export default function Index() {

@@ -4,8 +4,8 @@
  * this file is the only place where they are used. The `backend` namespace
  * is not used anywhere else in the app.
  */
-import en from './../../public/locales/en/backend.json';
-import de from './../../public/locales/de/backend.json';
+import en from "./../../public/locales/en/backend.json";
+import de from "./../../public/locales/de/backend.json";
 
 export type TranslationKeyEN = keyof typeof en;
 export type TranslationKeyDE = keyof typeof de;
@@ -16,22 +16,41 @@ export type TranslationKeyDE = keyof typeof de;
  * @param replacers { name: 'John' }
  * @returns { en: 'Hello John!', de: 'Hallo John!' }
  */
-export const t = (key: string, replacers: Record<string, string> = {}): Record<string, string> => {
+export const t = (
+  key: string,
+  replacers: Record<string, string> = {}
+): Record<string, string> => {
   return {
-    en: replace(en.hasOwnProperty(key) ? en[key as TranslationKeyEN] : key, replacers),
-    de: replace(de.hasOwnProperty(key) ? de[key as TranslationKeyDE] : key, replacers),
+    en: replace(
+      en.hasOwnProperty(key) ? en[key as TranslationKeyEN] : key,
+      replacers
+    ),
+    de: replace(
+      de.hasOwnProperty(key) ? de[key as TranslationKeyDE] : key,
+      replacers
+    ),
   };
 };
 
-export const fixedT = (key: string, locale: string, replacers: Record<string, string> = {}): string => {
+export const fixedT = (
+  key: string,
+  locale: string,
+  replacers: Record<string, string> = {}
+): string => {
   switch (locale) {
-    case 'en':
-      return replace(en.hasOwnProperty(key) ? en[key as TranslationKeyEN] : key, replacers);
-    case 'de':
-      return replace(de.hasOwnProperty(key) ? de[key as TranslationKeyDE] : key, replacers);
+    case "en":
+      return replace(
+        en.hasOwnProperty(key) ? en[key as TranslationKeyEN] : key,
+        replacers
+      );
+    case "de":
+      return replace(
+        de.hasOwnProperty(key) ? de[key as TranslationKeyDE] : key,
+        replacers
+      );
   }
   return key;
-}
+};
 
 /**
  * @param s Hello {name}!
@@ -44,4 +63,4 @@ const replace = (s: string, replacers: Record<string, string> = {}): string => {
     res = res?.replace(`{${key}}`, replacers[key]);
   });
   return res;
-}
+};

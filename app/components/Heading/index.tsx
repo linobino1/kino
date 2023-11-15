@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
 export interface Type extends React.HTMLAttributes<HTMLHeadingElement> {
-  text?: string
-  children?: React.ReactNode
+  text?: string;
+  children?: React.ReactNode;
 }
 
 export const Heading: React.FC<Type> = ({ text, children, ...props }) => (

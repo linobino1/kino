@@ -26,7 +26,7 @@ ul.list {
   grid-column: auto;
 }
 .item:hover {
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   transform: translate(0px, -2%);
 }
 /* IMAGE ****************************************************************/
@@ -73,14 +73,14 @@ ul.list {
   justify-self: end;
 }
 .moreInfo::after {
-  content: ' >';
+  content: " >";
 }
 .synopsis {
   position: relative;
   overflow: hidden;
 }
 .synopsis::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;

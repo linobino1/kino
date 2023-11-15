@@ -11,79 +11,86 @@ import { useTranslation } from "react-i18next";
 
 export const ErrorBoundary = ErrorPage;
 
-export const loader = async ({ params, request, context: { payload }}: LoaderArgs) => {
+export const loader = async ({
+  params,
+  request,
+  context: { payload },
+}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
-  const season = (await payload.find({
-    collection: 'seasons',
-    where: {
-      slug: {
-        equals: params.season,
+  const season = (
+    await payload.find({
+      collection: "seasons",
+      where: {
+        slug: {
+          equals: params.season,
+        },
       },
-    },
-    locale,
-    depth: 11,
-  })).docs[0];
-  
+      locale,
+      depth: 11,
+    })
+  ).docs[0];
+
   if (!season) {
-    throw new Response('Season not found', { status: 404 });
+    throw new Response("Season not found", { status: 404 });
   }
-  
-  const screenings = (await payload.find({
-    collection: 'screenings',
-    where: {
-      season: {
-        equals: season.id,
+
+  const screenings = (
+    await payload.find({
+      collection: "screenings",
+      where: {
+        season: {
+          equals: season.id,
+        },
       },
-    },
-    locale,
-    depth: 11,
-    sort: 'date',
-  })
+      locale,
+      depth: 11,
+      sort: "date",
+    })
   ).docs;
 
-  const navigation = (await payload.find({
-    collection: 'navigations',
-    where: {
-      type: {
-        equals: 'socialMedia',
+  const navigation = (
+    await payload.find({
+      collection: "navigations",
+      where: {
+        type: {
+          equals: "socialMedia",
+        },
       },
-    },
-  })).docs[0];
-  
+    })
+  ).docs[0];
+
   const site = await payload.findGlobal({
-    slug: 'site',
+    slug: "site",
   });
-  
+
   return {
     season,
     screenings,
     navigation,
     site,
-  }
-}
+  };
+};
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return {
     title: data.season.name,
-  }
+  };
 };
 
 export default function Season() {
   const { t } = useTranslation();
-  const { season, screenings, navigation, site } = useLoaderData<typeof loader>();
+  const { season, screenings, navigation, site } =
+    useLoaderData<typeof loader>();
 
   return (
-    <Page layoutType='default'>
-      <HeaderImage
-        image={season.header as Media}
-        navigation={navigation}
-      />
+    <Page layoutType="default">
+      <HeaderImage image={season.header as Media} navigation={navigation} />
       <Heading>{season.name}</Heading>
       <ScreeningsList
         items={screenings}
-        emptyMessage={t('No screenings for this season.')}
+        emptyMessage={t("No screenings for this season.")}
         site={site}
       />
     </Page>
-  )
+  );
 }

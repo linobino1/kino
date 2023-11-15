@@ -19,9 +19,9 @@
 .tag {
   font-weight: var(--font-weight-bold);
   display: inline-block;
-  padding: 0 .2rem;
-  border-radius: .6em;
-  margin-inline-end: .5rem;
+  padding: 0 0.2rem;
+  border-radius: 0.6em;
+  margin-inline-end: 0.5rem;
 }
 .tag.series {
   background-color: var(--color-theme-contrast-light-2);

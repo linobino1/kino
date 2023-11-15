@@ -1,33 +1,33 @@
-import type { Field } from 'payload/types';
-import { t } from '../i18n';
+import type { Field } from "payload/types";
+import { t } from "../i18n";
 
 export const metaField = (label: Record<string, string>): Field => ({
-  name: 'meta',
+  name: "meta",
   label,
-  type: 'group',
+  type: "group",
   fields: [
     {
-      name: 'title',
-      label: t('Title'),
+      name: "title",
+      label: t("Title"),
       localized: true,
-      type: 'text',
+      type: "text",
     },
     {
-      name: 'description',
-      label: t('Description'),
+      name: "description",
+      label: t("Description"),
       localized: true,
-      type: 'textarea',
+      type: "textarea",
     },
     {
-      name: 'keywords',
-      label: t('Keywords'),
-      type: 'text',
+      name: "keywords",
+      label: t("Keywords"),
+      type: "text",
     },
     {
-      name: 'image',
-      label: t('Image'),
-      type: 'upload',
-      relationTo: 'media',
-    }
+      name: "image",
+      label: t("Image"),
+      type: "upload",
+      relationTo: "media",
+    },
   ],
 });

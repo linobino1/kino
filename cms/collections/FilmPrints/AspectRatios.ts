@@ -1,25 +1,25 @@
-import type { CollectionConfig } from 'payload/types';
-import { t } from '../../i18n';
+import type { CollectionConfig } from "payload/types";
+import { t } from "../../i18n";
 
 const AspectRatios: CollectionConfig = {
-  slug: 'aspectRatios',
+  slug: "aspectRatios",
   labels: {
-    singular: t('Aspect Ratio'),
-    plural: t('Aspect Ratios'),
+    singular: t("Aspect Ratio"),
+    plural: t("Aspect Ratios"),
   },
   admin: {
-    group: t('Configuration'),
-    defaultColumns: ['name'],
-    useAsTitle: 'name',
+    group: t("Configuration"),
+    defaultColumns: ["name"],
+    useAsTitle: "name",
   },
   access: {
     read: () => true,
   },
   fields: [
     {
-      name: 'name',
-      label: t('Name'),
-      type: 'text',
+      name: "name",
+      label: t("Name"),
+      type: "text",
       required: true,
     },
   ],

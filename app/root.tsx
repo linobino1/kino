@@ -1,13 +1,13 @@
 import {
   DynamicLinks,
   ExternalScripts,
-  type DynamicLinksFunction
+  type DynamicLinksFunction,
 } from "remix-utils";
 import type {
   MetaFunction,
   SerializeFrom,
   LoaderArgs,
-  LinksFunction
+  LinksFunction,
 } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
@@ -25,7 +25,7 @@ import { useEffect } from "react";
 import CookieConsent from "react-cookie-consent";
 import { cssBundleHref } from "@remix-run/css-bundle";
 import { i18nCookie } from "./cookie";
-import type { Media} from "payload/generated-types";
+import type { Media } from "payload/generated-types";
 import environment from "./util/environment";
 import classes from "./root.module.css";
 import { ErrorPage } from "~/components/ErrorPage";
@@ -39,49 +39,55 @@ export const ErrorBoundary = ErrorPage;
 export const links: LinksFunction = () => {
   return [
     // use css bundling
-    ...(cssBundleHref
-      ? [{ rel: "stylesheet", href: cssBundleHref }]
-      : []),
+    ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
   ];
 };
 
-export async function loader({ request, context: { payload, user } }: LoaderArgs) {
+export async function loader({
+  request,
+  context: { payload, user },
+}: LoaderArgs) {
   const locale = await i18next.getLocale(request);
   const [site, localeCookie] = await Promise.all([
     payload.findGlobal({
-      slug: 'site',
+      slug: "site",
       depth: 3,
     }),
     i18nCookie.serialize(locale),
   ]);
 
-  return json({
-    user,
-    site,
-    locale,
-    publicKeys: {
-      PAYLOAD_PUBLIC_SERVER_URL: environment().PAYLOAD_PUBLIC_SERVER_URL,
-      HCAPTCHA_SITE_KEY: environment().HCAPTCHA_SITE_KEY,
-      TIMEZONE: environment().TIMEZONE,
-      NODE_ENV: environment().NODE_ENV,
-      MAILCHIMP_SIGNUP_URL: environment().MAILCHIMP_SIGNUP_URL,
+  return json(
+    {
+      user,
+      site,
+      locale,
+      publicKeys: {
+        PAYLOAD_PUBLIC_SERVER_URL: environment().PAYLOAD_PUBLIC_SERVER_URL,
+        HCAPTCHA_SITE_KEY: environment().HCAPTCHA_SITE_KEY,
+        TIMEZONE: environment().TIMEZONE,
+        NODE_ENV: environment().NODE_ENV,
+        MAILCHIMP_SIGNUP_URL: environment().MAILCHIMP_SIGNUP_URL,
+      },
     },
-  }, {
-    headers: {
-      "Set-Cookie": localeCookie,
-    },
-  })
+    {
+      headers: {
+        "Set-Cookie": localeCookie,
+      },
+    }
+  );
 }
 
-export const dynamicLinks: DynamicLinksFunction<SerializeFrom<typeof loader>> = ({ data }) => {
+export const dynamicLinks: DynamicLinksFunction<
+  SerializeFrom<typeof loader>
+> = ({ data }) => {
   return [
     {
       rel: "icon",
       href: (data.site.favicon as Media)?.url as string,
       type: (data.site.logo as Media)?.mimeType,
     },
-  ]
-}
+  ];
+};
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => ({
   charset: "utf-8",
@@ -89,9 +95,11 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => ({
   description: data.site.meta?.description,
   keywords: data.site.meta?.keywords,
   viewport: "width=device-width,initial-scale=1",
-  'og:image': data.site.meta?.image && encodeURI((data.site.meta.image as any)?.sizes['1500w'].url),
-  'og:title': data.site.meta?.title,
-  'og:description': data.site.meta?.description,
+  "og:image":
+    data.site.meta?.image &&
+    encodeURI((data.site.meta.image as any)?.sizes["1500w"].url),
+  "og:title": data.site.meta?.title,
+  "og:description": data.site.meta?.description,
 });
 
 export const handle = {
@@ -113,9 +121,10 @@ export default function App() {
 
   // handle locale change
   useChangeLanguage(locale);
-  
 
-  const structuredData: WithContext<MovieTheater> = addContext(locationSchema(site));
+  const structuredData: WithContext<MovieTheater> = addContext(
+    locationSchema(site)
+  );
 
   return (
     <html lang={locale} dir={i18n.dir()}>
@@ -123,7 +132,7 @@ export default function App() {
         <Meta />
         <Links />
         <DynamicLinks />
-        
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -148,8 +157,8 @@ export default function App() {
         <div className={classes.cookiesWrapper}>
           <CookieConsent
             location="bottom"
-            buttonText={t('Accept')}
-            declineButtonText={t('Decline')}
+            buttonText={t("Accept")}
+            declineButtonText={t("Decline")}
             enableDeclineButton
             containerClasses={classes.cookies}
             buttonWrapperClasses={classes.cookieButtons}
@@ -157,7 +166,7 @@ export default function App() {
             declineButtonClasses={classes.cookieButtonDecline}
             contentClasses={classes.cookieContent}
           >
-            { t('CookieBannerText')}
+            {t("CookieBannerText")}
           </CookieConsent>
         </div>
       </body>

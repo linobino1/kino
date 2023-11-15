@@ -1,38 +1,36 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
-import { Modal, useModal } from '@faceless-ui/modal';
-import { Transforms } from 'slate';
-import { ReactEditor, useSlate } from 'slate-react';
-import { ElementButton } from 'payload/components/rich-text';
-import { Form, Text, Submit } from 'payload/components/forms';
-import { MinimalTemplate, Button, X } from 'payload/components';
-import VideoIcon from '../Icon';
+import React, { Fragment, useCallback, useEffect, useState } from "react";
+import { Modal, useModal } from "@faceless-ui/modal";
+import { Transforms } from "slate";
+import { ReactEditor, useSlate } from "slate-react";
+import { ElementButton } from "payload/components/rich-text";
+import { Form, Text, Submit } from "payload/components/forms";
+import { MinimalTemplate, Button, X } from "payload/components";
+import VideoIcon from "../Icon";
 
-import './index.scss';
+import "./index.scss";
 
 const initialFormData = {
-  source: 'youtube',
+  source: "youtube",
 };
 
-const baseClass = 'video-rich-text-button';
+const baseClass = "video-rich-text-button";
 
-const insertVideo = (editor: any, { url }: { url: string}) => {
-  const text = { text: ' ' };
-  
+const insertVideo = (editor: any, { url }: { url: string }) => {
+  const text = { text: " " };
+
   const video = {
-    type: 'video',
+    type: "video",
     url,
-    children: [
-      text,
-    ],
+    children: [text],
   };
-  
-  const nodes = [video, { type: 'p', children: [{ text: '' }] }];
-  
+
+  const nodes = [video, { type: "p", children: [{ text: "" }] }];
+
   if (editor.blurSelection) {
     Transforms.select(editor, editor.blurSelection);
   }
-  
+
   Transforms.insertNodes(editor, nodes);
   ReactEditor.focus(editor);
 };
@@ -42,69 +40,62 @@ const VideoButton: React.FC<{ path: string }> = ({ path }) => {
   const editor = useSlate();
   const [renderModal, setRenderModal] = useState(false);
   const modalSlug = `${path}-add-video`;
-  
-  const handleAddVideo = useCallback((_: any, { url }: { url: string}) => {
-    insertVideo(editor, { url });
-    toggleModal(modalSlug);
-    setRenderModal(false);
-  }, [editor, toggleModal]);
-  
+
+  const handleAddVideo = useCallback(
+    (_: any, { url }: { url: string }) => {
+      insertVideo(editor, { url });
+      toggleModal(modalSlug);
+      setRenderModal(false);
+    },
+    [editor, toggleModal]
+  );
+
   useEffect(() => {
     if (renderModal) {
       openModal(modalSlug);
     }
   }, [renderModal, openModal, modalSlug]);
-  
+
   return (
     <Fragment>
-    <ElementButton
-      className={baseClass}
-      format="video"
-      onClick={(e) => {
-        e.preventDefault();
-        setRenderModal(true)
-      }}
-    >
-    <VideoIcon />
-    </ElementButton>
-    {renderModal && (
-      <Modal
-        slug={modalSlug}
-        className={`${baseClass}__modal`}
+      <ElementButton
+        className={baseClass}
+        format="video"
+        onClick={(e) => {
+          e.preventDefault();
+          setRenderModal(true);
+        }}
       >
-        <MinimalTemplate className={`${baseClass}__template`}>
-          <header className={`${baseClass}__header`}>
-            <h3>Add Video</h3>
-            <Button
-              buttonStyle="none"
-              onClick={() => {
-                toggleModal(modalSlug);
-                setRenderModal(false);
-              }}
+        <VideoIcon />
+      </ElementButton>
+      {renderModal && (
+        <Modal slug={modalSlug} className={`${baseClass}__modal`}>
+          <MinimalTemplate className={`${baseClass}__template`}>
+            <header className={`${baseClass}__header`}>
+              <h3>Add Video</h3>
+              <Button
+                buttonStyle="none"
+                onClick={() => {
+                  toggleModal(modalSlug);
+                  setRenderModal(false);
+                }}
+              >
+                <X />
+              </Button>
+            </header>
+            <Form
+              // @ts-ignore
+              onSubmit={handleAddVideo}
+              initialData={initialFormData}
             >
-              <X />
-            </Button>
-          </header>
-          <Form
-            // @ts-ignore
-            onSubmit={handleAddVideo}
-            initialData={initialFormData}
-          >
-            <Text
-              label="Video URL"
-              required
-              name="url"
-            />
-            <Submit>
-              Add video
-            </Submit>
-          </Form>
-        </MinimalTemplate>
-      </Modal>
+              <Text label="Video URL" required name="url" />
+              <Submit>Add video</Submit>
+            </Form>
+          </MinimalTemplate>
+        </Modal>
       )}
-      </Fragment>
-      );
-    };
-    
-    export default VideoButton;
-    
+    </Fragment>
+  );
+};
+
+export default VideoButton;

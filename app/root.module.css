@@ -7,20 +7,20 @@
 }
 
 @font-face {
-  font-family: 'DM Sans';
-  src: url('../public/fonts/DM_Sans/DMSans-Regular.ttf') format('truetype');
+  font-family: "DM Sans";
+  src: url("../public/fonts/DM_Sans/DMSans-Regular.ttf") format("truetype");
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
-  font-family: 'DM Sans';
-  src: url('../public/fonts/DM_Sans/DMSans-Medium.ttf') format('truetype');
+  font-family: "DM Sans";
+  src: url("../public/fonts/DM_Sans/DMSans-Medium.ttf") format("truetype");
   font-weight: 500;
   font-display: swap;
 }
 @font-face {
-  font-family: 'DM Sans';
-  src: url('../public/fonts/DM_Sans/DMSans-Bold.ttf') format('truetype');
+  font-family: "DM Sans";
+  src: url("../public/fonts/DM_Sans/DMSans-Bold.ttf") format("truetype");
   font-weight: 700;
   font-display: swap;
 }
@@ -30,47 +30,47 @@
   --page-max-width: min(calc(100vw - 2rem), 1120px);
 
   --color-theme: #283587;
-  --color-white: #FFFFFF;
+  --color-white: #ffffff;
   --color-black: #000000;
-  --color-theme-contrast: #F6CD03;
-  --color-theme-contrast-strong: #F1FF00;
-  --color-theme-contrast-light: #FF9EE6;
-  --color-theme-contrast-light-2: #62B9A6;
-  --color-theme-contrast-dark: #D63312;
+  --color-theme-contrast: #f6cd03;
+  --color-theme-contrast-strong: #f1ff00;
+  --color-theme-contrast-light: #ff9ee6;
+  --color-theme-contrast-light-2: #62b9a6;
+  --color-theme-contrast-dark: #d63312;
   --color-light-grey: #dcdcdc;
-  --color-light-grey-readable: #C1C1C1;
+  --color-light-grey-readable: #c1c1c1;
 
-  --color-font-light: rgb(132, 132, 132);;
+  --color-font-light: rgb(132, 132, 132);
 
   --color-font: #000000;
-  --color-font-2: #4A4A4A;
-  --color-font-light: #9A9391;
-  --color-font-bright: #FFFFFF;
-  --color-font-bright-2: #E8E8E8;
-  --color-font-bright-3: #9A969B;
+  --color-font-2: #4a4a4a;
+  --color-font-light: #9a9391;
+  --color-font-bright: #ffffff;
+  --color-font-bright-2: #e8e8e8;
+  --color-font-bright-3: #9a969b;
 
-  --font-family: 'DM Sans', 'Helvetica', sans-serif;
-  --font-family-serif: 'Times', serif;
+  --font-family: "DM Sans", "Helvetica", sans-serif;
+  --font-family-serif: "Times", serif;
   --font-weight-bold: 600;
   --font-weight-semi-bold: 500;
   --font-weight-normal: 400;
   --font-weight-light: 200;
-  
-  --letter-spacing-big: .1em;
-  --letter-spacing-x-big: .11em;
-  
+
+  --letter-spacing-big: 0.1em;
+  --letter-spacing-x-big: 0.11em;
+
   --font-xxx-big: normal 300 2.5rem/1 var(--font-family);
   --font-xx-big: normal 300 1.9rem/1 var(--font-family);
   --font-x-big: normal 300 1.7rem/1.2 var(--font-family);
   --font-big: normal 300 1.3rem/1.2 var(--font-family);
   --font: normal 300 1rem/1.4 var(--font-family);
-  --font-small: normal 300 .9rem/1.4 var(--font-family);
-  --font-x-small: normal 300 .8rem/1.4 var(--font-family);
+  --font-small: normal 300 0.9rem/1.4 var(--font-family);
+  --font-x-small: normal 300 0.8rem/1.4 var(--font-family);
   --font-h2: var(--font-weight-bold) 1.9rem/1 var(--font-family);
 
   --border-radius: 2px;
-  --box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.15);
-  
+  --box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.15);
+
   --z-index-header: 300;
   --z-index-modal: 200;
   --z-index-cookies: 400;
@@ -139,13 +139,13 @@ p {
 .box {
   padding: 2em;
   border-radius: var(--border-radius);
-  background-color: rgba(0,0,0,0.05);
+  background-color: rgba(0, 0, 0, 0.05);
   margin-block: 2em;
   box-shadow: var(--box-shadow);
 }
 /** Box *************************************************************/
 .cookiesWrapper {
-  position: fixed; 
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
@@ -160,9 +160,9 @@ p {
   background: rgba(255, 255, 255, 0.95) !important;
   backdrop-filter: blur(10px);
   color: var(--color-font) !important;
-  border-radius: .5em !important;
+  border-radius: 0.5em !important;
   align-items: flex-end !important;
-  box-shadow: 0px 0px 10px rgba(255, 255, 255, .1);
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
 }
 .cookieContent {
   max-width: 30em;
@@ -173,10 +173,10 @@ p {
 }
 .cookieButtonAccept,
 .cookieButtonDecline {
-  padding: .5em !important;
+  padding: 0.5em !important;
   border-radius: 0 !important;
   border: 1px solid !important;
-  border-radius: .3em !important;
+  border-radius: 0.3em !important;
   min-width: 12em !important;
   font: var(--font);
 }
@@ -203,5 +203,4 @@ p {
   .cookieButtonDecline {
     min-width: unset !important;
   }
-  
 }

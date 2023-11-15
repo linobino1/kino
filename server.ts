@@ -12,7 +12,6 @@ require("dotenv").config();
 
 const BUILD_DIR = path.join(process.cwd(), "build");
 
-
 start();
 
 async function start() {
@@ -36,14 +35,14 @@ async function start() {
       payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`);
     },
   });
-  
+
   // init themoviedb api
   themoviedb.defaults.params = {
     api_key: process.env.THEMOVIEDB_API_KEY,
-  }
+  };
 
   app.use(compression());
-  
+
   // http://expressjs.com/en/advanced/best-practice-security.html#at-a-minimum-disable-x-powered-by-header
   app.disable("x-powered-by");
 
@@ -58,13 +57,17 @@ async function start() {
   app.use(express.static("public", { maxAge: "1h" }));
 
   app.use(morgan("tiny"));
-  
+
   // robots.txt
-  app.get('/robots.txt', function (req, res) {
-    res.type('text/plain');
-    res.send(`User-agent: *\nDisallow:${process.env.NODE_ENV === 'development' ? ' *' : ''}:`);
+  app.get("/robots.txt", function (req, res) {
+    res.type("text/plain");
+    res.send(
+      `User-agent: *\nDisallow:${
+        process.env.NODE_ENV === "development" ? " *" : ""
+      }:`
+    );
   });
-  
+
   app.use(express.json());
 
   // authenticate all requests to the frontend

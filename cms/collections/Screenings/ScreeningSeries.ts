@@ -1,50 +1,50 @@
-import type { CollectionConfig } from 'payload/types';
-import { t } from '../../i18n';
-import pageLayout from '../../fields/pageLayout';
+import type { CollectionConfig } from "payload/types";
+import { t } from "../../i18n";
+import pageLayout from "../../fields/pageLayout";
 
 const ScreeningSeries: CollectionConfig = {
-  slug: 'screeningSeries',
+  slug: "screeningSeries",
   labels: {
-    singular: t('Screening Series singular'),
-    plural: t('Screening Series'),
+    singular: t("Screening Series singular"),
+    plural: t("Screening Series"),
   },
   admin: {
-    group: t('Screenings'),
-    useAsTitle: 'name',
-    defaultColumns: ['name'],
+    group: t("Screenings"),
+    useAsTitle: "name",
+    defaultColumns: ["name"],
   },
   access: {
     read: () => true,
   },
   custom: {
     addUrlField: {
-      hook: (slug?: string) => `/screening-series/${slug || ''}`,
+      hook: (slug?: string) => `/screening-series/${slug || ""}`,
     },
     addSlugField: {
-      from: 'name',
+      from: "name",
     },
   },
   fields: [
     {
-      name: 'name',
-      label: t('Name'),
-      type: 'text',
+      name: "name",
+      label: t("Name"),
+      type: "text",
       localized: true,
       required: true,
     },
     pageLayout({
       defaultLayout: [
         {
-          blockType: 'headerImage',
+          blockType: "headerImage",
         },
         {
-          blockType: 'heading',
+          blockType: "heading",
         },
         {
-          blockType: 'content',
+          blockType: "content",
         },
         {
-          blockType: 'outlet',
+          blockType: "outlet",
         },
       ],
     }),

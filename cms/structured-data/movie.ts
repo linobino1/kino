@@ -17,4 +17,4 @@ export const movieSchema = (movie: Movie): SchemaOrgMovie => {
     res.genre = (movie.genres[0] as Genre).name;
   }
   return res;
-}
+};

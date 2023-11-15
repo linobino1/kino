@@ -7,17 +7,23 @@ import type {
   ScreeningSery,
   FilmPrint,
   Season,
-} from 'payload/generated-types';
+} from "payload/generated-types";
 
 // each collection that has a url field must be added to this type
-export type LinkableCollection = Post | StaticPage | Screening | ScreeningSery | FilmPrint | Season;
+export type LinkableCollection =
+  | Post
+  | StaticPage
+  | Screening
+  | ScreeningSery
+  | FilmPrint
+  | Season;
 
 // each collection that has a url field must be added to this array
 export const LinkableCollectionSlugs = [
-  'posts',
-  'staticPages',
-  'screenings',
-  'screeningSeries',
-  'filmPrints',
-  'seasons',
+  "posts",
+  "staticPages",
+  "screenings",
+  "screeningSeries",
+  "filmPrints",
+  "seasons",
 ];

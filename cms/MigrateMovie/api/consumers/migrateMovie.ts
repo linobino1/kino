@@ -6,10 +6,12 @@ import { tmdbLng } from "../../tmdb";
 import type { MigratedMovie } from "../types";
 
 export const migrateMovie = async (
-  payload: Payload, tmdbId: number, warnings: Error[],
+  payload: Payload,
+  tmdbId: number,
+  warnings: Error[]
 ): Promise<MigratedMovie> => {
-  const data = await getTmdbData('movie', tmdbId, tmdbLng);
-  
+  const data = await getTmdbData("movie", tmdbId, tmdbLng);
+
   // create genres
   let genres: Genre[] = [];
   await Promise.all(
@@ -17,7 +19,7 @@ export const migrateMovie = async (
       genres.push(await migrateGenre(payload, tmdbId, warnings, genre));
     })
   );
-  
+
   // create production companies
   let productionCompanies: Company[] = [];
   await Promise.all(
@@ -27,7 +29,7 @@ export const migrateMovie = async (
       // try to create company
       try {
         doc = await payload.create({
-          collection: 'companies',
+          collection: "companies",
           data: {
             name: company.name,
           },
@@ -35,26 +37,33 @@ export const migrateMovie = async (
         });
       } catch (err) {
         // could not be created, try to find it
-        doc = (await payload.find({
-          collection: 'companies',
-          where: {
-            name: {
-              equals: company.name,
+        doc = (
+          await payload.find({
+            collection: "companies",
+            where: {
+              name: {
+                equals: company.name,
+              },
             },
-          },
-          locale: tmdbLng,
-          limit: 1,
-        })).docs[0];
+            locale: tmdbLng,
+            limit: 1,
+          })
+        ).docs[0];
       }
-      
-      if (!doc) warnings.push(new Error(`Could neither find or create production company ${company.name}`));
+
+      if (!doc)
+        warnings.push(
+          new Error(
+            `Could neither find or create production company ${company.name}`
+          )
+        );
 
       productionCompanies.push(doc);
     })
   );
-  
+
   let movie = await payload.create({
-    collection: 'movies',
+    collection: "movies",
     draft: true,
     // @ts-ignore data is partial, that is ok because draft is true
     data: {
@@ -63,8 +72,10 @@ export const migrateMovie = async (
       internationalTitle: data.title,
       isHfgProduction: false,
       synopsis: data.overview,
-      year: parseInt(data.release_date?.split('-')[0]),
-      countries: data.production_countries.map((country: any) => country.iso_3166_1.toUpperCase()),
+      year: parseInt(data.release_date?.split("-")[0]),
+      countries: data.production_countries.map((country: any) =>
+        country.iso_3166_1.toUpperCase()
+      ),
       tmdbId: data.id,
       duration: data.runtime,
       genres,
@@ -72,19 +83,19 @@ export const migrateMovie = async (
     },
     locale: tmdbLng,
   });
-  
-  if (!movie) throw new Error('Unable to create movie');
-  
+
+  if (!movie) throw new Error("Unable to create movie");
+
   // add translations
   for (const language of payload.config.i18n.supportedLngs as []) {
     if (language === tmdbLng) continue; // we already have the default language...
-    
+
     // fetch movie details from TMDB in language
-    let dataTranslated = await getTmdbData('movie', tmdbId, language);
+    let dataTranslated = await getTmdbData("movie", tmdbId, language);
 
     // title & synopsis
     await payload.update({
-      collection: 'movies',
+      collection: "movies",
       id: movie.id,
       draft: true,
       locale: language,
@@ -96,14 +107,17 @@ export const migrateMovie = async (
   }
 
   return movie;
-}
+};
 
 /**
  * migrate or find a genre from themoviedb.org data
- * @returns 
+ * @returns
  */
 const migrateGenre = async (
-  payload: Payload, tmdbId: number, warnings: Error[], tmdbGenre: tmdbMovie['genres'][0],
+  payload: Payload,
+  tmdbId: number,
+  warnings: Error[],
+  tmdbGenre: tmdbMovie["genres"][0]
 ): Promise<Genre> => {
   let genre: Genre;
   let created = false;
@@ -111,7 +125,7 @@ const migrateGenre = async (
   // try to create genre
   try {
     genre = await payload.create({
-      collection: 'genres',
+      collection: "genres",
       data: {
         name: tmdbGenre.name,
       },
@@ -120,47 +134,58 @@ const migrateGenre = async (
     created = true;
   } catch (err) {
     // could not be created, try to find it
-    genre = (await payload.find({
-      collection: 'genres',
-      where: {
-        name: {
-          equals: tmdbGenre.name,
+    genre = (
+      await payload.find({
+        collection: "genres",
+        where: {
+          name: {
+            equals: tmdbGenre.name,
+          },
         },
-      },
-      locale: tmdbLng,
-      limit: 1,
-    })).docs[0];
+        locale: tmdbLng,
+        limit: 1,
+      })
+    ).docs[0];
   }
-  
-  if (!genre) warnings.push(new Error(`Could neither find or create genre ${tmdbGenre.name}`));
-  
+
+  if (!genre)
+    warnings.push(
+      new Error(`Could neither find or create genre ${tmdbGenre.name}`)
+    );
+
   // add translations
   if (created) {
     (payload.config.i18n.supportedLngs as []).forEach(async (lng) => {
       if (lng === tmdbLng) return; // we already have the default language...
-        
-      getTmdbData('movie', tmdbId, lng).then(async (tmdbMovieLng) => {
-        let name = tmdbMovieLng.genres.find((g) => g.id === tmdbGenre.id)?.name;
-        
-        try {
-          await payload.update({
-            collection: 'genres',
-            id: genre.id,
-            data: {
-              name,
-            },
-            locale: lng,
-          });
-        } catch (err) {
+
+      getTmdbData("movie", tmdbId, lng)
+        .then(async (tmdbMovieLng) => {
+          let name = tmdbMovieLng.genres.find(
+            (g) => g.id === tmdbGenre.id
+          )?.name;
+
+          try {
+            await payload.update({
+              collection: "genres",
+              id: genre.id,
+              data: {
+                name,
+              },
+              locale: lng,
+            });
+          } catch (err) {
+            console.error(err);
+            warnings.push(
+              new Error(`Unable to add genre translation (${err})`)
+            );
+          }
+        })
+        .catch((err) => {
           console.error(err);
-          warnings.push(new Error(`Unable to add genre translation (${err})`));
-        }
-      }).catch((err) => {
-        console.error(err);
-        warnings.push(new Error(`Unable to get genre translation (${err})`));
-      });
+          warnings.push(new Error(`Unable to get genre translation (${err})`));
+        });
     });
   }
-  
+
   return genre;
-}
+};

@@ -13,20 +13,23 @@ interface ImagesMigrationFunction {
     images: {
       poster: string;
       backdrop: string;
-    },
+    }
   ): Promise<void>;
 }
-export const migrateImages: ImagesMigrationFunction = async ({
-  payload, movie, warnings,
-}, images) => {
-  if (!movie.slug) throw new Error('Cannot migrate images without movie slug');
+export const migrateImages: ImagesMigrationFunction = async (
+  { payload, movie, warnings },
+  images
+) => {
+  if (!movie.slug) throw new Error("Cannot migrate images without movie slug");
 
   // create temp directory for images
   let tmpDir;
   try {
-    tmpDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'tmdb-migrate-images-'));
+    tmpDir = await fs.promises.mkdtemp(
+      path.join(os.tmpdir(), "tmdb-migrate-images-")
+    );
   } catch (err) {
-    throw new Error('Unable to create temp directory for images');
+    throw new Error("Unable to create temp directory for images");
   }
 
   // find or create poster
@@ -34,7 +37,7 @@ export const migrateImages: ImagesMigrationFunction = async ({
   try {
     poster = await updateOrCreateImage(
       images.poster,
-      'w500',
+      "w500",
       path.join(tmpDir, `${movie.slug}-poster.jpg`),
       payload
     );
@@ -43,10 +46,10 @@ export const migrateImages: ImagesMigrationFunction = async ({
   }
 
   // find or create still
-  try {  
+  try {
     still = await updateOrCreateImage(
       images.backdrop,
-      'original',
+      "original",
       path.join(tmpDir, `${movie.slug}-backdrop.jpg`),
       payload
     );
@@ -56,14 +59,14 @@ export const migrateImages: ImagesMigrationFunction = async ({
 
   // update movie
   await payload.update({
-    collection: 'movies',
+    collection: "movies",
     id: movie.id,
     data: {
       poster,
       still,
     },
   });
-}
+};
 
 /**
  * download an image from themoviedb.org
@@ -71,29 +74,34 @@ export const migrateImages: ImagesMigrationFunction = async ({
  * @param target target filepath
  * @param size image dimensions
  */
-export const downloadTmdbImage = async (tmdbFilepath: string, target: string, size: 'original' | 'w500') => {  
+export const downloadTmdbImage = async (
+  tmdbFilepath: string,
+  target: string,
+  size: "original" | "w500"
+) => {
   await new Promise((resolve, reject) => {
     const url = `${tmdbMediaUrl}/t/p/${size}/${tmdbFilepath}`;
 
-    https.get(url, response => {
-      const code = response.statusCode ?? 0
-      if (code >= 300) {  // we don't do redirects
-        return reject(new Error(response.statusMessage))
-      }
+    https
+      .get(url, (response) => {
+        const code = response.statusCode ?? 0;
+        if (code >= 300) {
+          // we don't do redirects
+          return reject(new Error(response.statusMessage));
+        }
 
-      // save the file to disk
-      const fileWriter = fs
-        .createWriteStream(target)
-        .on('finish', () => {
-          resolve({})
-        })
+        // save the file to disk
+        const fileWriter = fs.createWriteStream(target).on("finish", () => {
+          resolve({});
+        });
 
-      response.pipe(fileWriter)
-    }).on('error', error => {
-      reject(error)
-    })
-  })
-}
+        response.pipe(fileWriter);
+      })
+      .on("error", (error) => {
+        reject(error);
+      });
+  });
+};
 
 /**
  * update or create a poster or still
@@ -105,29 +113,33 @@ export const downloadTmdbImage = async (tmdbFilepath: string, target: string, si
  */
 export async function updateOrCreateImage(
   tmdbFilepath: string,
-  size: 'original' | 'w500',
+  size: "original" | "w500",
   filePath: string,
-  payload: Payload,
+  payload: Payload
 ): Promise<Media> {
   // download image from themoviedb.org to given path
   try {
     await downloadTmdbImage(tmdbFilepath, filePath, size);
   } catch (err) {
-    return Promise.reject(new Error(`Unable to download image from themoviedb.org (${err})`));
+    return Promise.reject(
+      new Error(`Unable to download image from themoviedb.org (${err})`)
+    );
   }
-  
+
   // upload image to payload
-  let image: Media = (await payload.find({
-    collection: 'media',
-    where: {
-      tmdbFilepath: {
-        equals: tmdbFilepath,
+  let image: Media = (
+    await payload.find({
+      collection: "media",
+      where: {
+        tmdbFilepath: {
+          equals: tmdbFilepath,
+        },
       },
-    }
-  })).docs[0];
+    })
+  ).docs[0];
   if (image) {
     return await payload.update({
-      collection: 'media',
+      collection: "media",
       id: image.id,
       filePath,
       data: {
@@ -137,7 +149,7 @@ export async function updateOrCreateImage(
     });
   }
   return await payload.create({
-    collection: 'media',
+    collection: "media",
     filePath,
     data: {
       tmdbFilepath,

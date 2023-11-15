@@ -24,7 +24,7 @@
 .container h2 {
   font: var(--font-h2);
   text-transform: uppercase;
-  margin-block: .2em 0;
+  margin-block: 0.2em 0;
   word-wrap: break-word;
 }
 .container .more {

@@ -1,8 +1,5 @@
 import type { Media, Post } from "payload/generated-types";
-import type {
-  ItemList,
-  BlogPosting,
-} from "schema-dts";
+import type { ItemList, BlogPosting } from "schema-dts";
 import { itemList } from ".";
 import { serializeToPlainText } from "~/components/RichText/Serialize";
 
@@ -19,4 +16,4 @@ export const postPreviewSchema = (post: Post): BlogPosting => {
 
 export const postsListSchema = (posts: Post[]): ItemList => {
   return itemList(posts.map((p) => postPreviewSchema(p)));
-}
+};

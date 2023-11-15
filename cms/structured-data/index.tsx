@@ -1,9 +1,5 @@
 import React from "react";
-import type {
-  Thing,
-  WithContext,
-  ItemList,
-} from "schema-dts";
+import type { Thing, WithContext, ItemList } from "schema-dts";
 
 export function addContext<T extends Thing>(json: T): WithContext<T> {
   const jsonWithContext = json as WithContext<T>;
@@ -13,7 +9,10 @@ export function addContext<T extends Thing>(json: T): WithContext<T> {
 
 export function JsonLd<T extends Thing>(data: T): React.ReactNode {
   return (
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(addContext(data))}} />
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(addContext(data)) }}
+    />
   );
 }
 

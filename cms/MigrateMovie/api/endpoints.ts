@@ -4,24 +4,24 @@ import { migrate } from "./migrate";
 import { preview } from "./preview";
 import { findInTmdb } from "./helpers";
 
-const prefix = '/migrate-movie';
-  
+const prefix = "/migrate-movie";
+
 const hasAccess = (req: PayloadRequest) => {
-  return ['admin', 'editor'].find((role) => role === req?.user?.role);
+  return ["admin", "editor"].find((role) => role === req?.user?.role);
 };
 
-export const endpoints: Endpoint[]  = [
+export const endpoints: Endpoint[] = [
   {
     path: `${prefix}/search`,
-    method: 'post',
+    method: "post",
     handler: async (req, res) => {
       const { payload } = req;
 
       if (!hasAccess(req)) {
-        res.status(401).send('Unauthorized');
-        return
+        res.status(401).send("Unauthorized");
+        return;
       }
-      
+
       try {
         const data = await findInTmdb({
           payload,
@@ -31,20 +31,20 @@ export const endpoints: Endpoint[]  = [
       } catch (error: any) {
         res.status(400).send({ success: false, message: error.message });
       }
-      return
+      return;
     },
   },
   {
     path: `${prefix}/preview`,
-    method: 'post',
+    method: "post",
     handler: async (req, res) => {
       const { payload } = req;
 
       if (!hasAccess(req)) {
-        res.status(401).send('Unauthorized');
-        return
+        res.status(401).send("Unauthorized");
+        return;
       }
-      
+
       try {
         const data = await preview({
           tmdbId: req.body.tmdbId,
@@ -55,18 +55,18 @@ export const endpoints: Endpoint[]  = [
       } catch (error: any) {
         res.status(400).send({ success: false, message: error.message });
       }
-      return
+      return;
     },
   },
   {
     path: `${prefix}/migrate`,
-    method: 'post',
+    method: "post",
     handler: async (req, res) => {
       const { payload } = req;
 
       if (!hasAccess(req)) {
-        res.status(401).send('Unauthorized');
-        return
+        res.status(401).send("Unauthorized");
+        return;
       }
 
       try {
@@ -75,15 +75,18 @@ export const endpoints: Endpoint[]  = [
           payload,
           images: req.body.images,
         });
-        res.status(200).send({ success: true, data: {
-          movie: data.movie,
-          warnings: data.warnings.map((warning) => warning.message),
-        }});
-        return
+        res.status(200).send({
+          success: true,
+          data: {
+            movie: data.movie,
+            warnings: data.warnings.map((warning) => warning.message),
+          },
+        });
+        return;
       } catch (error: any) {
         res.status(400).send({ success: false, message: error.message });
-        return
+        return;
       }
     },
-  }
-]
+  },
+];

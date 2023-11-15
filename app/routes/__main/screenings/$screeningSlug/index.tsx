@@ -12,28 +12,34 @@ import classes from "./index.module.css";
 import { Date } from "~/components/Date";
 import i18next from "~/i18next.server";
 import Page from "~/components/Page";
-import { Response } from '@remix-run/node';
+import { Response } from "@remix-run/node";
 import { ScreeningInfo } from "~/components/ScreeningInfo";
 import HeaderImage from "~/components/HeaderImage";
 import { JsonLd } from "cms/structured-data";
 import { screeningSchema } from "cms/structured-data/screening";
 
-export const loader = async ({ params, request, context: { payload }}: LoaderArgs) => {
+export const loader = async ({
+  params,
+  request,
+  context: { payload },
+}: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
-  const navigation = (await payload.find({
-    collection: 'navigations',
-    where: {
-      type: {
-        equals: 'socialMedia',
+  const navigation = (
+    await payload.find({
+      collection: "navigations",
+      where: {
+        type: {
+          equals: "socialMedia",
+        },
       },
-    },
-  })).docs[0];
+    })
+  ).docs[0];
   const site = await payload.findGlobal({
-    slug: 'site'
+    slug: "site",
   });
-    
+
   const data = await payload.find({
-    collection: 'screenings',
+    collection: "screenings",
     where: {
       slug: {
         equals: params.screeningSlug,
@@ -42,22 +48,22 @@ export const loader = async ({ params, request, context: { payload }}: LoaderArg
     locale,
     depth: 6,
   });
-  
+
   if (!data.docs.length) {
-    throw new Response('Screening not found', { status: 404 });
+    throw new Response("Screening not found", { status: 404 });
   }
-  
+
   return {
     screening: data.docs[0],
     navigation,
     site,
-  }
-}
+  };
+};
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return {
     title: data?.screening.title,
-  }
+  };
 };
 
 export default function Item() {
@@ -71,8 +77,8 @@ export default function Item() {
 
   return (
     <Page className={classes.container}>
-      { JsonLd(screeningSchema(screening, site)) }
-      <HeaderImage image={mainMovie.still} navigation={navigation} >
+      {JsonLd(screeningSchema(screening, site))}
+      <HeaderImage image={mainMovie.still} navigation={navigation}>
         <div className={classes.infoTitle}>
           <Date
             className={classes.date}
@@ -83,17 +89,22 @@ export default function Item() {
           <div className={classes.location}>
             {(screening.location as Location).name}
           </div>
-          <Link className={classes.season} to={(screening.season as Season).url}>
+          <Link
+            className={classes.season}
+            to={(screening.season as Season).url}
+          >
             {(screening.season as Season).name}
           </Link>
-          { allFilms.map((filmprint) => (
+          {allFilms.map((filmprint) => (
             <div key={filmprint.id} className={classes.movieTitle}>
               {(filmprint.movie as MovieType).title}
             </div>
           ))}
-          { screening.series && (
+          {screening.series && (
             <a
-              href={`/screening-series/${(screening.series as ScreeningSery).slug}`}
+              href={`/screening-series/${
+                (screening.series as ScreeningSery).slug
+              }`}
               className={`${classes.series} ${classes.tag}`}
             >
               {(screening.series as ScreeningSery)?.name}
@@ -103,7 +114,7 @@ export default function Item() {
       </HeaderImage>
       <main>
         <div className={classes.movies}>
-          { allFilms.map((filmprint, i) => (
+          {allFilms.map((filmprint, i) => (
             <Movie
               key={filmprint.id}
               movie={filmprint.movie as MovieType}
@@ -113,9 +124,7 @@ export default function Item() {
             />
           ))}
         </div>
-        { !inlineScreeningInfo && (
-          <ScreeningInfo screening={screening} />
-        )}
+        {!inlineScreeningInfo && <ScreeningInfo screening={screening} />}
       </main>
     </Page>
   );
