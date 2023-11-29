@@ -23,7 +23,8 @@ const Users: CollectionConfig = {
     create: ({ req: { user } }) => user?.role === "admin",
     delete: ({ req: { user } }) => user?.role === "admin",
     admin: ({ req: { user }, id }) =>
-      Boolean(user) && (user?.id === id || user?.role === "admin"),
+      Boolean(user) &&
+      (user?.id === id || user?.role === "admin" || user?.role === "editor"),
     unlock: ({ req: { user }, id }) =>
       Boolean(user) && (user?.id === id || user?.role === "admin"),
   },
