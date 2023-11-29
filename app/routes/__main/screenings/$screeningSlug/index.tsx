@@ -95,11 +95,7 @@ export default function Item() {
           >
             {(screening.season as Season).name}
           </Link>
-          {allFilms.map((filmprint) => (
-            <div key={filmprint.id} className={classes.movieTitle}>
-              {(filmprint.movie as MovieType).title}
-            </div>
-          ))}
+          <div className={classes.title}>{screening.title}</div>
           {screening.series && (
             <a
               href={`/screening-series/${

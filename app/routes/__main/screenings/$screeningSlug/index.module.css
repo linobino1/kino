@@ -30,7 +30,7 @@ a.tag {
   text-decoration: none !important;
   color: inherit !important;
 }
-.movieTitle {
+.title {
   font: var(--font-x-big);
   font-weight: var(--font-weight-bold);
   margin-block: 1rem;
