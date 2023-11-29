@@ -27,6 +27,20 @@ export const Footer: React.FC<Props> = ({ site, navigations }) => {
           className={classes.navSocial}
         />
         <NewsletterSignup className={classes.newsletter} />
+        <div className={classes.logos}>
+          <img
+            src="/img/hfg.svg"
+            alt="Hochschule für Gestaltung Karlsruhe"
+            height={60}
+          />
+          <img src="/img/asta.svg" alt="AstA HfG Karlsruhe" height={40} />
+          <img
+            src="/img/zkm.svg"
+            alt="Zenrum für Kunst und Medien Karlsruhe"
+            className={classes.logo}
+            height={25}
+          />
+        </div>
       </div>
     </footer>
   );
