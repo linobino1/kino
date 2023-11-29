@@ -182,7 +182,7 @@ const Screenings: CollectionConfig = {
     {
       name: "info",
       label: t("Info"),
-      type: "text",
+      type: "richText",
       required: false,
       localized: true,
     },
