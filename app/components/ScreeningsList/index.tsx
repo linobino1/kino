@@ -7,14 +7,14 @@ import classes from "./index.module.css";
 import { JsonLd } from "cms/structured-data";
 import { screeningsListSchema as screeningsListMarkup } from "cms/structured-data/screening";
 
-export type Props = {
+export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   from?: string;
   items: Screening[];
   site: Site;
   className?: string;
   activeScreeningSery?: ScreeningSery;
   emptyMessage?: string;
-};
+}
 
 export const ScreeningsList: React.FC<Props> = ({
   items,
@@ -22,11 +22,12 @@ export const ScreeningsList: React.FC<Props> = ({
   activeScreeningSery,
   emptyMessage,
   site,
+  ...props
 }) => {
   const { t } = useTranslation();
 
   return items?.length ? (
-    <div className={`${classes.list} ${className || ""}`}>
+    <div {...props} className={`${classes.list} ${className || ""}`}>
       {JsonLd(screeningsListMarkup(items, site))}
       {items.map((item) => (
         <Link
