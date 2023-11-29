@@ -4,11 +4,7 @@
   aspect-ratio: 16/9;
   z-index: 1;
   display: grid;
-}
-@media screen and (min-width: 1480px) {
-  .container {
-    max-height: 55vh;
-  }
+  max-height: 55vh;
 }
 /** IMAGE HEADER   ******************************************/
 img.header {
