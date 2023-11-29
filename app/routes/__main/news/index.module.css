@@ -1,5 +1,6 @@
-.page {
+.gutter {
   max-width: var(--page-max-width);
+  margin-inline: auto;
 }
 .page section {
   margin-block: 2em;

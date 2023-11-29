@@ -90,33 +90,34 @@ export default function Index() {
 
   return (
     <Page layout={page.layout} className={classes.page}>
-      <section className={classes.hero}></section>
-      <section className={classes.upcoming}>
-        <h2>{t("Upcoming Screenings")}</h2>
-        <ScreeningsList items={screenings} site={site} />
-        <p>
-          <Link to="/screenings">{t("See all screenings")}</Link>
-        </p>
-      </section>
-      <section className={classes.news}>
-        <h2>{t("News")}</h2>
-        {posts.docs?.length ? (
-          <>
-            {JsonLd(postsListSchema(posts.docs))}
-            <ul className={classes.posts}>
-              {posts.docs.map((post) => (
-                <li key={post.slug}>
-                  <PostPreview post={post} />
-                  <hr />
-                </li>
-              ))}
-            </ul>
-          </>
-        ) : (
-          <div className={classes.empty}>{t("No posts.")}</div>
-        )}
-        <Pagination {...posts} linkProps={{ prefetch: "intent" }} />
-      </section>
+      <div className={classes.gutter}>
+        <section className={classes.upcoming}>
+          <h2>{t("Upcoming Screenings")}</h2>
+          <ScreeningsList items={screenings} site={site} />
+          <p>
+            <Link to="/screenings">{t("See all screenings")}</Link>
+          </p>
+        </section>
+        <section className={classes.news}>
+          <h2>{t("News")}</h2>
+          {posts.docs?.length ? (
+            <>
+              {JsonLd(postsListSchema(posts.docs))}
+              <ul className={classes.posts}>
+                {posts.docs.map((post) => (
+                  <li key={post.slug}>
+                    <PostPreview post={post} />
+                    <hr />
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <div className={classes.empty}>{t("No posts.")}</div>
+          )}
+          <Pagination {...posts} linkProps={{ prefetch: "intent" }} />
+        </section>
+      </div>
     </Page>
   );
 }
