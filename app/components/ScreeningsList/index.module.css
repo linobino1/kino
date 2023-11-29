@@ -5,6 +5,7 @@
   grid-template-columns: repeat(auto-fill, minmax(15em, auto));
   margin-block: 3em;
   margin-inline: auto;
+  padding-inline: 0.8rem;
   max-width: min(100%, 1340px);
 }
 .empty {
