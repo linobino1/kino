@@ -98,4 +98,11 @@
   .navSocial {
     align-items: center;
   }
+  .logos {
+    grid-row: 5;
+    flex-direction: column;
+  }
+  .logos img {
+    max-width: 100%;
+  }
 }
