@@ -27,7 +27,7 @@
 
 :root {
   --page-max-width: 1120px;
-  --page-max-width: min(calc(100vw - 2rem), 1120px);
+  --page-max-width: min(calc(100vw - 2rem), 920px);
 
   --color-theme: #283587;
   --color-white: #ffffff;
