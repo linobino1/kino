@@ -154,21 +154,23 @@ export default function App() {
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
-        <div className={classes.cookiesWrapper}>
-          <CookieConsent
-            location="bottom"
-            buttonText={t("Accept")}
-            declineButtonText={t("Decline")}
-            enableDeclineButton
-            containerClasses={classes.cookies}
-            buttonWrapperClasses={classes.cookieButtons}
-            buttonClasses={classes.cookieButtonAccept}
-            declineButtonClasses={classes.cookieButtonDecline}
-            contentClasses={classes.cookieContent}
-          >
-            {t("CookieBannerText")}
-          </CookieConsent>
-        </div>
+        {false && (
+          <div className={classes.cookiesWrapper}>
+            <CookieConsent
+              location="bottom"
+              buttonText={t("Accept")}
+              declineButtonText={t("Decline")}
+              enableDeclineButton
+              containerClasses={classes.cookies}
+              buttonWrapperClasses={classes.cookieButtons}
+              buttonClasses={classes.cookieButtonAccept}
+              declineButtonClasses={classes.cookieButtonDecline}
+              contentClasses={classes.cookieContent}
+            >
+              {t("CookieBannerText")}
+            </CookieConsent>
+          </div>
+        )}
       </body>
     </html>
   );
