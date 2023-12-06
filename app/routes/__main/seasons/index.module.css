@@ -2,10 +2,10 @@
 }
 ul.seasons {
   list-style: none;
-  padding: 0;
+  padding: 0 0.8rem;
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 20rem);
+  grid-template-columns: repeat(auto-fill, minmax(100%, 20rem));
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
