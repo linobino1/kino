@@ -12,11 +12,16 @@ export const UserStatus: React.FC<Props> = ({ className }) => {
   const user = useMatches().find((x) => x.id === "root")?.data.user;
 
   return (
-    <div className={`${classes.userStatus} ${className}`}>
+    <div className={`${classes.container} ${className}`}>
       {user ? (
-        <Link to="/auth/me" className={classes.name}>
-          {t("signed in as {{name}}", { name: user.name })}
-        </Link>
+        <div className={classes.signedIn}>
+          <Link to="/auth/me" className={classes.name}>
+            {t("signed in as {{name}}", { name: user.name })}
+          </Link>
+          <Link to="/admin" className={classes.admin} target="_blank">
+            {t("backend")}
+          </Link>
+        </div>
       ) : (
         <Link to="/auth/signin" className={classes.signIn}>
           {t("Sign In")}

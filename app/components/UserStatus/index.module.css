@@ -1,20 +1,29 @@
-.userStatus a,
-.userStatus a:active,
-.userStatus a:visited {
+.container a,
+.container a:active,
+.container a:visited {
   color: inherit;
   text-decoration: inherit;
 }
-
-.name,
-.signIn {
-  white-space: nowrap;
-  padding: 0.5rem;
-}
-.name:hover,
-.signIn:hover {
+.container a:hover {
   color: var(--color-black) !important;
 }
 
-.name {
+.signIn {
+  padding: 0.5rem;
+}
+.signedIn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: center;
   text-transform: none;
+  white-space: nowrap;
+}
+.admin::after {
+  content: "\2197";
+}
+@media screen and (max-width: 768px) {
+  .signedIn {
+    text-align: right;
+  }
 }
