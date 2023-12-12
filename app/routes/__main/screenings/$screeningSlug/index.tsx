@@ -71,7 +71,7 @@ export default function Item() {
   const mainMovie = (screening.featureFilms[0] as FilmPrint).movie as MovieType;
   const featureFilms = (screening.featureFilms as FilmPrint[]) ?? [];
   const supportingFilms = (screening.supportingFilms as FilmPrint[]) ?? [];
-  const allFilms = [...supportingFilms, ...featureFilms];
+  const allFilms = [...featureFilms, ...supportingFilms];
 
   const inlineScreeningInfo = allFilms.length <= 1;
 
