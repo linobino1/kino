@@ -93,7 +93,7 @@ const Posts: CollectionConfig = {
           name: "type",
           label: t("Type"),
           type: "radio",
-          defaultValue: "self",
+          defaultValue: "none",
           admin: {
             description: t("AdminExplainPostLinkType"),
           },
