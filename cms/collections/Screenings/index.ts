@@ -121,7 +121,8 @@ const Screenings: CollectionConfig = {
       defaultValue: () =>
         fetch(`/api/seasons/`)
           .then((res) => res.json())
-          .then((res) => res.docs[0].id),
+          .then((res) => res.docs[0].id)
+          .catch(() => null),
     },
     {
       name: "location",
