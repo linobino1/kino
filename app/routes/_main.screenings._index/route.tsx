@@ -1,10 +1,11 @@
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { Page } from "~/components/Page";
 import { ScreeningsList } from "~/components/ScreeningsList";
 import i18next from "~/i18next.server";
 import { mergeMeta, pageMeta } from "~/util/pageMeta";
 import { ErrorPage } from "~/components/ErrorPage";
+import type { loader as rootLoader } from "app/root";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -47,9 +48,15 @@ export const loader = async ({ request, context: { payload } }: LoaderArgs) => {
   };
 };
 
-export const meta = mergeMeta(({ data }) =>
-  pageMeta(data.page.meta, data.site.meta)
-);
+export const meta: V2_MetaFunction<
+  typeof loader,
+  {
+    root: typeof rootLoader;
+  }
+> = mergeMeta(({ data, matches }) => {
+  const site = matches.find((match) => match?.id === "root")?.data.site;
+  return pageMeta(data?.page.meta, site?.meta);
+});
 
 export default function Index() {
   const { page, screenings, site } = useLoaderData<typeof loader>();

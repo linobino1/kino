@@ -1,4 +1,4 @@
-import { redirect, type LoaderArgs } from "@remix-run/node";
+import { redirect, type LoaderArgs, V2_MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { Page } from "~/components/Page";
@@ -10,6 +10,7 @@ import PostPreview from "~/components/PostPreview";
 import { JsonLd } from "cms/structured-data";
 import { postsListSchema } from "cms/structured-data/post";
 import ScreeningsList from "~/components/ScreeningsList";
+import type { loader as rootLoader } from "app/root";
 
 let today = new Date();
 today.setHours(0, 0, 0, 0);
@@ -69,9 +70,15 @@ export const loader = async ({ request, context: { payload } }: LoaderArgs) => {
   };
 };
 
-export const meta = mergeMeta(({ data }) =>
-  pageMeta(data.page.meta, data.site.meta)
-);
+export const meta: V2_MetaFunction<
+  typeof loader,
+  {
+    root: typeof rootLoader;
+  }
+> = mergeMeta(({ data, matches }) => {
+  const site = matches.find((match) => match?.id === "root")?.data.site;
+  return pageMeta(data?.page.meta, site?.meta);
+});
 
 export default function Index() {
   const { site, page, posts, screenings } = useLoaderData<typeof loader>();
