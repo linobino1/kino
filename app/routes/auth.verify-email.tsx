@@ -1,4 +1,4 @@
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
@@ -8,7 +8,10 @@ import i18next from "~/i18next.server";
 // i18n namespace
 const ns = "auth";
 
-export const loader = async ({ request, context: { payload } }: LoaderArgs) => {
+export const loader = async ({
+  request,
+  context: { payload },
+}: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const t = await i18next.getFixedT(request, ns);
 

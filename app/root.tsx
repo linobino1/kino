@@ -1,13 +1,7 @@
-import {
-  DynamicLinks,
-  ExternalScripts,
-  type DynamicLinksFunction,
-} from "remix-utils";
 import type {
-  SerializeFrom,
-  LoaderArgs,
+  LoaderFunctionArgs,
   LinksFunction,
-  V2_MetaFunction,
+  MetaFunction,
 } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
@@ -46,7 +40,7 @@ export const links: LinksFunction = () => {
 export async function loader({
   request,
   context: { payload, user },
-}: LoaderArgs) {
+}: LoaderFunctionArgs) {
   const locale = await i18next.getLocale(request);
   const [site, localeCookie] = await Promise.all([
     payload.findGlobal({
@@ -77,20 +71,14 @@ export async function loader({
   );
 }
 
-export const dynamicLinks: DynamicLinksFunction<
-  SerializeFrom<typeof loader>
-> = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [
     {
+      tagName: "link",
       rel: "icon",
-      href: (data.site.favicon as Media)?.url as string,
-      type: (data.site.logo as Media)?.mimeType,
+      href: (data?.site.favicon as Media)?.url as string,
+      type: (data?.site.logo as Media)?.mimeType,
     },
-  ];
-};
-
-export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
-  return [
     {
       charSet: "utf-8",
     },
@@ -128,7 +116,6 @@ export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
 
 export const handle = {
   i18n: "common", // i18n namespace
-  dynamicLinks,
 };
 
 export function useChangeLanguage(locale: string) {
@@ -155,7 +142,7 @@ export default function App() {
       <head>
         <Meta />
         <Links />
-        <DynamicLinks />
+        {/* <DynamicLinks /> */}
 
         <script
           type="application/ld+json"
@@ -165,7 +152,6 @@ export default function App() {
         />
       </head>
       <body className={classes.body}>
-        <ExternalScripts />
         <script
           dangerouslySetInnerHTML={{
             __html: `window.ENV = ${JSON.stringify(publicKeys)}`,

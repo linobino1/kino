@@ -1,4 +1,8 @@
-import { redirect, type LoaderArgs, V2_MetaFunction } from "@remix-run/node";
+import {
+  redirect,
+  type LoaderFunctionArgs,
+  MetaFunction,
+} from "@remix-run/node";
 import type { Media } from "payload/generated-types";
 import { useLoaderData } from "@remix-run/react";
 import i18next from "~/i18next.server";
@@ -12,7 +16,10 @@ import type { loader as rootLoader } from "app/root";
 
 export const ErrorBoundary = ErrorPage;
 
-export const loader = async ({ request, context: { payload } }: LoaderArgs) => {
+export const loader = async ({
+  request,
+  context: { payload },
+}: LoaderFunctionArgs) => {
   const locale = await i18next.getLocale(request);
   const page = await payload.findGlobal({
     slug: "seasonsPage",
@@ -43,7 +50,7 @@ export const loader = async ({ request, context: { payload } }: LoaderArgs) => {
   };
 };
 
-export const meta: V2_MetaFunction<
+export const meta: MetaFunction<
   typeof loader,
   {
     root: typeof rootLoader;

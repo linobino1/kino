@@ -1,11 +1,11 @@
 import type {
   LoaderFunction,
-  V2_HtmlMetaDescriptor,
-  V2_MetaFunction,
+  MetaFunction,
+  MetaDescriptor,
 } from "@remix-run/node";
 import type { Meta } from "cms/fields/meta";
 
-export const pageMeta = (page: Meta, site: Meta): V2_HtmlMetaDescriptor[] => {
+export const pageMeta = (page: Meta, site: Meta): MetaDescriptor[] => {
   console.log("pageMeta", page, site);
   console.log("t", pageTitle(site?.title, page?.title));
   return [
@@ -46,9 +46,9 @@ export const pageKeywords = (
 
 /**
  * https://gist.github.com/ryanflorence/ec1849c6d690cfbffcb408ecd633e069
- * @param overrideFn V2_MetaFunction
- * @param appendFn V2_MetaFunction
- * @returns V2_MetaFunction
+ * @param overrideFn MetaFunction
+ * @param appendFn MetaFunction
+ * @returns MetaFunction
  */
 export const mergeMeta = <
   Loader extends LoaderFunction | unknown = unknown,
@@ -57,8 +57,8 @@ export const mergeMeta = <
     LoaderFunction
   >
 >(
-  leafMetaFn: V2_MetaFunction<Loader, ParentsLoaders>
-): V2_MetaFunction<Loader, ParentsLoaders> => {
+  leafMetaFn: MetaFunction<Loader, ParentsLoaders>
+): MetaFunction<Loader, ParentsLoaders> => {
   return (arg) => {
     let leafMeta = leafMetaFn(arg);
 
@@ -75,6 +75,10 @@ export const mergeMeta = <
             ("charSet" in meta &&
               "charSet" in parentMeta &&
               meta.charSet === parentMeta.charSet) ||
+            // HACK: we only allow one rel=xxx meta tag for each rel type
+            ("rel" in meta &&
+              "rel" in parentMeta &&
+              meta.rel === parentMeta.rel) ||
             ("title" in meta && "title" in parentMeta)
         );
         if (index == -1) {

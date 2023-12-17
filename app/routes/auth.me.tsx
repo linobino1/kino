@@ -1,4 +1,4 @@
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Link, useActionData, useLoaderData } from "@remix-run/react";
 import type { ActionArgs, ActionFunction } from "@remix-run/server-runtime";
@@ -46,7 +46,7 @@ export const action: ActionFunction = async ({
   }
 };
 
-export const loader = ({ context: { user, res } }: LoaderArgs) => {
+export const loader = ({ context: { user, res } }: LoaderFunctionArgs) => {
   if (!user) {
     res.redirect("/auth/signin");
   }

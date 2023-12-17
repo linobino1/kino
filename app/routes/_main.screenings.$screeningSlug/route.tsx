@@ -1,4 +1,4 @@
-import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import type {
   FilmPrint,
@@ -13,7 +13,6 @@ import classes from "./index.module.css";
 import { Date } from "~/components/Date";
 import i18next from "~/i18next.server";
 import Page from "~/components/Page";
-import { Response } from "@remix-run/node";
 import { ScreeningInfo } from "~/components/ScreeningInfo";
 import HeaderImage from "~/components/HeaderImage";
 import { JsonLd } from "cms/structured-data";
@@ -28,7 +27,7 @@ export const loader = async ({
   params,
   request,
   context: { payload },
-}: LoaderArgs) => {
+}: LoaderFunctionArgs) => {
   const locale = await i18next.getLocale(request);
   const navigation = (
     await payload.find({
@@ -66,7 +65,7 @@ export const loader = async ({
   };
 };
 
-export const meta: V2_MetaFunction<
+export const meta: MetaFunction<
   typeof loader,
   {
     root: typeof rootLoader;

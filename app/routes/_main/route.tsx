@@ -1,4 +1,4 @@
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import Footer from "~/components/Footer";
 import Header from "~/components/Header";
@@ -8,7 +8,10 @@ import { ErrorPage } from "~/components/ErrorPage";
 
 export const ErrorBoundary = ErrorPage;
 
-export const loader = async ({ request, context: { payload } }: LoaderArgs) => {
+export const loader = async ({
+  request,
+  context: { payload },
+}: LoaderFunctionArgs) => {
   const locale = await i18next.getLocale(request);
 
   const [site, navigations] = await Promise.all([

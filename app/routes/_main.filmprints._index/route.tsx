@@ -1,4 +1,4 @@
-import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import {
   Form,
@@ -21,7 +21,10 @@ import type { loader as rootLoader } from "app/root";
 
 const limit = 10;
 
-export const loader = async ({ request, context: { payload } }: LoaderArgs) => {
+export const loader = async ({
+  request,
+  context: { payload },
+}: LoaderFunctionArgs) => {
   const locale = await i18next.getLocale(request);
   const page = await payload.findGlobal({
     slug: "archive",
@@ -62,7 +65,7 @@ export const loader = async ({ request, context: { payload } }: LoaderArgs) => {
   };
 };
 
-export const meta: V2_MetaFunction<
+export const meta: MetaFunction<
   typeof loader,
   {
     root: typeof rootLoader;

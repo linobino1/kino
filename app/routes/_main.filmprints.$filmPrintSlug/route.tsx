@@ -1,4 +1,4 @@
-import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import type { Movie as MovieType } from "payload/generated-types";
 import { useLoaderData } from "@remix-run/react";
 import i18next from "~/i18next.server";
@@ -16,7 +16,7 @@ export const loader = async ({
   params,
   request,
   context: { payload },
-}: LoaderArgs) => {
+}: LoaderFunctionArgs) => {
   const data = await payload.find({
     collection: "filmPrints",
     where: {
@@ -48,7 +48,7 @@ export const loader = async ({
   };
 };
 
-export const meta: V2_MetaFunction<
+export const meta: MetaFunction<
   typeof loader,
   {
     root: typeof rootLoader;

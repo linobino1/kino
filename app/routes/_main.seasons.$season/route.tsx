@@ -1,4 +1,4 @@
-import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import type { Media } from "payload/generated-types";
 import { useLoaderData } from "@remix-run/react";
 import i18next from "~/i18next.server";
@@ -17,7 +17,7 @@ export const loader = async ({
   params,
   request,
   context: { payload },
-}: LoaderArgs) => {
+}: LoaderFunctionArgs) => {
   const locale = await i18next.getLocale(request);
   const season = (
     await payload.find({
@@ -72,7 +72,7 @@ export const loader = async ({
     site,
   };
 };
-export const meta: V2_MetaFunction<
+export const meta: MetaFunction<
   typeof loader,
   {
     root: typeof rootLoader;

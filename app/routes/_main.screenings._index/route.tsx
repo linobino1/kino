@@ -1,4 +1,4 @@
-import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { Page } from "~/components/Page";
 import { ScreeningsList } from "~/components/ScreeningsList";
@@ -12,7 +12,10 @@ export const ErrorBoundary = ErrorPage;
 let today = new Date();
 today.setHours(0, 0, 0, 0);
 
-export const loader = async ({ request, context: { payload } }: LoaderArgs) => {
+export const loader = async ({
+  request,
+  context: { payload },
+}: LoaderFunctionArgs) => {
   const locale = await i18next.getLocale(request);
   const page = await payload.findGlobal({
     slug: "screeningsPage",
@@ -48,7 +51,7 @@ export const loader = async ({ request, context: { payload } }: LoaderArgs) => {
   };
 };
 
-export const meta: V2_MetaFunction<
+export const meta: MetaFunction<
   typeof loader,
   {
     root: typeof rootLoader;

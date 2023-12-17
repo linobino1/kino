@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 import React from "react";
-import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import i18next from "~/i18next.server";
 import { Response } from "@remix-run/node";
@@ -15,7 +15,7 @@ export const loader = async ({
   request,
   params,
   context: { payload },
-}: LoaderArgs) => {
+}: LoaderFunctionArgs) => {
   const locale = await i18next.getLocale(request);
   const res = await payload.find({
     collection: "staticPages",
@@ -34,7 +34,7 @@ export const loader = async ({
   };
 };
 
-export const meta: V2_MetaFunction<
+export const meta: MetaFunction<
   typeof loader,
   {
     root: typeof rootLoader;

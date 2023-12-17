@@ -1,4 +1,4 @@
-import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import type { Media } from "payload/generated-types";
 import { useLoaderData } from "@remix-run/react";
 import { Page } from "~/components/Page";
@@ -18,7 +18,7 @@ export const loader = async ({
   request,
   params,
   context: { payload },
-}: LoaderArgs) => {
+}: LoaderFunctionArgs) => {
   const locale = await i18next.getLocale(request);
   const data = await payload.find({
     collection: "posts",
@@ -39,7 +39,7 @@ export const loader = async ({
   };
 };
 
-export const meta: V2_MetaFunction<
+export const meta: MetaFunction<
   typeof loader,
   {
     root: typeof rootLoader;
