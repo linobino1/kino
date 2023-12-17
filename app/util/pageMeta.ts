@@ -44,8 +44,7 @@ export const pageKeywords = (
 
 /**
  * https://gist.github.com/ryanflorence/ec1849c6d690cfbffcb408ecd633e069
- * @param overrideFn MetaFunction
- * @param appendFn MetaFunction
+ * @param leafMetaFn MetaFunction
  * @returns MetaFunction
  */
 export const mergeMeta = <
