@@ -20,8 +20,7 @@ export const getSrcSetString = (image: Media, srcset: SrcSetItem[]): string => {
     .map((item) => {
       const cropped = image.sizes?.[item.size];
       return (
-        cropped &&
-        cropped.url &&
+        cropped?.url &&
         [encodeURI(cropped.url || ""), item.css].filter(Boolean).join(" ")
       );
     })
@@ -36,22 +35,26 @@ export const Image: React.FC<Props> = (props) => {
     (Object.keys(image.sizes || {})
       .map((key) => {
         const item = image.sizes?.[key as keyof Required<Media>["sizes"]];
-        return (
-          item?.url && {
-            size: key as keyof Required<Media>["sizes"],
-            css: `${item?.width}w`,
-          }
-        );
+        return item?.url
+          ? {
+              size: key as keyof Required<Media>["sizes"],
+              css: `${item?.width}w`,
+            }
+          : null;
       })
       .filter(Boolean) as SrcSetItem[]);
   const srcSet = props.srcSet || getSrcSetString(image, srcset_);
+
+  const htmlProps: Partial<Props> = { ...props };
+  delete htmlProps.srcset_;
+  delete htmlProps.image;
 
   return image ? (
     <img
       src={image.url}
       alt={alt || image.alt || ""}
       srcSet={srcSet}
-      {...props}
+      {...htmlProps}
     />
   ) : null;
 };
