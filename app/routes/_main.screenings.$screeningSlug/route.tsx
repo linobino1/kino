@@ -78,7 +78,7 @@ export const meta: V2_MetaFunction<
     title: data?.screening.title,
     date: format(parseISO(data?.screening.date || ""), "PPp"),
   });
-  const description = t("screening.meta", {
+  const description = t("screening.meta.description", {
     date: format(parseISO(data?.screening.date || ""), "PPpp"),
     synopsis: (
       (data?.screening.featureFilms[0] as FilmPrint).movie as MovieType
