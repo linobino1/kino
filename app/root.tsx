@@ -4,10 +4,10 @@ import {
   type DynamicLinksFunction,
 } from "remix-utils";
 import type {
-  MetaFunction,
   SerializeFrom,
   LoaderArgs,
   LinksFunction,
+  V2_MetaFunction,
 } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
@@ -89,18 +89,42 @@ export const dynamicLinks: DynamicLinksFunction<
   ];
 };
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => ({
-  charset: "utf-8",
-  title: data.site.meta?.title,
-  description: data.site.meta?.description,
-  keywords: data.site.meta?.keywords,
-  viewport: "width=device-width,initial-scale=1",
-  "og:image":
-    data.site.meta?.image &&
-    encodeURI((data.site.meta.image as any)?.sizes["1500w"].url),
-  "og:title": data.site.meta?.title,
-  "og:description": data.site.meta?.description,
-});
+export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
+  return [
+    {
+      charSet: "utf-8",
+    },
+    {
+      title: data?.site.meta?.title,
+    },
+    {
+      name: "description",
+      content: data?.site.meta?.description,
+    },
+    {
+      name: "keywords",
+      content: data?.site.meta?.keywords,
+    },
+    {
+      name: "viewport",
+      content: "width=device-width,initial-scale=1",
+    },
+    {
+      name: "og:image",
+      content:
+        data?.site.meta?.image &&
+        encodeURI((data.site.meta.image as any)?.sizes["1500w"].url),
+    },
+    {
+      name: "og:title",
+      content: data?.site.meta?.title,
+    },
+    {
+      name: "og:description",
+      content: data?.site.meta?.description,
+    },
+  ];
+};
 
 export const handle = {
   i18n: "common", // i18n namespace

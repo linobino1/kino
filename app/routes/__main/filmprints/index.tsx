@@ -1,4 +1,4 @@
-import type { MetaFunction, LoaderArgs } from "@remix-run/node";
+import type { LoaderArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import {
   Form,
@@ -15,7 +15,7 @@ import type { Payload } from "payload";
 import { Filters } from "~/util/filter";
 import { useRef } from "react";
 import type { Where } from "payload/types";
-import { pageDescription, pageKeywords, pageTitle } from "~/util/pageMeta";
+import { mergeMeta, pageMeta } from "~/util/pageMeta";
 import Pagination from "~/components/Pagination";
 
 const limit = 10;
@@ -61,20 +61,9 @@ export const loader = async ({ request, context: { payload } }: LoaderArgs) => {
   };
 };
 
-export const meta: MetaFunction<typeof loader> = ({ data, parentsData }) => ({
-  title: pageTitle(
-    parentsData.root?.site?.meta?.title,
-    data?.page?.meta?.title
-  ),
-  description: pageDescription(
-    parentsData.root?.site?.meta?.description,
-    data?.page?.meta?.description
-  ),
-  keywords: pageKeywords(
-    parentsData.root?.site?.meta?.keywords,
-    data?.page?.meta?.keywords
-  ),
-});
+export const meta = mergeMeta(({ data }) =>
+  pageMeta(data.page.meta, data.site.meta)
+);
 
 const getFilters = ({
   payload,

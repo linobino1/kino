@@ -1,4 +1,4 @@
-import type { LoaderArgs, MetaFunction } from "@remix-run/node";
+import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
 import type { Media } from "payload/generated-types";
 import { useLoaderData } from "@remix-run/react";
 import i18next from "~/i18next.server";
@@ -8,6 +8,8 @@ import { ErrorPage } from "~/components/ErrorPage";
 import { HeaderImage } from "~/components/HeaderImage";
 import { Heading } from "~/components/Heading";
 import { useTranslation } from "react-i18next";
+import type { loader as rootLoader } from "app/root";
+import { mergeMeta, pageTitle } from "~/util/pageMeta";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -70,12 +72,23 @@ export const loader = async ({
     site,
   };
 };
-
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  return {
-    title: data.season.name,
-  };
-};
+export const meta: V2_MetaFunction<
+  typeof loader,
+  {
+    root: typeof rootLoader;
+  }
+> = mergeMeta(({ data, matches }) => {
+  const site = matches.find((match) => match?.id === "root")?.data.site;
+  return [
+    {
+      title: pageTitle(site?.meta?.title, data?.season.name),
+    },
+    {
+      name: "og:image",
+      content: (data?.season.header as Media).url,
+    },
+  ];
+});
 
 export default function Season() {
   const { t } = useTranslation();

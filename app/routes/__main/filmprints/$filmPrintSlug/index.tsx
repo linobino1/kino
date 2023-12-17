@@ -1,4 +1,4 @@
-import type { LoaderArgs, MetaFunction } from "@remix-run/node";
+import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
 import type { Movie as MovieType } from "payload/generated-types";
 import { useLoaderData } from "@remix-run/react";
 import i18next from "~/i18next.server";
@@ -7,6 +7,8 @@ import { Page } from "~/components/Page";
 import { ErrorPage } from "~/components/ErrorPage";
 import HeaderImage from "~/components/HeaderImage";
 import classes from "./index.module.css";
+import { mergeMeta, pageTitle } from "~/util/pageMeta";
+import type { loader as rootLoader } from "app/root";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -46,11 +48,19 @@ export const loader = async ({
   };
 };
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  return {
-    title: data?.filmPrint?.title,
-  };
-};
+export const meta: V2_MetaFunction<
+  typeof loader,
+  {
+    root: typeof rootLoader;
+  }
+> = mergeMeta(({ data, matches }) => {
+  const site = matches.find((match) => match?.id === "root")?.data.site;
+  return [
+    {
+      title: pageTitle(site?.meta?.title, data?.filmPrint?.title),
+    },
+  ];
+});
 
 export default function Item() {
   const { filmPrint, navigation } = useLoaderData<typeof loader>();

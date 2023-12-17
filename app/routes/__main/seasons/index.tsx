@@ -1,9 +1,9 @@
-import { redirect, type LoaderArgs, type MetaFunction } from "@remix-run/node";
+import { redirect, type LoaderArgs } from "@remix-run/node";
 import type { Media } from "payload/generated-types";
 import { useLoaderData } from "@remix-run/react";
 import i18next from "~/i18next.server";
 import { Page } from "~/components/Page";
-import { pageDescription, pageKeywords, pageTitle } from "~/util/pageMeta";
+import { mergeMeta, pageMeta } from "~/util/pageMeta";
 import { ErrorPage } from "~/components/ErrorPage";
 import classes from "./index.module.css";
 import Image from "~/components/Image";
@@ -42,20 +42,9 @@ export const loader = async ({ request, context: { payload } }: LoaderArgs) => {
   };
 };
 
-export const meta: MetaFunction<typeof loader> = ({ data, parentsData }) => ({
-  title: pageTitle(
-    parentsData.root?.site?.meta?.title,
-    data?.page?.meta?.title
-  ),
-  description: pageDescription(
-    parentsData.root?.site?.meta?.description,
-    data?.page?.meta?.description
-  ),
-  keywords: pageKeywords(
-    parentsData.root?.site?.meta?.keywords,
-    data?.page?.meta?.keywords
-  ),
-});
+export const meta = mergeMeta(({ data }) =>
+  pageMeta(data.page.meta, data.site.meta)
+);
 
 export default function Seasons() {
   const { page, seasons } = useLoaderData<typeof loader>();

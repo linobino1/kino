@@ -4,6 +4,7 @@ module.exports = {
   ignoredRouteFiles: ["**/*.css"],
   future: {
     v2_errorBoundary: true,
+    v2_meta: true,
   },
   // appDirectory: "app",
   // assetsBuildDirectory: "public/build",

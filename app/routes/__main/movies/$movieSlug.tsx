@@ -1,13 +1,13 @@
-import type { MetaFunction } from "@remix-run/node";
-import type { LoaderArgs } from "@remix-run/node";
+import type { V2_MetaFunction, LoaderArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import i18next from "~/i18next.server";
 import Movie from "~/components/Movie";
 import Image from "~/components/Image";
 import classes from "./index.module.css";
 import type { Media } from "payload/generated-types";
-import { pageTitle } from "~/util/pageMeta";
+import { mergeMeta, pageDescription, pageTitle } from "~/util/pageMeta";
 import { ErrorPage } from "~/components/ErrorPage";
+import type { loader as rootLoader } from "app/root";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -36,9 +36,26 @@ export const loader = async ({
   };
 };
 
-export const meta: MetaFunction<typeof loader> = ({ data, parentsData }) => ({
-  title: pageTitle(parentsData.root?.site?.meta?.title, data?.movie?.title),
-  description: data?.movie?.synopsis,
+export const meta: V2_MetaFunction<
+  typeof loader,
+  {
+    root: typeof rootLoader;
+  }
+> = mergeMeta(({ data, matches }) => {
+  const site = matches.find((match) => match?.id === "root")?.data.site;
+  return [
+    {
+      title: pageTitle(site?.meta?.title, data?.movie.title),
+    },
+    {
+      name: "description",
+      content: pageDescription(site?.meta?.description, data?.movie.synopsis),
+    },
+    {
+      name: "og:image",
+      content: (data?.movie.still as Media)?.url,
+    },
+  ];
 });
 
 export default function MovieDetail() {

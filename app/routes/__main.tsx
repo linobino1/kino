@@ -5,6 +5,13 @@ import Header from "~/components/Header";
 import i18next from "~/i18next.server";
 import classes from "./__main.module.css";
 import { ErrorPage } from "~/components/ErrorPage";
+// import { mergeMeta } from "~/util/pageMeta";
+
+// export const meta = mergeMeta(() => [
+//   {
+//     title: "XXX - __main",
+//   },
+// ]);
 
 export const ErrorBoundary = ErrorPage;
 

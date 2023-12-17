@@ -1,8 +1,8 @@
-import { redirect, type MetaFunction, type LoaderArgs } from "@remix-run/node";
+import { redirect, type LoaderArgs } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { Page } from "~/components/Page";
-import { pageDescription, pageKeywords, pageTitle } from "~/util/pageMeta";
+import { mergeMeta, pageMeta } from "~/util/pageMeta";
 import classes from "./index.module.css";
 import i18next from "~/i18next.server";
 import Pagination from "~/components/Pagination";
@@ -69,20 +69,9 @@ export const loader = async ({ request, context: { payload } }: LoaderArgs) => {
   };
 };
 
-export const meta: MetaFunction<typeof loader> = ({ data, parentsData }) => ({
-  title: pageTitle(
-    parentsData.root?.site?.meta?.title,
-    data?.page?.meta?.title
-  ),
-  description: pageDescription(
-    parentsData.root?.site?.meta?.description,
-    data?.page?.meta?.description
-  ),
-  keywords: pageKeywords(
-    parentsData.root?.site?.meta?.keywords,
-    data?.page?.meta?.keywords
-  ),
-});
+export const meta = mergeMeta(({ data }) =>
+  pageMeta(data.page.meta, data.site.meta)
+);
 
 export default function Index() {
   const { site, page, posts, screenings } = useLoaderData<typeof loader>();

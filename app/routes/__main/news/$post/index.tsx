@@ -1,8 +1,8 @@
-import type { LoaderArgs, MetaFunction } from "@remix-run/node";
+import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
 import type { Media } from "payload/generated-types";
 import { useLoaderData } from "@remix-run/react";
 import { Page } from "~/components/Page";
-import { pageTitle } from "~/util/pageMeta";
+import { mergeMeta, pageDescription, pageTitle } from "~/util/pageMeta";
 import i18next from "~/i18next.server";
 import classes from "./index.module.css";
 import { Image } from "~/components/Image";
@@ -11,6 +11,8 @@ import Blocks from "~/components/Blocks";
 import RichText from "~/components/RichText";
 import { JsonLd } from "cms/structured-data";
 import { postPreviewSchema } from "cms/structured-data/post";
+import type { loader as rootLoader } from "app/root";
+import { serializeToPlainText } from "~/components/RichText/Serialize";
 
 export const loader = async ({
   request,
@@ -37,9 +39,24 @@ export const loader = async ({
   };
 };
 
-export const meta: MetaFunction<typeof loader> = ({ data, parentsData }) => ({
-  title: pageTitle(parentsData.root?.site?.meta?.title, data.post.title),
-  "og:image": (data.post.header as Media)?.url,
+export const meta: V2_MetaFunction<
+  typeof loader,
+  {
+    root: typeof rootLoader;
+  }
+> = mergeMeta(({ data, matches }) => {
+  const site = matches.find((match) => match?.id === "root")?.data.site;
+
+  return [
+    {
+      title: pageTitle(site?.meta?.title, data?.post.title),
+      description: pageDescription(
+        site?.meta?.description,
+        serializeToPlainText({ content: data?.post.content })
+      ),
+      "og:image": (data?.post.header as Media)?.url,
+    },
+  ];
 });
 
 export default function Index() {

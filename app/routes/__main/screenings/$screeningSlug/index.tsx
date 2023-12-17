@@ -1,4 +1,4 @@
-import type { LoaderArgs, MetaFunction } from "@remix-run/node";
+import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import type {
   FilmPrint,
@@ -6,6 +6,7 @@ import type {
   Location,
   ScreeningSery,
   Season,
+  Media,
 } from "payload/generated-types";
 import { Movie } from "~/components/Movie";
 import classes from "./index.module.css";
@@ -17,6 +18,11 @@ import { ScreeningInfo } from "~/components/ScreeningInfo";
 import HeaderImage from "~/components/HeaderImage";
 import { JsonLd } from "cms/structured-data";
 import { screeningSchema } from "cms/structured-data/screening";
+import { mergeMeta, pageTitle } from "~/util/pageMeta";
+import type { loader as rootLoader } from "app/root";
+import { parseISO } from "date-fns";
+import { format } from "date-fns-tz";
+import { useTranslation } from "react-i18next";
 
 export const loader = async ({
   params,
@@ -60,11 +66,45 @@ export const loader = async ({
   };
 };
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  return {
+export const meta: V2_MetaFunction<
+  typeof loader,
+  {
+    root: typeof rootLoader;
+  }
+> = mergeMeta(({ data, matches }) => {
+  const { t } = useTranslation();
+  const site = matches.find((match) => match?.id === "root")?.data.site;
+  const title = t("screening.meta.title", {
     title: data?.screening.title,
-  };
-};
+    date: format(parseISO(data?.screening.date || ""), "PPp"),
+  });
+  const description = t("screening.meta", {
+    date: format(parseISO(data?.screening.date || ""), "PPpp"),
+    synopsis: (
+      (data?.screening.featureFilms[0] as FilmPrint).movie as MovieType
+    ).synopsis,
+  });
+  return [
+    {
+      title: pageTitle(site?.meta?.title, title),
+    },
+    {
+      name: "description",
+      content: description,
+    },
+    {
+      name: "og:title",
+      content: pageTitle(site?.meta?.title, title),
+    },
+    {
+      name: "og:image",
+      content: (
+        ((data?.screening.featureFilms[0] as FilmPrint).movie as MovieType)
+          .still as Media
+      ).url,
+    },
+  ];
+});
 
 export default function Item() {
   const { screening, navigation, site } = useLoaderData<typeof loader>();

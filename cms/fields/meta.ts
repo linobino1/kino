@@ -1,5 +1,8 @@
 import type { Field } from "payload/types";
 import { t } from "../i18n";
+import type { Site } from "payload/generated-types";
+
+export type Meta = Site["meta"];
 
 export const metaField = (label: Record<string, string>): Field => ({
   name: "meta",
