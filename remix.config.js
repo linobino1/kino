@@ -2,6 +2,7 @@
 module.exports = {
   serverDependenciesToBundle: ["html-escaper"],
   ignoredRouteFiles: ["**/*.css"],
+  serverModuleFormat: "cjs",
   future: {
     v2_errorBoundary: true,
     v2_dev: true,
