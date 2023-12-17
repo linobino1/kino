@@ -1,7 +1,7 @@
 import { Form, Link, useActionData } from "@remix-run/react";
 import type { ActionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import classes from "./index.module.css";
+import classes from "./auth.module.css";
 import { useTranslation } from "react-i18next";
 import i18next from "~/i18next.server";
 

@@ -2,7 +2,7 @@ import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
-import classes from "./index.module.css";
+import classes from "./auth.module.css";
 import i18next from "~/i18next.server";
 
 // i18n namespace
