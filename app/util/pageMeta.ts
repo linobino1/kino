@@ -6,8 +6,6 @@ import type {
 import type { Meta } from "cms/fields/meta";
 
 export const pageMeta = (page: Meta, site: Meta): MetaDescriptor[] => {
-  console.log("pageMeta", page, site);
-  console.log("t", pageTitle(site?.title, page?.title));
   return [
     {
       title: pageTitle(site?.title, page?.title),
