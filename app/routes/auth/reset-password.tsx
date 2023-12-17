@@ -50,7 +50,7 @@ export default function VerifyEmail() {
           <Link to="/auth/signin">{t("sign in")}</Link>
         </nav>
       ) : (
-        <Form method="post" className={classes.form}>
+        <Form method="POST" className={classes.form}>
           <label>
             {t("your new password")}
             <input type="password" name="password" />

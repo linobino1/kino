@@ -1,7 +1,6 @@
 import { Form, Link, useActionData } from "@remix-run/react";
 import type { ActionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import classes from "./index.module.css";
 import { useTranslation } from "react-i18next";
 import i18next from "~/i18next.server";
@@ -40,7 +39,7 @@ export default function SignIn() {
   return (
     <>
       <h1>{t("sign in")}</h1>
-      <Form method="post" className={classes.form}>
+      <Form method="POST" className={classes.form}>
         {actionData?.error && <p>{actionData.error}</p>}
         <label>
           {t("email")}

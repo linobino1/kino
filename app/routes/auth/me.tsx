@@ -67,7 +67,7 @@ export default function Me() {
       {user ? (
         <>
           {t("Signed in as {{user}}", { user: user.name })}
-          <Form method="post" className={classes.form}>
+          <Form method="POST" className={classes.form}>
             <input type="hidden" name="id" value={user.id} />
             <button type="submit" name="_action" value="signOut">
               {t("sign out")}

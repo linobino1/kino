@@ -45,7 +45,7 @@ export default function SignUp() {
       <h1>{t("sign up")}</h1>
       {data?.message && <p>{data.message}</p>}
       {!data?.success && (
-        <Form method="post" className={classes.form}>
+        <Form method="POST" className={classes.form}>
           <label>
             {t("name")}
             <input type="name" name="name" />

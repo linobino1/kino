@@ -1,6 +1,5 @@
 import { Form, useActionData } from "@remix-run/react";
 import type { ActionArgs } from "@remix-run/node";
-import { fetch } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useTranslation } from "react-i18next";
 import classes from "./index.module.css";
@@ -48,7 +47,7 @@ export default function ForgotPassword() {
       <h1>{t("reset your password")}</h1>
       {data && <p>{data.message}</p>}
       {!data?.success && (
-        <Form method="post" className={classes.form}>
+        <Form method="POST" className={classes.form}>
           {data && "error" in data && <p>{data.error as string}</p>}
           <label>
             {t("email")}
