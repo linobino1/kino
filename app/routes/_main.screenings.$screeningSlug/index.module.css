@@ -36,6 +36,9 @@ a.tag {
   margin-block: 1rem;
   text-transform: uppercase;
 }
+.info {
+  margin-block: 1rem 2rem;
+}
 
 /** MOVIES   ************************************************/
 .movies > * {

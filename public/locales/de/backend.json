@@ -146,5 +146,6 @@
   "Job": "Tätigkeit",
   "Jobs": "Tätigkeiten",
   "Review & publish": "Überprüfen & veröffentlichen",
-  "Is Supporting Film": "Ist Vorfilm"
+  "Is Supporting Film": "Ist Vorfilm",
+  "AdminExplainScreeningInfo": "Dieser Text wird am Anfang der Vorstellungsseite angezeigt."
 }

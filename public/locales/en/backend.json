@@ -16,5 +16,6 @@
   "AdminExplainPostLinkType": "Select 'None' to link the post header to the post detail page (if exists).",
   "rentalCreditsDefault": "Loan of the film print with kind support of XXX.",
   "Location": "Venue",
-  "Locations": "Venues"
+  "Locations": "Venues",
+  "AdminExplainScreeningInfo": "This will be displayed at the beginning of the screening detail page."
 }

@@ -21,6 +21,7 @@ import type { loader as rootLoader } from "app/root";
 import { parseISO } from "date-fns";
 import { format } from "date-fns-tz";
 import { useTranslation } from "react-i18next";
+import RichText from "~/components/RichText";
 
 export const loader = async ({
   params,
@@ -143,6 +144,9 @@ export default function Item() {
         </div>
       </HeaderImage>
       <main>
+        {screening.info && (
+          <RichText content={screening.info} className={classes.info} />
+        )}
         <div className={classes.movies}>
           {screening.films.map((film, i) => (
             <Movie

@@ -206,6 +206,16 @@ const Screenings: CollectionConfig = {
       },
     },
     {
+      name: "info",
+      label: t("Info"),
+      type: "richText",
+      admin: {
+        description: t("AdminExplainScreeningInfo"),
+      },
+      localized: true,
+      required: false,
+    },
+    {
       name: "moderator",
       label: t("Moderator"),
       type: "text",
