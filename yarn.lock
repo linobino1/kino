@@ -10887,10 +10887,10 @@ remark-rehype@^10.0.0:
     mdast-util-to-hast "^12.1.0"
     unified "^10.0.0"
 
-remix-i18next@^5.0.0:
-  version "5.1.1"
-  resolved "https://registry.npmjs.org/remix-i18next/-/remix-i18next-5.1.1.tgz"
-  integrity sha512-2a9YnbTtF4Povyo396AvK+1pwP+FFclwkOeJtpFENIX+D/nBggoUy17ARq5q8maza7zplfdHWNODwNBEyMIEzg==
+remix-i18next@^5.4.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/remix-i18next/-/remix-i18next-5.4.0.tgz#9e40503476f8b67b65b35b7d7d51032a98531f08"
+  integrity sha512-4TGdkvSihr7X4qqpT31zleIyyRr3Z6MSu49t0zeZhFQrNqb6m7Ob/kVA5QfAl+jOa3Eow30bQ2fuOTBlQ07efA==
   dependencies:
     accept-language-parser "^1.5.0"
     intl-parse-accept-language "^1.0.0"
