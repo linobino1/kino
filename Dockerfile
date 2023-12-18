@@ -29,6 +29,8 @@ COPY --from=builder /home/node/dist ./dist
 COPY --from=builder /home/node/build ./build
 COPY --from=builder /home/node/public ./public
 
+COPY migrations ./migrations
+
 EXPOSE 3000
 
 CMD ["yarn", "start"]
