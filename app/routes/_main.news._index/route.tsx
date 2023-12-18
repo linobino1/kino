@@ -75,7 +75,7 @@ export const loader = async ({
     site,
     page,
     posts,
-    screenings: screenings.docs || [],
+    screenings,
   };
 };
 
@@ -98,7 +98,7 @@ export default function Index() {
       <div className={classes.gutter}>
         <section className={classes.upcoming}>
           <h2>{t("Upcoming Screenings")}</h2>
-          <ScreeningsList items={screenings} site={site} />
+          <ScreeningsList items={screenings.docs} site={site} />
           <p>
             <Link to="/screenings">{t("See all screenings")}</Link>
           </p>
