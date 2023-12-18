@@ -26,7 +26,8 @@ import { ErrorPage } from "~/components/ErrorPage";
 import type { MovieTheater, WithContext } from "schema-dts";
 import { locationSchema } from "cms/structured-data/location";
 import { addContext } from "cms/structured-data";
-import { ModalContainer, ModalProvider } from "@faceless-ui/modal";
+import pkg from "@faceless-ui/modal";
+const { ModalContainer, ModalProvider } = pkg;
 
 export const ErrorBoundary = ErrorPage;
 

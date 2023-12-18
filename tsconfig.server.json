@@ -1,27 +1,14 @@
 {
+  // Extend the root-level config to reuse common options.
+  "extends": "./tsconfig.json",
+  "files": ["env.d.ts", "server.ts", "payload.config.ts"],
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "strict": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "outDir": "./dist",
-    "jsx": "react",
-    "paths": {
-      "~/*": ["./app/*"],
-      "payload/generated-types": ["./cms/payload-types.ts"]
-    }
-  },
-  "include": [
-    "env.d.ts",
-    "server.ts",
-    "payload.config.ts",
-    "migrate-mongo-config.js",
-    "./cms/scripts/**/*.ts"
-  ],
-  "ts-node": {
-    "transpileOnly": true
+    "lib": ["ES2022"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "dist",
+    "baseUrl": ".",
+    "sourceMap": true,
+    "noEmit": false
   }
 }

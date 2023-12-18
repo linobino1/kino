@@ -1,4 +1,3 @@
-import path from "path";
 import express from "express";
 import compression from "compression";
 import morgan from "morgan";
@@ -7,10 +6,14 @@ import { createRequestHandler } from "@remix-run/express";
 import invariant from "tiny-invariant";
 import { sender, transport } from "./email";
 import { themoviedb } from "./cms/MigrateMovie/tmdb";
+import sourceMapSupport from "source-map-support";
+import { unstable_viteServerBuildModuleId } from "@remix-run/dev";
+import { installGlobals } from "@remix-run/node";
 
+// patch in Remix runtime globals
+installGlobals();
 require("dotenv").config();
-
-const BUILD_DIR = path.join(process.cwd(), "build");
+sourceMapSupport.install();
 
 start();
 
@@ -19,6 +22,18 @@ async function start() {
 
   invariant(process.env.PAYLOAD_SECRET, "PAYLOAD_SECRET is required");
   invariant(process.env.THEMOVIEDB_API_KEY, "THEMOVIEDB_API_KEY is required");
+
+  const vite =
+    process.env.NODE_ENV === "production"
+      ? undefined
+      : // @ts-ignore
+        await import("vite").then(({ createServer }) =>
+          createServer({
+            server: {
+              middlewareMode: true,
+            },
+          })
+        );
 
   // Initialize Payload
   await payload.init({
@@ -33,6 +48,9 @@ async function start() {
       payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`);
     },
   });
+
+  // authenticate all requests to the frontend
+  app.use(payload.authenticate);
 
   // init themoviedb api
   themoviedb.defaults.params = {
@@ -56,6 +74,18 @@ async function start() {
 
   app.use(morgan("tiny"));
 
+  // handle Remix asset requests
+  if (vite) {
+    app.use(vite.middlewares);
+  } else {
+    app.use(
+      "/assets",
+      express.static("build/client/assets", { immutable: true, maxAge: "1y" })
+    );
+  }
+
+  app.use(express.static("build/client", { maxAge: "1h" }));
+
   // robots.txt
   app.get("/robots.txt", function (req, res) {
     res.type("text/plain");
@@ -68,59 +98,27 @@ async function start() {
 
   app.use(express.json());
 
-  // authenticate all requests to the frontend
-  app.use(payload.authenticate);
-
+  // handle Remix SSR requests
   app.all(
     "*",
-    process.env.NODE_ENV === "development"
-      ? (req, res, next) => {
-          purgeRequireCache();
-
-          return createRequestHandler({
-            build: require(BUILD_DIR),
-            mode: process.env.NODE_ENV,
-            getLoadContext(req, res) {
-              return {
-                // @ts-expect-error
-                payload: req.payload,
-                // @ts-expect-error
-                user: req?.user,
-                res,
-              };
-            },
-          })(req, res, next);
-        }
-      : createRequestHandler({
-          build: require(BUILD_DIR),
-          mode: process.env.NODE_ENV,
-          getLoadContext(req, res) {
-            return {
-              // @ts-expect-error
-              payload: req.payload,
-              // @ts-expect-error
-              user: req?.user,
-              res,
-            };
-          },
-        })
+    createRequestHandler({
+      build: vite
+        ? () => vite.ssrLoadModule(unstable_viteServerBuildModuleId)
+        : // @ts-ignore
+          await import("./build/server/index.js"),
+      getLoadContext(req, res) {
+        return {
+          payload: req.payload,
+          user: req?.user,
+          res,
+        };
+      },
+    })
   );
+
   const port = process.env.PORT || 3000;
 
   app.listen(port, () => {
     console.log(`Express server listening on port ${port}`);
   });
-}
-
-function purgeRequireCache() {
-  // purge require cache on requests for "server side HMR" this won't let
-  // you have in-memory objects between requests in development,
-  // alternatively you can set up nodemon/pm2-dev to restart the server on
-  // file changes, but then you'll have to reconnect to databases/etc on each
-  // change. We prefer the DX of this, so we've included it for you by default
-  for (const key in require.cache) {
-    if (key.startsWith(BUILD_DIR)) {
-      delete require.cache[key];
-    }
-  }
 }

@@ -43,7 +43,7 @@ import { addSlugField } from "./cms/plugins/addSlugField";
 import { SeasonsPage } from "./cms/globals/pages/Seasons";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { slateEditor } from "@payloadcms/richtext-slate";
-import { webpackBundler } from "@payloadcms/bundler-webpack";
+import { viteBundler } from "@payloadcms/bundler-vite";
 import video from "./cms/fields/richtext/video";
 
 const mockModulePath = path.resolve(__dirname, "mocks/emptyObject.js");
@@ -107,7 +107,14 @@ export default buildConfig({
   },
   admin: {
     user: Users.slug,
-    bundler: webpackBundler(),
+    bundler: viteBundler(),
+    vite: (incomingViteConfig) => ({
+      ...incomingViteConfig,
+      build: {
+        ...incomingViteConfig.build,
+        emptyOutDir: false,
+      },
+    }),
     components: {
       beforeDashboard: [MigrateMovieButton],
       views: {
