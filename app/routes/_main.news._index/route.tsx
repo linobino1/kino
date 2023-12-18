@@ -1,7 +1,7 @@
 import {
   redirect,
   type LoaderFunctionArgs,
-  MetaFunction,
+  type MetaFunction,
 } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
@@ -15,6 +15,8 @@ import { JsonLd } from "cms/structured-data";
 import { postsListSchema } from "cms/structured-data/post";
 import ScreeningsList from "~/components/ScreeningsList";
 import type { loader as rootLoader } from "app/root";
+import type { Blog, Post, Screening, Site } from "payload/generated-types";
+import type { PaginatedDocs } from "payload/database";
 
 let today = new Date();
 today.setHours(0, 0, 0, 0);
@@ -24,25 +26,25 @@ export const loader = async ({
   context: { payload },
 }: LoaderFunctionArgs) => {
   const locale = await i18next.getLocale(request);
-  const site = await payload.findGlobal({
+  const site = (await payload.findGlobal({
     slug: "site",
-  });
-  const page = await payload.findGlobal({
+  })) as unknown as Site;
+  const page = (await payload.findGlobal({
     slug: "blog",
     locale,
-  });
+  })) as unknown as Blog;
   const postsPage = parseInt(
     new URL(request.url).searchParams.get("page") || "1"
   );
-  const posts = await payload.find({
+  const posts = (await payload.find({
     collection: "posts",
     sort: "-date",
     limit: 10,
     pagination: true,
     page: postsPage,
     locale,
-  });
-  const screenings = await payload.find({
+  })) as unknown as PaginatedDocs<Post>;
+  const screenings = (await payload.find({
     collection: "screenings",
     locale,
     depth: 7,
@@ -60,7 +62,7 @@ export const loader = async ({
     },
     sort: "date",
     limit: 3,
-  });
+  })) as unknown as PaginatedDocs<Screening>;
 
   // Redirect to the last page if the requested page is greater than the total number of page
   if (postsPage > posts.totalPages) {

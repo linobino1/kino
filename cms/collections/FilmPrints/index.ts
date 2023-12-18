@@ -67,7 +67,7 @@ export const FilmPrints: CollectionConfig = {
                 },
               },
             })
-          ).docs[0] as Movie;
+          ).docs[0] as unknown as Movie;
           const format = (
             await req.payload.find({
               collection: "formats",
@@ -78,7 +78,7 @@ export const FilmPrints: CollectionConfig = {
                 },
               },
             })
-          ).docs[0] as Format;
+          ).docs[0] as unknown as Format;
           const languageVersion = (
             await req.payload.find({
               collection: "languageVersions",

@@ -19,7 +19,7 @@ import { useEffect } from "react";
 import CookieConsent from "react-cookie-consent";
 import { cssBundleHref } from "@remix-run/css-bundle";
 import { i18nCookie } from "./cookie";
-import type { Media } from "payload/generated-types";
+import type { Media, Site } from "payload/generated-types";
 import environment from "./util/environment";
 import classes from "./root.module.css";
 import { ErrorPage } from "~/components/ErrorPage";
@@ -46,7 +46,7 @@ export async function loader({
     payload.findGlobal({
       slug: "site",
       depth: 3,
-    }),
+    }) as Promise<unknown> as Promise<Site>,
     i18nCookie.serialize(locale),
   ]);
 

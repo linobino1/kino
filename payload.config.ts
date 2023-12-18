@@ -41,15 +41,40 @@ import { s3Adapter } from "@payloadcms/plugin-cloud-storage/s3";
 import { addUrlField } from "./cms/plugins/addUrlField";
 import { addSlugField } from "./cms/plugins/addSlugField";
 import { SeasonsPage } from "./cms/globals/pages/Seasons";
+import { mongooseAdapter } from "@payloadcms/db-mongodb";
+import { slateEditor } from "@payloadcms/richtext-slate";
+import { webpackBundler } from "@payloadcms/bundler-webpack";
+import video from "./cms/fields/richtext/video";
 
 const mockModulePath = path.resolve(__dirname, "mocks/emptyObject.js");
 
 export default buildConfig({
+  db: mongooseAdapter({
+    url: process.env.MONGO_URL || "mongodb://localhost:27017/app",
+  }),
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || "http://localhost:3000",
   endpoints: [
     // path will be prefixed with /api if root is not set to true
     ...migrateMovieEndpoints,
   ],
+  editor: slateEditor({
+    admin: {
+      elements: [
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "link",
+        "ol",
+        "ul",
+        "indent",
+        "upload",
+        video,
+      ],
+      leaves: ["bold", "italic", "underline", "strikethrough"],
+    },
+  }),
   plugins: [
     addUrlField,
     addSlugField,
@@ -76,16 +101,18 @@ export default buildConfig({
       },
     }),
   ],
+  rateLimit: {
+    window: 5 * 60 * 1000, // 5 minutes
+    max: 1000, // limit each IP to 1000 requests per window
+  },
   admin: {
     user: Users.slug,
+    bundler: webpackBundler(),
     components: {
       beforeDashboard: [MigrateMovieButton],
-      routes: [
-        {
-          path: "/migrate-movie",
-          Component: MigrateMovieView,
-        },
-      ],
+      views: {
+        MigrateMovieView,
+      },
       beforeNavLinks: [MigrateMovieLink],
     },
     webpack: (config) => ({

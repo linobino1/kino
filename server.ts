@@ -18,13 +18,11 @@ async function start() {
   const app = express();
 
   invariant(process.env.PAYLOAD_SECRET, "PAYLOAD_SECRET is required");
-  invariant(process.env.MONGO_URL, "MONGO_URL is required");
   invariant(process.env.THEMOVIEDB_API_KEY, "THEMOVIEDB_API_KEY is required");
 
   // Initialize Payload
   await payload.init({
     secret: process.env.PAYLOAD_SECRET,
-    mongoURL: process.env.MONGO_URL,
     express: app,
     email: {
       fromName: sender.name,

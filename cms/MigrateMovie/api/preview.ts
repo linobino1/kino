@@ -2,6 +2,7 @@ import type { PreviewFunction } from "./types";
 import { fixedT } from "../../i18n";
 import { tmdbLng } from "../tmdb";
 import { getTmdbData } from "./helpers";
+import type { Movie } from "payload/generated-types";
 
 /**
  * Check if movie exists in database, if not fetch it from themoviedb.org
@@ -21,7 +22,7 @@ export const preview: PreviewFunction = async ({ payload, tmdbId, locale }) => {
       },
       depth: 0,
     })
-  ).docs[0];
+  ).docs[0] as unknown as Movie;
   if (doc) {
     throw new Error(
       fixedT("MovieExists", locale, { title: doc.originalTitle, id: doc.id })

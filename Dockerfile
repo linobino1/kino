@@ -29,10 +29,6 @@ COPY --from=builder /home/node/dist ./dist
 COPY --from=builder /home/node/build ./build
 COPY --from=builder /home/node/public ./public
 
-# copy mongo-migrate files
-COPY migrations ./migrations
-COPY migrate-mongo-config.js ./migrate-mongo-config.js
-
 EXPOSE 3000
 
 CMD ["yarn", "start"]

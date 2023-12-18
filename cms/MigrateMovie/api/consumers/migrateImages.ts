@@ -136,9 +136,9 @@ export async function updateOrCreateImage(
         },
       },
     })
-  ).docs[0];
+  ).docs[0] as unknown as Media;
   if (image) {
-    return await payload.update({
+    return (await payload.update({
       collection: "media",
       id: image.id,
       filePath,
@@ -146,13 +146,13 @@ export async function updateOrCreateImage(
         tmdbFilepath,
       },
       overwriteExistingFiles: true,
-    });
+    })) as unknown as Media;
   }
-  return await payload.create({
+  return (await payload.create({
     collection: "media",
     filePath,
     data: {
       tmdbFilepath,
     },
-  });
+  })) as unknown as Media;
 }

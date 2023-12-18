@@ -14,7 +14,7 @@ const Screenings: CollectionConfig = {
   },
   admin: {
     group: t("Screenings"),
-    defaultColumns: ["date", "time", "title", "_status"],
+    defaultColumns: ["date", "title", "_status"],
     useAsTitle: "title",
   },
   versions: {
@@ -88,6 +88,7 @@ const Screenings: CollectionConfig = {
       },
       hooks: {
         beforeValidate: [
+          // TODO: put this in a collection hook and save title in all languages
           // compute title
           async ({ value, data, req }) => {
             if (value || !data?.featureFilms?.length) return value;

@@ -55,22 +55,6 @@ const Posts: CollectionConfig = {
       type: "richText",
       localized: true,
       required: true,
-      admin: {
-        elements: [
-          "h2",
-          "h3",
-          "h4",
-          "h5",
-          "h6",
-          "link",
-          "ol",
-          "ul",
-          "indent",
-          "upload",
-          video,
-        ],
-        leaves: ["bold", "italic", "underline", "strikethrough"],
-      },
     },
     {
       name: "details",
