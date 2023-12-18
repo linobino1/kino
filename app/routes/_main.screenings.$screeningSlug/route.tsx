@@ -13,7 +13,6 @@ import classes from "./index.module.css";
 import { Date } from "~/components/Date";
 import i18next from "~/i18next.server";
 import Page from "~/components/Page";
-import { ScreeningInfo } from "~/components/ScreeningInfo";
 import HeaderImage from "~/components/HeaderImage";
 import { JsonLd } from "cms/structured-data";
 import { screeningSchema } from "cms/structured-data/screening";
@@ -51,7 +50,7 @@ export const loader = async ({
       },
     },
     locale,
-    depth: 6,
+    depth: 8,
   });
 
   if (!data.docs.length) {
@@ -80,12 +79,12 @@ export const meta: MetaFunction<
   const description = t("screening.meta.description", {
     date: format(parseISO(data?.screening.date || ""), "PPpp"),
     synopsis: (
-      (data?.screening.featureFilms[0] as FilmPrint).movie as MovieType
+      (data?.screening.films[0].filmprint as FilmPrint).movie as MovieType
     ).synopsis,
   });
   return [
     {
-      title: pageTitle(site?.meta?.title, title),
+      title: pageTitle(site?.meta?.title || undefined, title),
     },
     {
       name: "description",
@@ -93,12 +92,12 @@ export const meta: MetaFunction<
     },
     {
       name: "og:title",
-      content: pageTitle(site?.meta?.title, title),
+      content: pageTitle(site?.meta?.title || undefined, title),
     },
     {
       name: "og:image",
       content: (
-        ((data?.screening.featureFilms[0] as FilmPrint).movie as MovieType)
+        ((data?.screening.films[0].filmprint as FilmPrint).movie as MovieType)
           .still as Media
       ).url,
     },
@@ -107,12 +106,8 @@ export const meta: MetaFunction<
 
 export default function Item() {
   const { screening, navigation, site } = useLoaderData<typeof loader>();
-  const mainMovie = (screening.featureFilms[0] as FilmPrint).movie as MovieType;
-  const featureFilms = (screening.featureFilms as FilmPrint[]) ?? [];
-  const supportingFilms = (screening.supportingFilms as FilmPrint[]) ?? [];
-  const allFilms = [...featureFilms, ...supportingFilms];
-
-  const inlineScreeningInfo = allFilms.length <= 1;
+  const mainMovie = (screening.films[0].filmprint as FilmPrint)
+    .movie as MovieType;
 
   return (
     <Page className={classes.container}>
@@ -149,17 +144,16 @@ export default function Item() {
       </HeaderImage>
       <main>
         <div className={classes.movies}>
-          {allFilms.map((filmprint, i) => (
+          {screening.films.map((film, i) => (
             <Movie
-              key={filmprint.id}
-              movie={filmprint.movie as MovieType}
-              filmprint={filmprint}
-              screening={screening}
-              showScreeningInfo={inlineScreeningInfo}
+              key={i}
+              movie={(film.filmprint as FilmPrint).movie as MovieType}
+              filmprint={film.filmprint as FilmPrint}
+              isSupportingFilm={!!film.isSupportingFilm}
+              info={film.info}
             />
           ))}
         </div>
-        {!inlineScreeningInfo && <ScreeningInfo screening={screening} />}
       </main>
     </Page>
   );

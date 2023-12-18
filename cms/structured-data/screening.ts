@@ -14,12 +14,12 @@ export const screeningSchema = (
   screening: Screening,
   site: Site
 ): ScreeningEvent => {
-  const movie = (screening.featureFilms[0] as FilmPrint).movie as Movie;
+  const movie = (screening.films[0].filmprint as FilmPrint).movie as Movie;
   return {
     "@type": "ScreeningEvent",
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    name: screening.title,
+    name: screening.title as string,
     startDate: screening.date,
     endDate: new Date(
       parseISO(screening.date).getTime() + movie.duration * 60 * 1000

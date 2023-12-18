@@ -43,7 +43,7 @@ export const ScreeningsListItem: React.FC<Props> = ({
       </div>
       <Image
         image={
-          ((screening.featureFilms[0] as FilmPrint)?.movie as Movie)
+          ((screening.films[0].filmprint as FilmPrint)?.movie as Movie)
             ?.still as Media
         }
         alt={t("movie still") as string}

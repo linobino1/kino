@@ -38,5 +38,6 @@
   "News": "Neuigkeiten",
   "See all screenings": "Alle Vorstellungen",
   "screening.meta.title": "{{ title }} am {{date}}",
-  "screening.meta.description": "Vorstellung am {{date}}. {{synopsis}}"
+  "screening.meta.description": "Vorstellung am {{date}}. {{synopsis}}",
+  "Supporting Film": "Vorfilm"
 }
