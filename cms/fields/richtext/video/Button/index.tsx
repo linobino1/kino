@@ -3,12 +3,12 @@ import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { Modal, useModal } from "@faceless-ui/modal";
 import { Transforms } from "slate";
 import { ReactEditor, useSlate } from "slate-react";
-import { ElementButton } from "payload/components/rich-text";
 import { Form, Text, Submit } from "payload/components/forms";
 import { MinimalTemplate, Button, X } from "payload/components";
 import VideoIcon from "../Icon";
 
 import "./index.scss";
+import { ElementButton } from "@payloadcms/richtext-slate";
 
 const initialFormData = {
   source: "youtube",

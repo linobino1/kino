@@ -33,7 +33,6 @@ const regenerateMediaSizes = async () => {
 
     await payload.init({
       secret: process.env.PAYLOAD_SECRET,
-      mongoURL: process.env.MONGO_URL,
       local: true,
     });
   } catch (err) {

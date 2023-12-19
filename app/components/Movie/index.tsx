@@ -7,7 +7,6 @@ import type {
   Rental,
   Media,
   Format,
-  Screening,
   Genre,
 } from "payload/generated-types";
 import React from "react";
@@ -15,20 +14,21 @@ import classes from "./index.module.css";
 import { useTranslation } from "react-i18next";
 import Image from "~/components/Image";
 import { Link } from "@remix-run/react";
-import ScreeningInfo from "../ScreeningInfo";
+import RichText from "../RichText";
 
 export interface Props extends React.HTMLAttributes<HTMLElement> {
   movie: MovieType;
   filmprint?: FilmPrint;
-  screening?: Screening;
-  showScreeningInfo?: boolean;
+  isSupportingFilm?: boolean;
+  info?: any; // additional info to show, richtext
 }
 
 export const Movie: React.FC<Props> = ({
   movie,
   filmprint,
   className,
-  showScreeningInfo,
+  isSupportingFilm,
+  info,
   ...props
 }) => {
   const { t } = useTranslation();
@@ -58,7 +58,14 @@ export const Movie: React.FC<Props> = ({
         ]}
         alt={t("movie poster") as string}
       />
-      <h2>{movie.title}</h2>
+      <h2>
+        {isSupportingFilm && (
+          <span className={classes.supportingFilm}>
+            {t("Supporting Film")}:&nbsp;
+          </span>
+        )}
+        {movie.title}
+      </h2>
       <ul className={classes.specs}>
         {specs.map((spec, i) => (
           <li key={i}>{spec}</li>
@@ -70,9 +77,7 @@ export const Movie: React.FC<Props> = ({
           __html: movie.synopsis as string,
         }}
       />
-      {showScreeningInfo && props.screening && (
-        <ScreeningInfo screening={props.screening as Screening} />
-      )}
+      {info && <RichText className={classes.info} content={info} />}
       {movie.trailer && (
         <Link className={classes.trailer} to={movie.trailer} target="_blank">
           {t("Trailer")}

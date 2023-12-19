@@ -55,22 +55,6 @@ const Posts: CollectionConfig = {
       type: "richText",
       localized: true,
       required: true,
-      admin: {
-        elements: [
-          "h2",
-          "h3",
-          "h4",
-          "h5",
-          "h6",
-          "link",
-          "ol",
-          "ul",
-          "indent",
-          "upload",
-          video,
-        ],
-        leaves: ["bold", "italic", "underline", "strikethrough"],
-      },
     },
     {
       name: "details",
@@ -93,7 +77,7 @@ const Posts: CollectionConfig = {
           name: "type",
           label: t("Type"),
           type: "radio",
-          defaultValue: "self",
+          defaultValue: "none",
           admin: {
             description: t("AdminExplainPostLinkType"),
           },

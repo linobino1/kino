@@ -36,5 +36,8 @@
   "reset filters": "Filter zurücksetzen",
   "Upcoming Screenings": "Die nächsten Vorstellungen",
   "News": "Neuigkeiten",
-  "See all screenings": "Alle Vorstellungen"
+  "See all screenings": "Alle Vorstellungen",
+  "screening.meta.title": "{{ title }} am {{date}}",
+  "screening.meta.description": "Vorstellung am {{date}}. {{synopsis}}",
+  "Supporting Film": "Vorfilm"
 }

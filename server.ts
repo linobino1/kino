@@ -7,6 +7,7 @@ import { createRequestHandler } from "@remix-run/express";
 import invariant from "tiny-invariant";
 import { sender, transport } from "./email";
 import { themoviedb } from "./cms/MigrateMovie/tmdb";
+import { broadcastDevReady } from "@remix-run/node";
 
 require("dotenv").config();
 
@@ -18,13 +19,11 @@ async function start() {
   const app = express();
 
   invariant(process.env.PAYLOAD_SECRET, "PAYLOAD_SECRET is required");
-  invariant(process.env.MONGO_URL, "MONGO_URL is required");
   invariant(process.env.THEMOVIEDB_API_KEY, "THEMOVIEDB_API_KEY is required");
 
   // Initialize Payload
   await payload.init({
     secret: process.env.PAYLOAD_SECRET,
-    mongoURL: process.env.MONGO_URL,
     express: app,
     email: {
       fromName: sender.name,
@@ -73,6 +72,8 @@ async function start() {
   // authenticate all requests to the frontend
   app.use(payload.authenticate);
 
+  const build = require(BUILD_DIR);
+
   app.all(
     "*",
     process.env.NODE_ENV === "development"
@@ -80,7 +81,7 @@ async function start() {
           purgeRequireCache();
 
           return createRequestHandler({
-            build: require(BUILD_DIR),
+            build,
             mode: process.env.NODE_ENV,
             getLoadContext(req, res) {
               return {
@@ -94,7 +95,7 @@ async function start() {
           })(req, res, next);
         }
       : createRequestHandler({
-          build: require(BUILD_DIR),
+          build,
           mode: process.env.NODE_ENV,
           getLoadContext(req, res) {
             return {
@@ -111,6 +112,9 @@ async function start() {
 
   app.listen(port, () => {
     console.log(`Express server listening on port ${port}`);
+    if (process.env.NODE_ENV === "development") {
+      broadcastDevReady(build);
+    }
   });
 }
 

@@ -28,13 +28,13 @@ export const migrateMovie = async (
 
       // try to create company
       try {
-        doc = await payload.create({
+        doc = (await payload.create({
           collection: "companies",
           data: {
             name: company.name,
           },
           locale: tmdbLng,
-        });
+        })) as unknown as Company;
       } catch (err) {
         // could not be created, try to find it
         doc = (
@@ -48,7 +48,7 @@ export const migrateMovie = async (
             locale: tmdbLng,
             limit: 1,
           })
-        ).docs[0];
+        ).docs[0] as unknown as Company;
       }
 
       if (!doc)
@@ -106,7 +106,7 @@ export const migrateMovie = async (
     });
   }
 
-  return movie;
+  return movie as unknown as MigratedMovie;
 };
 
 /**
@@ -124,13 +124,13 @@ const migrateGenre = async (
 
   // try to create genre
   try {
-    genre = await payload.create({
+    genre = (await payload.create({
       collection: "genres",
       data: {
         name: tmdbGenre.name,
       },
       locale: tmdbLng,
-    });
+    })) as unknown as Genre;
     created = true;
   } catch (err) {
     // could not be created, try to find it
@@ -145,7 +145,7 @@ const migrateGenre = async (
         locale: tmdbLng,
         limit: 1,
       })
-    ).docs[0];
+    ).docs[0] as unknown as Genre;
   }
 
   if (!genre)

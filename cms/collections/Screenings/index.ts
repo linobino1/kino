@@ -14,7 +14,7 @@ const Screenings: CollectionConfig = {
   },
   admin: {
     group: t("Screenings"),
-    defaultColumns: ["date", "time", "title", "_status"],
+    defaultColumns: ["date", "title", "_status"],
     useAsTitle: "title",
   },
   versions: {
@@ -35,13 +35,19 @@ const Screenings: CollectionConfig = {
       hook: (slug?: string) => `/screenings/${slug || ""}`,
     },
     addSlugField: {
-      generator: async ({ data, req }: slugGeneratorArgs) => {
-        // we need the date and at least one feature film
+      generator: async ({
+        data,
+        req,
+        originalDoc,
+        from,
+      }: slugGeneratorArgs) => {
+        // we need the date and at least one film
         if (
           !data ||
           !("date" in data) ||
-          !("featureFilms" in data) ||
-          !data.featureFilms.length
+          !("films" in data) ||
+          !data.films.length ||
+          !("filmprint" in data.films[0])
         ) {
           return undefined;
         }
@@ -52,8 +58,8 @@ const Screenings: CollectionConfig = {
         // movie is just an id
         const filmPrint = await req.payload.findByID({
           collection: "filmPrints",
-          id: data.featureFilms[0],
-          locale: req.locale,
+          id: data.films[0].filmprint,
+          locale: req.payload.config.i18n.fallbackLng as string,
           depth: 2,
         });
 
@@ -70,7 +76,7 @@ const Screenings: CollectionConfig = {
       name: "migrateMovie",
       type: "ui",
       admin: {
-        condition: (data) => !data?.featureFilms?.length,
+        condition: (data) => !data?.films?.length,
         components: {
           Field: MigrateMovieButton,
         },
@@ -87,26 +93,36 @@ const Screenings: CollectionConfig = {
         ),
       },
       hooks: {
-        beforeValidate: [
-          // compute title
-          async ({ value, data, req }) => {
-            if (value || !data?.featureFilms?.length) return value;
-            // fetch the first feature films title
-            const title = (
-              (
-                await req.payload.find({
-                  collection: "filmPrints",
-                  where: {
-                    _id: {
-                      equals: data.featureFilms[0],
-                    },
-                  },
-                  locale: req.locale,
-                  depth: 2,
-                })
-              ).docs[0].movie as Movie
-            ).title;
-            return title;
+        // compute title
+        afterRead: [
+          async ({ data, value, req }) => {
+            if (value) return value;
+
+            // return the title of the first film
+            if (!data?.films?.length) return undefined;
+            const filmPrint = await req.payload.findByID({
+              collection: "filmPrints",
+              id: data.films[0].filmprint,
+              locale: req.locale,
+              depth: 4,
+            });
+            return (filmPrint?.movie as Movie).title;
+          },
+        ],
+        beforeChange: [
+          // if the title equals the title of the first film, don't save it
+          async ({ data, value, req }) => {
+            // we need a film to compare to
+            if (!data?.films?.length) return value;
+            const filmPrint = await req.payload.findByID({
+              collection: "filmPrints",
+              id: data.films[0].filmprint,
+              locale: req.locale,
+              depth: 4,
+            });
+
+            if (value === (filmPrint?.movie as Movie).title) return null;
+            return value;
           },
         ],
       },
@@ -121,7 +137,8 @@ const Screenings: CollectionConfig = {
       defaultValue: () =>
         fetch(`/api/seasons/`)
           .then((res) => res.json())
-          .then((res) => res.docs[0].id),
+          .then((res) => res.docs[0].id)
+          .catch(() => null),
     },
     {
       name: "location",
@@ -138,29 +155,38 @@ const Screenings: CollectionConfig = {
       hasMany: false,
     },
     {
-      name: "featureFilms",
-      label: t("Feature Film(s)"),
-      type: "relationship",
-      relationTo: "filmPrints",
-      hasMany: true,
+      name: "films",
+      label: t("Films"),
+      type: "array",
+      minRows: 1,
       required: true,
-      filterOptions: {
-        _status: {
-          equals: "published",
+      fields: [
+        {
+          name: "filmprint",
+          label: t("Film"),
+          type: "relationship",
+          relationTo: "filmPrints",
+          required: true,
+          filterOptions: {
+            _status: {
+              equals: "published",
+            },
+          },
         },
-      },
-    },
-    {
-      name: "supportingFilms",
-      label: t("Supporting Film(s)"),
-      type: "relationship",
-      relationTo: "filmPrints",
-      hasMany: true,
-      filterOptions: {
-        _status: {
-          equals: "published",
+        {
+          name: "isSupportingFilm",
+          label: t("Is Supporting Film"),
+          type: "checkbox",
+          defaultValue: false,
         },
-      },
+        {
+          name: "info",
+          label: t("Info"),
+          type: "richText",
+          localized: true,
+          required: false,
+        },
+      ],
     },
     {
       name: "date",
@@ -183,8 +209,11 @@ const Screenings: CollectionConfig = {
       name: "info",
       label: t("Info"),
       type: "richText",
-      required: false,
+      admin: {
+        description: t("AdminExplainScreeningInfo"),
+      },
       localized: true,
+      required: false,
     },
     {
       name: "moderator",

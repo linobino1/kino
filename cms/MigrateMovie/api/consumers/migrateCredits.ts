@@ -23,12 +23,12 @@ export const migrateCredits: MigrationFunction = async ({
 
       // try to create person
       try {
-        doc = await payload.create({
+        doc = (await payload.create({
           collection: "persons",
           data: {
             name: person.name,
           },
-        });
+        })) as unknown as Person;
       } catch (err) {
         // could not be created, try to find it
         doc = (
@@ -41,7 +41,7 @@ export const migrateCredits: MigrationFunction = async ({
             },
             limit: 1,
           })
-        ).docs[0];
+        ).docs[0] as unknown as Person;
       }
       if (!doc)
         warnings.push(
@@ -60,12 +60,12 @@ export const migrateCredits: MigrationFunction = async ({
 
       // try to create person
       try {
-        person = await payload.create({
+        person = (await payload.create({
           collection: "persons",
           data: {
             name: tmdbPerson.name,
           },
-        });
+        })) as unknown as Person;
       } catch (err) {
         // could not be created, try to find it
         person = (
@@ -78,7 +78,7 @@ export const migrateCredits: MigrationFunction = async ({
             },
             limit: 1,
           })
-        ).docs[0];
+        ).docs[0] as unknown as Person;
       }
 
       if (!person)
@@ -124,13 +124,13 @@ const migrateJob = async (
 
   // try to create job
   try {
-    job = await payload.create({
+    job = (await payload.create({
       collection: "jobs",
       data: {
         name: tmdbJob,
       },
       locale: tmdbLng,
-    });
+    })) as unknown as Job;
 
     // HACK: we add the english name to all languages because jobs are not translated in themoviedb.org
     const fallbackLng = payload.config.i18n.fallbackLng as string;
@@ -164,7 +164,7 @@ const migrateJob = async (
         locale: tmdbLng,
         limit: 1,
       })
-    ).docs[0];
+    ).docs[0] as unknown as Job;
   }
 
   if (!job)

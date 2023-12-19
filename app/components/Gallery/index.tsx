@@ -6,9 +6,9 @@ import carouselStyles from "react-responsive-carousel/lib/styles/carousel.min.cs
 import { Carousel } from "react-responsive-carousel";
 
 export type Type = {
-  images?: {
-    image?: Media | string;
-    id?: string;
+  images: {
+    image: Media | string;
+    id: string;
   }[];
 };
 
@@ -23,7 +23,7 @@ export const Gallery: React.FC<Type> = ({ images }) => {
               <Image
                 className={classes.image}
                 image={item.image as Media}
-                alt={(item.image as Media)?.alt}
+                alt={(item.image as Media)?.alt as string}
               />
             </div>
           ))}

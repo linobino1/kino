@@ -1,13 +1,7 @@
-import {
-  DynamicLinks,
-  ExternalScripts,
-  type DynamicLinksFunction,
-} from "remix-utils";
 import type {
-  MetaFunction,
-  SerializeFrom,
-  LoaderArgs,
+  LoaderFunctionArgs,
   LinksFunction,
+  MetaFunction,
 } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
@@ -25,7 +19,7 @@ import { useEffect } from "react";
 import CookieConsent from "react-cookie-consent";
 import { cssBundleHref } from "@remix-run/css-bundle";
 import { i18nCookie } from "./cookie";
-import type { Media } from "payload/generated-types";
+import type { Media, Site } from "payload/generated-types";
 import environment from "./util/environment";
 import classes from "./root.module.css";
 import { ErrorPage } from "~/components/ErrorPage";
@@ -46,13 +40,13 @@ export const links: LinksFunction = () => {
 export async function loader({
   request,
   context: { payload, user },
-}: LoaderArgs) {
+}: LoaderFunctionArgs) {
   const locale = await i18next.getLocale(request);
   const [site, localeCookie] = await Promise.all([
     payload.findGlobal({
       slug: "site",
       depth: 3,
-    }),
+    }) as Promise<unknown> as Promise<Site>,
     i18nCookie.serialize(locale),
   ]);
 
@@ -77,34 +71,51 @@ export async function loader({
   );
 }
 
-export const dynamicLinks: DynamicLinksFunction<
-  SerializeFrom<typeof loader>
-> = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [
     {
+      tagName: "link",
       rel: "icon",
-      href: (data.site.favicon as Media)?.url as string,
-      type: (data.site.logo as Media)?.mimeType,
+      href: (data?.site.favicon as Media)?.url as string,
+      type: (data?.site.logo as Media)?.mimeType,
+    },
+    {
+      charSet: "utf-8",
+    },
+    {
+      title: data?.site.meta?.title,
+    },
+    {
+      name: "description",
+      content: data?.site.meta?.description,
+    },
+    {
+      name: "keywords",
+      content: data?.site.meta?.keywords,
+    },
+    {
+      name: "viewport",
+      content: "width=device-width,initial-scale=1",
+    },
+    {
+      name: "og:image",
+      content:
+        data?.site.meta?.image &&
+        encodeURI((data.site.meta.image as any)?.sizes["1500w"].url),
+    },
+    {
+      name: "og:title",
+      content: data?.site.meta?.title,
+    },
+    {
+      name: "og:description",
+      content: data?.site.meta?.description,
     },
   ];
 };
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => ({
-  charset: "utf-8",
-  title: data.site.meta?.title,
-  description: data.site.meta?.description,
-  keywords: data.site.meta?.keywords,
-  viewport: "width=device-width,initial-scale=1",
-  "og:image":
-    data.site.meta?.image &&
-    encodeURI((data.site.meta.image as any)?.sizes["1500w"].url),
-  "og:title": data.site.meta?.title,
-  "og:description": data.site.meta?.description,
-});
-
 export const handle = {
   i18n: "common", // i18n namespace
-  dynamicLinks,
 };
 
 export function useChangeLanguage(locale: string) {
@@ -131,7 +142,7 @@ export default function App() {
       <head>
         <Meta />
         <Links />
-        <DynamicLinks />
+        {/* <DynamicLinks /> */}
 
         <script
           type="application/ld+json"
@@ -141,7 +152,6 @@ export default function App() {
         />
       </head>
       <body className={classes.body}>
-        <ExternalScripts />
         <script
           dangerouslySetInnerHTML={{
             __html: `window.ENV = ${JSON.stringify(publicKeys)}`,

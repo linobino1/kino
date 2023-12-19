@@ -27,5 +27,8 @@
   "reset filters": "reset filters",
   "Upcoming Screenings": "Upcoming Screenings",
   "News": "News",
-  "See all screenings": "See all screenings"
+  "See all screenings": "See all screenings",
+  "screening.meta.title": "{{ title }} on {{date}}",
+  "screening.meta.description": "Screening on {{date}}. {{synopsis}}",
+  "Supporting Film": "Supporting Film"
 }

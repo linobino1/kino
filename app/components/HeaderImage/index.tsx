@@ -9,7 +9,7 @@ import { Navigation } from "~/components/Navigation";
 
 export type Type = {
   image?: Media | string;
-  navigation?: NavigationType | string;
+  navigation?: NavigationType | string | null;
   children?: React.ReactNode;
 };
 
