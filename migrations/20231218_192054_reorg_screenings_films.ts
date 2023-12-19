@@ -1,6 +1,15 @@
 import type { MigrateUpArgs, MigrateDownArgs } from "@payloadcms/db-mongodb";
 import type { Screening } from "payload/generated-types";
 
+// somehow this is the value that was stored in the database for blank slate values
+// the admin panel dies when given this value
+// maybe there was a slate update in the meantime?
+const slateInvalidBlankValue = [
+  {
+    children: [{}],
+  },
+];
+
 export async function up({ payload }: MigrateUpArgs): Promise<void> {
   // merge screenings.featureFilms and screenings.supportingFilms into screenings.films
   // transform screenings.info into screenings.films[0].info
@@ -22,9 +31,30 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
         });
       });
 
-      // let's add screenings.info to the first film
-      if (screening.info && films.length > 0) {
-        films[0].info = screening.info;
+      // migrate screenings.info
+      let { info } = screening;
+      // info._doc is the actual info object
+      if (
+        info &&
+        typeof info === "object" &&
+        info._doc &&
+        typeof info._doc === "object"
+      ) {
+        // sanitize blank slate values for all locales
+        Object.keys(info._doc).forEach((key) => {
+          if (
+            JSON.stringify(info[key]) === JSON.stringify(slateInvalidBlankValue)
+          ) {
+            info[key] = null;
+          }
+        });
+      } else {
+        info = null;
+      }
+
+      // add info to the first film
+      if (films.length > 0) {
+        films[0].info = info;
       }
 
       // update screening
@@ -51,6 +81,7 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       );
     }
   );
+  // throw new Error("stop");
 }
 
 export async function down({ payload }: MigrateDownArgs): Promise<void> {
