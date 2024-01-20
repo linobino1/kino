@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useMatches } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import classes from "./index.module.css";
+import type { User } from "payload/generated-types";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
@@ -9,7 +10,11 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 export const UserStatus: React.FC<Props> = ({ className }) => {
   const { t } = useTranslation();
-  const user = useMatches().find((x) => x.id === "root")?.data.user;
+  const rootData = useMatches().find((x) => x.id === "root")?.data;
+  const user = (rootData &&
+    typeof rootData === "object" &&
+    "user" in rootData &&
+    rootData.user) as User;
 
   return (
     <div className={`${classes.container} ${className}`}>
