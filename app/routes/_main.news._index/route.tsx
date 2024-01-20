@@ -100,7 +100,9 @@ export default function Index() {
           <h2>{t("Upcoming Screenings")}</h2>
           <ScreeningsList items={screenings.docs} site={site} />
           <p>
-            <Link to="/screenings">{t("See all screenings")}</Link>
+            <Link to="/screenings" className={classes.allScreeningsButton}>
+              {t("See all screenings")}
+            </Link>
           </p>
         </section>
         <section className={classes.news}>

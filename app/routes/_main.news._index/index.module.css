@@ -34,3 +34,25 @@ ul.posts > li:last-child hr {
 ul.posts > li p {
   margin-left: 0;
 }
+
+a.allScreeningsButton:visited,
+a.allScreeningsButton:active,
+a.allScreeningsButton:focus,
+a.allScreeningsButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5em 1em;
+  border: 1px solid;
+  border-radius: var(--border-radius-big);
+  color: inherit;
+  font: var(--font-big);
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out;
+  margin-inline: auto;
+  width: fit-content;
+}
+a.allScreeningsButton:hover {
+  background-color: var(--color-white);
+  color: var(--color-theme);
+}

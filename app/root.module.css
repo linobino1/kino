@@ -69,6 +69,7 @@
   --font-h2: var(--font-weight-bold) 1.9rem/1 var(--font-family);
 
   --border-radius: 2px;
+  --border-radius-big: 5px;
   --box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.15);
 
   --z-index-header: 300;
