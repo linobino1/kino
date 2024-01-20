@@ -10,6 +10,7 @@
 
 .signIn {
   padding: 0.5rem;
+  text-wrap: nowrap;
 }
 .signedIn {
   display: flex;
