@@ -1,0 +1,4 @@
+.gutter {
+  max-width: var(--page-max-width);
+  margin-inline: auto;
+}
