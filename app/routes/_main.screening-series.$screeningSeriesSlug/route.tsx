@@ -6,6 +6,7 @@ import ScreeningsList from "~/components/ScreeningsList";
 import { ErrorPage } from "~/components/ErrorPage";
 import { mergeMeta, pageTitle } from "~/util/pageMeta";
 import type { loader as rootLoader } from "app/root";
+import Gutter from "~/components/Gutter";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -80,11 +81,13 @@ export default function Item() {
 
   return (
     <Page layout={screeningSeries.layout}>
-      <ScreeningsList
-        items={screenings}
-        activeScreeningSery={screeningSeries}
-        site={site}
-      />
+      <Gutter>
+        <ScreeningsList
+          items={screenings}
+          activeScreeningSery={screeningSeries}
+          site={site}
+        />
+      </Gutter>
     </Page>
   );
 }
