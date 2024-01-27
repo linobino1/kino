@@ -67,7 +67,10 @@ export const meta: MetaFunction<
 
   return [
     {
-      title: pageTitle(site?.meta?.title, data?.screeningSeries?.name),
+      title: pageTitle(
+        site?.meta?.title || undefined,
+        data?.screeningSeries?.name
+      ),
     },
   ];
 });
