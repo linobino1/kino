@@ -82,7 +82,7 @@ export const meta: MetaFunction<
   const site = matches.find((match) => match?.id === "root")?.data.site;
   return [
     {
-      title: pageTitle(site?.meta?.title, data?.season.name),
+      title: pageTitle(site?.meta?.title || undefined, data?.season.name),
     },
     {
       name: "og:image",
