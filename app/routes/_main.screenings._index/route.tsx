@@ -6,7 +6,7 @@ import i18next from "~/i18next.server";
 import { mergeMeta, pageMeta } from "~/util/pageMeta";
 import { ErrorPage } from "~/components/ErrorPage";
 import type { loader as rootLoader } from "app/root";
-import classes from "./index.module.css";
+import Gutter from "~/components/Gutter";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -67,9 +67,9 @@ export default function Index() {
 
   return (
     <Page layout={page.layout}>
-      <div className={classes.gutter}>
+      <Gutter>
         <ScreeningsList items={screenings} site={site} />
-      </div>
+      </Gutter>
     </Page>
   );
 }

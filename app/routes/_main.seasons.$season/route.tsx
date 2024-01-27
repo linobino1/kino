@@ -10,6 +10,7 @@ import { Heading } from "~/components/Heading";
 import { useTranslation } from "react-i18next";
 import type { loader as rootLoader } from "app/root";
 import { mergeMeta, pageTitle } from "~/util/pageMeta";
+import Gutter from "~/components/Gutter";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -99,11 +100,13 @@ export default function Season() {
     <Page layoutType="default">
       <HeaderImage image={season.header as Media} navigation={navigation} />
       <Heading>{season.name}</Heading>
-      <ScreeningsList
-        items={screenings}
-        emptyMessage={t("No screenings for this season.")}
-        site={site}
-      />
+      <Gutter>
+        <ScreeningsList
+          items={screenings}
+          emptyMessage={t("No screenings for this season.")}
+          site={site}
+        />
+      </Gutter>
     </Page>
   );
 }

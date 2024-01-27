@@ -17,6 +17,7 @@ import ScreeningsList from "~/components/ScreeningsList";
 import type { loader as rootLoader } from "app/root";
 import type { Blog, Post, Screening, Site } from "payload/generated-types";
 import type { PaginatedDocs } from "payload/database";
+import Gutter from "~/components/Gutter";
 
 let today = new Date();
 today.setHours(0, 0, 0, 0);
@@ -95,7 +96,7 @@ export default function Index() {
 
   return (
     <Page layout={page.layout} className={classes.page}>
-      <div className={classes.gutter}>
+      <Gutter>
         <section className={classes.upcoming}>
           <h2>{t("Upcoming Screenings")}</h2>
           <ScreeningsList items={screenings.docs} site={site} />
@@ -124,7 +125,7 @@ export default function Index() {
           )}
           <Pagination {...posts} linkProps={{ prefetch: "intent" }} />
         </section>
-      </div>
+      </Gutter>
     </Page>
   );
 }
