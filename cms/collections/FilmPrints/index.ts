@@ -11,7 +11,9 @@ export const FilmPrints: CollectionConfig = {
     singular: t("Film Print"),
     plural: t("Film Prints"),
   },
-  defaultSort: "-createdAt",
+  // uncomment the next line as soon as this bug is fixed:
+  // https://github.com/payloadcms/payload/issues/4815
+  // defaultSort: "-createdAt",
   admin: {
     group: t("Movie Database"),
     defaultColumns: [
