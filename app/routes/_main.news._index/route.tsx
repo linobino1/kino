@@ -2,6 +2,7 @@ import {
   redirect,
   type LoaderFunctionArgs,
   type MetaFunction,
+  type HeadersFunction,
 } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
@@ -18,6 +19,10 @@ import type { loader as rootLoader } from "app/root";
 import type { Blog, Post, Screening, Site } from "payload/generated-types";
 import type { PaginatedDocs } from "payload/database";
 import Gutter from "~/components/Gutter";
+
+export const headers: HeadersFunction = () => ({
+  "Cache-Control": "max-age=3600, s-maxage=3600",
+});
 
 let today = new Date();
 today.setHours(0, 0, 0, 0);
