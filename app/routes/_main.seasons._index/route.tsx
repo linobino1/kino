@@ -33,7 +33,7 @@ export const loader = async ({
     collection: "seasons",
     locale,
     depth: 3,
-    limit: 10,
+    limit: 12,
     pagination: true,
     sort: "-sort",
     page: pageNumber,
