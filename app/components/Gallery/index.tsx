@@ -6,10 +6,12 @@ import carouselStyles from "react-responsive-carousel/lib/styles/carousel.min.cs
 import { Carousel } from "react-responsive-carousel";
 
 export type Type = {
-  images: {
-    image: Media | string;
-    id: string;
-  }[];
+  images?:
+    | {
+        image: Media | string;
+        id?: string | null;
+      }[]
+    | null;
 };
 
 export const Gallery: React.FC<Type> = ({ images }) => {
