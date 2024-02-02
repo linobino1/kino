@@ -1,7 +1,7 @@
 import {
   redirect,
   type LoaderFunctionArgs,
-  MetaFunction,
+  type MetaFunction,
 } from "@remix-run/node";
 import type { Media } from "payload/generated-types";
 import { useLoaderData } from "@remix-run/react";
