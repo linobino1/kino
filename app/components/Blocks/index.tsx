@@ -45,7 +45,7 @@ export const Block: React.FC<BlockProps> = ({ block, ...props }) => {
     case "gallery":
       return (
         <Gutter>
-          <Gallery images={block.images} />;
+          <Gallery images={block.images} />
         </Gutter>
       );
 
