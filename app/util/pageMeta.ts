@@ -21,7 +21,10 @@ export const pageMeta = (page: Meta, site: Meta): MetaDescriptor[] => {
   ];
 };
 
-export const pageTitle = (siteTitle?: string, title?: string): string => {
+export const pageTitle = (
+  siteTitle?: string | null,
+  title?: string | null
+): string => {
   if (!title) {
     return siteTitle || "";
   }
@@ -29,15 +32,15 @@ export const pageTitle = (siteTitle?: string, title?: string): string => {
 };
 
 export const pageDescription = (
-  siteDescription?: string,
-  description?: string
+  siteDescription?: string | null,
+  description?: string | null
 ): string => {
   return description || siteDescription || "";
 };
 
 export const pageKeywords = (
-  siteKeywords?: string,
-  keywords?: string
+  siteKeywords?: string | null,
+  keywords?: string | null
 ): string => {
   return [keywords, siteKeywords].filter(Boolean).join(", ");
 };
