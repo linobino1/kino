@@ -13,6 +13,7 @@ import { JsonLd } from "cms/structured-data";
 import { postPreviewSchema } from "cms/structured-data/post";
 import type { loader as rootLoader } from "app/root";
 import { serializeToPlainText } from "~/components/RichText/Serialize";
+import Gutter from "~/components/Gutter";
 
 export const loader = async ({
   request,
@@ -65,12 +66,14 @@ export default function Index() {
   return (
     <Page className={classes.container}>
       {JsonLd(postPreviewSchema(post))}
-      <div className={classes.header}>
-        <Date iso={post.date} format="PPP" /> {post.title}
-      </div>
-      <Image className={classes.image} image={post.header as Media} />
-      <h1>{post.title}</h1>
-      <RichText content={post.content} className={classes.preview} />
+      <Gutter>
+        <div className={classes.header}>
+          <Date iso={post.date} format="PPP" /> {post.title}
+        </div>
+        <Image className={classes.image} image={post.header as Media} />
+        <h1>{post.title}</h1>
+        <RichText content={post.content} className={classes.preview} />
+      </Gutter>
       <Blocks blocks={post.details as []} />
     </Page>
   );
