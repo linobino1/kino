@@ -1,15 +1,6 @@
 .container ul {
-  max-width: var(--page-max-width);
   text-align: left;
 }
-@media screen and (min-width: 768px) {
-  .container ul {
-    max-width: min(70vw, 1100px);
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
 .container a span {
   text-decoration: underline;
 }
@@ -20,9 +11,4 @@
 .container a::after {
   content: "\2197";
   text-decoration: none !important;
-}
-
-.container p {
-  max-width: var(--page-max-width);
-  margin-inline: auto;
 }

@@ -13,6 +13,7 @@ import classes from "./index.module.css";
 import Image from "~/components/Image";
 import Pagination from "~/components/Pagination";
 import type { loader as rootLoader } from "app/root";
+import Gutter from "~/components/Gutter";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -44,6 +45,7 @@ export const loader = async ({
       status: 302,
     });
   }
+  console.log("seasons", seasons);
   return {
     page,
     seasons,
@@ -65,7 +67,7 @@ export default function Seasons() {
 
   return (
     <Page layout={page.layout}>
-      <main>
+      <Gutter>
         {seasons.docs?.length ? (
           <ul className={classes.seasons}>
             {seasons.docs.map((season) => (
@@ -81,7 +83,7 @@ export default function Seasons() {
           </ul>
         ) : null}
         <Pagination {...seasons} linkProps={{ prefetch: "intent" }} />
-      </main>
+      </Gutter>
     </Page>
   );
 }

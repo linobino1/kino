@@ -1,6 +1,0 @@
-.block:not([data-type="headerImage"]):not([data-type="heading"]):not(
-    [data-type="outlet"]
-  ) {
-  max-width: var(--page-max-width);
-  margin-inline: auto;
-}

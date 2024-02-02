@@ -7,13 +7,10 @@
   border-bottom: 1px solid var(--color-light-grey);
 }
 .header {
-  max-width: var(--page-max-width);
-  margin-inline: auto;
   color: var(--color-font-light);
   text-transform: uppercase;
   z-index: var(--z-index-header);
-  width: var(--page-max-width);
-  margin-inline: auto;
+  width: 100%;
   display: grid;
   grid-template-columns: min-content 1fr min-content;
   align-items: center;

@@ -6,9 +6,9 @@ import { Movie } from "~/components/Movie";
 import { Page } from "~/components/Page";
 import { ErrorPage } from "~/components/ErrorPage";
 import HeaderImage from "~/components/HeaderImage";
-import classes from "./index.module.css";
 import { mergeMeta, pageTitle } from "~/util/pageMeta";
 import type { loader as rootLoader } from "app/root";
+import Gutter from "~/components/Gutter";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -67,11 +67,11 @@ export default function Item() {
   const movie = filmPrint.movie as MovieType;
 
   return (
-    <Page className={classes.container}>
+    <Page>
       <HeaderImage image={movie.still} navigation={navigation} />
-      <main>
+      <Gutter>
         <Movie movie={movie} filmprint={filmPrint} />
-      </main>
+      </Gutter>
     </Page>
   );
 }

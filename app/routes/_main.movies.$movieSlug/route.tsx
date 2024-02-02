@@ -3,7 +3,6 @@ import { useLoaderData } from "@remix-run/react";
 import i18next from "~/i18next.server";
 import Movie from "~/components/Movie";
 import Image from "~/components/Image";
-import classes from "./index.module.css";
 import type { Media } from "payload/generated-types";
 import { mergeMeta, pageDescription, pageTitle } from "~/util/pageMeta";
 import { ErrorPage } from "~/components/ErrorPage";
@@ -64,7 +63,7 @@ export default function MovieDetail() {
   return (
     <>
       <Image image={movie.still as Media} />
-      <Movie movie={movie} className={classes.movie} />
+      <Movie movie={movie} />
     </>
   );
 }

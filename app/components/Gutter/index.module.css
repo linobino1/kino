@@ -1,4 +1,17 @@
 .gutter {
-  max-width: var(--page-max-width);
+  max-width: 96vw;
   margin-inline: auto;
+}
+
+@media screen and (min-width: 1024px) {
+  .gutter.medium {
+    max-width: 60rem;
+    margin-inline: auto;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .gutter.large {
+    max-width: 80rem;
+  }
 }

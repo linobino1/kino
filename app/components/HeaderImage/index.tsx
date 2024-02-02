@@ -6,25 +6,31 @@ import type {
 import Image from "~/components/Image";
 import classes from "./index.module.css";
 import { Navigation } from "~/components/Navigation";
+import Gutter from "../Gutter";
 
-export type Type = {
+export interface Type extends React.HTMLAttributes<HTMLDivElement> {
   image?: Media | string;
   navigation?: NavigationType | string | null;
   children?: React.ReactNode;
-};
+}
 
 export const HeaderImage: React.FC<Type> = ({
   image,
   navigation,
   children,
+  className,
+  ...props
 }) => {
   return (
-    <header className={classes.container}>
+    <header
+      className={[className, classes.container].filter(Boolean).join(" ")}
+      {...props}
+    >
       {(image as Media) && (
         <Image className={classes.header} image={image as Media} />
       )}
       <div className={classes.overlay} />
-      <div className={classes.content}>
+      <Gutter className={classes.content}>
         {(navigation as NavigationType) && (
           <Navigation
             navigation={navigation as NavigationType}
@@ -32,7 +38,7 @@ export const HeaderImage: React.FC<Type> = ({
           />
         )}
         {children}
-      </div>
+      </Gutter>
     </header>
   );
 };

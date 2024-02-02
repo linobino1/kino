@@ -7,7 +7,7 @@ import { Gallery } from "../Gallery";
 import { MyReactPlayer } from "../MyReactPlayer";
 import { Image } from "../Image";
 import { RichText } from "../RichText";
-import classes from "./index.module.css";
+import Gutter from "../Gutter";
 
 export interface BlockProps extends React.HTMLAttributes<HTMLDivElement> {
   block?: PageLayout["blocks"][0];
@@ -16,42 +16,50 @@ export interface BlockProps extends React.HTMLAttributes<HTMLDivElement> {
 export const Block: React.FC<BlockProps> = ({ block, ...props }) => {
   const { children } = props;
   if (!block) return null;
-  return (
-    <div className={classes.block} data-type={block.blockType}>
-      {(() => {
-        switch (block.blockType) {
-          case "content":
-            return <RichText content={block.content} />;
+  switch (block.blockType) {
+    case "content":
+      return (
+        <Gutter>
+          <RichText content={block.content} />
+        </Gutter>
+      );
 
-          case "heading":
-            return <Heading text={block.text ?? undefined} />;
+    case "heading":
+      return <Heading text={block.text ?? undefined} />;
 
-          case "headerImage":
-            return <HeaderImage {...block} />;
+    case "headerImage":
+      return <HeaderImage {...block} />;
 
-          case "image":
-            return (
-              <Image
-                image={block.image as Media}
-                width={"100%"}
-                height={"auto"}
-                style={{ marginBlock: "1rem" }}
-              />
-            );
+    case "image":
+      return (
+        <Gutter>
+          <Image
+            image={block.image as Media}
+            width={"100%"}
+            height={"auto"}
+            style={{ marginBlock: "1rem" }}
+          />
+        </Gutter>
+      );
 
-          case "gallery":
-            return <Gallery images={block.images} />;
+    case "gallery":
+      return (
+        <Gutter>
+          <Gallery images={block.images} />;
+        </Gutter>
+      );
 
-          case "video":
-            return <MyReactPlayer url={block.url} />;
+    case "video":
+      return (
+        <Gutter>
+          <MyReactPlayer url={block.url} />;
+        </Gutter>
+      );
 
-          default:
-          case "outlet":
-            return children as React.ReactElement;
-        }
-      })()}
-    </div>
-  );
+    default:
+    case "outlet":
+      return children as React.ReactElement;
+  }
 };
 
 export interface BlocksProps extends React.HTMLAttributes<HTMLDivElement> {

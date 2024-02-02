@@ -1,5 +1,4 @@
 .container {
-  max-width: var(--page-max-width);
   padding-block: 2rem;
 }
 .header {

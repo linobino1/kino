@@ -40,9 +40,8 @@ img.header {
 
 /** CONTENT        ******************************************/
 .content {
-  width: var(--page-max-width);
-  margin-inline: auto;
   padding-block: 1rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

@@ -22,6 +22,7 @@ import { parseISO } from "date-fns";
 import { format } from "date-fns-tz";
 import { useTranslation } from "react-i18next";
 import RichText from "~/components/RichText";
+import Gutter from "~/components/Gutter";
 
 export const loader = async ({
   params,
@@ -113,7 +114,11 @@ export default function Item() {
   return (
     <Page className={classes.container}>
       {JsonLd(screeningSchema(screening, site))}
-      <HeaderImage image={mainMovie.still} navigation={navigation}>
+      <HeaderImage
+        image={mainMovie.still}
+        navigation={navigation}
+        className={classes.header}
+      >
         <div className={classes.infoTitle}>
           <Date
             className={classes.date}
@@ -143,7 +148,7 @@ export default function Item() {
           )}
         </div>
       </HeaderImage>
-      <main>
+      <Gutter>
         {screening.info && (
           <RichText content={screening.info} className={classes.info} />
         )}
@@ -158,7 +163,7 @@ export default function Item() {
             />
           ))}
         </div>
-      </main>
+      </Gutter>
     </Page>
   );
 }

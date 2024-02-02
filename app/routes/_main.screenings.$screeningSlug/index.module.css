@@ -1,8 +1,7 @@
-.container main {
-  max-width: var(--page-max-width);
-  margin-inline: auto;
-}
 /** IMAGE HEADER   ******************************************/
+.header {
+  margin-bottom: 1rem;
+}
 .infoTitle {
   display: block;
 }

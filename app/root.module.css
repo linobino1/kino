@@ -26,9 +26,6 @@
 }
 
 :root {
-  --page-max-width: 1120px;
-  --page-max-width: min(calc(100vw - 2rem), 920px);
-
   --color-theme: #283587;
   --color-white: #ffffff;
   --color-black: #000000;
@@ -123,9 +120,6 @@ hr {
   color: inherit;
 }
 /* improve readablity */
-p {
-  max-width: var(--page-max-width);
-}
 @media screen and (min-width: 768px) {
   p {
     max-width: min(70vw, 1100px);

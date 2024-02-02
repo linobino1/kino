@@ -1,10 +1,16 @@
 import classes from "./index.module.css";
 
-export interface Props extends React.HTMLAttributes<HTMLDivElement> {}
+export interface Props extends React.HTMLAttributes<HTMLDivElement> {
+  size?: "medium" | "large";
+}
 
-const Gutter: React.FC<Props> = ({ className, ...props }) => {
+const Gutter: React.FC<Props> = ({ size = "medium", className, ...props }) => {
   return (
-    <div className={[classes.gutter, className].filter(Boolean).join(" ")}>
+    <div
+      className={[classes.gutter, classes[size], className]
+        .filter(Boolean)
+        .join(" ")}
+    >
       {props.children}
     </div>
   );

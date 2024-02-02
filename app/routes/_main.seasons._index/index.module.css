@@ -1,11 +1,11 @@
 ul.seasons {
   list-style: none;
   padding: 0 0.8rem;
-  margin: 0;
+  margin-block: 1rem;
   display: grid;
   grid-template-columns: repeat(auto-fill, 20rem);
+  width: 100%;
   align-items: center;
-  justify-content: center;
   gap: 0.5rem;
 }
 ul.seasons > li {
