@@ -22,7 +22,7 @@
 }
 /* Type 'default' ***********************************************************/
 .page[data-layout-type="default"] h1 {
-  width: 100vw;
+  width: 100%;
   color: var(--color-black);
   background: var(--color-white);
 }
