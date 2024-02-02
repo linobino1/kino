@@ -7,6 +7,9 @@ import { ErrorPage } from "~/components/ErrorPage";
 import { mergeMeta, pageTitle } from "~/util/pageMeta";
 import type { loader as rootLoader } from "app/root";
 import Gutter from "~/components/Gutter";
+import type { PaginatedDocs } from "payload/database";
+import type { Screening } from "payload/generated-types";
+import Pagination from "~/components/Pagination";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -33,19 +36,21 @@ export const loader = async ({
     throw new Response("Screening series not found", { status: 404 });
   }
 
-  const screenings = (
-    await payload.find({
-      collection: "screenings",
-      where: {
-        series: {
-          equals: screeningSeries.id,
-        },
+  const page = parseInt(new URL(request.url).searchParams.get("page") || "1");
+  const screenings = (await payload.find({
+    collection: "screenings",
+    where: {
+      series: {
+        equals: screeningSeries.id,
       },
-      locale,
-      depth: 11,
-      sort: "date",
-    })
-  ).docs;
+    },
+    locale,
+    depth: 11,
+    sort: "date",
+    pagination: true,
+    page,
+    limit: 20,
+  })) as unknown as PaginatedDocs<Screening>;
 
   const site = await payload.findGlobal({
     slug: "site",
@@ -83,10 +88,11 @@ export default function Item() {
     <Page layout={screeningSeries.layout}>
       <Gutter>
         <ScreeningsList
-          items={screenings}
+          items={screenings.docs}
           activeScreeningSery={screeningSeries}
           site={site}
         />
+        <Pagination {...screenings} linkProps={{ prefetch: "intent" }} />
       </Gutter>
     </Page>
   );
