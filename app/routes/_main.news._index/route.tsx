@@ -24,13 +24,13 @@ export const headers: HeadersFunction = () => ({
   "Cache-Control": "max-age=3600, s-maxage=3600",
 });
 
-let today = new Date();
-today.setHours(0, 0, 0, 0);
-
 export const loader = async ({
   request,
   context: { payload },
 }: LoaderFunctionArgs) => {
+  let today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   const locale = await i18next.getLocale(request);
   const site = (await payload.findGlobal({
     slug: "site",
@@ -69,6 +69,8 @@ export const loader = async ({
     sort: "date",
     limit: 3,
   })) as unknown as PaginatedDocs<Screening>;
+
+  console.log("today", today);
 
   // Redirect to the last page if the requested page is greater than the total number of page
   if (postsPage > posts.totalPages) {
