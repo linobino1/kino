@@ -45,7 +45,7 @@ export const loader = async ({
       status: 302,
     });
   }
-  console.log("seasons", seasons);
+
   return {
     page,
     seasons,
