@@ -66,12 +66,10 @@ export default function Index() {
   return (
     <Page className={classes.container}>
       {JsonLd(postPreviewSchema(post))}
-      <Gutter>
-        <div className={classes.header}>
-          <Date iso={post.date} format="PPP" /> {post.title}
-        </div>
-        <Image className={classes.image} image={post.header as Media} />
+      <Gutter size="small">
+        <Date iso={post.date} format="PPP" className={classes.date} />
         <h1>{post.title}</h1>
+        <Image className={classes.image} image={post.header as Media} />
         <RichText content={post.content} className={classes.preview} />
       </Gutter>
       <Blocks blocks={post.details as []} />

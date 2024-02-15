@@ -14,6 +14,12 @@
   text-align: start;
   padding: unset;
 }
+.date {
+  display: block;
+  font: var(--font-small);
+  color: var(--color-light-grey);
+  margin-block: 1em;
+}
 .image {
   width: 100%;
   aspect-ratio: 16/9;
