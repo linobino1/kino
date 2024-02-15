@@ -119,12 +119,6 @@ hr {
   text-decoration: none;
   color: inherit;
 }
-/* improve readablity */
-@media screen and (min-width: 768px) {
-  p {
-    max-width: min(70vw, 1100px);
-  }
-}
 @media screen and (min-width: 768px) {
   *[data-mobile-only] {
     display: none;

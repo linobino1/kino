@@ -3,7 +3,15 @@
   margin-inline: auto;
 }
 
+@media screen and (min-width: 768px) {
+  .gutter.small {
+    max-width: 45rem;
+  }
+}
 @media screen and (min-width: 1024px) {
+  .gutter.small {
+    max-width: 45rem;
+  }
   .gutter.medium {
     max-width: 60rem;
     margin-inline: auto;

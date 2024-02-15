@@ -1,7 +1,7 @@
 import classes from "./index.module.css";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  size?: "medium" | "large";
+  size?: "small" | "medium" | "large";
 }
 
 const Gutter: React.FC<Props> = ({ size = "medium", className, ...props }) => {

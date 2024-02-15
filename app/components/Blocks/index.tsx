@@ -19,7 +19,7 @@ export const Block: React.FC<BlockProps> = ({ block, ...props }) => {
   switch (block.blockType) {
     case "content":
       return (
-        <Gutter>
+        <Gutter size="small">
           <RichText content={block.content} />
         </Gutter>
       );
@@ -33,7 +33,7 @@ export const Block: React.FC<BlockProps> = ({ block, ...props }) => {
 
     case "image":
       return (
-        <Gutter>
+        <Gutter size="small">
           <Image
             image={block.image as Media}
             width={"100%"}
@@ -45,14 +45,14 @@ export const Block: React.FC<BlockProps> = ({ block, ...props }) => {
 
     case "gallery":
       return (
-        <Gutter>
+        <Gutter size="small">
           <Gallery images={block.images} />
         </Gutter>
       );
 
     case "video":
       return (
-        <Gutter>
+        <Gutter size="small">
           <MyReactPlayer url={block.url} />;
         </Gutter>
       );
