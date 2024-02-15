@@ -28,7 +28,8 @@ export const Block: React.FC<BlockProps> = ({ block, ...props }) => {
       return <Heading text={block.text ?? undefined} />;
 
     case "headerImage":
-      return <HeaderImage {...block} />;
+      const { blockType, blockName, id, ...props } = block;
+      return <HeaderImage {...props} />;
 
     case "image":
       return (
