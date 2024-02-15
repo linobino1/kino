@@ -8,13 +8,15 @@ import classes from "./index.module.css";
 import { Navigation } from "~/components/Navigation";
 import Gutter from "../Gutter";
 
-export interface Type extends React.HTMLAttributes<HTMLDivElement> {
+export interface Type extends Omit<React.HTMLAttributes<HTMLDivElement>, "id"> {
+  id?: string | undefined | null;
   image?: Media | string;
   navigation?: NavigationType | string | null;
   children?: React.ReactNode;
 }
 
 export const HeaderImage: React.FC<Type> = ({
+  id,
   image,
   navigation,
   children,
@@ -25,6 +27,7 @@ export const HeaderImage: React.FC<Type> = ({
     <header
       className={[className, classes.container].filter(Boolean).join(" ")}
       {...props}
+      id={id || undefined}
     >
       {(image as Media) && (
         <Image className={classes.header} image={image as Media} />
