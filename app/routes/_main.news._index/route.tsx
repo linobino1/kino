@@ -70,8 +70,6 @@ export const loader = async ({
     limit: 3,
   })) as unknown as PaginatedDocs<Screening>;
 
-  console.log("today", today);
-
   // Redirect to the last page if the requested page is greater than the total number of page
   if (postsPage > posts.totalPages) {
     throw redirect(`?page=${posts.totalPages}`, {
