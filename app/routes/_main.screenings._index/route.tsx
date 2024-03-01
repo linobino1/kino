@@ -10,9 +10,6 @@ import Gutter from "~/components/Gutter";
 
 export const ErrorBoundary = ErrorPage;
 
-let today = new Date();
-today.setHours(0, 0, 0, 0);
-
 export const loader = async ({
   request,
   context: { payload },
@@ -22,6 +19,10 @@ export const loader = async ({
     slug: "screeningsPage",
     locale,
   });
+
+  let today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   const screenings = await payload.find({
     collection: "screenings",
     locale,
