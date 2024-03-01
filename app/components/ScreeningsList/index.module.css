@@ -74,7 +74,8 @@
   border-radius: 100px;
   padding-inline: 0.5em;
   padding-block: 0.2em;
-  white-space: nowrap;
+  max-width: 15em;
+  text-align: center;
 }
 .series {
   background-color: var(--color-theme-contrast-light-2);
