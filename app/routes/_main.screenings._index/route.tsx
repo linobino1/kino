@@ -7,6 +7,7 @@ import { mergeMeta, pageMeta } from "~/util/pageMeta";
 import { ErrorPage } from "~/components/ErrorPage";
 import type { loader as rootLoader } from "app/root";
 import Gutter from "~/components/Gutter";
+import Pagination from "~/components/Pagination";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -27,6 +28,7 @@ export const loader = async ({
     collection: "screenings",
     locale,
     depth: 7,
+    limit: 50,
     where: {
       _status: {
         equals: "published",
@@ -48,7 +50,7 @@ export const loader = async ({
 
   return {
     page,
-    screenings: screenings.docs || [],
+    screenings,
     site,
   };
 };
@@ -69,7 +71,8 @@ export default function Index() {
   return (
     <Page layout={page.layout}>
       <Gutter>
-        <ScreeningsList items={screenings} site={site} />
+        <ScreeningsList items={screenings.docs} site={site} />
+        <Pagination {...screenings} linkProps={{ prefetch: "intent" }} />
       </Gutter>
     </Page>
   );
