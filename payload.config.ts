@@ -82,10 +82,10 @@ export default buildConfig({
       enabled: process.env.S3_ENABLED === "true",
       collections: {
         media: {
-          disablePayloadAccessControl: true, // serve files directly from S3
-          generateFileURL: (file) => {
-            return `${process.env.MEDIA_URL}/${file.filename}`;
-          },
+          // disablePayloadAccessControl: true, // serve files directly from S3
+          // generateFileURL: (file) => {
+          //   return `${process.env.MEDIA_URL}/${file.filename}`;
+          // },
           adapter: s3Adapter({
             bucket: process.env.S3_BUCKET || "",
             config: {
