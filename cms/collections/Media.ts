@@ -23,6 +23,8 @@ export const Media: CollectionConfig = {
       defaultLimit: 100,
       limits: [50, 100, 250, 500],
     },
+    enableRichTextLink: true,
+    enableRichTextRelationship: true,
   },
   access: {
     read: (): boolean => true, // Everyone can read Media
@@ -30,7 +32,7 @@ export const Media: CollectionConfig = {
   upload: {
     staticDir: path.resolve(__dirname, "../../media"),
     formatOptions,
-    mimeTypes: ["image/*"],
+    mimeTypes: ["image/*", "application/pdf"],
     adminThumbnail: "175w",
     imageSizes: [
       {
