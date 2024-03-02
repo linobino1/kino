@@ -147,5 +147,7 @@
   "Jobs": "Tätigkeiten",
   "Review & publish": "Überprüfen & veröffentlichen",
   "Is Supporting Film": "Ist Vorfilm",
-  "AdminExplainScreeningInfo": "Dieser Text wird am Anfang der Vorstellungsseite angezeigt."
+  "AdminExplainScreeningInfo": "Dieser Text wird am Anfang der Vorstellungsseite angezeigt.",
+  "excludeFromUpcomingScreenings": "Nicht im Programm anzeigen",
+  "excludeFromUpcomingScreeningsDescription": "Wenn der Haken gesetzt ist, wird die Vorstellung nicht auf der Startseite und in der Liste der kommenden Vorstellungen angezeigt."
 }

@@ -227,6 +227,16 @@ const Screenings: CollectionConfig = {
       type: "text",
       required: false,
     },
+    {
+      name: "excludeFromUpcoming",
+      label: t("excludeFromUpcomingScreenings"),
+      type: "checkbox",
+      defaultValue: false,
+      admin: {
+        position: "sidebar",
+        description: t("excludeFromUpcomingScreeningsDescription"),
+      },
+    },
   ],
 };
 

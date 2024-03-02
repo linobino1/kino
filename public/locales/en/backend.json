@@ -17,5 +17,7 @@
   "rentalCreditsDefault": "Loan of the film print with kind support of XXX.",
   "Location": "Venue",
   "Locations": "Venues",
-  "AdminExplainScreeningInfo": "This will be displayed at the beginning of the screening detail page."
+  "AdminExplainScreeningInfo": "This will be displayed at the beginning of the screening detail page.",
+  "excludeFromUpcomingScreenings": "Exclude from upcoming screenings",
+  "excludeFromUpcomingScreeningsDescription": "If checked, the screening will be hidden from the upcoming screenings list."
 }

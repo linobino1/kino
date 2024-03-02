@@ -39,6 +39,11 @@ export const loader = async ({
             greater_than_equal: today,
           },
         },
+        {
+          excludeFromUpcoming: {
+            not_equals: true,
+          },
+        },
       ],
     },
     sort: "date",
