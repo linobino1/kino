@@ -13,7 +13,9 @@ const Posts: CollectionConfig = {
     defaultColumns: ["date", "title"],
     useAsTitle: "title",
   },
-  defaultSort: "-date",
+  // uncomment the next line as soon as this bug is fixed:
+  // https://github.com/payloadcms/payload/issues/4815
+  // defaultSort: "-date",
   custom: {
     addUrlField: {
       hook: (slug?: string) => `/news/${slug || ""}`,

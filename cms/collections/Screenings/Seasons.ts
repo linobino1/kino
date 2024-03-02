@@ -12,7 +12,9 @@ const Seasons: CollectionConfig = {
     group: t("Configuration"),
     useAsTitle: "name",
   },
-  defaultSort: "-sort",
+  // uncomment the next line as soon as this bug is fixed:
+  // https://github.com/payloadcms/payload/issues/4815
+  // defaultSort: "-sort",
   access: {
     read: () => true,
   },
