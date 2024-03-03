@@ -1,7 +1,7 @@
 import type { Post, Media } from "payload/generated-types";
 import React from "react";
 import Date from "~/components/Date";
-import Image from "~/components/Image";
+import Image from "~/components/ImageNew";
 import RichText from "~/components/RichText";
 import classes from "./index.module.css";
 import { useTranslation } from "react-i18next";
@@ -34,7 +34,13 @@ export const PostPreview: React.FC<Props> = (props) => {
         image={post.header as Media}
         onClick={link ? () => window.open(link, target) : undefined}
         className={link ? classes.link : undefined}
-        sizes="(max-width: 768px) 100vw, 50vw"
+        srcSet={[
+          { options: { width: 500 }, width: "500w" },
+          { options: { width: 768 }, width: "768w" },
+          { options: { width: 1000 }, width: "1000w" },
+          { options: { width: 1500 }, width: "1500w" },
+        ]}
+        sizes="(max-width: 768px) 100vw, 500px"
       />
       <Date className={classes.date} iso={post.date} format="PPP" />
       <h2>{post.title}</h2>
