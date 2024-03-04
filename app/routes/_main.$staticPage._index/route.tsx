@@ -3,7 +3,6 @@ import React from "react";
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import i18next from "~/i18next.server";
-import { Response } from "@remix-run/node";
 import Page from "~/components/Page";
 import { mergeMeta, pageMeta } from "~/util/pageMeta";
 import { ErrorPage } from "~/components/ErrorPage";
@@ -26,9 +25,11 @@ export const loader = async ({
     },
     locale,
   });
+
   if (!res.docs.length) {
     throw new Response("Page not found", { status: 404 });
   }
+
   return {
     page: res.docs[0],
   };
