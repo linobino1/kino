@@ -1,15 +1,6 @@
 import type { CollectionConfig } from "payload/types";
-import type { ImageUploadFormatOptions } from "payload/dist/uploads/types";
 import { t } from "../i18n";
 import path from "path";
-
-export const formatOptions: ImageUploadFormatOptions = {
-  format: "webp",
-  options: {
-    quality: 100,
-    force: true,
-  },
-};
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -31,56 +22,7 @@ export const Media: CollectionConfig = {
   },
   upload: {
     staticDir: path.resolve(__dirname, "../../media"),
-    formatOptions,
     mimeTypes: ["image/*", "application/pdf"],
-    adminThumbnail: "175w",
-    imageSizes: [
-      {
-        name: "120w", // small filmposter on desktop
-        width: 120,
-        formatOptions,
-      },
-      {
-        name: "175w", // backend thumbnail
-        width: 175,
-        formatOptions,
-      },
-      {
-        name: "260w", // big filmposter on desktop
-        width: 260,
-        formatOptions,
-      },
-      {
-        name: "350w", // small filmposter on retina desktop
-        width: 350,
-        formatOptions,
-      },
-      {
-        name: "520w", // big filmpost on retina desktop
-        width: 520,
-        formatOptions,
-      },
-      {
-        name: "750w",
-        width: 750,
-        formatOptions,
-      },
-      {
-        name: "1000w",
-        width: 1000,
-        formatOptions,
-      },
-      {
-        name: "1500w",
-        width: 1500,
-        formatOptions,
-      },
-      {
-        name: "2560w",
-        width: 2560,
-        formatOptions,
-      },
-    ],
   },
   fields: [
     {
