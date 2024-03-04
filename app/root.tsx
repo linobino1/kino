@@ -61,7 +61,7 @@ export async function loader({
         TIMEZONE: environment().TIMEZONE,
         NODE_ENV: environment().NODE_ENV,
         MAILCHIMP_SIGNUP_URL: environment().MAILCHIMP_SIGNUP_URL,
-        MEDIA_URL: environment().MEDIA_URL,
+        CDN_CGI_IMAGE_URL: environment().CDN_CGI_IMAGE_URL,
       },
     },
     {

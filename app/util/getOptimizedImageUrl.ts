@@ -19,11 +19,14 @@ export const getOptimizedImageUrl = (url: string, options: object) => {
 
   // merge options with default options
   options = { ...defaultOptions, ...options };
+  const optionsString = Object.entries(options)
+    .map(([key, value]) => `${key}=${value}`)
+    .join(",");
 
   // construct the url
-  return `${environment().MEDIA_URL}/cdn-cgi/image/${Object.entries(options)
-    .map(([key, value]) => `${key}=${value}`)
-    .join(",")}/${encodeURI(url)}`;
+  return `${environment().CDN_CGI_IMAGE_URL}/${optionsString}/${encodeURI(
+    url
+  )}`;
 };
 
 export default getOptimizedImageUrl;
