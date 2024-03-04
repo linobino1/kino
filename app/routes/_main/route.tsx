@@ -1,10 +1,11 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { Outlet, useLoaderData } from "@remix-run/react";
+import { Outlet, useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import Footer from "~/components/Footer";
 import Header from "~/components/Header";
 import i18next from "~/i18next.server";
 import classes from "./index.module.css";
 import { ErrorPage } from "~/components/ErrorPage";
+import type { loader as rootLoader } from "~/root";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -14,18 +15,13 @@ export const loader = async ({
 }: LoaderFunctionArgs) => {
   const locale = await i18next.getLocale(request);
 
-  const [site, navigations] = await Promise.all([
-    payload.findGlobal({
-      slug: "site",
-    }),
-    payload.find({
-      collection: "navigations",
-      depth: 12,
-      locale,
-    }),
-  ]);
+  const navigations = await payload.find({
+    collection: "navigations",
+    depth: 12,
+    locale,
+  });
+
   return {
-    site,
     navigations: navigations.docs,
   };
 };
@@ -35,7 +31,8 @@ export const handle = {
 };
 
 export default function Layout() {
-  const { site, navigations } = useLoaderData<typeof loader>();
+  const { navigations } = useLoaderData<typeof loader>();
+  const { site } = useRouteLoaderData<typeof rootLoader>("root")!;
 
   return (
     <>
