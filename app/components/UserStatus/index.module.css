@@ -21,7 +21,7 @@
   white-space: nowrap;
 }
 .admin::after {
-  content: "\2197";
+  content: "\2192";
 }
 @media screen and (max-width: 768px) {
   .signedIn {

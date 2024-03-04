@@ -6,6 +6,7 @@ import { MyReactPlayer } from "../../MyReactPlayer";
 import { Image } from "~/components/Image";
 import classes from "./index.module.css";
 import { Node as SlateNode } from "slate";
+import ArrowOutward from "~/components/icons/ArrowOutward";
 
 export type Node = {
   type: string;
@@ -143,17 +144,28 @@ export const Serialize: SerializeFunction = ({ content }) => {
             );
           case "link":
             const target = node.newTab ? "_blank" : "_self";
-            // treat internal links
+            const inner = (
+              <div
+                style={{ display: "flex", gap: ".2em", alignItems: "center" }}
+              >
+                <Serialize content={node.children} />
+                {node.newTab && <ArrowOutward />}
+              </div>
+            );
+
+            // internal links
             if (node.linkType === "internal") {
               return (
                 <Link key={i} to={node.doc.value.url as string} target={target}>
-                  <Serialize content={node.children} />
+                  {inner}
                 </Link>
               );
             }
+
+            // external links
             return (
               <a key={i} href={escape(node.url ?? "")} target={target}>
-                <Serialize content={node.children} />
+                {inner}
               </a>
             );
 
