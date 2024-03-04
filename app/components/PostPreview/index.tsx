@@ -35,10 +35,10 @@ export const PostPreview: React.FC<Props> = (props) => {
         onClick={link ? () => window.open(link, target) : undefined}
         className={link ? classes.link : undefined}
         srcSet={[
-          { options: { width: 500 }, width: "500w" },
-          { options: { width: 768 }, width: "768w" },
-          { options: { width: 1000 }, width: "1000w" },
-          { options: { width: 1500 }, width: "1500w" },
+          { options: { width: 500 }, size: "500w" },
+          { options: { width: 768 }, size: "768w" },
+          { options: { width: 1000 }, size: "1000w" },
+          { options: { width: 1500 }, size: "1500w" },
         ]}
         sizes="(max-width: 768px) 100vw, 500px"
       />

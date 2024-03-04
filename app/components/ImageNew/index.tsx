@@ -9,7 +9,7 @@ import getOptimizedImageUrl from "~/util/getOptimizedImageUrl";
 export interface Props
   extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "srcSet"> {
   image?: Media;
-  srcSet?: { options: object; width: string }[] | string;
+  srcSet?: { options: object; size: string }[] | string;
 }
 
 export const Image: React.FC<Props> = ({
@@ -27,7 +27,7 @@ export const Image: React.FC<Props> = ({
   if (typeof srcSet === "object") {
     srcSet = srcSet
       .map((item) => {
-        return `${getOptimizedImageUrl(src || "", item.options)} ${item.width}`;
+        return `${getOptimizedImageUrl(src || "", item.options)} ${item.size}`;
       })
       .join(", ");
   }
