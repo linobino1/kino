@@ -130,6 +130,9 @@ export default buildConfig({
   upload: {
     defCharset: "utf8",
     defParamCharset: "utf8",
+    limits: {
+      fileSize: 10 * 1024 * 1024, // 10MB
+    },
   },
   i18n: {
     // admin panel i18n
