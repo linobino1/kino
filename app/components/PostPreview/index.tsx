@@ -1,7 +1,7 @@
 import type { Post, Media } from "payload/generated-types";
 import React from "react";
 import Date from "~/components/Date";
-import Image from "~/components/ImageNew";
+import Image from "~/components/Image";
 import RichText from "~/components/RichText";
 import classes from "./index.module.css";
 import { useTranslation } from "react-i18next";

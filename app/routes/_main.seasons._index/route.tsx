@@ -73,7 +73,16 @@ export default function Seasons() {
             {seasons.docs.map((season) => (
               <li key={season.id}>
                 <a href={`/seasons/${season.slug}`}>
-                  <Image image={season.header as Media} alt={season.name} />
+                  <Image
+                    image={season.header as Media}
+                    alt={season.name}
+                    srcSet={[
+                      { options: { width: 304, height: 197 }, size: "304w" },
+                      // { options: { width: 608, height: 394 }, size: "608w" },
+                      { options: { width: 768, height: 498 }, size: "768w" },
+                    ]}
+                    sizes="(max-width: 768px) 100vw, 304px"
+                  />
                   <div className={classes.overlay}>
                     <h2>{season.name}</h2>
                   </div>

@@ -160,7 +160,15 @@ export const Serialize: SerializeFunction = ({ content }) => {
           case "upload":
             return (
               <div className={classes.imageWrapper} key={i}>
-                <Image image={node.value as Media} />
+                <Image
+                  image={node.value as Media}
+                  srcSet={[
+                    { options: { width: 500 }, size: "500w" },
+                    { options: { width: 720 }, size: "720w" },
+                    { options: { width: 1440 }, size: "1440w" },
+                  ]}
+                  sizes="(max-width: 768px) 100vw, 720px"
+                />
               </div>
             );
 

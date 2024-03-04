@@ -50,13 +50,12 @@ export const Movie: React.FC<Props> = ({
       <Image
         className={classes.poster}
         image={movie.poster as Media}
-        srcset_={[
-          { size: "120w", css: "120w" },
-          { size: "260w", css: "260w" },
-          { size: "350w", css: "350w" },
-          { size: "520w", css: "520w" },
-        ]}
         alt={t("movie poster") as string}
+        srcSet={[
+          { options: { width: 260 }, size: "260w" },
+          { options: { width: 520 }, size: "520w" },
+        ]}
+        sizes="260px"
       />
       <h2>
         {isSupportingFilm && (

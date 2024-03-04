@@ -1,62 +1,38 @@
 import type { Media } from "payload/generated-types";
 import React from "react";
-
-export interface SrcSetItem {
-  size: keyof Required<Media>["sizes"];
-  css?: string;
-}
-export interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {
-  image: Media;
-  srcset_?: SrcSetItem[];
-}
+import getOptimizedImageUrl from "~/util/getOptimizedImageUrl";
 
 /**
- * get srcSet string from srcSet array
- * @param image Media
- * @param srcSet [{ size: '2560w', css: 2560 }, { size: '1500w', css: '2x' }]
+ * srcSet can either be used natively or by passing an array of  { options: cloudflare transformation options, width: css width }
+ * e.g. { options: { width: 400, quality: 80 }, width: "500w" }
  */
-export const getSrcSetString = (image: Media, srcset: SrcSetItem[]): string => {
-  return (srcset || [])
-    .map((item) => {
-      const cropped = image.sizes?.[item.size];
-      return (
-        cropped?.url &&
-        [encodeURI(cropped.url || ""), item.css].filter(Boolean).join(" ")
-      );
-    })
-    .filter(Boolean)
-    .join(", ");
-};
+export interface Props
+  extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "srcSet"> {
+  image?: Media;
+  srcSet?: { options: object; size: string }[] | string;
+}
 
-export const Image: React.FC<Props> = (props) => {
-  const { image, alt } = props;
-  const srcset_ =
-    props.srcset_ ||
-    (Object.keys(image.sizes || {})
-      .map((key) => {
-        const item = image.sizes?.[key as keyof Required<Media>["sizes"]];
-        return item?.url
-          ? {
-              size: key as keyof Required<Media>["sizes"],
-              css: `${item?.width}w`,
-            }
-          : null;
+export const Image: React.FC<Props> = ({
+  image,
+  srcSet,
+  src,
+  alt,
+  ...props
+}) => {
+  // use src and alt from image if provided
+  src ||= image?.url || undefined;
+  alt ||= image?.alt || undefined;
+
+  // transform srcSet array to string
+  if (typeof srcSet === "object") {
+    srcSet = srcSet
+      .map((item) => {
+        return `${getOptimizedImageUrl(src || "", item.options)} ${item.size}`;
       })
-      .filter(Boolean) as SrcSetItem[]);
-  const srcSet = props.srcSet || getSrcSetString(image, srcset_);
+      .join(", ");
+  }
 
-  const htmlProps: Partial<Props> = { ...props };
-  delete htmlProps.srcset_;
-  delete htmlProps.image;
-
-  return image ? (
-    <img
-      src={image.url}
-      alt={alt || image.alt || ""}
-      srcSet={srcSet}
-      {...htmlProps}
-    />
-  ) : null;
+  return <img {...props} src={src} alt={alt} srcSet={srcSet} />;
 };
 
 export default Image;

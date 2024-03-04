@@ -30,7 +30,17 @@ export const HeaderImage: React.FC<Type> = ({
       id={id || undefined}
     >
       {(image as Media) && (
-        <Image className={classes.header} image={image as Media} />
+        <Image
+          className={classes.header}
+          image={image as Media}
+          srcSet={[
+            { options: { width: 500 }, size: "500w" },
+            { options: { width: 768 }, size: "768w" },
+            { options: { width: 1500 }, size: "1500w" },
+            { options: { width: 2560 }, size: "2560w" },
+          ]}
+          sizes="100vw"
+        />
       )}
       <div className={classes.overlay} />
       <Gutter className={classes.content}>

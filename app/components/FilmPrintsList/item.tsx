@@ -22,8 +22,13 @@ export const FilmPrintsListItem: React.FC<Props> = ({ item }) => {
     <div className={classes.item}>
       <Image
         image={movie.still as Media}
-        sizes="50vw"
         alt={t("movie still") as string}
+        srcSet={[
+          { options: { width: 500, height: 281, fit: "crop" }, size: "500w" },
+          { options: { width: 768, height: 432, fit: "crop" }, size: "768w" },
+          { options: { width: 1536, height: 864, fit: "crop" }, size: "1536w" },
+        ]}
+        sizes="(max-width: 1200px) 66vw, (max-width: 1000px) 50vw, (max-width: 768px) 100vw, 768px"
       />
       <div className={classes.overlay}>
         <div className={classes.title}>{movie.title}</div>

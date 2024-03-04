@@ -69,7 +69,16 @@ export default function Index() {
       <Gutter size="small">
         <Date iso={post.date} format="PPP" className={classes.date} />
         <h1>{post.title}</h1>
-        <Image className={classes.image} image={post.header as Media} />
+        <Image
+          className={classes.image}
+          image={post.header as Media}
+          srcSet={[
+            { options: { width: 500 }, size: "500w" },
+            { options: { width: 768 }, size: "768w" },
+            { options: { width: 1500 }, size: "1500w" },
+          ]}
+          sizes="(max-width: 768px) 100vw, 720px"
+        />
         <RichText content={post.content} className={classes.preview} />
       </Gutter>
       <Blocks blocks={post.details as []} />

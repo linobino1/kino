@@ -39,6 +39,12 @@ export const Block: React.FC<BlockProps> = ({ block, ...props }) => {
             width={"100%"}
             height={"auto"}
             style={{ marginBlock: "1rem" }}
+            srcSet={[
+              { options: { width: 500 }, size: "500w" },
+              { options: { width: 720 }, size: "720w" },
+              { options: { width: 1440 }, size: "1440w" },
+            ]}
+            sizes="(max-width: 768px) 100vw, 720px"
           />
         </Gutter>
       );

@@ -47,6 +47,13 @@ export const ScreeningsListItem: React.FC<Props> = ({
             ?.still as Media
         }
         alt={t("movie still") as string}
+        srcSet={[
+          { options: { width: 310, height: 310, fit: "crop" }, size: "310w" },
+          { options: { width: 450, height: 450, fit: "crop" }, size: "450w" },
+          { options: { width: 620, height: 620, fit: "crop" }, size: "620w" },
+          { options: { width: 900, height: 900, fit: "crop" }, size: "900w" },
+        ]}
+        sizes="(max-width: 500px) 100vw, (max-width: 700px) 50vw, (max-width: 1024px) 33vw, 310px"
       />
       <div className={classes.info}>
         <div className={classes.tags}>
