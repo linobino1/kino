@@ -45,6 +45,8 @@ import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { slateEditor } from "@payloadcms/richtext-slate";
 import { webpackBundler } from "@payloadcms/bundler-webpack";
 import video from "./cms/fields/richtext/video";
+import { seed } from "./cms/endpoints/seed";
+import { regenerateMediaSizes } from "./cms/endpoints/regenerateMediaSizes";
 
 const mockModulePath = path.resolve(__dirname, "mocks/emptyObject.js");
 
@@ -56,6 +58,16 @@ export default buildConfig({
   endpoints: [
     // path will be prefixed with /api if root is not set to true
     ...migrateMovieEndpoints,
+    {
+      path: "/seed",
+      method: "get",
+      handler: seed,
+    },
+    {
+      path: "/regenerate-media-sizes",
+      method: "get",
+      handler: regenerateMediaSizes,
+    },
   ],
   editor: slateEditor({
     admin: {

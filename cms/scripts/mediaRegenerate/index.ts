@@ -1,17 +1,7 @@
-import payload from "payload";
+import { type Payload } from "payload";
 import path from "path";
 import fs from "fs";
-import invariant from "tiny-invariant";
 import type { Config } from "payload/generated-types";
-
-require("dotenv").config();
-
-/**
- * This script is paginated, so you can run it in chunks. Defaults to page 1, limit 300.
- * e.g. yarn generate-media-sizes 2 300 will run page 2, limit 300
- **/
-const page = parseInt(process.argv[2] || "1");
-const limit = parseInt(process.argv[3] || "300");
 
 const mediaDir = path.resolve(__dirname, "../../../media");
 const mediaCollections: {
@@ -24,23 +14,16 @@ const mediaCollections: {
   },
 ];
 // only regenerate these extensions
-const extensions = [".jpg", ".jpeg", ".png", ".gif", ".webp"];
+const extensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".avif"];
 
-const regenerateMediaSizes = async () => {
-  try {
-    invariant(process.env.PAYLOAD_SECRET, "PAYLOAD_SECRET is required");
-    invariant(process.env.MONGO_URL, "MONGO_URL is required");
-
-    await payload.init({
-      secret: process.env.PAYLOAD_SECRET,
-      local: true,
-    });
-  } catch (err) {
-    console.log("Unable to initialize payload");
-    console.error(err);
-    process.exit(0);
-  }
-
+/**
+ * This script is paginated, so you can run it in chunks. Defaults to page 1, limit 300.
+ **/
+export const mediaRegenerate = async (
+  payload: Payload,
+  page: number = 1,
+  limit: number = 300
+) => {
   await Promise.all(
     mediaCollections.map(async (collection) => {
       const media = await payload.find({
@@ -63,22 +46,24 @@ const regenerateMediaSizes = async () => {
           }
 
           process.env.S3_ENABLED === "true"
-            ? await regenerateS3File(mediaDoc, collection)
-            : await regenerateLocalFile(mediaDoc, collection);
+            ? await regenerateS3File(payload, mediaDoc, collection)
+            : await regenerateLocalFile(payload, mediaDoc, collection);
         })
       );
     })
   );
 
   console.log("Media size regeneration completed!");
-  process.exit(0);
 };
 
-regenerateMediaSizes();
-
-const regenerateLocalFile = async (mediaDoc: any, collection: any) => {
+const regenerateLocalFile = async (
+  payload: Payload,
+  mediaDoc: any,
+  collection: any
+) => {
   const path = `${mediaDir}${collection.relDir}/${mediaDoc.filename}`;
   const tmpPath = `${mediaDir}${collection.relDir}/temp_${mediaDoc.filename}`;
+  console.log("path", path);
 
   if (!fs.existsSync(path)) {
     console.log(`does not exist: ${path}`);
@@ -122,7 +107,11 @@ const regenerateLocalFile = async (mediaDoc: any, collection: any) => {
   }
 };
 
-const regenerateS3File = async (mediaDoc: any, collection: any) => {
+const regenerateS3File = async (
+  payload: Payload,
+  mediaDoc: any,
+  collection: any
+) => {
   try {
     await fetch(mediaDoc.url)
       .then((response) => response.blob())
