@@ -145,9 +145,7 @@ export const Serialize: SerializeFunction = ({ content }) => {
           case "link":
             const target = node.newTab ? "_blank" : "_self";
             const inner = (
-              <div
-                style={{ display: "flex", gap: ".2em", alignItems: "center" }}
-              >
+              <div className={classes.externalLink}>
                 <Serialize content={node.children} />
                 {node.newTab && <ArrowOutward />}
               </div>

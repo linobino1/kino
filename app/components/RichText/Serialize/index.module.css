@@ -19,3 +19,8 @@
 .videoWrapper {
   width: 100%;
 }
+
+/* External link ***************************************************/
+.externalLink svg {
+  vertical-align: middle;
+}
