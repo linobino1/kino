@@ -7,6 +7,8 @@
   "No posts.": "Keine Beiträge.",
   "No upcoming screenings.": "Keine bevorstehenden Vorführungen.",
   "ageRating {age}": "FSK {{age}}",
+  "directed by {directors}": "Regie: {{directors}}",
+  "starring {actors}": "mit {{actors}}",
   "No films matching your search": "Keine Filme gefunden, die Ihrer Suche entsprechen",
   "duration {duration}": "{{duration}} min",
   "newsletter.title": "Newsletter abonnieren:",

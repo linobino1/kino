@@ -38,11 +38,21 @@ export const Movie: React.FC<Props> = ({
     (movie.genres as Genre[]).map((x) => x.name).join(", "),
     (movie.countries as Country[])?.map((x) => x.name).join(", "),
     movie.year,
-    (movie.directors as Person[])?.map((x) => x.name).join(", "),
+    movie.directors &&
+      t("directed by {directors}", {
+        directors: (movie.directors as Person[])?.map((x) => x.name).join(", "),
+      }),
     t("duration {duration}", { duration: movie.duration }),
     (filmprint?.format as Format).name,
     // movie.ageRating ? t('ageRating {age}', { age: movie.ageRating}) : null,
     filmprint ? (filmprint.languageVersion as LanguageVersion)?.name : null,
+    movie.cast &&
+      t("starring {actors}", {
+        actors: (movie.cast as Person[])
+          ?.slice(0, 3)
+          .map((x) => x.name)
+          .join(", "),
+      }),
   ].filter(Boolean);
 
   return (
@@ -67,7 +77,12 @@ export const Movie: React.FC<Props> = ({
       </h2>
       <ul className={classes.specs}>
         {specs.map((spec, i) => (
-          <li key={i}>{spec}</li>
+          <li
+            key={i}
+            dangerouslySetInnerHTML={{
+              __html: spec as string,
+            }}
+          />
         ))}
       </ul>
       <p
