@@ -83,6 +83,23 @@ const Screenings: CollectionConfig = {
       },
     },
     {
+      name: "date",
+      label: t("Date & Time"),
+      type: "date",
+      required: true,
+      defaultValue: () => {
+        const res = new Date();
+        res.setHours(19, 0, 0, 0);
+        return res.toISOString();
+      },
+      admin: {
+        date: {
+          pickerAppearance: "dayAndTime",
+        },
+        description: t("adminWarningTimezone"),
+      },
+    },
+    {
       name: "title",
       label: t("Title"),
       type: "text",
@@ -187,23 +204,6 @@ const Screenings: CollectionConfig = {
           required: false,
         },
       ],
-    },
-    {
-      name: "date",
-      label: t("Date & Time"),
-      type: "date",
-      required: true,
-      defaultValue: () => {
-        const res = new Date();
-        res.setHours(19, 0, 0, 0);
-        return res.toISOString();
-      },
-      admin: {
-        date: {
-          pickerAppearance: "dayAndTime",
-        },
-        description: t("adminWarningTimezone"),
-      },
     },
     {
       name: "info",
