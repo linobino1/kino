@@ -9,6 +9,7 @@ import HeaderImage from "~/components/HeaderImage";
 import { mergeMeta, pageTitle } from "~/util/pageMeta";
 import type { loader as rootLoader } from "app/root";
 import Gutter from "~/components/Gutter";
+import classes from "./index.module.css";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -68,7 +69,11 @@ export default function Item() {
 
   return (
     <Page>
-      <HeaderImage image={movie.still} navigation={navigation} />
+      <HeaderImage
+        image={movie.still}
+        navigation={navigation}
+        className={classes.header}
+      />
       <Gutter>
         <Movie movie={movie} filmprint={filmPrint} />
       </Gutter>
