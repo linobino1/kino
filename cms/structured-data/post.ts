@@ -10,7 +10,7 @@ export const postPreviewSchema = (post: Post): BlogPosting => {
     articleBody: serializeToPlainText({ content: post.content }),
     datePublished: post.date,
     url: post.url,
-    image: (post.header as Media)?.url,
+    image: (post.header as Media)?.url || undefined,
   };
 };
 
