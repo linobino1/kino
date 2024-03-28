@@ -3,7 +3,6 @@ import type { Config, Plugin } from "payload/config";
 import type { FieldHookArgs } from "payload/dist/fields/config/types";
 import { useField } from "payload/components/forms";
 import { useTranslation } from "react-i18next";
-import payload from "payload";
 
 /**
  * this plugin adds a url field to a collection if you add the following to the collection config:
@@ -48,7 +47,9 @@ export const addUrlField: Plugin = (incomingConfig: Config): Config => {
                             siblingData.slug
                           ) || "";
                         if (!relativeUrl) return "";
-                        return payload.config.serverURL + relativeUrl;
+                        return (
+                          process.env.PAYLOAD_PUBLIC_SERVER_URL + relativeUrl
+                        );
                       },
                     ],
                   },

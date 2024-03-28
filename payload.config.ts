@@ -54,7 +54,6 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.MONGO_URL || "mongodb://localhost:27017/app",
   }),
-  serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || "http://localhost:3000",
   endpoints: [
     // path will be prefixed with /api if root is not set to true
     ...migrateMovieEndpoints,

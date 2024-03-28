@@ -56,7 +56,6 @@ export async function loader({
       site,
       locale,
       publicKeys: {
-        PAYLOAD_PUBLIC_SERVER_URL: environment().PAYLOAD_PUBLIC_SERVER_URL,
         HCAPTCHA_SITE_KEY: environment().HCAPTCHA_SITE_KEY,
         TIMEZONE: environment().TIMEZONE,
         NODE_ENV: environment().NODE_ENV,
