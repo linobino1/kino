@@ -16,8 +16,6 @@ import { JsonLd } from "cms/structured-data";
 import { postsListSchema } from "cms/structured-data/post";
 import ScreeningsList from "~/components/ScreeningsList";
 import type { loader as rootLoader } from "app/root";
-import type { Blog, Post, Screening } from "payload/generated-types";
-import type { PaginatedDocs } from "payload/database";
 import Gutter from "~/components/Gutter";
 
 export const headers: HeadersFunction = () => ({
@@ -28,49 +26,54 @@ export const loader = async ({
   request,
   context: { payload },
 }: LoaderFunctionArgs) => {
+  // compare date for upcoming screenings
   let today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const locale = await i18next.getLocale(request);
-  const page = (await payload.findGlobal({
-    slug: "blog",
-    locale,
-  })) as unknown as Blog;
+  // pagination for posts
   const postsPage = parseInt(
     new URL(request.url).searchParams.get("page") || "1"
   );
-  const posts = (await payload.find({
-    collection: "posts",
-    sort: "-date",
-    limit: 10,
-    pagination: true,
-    page: postsPage,
-    locale,
-  })) as unknown as PaginatedDocs<Post>;
-  const screenings = (await payload.find({
-    collection: "screenings",
-    locale,
-    depth: 7,
-    where: {
-      _status: {
-        equals: "published",
+
+  const locale = await i18next.getLocale(request);
+  const [page, posts, screenings] = await Promise.all([
+    payload.findGlobal({
+      slug: "blog",
+      locale,
+    }),
+    payload.find({
+      collection: "posts",
+      sort: "-date",
+      limit: 10,
+      pagination: true,
+      page: postsPage,
+      locale,
+    }),
+    payload.find({
+      collection: "screenings",
+      locale,
+      depth: 7,
+      where: {
+        _status: {
+          equals: "published",
+        },
+        and: [
+          {
+            date: {
+              greater_than_equal: today,
+            },
+          },
+          {
+            excludeFromUpcoming: {
+              not_equals: true,
+            },
+          },
+        ],
       },
-      and: [
-        {
-          date: {
-            greater_than_equal: today,
-          },
-        },
-        {
-          excludeFromUpcoming: {
-            not_equals: true,
-          },
-        },
-      ],
-    },
-    sort: "date",
-    limit: 3,
-  })) as unknown as PaginatedDocs<Screening>;
+      sort: "date",
+      limit: 3,
+    }),
+  ]);
 
   // Redirect to the last page if the requested page is greater than the total number of page
   if (postsPage > posts.totalPages) {
