@@ -4,6 +4,7 @@ import type {
   MetaDescriptor,
 } from "@remix-run/node";
 import type { Meta } from "cms/fields/meta";
+import { unescape } from "html-escaper";
 
 export const pageMeta = (page: Meta, site: Meta): MetaDescriptor[] => {
   return [
@@ -28,7 +29,7 @@ export const pageTitle = (
   if (!title) {
     return siteTitle || "";
   }
-  return [title, siteTitle].filter(Boolean).join(" | ");
+  return unescape([title, siteTitle].filter(Boolean).join(" | "));
 };
 
 export const pageDescription = (
