@@ -44,6 +44,7 @@ export const loader = async ({
     payload.find({
       collection: "posts",
       sort: "-date",
+      depth: 1,
       limit: 10,
       pagination: true,
       page: postsPage,
@@ -52,7 +53,7 @@ export const loader = async ({
     payload.find({
       collection: "screenings",
       locale,
-      depth: 7,
+      depth: 3,
       where: {
         _status: {
           equals: "published",
