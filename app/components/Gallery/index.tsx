@@ -19,7 +19,7 @@ export const Gallery: React.FC<Type> = ({ images }) => {
     <>
       <link rel="stylesheet" href={carouselStyles} />
       <div className={classes.container}>
-        <Carousel showArrows={true} showStatus={false}>
+        <Carousel showArrows={true} showStatus={false} showThumbs={false}>
           {images.map((item) => (
             <div key={item.id}>
               <Image
