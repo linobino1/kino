@@ -9,12 +9,16 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
 }
 
-export const Page: React.FC<Props> = (props) => {
-  const { layout, children } = props;
+export const Page: React.FC<Props> = ({
+  layout,
+  layoutType,
+  children,
+  ...props
+}) => {
   return (
     <div
       {...props}
-      data-layout-type={layout?.type || props.layoutType || "default"}
+      data-layout-type={layout?.type || layoutType || "default"}
       className={`${classes.page} ${props.className}`}
     >
       {layout?.blocks ? (
