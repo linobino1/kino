@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import type {
   FilmPrint,
   Movie as MovieType,
@@ -40,9 +40,6 @@ export const loader = async ({
       },
     })
   ).docs[0];
-  const site = await payload.findGlobal({
-    slug: "site",
-  });
 
   const data = await payload.find({
     collection: "screenings",
@@ -62,7 +59,6 @@ export const loader = async ({
   return {
     screening: data.docs[0],
     navigation,
-    site,
   };
 };
 
@@ -107,7 +103,8 @@ export const meta: MetaFunction<
 });
 
 export default function Item() {
-  const { screening, navigation, site } = useLoaderData<typeof loader>();
+  const { screening, navigation } = useLoaderData<typeof loader>();
+  const { site } = useRouteLoaderData<typeof rootLoader>("root")!;
   const mainMovie = (screening.films[0].filmprint as FilmPrint)
     .movie as MovieType;
 

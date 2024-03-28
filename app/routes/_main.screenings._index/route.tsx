@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import { Page } from "~/components/Page";
 import { ScreeningsList } from "~/components/ScreeningsList";
 import i18next from "~/i18next.server";
@@ -49,14 +49,9 @@ export const loader = async ({
     sort: "date",
   });
 
-  const site = await payload.findGlobal({
-    slug: "site",
-  });
-
   return {
     page,
     screenings,
-    site,
   };
 };
 
@@ -71,7 +66,8 @@ export const meta: MetaFunction<
 });
 
 export default function Index() {
-  const { page, screenings, site } = useLoaderData<typeof loader>();
+  const { page, screenings } = useLoaderData<typeof loader>();
+  const { site } = useRouteLoaderData<typeof rootLoader>("root")!;
 
   return (
     <Page layout={page.layout}>

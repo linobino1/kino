@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import i18next from "~/i18next.server";
 import Page from "~/components/Page";
 import ScreeningsList from "~/components/ScreeningsList";
@@ -52,14 +52,9 @@ export const loader = async ({
     limit: 20,
   })) as unknown as PaginatedDocs<Screening>;
 
-  const site = await payload.findGlobal({
-    slug: "site",
-  });
-
   return {
     screeningSeries,
     screenings,
-    site,
   };
 };
 
@@ -82,7 +77,8 @@ export const meta: MetaFunction<
 });
 
 export default function Item() {
-  const { screeningSeries, screenings, site } = useLoaderData<typeof loader>();
+  const { screeningSeries, screenings } = useLoaderData<typeof loader>();
+  const { site } = useRouteLoaderData<typeof rootLoader>("root")!;
 
   return (
     <Page layout={screeningSeries.layout}>

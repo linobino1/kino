@@ -4,7 +4,7 @@ import {
   type MetaFunction,
   type HeadersFunction,
 } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { Page } from "~/components/Page";
 import { mergeMeta, pageMeta } from "~/util/pageMeta";
@@ -16,7 +16,7 @@ import { JsonLd } from "cms/structured-data";
 import { postsListSchema } from "cms/structured-data/post";
 import ScreeningsList from "~/components/ScreeningsList";
 import type { loader as rootLoader } from "app/root";
-import type { Blog, Post, Screening, Site } from "payload/generated-types";
+import type { Blog, Post, Screening } from "payload/generated-types";
 import type { PaginatedDocs } from "payload/database";
 import Gutter from "~/components/Gutter";
 
@@ -32,9 +32,6 @@ export const loader = async ({
   today.setHours(0, 0, 0, 0);
 
   const locale = await i18next.getLocale(request);
-  const site = (await payload.findGlobal({
-    slug: "site",
-  })) as unknown as Site;
   const page = (await payload.findGlobal({
     slug: "blog",
     locale,
@@ -83,7 +80,6 @@ export const loader = async ({
   }
 
   return {
-    site,
     page,
     posts,
     screenings,
@@ -101,7 +97,8 @@ export const meta: MetaFunction<
 });
 
 export default function Index() {
-  const { site, page, posts, screenings } = useLoaderData<typeof loader>();
+  const { page, posts, screenings } = useLoaderData<typeof loader>();
+  const { site } = useRouteLoaderData<typeof rootLoader>("root")!;
   const { t } = useTranslation();
 
   return (

@@ -1,6 +1,6 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import type { Media, Screening } from "payload/generated-types";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import i18next from "~/i18next.server";
 import { Page } from "~/components/Page";
 import { ScreeningsList } from "~/components/ScreeningsList";
@@ -66,15 +66,10 @@ export const loader = async ({
     })
   ).docs[0];
 
-  const site = await payload.findGlobal({
-    slug: "site",
-  });
-
   return {
     season,
     screenings,
     navigation,
-    site,
   };
 };
 export const meta: MetaFunction<
@@ -97,8 +92,8 @@ export const meta: MetaFunction<
 
 export default function Season() {
   const { t } = useTranslation();
-  const { season, screenings, navigation, site } =
-    useLoaderData<typeof loader>();
+  const { season, screenings, navigation } = useLoaderData<typeof loader>();
+  const { site } = useRouteLoaderData<typeof rootLoader>("root")!;
 
   return (
     <Page layoutType="default">
