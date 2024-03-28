@@ -44,7 +44,6 @@ import { SeasonsPage } from "./cms/globals/pages/Seasons";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { slateEditor } from "@payloadcms/richtext-slate";
 import { webpackBundler } from "@payloadcms/bundler-webpack";
-import video from "./cms/fields/richtext/video";
 import { seed } from "./cms/endpoints/seed";
 import { regenerateMediaSizes } from "./cms/endpoints/regenerateMediaSizes";
 
@@ -81,7 +80,6 @@ export default buildConfig({
         "ul",
         "indent",
         "upload",
-        video,
       ],
       leaves: ["bold", "italic", "underline", "strikethrough"],
     },

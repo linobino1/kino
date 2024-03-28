@@ -46,7 +46,6 @@ export const addUrlField: Plugin = (incomingConfig: Config): Config => {
                           collection.custom?.addUrlField.hook(
                             siblingData.slug
                           ) || "";
-                        console.log("relativeUrl", relativeUrl);
                         return `${process.env.PAYLOAD_PUBLIC_SERVER_URL || ""}${
                           relativeUrl || ""
                         }`;
