@@ -5,7 +5,6 @@ import { Link } from "@remix-run/react";
 import { MyReactPlayer } from "../../MyReactPlayer";
 import { Image } from "~/components/Image";
 import classes from "./index.module.css";
-import { Node as SlateNode } from "slate";
 import ArrowOutward from "~/components/icons/ArrowOutward";
 
 export type Node = {
@@ -21,8 +20,24 @@ export type Node = {
   doc?: any;
 };
 
-export const serializeToPlainText = ({ content }: { content: any }) => {
-  return content.map((n: any) => SlateNode.string(n)).join("\n");
+export const serializeToPlainText = ({ content }: { content: any }): string => {
+  if (!content) return "";
+
+  if (typeof content === "string") {
+    return content;
+  }
+
+  if (Array.isArray(content)) {
+    return content
+      .map((n: any) => serializeToPlainText({ content: n }))
+      .join("");
+  }
+
+  if (content.children) {
+    return serializeToPlainText({ content: content.children });
+  }
+
+  return "";
 };
 
 type SerializeFunction = React.FC<{
