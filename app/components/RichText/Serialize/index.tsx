@@ -22,7 +22,7 @@ export type Node = {
 };
 
 export const serializeToPlainText = ({ content }: { content: any }) => {
-  return content.map((n: any) => SlateNode.string(n)).join("\n");
+  return content?.map((n: any) => SlateNode.string(n)).join("\n");
 };
 
 type SerializeFunction = React.FC<{
