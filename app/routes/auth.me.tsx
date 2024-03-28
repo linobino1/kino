@@ -1,8 +1,11 @@
-import type { LoaderFunctionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import {
+  json,
+  redirect,
+  type ActionFunctionArgs,
+  type ActionFunction,
+  type LoaderFunctionArgs,
+} from "@remix-run/node";
 import { Form, Link, useActionData, useLoaderData } from "@remix-run/react";
-import type { ActionArgs, ActionFunction } from "@remix-run/server-runtime";
-import { redirect } from "@remix-run/server-runtime";
 import { useTranslation } from "react-i18next";
 import classes from "./auth.module.css";
 import i18next from "~/i18next.server";
@@ -16,7 +19,7 @@ const ns = "auth";
 export const action: ActionFunction = async ({
   request,
   context: { payload, res },
-}: ActionArgs) => {
+}: ActionFunctionArgs) => {
   const form = await request.formData();
   const t = await i18next.getFixedT(request, ns);
 

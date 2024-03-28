@@ -1,4 +1,4 @@
-import { redirect } from "@remix-run/router";
+import { redirect } from "@remix-run/node";
 
 /**
  * Redirect to /news

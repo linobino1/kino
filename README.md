@@ -9,14 +9,14 @@ Powered by [Remix](https://remix.run) and [PayloadCMS](https://payloadcms.com).
 install the dependencies and generate the types:
 
 ```sh
-yarn
-yarn generate:types
+pnpm i
+pnpm generate:types
 ```
 
 Start the app in the dev environment:
 
 ```sh
-yarn dev
+pnpm dev
 ```
 
 OR:
@@ -30,13 +30,13 @@ docker compose up -d
 First, build your app for production:
 
 ```sh
-yarn build
+pnpm build
 ```
 
 Then run the app in production mode:
 
 ```sh
-yarn start
+pnpm start
 ```
 
 ### Fly.io Setup
@@ -66,8 +66,8 @@ Media files should be stored in a S3 bucket. Create a bucket at Cloudflare, AWS,
 To seed the database, run the following command in the docker container of the app:
 
 ```sh
-yarn seed
-# in development use yarn seed:dev
+pnpm seed
+# in development use pnpm seed:dev
 ```
 
 It will exexute the script `cms/seed/index.ts` which does:
@@ -79,19 +79,19 @@ It will exexute the script `cms/seed/index.ts` which does:
 To apply database migrations, run the following command in the docker container of the app:
 
 ```sh
-yarn payload migrate
+pnpm payload migrate
 
 # development:
-yarn payload:dev migrate
+pnpm payload:dev migrate
 
 # migrate down:
-yarn payload migrate:down
+pnpm payload migrate:down
 ```
 
 #### Dev: Create a new Migration
 
 ```sh
-yarn payload:dev migrate:create <name>
+pnpm payload:dev migrate:create <name>
 ```
 
 #### Regenerate Image Sizes
@@ -99,7 +99,7 @@ yarn payload:dev migrate:create <name>
 If you need to generate the image sizes again, you can do that with the following command:
 
 ```sh
-yarn generate:images
+pnpm generate:images
 ```
 
 Make sure you have an `.env` file with `PAYLOAD_SECRET` and `MONGO_URL` defined.  

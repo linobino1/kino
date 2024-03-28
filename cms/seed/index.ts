@@ -10,7 +10,7 @@ export async function seedCountries(payload: Payload) {
     payload.logger.info(`adding ${alpha2}`);
 
     // create item in fallback language if not already exists
-    const name = countries.getName(alpha2, fallbackLocale);
+    const name = countries.getName(alpha2, fallbackLocale) as string;
     try {
       await payload.create({
         collection: "countries",
