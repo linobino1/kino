@@ -1,4 +1,8 @@
-import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import type {
+  HeadersFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@remix-run/node";
 import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import { Page } from "~/components/Page";
 import { ScreeningsList } from "~/components/ScreeningsList";
@@ -8,6 +12,7 @@ import { ErrorPage } from "~/components/ErrorPage";
 import type { loader as rootLoader } from "app/root";
 import Gutter from "~/components/Gutter";
 import Pagination from "~/components/Pagination";
+import { cacheControlShort } from "~/util/cacheControl";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -63,6 +68,10 @@ export const meta: MetaFunction<
 > = mergeMeta(({ data, matches }) => {
   const site = matches.find((match) => match?.id === "root")?.data.site;
   return pageMeta(data?.page.meta, site?.meta);
+});
+
+export const headers: HeadersFunction = () => ({
+  "Cache-Control": cacheControlShort,
 });
 
 export default function Index() {

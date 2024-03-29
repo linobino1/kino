@@ -3,6 +3,7 @@ import {
   type LoaderFunctionArgs,
   type MetaFunction,
   type HeadersFunction,
+  json,
 } from "@remix-run/node";
 import { Link, useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
@@ -17,9 +18,10 @@ import { postsListSchema } from "cms/structured-data/post";
 import ScreeningsList from "~/components/ScreeningsList";
 import type { loader as rootLoader } from "app/root";
 import Gutter from "~/components/Gutter";
+import { cacheControlShortWithSWR } from "~/util/cacheControl";
 
 export const headers: HeadersFunction = () => ({
-  "Cache-Control": "max-age=3600, s-maxage=3600",
+  "Cache-Control": cacheControlShortWithSWR,
 });
 
 export const loader = async ({
@@ -83,11 +85,19 @@ export const loader = async ({
     });
   }
 
-  return {
-    page,
-    posts,
-    screenings,
-  };
+  return json(
+    {
+      page,
+      posts,
+      screenings,
+    },
+    {
+      headers: {
+        // cache this data for 10 minutes, and allow stale data to be served while revalidating for 1h
+        "Cache-Control": cacheControlShortWithSWR,
+      },
+    }
+  );
 };
 
 export const meta: MetaFunction<

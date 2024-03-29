@@ -1,4 +1,5 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { Outlet, useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import Footer from "~/components/Footer";
 import Header from "~/components/Header";
@@ -6,6 +7,7 @@ import i18next from "~/i18next.server";
 import classes from "./index.module.css";
 import { ErrorPage } from "~/components/ErrorPage";
 import type { loader as rootLoader } from "~/root";
+import { cacheControlShortWithSWR } from "~/util/cacheControl";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -21,9 +23,16 @@ export const loader = async ({
     locale,
   });
 
-  return {
-    navigations: navigations.docs,
-  };
+  return json(
+    {
+      navigations: navigations.docs,
+    },
+    {
+      headers: {
+        "Cache-Control": cacheControlShortWithSWR,
+      },
+    }
+  );
 };
 
 export const handle = {

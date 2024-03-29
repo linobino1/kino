@@ -1,5 +1,10 @@
-import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import type {
+  HeadersFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@remix-run/node";
 import { Link, useLoaderData, useRouteLoaderData } from "@remix-run/react";
+import { json } from "@remix-run/node";
 import type {
   FilmPrint,
   Movie as MovieType,
@@ -23,6 +28,7 @@ import { format } from "date-fns-tz";
 import { useTranslation } from "react-i18next";
 import RichText from "~/components/RichText";
 import Gutter from "~/components/Gutter";
+import { cacheControlVeryShortCacheButLongSWR } from "~/util/cacheControl";
 
 export const loader = async ({
   params,
@@ -56,10 +62,17 @@ export const loader = async ({
     throw new Response("Screening not found", { status: 404 });
   }
 
-  return {
-    screening: data.docs[0],
-    navigation,
-  };
+  return json(
+    {
+      screening: data.docs[0],
+      navigation,
+    },
+    {
+      headers: {
+        "Cache-Control": cacheControlVeryShortCacheButLongSWR,
+      },
+    }
+  );
 };
 
 export const meta: MetaFunction<
@@ -100,6 +113,10 @@ export const meta: MetaFunction<
       ).url,
     },
   ];
+});
+
+export const headers: HeadersFunction = () => ({
+  "Cache-Control": cacheControlVeryShortCacheButLongSWR,
 });
 
 export default function Item() {

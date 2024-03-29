@@ -27,6 +27,7 @@ import type { MovieTheater, WithContext } from "schema-dts";
 import { locationSchema } from "cms/structured-data/location";
 import { addContext } from "cms/structured-data";
 import { ModalContainer, ModalProvider } from "@faceless-ui/modal";
+import { cacheControlShortWithSWR } from "./util/cacheControl";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -66,6 +67,7 @@ export async function loader({
     {
       headers: {
         "Set-Cookie": localeCookie,
+        "Cache-Control": cacheControlShortWithSWR,
       },
     }
   );
