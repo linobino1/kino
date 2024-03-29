@@ -2,7 +2,7 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "yarn generate:types && yarn build:remix && yarn build:copyfiles && yarn build:payload && yarn build:server",
+    "build": "pnpm generate:types && pnpm build:remix && pnpm build:copyfiles && pnpm build:payload && pnpm build:server",
     "build:copyfiles": "copyfiles -u 1 \"cms/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png}\" dist/cms/",
     "build:payload": "payload build",
     "build:remix": "remix build",
@@ -10,7 +10,7 @@
     "dev": "remix dev -c 'node -r ts-node/register --watch-path ./server.ts server.ts'",
     "payload": "cross-env PAYLOAD_CONFIG_PATH=dist/payload.config.js payload",
     "payload:dev": "cross-env PAYLOAD_CONFIG_PATH=payload.config.ts payload",
-    "start": "yarn payload migrate && cross-env PAYLOAD_CONFIG_PATH=dist/payload.config.js NODE_ENV=production node dist/server.js",
+    "start": "pnpm payload migrate && cross-env PAYLOAD_CONFIG_PATH=dist/payload.config.js NODE_ENV=production node dist/server.js",
     "typecheck": "tsc -p tsconfig.server.json",
     "generate:types": "cross-env payload generate:types",
     "generate:images": "cross-env PAYLOAD_CONFIG_PATH=dist/payload.config.js node dist/cms/scripts/mediaRegenerate/index.js",
