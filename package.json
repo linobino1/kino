@@ -13,12 +13,8 @@
     "start": "pnpm payload migrate && cross-env PAYLOAD_CONFIG_PATH=dist/payload.config.js NODE_ENV=production node dist/server.js",
     "typecheck": "tsc -p tsconfig.server.json",
     "generate:types": "cross-env payload generate:types",
-    "generate:images": "cross-env PAYLOAD_CONFIG_PATH=dist/payload.config.js node dist/cms/scripts/mediaRegenerate/index.js",
-    "generate:images:dev": "cross-env ts-node ./cms/scripts/mediaRegenerate",
     "seed": "cross-env PAYLOAD_CONFIG_PATH=dist/payload.config.js node ./cms/seed/index.ts",
-    "seed:dev": "ts-node --require dotenv/config ./cms/seed/index.ts",
-    "import:media": "cross-env PAYLOAD_CONFIG_PATH=dist/payload.config.js node dist/cms/scripts/mediaImport/index.js",
-    "import:media:dev": "cross-env ts-node ./cms/scripts/mediaImport"
+    "seed:dev": "ts-node --require dotenv/config ./cms/seed/index.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.400.0",
