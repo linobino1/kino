@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { DefaultTemplate } from "payload/components/templates";
-import { Eyebrow } from "payload/components/elements";
 import type { AdminViewConfig } from "payload/config";
 import { useStepNav } from "payload/components/hooks";
 import { useConfig, Meta } from "payload/components/utilities";
@@ -41,7 +40,6 @@ export const MigrateMovieView: AdminViewConfig = {
           description="Building custom routes into Payload is easy."
           keywords="Custom React Components, Payload, CMS"
         />
-        <Eyebrow />
         <div className="gutter--left gutter--right">
           <h1>{t("Migrate Movie")} </h1>
           <MigrateMovie />
