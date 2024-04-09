@@ -51,6 +51,7 @@ const mockModulePath = path.resolve(__dirname, "mocks/emptyObject.js");
 export default buildConfig({
   db: mongooseAdapter({
     url: process.env.MONGO_URL || "mongodb://localhost:27017/app",
+    migrationDir: path.resolve(__dirname, "migrations"),
   }),
   endpoints: [
     // path will be prefixed with /api if root is not set to true
