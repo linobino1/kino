@@ -81,8 +81,8 @@ dependencies:
     specifier: ^7.6.0
     version: 7.11.0
   i18next:
-    specifier: ^23.1.0
-    version: 23.10.1
+    specifier: ^22.5.1
+    version: 22.5.1
   i18next-browser-languagedetector:
     specifier: ^7.0.1
     version: 7.2.0
@@ -117,8 +117,8 @@ dependencies:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
   react-i18next:
-    specifier: '14'
-    version: 14.1.0(i18next@23.10.1)(react-dom@18.2.0)(react@18.2.0)
+    specifier: '11'
+    version: 11.18.6(i18next@22.5.1)(react-dom@18.2.0)(react@18.2.0)
   react-player:
     specifier: ^2.12.0
     version: 2.15.1(react@18.2.0)
@@ -130,7 +130,7 @@ dependencies:
     version: 5.3.4(react@18.2.0)
   remix-i18next:
     specifier: ^5.4.0
-    version: 5.5.0(@remix-run/react@2.8.1)(@remix-run/server-runtime@2.8.1)(i18next@23.10.1)(react-i18next@14.1.0)(react@18.2.0)
+    version: 5.5.0(@remix-run/react@2.8.1)(@remix-run/server-runtime@2.8.1)(i18next@22.5.1)(react-i18next@11.18.6)(react@18.2.0)
   schema-dts:
     specifier: ^1.1.2
     version: 1.1.2(typescript@5.4.3)
@@ -7850,12 +7850,6 @@ packages:
       '@babel/runtime': 7.24.1
     dev: false
 
-  /i18next@23.10.1:
-    resolution: {integrity: sha512-NDiIzFbcs3O9PXpfhkjyf7WdqFn5Vq6mhzhtkXzj51aOcNuPNcTwuYNuXCpHsanZGHlHKL35G7huoFeVic1hng==}
-    dependencies:
-      '@babel/runtime': 7.24.1
-    dev: false
-
   /iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
     engines: {node: '>=0.10.0'}
@@ -11434,26 +11428,6 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /react-i18next@14.1.0(i18next@23.10.1)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-3KwX6LHpbvGQ+sBEntjV4sYW3Zovjjl3fpoHbUwSgFHf0uRBcbeCBLR5al6ikncI5+W0EFb71QXZmfop+J6NrQ==}
-    peerDependencies:
-      i18next: '>= 23.2.3'
-      react: '>= 16.8.0'
-      react-dom: '*'
-      react-native: '*'
-    peerDependenciesMeta:
-      react-dom:
-        optional: true
-      react-native:
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.24.1
-      html-parse-stringify: 3.0.1
-      i18next: 23.10.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
   /react-image-crop@10.1.8(react@18.2.0):
     resolution: {integrity: sha512-4rb8XtXNx7ZaOZarKKnckgz4xLMvds/YrU6mpJfGhGAsy2Mg4mIw1x+DCCGngVGq2soTBVVOxx2s/C6mTX9+pA==}
     peerDependencies:
@@ -11800,7 +11774,7 @@ packages:
       unified: 10.1.2
     dev: true
 
-  /remix-i18next@5.5.0(@remix-run/react@2.8.1)(@remix-run/server-runtime@2.8.1)(i18next@23.10.1)(react-i18next@14.1.0)(react@18.2.0):
+  /remix-i18next@5.5.0(@remix-run/react@2.8.1)(@remix-run/server-runtime@2.8.1)(i18next@22.5.1)(react-i18next@11.18.6)(react@18.2.0):
     resolution: {integrity: sha512-QAHYlwb/0fmoSmH+t7AiJ3EhyG4SSQNQnAAPfqbkn/3UJfWO+NFFVxuggGx25FRJ3SOPexaspoiaCddcEayPAQ==}
     peerDependencies:
       '@remix-run/react': ^1.0.0 || ^2.0.0
@@ -11812,11 +11786,11 @@ packages:
       '@remix-run/react': 2.8.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.3)
       '@remix-run/server-runtime': 2.8.1(typescript@5.4.3)
       accept-language-parser: 1.5.0
-      i18next: 23.10.1
+      i18next: 22.5.1
       intl-parse-accept-language: 1.0.0
       lru-cache: 7.18.3
       react: 18.2.0
-      react-i18next: 14.1.0(i18next@23.10.1)(react-dom@18.2.0)(react@18.2.0)
+      react-i18next: 11.18.6(i18next@22.5.1)(react-dom@18.2.0)(react@18.2.0)
       use-consistent-value: 1.0.0(react@18.2.0)
     dev: false
 
