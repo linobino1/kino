@@ -45,6 +45,7 @@ import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { slateEditor } from "@payloadcms/richtext-slate";
 import { webpackBundler } from "@payloadcms/bundler-webpack";
 import { seed } from "./cms/endpoints/seed";
+import { regenerateMediaSizes } from "./cms/endpoints/regenerateMediaSizes";
 
 const mockModulePath = path.resolve(__dirname, "mocks/emptyObject.js");
 
@@ -59,6 +60,11 @@ export default buildConfig({
       path: "/seed",
       method: "get",
       handler: seed,
+    },
+    {
+      path: "/regenerate-media-sizes",
+      method: "get",
+      handler: regenerateMediaSizes,
     },
   ],
   editor: slateEditor({
