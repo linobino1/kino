@@ -23,6 +23,7 @@ export const Media: CollectionConfig = {
   upload: {
     staticDir: path.resolve(__dirname, "../../media"),
     mimeTypes: ["image/*", "application/pdf"],
+    staticURL: process.env.MEDIA_URL || undefined,
   },
   fields: [
     {
