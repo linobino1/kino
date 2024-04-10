@@ -110,7 +110,8 @@
   z-index: 1;
 }
 .date .dayName,
-.date .month {
+.date .month,
+.date .year {
   font: var(--font);
   line-height: 1;
   text-transform: uppercase;
@@ -120,6 +121,9 @@
   font-family: "Tahoma", sans-serif;
   font-weight: var(--font-weight-bold);
   line-height: 1;
+}
+.date .year {
+  font: var(--font-small);
 }
 @media screen and (max-width: 500px) {
   .item img {

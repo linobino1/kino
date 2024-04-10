@@ -7,9 +7,8 @@ import { ErrorPage } from "~/components/ErrorPage";
 import { mergeMeta, pageTitle } from "~/util/pageMeta";
 import type { loader as rootLoader } from "app/root";
 import Gutter from "~/components/Gutter";
-import type { PaginatedDocs } from "payload/database";
-import type { Screening } from "payload/generated-types";
 import Pagination from "~/components/Pagination";
+import { useTranslation } from "react-i18next";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -19,6 +18,10 @@ export const loader = async ({
   context: { payload },
 }: LoaderFunctionArgs) => {
   const locale = await i18next.getLocale(request);
+  // compare date for upcoming screenings
+  let today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   const screeningSeries = (
     await payload.find({
       collection: "screeningSeries",
@@ -37,24 +40,63 @@ export const loader = async ({
   }
 
   const page = parseInt(new URL(request.url).searchParams.get("page") || "1");
-  const screenings = (await payload.find({
-    collection: "screenings",
-    where: {
-      series: {
-        equals: screeningSeries.id,
+  const depth = 11;
+  const [upcoming, past] = await Promise.all([
+    payload.find({
+      collection: "screenings",
+      where: {
+        and: [
+          {
+            series: {
+              equals: screeningSeries.id,
+            },
+          },
+          {
+            date: {
+              greater_than_equal: today,
+            },
+          },
+          {
+            excludeFromUpcoming: {
+              not_equals: true,
+            },
+          },
+        ],
       },
-    },
-    locale,
-    depth: 11,
-    sort: "date",
-    pagination: true,
-    page,
-    limit: 20,
-  })) as unknown as PaginatedDocs<Screening>;
+      sort: "date",
+      locale,
+      depth,
+      pagination: false,
+    }),
+    payload.find({
+      collection: "screenings",
+      where: {
+        and: [
+          {
+            series: {
+              equals: screeningSeries.id,
+            },
+          },
+          {
+            date: {
+              less_than: today,
+            },
+          },
+        ],
+      },
+      sort: "-date",
+      locale,
+      depth,
+      pagination: true,
+      page,
+      limit: 20,
+    }),
+  ]);
 
   return {
     screeningSeries,
-    screenings,
+    upcoming,
+    past,
   };
 };
 
@@ -77,18 +119,34 @@ export const meta: MetaFunction<
 });
 
 export default function Item() {
-  const { screeningSeries, screenings } = useLoaderData<typeof loader>();
+  const { t } = useTranslation();
+  const { screeningSeries, upcoming, past } = useLoaderData<typeof loader>();
   const { site } = useRouteLoaderData<typeof rootLoader>("root")!;
 
   return (
     <Page layout={screeningSeries.layout}>
       <Gutter>
-        <ScreeningsList
-          items={screenings.docs}
-          activeScreeningSery={screeningSeries}
-          site={site}
-        />
-        <Pagination {...screenings} linkProps={{ prefetch: "intent" }} />
+        {upcoming.docs.length > 0 && (
+          <>
+            <h2>{t("Upcoming Screenings")}</h2>
+            <ScreeningsList
+              items={upcoming.docs}
+              activeScreeningSery={screeningSeries}
+              site={site}
+            />
+          </>
+        )}
+        {past.docs.length > 0 && (
+          <>
+            <h2>{t("Past Screenings")}</h2>
+            <ScreeningsList
+              items={past.docs}
+              activeScreeningSery={screeningSeries}
+              site={site}
+            />
+          </>
+        )}
+        <Pagination {...past} linkProps={{ prefetch: "intent" }} />
       </Gutter>
     </Page>
   );

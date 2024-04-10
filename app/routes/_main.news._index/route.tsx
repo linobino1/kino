@@ -119,7 +119,7 @@ export default function Index() {
     <Page layout={page.layout} className={classes.page}>
       <Gutter>
         <section className={classes.upcoming}>
-          <h2>{t("Upcoming Screenings")}</h2>
+          <h2>{t("Our Next Screenings")}</h2>
           <ScreeningsList items={screenings.docs} site={site} />
           <Link to="/screenings" className={classes.allScreeningsButton}>
             {t("See all screenings")}

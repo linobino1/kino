@@ -7,7 +7,7 @@ import type {
   Screening,
   ScreeningSery,
 } from "payload/generated-types";
-import { Date } from "~/components/Date";
+import { Date as DateComponent } from "~/components/Date";
 import { useTranslation } from "react-i18next";
 import Image from "~/components/Image";
 
@@ -21,25 +21,34 @@ export const ScreeningsListItem: React.FC<Props> = ({
   activeScreeningSery,
 }) => {
   const { t } = useTranslation();
-
+  let today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const isPast = new Date(Date.parse(screening.date)) < today;
   return (
     <div className={classes.item}>
       <div className={classes.date}>
-        <Date
+        <DateComponent
           iso={screening.date as string}
           className={classes.dayName}
           format="EEEEEE"
         />
-        <Date
+        <DateComponent
           iso={screening.date as string}
           className={classes.month}
           format="MMM"
         />
-        <Date
+        <DateComponent
           iso={screening.date as string}
           className={classes.dayNumber}
           format="dd"
         />
+        {isPast && (
+          <DateComponent
+            iso={screening.date as string}
+            className={classes.year}
+            format="yyyy"
+          />
+        )}
       </div>
       <Image
         image={
@@ -65,7 +74,7 @@ export const ScreeningsListItem: React.FC<Props> = ({
               </div>
             )}
         </div>
-        <Date
+        <DateComponent
           iso={screening.date as string}
           className={classes.time}
           format="p"
