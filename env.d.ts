@@ -15,6 +15,7 @@ declare global {
     MEDIA_URL: string;
     CDN_CGI_IMAGE_URL: string;
     MAILCHIMP_SIGNUP_URL: string;
+    SENTRY_DSN: string;
   }
   interface Window {
     ENV: AppEnvironment;

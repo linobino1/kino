@@ -8,6 +8,8 @@ import invariant from "tiny-invariant";
 import { sender, transport } from "./email";
 import { themoviedb } from "./cms/MigrateMovie/tmdb";
 import { broadcastDevReady } from "@remix-run/node";
+import * as Sentry from "@sentry/node";
+import { nodeProfilingIntegration } from "@sentry/profiling-node";
 
 require("dotenv").config();
 
@@ -20,6 +22,28 @@ async function start() {
 
   invariant(process.env.PAYLOAD_SECRET, "PAYLOAD_SECRET is required");
   invariant(process.env.THEMOVIEDB_API_KEY, "THEMOVIEDB_API_KEY is required");
+
+  Sentry.init({
+    environment: process.env.NODE_ENV,
+    dsn: process.env.SENTRY_DSN,
+    integrations: [
+      // enable HTTP calls tracing
+      new Sentry.Integrations.Http({ tracing: true }),
+      // enable Express.js middleware tracing
+      new Sentry.Integrations.Express({ app }),
+      nodeProfilingIntegration(),
+    ],
+    // Performance Monitoring
+    tracesSampleRate: 1.0, //  Capture 100% of the transactions
+    // Set sampling rate for profiling - this is relative to tracesSampleRate
+    profilesSampleRate: 1.0,
+  });
+
+  // The request handler must be the first middleware on the app
+  app.use(Sentry.Handlers.requestHandler());
+
+  // TracingHandler creates a trace for every incoming request
+  app.use(Sentry.Handlers.tracingHandler());
 
   // Initialize Payload
   await payload.init({
@@ -56,6 +80,11 @@ async function start() {
   app.use(express.static("public", { maxAge: "1h" }));
 
   app.use(morgan("tiny"));
+
+  // sentry debug route
+  app.get("/debug-sentry", function mainHandler(req, res) {
+    throw new Error("My first Sentry error!");
+  });
 
   // robots.txt
   app.get("/robots.txt", function (req, res) {
@@ -108,6 +137,10 @@ async function start() {
           },
         })
   );
+
+  // The error handler must be registered before any other error middleware and after all controllers
+  app.use(Sentry.Handlers.errorHandler());
+
   const port = process.env.PORT || 3000;
 
   app.listen(port, () => {
