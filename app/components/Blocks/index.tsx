@@ -77,14 +77,17 @@ export const Blocks: React.FC<BlocksProps> = ({
   blocks,
   children,
   ...props
-}) => (
-  <div {...props}>
-    {blocks?.map((block, i) => (
-      <Block key={i} block={block}>
-        {children}
-      </Block>
-    ))}
-  </div>
-);
+}) => {
+  if (!Array.isArray(blocks)) return null;
+  return (
+    <div {...props}>
+      {blocks.map((block, i) => (
+        <Block key={i} block={block}>
+          {children}
+        </Block>
+      ))}
+    </div>
+  );
+};
 
 export default Blocks;
