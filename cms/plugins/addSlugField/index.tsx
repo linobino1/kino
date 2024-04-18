@@ -9,10 +9,17 @@ import { t } from "../../i18n";
 
 export const slugFormat = (s: string): string => {
   if (!s) return s;
-  return slugify(s, {
-    lower: true,
-    strict: true,
-  });
+  return slugify(
+    s
+      .replace("ä", "ae")
+      .replace("ö", "oe")
+      .replace("Ü", "ue")
+      .replace("ß", "ss"),
+    {
+      lower: true,
+      strict: true,
+    }
+  );
 };
 
 export type slugGeneratorArgs = Parameters<BeforeChangeHook>[0] & {
