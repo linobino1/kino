@@ -11,6 +11,7 @@ export const slugFormat = (s: string): string => {
   if (!s) return s;
   return slugify(s, {
     lower: true,
+    strict: true,
   });
 };
 
