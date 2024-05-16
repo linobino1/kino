@@ -24,14 +24,14 @@ importers:
         specifier: ^1.0.6
         version: 1.0.6(@swc/core@1.3.107)(esbuild@0.17.6)(payload@2.17.0(@types/react@18.2.73)(esbuild@0.17.6)(typescript@5.4.3)(webpack@5.91.0(@swc/core@1.3.107)(esbuild@0.17.6)(webpack-cli@4.10.0)))(sass@1.69.4)
       '@payloadcms/db-mongodb':
-        specifier: ^1.4.0
-        version: 1.4.3(payload@2.17.0(@types/react@18.2.73)(esbuild@0.17.6)(typescript@5.4.3)(webpack@5.91.0(@swc/core@1.3.107)(esbuild@0.17.6)(webpack-cli@4.10.0)))
+        specifier: ^1.5.1
+        version: 1.5.1(payload@2.17.0(@types/react@18.2.73)(esbuild@0.17.6)(typescript@5.4.3)(webpack@5.91.0(@swc/core@1.3.107)(esbuild@0.17.6)(webpack-cli@4.10.0)))
       '@payloadcms/plugin-cloud-storage':
         specifier: ^1.1.2
         version: 1.1.2(@aws-sdk/client-s3@3.540.0)(@aws-sdk/lib-storage@3.540.0(@aws-sdk/client-s3@3.540.0))(payload@2.17.0(@types/react@18.2.73)(esbuild@0.17.6)(typescript@5.4.3)(webpack@5.91.0(@swc/core@1.3.107)(esbuild@0.17.6)(webpack-cli@4.10.0)))
       '@payloadcms/richtext-slate':
-        specifier: ^1.4.0
-        version: 1.4.0(payload@2.17.0(@types/react@18.2.73)(esbuild@0.17.6)(typescript@5.4.3)(webpack@5.91.0(@swc/core@1.3.107)(esbuild@0.17.6)(webpack-cli@4.10.0)))(react-dom@18.2.0(react@18.2.0))
+        specifier: ^1.5.2
+        version: 1.5.2(payload@2.17.0(@types/react@18.2.73)(esbuild@0.17.6)(typescript@5.4.3)(webpack@5.91.0(@swc/core@1.3.107)(esbuild@0.17.6)(webpack-cli@4.10.0)))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@remix-run/css-bundle':
         specifier: ^2.8.0
         version: 2.8.1
@@ -1337,8 +1337,8 @@ packages:
     peerDependencies:
       payload: ^2.0.0
 
-  '@payloadcms/db-mongodb@1.4.3':
-    resolution: {integrity: sha512-EOqxE8XOuICkxBqCwPkAj/NiIT5GxbYG7uocUGNvw5icZkZSAT88YD4dipZISP4Ft8QQ7EUJsjqeRali8oLtCw==}
+  '@payloadcms/db-mongodb@1.5.1':
+    resolution: {integrity: sha512-llaVGLqHkBaRvMuPG0hNdXUQ0UBfzCxujAc2N9ZtNGru7+PIyxsjVbhvgflcybuFHX12BDgOD1uvTUWfa/MgiA==}
     peerDependencies:
       payload: ^2.0.0
 
@@ -1363,10 +1363,11 @@ packages:
       '@google-cloud/storage':
         optional: true
 
-  '@payloadcms/richtext-slate@1.4.0':
-    resolution: {integrity: sha512-nIQmo/q5ZeRylSXuUEn6DHgDXgye/SjMZ3HNPKhyEDe1ziiCvqpgb9CJ9m1DgPg1eDqh2OYxCUHipC21k0X0jw==}
+  '@payloadcms/richtext-slate@1.5.2':
+    resolution: {integrity: sha512-0rq9zgOhpPHO5kcFlajld3h5beww6jjYwHZH5sxgtuen3bz6pepIr3agg650R/aE1+sfez0NdpwoB0gb7FX03g==}
     peerDependencies:
       payload: ^2.3.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -8685,7 +8686,7 @@ snapshots:
       - utf-8-validate
       - webpack-dev-server
 
-  '@payloadcms/db-mongodb@1.4.3(payload@2.17.0(@types/react@18.2.73)(esbuild@0.17.6)(typescript@5.4.3)(webpack@5.91.0(@swc/core@1.3.107)(esbuild@0.17.6)(webpack-cli@4.10.0)))':
+  '@payloadcms/db-mongodb@1.5.1(payload@2.17.0(@types/react@18.2.73)(esbuild@0.17.6)(typescript@5.4.3)(webpack@5.91.0(@swc/core@1.3.107)(esbuild@0.17.6)(webpack-cli@4.10.0)))':
     dependencies:
       bson-objectid: 2.0.4
       deepmerge: 4.3.1
@@ -8710,7 +8711,7 @@ snapshots:
       '@aws-sdk/client-s3': 3.540.0
       '@aws-sdk/lib-storage': 3.540.0(@aws-sdk/client-s3@3.540.0)
 
-  '@payloadcms/richtext-slate@1.4.0(payload@2.17.0(@types/react@18.2.73)(esbuild@0.17.6)(typescript@5.4.3)(webpack@5.91.0(@swc/core@1.3.107)(esbuild@0.17.6)(webpack-cli@4.10.0)))(react-dom@18.2.0(react@18.2.0))':
+  '@payloadcms/richtext-slate@1.5.2(payload@2.17.0(@types/react@18.2.73)(esbuild@0.17.6)(typescript@5.4.3)(webpack@5.91.0(@swc/core@1.3.107)(esbuild@0.17.6)(webpack-cli@4.10.0)))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@faceless-ui/modal': 2.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       i18next: 22.5.1
