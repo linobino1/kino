@@ -8,6 +8,7 @@ import { MyReactPlayer } from "../MyReactPlayer";
 import { Image } from "../Image";
 import { RichText } from "../RichText";
 import Gutter from "../Gutter";
+import ScreeningsBlock from "./ScreeningsBlock";
 
 export interface BlockProps extends React.HTMLAttributes<HTMLDivElement> {
   block?: PageLayout["blocks"][0];
@@ -60,6 +61,13 @@ export const Block: React.FC<BlockProps> = ({ block, ...props }) => {
       return (
         <Gutter size="small">
           <MyReactPlayer url={block.url} />;
+        </Gutter>
+      );
+
+    case "screenings":
+      return (
+        <Gutter>
+          <ScreeningsBlock {...block} />
         </Gutter>
       );
 

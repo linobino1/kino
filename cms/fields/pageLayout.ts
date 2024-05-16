@@ -8,6 +8,7 @@ import { Image } from "../blocks/Image";
 import { Gallery } from "../blocks/Gallery";
 import { Video } from "../blocks/Video";
 import { t } from "../i18n";
+import Screenings from "../blocks/Screenings";
 
 export type PageLayout = StaticPage["layout"];
 
@@ -28,7 +29,16 @@ export const pageLayout = (props?: Props): Field => {
         type: "blocks",
         required: true,
         minRows: 1,
-        blocks: [Heading, HeaderImage, Content, Outlet, Image, Gallery, Video],
+        blocks: [
+          Heading,
+          HeaderImage,
+          Content,
+          Outlet,
+          Image,
+          Gallery,
+          Video,
+          Screenings,
+        ],
         defaultValue: defaultLayout,
       },
       {

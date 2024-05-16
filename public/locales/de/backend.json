@@ -149,5 +149,7 @@
   "Is Supporting Film": "Ist Vorfilm",
   "AdminExplainScreeningInfo": "Dieser Text wird am Anfang der Vorstellungsseite angezeigt.",
   "excludeFromUpcomingScreenings": "Nicht im Programm anzeigen",
-  "excludeFromUpcomingScreeningsDescription": "Wenn der Haken gesetzt ist, wird die Vorstellung nicht auf der Startseite und in der Liste der kommenden Vorstellungen angezeigt."
+  "excludeFromUpcomingScreeningsDescription": "Wenn der Haken gesetzt ist, wird die Vorstellung nicht auf der Startseite und in der Liste der kommenden Vorstellungen angezeigt.",
+  "populateManually": "Manuell befüllen",
+  "byScreeningSeries": "nach Vorstellungsreihe"
 }
