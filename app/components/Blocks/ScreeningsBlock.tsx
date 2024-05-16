@@ -59,6 +59,7 @@ const ScreeningsBlock: React.FC<ScreeningsBlockProps> = ({
                 },
               ],
             },
+            sort: "date",
           });
           const res = await fetch(
             `${
@@ -71,7 +72,7 @@ const ScreeningsBlock: React.FC<ScreeningsBlockProps> = ({
       }
 
       await Promise.all(
-        ids.map(async (id) => {
+        ids.map(async (id, index) => {
           return fetch(
             `${
               environment().PAYLOAD_PUBLIC_SERVER_URL || ""
@@ -79,7 +80,7 @@ const ScreeningsBlock: React.FC<ScreeningsBlockProps> = ({
           )
             .then((res) => res.json())
             .then((data) => {
-              deepDocs.push(data);
+              deepDocs[index] = data;
             });
         })
       );
