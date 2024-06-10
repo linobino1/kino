@@ -13,8 +13,14 @@ export const action = async ({
   request,
   context: { payload },
 }: ActionFunctionArgs) => {
-  const form = await request.formData();
   const t = await i18next.getFixedT(request, ns);
+
+  return json({
+    success: false,
+    message: t("Registration is disabled!"),
+  });
+
+  const form = await request.formData();
 
   // create user
   try {
