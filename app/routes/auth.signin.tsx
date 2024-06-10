@@ -1,5 +1,5 @@
 import { Form, Link, useActionData } from "@remix-run/react";
-import type { ActionArgs } from "@remix-run/node";
+import type { ActionFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import classes from "./auth.module.css";
 import { useTranslation } from "react-i18next";
@@ -11,7 +11,7 @@ const ns = "auth";
 export const action = async ({
   request,
   context: { payload, res },
-}: ActionArgs) => {
+}: ActionFunctionArgs) => {
   const form = await request.formData();
   const t = await i18next.getFixedT(request, ns);
 
@@ -23,6 +23,7 @@ export const action = async ({
         password: form.get("password") as string,
       },
       res,
+      overrideAccess: false,
     });
     return redirect("/");
   } catch (err) {

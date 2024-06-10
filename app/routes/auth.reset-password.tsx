@@ -1,4 +1,4 @@
-import type { ActionArgs } from "@remix-run/node";
+import type { ActionFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Link, useActionData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
@@ -8,7 +8,10 @@ import i18next from "~/i18next.server";
 // i18n namespace
 const ns = "auth";
 
-export const action = async ({ request, context: { payload } }: ActionArgs) => {
+export const action = async ({
+  request,
+  context: { payload },
+}: ActionFunctionArgs) => {
   const url = new URL(request.url);
   const form = await request.formData();
   const t = await i18next.getFixedT(request, ns);
@@ -16,7 +19,7 @@ export const action = async ({ request, context: { payload } }: ActionArgs) => {
   try {
     await payload.resetPassword({
       collection: "users",
-      overrideAccess: true,
+      overrideAccess: false,
       data: {
         password: form.get("password") as string,
         token: url.searchParams.get("token") ?? "",
