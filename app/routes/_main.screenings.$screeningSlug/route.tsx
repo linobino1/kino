@@ -24,11 +24,12 @@ import { screeningSchema } from "cms/structured-data/screening";
 import { mergeMeta, pageTitle } from "~/util/pageMeta";
 import type { loader as rootLoader } from "app/root";
 import { parseISO } from "date-fns";
-import { format } from "date-fns-tz";
+import { formatInTimeZone } from "date-fns-tz";
 import { useTranslation } from "react-i18next";
 import RichText from "~/components/RichText";
 import Gutter from "~/components/Gutter";
 import { cacheControlVeryShortCacheButLongSWR } from "~/util/cacheControl";
+import environment from "~/util/environment";
 
 export const loader = async ({
   params,
@@ -85,10 +86,18 @@ export const meta: MetaFunction<
   const site = matches.find((match) => match?.id === "root")?.data.site;
   const title = t("screening.meta.title", {
     title: data?.screening.title,
-    date: format(parseISO(data?.screening.date || ""), "PPp"),
+    date: formatInTimeZone(
+      parseISO(data?.screening.date || ""),
+      environment().TIMEZONE,
+      "PPp"
+    ),
   });
   const description = t("screening.meta.description", {
-    date: format(parseISO(data?.screening.date || ""), "PPpp"),
+    date: formatInTimeZone(
+      parseISO(data?.screening.date || ""),
+      environment().TIMEZONE,
+      "PPpp"
+    ),
     synopsis: (
       (data?.screening.films[0].filmprint as FilmPrint).movie as MovieType
     ).synopsis,
