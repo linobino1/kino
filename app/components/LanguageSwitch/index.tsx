@@ -27,6 +27,8 @@ export default function LanguageSwitch({ className }: Props) {
               i18n.language === lng && classes.active
             }`}
             to={`?${query.toString()}`}
+            rel="alternate"
+            hrefLang={lng}
           >
             {lng.toUpperCase()}
           </Link>
