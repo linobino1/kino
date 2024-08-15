@@ -50,7 +50,12 @@ export default function Newsletter({ mailing }: Props) {
     <Html
       lang={mailing.language ?? "de"}
       dir="ltr"
-      style={{ fontFamily: "Helvetica, Arial, sans", fontSize: "16px" }}
+      style={{
+        fontFamily: "Helvetica, Arial, sans",
+        fontSize: "16px",
+        margin: 0,
+        padding: 0,
+      }}
     >
       <Head>
         <Font
@@ -89,6 +94,7 @@ export default function Newsletter({ mailing }: Props) {
         <Container
           style={{
             paddingBottom: "20px",
+            paddingInline: "5px",
             width: "100%",
             maxWidth: containerWidth,
           }}
@@ -114,7 +120,6 @@ export default function Newsletter({ mailing }: Props) {
 
             `${movie.duration} min`,
             (filmprint?.format as Format).name,
-            // movie.ageRating ? t('ageRating {age}', { age: movie.ageRating}) : null,
             filmprint
               ? (filmprint.languageVersion as LanguageVersion)?.name
               : null,
