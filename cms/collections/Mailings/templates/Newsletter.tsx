@@ -75,7 +75,7 @@ export default function Newsletter({ mailing }: Props) {
         />
       </Head>
       <Body style={{ padding: 0, margin: 0 }}>
-        {mailing.headerImage && (
+        {typeof mailing.headerImage === "object" && (
           <Img
             src={(mailing.headerImage as Media).url ?? ""}
             alt="header"
@@ -183,7 +183,7 @@ export default function Newsletter({ mailing }: Props) {
             </Section>
           );
         })}
-        {footer?.image && footer.label && footer.link && (
+        {typeof footer?.image === "object" && footer.label && footer.link && (
           <Section
             style={{
               width: "100%",
@@ -242,4 +242,5 @@ export default function Newsletter({ mailing }: Props) {
   );
 }
 
+// this is for using the react-email dev server with `pnpm email`
 Newsletter.PreviewProps = seed;

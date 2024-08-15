@@ -1,35 +1,70 @@
 import React from "react";
-import type { AfterOperationHook } from "payload/dist/collections/config/types";
-import type { Mailing } from "payload/generated-types";
 import { extractTokenFromRequest } from "../../../util/extractTokenFromRequest";
-import Newsletter from "../templates/Newsletter";
+import Newsletter, {
+  type Props as NewsletterProps,
+} from "../templates/Newsletter";
 import { render } from "@react-email/components";
+import type { FieldHook } from "payload/types";
 
-export const generateHTML: AfterOperationHook = async ({
-  operation,
-  req,
-  result,
-}) => {
-  if (!["create", "update", "updateByID"].includes(operation)) {
-    return result;
+export const generateHTML: FieldHook = async ({ data, req }) => {
+  if (!data) {
+    return;
   }
 
-  const token = extractTokenFromRequest(req);
-  const response = await fetch(
-    `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/mailings/${result.id}?depth=4`,
-    {
-      credentials: "include",
-      headers: { cookie: `payload-token=${token}` },
-    }
-  );
+  console.log("Generating HTML for mailing", data);
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch mailing details");
-  }
+  // it would be nice if we could fetch the whole mailing doc here with more depth, but this will not work on create
+  // const id = data.id;
+  // const token = extractTokenFromRequest(req);
+  // const response = await fetch(
+  //   `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/mailings/${result.id}?depth=4`,
+  // );
 
-  const mailing: Mailing = await response.json();
+  // let's fetch the details we need...
+  const fetchOptions: RequestInit = {
+    credentials: "include",
+    headers: {
+      cookie: `payload-token=${extractTokenFromRequest(req)}`,
+    },
+  };
+  const [headerImage, footerImage, screenings] = await Promise.all([
+    // header image (if set)
+    data.headerImage &&
+      fetch(
+        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/media/${data.headerImage}`,
+        fetchOptions
+      ).then((res) => res.json()),
+    // footer image (if set)
+    data.footer.image &&
+      fetch(
+        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/media/${data.footer.image}`,
+        fetchOptions
+      ).then((res) => res.json()),
+    // screenings with depth 3
+    Promise.all(
+      data.screenings.map((item: any) =>
+        fetch(
+          `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/screenings/${item.screening}?depth=3`,
+          fetchOptions
+        ).then((res) => res.json())
+      )
+    ),
+  ]);
 
-  result.html = render(<Newsletter mailing={mailing} />);
+  // assemble the "deep" mailing doc
+  const mailing: NewsletterProps["mailing"] = {
+    ...data,
+    subject: data.subject, // make typescript happy
+    headerImage,
+    footer: {
+      ...data?.footer,
+      image: footerImage,
+    },
+    screenings: data.screenings.map((item: any, index: number) => ({
+      ...item,
+      screening: screenings[index],
+    })),
+  };
 
-  return result;
+  return render(<Newsletter mailing={mailing} />);
 };

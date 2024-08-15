@@ -17,9 +17,6 @@ export const Mailings: CollectionConfig = {
     create: isAdminOrEditor,
     delete: isAdminOrEditor,
   },
-  hooks: {
-    afterOperation: [generateHTML],
-  },
   fields: [
     {
       name: "subject",
@@ -104,6 +101,9 @@ export const Mailings: CollectionConfig = {
     {
       name: "html",
       type: "text",
+      hooks: {
+        beforeChange: [generateHTML],
+      },
       admin: {
         components: {
           Field: HtmlField,
