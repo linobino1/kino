@@ -5,12 +5,16 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { isAdminOrEditor } from "../../access";
 import { colorPickerField } from "@innovixx/payload-color-picker-field";
 import { generateHTML } from "./hooks/generateHTML";
+import HowTo from "./components/HowTo";
 
 export const Mailings: CollectionConfig = {
   slug: "mailings",
   admin: {
     group: t("Mailings"),
     defaultColumns: ["id", "updatedAt"],
+    components: {
+      BeforeList: [HowTo],
+    },
   },
   defaultSort: "-updatedAt",
   access: {
