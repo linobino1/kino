@@ -4,8 +4,21 @@ export const seed: NewsletterProps = {
   mailing: {
     language: "de",
     subject: "Nächste Woche im Blauen Salon: HOLY MOTORS",
-    footerCTA: {
-      text: "filmprogramm",
+    footer: {
+      image: {
+        id: "669a38b2080db7e7077e207a",
+        alt: "enter-the-void-backdrop",
+        tmdbFilepath: "/eT0Qri82683I4fFV0md8CC01YyB.jpg",
+        filename: "enter-the-void-backdrop.jpg",
+        mimeType: "image/jpeg",
+        filesize: 1948980,
+        width: 3840,
+        height: 2160,
+        createdAt: "2024-07-19T09:58:10.385Z",
+        updatedAt: "2024-07-19T09:58:10.385Z",
+        url: "https://r2.kinoimblauensalon.de/enter-the-void-backdrop.jpg",
+      },
+      label: "filmprogramm",
       link: "https://kinoimblauensalon.de",
     },
     headerImage: {
@@ -22,19 +35,6 @@ export const seed: NewsletterProps = {
       url: "https://r2.kinoimblauensalon.de/enter-the-void-backdrop.jpg",
     },
     color: "#ff0000",
-    footerImage: {
-      id: "669a38b2080db7e7077e207a",
-      alt: "enter-the-void-backdrop",
-      tmdbFilepath: "/eT0Qri82683I4fFV0md8CC01YyB.jpg",
-      filename: "enter-the-void-backdrop.jpg",
-      mimeType: "image/jpeg",
-      filesize: 1948980,
-      width: 3840,
-      height: 2160,
-      createdAt: "2024-07-19T09:58:10.385Z",
-      updatedAt: "2024-07-19T09:58:10.385Z",
-      url: "https://r2.kinoimblauensalon.de/enter-the-void-backdrop.jpg",
-    },
     content: {
       root: {
         children: [

@@ -17,6 +17,9 @@ export const Mailings: CollectionConfig = {
     create: isAdminOrEditor,
     delete: isAdminOrEditor,
   },
+  hooks: {
+    afterOperation: [generateHTML],
+  },
   fields: [
     {
       name: "subject",
@@ -30,6 +33,7 @@ export const Mailings: CollectionConfig = {
         colorPickerField({
           name: "color",
           label: t("Color"),
+          defaultValue: "#000000",
         }),
         {
           name: "language",
@@ -76,33 +80,30 @@ export const Mailings: CollectionConfig = {
       ],
     },
     {
-      name: "footerImage",
-      type: "upload",
-      relationTo: "media",
-    },
-    {
-      name: "footerCTA",
-      label: t("Footer Button"),
       type: "group",
+      name: "footer",
+      label: t("Footer"),
       fields: [
         {
-          name: "text",
+          name: "image",
+          label: t("Image"),
+          type: "upload",
+          relationTo: "media",
+        },
+        {
+          name: "label",
+          label: t("Label"),
           type: "text",
-          required: true,
         },
         {
           name: "link",
           type: "text",
-          required: true,
         },
       ],
     },
     {
       name: "html",
       type: "text",
-      hooks: {
-        beforeChange: [generateHTML],
-      },
       admin: {
         components: {
           Field: HtmlField,

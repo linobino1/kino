@@ -45,6 +45,7 @@ const fontSize = "16px";
 
 export default function Newsletter({ mailing }: Props) {
   const color = mailing.color ?? "#000";
+  const { footer } = mailing;
   return (
     <Html
       lang={mailing.language ?? "de"}
@@ -182,20 +183,18 @@ export default function Newsletter({ mailing }: Props) {
             </Section>
           );
         })}
-        {mailing.footerImage && mailing.footerCTA && (
+        {footer?.image && footer.label && footer.link && (
           <Section
             style={{
               width: "100%",
-              backgroundImage: `url(${
-                (mailing.footerImage as Media).url ?? ""
-              })`,
+              backgroundImage: `url(${(footer.image as Media).url ?? ""})`,
               backgroundSize: "cover",
               minHeight: "40px",
               textAlign: "center",
             }}
           >
             <Link
-              href={mailing.footerCTA.link}
+              href={footer.link}
               style={{
                 color,
                 display: "inline-block",
@@ -210,7 +209,7 @@ export default function Newsletter({ mailing }: Props) {
                 margin: "20px",
               }}
             >
-              {mailing.footerCTA.text}
+              {footer.label}
             </Link>
           </Section>
         )}
