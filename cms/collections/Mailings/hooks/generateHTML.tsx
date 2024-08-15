@@ -54,7 +54,6 @@ export const generateHTML: FieldHook = async ({ data, req }) => {
   // assemble the "deep" mailing doc
   const mailing: NewsletterProps["mailing"] = {
     ...data,
-    subject: data.subject, // make typescript happy
     headerImage,
     footer: {
       ...data?.footer,

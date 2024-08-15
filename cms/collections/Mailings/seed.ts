@@ -3,7 +3,6 @@ import type { Props as NewsletterProps } from "./templates/Newsletter";
 export const seed: NewsletterProps = {
   mailing: {
     language: "de",
-    subject: "Nächste Woche im Blauen Salon: HOLY MOTORS",
     footer: {
       image: {
         id: "669a38b2080db7e7077e207a",

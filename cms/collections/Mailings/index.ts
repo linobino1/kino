@@ -10,7 +10,9 @@ export const Mailings: CollectionConfig = {
   slug: "mailings",
   admin: {
     group: t("Mailings"),
+    defaultColumns: ["id", "updatedAt"],
   },
+  defaultSort: "-updatedAt",
   access: {
     read: isAdminOrEditor,
     update: isAdminOrEditor,
@@ -18,12 +20,6 @@ export const Mailings: CollectionConfig = {
     delete: isAdminOrEditor,
   },
   fields: [
-    {
-      name: "subject",
-      label: t("Subject"),
-      type: "text",
-      required: true,
-    },
     {
       type: "row",
       fields: [
