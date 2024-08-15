@@ -86,7 +86,13 @@ export default function Newsletter({ mailing }: Props) {
             }}
           />
         )}
-        <Container width={containerWidth} style={{ paddingBottom: "20px" }}>
+        <Container
+          style={{
+            paddingBottom: "20px",
+            width: "100%",
+            maxWidth: containerWidth,
+          }}
+        >
           <SerializeLexicalToEmail
             nodes={mailing.content?.root.children as any}
             color={color}
@@ -127,8 +133,11 @@ export default function Newsletter({ mailing }: Props) {
               style={{ backgroundColor: bgGrey, paddingBlock: "20px" }}
             >
               <Container
-                width={containerWidth}
-                style={{ backgroundColor: "#FFFFFF" }}
+                style={{
+                  backgroundColor: "#FFFFFF",
+                  width: "100%",
+                  maxWidth: containerWidth,
+                }}
               >
                 <Link href={screening.url} style={{ display: "contents" }}>
                   <Img
