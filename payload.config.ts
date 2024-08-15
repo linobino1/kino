@@ -45,6 +45,7 @@ import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { slateEditor } from "@payloadcms/richtext-slate";
 import { webpackBundler } from "@payloadcms/bundler-webpack";
 import { seed } from "./cms/endpoints/seed";
+import { Mailings } from "./cms/collections/Mailings";
 
 const mockModulePath = path.resolve(__dirname, "mocks/emptyObject.js");
 
@@ -168,6 +169,9 @@ export default buildConfig({
 
     // Blog
     Posts,
+
+    // Mailings
+    Mailings,
 
     // Media
     Media,
