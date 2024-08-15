@@ -222,7 +222,7 @@ export default function Newsletter({ mailing }: Props) {
           }}
         >
           <Section style={{ padding: "20px" }}>
-            <Text>
+            <Text style={{ lineHeight: "18px" }}>
               Kino im Blauen Salon e.V.
               <br />
               HfG Karlsruhe
