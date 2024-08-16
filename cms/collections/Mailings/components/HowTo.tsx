@@ -4,7 +4,7 @@ import { Gutter } from "payload/components/elements";
 const HowTo = () => {
   return (
     <Gutter>
-      <h1>How to use Mailings</h1>
+      <h3>How to use Mailings</h3>
       <p>To create a new mailing, follow these steps:</p>
       <ol>
         <li>
