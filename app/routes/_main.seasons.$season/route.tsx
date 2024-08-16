@@ -3,7 +3,7 @@ import type { Media, Screening } from "payload/generated-types";
 import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import i18next from "~/i18next.server";
 import { Page } from "~/components/Page";
-import { ScreeningsList } from "~/components/ScreeningsList";
+import { EventsList } from "~/components/EventsList";
 import { ErrorPage } from "~/components/ErrorPage";
 import { HeaderImage } from "~/components/HeaderImage";
 import { Heading } from "~/components/Heading";
@@ -100,7 +100,7 @@ export default function Season() {
       <HeaderImage image={season.header as Media} navigation={navigation} />
       <Heading>{season.name}</Heading>
       <Gutter>
-        <ScreeningsList
+        <EventsList
           items={screenings.docs}
           emptyMessage={t("No screenings for this season.")}
           site={site}

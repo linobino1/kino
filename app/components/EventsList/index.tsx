@@ -1,4 +1,4 @@
-import { ScreeningsListItem } from "./item";
+import { EventsListItem } from "./item";
 import { Link } from "@remix-run/react";
 import type { Screening, ScreeningSery, Site } from "payload/generated-types";
 import React from "react";
@@ -16,7 +16,7 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   emptyMessage?: string;
 }
 
-export const ScreeningsList: React.FC<Props> = ({
+export const EventsList: React.FC<Props> = ({
   items,
   className,
   activeScreeningSery,
@@ -35,7 +35,7 @@ export const ScreeningsList: React.FC<Props> = ({
           to={`/screenings/${item.slug as string}`}
           prefetch="intent"
         >
-          <ScreeningsListItem
+          <EventsListItem
             screening={item}
             activeScreeningSery={activeScreeningSery}
           />
@@ -49,4 +49,4 @@ export const ScreeningsList: React.FC<Props> = ({
   );
 };
 
-export default ScreeningsList;
+export default EventsList;

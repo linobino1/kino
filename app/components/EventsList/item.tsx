@@ -16,7 +16,7 @@ type Props = {
   activeScreeningSery?: ScreeningSery;
 };
 
-export const ScreeningsListItem: React.FC<Props> = ({
+export const EventsListItem: React.FC<Props> = ({
   screening,
   activeScreeningSery,
 }) => {
@@ -86,4 +86,4 @@ export const ScreeningsListItem: React.FC<Props> = ({
   );
 };
 
-export default ScreeningsListItem;
+export default EventsListItem;

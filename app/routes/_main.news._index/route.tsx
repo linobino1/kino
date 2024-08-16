@@ -15,7 +15,7 @@ import Pagination from "~/components/Pagination";
 import PostPreview from "~/components/PostPreview";
 import { JsonLd } from "cms/structured-data";
 import { postsListSchema } from "cms/structured-data/post";
-import ScreeningsList from "~/components/ScreeningsList";
+import EventsList from "~/components/EventsList";
 import type { loader as rootLoader } from "app/root";
 import Gutter from "~/components/Gutter";
 import { cacheControlShortWithSWR } from "~/util/cacheControl";
@@ -120,7 +120,7 @@ export default function Index() {
       <Gutter>
         <section className={classes.upcoming}>
           <h2>{t("Our Next Screenings")}</h2>
-          <ScreeningsList items={screenings.docs} site={site} />
+          <EventsList items={screenings.docs} site={site} />
           <Link to="/screenings" className={classes.allScreeningsButton}>
             {t("See all screenings")}
           </Link>

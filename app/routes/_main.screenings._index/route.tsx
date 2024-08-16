@@ -5,7 +5,7 @@ import type {
 } from "@remix-run/node";
 import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import { Page } from "~/components/Page";
-import { ScreeningsList } from "~/components/ScreeningsList";
+import { EventsList } from "~/components/EventsList";
 import i18next from "~/i18next.server";
 import { mergeMeta, pageMeta } from "~/util/pageMeta";
 import { ErrorPage } from "~/components/ErrorPage";
@@ -81,7 +81,7 @@ export default function Index() {
   return (
     <Page layout={page.layout}>
       <Gutter>
-        <ScreeningsList items={screenings.docs} site={site} />
+        <EventsList items={screenings.docs} site={site} />
         <Pagination {...screenings} linkProps={{ prefetch: "intent" }} />
       </Gutter>
     </Page>

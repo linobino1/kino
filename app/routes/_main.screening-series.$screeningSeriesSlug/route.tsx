@@ -2,7 +2,7 @@ import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import i18next from "~/i18next.server";
 import Page from "~/components/Page";
-import ScreeningsList from "~/components/ScreeningsList";
+import EventsList from "~/components/EventsList";
 import { ErrorPage } from "~/components/ErrorPage";
 import { mergeMeta, pageTitle } from "~/util/pageMeta";
 import type { loader as rootLoader } from "app/root";
@@ -130,7 +130,7 @@ export default function Item() {
         {upcoming.docs.length > 0 && (
           <>
             <h2>{t("Upcoming Screenings")}</h2>
-            <ScreeningsList
+            <EventsList
               items={upcoming.docs}
               activeScreeningSery={screeningSeries}
               site={site}
@@ -140,7 +140,7 @@ export default function Item() {
         {past.docs.length > 0 && (
           <>
             <h2>{t("Past Screenings")}</h2>
-            <ScreeningsList
+            <EventsList
               items={past.docs}
               activeScreeningSery={screeningSeries}
               site={site}

@@ -1,5 +1,5 @@
 import type { Screening, Site, StaticPage } from "payload/generated-types";
-import ScreeningsList from "../ScreeningsList";
+import EventsList from "../EventsList";
 import { useRouteLoaderData } from "@remix-run/react";
 import type { loader as rootLoader } from "~/root";
 import environment from "~/util/environment";
@@ -93,7 +93,7 @@ const ScreeningsBlock: React.FC<ScreeningsBlockProps> = ({
   return loading ? (
     <p>{t("Loading...")}</p>
   ) : (
-    <ScreeningsList items={docs} site={site} />
+    <EventsList items={docs} site={site} />
   );
 };
 
