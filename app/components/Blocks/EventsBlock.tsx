@@ -7,12 +7,12 @@ import { useEffect, useState } from "react";
 import qs from "qs";
 import { useTranslation } from "react-i18next";
 
-type ScreeningsBlockProps = Extract<
+type EventsBlockProps = Extract<
   NonNullable<StaticPage["layout"]["blocks"][0]>,
   { blockType: "screenings" }
 >;
 
-const ScreeningsBlock: React.FC<ScreeningsBlockProps> = ({
+const EventsBlock: React.FC<EventsBlockProps> = ({
   type,
   screeningSeries,
   screenings,
@@ -97,4 +97,4 @@ const ScreeningsBlock: React.FC<ScreeningsBlockProps> = ({
   );
 };
 
-export default ScreeningsBlock;
+export default EventsBlock;
