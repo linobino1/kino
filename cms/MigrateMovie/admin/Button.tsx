@@ -17,6 +17,7 @@ export const MigrateMovieButton: React.FC = () => {
         to={`${adminRoute}/migrate-movie`}
         buttonStyle="secondary"
         className="button"
+        size="small"
       >
         {t("Migrate a movie from themoviedb.org")}
       </Button>

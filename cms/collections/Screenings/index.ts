@@ -32,7 +32,7 @@ const Screenings: CollectionConfig = {
   },
   custom: {
     addUrlField: {
-      hook: (slug?: string) => `/screenings/${slug || ""}`,
+      hook: (slug?: string) => `/events/${slug || ""}`,
     },
     addSlugField: {
       generator: slugGenerator,
@@ -40,31 +40,14 @@ const Screenings: CollectionConfig = {
   },
   fields: [
     {
-      name: "migrateMovie",
-      type: "ui",
-      admin: {
-        condition: (data) => !data?.films?.length,
-        components: {
-          Field: MigrateMovieButton,
-        },
-      },
-    },
-    {
-      name: "date",
-      label: t("Date & Time"),
-      type: "date",
-      required: true,
-      defaultValue: () => {
-        const res = new Date();
-        res.setHours(19, 0, 0, 0);
-        return res.toISOString();
-      },
-      admin: {
-        date: {
-          pickerAppearance: "dayAndTime",
-        },
-        description: t("adminWarningTimezone"),
-      },
+      name: "type",
+      label: t("Type"),
+      type: "select",
+      options: [
+        { label: t("Screening"), value: "screening" },
+        { label: t("Event"), value: "event" },
+      ],
+      defaultValue: "screening",
     },
     {
       name: "title",
@@ -94,31 +77,68 @@ const Screenings: CollectionConfig = {
       },
     },
     {
-      name: "season",
-      label: t("Season"),
-      type: "relationship",
-      relationTo: "seasons",
-      hasMany: false,
-      required: true,
-      defaultValue: () =>
-        fetch(`/api/seasons/`)
-          .then((res) => res.json())
-          .then((res) => res.docs[0].id)
-          .catch(() => null),
+      type: "row",
+      fields: [
+        {
+          name: "date",
+          label: t("Date & Time"),
+          type: "date",
+          required: true,
+          defaultValue: () => {
+            const res = new Date();
+            res.setHours(19, 0, 0, 0);
+            return res.toISOString();
+          },
+          admin: {
+            date: {
+              pickerAppearance: "dayAndTime",
+            },
+            description: t("adminWarningTimezone"),
+            width: "50%",
+          },
+        },
+        {
+          name: "location",
+          label: t("Location"),
+          type: "relationship",
+          relationTo: "locations",
+          defaultValue: () => getDefaultDocId("locations"),
+          admin: {
+            width: "50%",
+          },
+        },
+      ],
     },
     {
-      name: "location",
-      label: t("Location"),
-      type: "relationship",
-      relationTo: "locations",
-      defaultValue: () => getDefaultDocId("locations"),
-    },
-    {
-      name: "series",
-      label: t("Screening Series"),
-      type: "relationship",
-      relationTo: "screeningSeries",
-      hasMany: false,
+      type: "row",
+      fields: [
+        {
+          name: "season",
+          label: t("Season"),
+          type: "relationship",
+          relationTo: "seasons",
+          hasMany: false,
+          required: true,
+          defaultValue: () =>
+            fetch(`/api/seasons/`)
+              .then((res) => res.json())
+              .then((res) => res.docs[0].id)
+              .catch(() => null),
+          admin: {
+            width: "50%",
+          },
+        },
+        {
+          name: "series",
+          label: t("Screening Series singular"),
+          type: "relationship",
+          relationTo: "screeningSeries",
+          hasMany: false,
+          admin: {
+            width: "50%",
+          },
+        },
+      ],
     },
     {
       name: "films",
@@ -127,6 +147,15 @@ const Screenings: CollectionConfig = {
       minRows: 1,
       required: true,
       fields: [
+        {
+          name: "migrateMovie",
+          type: "ui",
+          admin: {
+            components: {
+              Field: MigrateMovieButton,
+            },
+          },
+        },
         {
           name: "filmprint",
           label: t("Film"),
@@ -153,6 +182,9 @@ const Screenings: CollectionConfig = {
           required: false,
         },
       ],
+      admin: {
+        condition: (data) => data?.type === "screening",
+      },
     },
     {
       name: "info",
