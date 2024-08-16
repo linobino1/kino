@@ -4,7 +4,7 @@ import { t } from "../i18n";
 export const Events: Block = {
   slug: "events",
   labels: {
-    singular: t("Event"),
+    singular: t("Events"),
     plural: t("Events"),
   },
   fields: [
@@ -26,13 +26,14 @@ export const Events: Block = {
       name: "events",
       type: "array",
       labels: {
-        singular: t("Event"),
+        singular: t("Events"),
         plural: t("Events"),
       },
       minRows: 1,
       fields: [
         {
           name: "doc",
+          label: t("Event"),
           type: "relationship",
           relationTo: "events",
           required: true,
@@ -44,6 +45,7 @@ export const Events: Block = {
     },
     {
       name: "screeningSeries",
+      label: t("Screening Series singular"),
       type: "relationship",
       relationTo: "screeningSeries",
       hasMany: false,
