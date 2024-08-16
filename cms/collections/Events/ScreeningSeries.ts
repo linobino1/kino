@@ -9,7 +9,7 @@ const ScreeningSeries: CollectionConfig = {
     plural: t("Screening Series"),
   },
   admin: {
-    group: t("Screenings"),
+    group: t("Calendar"),
     useAsTitle: "name",
     defaultColumns: ["name"],
   },

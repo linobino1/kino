@@ -1,3 +1,4 @@
+// @ts-nocheck - they payload config has changed a lot since this migration was written
 import type { MigrateUpArgs, MigrateDownArgs } from "@payloadcms/db-mongodb";
 import type { FilmPrint, Movie } from "payload/generated-types";
 import { options } from "../app/i18n";
@@ -6,7 +7,7 @@ import { options } from "../app/i18n";
 export async function up({ payload }: MigrateUpArgs): Promise<void> {
   for (const locale of options.supportedLngs) {
     const screenings = await payload.find({
-      collection: "screenings",
+      collection: "events",
       depth: 4,
       locale,
     });
@@ -17,11 +18,11 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
       }
 
       const title = (
-        (screening.films[0].filmprint as FilmPrint)?.movie as Movie
+        (screening.films?.[0]?.filmprint as FilmPrint)?.movie as Movie
       )?.title;
 
       await payload.update({
-        collection: "screenings",
+        collection: "events",
         id: screening.id,
         data: {
           title,

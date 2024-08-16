@@ -1,19 +1,29 @@
-import type { CollectionConfig } from "payload/types";
+import type { CollectionConfig, FieldBase } from "payload/types";
 import type { Movie } from "payload/generated-types";
 import { t } from "../../i18n";
 import { getDefaultDocId } from "../../fields/default";
 import { MigrateMovieButton } from "../../MigrateMovie/admin/Button";
 import { isAdminOrEditor } from "../../access";
 import { slugGenerator } from "./util/slugGenerator";
+import { updateImages } from "./hooks/updateImages";
 
-const Screenings: CollectionConfig = {
-  slug: "screenings",
+const requiredForNonScreeningEvents: FieldBase["validate"] = (
+  value: string,
+  { data, t }
+) => {
+  if (data?.type !== "screening" && !value)
+    return t("Field is required for non-screening events");
+  return true;
+};
+
+const Events: CollectionConfig = {
+  slug: "events",
   labels: {
-    singular: t("Screening"),
-    plural: t("Screenings"),
+    singular: t("Event"),
+    plural: t("Events"),
   },
   admin: {
-    group: t("Screenings"),
+    group: t("Calendar"),
     defaultColumns: ["date", "title", "_status"],
     useAsTitle: "title",
   },
@@ -38,6 +48,9 @@ const Screenings: CollectionConfig = {
       generator: slugGenerator,
     },
   },
+  hooks: {
+    beforeChange: [updateImages],
+  },
   fields: [
     {
       name: "type",
@@ -56,9 +69,10 @@ const Screenings: CollectionConfig = {
       localized: true,
       admin: {
         description: t(
-          "Leave blank to use the title of the first feature film"
+          "Leave blank to use the title of the first feature film, if this is a screening"
         ),
       },
+      validate: requiredForNonScreeningEvents,
       hooks: {
         beforeChange: [
           // if the field is empty, we will fill it with the title of the first film
@@ -75,6 +89,16 @@ const Screenings: CollectionConfig = {
           },
         ],
       },
+    },
+    {
+      name: "subtitle",
+      label: t("Subtitle"),
+      type: "text",
+      localized: true,
+      admin: {
+        condition: (data) => data?.type !== "screening",
+      },
+      validate: requiredForNonScreeningEvents,
     },
     {
       type: "row",
@@ -141,6 +165,37 @@ const Screenings: CollectionConfig = {
       ],
     },
     {
+      name: "header",
+      label: t("Header Image"),
+      type: "upload",
+      relationTo: "media",
+      admin: {
+        condition: (data) => data?.type !== "screening",
+      },
+      validate: requiredForNonScreeningEvents,
+    },
+    {
+      name: "poster",
+      label: t("Poster"),
+      type: "upload",
+      relationTo: "media",
+      admin: {
+        condition: (data) => data?.type !== "screening",
+      },
+      validate: requiredForNonScreeningEvents,
+    },
+    {
+      name: "info",
+      label: t("Info"),
+      type: "richText",
+      admin: {
+        description: t("AdminExplainScreeningInfo"),
+      },
+      localized: true,
+      required: false,
+      validate: requiredForNonScreeningEvents,
+    },
+    {
       name: "films",
       label: t("Films"),
       type: "array",
@@ -152,7 +207,7 @@ const Screenings: CollectionConfig = {
           type: "ui",
           admin: {
             components: {
-              Field: MigrateMovieButton,
+              Field: () => MigrateMovieButton({ newTab: true }),
             },
           },
         },
@@ -180,21 +235,14 @@ const Screenings: CollectionConfig = {
           type: "richText",
           localized: true,
           required: false,
+          admin: {
+            description: t("AdminExplainFilmInfo"),
+          },
         },
       ],
       admin: {
         condition: (data) => data?.type === "screening",
       },
-    },
-    {
-      name: "info",
-      label: t("Info"),
-      type: "richText",
-      admin: {
-        description: t("AdminExplainScreeningInfo"),
-      },
-      localized: true,
-      required: false,
     },
     {
       name: "moderator",
@@ -221,4 +269,4 @@ const Screenings: CollectionConfig = {
   ],
 };
 
-export default Screenings;
+export default Events;

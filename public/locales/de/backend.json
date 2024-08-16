@@ -100,7 +100,7 @@
   "backdrop": "Hintergrundbild",
   "poster": "Poster",
   "Successfully created movie {{link}}": "{{link}} wurde erfolgreich als Entwurf angelegt.",
-  "Comapny": "Firma",
+  "Company": "Firma",
   "Companies": "Firmen",
   "Production Company": "Produktionsfirma",
   "Production Companies": "Produktionsfirmen",
@@ -111,7 +111,7 @@
   "Rental": "Verleih",
   "Rentals": "Verleihe",
   "adminWarningTimezone": "Achtung: wenn du dich in einer anderen Zeitzone als das Kino befindest, musst du den Unterschied ausgleichen.",
-  "AdminExplainScreeningsPage": "Die Seite \"Vorstellungen\" listet alle Vorstellungen ab dem heutigen Tage.",
+  "AdminExplainEventsPage": "Die Seite \"Vorstellungen\" listet alle Vorstellungen ab dem heutigen Tage.",
   "Subscriber": "Abonnent",
   "Gallery": "Galerie",
   "Galleries": "Galerien",
@@ -147,7 +147,8 @@
   "Jobs": "Tätigkeiten",
   "Review & publish": "Überprüfen & veröffentlichen",
   "Is Supporting Film": "Ist Vorfilm",
-  "AdminExplainScreeningInfo": "Dieser Text wird am Anfang der Vorstellungsseite angezeigt.",
+  "AdminExplainScreeningInfo": "Infos zur Veranstaltung. Bei Veranstaltungen ohne Filme bildet das den Hauptinhalt.",
+  "AdminExplainFilmInfo": "Infos zum Film / der Kopie.",
   "excludeFromUpcomingScreenings": "Nicht im Programm anzeigen",
   "excludeFromUpcomingScreeningsDescription": "Wenn der Haken gesetzt ist, wird die Vorstellung nicht auf der Startseite und in der Liste der kommenden Vorstellungen angezeigt.",
   "populateManually": "Manuell befüllen",
@@ -156,5 +157,8 @@
   "Subject": "Betreff",
   "not available": "nicht verfügbar",
   "Language": "Sprache",
-  "Label": "Bezeichnung"
+  "Label": "Bezeichnung",
+  "Calendar": "Kalender",
+  "Leave blank to use the title of the first feature film, if this is a screening": "Leer lassen, um den Titel des ersten Spielfilms zu verwenden, falls es sich um eine Vorstellung handelt",
+  "Field is required for non-screening events": "Feld ist für nicht-Vorstellungen erforderlich"
 }

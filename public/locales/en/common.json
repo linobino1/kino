@@ -38,7 +38,7 @@
   "Past Screenings": "Past Screenings",
   "News": "News",
   "See all screenings": "See all screenings",
-  "screening.meta.title": "{{ title }} on {{date}}",
+  "event.meta.title": "{{ title }} on {{date}}",
   "screening.meta.description": "Screening on {{date}}. {{synopsis}}",
   "Supporting Film": "Supporting Film"
 }

@@ -8,7 +8,7 @@ import { Image } from "../blocks/Image";
 import { Gallery } from "../blocks/Gallery";
 import { Video } from "../blocks/Video";
 import { t } from "../i18n";
-import Screenings from "../blocks/Screenings";
+import Events from "../blocks/Events";
 
 export type PageLayout = StaticPage["layout"];
 
@@ -37,7 +37,7 @@ export const pageLayout = (props?: Props): Field => {
           Image,
           Gallery,
           Video,
-          Screenings,
+          Events,
         ],
         defaultValue: defaultLayout,
       },

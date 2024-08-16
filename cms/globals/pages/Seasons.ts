@@ -7,7 +7,7 @@ export const SeasonsPage: GlobalConfig = {
   slug: "seasonsPage",
   admin: {
     group: t("Pages"),
-    description: t("AdminExplainScreeningsPage"),
+    description: t("AdminExplainEventsPage"),
   },
   label: t("Seasons"),
   fields: [pageLayout(), metaField(t("Meta"))],

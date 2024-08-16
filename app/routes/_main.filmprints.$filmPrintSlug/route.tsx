@@ -2,7 +2,7 @@ import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import type { Movie as MovieType } from "payload/generated-types";
 import { useLoaderData } from "@remix-run/react";
 import i18next from "~/i18next.server";
-import { Movie } from "~/components/Movie";
+import { MovieInfo } from "~/components/MovieInfo";
 import { Page } from "~/components/Page";
 import { ErrorPage } from "~/components/ErrorPage";
 import HeaderImage from "~/components/HeaderImage";
@@ -75,7 +75,7 @@ export default function Item() {
         className={classes.header}
       />
       <Gutter>
-        <Movie movie={movie} filmprint={filmPrint} />
+        <MovieInfo movie={movie} filmprint={filmPrint} />
       </Gutter>
     </Page>
   );

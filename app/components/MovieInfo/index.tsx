@@ -23,7 +23,7 @@ export interface Props extends React.HTMLAttributes<HTMLElement> {
   info?: any; // additional info to show, richtext
 }
 
-export const Movie: React.FC<Props> = ({
+export const MovieInfo: React.FC<Props> = ({
   movie,
   filmprint,
   className,
@@ -116,4 +116,4 @@ export const Movie: React.FC<Props> = ({
   );
 };
 
-export default Movie;
+export default MovieInfo;

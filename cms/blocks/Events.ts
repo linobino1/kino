@@ -1,11 +1,11 @@
 import type { Block } from "payload/types";
 import { t } from "../i18n";
 
-export const Screenings: Block = {
-  slug: "screenings",
+export const Events: Block = {
+  slug: "events",
   labels: {
-    singular: t("Screenings"),
-    plural: t("Screenings"),
+    singular: t("Event"),
+    plural: t("Events"),
   },
   fields: [
     {
@@ -23,18 +23,18 @@ export const Screenings: Block = {
       ],
     },
     {
-      name: "screenings",
+      name: "events",
       type: "array",
       labels: {
-        singular: t("Screening"),
-        plural: t("Screenings"),
+        singular: t("Event"),
+        plural: t("Events"),
       },
       minRows: 1,
       fields: [
         {
           name: "doc",
           type: "relationship",
-          relationTo: "screenings",
+          relationTo: "events",
           required: true,
         },
       ],
@@ -54,4 +54,4 @@ export const Screenings: Block = {
   ],
 };
 
-export default Screenings;
+export default Events;

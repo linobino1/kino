@@ -21,7 +21,7 @@ import type {
   Media,
   Movie,
   Person,
-  Screening,
+  Event,
 } from "payload/generated-types";
 import { seed } from "../seed";
 import { SerializeLexicalToEmail } from "../lexical/SerializeLexicalToEmail";
@@ -105,8 +105,8 @@ export default function Newsletter({ mailing }: Props) {
           />
         </Container>
         {mailing.screenings?.map((item, index) => {
-          const screening = item.screening as Screening;
-          const filmprint = screening.films[0].filmprint as FilmPrint;
+          const screening = item.screening as Event;
+          const filmprint = screening.films?.[0].filmprint as FilmPrint;
           const movie = filmprint.movie as Movie;
           const specs = [
             movie.originalTitle !== movie.title && `OT: ${movie.originalTitle}`,

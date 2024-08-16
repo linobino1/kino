@@ -38,7 +38,7 @@ export const loader = async ({
   );
 
   const locale = await i18next.getLocale(request);
-  const [page, posts, screenings] = await Promise.all([
+  const [page, posts, events] = await Promise.all([
     payload.findGlobal({
       slug: "blog",
       locale,
@@ -53,7 +53,7 @@ export const loader = async ({
       locale,
     }),
     payload.find({
-      collection: "screenings",
+      collection: "events",
       locale,
       depth: 3,
       where: {
@@ -89,7 +89,7 @@ export const loader = async ({
     {
       page,
       posts,
-      screenings,
+      events,
     },
     {
       headers: {
@@ -111,7 +111,7 @@ export const meta: MetaFunction<
 });
 
 export default function Index() {
-  const { page, posts, screenings } = useLoaderData<typeof loader>();
+  const { page, posts, events } = useLoaderData<typeof loader>();
   const { site } = useRouteLoaderData<typeof rootLoader>("root")!;
   const { t } = useTranslation();
 
@@ -120,7 +120,7 @@ export default function Index() {
       <Gutter>
         <section className={classes.upcoming}>
           <h2>{t("Our Next Screenings")}</h2>
-          <EventsList items={screenings.docs} site={site} />
+          <EventsList items={events.docs} site={site} />
           <Link to="/screenings" className={classes.allScreeningsButton}>
             {t("See all screenings")}
           </Link>

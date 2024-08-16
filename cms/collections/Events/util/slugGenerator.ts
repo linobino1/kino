@@ -2,6 +2,11 @@ import type { slugGeneratorArgs } from "../../../plugins/addSlugField";
 import type { Movie } from "payload/generated-types";
 
 export const slugGenerator = async ({ data, req }: slugGeneratorArgs) => {
+  // if the event is not a screening we need the title
+  if (!data || data.type !== "screening") {
+    return data?.title;
+  }
+
   // we need the date and at least one film
   if (
     !data ||

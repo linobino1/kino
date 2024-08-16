@@ -1,15 +1,15 @@
 import { EventsListItem } from "./item";
 import { Link } from "@remix-run/react";
-import type { Screening, ScreeningSery, Site } from "payload/generated-types";
+import type { Event, ScreeningSery, Site } from "payload/generated-types";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import classes from "./index.module.css";
 import { JsonLd } from "cms/structured-data";
-import { screeningsListSchema as screeningsListMarkup } from "cms/structured-data/screening";
+import { eventsListSchema as screeningsListMarkup } from "cms/structured-data/screening";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   from?: string;
-  items: Screening[];
+  items: Event[];
   site: Site;
   className?: string;
   activeScreeningSery?: ScreeningSery;
@@ -32,11 +32,11 @@ export const EventsList: React.FC<Props> = ({
       {items.map((item) => (
         <Link
           key={item.id}
-          to={`/screenings/${item.slug as string}`}
+          to={`/events/${item.slug as string}`}
           prefetch="intent"
         >
           <EventsListItem
-            screening={item}
+            event={item}
             activeScreeningSery={activeScreeningSery}
           />
         </Link>

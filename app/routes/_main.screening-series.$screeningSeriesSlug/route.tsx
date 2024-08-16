@@ -43,7 +43,7 @@ export const loader = async ({
   const depth = 11;
   const [upcoming, past] = await Promise.all([
     payload.find({
-      collection: "screenings",
+      collection: "events",
       where: {
         and: [
           {
@@ -69,7 +69,7 @@ export const loader = async ({
       pagination: false,
     }),
     payload.find({
-      collection: "screenings",
+      collection: "events",
       where: {
         and: [
           {

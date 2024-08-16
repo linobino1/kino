@@ -17,10 +17,10 @@ import Companies from "./cms/collections/Movies/Companies";
 import Genres from "./cms/collections/Movies/Genres";
 import Movies from "./cms/collections/Movies";
 import Countries from "./cms/collections/Movies/Countries";
-import Screenings from "./cms/collections/Screenings";
-import Seasons from "./cms/collections/Screenings/Seasons";
-import ScreeningSeries from "./cms/collections/Screenings/ScreeningSeries";
-import Locations from "./cms/collections/Screenings/Locations";
+import Events from "./cms/collections/Events";
+import Seasons from "./cms/collections/Events/Seasons";
+import ScreeningSeries from "./cms/collections/Events/ScreeningSeries";
+import Locations from "./cms/collections/Events/Locations";
 import FilmPrints from "./cms/collections/FilmPrints";
 import AspectRatios from "./cms/collections/FilmPrints/AspectRatios";
 import Carriers from "./cms/collections/FilmPrints/Carriers";
@@ -29,7 +29,7 @@ import Formats from "./cms/collections/FilmPrints/Formats";
 import LanguageVersions from "./cms/collections/FilmPrints/LanguageVersions";
 import SoundFormats from "./cms/collections/FilmPrints/SoundFormats";
 import Rentals from "./cms/collections/FilmPrints/Rentals";
-import ScreeningsPage from "./cms/globals/pages/ScreeningsPage";
+import EventsPage from "./cms/globals/pages/EventsPage";
 import Colors from "./cms/collections/FilmPrints/Colors";
 import Categories from "./cms/collections/FilmPrints/Categories";
 import { MigrateMovieView } from "./cms/MigrateMovie/admin/View";
@@ -164,7 +164,7 @@ export default buildConfig({
     FilmPrints,
 
     // Screenings
-    Screenings,
+    Events,
     ScreeningSeries,
 
     // Blog
@@ -201,7 +201,7 @@ export default buildConfig({
     Navigations,
     Users,
   ],
-  globals: [Site, Blog, ScreeningsPage, SeasonsPage, Archive],
+  globals: [Site, Blog, EventsPage, SeasonsPage, Archive],
   typescript: {
     outputFile: path.resolve(__dirname, "cms/payload-types.ts"),
   },

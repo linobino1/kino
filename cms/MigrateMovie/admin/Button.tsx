@@ -4,24 +4,27 @@ import { Button } from "payload/components/elements";
 import { useTranslation } from "react-i18next";
 import "./Button.scss";
 
-export const MigrateMovieButton: React.FC = () => {
+type Props = {
+  newTab?: boolean;
+};
+
+export const MigrateMovieButton: React.FC<Props> = ({ newTab }) => {
   const {
     routes: { admin: adminRoute },
   } = useConfig();
   const { t } = useTranslation();
 
   return (
-    <p>
-      <Button
-        el="link"
-        to={`${adminRoute}/migrate-movie`}
-        buttonStyle="secondary"
-        className="button"
-        size="small"
-      >
-        {t("Migrate a movie from themoviedb.org")}
-      </Button>
-    </p>
+    <Button
+      el="link"
+      newTab={newTab}
+      to={`${adminRoute}/migrate-movie`}
+      buttonStyle="secondary"
+      className="button"
+      size="small"
+    >
+      {t("Migrate a movie from themoviedb.org")}
+    </Button>
   );
 };
 

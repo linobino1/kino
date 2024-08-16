@@ -1,0 +1,34 @@
+.container {
+  overflow: auto;
+}
+.container img.poster {
+  float: left;
+  width: 260px;
+  height: auto;
+  margin-inline-end: 1rem;
+  margin-block-end: 1rem;
+}
+.container h2 {
+  text-transform: uppercase;
+  margin: 0;
+  word-wrap: break-word;
+  font: var(--font-h2);
+}
+.container .subtitle {
+  font: var(--font-small);
+  color: var(--color-light-grey-readable);
+}
+@media screen and (max-width: 768px) {
+  .container img.poster {
+    width: min(15em, 50%);
+    margin-right: 3vw;
+    margin-bottom: 3vw;
+  }
+}
+@media screen and (max-width: 350px) {
+  .container img.poster {
+    width: 100%;
+    margin-right: 0;
+    float: unset;
+  }
+}

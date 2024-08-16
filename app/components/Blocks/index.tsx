@@ -64,7 +64,7 @@ export const Block: React.FC<BlockProps> = ({ block, ...props }) => {
         </Gutter>
       );
 
-    case "screenings":
+    case "events":
       return (
         <Gutter>
           <EventsBlock {...block} />

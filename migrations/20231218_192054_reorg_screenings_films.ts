@@ -1,5 +1,5 @@
 import type { MigrateUpArgs, MigrateDownArgs } from "@payloadcms/db-mongodb";
-import type { Screening } from "payload/generated-types";
+import type { Event } from "payload/generated-types";
 
 // somehow this is the value that was stored in the database for blank slate values
 // the admin panel dies when given this value
@@ -16,7 +16,7 @@ export async function up({ payload }: MigrateUpArgs): Promise<void> {
   (await payload.db.collections.screenings.find()).forEach(
     async (screening) => {
       screening = screening._doc;
-      const films: Screening["films"] = [];
+      const films: Event["films"] = [];
 
       (screening.featureFilms || []).forEach(async (filmprint: any) => {
         films.push({

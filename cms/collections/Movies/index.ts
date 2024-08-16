@@ -39,7 +39,7 @@ const Movies: CollectionConfig = {
     components: {
       BeforeListTable: [
         // add a button to migrate a movie from TMDB
-        MigrateMovieButton,
+        () => MigrateMovieButton({}),
       ],
     },
   },

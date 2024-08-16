@@ -3,7 +3,7 @@
 import type {
   Post,
   StaticPage,
-  Screening,
+  Event,
   ScreeningSery,
   FilmPrint,
   Season,
@@ -13,7 +13,7 @@ import type {
 export type LinkableCollection =
   | Post
   | StaticPage
-  | Screening
+  | Event
   | ScreeningSery
   | FilmPrint
   | Season;
@@ -22,7 +22,7 @@ export type LinkableCollection =
 export const LinkableCollectionSlugs = [
   "posts",
   "staticPages",
-  "screenings",
+  "events",
   "screeningSeries",
   "filmPrints",
   "seasons",

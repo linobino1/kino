@@ -3,14 +3,14 @@ import { t } from "../../i18n";
 import { metaField } from "../../fields/meta";
 import pageLayout from "../../fields/pageLayout";
 
-export const ScreeningsPage: GlobalConfig = {
-  slug: "screeningsPage",
+export const EventsPage: GlobalConfig = {
+  slug: "eventsPage",
   admin: {
     group: t("Pages"),
-    description: t("AdminExplainScreeningsPage"),
+    description: t("AdminExplainEventsPage"),
   },
   label: t("Screenings"),
   fields: [pageLayout(), metaField(t("Meta"))],
 };
 
-export default ScreeningsPage;
+export default EventsPage;

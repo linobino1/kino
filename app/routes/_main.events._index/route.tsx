@@ -22,7 +22,7 @@ export const loader = async ({
 }: LoaderFunctionArgs) => {
   const locale = await i18next.getLocale(request);
   const page = await payload.findGlobal({
-    slug: "screeningsPage",
+    slug: "eventsPage",
     locale,
   });
 
@@ -30,7 +30,7 @@ export const loader = async ({
   today.setHours(0, 0, 0, 0);
 
   const screenings = await payload.find({
-    collection: "screenings",
+    collection: "events",
     locale,
     depth: 7,
     limit: 50,

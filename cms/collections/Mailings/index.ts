@@ -67,7 +67,7 @@ export const Mailings: CollectionConfig = {
         {
           name: "screening",
           type: "relationship",
-          relationTo: "screenings",
+          relationTo: "events",
         },
         {
           name: "additionalText",

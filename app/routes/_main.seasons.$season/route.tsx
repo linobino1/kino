@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import type { Media, Screening } from "payload/generated-types";
+import type { Media, Event } from "payload/generated-types";
 import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import i18next from "~/i18next.server";
 import { Page } from "~/components/Page";
@@ -41,7 +41,7 @@ export const loader = async ({
 
   const page = parseInt(new URL(request.url).searchParams.get("page") || "1");
   const screenings = (await payload.find({
-    collection: "screenings",
+    collection: "events",
     where: {
       season: {
         equals: season.id,
@@ -53,7 +53,7 @@ export const loader = async ({
     pagination: true,
     page,
     limit: 20,
-  })) as unknown as PaginatedDocs<Screening>;
+  })) as unknown as PaginatedDocs<Event>;
 
   const navigation = (
     await payload.find({

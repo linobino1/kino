@@ -1,4 +1,4 @@
-import type { Screening, Site, StaticPage } from "payload/generated-types";
+import type { Event, Site, StaticPage } from "payload/generated-types";
 import EventsList from "../EventsList";
 import { useRouteLoaderData } from "@remix-run/react";
 import type { loader as rootLoader } from "~/root";
@@ -15,22 +15,23 @@ type EventsBlockProps = Extract<
 const EventsBlock: React.FC<EventsBlockProps> = ({
   type,
   screeningSeries,
-  screenings,
+  events,
 }) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
-  const [docs, setDocs] = useState<Screening[]>([]);
-  const site = useRouteLoaderData<typeof rootLoader>("root")?.site as Site;
+  const [docs, setDocs] = useState<Event[]>([]);
+  const site = useRouteLoaderData<typeof rootLoader>("root")
+    ?.site as unknown as Site;
 
   // fetch screenings
   useEffect(() => {
     (async () => {
       let ids: string[] = [];
-      let deepDocs: Screening[] = [];
+      let deepDocs: Event[] = [];
       switch (type) {
         case "manual":
           ids =
-            screenings
+            events
               ?.map((screening) =>
                 typeof screening.doc === "string"
                   ? screening.doc
@@ -67,7 +68,7 @@ const EventsBlock: React.FC<EventsBlockProps> = ({
             }/api/screenings?${query}`
           );
           const data = await res.json();
-          ids = data.docs.map((doc: Screening) => doc.id);
+          ids = data.docs.map((doc: Event) => doc.id);
           break;
       }
 
@@ -88,7 +89,7 @@ const EventsBlock: React.FC<EventsBlockProps> = ({
       setDocs(deepDocs);
       setLoading(false);
     })();
-  }, [type, screenings, screeningSeries]);
+  }, [type, events, screeningSeries]);
 
   return loading ? (
     <p>{t("Loading...")}</p>
