@@ -76,23 +76,16 @@ It will exexute the script `cms/seed/index.ts` which does:
 
 ### Apply Database Migrations
 
-To apply database migrations, run the following command in the docker container of the app:
+To apply database migrations, run the following command:
 
 ```sh
 pnpm payload migrate
-
-# development:
-pnpm payload:dev migrate
 
 # migrate down:
 pnpm payload migrate:down
 ```
 
-#### Dev: Create a new Migration
-
-```sh
-pnpm payload:dev migrate:create <name>
-```
+To apply migrations to the production database, you can just run the command locally as well, but use your production connection string.
 
 #### Regenerate Image Sizes
 
