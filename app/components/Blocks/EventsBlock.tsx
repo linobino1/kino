@@ -32,10 +32,8 @@ const EventsBlock: React.FC<EventsBlockProps> = ({
         case "manual":
           ids =
             events
-              ?.map((screening) =>
-                typeof screening.doc === "string"
-                  ? screening.doc
-                  : screening.doc?.id
+              ?.map((event: any) =>
+                typeof event.doc === "string" ? event.doc : event.doc?.id
               )
               .filter(Boolean) ?? [];
 
@@ -65,7 +63,7 @@ const EventsBlock: React.FC<EventsBlockProps> = ({
           const res = await fetch(
             `${
               environment().PAYLOAD_PUBLIC_SERVER_URL || ""
-            }/api/screenings?${query}`
+            }/api/events?${query}`
           );
           const data = await res.json();
           ids = data.docs.map((doc: Event) => doc.id);
@@ -77,7 +75,7 @@ const EventsBlock: React.FC<EventsBlockProps> = ({
           return fetch(
             `${
               environment().PAYLOAD_PUBLIC_SERVER_URL || ""
-            }/api/screenings/${id}?depth=3`
+            }/api/events/${id}?depth=3`
           )
             .then((res) => res.json())
             .then((data) => {

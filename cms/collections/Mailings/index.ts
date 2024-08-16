@@ -60,17 +60,19 @@ export const Mailings: CollectionConfig = {
       editor: lexicalEditor({}),
     },
     {
-      name: "screenings",
-      label: t("Screenings"),
+      name: "events",
+      label: t("Events"),
       type: "array",
       fields: [
         {
-          name: "screening",
+          name: "event",
+          label: t("Event"),
           type: "relationship",
           relationTo: "events",
         },
         {
           name: "additionalText",
+          label: t("additional info"),
           type: "richText",
           editor: lexicalEditor({}),
         },

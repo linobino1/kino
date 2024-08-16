@@ -11,8 +11,6 @@ export const generateHTML: FieldHook = async ({ data, req }) => {
     return;
   }
 
-  console.log("Generating HTML for mailing", data);
-
   // it would be nice if we could fetch the whole mailing doc here with more depth, but this will not work on create
   // const id = data.id;
   // const token = extractTokenFromRequest(req);
@@ -27,7 +25,7 @@ export const generateHTML: FieldHook = async ({ data, req }) => {
       cookie: `payload-token=${extractTokenFromRequest(req)}`,
     },
   };
-  const [headerImage, footerImage, screenings] = await Promise.all([
+  const [headerImage, footerImage, events] = await Promise.all([
     // header image (if set)
     data.headerImage &&
       fetch(
@@ -42,9 +40,9 @@ export const generateHTML: FieldHook = async ({ data, req }) => {
       ).then((res) => res.json()),
     // screenings with depth 3
     Promise.all(
-      data.screenings.map((item: any) =>
+      data.events.map((item: any) =>
         fetch(
-          `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/screenings/${item.screening}?depth=3`,
+          `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/events/${item.event}?depth=3`,
           fetchOptions
         ).then((res) => res.json())
       )
@@ -59,9 +57,9 @@ export const generateHTML: FieldHook = async ({ data, req }) => {
       ...data?.footer,
       image: footerImage,
     },
-    screenings: data.screenings.map((item: any, index: number) => ({
+    events: data.events.map((item: any, index: number) => ({
       ...item,
-      screening: screenings[index],
+      event: events[index],
     })),
   };
 

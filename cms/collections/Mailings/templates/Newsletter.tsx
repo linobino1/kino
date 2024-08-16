@@ -28,12 +28,17 @@ import { SerializeLexicalToEmail } from "../lexical/SerializeLexicalToEmail";
 import { parseISO } from "date-fns";
 import { de } from "date-fns/locale";
 import { formatInTimeZone } from "date-fns-tz";
+import { Node as SlateNode } from "slate";
 
 const tz = process.env.TIMEZONE ?? "Europe/Berlin";
 
 const formatDate = (iso: string, format: string) => {
   const date = parseISO(iso);
   return formatInTimeZone(date, tz, format, { locale: de });
+};
+
+export const slateToPlainText = (content: any) => {
+  return content?.map((n: any) => SlateNode.string(n)).join("\n");
 };
 
 export type Props = {
@@ -104,32 +109,39 @@ export default function Newsletter({ mailing }: Props) {
             color={color}
           />
         </Container>
-        {mailing.screenings?.map((item, index) => {
-          const screening = item.screening as Event;
-          const filmprint = screening.films?.[0].filmprint as FilmPrint;
-          const movie = filmprint.movie as Movie;
-          const specs = [
-            movie.originalTitle !== movie.title && `OT: ${movie.originalTitle}`,
-            (movie.genres as Genre[]).map((x) => x.name).join(", "),
-            (movie.countries as Country[])?.map((x) => x.name).join(", "),
-            movie.year,
-            movie.directors &&
-              `R: ${(movie.directors as Person[])
-                ?.map((x) => x.name)
-                .join(", ")}`,
+        {mailing.events?.map((item, index) => {
+          const event = item.event as Event;
+          const filmprint = event.films?.[0]?.filmprint as
+            | FilmPrint
+            | undefined;
+          const movie = filmprint?.movie as Movie | undefined;
 
-            `${movie.duration} min`,
-            (filmprint?.format as Format).name,
-            filmprint
-              ? (filmprint.languageVersion as LanguageVersion)?.name
-              : null,
-            `Mit: ${(movie.cast as Person[])
-              ?.slice(0, 3)
-              .map((x) => x.name)
-              .join(", ")}`,
-          ]
-            .filter(Boolean)
-            .join(", ");
+          let subtitle = event.subtitle;
+          if (event.type === "screening" && movie) {
+            subtitle = [
+              movie.originalTitle !== movie.title &&
+                `OT: ${movie.originalTitle}`,
+              (movie.genres as Genre[]).map((x) => x.name).join(", "),
+              (movie.countries as Country[])?.map((x) => x.name).join(", "),
+              movie.year,
+              movie.directors &&
+                `R: ${(movie.directors as Person[])
+                  ?.map((x) => x.name)
+                  .join(", ")}`,
+
+              `${movie.duration} min`,
+              (filmprint?.format as Format).name,
+              filmprint
+                ? (filmprint.languageVersion as LanguageVersion)?.name
+                : null,
+              `Mit: ${(movie.cast as Person[])
+                ?.slice(0, 3)
+                .map((x) => x.name)
+                .join(", ")}`,
+            ]
+              .filter(Boolean)
+              .join(", ");
+          }
           const additionalText = item.additionalText;
 
           return (
@@ -144,9 +156,9 @@ export default function Newsletter({ mailing }: Props) {
                   maxWidth: containerWidth,
                 }}
               >
-                <Link href={screening.url} style={{ display: "contents" }}>
+                <Link href={event.url} style={{ display: "contents" }}>
                   <Img
-                    src={(movie.still as Media).url ?? ""}
+                    src={(event.header as Media).url ?? ""}
                     style={{
                       width: "100%",
                       height: "auto",
@@ -168,7 +180,7 @@ export default function Newsletter({ mailing }: Props) {
                       textAlign: "center",
                     }}
                   >
-                    {`${formatDate(screening.date, "dd. LLL - p")} Uhr`}
+                    {`${formatDate(event.date, "dd. LLL - p")} Uhr`}
                   </Text>
                 </Link>
                 <Container style={{ padding: "20px" }}>
@@ -179,14 +191,18 @@ export default function Newsletter({ mailing }: Props) {
                       fontSize: "23px",
                     }}
                   >
-                    {screening.title}
+                    {event.title}
                   </Heading>
                   <Text
                     style={{ marginBlock: 0, fontSize, fontStyle: "italic" }}
                   >
-                    {specs}
+                    {subtitle}
                   </Text>
-                  <Text style={{ fontSize }}>{movie.synopsis}</Text>
+                  <Text style={{ fontSize }}>
+                    {event.type === "screening"
+                      ? movie?.synopsis
+                      : slateToPlainText(event.info)}
+                  </Text>
                   {additionalText && (
                     <SerializeLexicalToEmail
                       nodes={additionalText.root.children as any}
