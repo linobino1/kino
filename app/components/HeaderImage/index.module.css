@@ -46,8 +46,9 @@ img.header {
   flex-direction: column;
   justify-content: space-between;
 }
-.content nav {
-  align-self: flex-end;
+.content .navGutter {
+  display: flex;
+  justify-content: end;
 }
 .content nav > *:last-child {
   margin-right: 0;

@@ -43,15 +43,17 @@ export const HeaderImage: React.FC<Type> = ({
         />
       )}
       <div className={classes.overlay} />
-      <Gutter className={classes.content}>
+      <div className={classes.content}>
         {(navigation as NavigationType) && (
-          <Navigation
-            navigation={navigation as NavigationType}
-            className={classes.navSocial}
-          />
+          <Gutter size="large" className={classes.navGutter}>
+            <Navigation
+              navigation={navigation as NavigationType}
+              className={classes.navSocial}
+            />
+          </Gutter>
         )}
-        {children}
-      </Gutter>
+        <Gutter>{children}</Gutter>
+      </div>
     </header>
   );
 };
