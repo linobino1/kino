@@ -16,18 +16,22 @@ const Movies: CollectionConfig = {
     afterDelete: [
       async ({ doc, req }: { doc: Movie; req: PayloadRequest }) => {
         // delete all media associated with this movie
+        const ids = [doc.still, doc.poster]
+          .map((x) => (typeof x === "object" ? x.id : x))
+          .filter(Boolean) as string[];
         try {
           await req.payload.delete({
             collection: "media",
             where: {
               id: {
-                in: [(doc.still as Media).id, (doc.poster as Media).id],
+                in: ids,
               },
             },
           });
         } catch (err) {
           // at least we tried..
         }
+        return true;
       },
     ],
   },
