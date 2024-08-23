@@ -1,5 +1,5 @@
 import type { CollectionConfig, PayloadRequest } from "payload/types";
-import type { Media, Movie } from "payload/generated-types";
+import type { Movie } from "payload/generated-types";
 import { t } from "../../i18n";
 import MigrateMovieButton from "../../MigrateMovie/admin/Button";
 import { isAdminOrEditor } from "../../access";
@@ -313,6 +313,23 @@ const Movies: CollectionConfig = {
         description: t("Comma-separated list of tags."),
         condition: (data) => !data?.isRented,
       },
+    },
+    {
+      type: "collapsible",
+      label: t("Wordpress Import Info"),
+      fields: [
+        {
+          name: "isMigratedFromWordpress",
+          type: "checkbox",
+          label: t("Imported from Wordpress"),
+          defaultValue: () => false,
+        },
+        {
+          name: "wordpressMigrationNotes",
+          type: "textarea",
+          label: t("Notes"),
+        },
+      ],
     },
   ],
 };

@@ -16,6 +16,13 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "isolatedModules": true,
-    "noEmit": true
+    "noEmit": true,
+    "plugins": [
+      {
+        "name": "@0no-co/graphqlsp",
+        "schema": "./cms/wp-migration/schema.graphql",
+        "tadaOutputLocation": "./cms/wp-migration/graphql-env.d.ts"
+      }
+    ]
   }
 }

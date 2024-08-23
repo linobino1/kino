@@ -161,5 +161,8 @@
   "Calendar": "Kalender",
   "Leave blank to use the title of the first feature film, if this is a screening": "Leer lassen, um den Titel des ersten Spielfilms zu verwenden, falls es sich um eine Vorstellung handelt",
   "Field is required for non-screening events": "Feld ist für nicht-Vorstellungen erforderlich",
-  "additional info": "zusätzliche Informationen"
+  "additional info": "zusätzliche Informationen",
+  "Wordpress Import Info": "Wordpress Import Info",
+  "Imported from Wordpress": "Von Wordpress importiert",
+  "Notes": "Notes"
 }
