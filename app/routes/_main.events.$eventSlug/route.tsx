@@ -117,7 +117,6 @@ export const meta: MetaFunction<
           ).synopsis,
         });
 
-  console.log("meta", title, description);
   return [
     {
       title: pageTitle(site?.meta?.title ?? undefined, title),
