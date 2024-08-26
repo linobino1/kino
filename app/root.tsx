@@ -40,9 +40,10 @@ export const links: LinksFunction = () => {
 
 export async function loader({
   request,
+  params: { lang },
   context: { payload, user },
 }: LoaderFunctionArgs) {
-  const locale = await i18next.getLocale(request);
+  const locale = lang ?? (await i18next.getLocale(request));
   const site = await payload.findGlobal({
     slug: "site",
     depth: 3,

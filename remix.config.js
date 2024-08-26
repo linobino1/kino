@@ -1,3 +1,5 @@
+import { customRoutesConfig } from "./app/customRouteConfig";
+
 /** @type {import('@remix-run/dev').AppConfig} */
 module.exports = {
   serverDependenciesToBundle: ["html-escaper"],
@@ -10,4 +12,5 @@ module.exports = {
     unstable_singleFetch: true,
     unstable_lazyRouteDiscovery: true,
   },
+  routes: customRoutesConfig,
 };

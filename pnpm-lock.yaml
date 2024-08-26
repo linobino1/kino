@@ -95,6 +95,9 @@ dependencies:
   express:
     specifier: ^4.18.2
     version: 4.19.2
+  glob:
+    specifier: ^11.0.0
+    version: 11.0.0
   html-escaper:
     specifier: ^3.0.3
     version: 3.0.3
@@ -155,6 +158,9 @@ dependencies:
   react-router-dom:
     specifier: '5'
     version: 5.3.4(react@18.3.1)
+  remix-custom-routes:
+    specifier: ^1.0.1
+    version: 1.0.1
   remix-i18next:
     specifier: ^5.4.0
     version: 5.5.0(@remix-run/react@2.11.2)(@remix-run/server-runtime@2.11.2)(i18next@22.5.1)(react-i18next@11.18.6)(react@18.3.1)
@@ -9220,6 +9226,19 @@ packages:
       package-json-from-dist: 1.0.0
       path-scurry: 1.11.1
 
+  /glob@11.0.0:
+    resolution: {integrity: sha512-9UiX/Bl6J2yaBbxKoEBRm4Cipxgok8kQYcOPEhScPwebu2I0HoQOuYdIO6S3hLuWoZgpDpwQZMzTFxgpkyT76g==}
+    engines: {node: 20 || >=22}
+    hasBin: true
+    dependencies:
+      foreground-child: 3.2.1
+      jackspeak: 4.0.1
+      minimatch: 10.0.1
+      minipass: 7.1.2
+      package-json-from-dist: 1.0.0
+      path-scurry: 2.0.0
+    dev: false
+
   /glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
     deprecated: Glob versions prior to v9 are no longer supported
@@ -10106,6 +10125,15 @@ packages:
     optionalDependencies:
       '@pkgjs/parseargs': 0.11.0
 
+  /jackspeak@4.0.1:
+    resolution: {integrity: sha512-cub8rahkh0Q/bw1+GxP7aeSe29hHHn2V4m29nnDlvCdlgU+3UGxkZp7Z53jLUdpX3jdTO0nJZUDl3xvbWc2Xog==}
+    engines: {node: 20 || >=22}
+    dependencies:
+      '@isaacs/cliui': 8.0.2
+    optionalDependencies:
+      '@pkgjs/parseargs': 0.11.0
+    dev: false
+
   /javascript-stringify@2.1.0:
     resolution: {integrity: sha512-JVAfqNPTvNq3sB/VHQJAFxN/sPgKnsKrCwyRt15zwNCdrMMJDdcEOdubuy+DuJYYdm0ox1J4uzEuYKkN+9yhVg==}
     dev: true
@@ -10494,6 +10522,11 @@ packages:
 
   /lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
+
+  /lru-cache@11.0.0:
+    resolution: {integrity: sha512-Qv32eSV1RSCfhY3fpPE2GNZ8jgM9X7rdAfemLWqTUxwiyIC4jJ6Sy0fZ8H+oLWevO6i4/bizg7c8d8i6bxrzbA==}
+    engines: {node: 20 || >=22}
+    dev: false
 
   /lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
@@ -11077,6 +11110,13 @@ packages:
       schema-utils: 3.3.0
       webpack: 5.93.0(@swc/core@1.7.6)(esbuild@0.17.6)(webpack-cli@4.10.0)
       webpack-sources: 1.4.3
+    dev: false
+
+  /minimatch@10.0.1:
+    resolution: {integrity: sha512-ethXTt3SGGR+95gudmqJ1eNhRO7eGEGIgYA9vnPatK4/etz2MEVDno5GMCibdMTuBMyElzIlgxMna3K94XDIDQ==}
+    engines: {node: 20 || >=22}
+    dependencies:
+      brace-expansion: 2.0.1
     dev: false
 
   /minimatch@3.1.2:
@@ -11902,6 +11942,14 @@ packages:
     dependencies:
       lru-cache: 10.4.3
       minipass: 7.1.2
+
+  /path-scurry@2.0.0:
+    resolution: {integrity: sha512-ypGJsmGtdXUOeM5u93TyeIEfEhM6s+ljAhrk5vAvSx8uyY/02OvrZnA0YNGUrPXfpJMgI1ODd3nwz8Npx4O4cg==}
+    engines: {node: 20 || >=22}
+    dependencies:
+      lru-cache: 11.0.0
+      minipass: 7.1.2
+    dev: false
 
   /path-to-regexp@0.1.7:
     resolution: {integrity: sha512-5DFkuoqlv1uYQKxy8omFBeJPQcdoE07Kv2sferDCrAq1ohOU+MSDswDIbnx3YAM60qIOnYa53wBhXW0EbMonrQ==}
@@ -13605,6 +13653,10 @@ packages:
       mdast-util-to-hast: 12.3.0
       unified: 10.1.2
     dev: true
+
+  /remix-custom-routes@1.0.1:
+    resolution: {integrity: sha512-nC9IFAHskzx0djXOA4KnRck8x2uDWtDw2cT0bN8XaOSlBumm5t+TOUKET6hiXMjMyjkr4FqqpH7lotD68dOA7A==}
+    dev: false
 
   /remix-i18next@5.5.0(@remix-run/react@2.11.2)(@remix-run/server-runtime@2.11.2)(i18next@22.5.1)(react-i18next@11.18.6)(react@18.3.1):
     resolution: {integrity: sha512-QAHYlwb/0fmoSmH+t7AiJ3EhyG4SSQNQnAAPfqbkn/3UJfWO+NFFVxuggGx25FRJ3SOPexaspoiaCddcEayPAQ==}
