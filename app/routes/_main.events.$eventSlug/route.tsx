@@ -1,8 +1,4 @@
-import type {
-  HeadersFunction,
-  LoaderFunctionArgs,
-  MetaFunction,
-} from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import type {
@@ -31,10 +27,11 @@ import { formatInTimeZone } from "date-fns-tz";
 import { useTranslation } from "react-i18next";
 import RichText from "~/components/RichText";
 import Gutter from "~/components/Gutter";
-import { cacheControlVeryShortCacheButLongSWR } from "~/util/cacheControl";
+import { cacheControlVeryShortCacheButLongSWR } from "~/util/cache-control/cacheControlVeryShortCacheButLongSWR";
 import environment from "~/util/environment";
 import { serializeToPlainText } from "~/components/RichText/Serialize";
 import EventInfo from "~/components/EventInfo";
+import { routeHeaders } from "~/util/cache-control/routeHeaders";
 
 export const loader = async ({
   params,
@@ -82,6 +79,8 @@ export const loader = async ({
     }
   );
 };
+
+export const headers = routeHeaders;
 
 export const meta: MetaFunction<
   typeof loader,
@@ -138,10 +137,6 @@ export const meta: MetaFunction<
       content: image,
     },
   ];
-});
-
-export const headers: HeadersFunction = () => ({
-  "Cache-Control": cacheControlVeryShortCacheButLongSWR,
 });
 
 export default function Item() {

@@ -2,7 +2,6 @@ import {
   redirect,
   type LoaderFunctionArgs,
   type MetaFunction,
-  type HeadersFunction,
   json,
 } from "@remix-run/node";
 import { Link, useLoaderData, useRouteLoaderData } from "@remix-run/react";
@@ -18,11 +17,10 @@ import { postsListSchema } from "cms/structured-data/post";
 import EventsList from "~/components/EventsList";
 import type { loader as rootLoader } from "app/root";
 import Gutter from "~/components/Gutter";
-import { cacheControlShortWithSWR } from "~/util/cacheControl";
+import { cacheControlShortWithSWR } from "~/util/cache-control/cacheControlShortWithSWR";
+import { routeHeaders } from "~/util/cache-control/routeHeaders";
 
-export const headers: HeadersFunction = () => ({
-  "Cache-Control": cacheControlShortWithSWR,
-});
+export const headers = routeHeaders;
 
 export const loader = async ({
   request,

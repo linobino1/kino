@@ -2,6 +2,7 @@ import type {
   LoaderFunctionArgs,
   LinksFunction,
   MetaFunction,
+  HeadersFunction,
 } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
@@ -26,7 +27,7 @@ import type { MovieTheater, WithContext } from "schema-dts";
 import { locationSchema } from "cms/structured-data/location";
 import { addContext } from "cms/structured-data";
 import { ModalContainer, ModalProvider } from "@faceless-ui/modal";
-import { cacheControlShortWithSWR } from "./util/cacheControl";
+import { cacheControlShortWithSWR } from "./util/cache-control/cacheControlShortWithSWR";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -64,10 +65,16 @@ export async function loader({
     {
       headers: {
         "Cache-Control": cacheControlShortWithSWR,
+        "Content-Language": locale,
       },
     }
   );
 }
+
+export const headers: HeadersFunction = ({ loaderHeaders }) => ({
+  "Cache-Control": loaderHeaders.get("Cache-Control") as string,
+  "Content-Language": loaderHeaders.get("Content-Language") as string,
+});
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [

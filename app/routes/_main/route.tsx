@@ -7,7 +7,8 @@ import i18next from "~/i18next.server";
 import classes from "./index.module.css";
 import { ErrorPage } from "~/components/ErrorPage";
 import type { loader as rootLoader } from "~/root";
-import { cacheControlShortWithSWR } from "~/util/cacheControl";
+import { cacheControlShortWithSWR } from "~/util/cache-control/cacheControlShortWithSWR";
+import { routeHeaders } from "~/util/cache-control/routeHeaders";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -34,6 +35,8 @@ export const loader = async ({
     }
   );
 };
+
+export const headers = routeHeaders;
 
 export const handle = {
   i18n: ["common"],

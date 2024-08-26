@@ -2,7 +2,6 @@
 import React from "react";
 import {
   json,
-  type HeadersFunction,
   type LoaderFunctionArgs,
   type MetaFunction,
 } from "@remix-run/node";
@@ -12,7 +11,8 @@ import Page from "~/components/Page";
 import { mergeMeta, pageMeta } from "~/util/pageMeta";
 import { ErrorPage } from "~/components/ErrorPage";
 import type { loader as rootLoader } from "app/root";
-import { cacheControlShortWithSWR } from "~/util/cacheControl";
+import { cacheControlShortWithSWR } from "~/util/cache-control/cacheControlShortWithSWR";
+import { routeHeaders } from "~/util/cache-control/routeHeaders";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -48,6 +48,8 @@ export const loader = async ({
   );
 };
 
+export const headers = routeHeaders;
+
 export const meta: MetaFunction<
   typeof loader,
   {
@@ -56,10 +58,6 @@ export const meta: MetaFunction<
 > = mergeMeta(({ data, matches }) => {
   const site = matches.find((match) => match?.id === "root")?.data.site;
   return pageMeta(data?.page.meta, site?.meta);
-});
-
-export const headers: HeadersFunction = () => ({
-  "Cache-Control": cacheControlShortWithSWR,
 });
 
 export const StaticPage: React.FC = () => {

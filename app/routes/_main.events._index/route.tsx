@@ -1,9 +1,5 @@
-import type {
-  HeadersFunction,
-  LoaderFunctionArgs,
-  MetaFunction,
-} from "@remix-run/node";
-import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import { json, useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import { Page } from "~/components/Page";
 import { EventsList } from "~/components/EventsList";
 import i18next from "~/i18next.server";
@@ -12,7 +8,8 @@ import { ErrorPage } from "~/components/ErrorPage";
 import type { loader as rootLoader } from "app/root";
 import Gutter from "~/components/Gutter";
 import Pagination from "~/components/Pagination";
-import { cacheControlShort } from "~/util/cacheControl";
+import { routeHeaders } from "~/util/cache-control/routeHeaders";
+import { cacheControlShortWithSWR } from "~/util/cache-control/cacheControlShortWithSWR";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -54,11 +51,20 @@ export const loader = async ({
     sort: "date",
   });
 
-  return {
-    page,
-    screenings,
-  };
+  return json(
+    {
+      page,
+      screenings,
+    },
+    {
+      headers: {
+        "Cache-Control": cacheControlShortWithSWR,
+      },
+    }
+  );
 };
+
+export const headers = routeHeaders;
 
 export const meta: MetaFunction<
   typeof loader,
@@ -68,10 +74,6 @@ export const meta: MetaFunction<
 > = mergeMeta(({ data, matches }) => {
   const site = matches.find((match) => match?.id === "root")?.data.site;
   return pageMeta(data?.page.meta, site?.meta);
-});
-
-export const headers: HeadersFunction = () => ({
-  "Cache-Control": cacheControlShort,
 });
 
 export default function Index() {
