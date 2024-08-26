@@ -150,5 +150,7 @@ export async function getAgeRating(
     return dateB.getTime() - dateA.getTime();
   });
 
-  return (release_dates[0]["certification"] as Movie["ageRating"]) || undefined;
+  return (
+    (release_dates[0]?.["certification"] as Movie["ageRating"]) || undefined
+  );
 }

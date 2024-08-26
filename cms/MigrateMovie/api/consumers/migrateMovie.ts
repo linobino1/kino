@@ -72,7 +72,7 @@ export const migrateMovie = async (
       internationalTitle: data.title,
       isHfgProduction: false,
       synopsis: data.overview,
-      year: parseInt(data.release_date?.split("-")[0]),
+      year: parseInt(data.release_date?.split("-")[0] || "0") ?? undefined,
       countries: data.production_countries.map((country: any) =>
         country.iso_3166_1.toUpperCase()
       ),

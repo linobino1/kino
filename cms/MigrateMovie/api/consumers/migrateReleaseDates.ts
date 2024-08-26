@@ -33,7 +33,7 @@ export const migrateReleaseDates: MigrationFunction = async ({
   });
 
   const ageRating =
-    (release_dates[0]["certification"] as Movie["ageRating"]) || undefined;
+    (release_dates[0]?.["certification"] as Movie["ageRating"]) || undefined;
 
   // update movie
   await payload.update({

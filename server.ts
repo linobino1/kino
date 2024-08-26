@@ -118,9 +118,10 @@ async function start() {
   app.all(
     "*",
     createRequestHandler({
+      // @ts-ignore
       build: vite
         ? () => vite.ssrLoadModule("virtual:remix/server-build")
-        : // @ts-expect-error
+        : // @ts-ignore-error
           await import("./build/server/index.js"),
       getLoadContext(req, res) {
         return {

@@ -92,7 +92,7 @@ export const FilmPrints: CollectionConfig = {
               },
             })
           ).docs[0];
-          data.title = `${movie.internationalTitle} ${format.name} ${languageVersion.abbreviation}`;
+          data.title = `${movie.internationalTitle} ${format.name} ${languageVersion?.abbreviation}`;
         }
 
         return data;

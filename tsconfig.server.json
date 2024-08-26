@@ -1,19 +1,6 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "strict": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "outDir": "./dist",
-    "jsx": "react",
-    "paths": {
-      "~/*": ["./app/*"],
-      "payload/generated-types": ["./cms/payload-types.ts"]
-    }
-  },
+  "extends": "./tsconfig.json",
+  "files": ["env.d.ts", "server.ts", "payload.config.ts"],
   "include": [
     "env.d.ts",
     "server.ts",
@@ -21,7 +8,17 @@
     "migrations/**/*.ts",
     "./cms/scripts/**/*.ts"
   ],
-  "ts-node": {
-    "transpileOnly": true
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "dist",
+    "baseUrl": ".",
+    "sourceMap": true,
+    "noEmit": false,
+    "paths": {
+      "~/*": ["./app/*"],
+      "payload/generated-types": ["./cms/payload-types.ts"]
+    }
   }
 }

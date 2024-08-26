@@ -1,3 +1,4 @@
+// @ts-nocheck - they payload config has changed a lot since this migration was written
 import type { MigrateUpArgs, MigrateDownArgs } from "@payloadcms/db-mongodb";
 import type { Event } from "payload/generated-types";
 

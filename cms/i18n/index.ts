@@ -60,7 +60,7 @@ export const fixedT = (
 const replace = (s: string, replacers: Record<string, string> = {}): string => {
   let res = s;
   Object.keys(replacers).forEach((key) => {
-    res = res?.replace(`{${key}}`, replacers[key]);
+    res = res?.replace(`{${key}}`, replacers[key] ?? "");
   });
   return res;
 };
