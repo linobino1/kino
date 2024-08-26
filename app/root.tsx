@@ -18,7 +18,6 @@ import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import CookieConsent from "react-cookie-consent";
 import { cssBundleHref } from "@remix-run/css-bundle";
-import { i18nCookie } from "./cookie";
 import type { Media } from "payload/generated-types";
 import environment from "./util/environment";
 import classes from "./root.module.css";
@@ -43,13 +42,10 @@ export async function loader({
   context: { payload, user },
 }: LoaderFunctionArgs) {
   const locale = await i18next.getLocale(request);
-  const [site, localeCookie] = await Promise.all([
-    payload.findGlobal({
-      slug: "site",
-      depth: 3,
-    }),
-    i18nCookie.serialize(locale),
-  ]);
+  const site = await payload.findGlobal({
+    slug: "site",
+    depth: 3,
+  });
 
   return json(
     {
@@ -67,7 +63,6 @@ export async function loader({
     },
     {
       headers: {
-        "Set-Cookie": localeCookie,
         "Cache-Control": cacheControlShortWithSWR,
       },
     }
@@ -125,6 +120,7 @@ export function useChangeLanguage(locale: string) {
   const { i18n } = useTranslation();
   useEffect(() => {
     i18n.changeLanguage(locale);
+    document.cookie = `i18n=${locale}; path=/; samesite=strict`;
   }, [locale, i18n]);
 }
 
