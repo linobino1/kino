@@ -1,28 +1,35 @@
 {
-  "include": ["env.d.ts", "remix.env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["env.d.ts", "**/*.ts", "**/*.tsx"],
   "compilerOptions": {
-    "target": "ES2019",
-    "lib": ["DOM", "DOM.Iterable", "ES2019"],
-    "allowJs": true,
-    "strict": true,
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "target": "es2022",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "isolatedModules": true,
+    "noImplicitAny": true,
     "jsx": "react-jsx",
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "baseUrl": ".",
     "paths": {
       "~/*": ["./app/*"],
       "payload/generated-types": ["./cms/payload-types.ts"]
-    },
-    "resolveJsonModule": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "isolatedModules": true,
-    "noEmit": true,
-    "plugins": [
-      {
-        "name": "@0no-co/graphqlsp",
-        "schema": "./cms/wp-migration/schema.graphql",
-        "tadaOutputLocation": "./cms/wp-migration/graphql-env.d.ts"
-      }
-    ]
-  }
+    }
+  },
+  "ts-node": {
+    "swc": true
+  },
+  "plugins": [
+    {
+      "name": "@0no-co/graphqlsp",
+      "schema": "./cms/wp-migration/schema.graphql",
+      "tadaOutputLocation": "./cms/wp-migration/graphql-env.d.ts"
+    }
+  ]
 }

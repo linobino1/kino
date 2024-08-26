@@ -7,7 +7,6 @@ import type {
 import { json } from "@remix-run/node";
 import {
   Links,
-  LiveReload,
   Meta,
   Outlet,
   Scripts,
@@ -26,8 +25,8 @@ import { ErrorPage } from "~/components/ErrorPage";
 import type { MovieTheater, WithContext } from "schema-dts";
 import { locationSchema } from "cms/structured-data/location";
 import { addContext } from "cms/structured-data";
-import { ModalContainer, ModalProvider } from "@faceless-ui/modal";
 import { cacheControlShortWithSWR } from "./util/cache-control/cacheControlShortWithSWR";
+import { returnLanguageIfSupported } from "./i18n";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -43,10 +42,13 @@ export async function loader({
   params: { lang },
   context: { payload, user },
 }: LoaderFunctionArgs) {
-  const locale = lang ?? (await i18next.getLocale(request));
+  const locale =
+    returnLanguageIfSupported(lang) ?? (await i18next.getLocale(request));
+
   const site = await payload.findGlobal({
     slug: "site",
     depth: 3,
+    locale,
   });
 
   return json(
@@ -149,8 +151,6 @@ export default function App() {
       <head>
         <Meta />
         <Links />
-        {/* <DynamicLinks /> */}
-
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -164,13 +164,9 @@ export default function App() {
             __html: `window.ENV = ${JSON.stringify(publicKeys)}`,
           }}
         />
-        <ModalProvider transTime={200} zIndex={200}>
-          <Outlet />
-          <ModalContainer />
-        </ModalProvider>
+        <Outlet />
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
         {false && (
           <div className={classes.cookiesWrapper}>
             <CookieConsent

@@ -1,25 +1,36 @@
-import path from "path";
 import express from "express";
 import compression from "compression";
 import morgan from "morgan";
+import sourceMapSupport from "source-map-support";
 import payload from "payload";
-import { createRequestHandler } from "@remix-run/express";
 import invariant from "tiny-invariant";
-import { sender, transport } from "./email";
-import { themoviedb } from "./cms/MigrateMovie/tmdb";
-import { broadcastDevReady } from "@remix-run/node";
+
+import { createRequestHandler } from "@remix-run/express";
+import { installGlobals, type ServerBuild } from "@remix-run/node";
 import * as Sentry from "@sentry/node";
 import { nodeProfilingIntegration } from "@sentry/profiling-node";
 
+// patch in Remix runtime globals
+installGlobals();
 require("dotenv").config();
-
-const BUILD_DIR = path.join(process.cwd(), "build");
-
-start();
+sourceMapSupport.install();
 
 async function start() {
   const app = express();
 
+  const vite =
+    process.env.NODE_ENV === "production"
+      ? undefined
+      : await import("vite").then(({ createServer }) =>
+          createServer({
+            server: {
+              middlewareMode: true,
+            },
+          })
+        );
+
+  // Start Payload CMS
+  invariant(process.env.PAYLOAD_SECRET, "PAYLOAD_SECRET is required");
   invariant(process.env.PAYLOAD_SECRET, "PAYLOAD_SECRET is required");
   invariant(process.env.THEMOVIEDB_API_KEY, "THEMOVIEDB_API_KEY is required");
 
@@ -44,26 +55,17 @@ async function start() {
 
   // TracingHandler creates a trace for every incoming request
   app.use(Sentry.Handlers.tracingHandler());
-
-  // Initialize Payload
   await payload.init({
     secret: process.env.PAYLOAD_SECRET,
     express: app,
-    email: {
-      fromName: sender.name,
-      fromAddress: sender.address,
-      transport,
-    },
     onInit: () => {
       payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`);
     },
   });
 
-  // init themoviedb api
-  themoviedb.defaults.params = {
-    api_key: process.env.THEMOVIEDB_API_KEY,
-  };
+  app.use(payload.authenticate);
 
+  // Express Server setup
   app.use(compression());
 
   // http://expressjs.com/en/advanced/best-practice-security.html#at-a-minimum-disable-x-powered-by-header
@@ -74,6 +76,7 @@ async function start() {
     "/build",
     express.static("public/build", { immutable: true, maxAge: "1y" })
   );
+  app.use(express.static("build/client", { maxAge: "1h" }));
 
   // Everything else (like favicon.ico) is cached for an hour. You may want to be
   // more aggressive with this caching.
@@ -96,70 +99,43 @@ async function start() {
     );
   });
 
+  // handle Remix asset requests
+  if (vite) {
+    app.use(vite.middlewares);
+  } else {
+    app.use(
+      "/assets",
+      express.static("build/client/assets", { immutable: true, maxAge: "1y" })
+    );
+  }
+
   app.use(express.json());
 
-  // authenticate all requests to the frontend
-  app.use(payload.authenticate);
-
-  const build = require(BUILD_DIR);
-
-  app.all(
-    "*",
-    process.env.NODE_ENV === "development"
-      ? (req, res, next) => {
-          purgeRequireCache();
-
-          return createRequestHandler({
-            build,
-            mode: process.env.NODE_ENV,
-            getLoadContext(req, res) {
-              return {
-                // @ts-expect-error
-                payload: req.payload,
-                // @ts-expect-error
-                user: req?.user,
-                res,
-              };
-            },
-          })(req, res, next);
-        }
-      : createRequestHandler({
-          build,
-          mode: process.env.NODE_ENV,
-          getLoadContext(req, res) {
-            return {
-              // @ts-expect-error
-              payload: req.payload,
-              // @ts-expect-error
-              user: req?.user,
-              res,
-            };
-          },
-        })
-  );
-
+  // handle Remix SSR requests
+  //
   // The error handler must be registered before any other error middleware and after all controllers
   app.use(Sentry.Handlers.errorHandler());
+  app.all(
+    "*",
+    createRequestHandler({
+      build: vite
+        ? () => vite.ssrLoadModule("virtual:remix/server-build")
+        : // @ts-expect-error
+          await import("./build/server/index.js"),
+      getLoadContext(req, res) {
+        return {
+          payload: req.payload,
+          user: req?.user,
+          res,
+        };
+      },
+    })
+  );
 
   const port = process.env.PORT || 3000;
-
-  app.listen(port, () => {
-    console.log(`Express server listening on port ${port}`);
-    if (process.env.NODE_ENV === "development") {
-      broadcastDevReady(build);
-    }
-  });
+  app.listen(port, () =>
+    console.log("Express server listening on http://localhost:" + port)
+  );
 }
 
-function purgeRequireCache() {
-  // purge require cache on requests for "server side HMR" this won't let
-  // you have in-memory objects between requests in development,
-  // alternatively you can set up nodemon/pm2-dev to restart the server on
-  // file changes, but then you'll have to reconnect to databases/etc on each
-  // change. We prefer the DX of this, so we've included it for you by default
-  for (const key in require.cache) {
-    if (key.startsWith(BUILD_DIR)) {
-      delete require.cache[key];
-    }
-  }
-}
+start();

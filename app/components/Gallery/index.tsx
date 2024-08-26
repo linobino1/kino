@@ -2,7 +2,7 @@ import React from "react";
 import type { Media } from "payload/generated-types";
 import classes from "./index.module.css";
 import Image from "~/components/Image";
-import carouselStyles from "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 
 export type Type = {
@@ -17,7 +17,7 @@ export type Type = {
 export const Gallery: React.FC<Type> = ({ images }) => {
   return images ? (
     <>
-      <link rel="stylesheet" href={carouselStyles} />
+      {/* <link rel="stylesheet" href={carouselStyles} /> */}
       <div className={classes.container}>
         <Carousel
           showArrows={true}
