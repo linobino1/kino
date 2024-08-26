@@ -39,17 +39,17 @@ dependencies:
     specifier: ^0.0.22
     version: 0.0.22(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
   '@remix-run/css-bundle':
-    specifier: ^2.8.0
-    version: 2.11.1
+    specifier: ^2.11.2
+    version: 2.11.2
   '@remix-run/express':
-    specifier: ^2.8.0
-    version: 2.11.1(express@4.19.2)(typescript@5.4.5)
+    specifier: ^2.11.2
+    version: 2.11.2(express@4.19.2)(typescript@5.4.5)
   '@remix-run/node':
-    specifier: ^2.8.0
-    version: 2.11.1(typescript@5.4.5)
+    specifier: ^2.11.2
+    version: 2.11.2(typescript@5.4.5)
   '@remix-run/react':
-    specifier: ^2.8.0
-    version: 2.11.1(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.5)
+    specifier: ^2.11.2
+    version: 2.11.2(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.5)
   '@sentry/node':
     specifier: ^7.110.1
     version: 7.118.0
@@ -157,7 +157,7 @@ dependencies:
     version: 5.3.4(react@18.3.1)
   remix-i18next:
     specifier: ^5.4.0
-    version: 5.5.0(@remix-run/react@2.11.1)(@remix-run/server-runtime@2.11.1)(i18next@22.5.1)(react-i18next@11.18.6)(react@18.3.1)
+    version: 5.5.0(@remix-run/react@2.11.2)(@remix-run/server-runtime@2.11.2)(i18next@22.5.1)(react-i18next@11.18.6)(react@18.3.1)
   schema-dts:
     specifier: ^1.1.2
     version: 1.1.2(typescript@5.4.5)
@@ -185,11 +185,11 @@ devDependencies:
     specifier: ^1.12.13
     version: 1.12.13(graphql@16.8.1)(typescript@5.4.5)
   '@remix-run/dev':
-    specifier: ^2.8.0
-    version: 2.11.1(@remix-run/react@2.11.1)(@types/node@22.1.0)(ts-node@10.9.2)(typescript@5.4.5)
+    specifier: ^2.11.2
+    version: 2.11.2(@remix-run/react@2.11.2)(@types/node@22.1.0)(ts-node@10.9.2)(typescript@5.4.5)
   '@remix-run/eslint-config':
-    specifier: ^2.8.0
-    version: 2.11.1(eslint@8.57.0)(react@18.3.1)(typescript@5.4.5)
+    specifier: ^2.11.2
+    version: 2.11.2(eslint@8.57.0)(react@18.3.1)(typescript@5.4.5)
   '@types/compression':
     specifier: ^1.7.2
     version: 1.7.5
@@ -4238,18 +4238,18 @@ packages:
       react: 18.3.1
     dev: false
 
-  /@remix-run/css-bundle@2.11.1:
-    resolution: {integrity: sha512-ct51rpY9lIdcQ87S3LBunqrOiEL3/jO7niMq286y07Mv92flwQAS/L3kNJFz8Tncuz0KJeaumGA02Otr3yiwqw==}
+  /@remix-run/css-bundle@2.11.2:
+    resolution: {integrity: sha512-3/MJLfwokke41inWrc/Kj+yBvuo+lUtkRCasySOFDOaNw5uf4f4ZbRO/IuJy6t3Qlt2jAc8xVluGUw4gcKN6uw==}
     engines: {node: '>=18.0.0'}
     dev: false
 
-  /@remix-run/dev@2.11.1(@remix-run/react@2.11.1)(@types/node@22.1.0)(ts-node@10.9.2)(typescript@5.4.5):
-    resolution: {integrity: sha512-zYiyKVjm+wBr1+P+W3psP79cuwh1qlQCbcwJhYVD6p6DJURTiotDxjnw/WtGgYrhNTuxyJ21dhRv4gHzLV/4Hg==}
+  /@remix-run/dev@2.11.2(@remix-run/react@2.11.2)(@types/node@22.1.0)(ts-node@10.9.2)(typescript@5.4.5):
+    resolution: {integrity: sha512-9DGb2UOIO4jOdws04Z+KmCeEBqbP36XvJZdcd4w16wDGI0I1ZY1c5ro58tB/7zPwN40s9MD9UzCYm6P+EkdeAg==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     peerDependencies:
-      '@remix-run/react': ^2.11.1
-      '@remix-run/serve': ^2.11.1
+      '@remix-run/react': ^2.11.2
+      '@remix-run/serve': ^2.11.2
       typescript: ^5.1.0
       vite: ^5.1.0
       wrangler: ^3.28.2
@@ -4273,10 +4273,10 @@ packages:
       '@babel/types': 7.25.2
       '@mdx-js/mdx': 2.3.0
       '@npmcli/package-json': 4.0.1
-      '@remix-run/node': 2.11.1(typescript@5.4.5)
-      '@remix-run/react': 2.11.1(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.5)
-      '@remix-run/router': 1.19.0
-      '@remix-run/server-runtime': 2.11.1(typescript@5.4.5)
+      '@remix-run/node': 2.11.2(typescript@5.4.5)
+      '@remix-run/react': 2.11.2(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.5)
+      '@remix-run/router': 1.19.1
+      '@remix-run/server-runtime': 2.11.2(typescript@5.4.5)
       '@types/mdx': 2.0.13
       '@vanilla-extract/integration': 6.5.0(@types/node@22.1.0)
       arg: 5.0.2
@@ -4334,8 +4334,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@remix-run/eslint-config@2.11.1(eslint@8.57.0)(react@18.3.1)(typescript@5.4.5):
-    resolution: {integrity: sha512-Qzrww4D1Bfl+Z+qYprOc43/iEl/QS1i+kTo0XickLMEiTsal0qEeIt9Zod6alO0DvLEm6ixUPQDHKcn2trwLtA==}
+  /@remix-run/eslint-config@2.11.2(eslint@8.57.0)(react@18.3.1)(typescript@5.4.5):
+    resolution: {integrity: sha512-IclP0pBI7cqmKhHqa6qWY0rAF7cXCM+xODuIkt9DpR6dvgDW3TpCTB4tqOavIYDsLGNkx1sPfkXjpe3FIrT9Xw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       eslint: ^8.0.0
@@ -4370,8 +4370,8 @@ packages:
       - supports-color
     dev: true
 
-  /@remix-run/express@2.11.1(express@4.19.2)(typescript@5.4.5):
-    resolution: {integrity: sha512-dU63L8pPBrwtr8VdhJ4z3SvfsgMqsI6rBEIKQXIGmylgZM+P9oVynBtzGljvjW1O3sv2tcd5mBxiLXpW7l502w==}
+  /@remix-run/express@2.11.2(express@4.19.2)(typescript@5.4.5):
+    resolution: {integrity: sha512-ebyvHJKRBDgQGNBMxsILt21IwMTjGxQxlr0VNxRJo5rNd5CcuULpx/PPmsBc1gsc/Jx9aUXpT7a9l0UEOc6+jw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       express: ^4.19.2
@@ -4380,13 +4380,13 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@remix-run/node': 2.11.1(typescript@5.4.5)
+      '@remix-run/node': 2.11.2(typescript@5.4.5)
       express: 4.19.2
       typescript: 5.4.5
     dev: false
 
-  /@remix-run/node@2.11.1(typescript@5.4.5):
-    resolution: {integrity: sha512-KCQPLSd5Y3OLCoJUQxxTGswALL1gZ+OgL3bf2ap6kITIp1AUZz3T4jqCNVVyWllVAU9gpCtrONaI+SiWf+8b2w==}
+  /@remix-run/node@2.11.2(typescript@5.4.5):
+    resolution: {integrity: sha512-gRNFM61EOYWNmYgf+pvBt6MrirWlkDz1G6RQsJNowtRqbYoy05AdDe5HiHGF5w8ZMAZVeXnZiwbL0Nt7ykYBCA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       typescript: ^5.1.0
@@ -4394,7 +4394,7 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@remix-run/server-runtime': 2.11.1(typescript@5.4.5)
+      '@remix-run/server-runtime': 2.11.2(typescript@5.4.5)
       '@remix-run/web-fetch': 4.4.2
       '@web3-storage/multipart-parser': 1.0.0
       cookie-signature: 1.2.1
@@ -4403,8 +4403,8 @@ packages:
       typescript: 5.4.5
       undici: 6.19.5
 
-  /@remix-run/react@2.11.1(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.5):
-    resolution: {integrity: sha512-bXilQrHx5WVHsdA6UFkWxYVePZJ1kzwfa/KYMdbMZi6zsSlv2/N6ZbgNuoemt8oM8/YgCT6EOPITzCgz+zEMVw==}
+  /@remix-run/react@2.11.2(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.5):
+    resolution: {integrity: sha512-SjjuK3aD/9wnIC5r0ZBNCpVSwEwt67YOQM7DCXhHiS8BtCvAxWEC4k4t8CvO9IwBG0gczqxzSqASH7U1RVtWqw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^18.0.0
@@ -4414,21 +4414,21 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@remix-run/router': 1.19.0
-      '@remix-run/server-runtime': 2.11.1(typescript@5.4.5)
+      '@remix-run/router': 1.19.1
+      '@remix-run/server-runtime': 2.11.2(typescript@5.4.5)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      react-router: 6.26.0(react@18.3.1)
-      react-router-dom: 6.26.0(react-dom@18.3.1)(react@18.3.1)
-      turbo-stream: 2.2.0
+      react-router: 6.26.1(react@18.3.1)
+      react-router-dom: 6.26.1(react-dom@18.3.1)(react@18.3.1)
+      turbo-stream: 2.3.0
       typescript: 5.4.5
 
-  /@remix-run/router@1.19.0:
-    resolution: {integrity: sha512-zDICCLKEwbVYTS6TjYaWtHXxkdoUvD/QXvyVZjGCsWz5vyH7aFeONlPffPdW+Y/t6KT0MgXb2Mfjun9YpWN1dA==}
+  /@remix-run/router@1.19.1:
+    resolution: {integrity: sha512-S45oynt/WH19bHbIXjtli6QmwNYvaz+vtnubvNpNDvUOoA/OWh6j1OikIP3G+v5GHdxyC6EXoChG3HgYGEUfcg==}
     engines: {node: '>=14.0.0'}
 
-  /@remix-run/server-runtime@2.11.1(typescript@5.4.5):
-    resolution: {integrity: sha512-j3AlrZul0javvPR6ZWdN32/l12t1E90sLeZI/k+4HpT0ifjqJVg8uG6alRJ0LLN9ae5BERYEslUebUqdfejSkQ==}
+  /@remix-run/server-runtime@2.11.2(typescript@5.4.5):
+    resolution: {integrity: sha512-abG6ENj0X3eHqDxqO2thWM2NSEiPnqyt58z1BbiQCv+t8g0Zuqd5QHbB4wzdNvfS0vKhg+jJiigcJneAc4sZzw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       typescript: ^5.1.0
@@ -4436,13 +4436,13 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@remix-run/router': 1.19.0
+      '@remix-run/router': 1.19.1
       '@types/cookie': 0.6.0
       '@web3-storage/multipart-parser': 1.0.0
       cookie: 0.6.0
       set-cookie-parser: 2.7.0
       source-map: 0.7.4
-      turbo-stream: 2.2.0
+      turbo-stream: 2.3.0
       typescript: 5.4.5
 
   /@remix-run/web-blob@3.1.0:
@@ -13318,17 +13318,17 @@ packages:
       tiny-warning: 1.0.3
     dev: false
 
-  /react-router-dom@6.26.0(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-RRGUIiDtLrkX3uYcFiCIxKFWMcWQGMojpYZfcstc63A1+sSnVgILGIm9gNUA6na3Fm1QuPGSBQH2EMbAZOnMsQ==}
+  /react-router-dom@6.26.1(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-veut7m41S1fLql4pLhxeSW3jlqs+4MtjRLj0xvuCEXsxusJCbs6I8yn9BxzzDX2XDgafrccY6hwjmd/bL54tFw==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: '>=16.8'
       react-dom: '>=16.8'
     dependencies:
-      '@remix-run/router': 1.19.0
+      '@remix-run/router': 1.19.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      react-router: 6.26.0(react@18.3.1)
+      react-router: 6.26.1(react@18.3.1)
 
   /react-router-navigation-prompt@1.9.6(react-router-dom@5.3.4)(react@18.3.1):
     resolution: {integrity: sha512-l0sAtbroHK8i1/Eyy29XcrMpBEt0R08BaScgMUt8r5vWWbLz7G0ChOikayTCQm7QgDFsHw8gVnxDJb7TBZCAKg==}
@@ -13357,13 +13357,13 @@ packages:
       tiny-warning: 1.0.3
     dev: false
 
-  /react-router@6.26.0(react@18.3.1):
-    resolution: {integrity: sha512-wVQq0/iFYd3iZ9H2l3N3k4PL8EEHcb0XlU2Na8nEwmiXgIUElEH6gaJDtUQxJ+JFzmIXaQjfdpcGWaM6IoQGxg==}
+  /react-router@6.26.1(react@18.3.1):
+    resolution: {integrity: sha512-kIwJveZNwp7teQRI5QmwWo39A5bXRyqpH0COKKmPnyD2vBvDwgFXSqDUYtt1h+FEyfnE8eXr7oe0MxRzVwCcvQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: '>=16.8'
     dependencies:
-      '@remix-run/router': 1.19.0
+      '@remix-run/router': 1.19.1
       react: 18.3.1
 
   /react-select@5.7.4(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1):
@@ -13606,7 +13606,7 @@ packages:
       unified: 10.1.2
     dev: true
 
-  /remix-i18next@5.5.0(@remix-run/react@2.11.1)(@remix-run/server-runtime@2.11.1)(i18next@22.5.1)(react-i18next@11.18.6)(react@18.3.1):
+  /remix-i18next@5.5.0(@remix-run/react@2.11.2)(@remix-run/server-runtime@2.11.2)(i18next@22.5.1)(react-i18next@11.18.6)(react@18.3.1):
     resolution: {integrity: sha512-QAHYlwb/0fmoSmH+t7AiJ3EhyG4SSQNQnAAPfqbkn/3UJfWO+NFFVxuggGx25FRJ3SOPexaspoiaCddcEayPAQ==}
     peerDependencies:
       '@remix-run/react': ^1.0.0 || ^2.0.0
@@ -13615,8 +13615,8 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-i18next: ^13.0.0 || ^14.0.0
     dependencies:
-      '@remix-run/react': 2.11.1(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.5)
-      '@remix-run/server-runtime': 2.11.1(typescript@5.4.5)
+      '@remix-run/react': 2.11.2(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.5)
+      '@remix-run/server-runtime': 2.11.2(typescript@5.4.5)
       accept-language-parser: 1.5.0
       i18next: 22.5.1
       intl-parse-accept-language: 1.0.0
@@ -15072,8 +15072,8 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
-  /turbo-stream@2.2.0:
-    resolution: {integrity: sha512-FKFg7A0To1VU4CH9YmSMON5QphK0BXjSoiC7D9yMh+mEEbXLUP9qJ4hEt1qcjKtzncs1OpcnjZO8NgrlVbZH+g==}
+  /turbo-stream@2.3.0:
+    resolution: {integrity: sha512-PhEr9mdexoVv+rJkQ3c8TjrN3DUghX37GNJkSMksoPR4KrXIPnM2MnqRt07sViIqX9IdlhrgtTSyjoVOASq6cg==}
 
   /type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
