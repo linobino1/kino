@@ -1,7 +1,6 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import type { Movie as MovieType } from "payload/generated-types";
 import { useLoaderData } from "@remix-run/react";
-import i18next from "~/i18next.server";
 import { MovieInfo } from "~/components/MovieInfo";
 import { Page } from "~/components/Page";
 import { ErrorPage } from "~/components/ErrorPage";
@@ -15,8 +14,8 @@ export const ErrorBoundary = ErrorPage;
 
 export const loader = async ({
   params,
-  request,
   context: { payload },
+  params: { lang: locale },
 }: LoaderFunctionArgs) => {
   const data = await payload.find({
     collection: "filmPrints",
@@ -25,7 +24,7 @@ export const loader = async ({
         equals: params.filmPrintSlug,
       },
     },
-    locale: await i18next.getLocale(request),
+    locale,
     depth: 11,
   });
   const navigation = (

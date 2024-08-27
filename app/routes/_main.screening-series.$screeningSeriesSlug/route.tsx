@@ -1,6 +1,5 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
-import i18next from "~/i18next.server";
 import Page from "~/components/Page";
 import EventsList from "~/components/EventsList";
 import { ErrorPage } from "~/components/ErrorPage";
@@ -13,11 +12,10 @@ import { useTranslation } from "react-i18next";
 export const ErrorBoundary = ErrorPage;
 
 export const loader = async ({
-  params,
   request,
   context: { payload },
+  params: { lang: locale, screeningSeriesSlug },
 }: LoaderFunctionArgs) => {
-  const locale = await i18next.getLocale(request);
   // compare date for upcoming screenings
   let today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -27,7 +25,7 @@ export const loader = async ({
       collection: "screeningSeries",
       where: {
         slug: {
-          equals: params.screeningSeriesSlug,
+          equals: screeningSeriesSlug,
         },
       },
       locale,

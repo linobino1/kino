@@ -15,7 +15,6 @@ import type {
 import { MovieInfo } from "~/components/MovieInfo";
 import classes from "./index.module.css";
 import { Date } from "~/components/Date";
-import i18next from "~/i18next.server";
 import Page from "~/components/Page";
 import HeaderImage from "~/components/HeaderImage";
 import { JsonLd } from "cms/structured-data";
@@ -38,8 +37,8 @@ export const loader = async ({
   params,
   request,
   context: { payload },
+  params: { lang: locale },
 }: LoaderFunctionArgs) => {
-  const locale = await i18next.getLocale(request);
   const [navigationResponse, eventResponse] = await Promise.all([
     payload.find({
       collection: "navigations",

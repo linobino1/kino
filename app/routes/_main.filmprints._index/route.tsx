@@ -9,7 +9,6 @@ import {
 import { Page } from "~/components/Page";
 import { FilmPrintsList } from "~/components/FilmPrintsList";
 import classes from "./index.module.css";
-import i18next from "~/i18next.server";
 import { useTranslation } from "react-i18next";
 import type { Payload } from "payload";
 import { Filters } from "~/util/filter";
@@ -24,8 +23,8 @@ const limit = 10;
 export const loader = async ({
   request,
   context: { payload },
+  params: { lang: locale },
 }: LoaderFunctionArgs) => {
-  const locale = await i18next.getLocale(request);
   const page = await payload.findGlobal({
     slug: "archive",
     locale,
@@ -37,7 +36,7 @@ export const loader = async ({
   // get all published film prints
   const filters = getFilters({
     payload,
-    locale,
+    locale: locale as string,
     params,
   });
   filters.applySearchParams(params);

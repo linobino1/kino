@@ -3,7 +3,6 @@ import type { Media } from "payload/generated-types";
 import { useLoaderData } from "@remix-run/react";
 import { Page } from "~/components/Page";
 import { mergeMeta, pageDescription, pageTitle } from "~/util/pageMeta";
-import i18next from "~/i18next.server";
 import classes from "./index.module.css";
 import { Image } from "~/components/Image";
 import Date from "~/components/Date";
@@ -16,11 +15,10 @@ import { serializeToPlainText } from "~/components/RichText/Serialize";
 import Gutter from "~/components/Gutter";
 
 export const loader = async ({
-  request,
   params,
   context: { payload },
+  params: { lang: locale },
 }: LoaderFunctionArgs) => {
-  const locale = await i18next.getLocale(request);
   const data = await payload.find({
     collection: "posts",
     locale,

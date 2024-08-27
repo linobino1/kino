@@ -26,6 +26,7 @@ export const headers = routeHeaders;
 export const loader = async ({
   request,
   context: { payload },
+  params: { lang: locale },
 }: LoaderFunctionArgs) => {
   // compare date for upcoming screenings
   let today = new Date();
@@ -36,7 +37,6 @@ export const loader = async ({
     new URL(request.url).searchParams.get("page") || "1"
   );
 
-  const locale = await i18next.getLocale(request);
   const [page, posts, events] = await Promise.all([
     payload.findGlobal({
       slug: "blog",

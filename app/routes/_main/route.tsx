@@ -3,7 +3,6 @@ import { json } from "@remix-run/node";
 import { Outlet, useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import Footer from "~/components/Footer";
 import Header from "~/components/Header";
-import i18next from "~/i18next.server";
 import classes from "./index.module.css";
 import { ErrorPage } from "~/components/ErrorPage";
 import type { loader as rootLoader } from "~/root";
@@ -13,11 +12,9 @@ import { routeHeaders } from "~/util/cache-control/routeHeaders";
 export const ErrorBoundary = ErrorPage;
 
 export const loader = async ({
-  request,
   context: { payload },
+  params: { lang: locale },
 }: LoaderFunctionArgs) => {
-  const locale = await i18next.getLocale(request);
-
   const navigations = await payload.find({
     collection: "navigations",
     depth: 12,

@@ -1,7 +1,6 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import type { Media, Event } from "payload/generated-types";
 import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
-import i18next from "~/i18next.server";
 import { Page } from "~/components/Page";
 import { EventsList } from "~/components/EventsList";
 import { ErrorPage } from "~/components/ErrorPage";
@@ -20,14 +19,14 @@ export const loader = async ({
   params,
   request,
   context: { payload },
+  params: { lang: locale, season: slug },
 }: LoaderFunctionArgs) => {
-  const locale = await i18next.getLocale(request);
   const season = (
     await payload.find({
       collection: "seasons",
       where: {
         slug: {
-          equals: params.season,
+          equals: slug,
         },
       },
       locale,

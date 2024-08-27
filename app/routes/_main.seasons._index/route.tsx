@@ -5,7 +5,6 @@ import {
 } from "@remix-run/node";
 import type { Media } from "payload/generated-types";
 import { useLoaderData } from "@remix-run/react";
-import i18next from "~/i18next.server";
 import { Page } from "~/components/Page";
 import { mergeMeta, pageMeta } from "~/util/pageMeta";
 import { ErrorPage } from "~/components/ErrorPage";
@@ -20,8 +19,8 @@ export const ErrorBoundary = ErrorPage;
 export const loader = async ({
   request,
   context: { payload },
+  params: { lang: locale },
 }: LoaderFunctionArgs) => {
-  const locale = await i18next.getLocale(request);
   const page = await payload.findGlobal({
     slug: "seasonsPage",
     locale,
