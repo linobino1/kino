@@ -6,12 +6,10 @@ import payload from "payload";
 import invariant from "tiny-invariant";
 
 import { createRequestHandler } from "@remix-run/express";
-import { installGlobals, type ServerBuild } from "@remix-run/node";
 import * as Sentry from "@sentry/node";
 import { nodeProfilingIntegration } from "@sentry/profiling-node";
 
 // patch in Remix runtime globals
-installGlobals();
 require("dotenv").config();
 sourceMapSupport.install();
 
