@@ -1,4 +1,5 @@
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
+import { localizeTo } from "~/components/localized-link/util/localizeTo";
 import i18next from "~/i18next.server";
 
 /**
@@ -6,9 +7,6 @@ import i18next from "~/i18next.server";
  */
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const lang = await i18next.getLocale(request);
-  throw redirect(`/${lang}/news`);
+  const to = localizeTo("/news", lang) as string;
+  throw redirect(to);
 };
-
-export default function Index() {
-  return <></>;
-}

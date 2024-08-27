@@ -28,6 +28,7 @@ import { addContext } from "cms/structured-data";
 import { cacheControlShortWithSWR } from "./util/cache-control/cacheControlShortWithSWR";
 import { returnLanguageIfSupported } from "./i18n";
 import { getHreflangLinks } from "./util/getHreflangLinks";
+import { localizeTo } from "./components/localized-link/util/localizeTo";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -49,7 +50,8 @@ export async function loader({
   if (!urlLang) {
     const requestLang = await i18next.getLocale(request);
     const url = new URL(request.url);
-    throw redirect(`/${requestLang}${url.pathname}`);
+    const to = localizeTo(url.pathname, requestLang) as string;
+    throw redirect(to);
   }
 
   const locale = urlLang;
