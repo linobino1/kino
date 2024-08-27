@@ -28,7 +28,6 @@ export const PostPreview: React.FC<Props> = (props) => {
     case "none":
       link = post.details?.length ? post.url : undefined;
   }
-  console.log("url", post.url);
   return (
     <div {...props} className={`${classes.container} ${props.className}`}>
       <Image
