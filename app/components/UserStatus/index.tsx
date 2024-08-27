@@ -1,8 +1,9 @@
 import React from "react";
-import { Link, useMatches } from "@remix-run/react";
+import { useMatches } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import classes from "./index.module.css";
 import type { User } from "payload/generated-types";
+import { Link } from "~/components/localized-link";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;

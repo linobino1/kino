@@ -2,6 +2,7 @@
 import React from "react";
 import {
   json,
+  redirect,
   type LoaderFunctionArgs,
   type MetaFunction,
 } from "@remix-run/node";
@@ -22,6 +23,13 @@ export const loader = async ({
   context: { payload },
 }: LoaderFunctionArgs) => {
   const locale = await i18next.getLocale(request);
+
+  // catch /en and /de and redirect to /en/home or /de/home
+  const url = new URL(request.url);
+  if (url.pathname === `/${locale}`) {
+    throw redirect(`/`);
+  }
+
   const res = await payload.find({
     collection: "staticPages",
     where: {

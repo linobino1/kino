@@ -5,10 +5,11 @@ import {
   type ActionFunction,
   type LoaderFunctionArgs,
 } from "@remix-run/node";
-import { Form, Link, useActionData, useLoaderData } from "@remix-run/react";
+import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import classes from "./auth.module.css";
 import i18next from "~/i18next.server";
+import { Link } from "~/components/localized-link";
 
 // i18n namespace
 const ns = "auth";

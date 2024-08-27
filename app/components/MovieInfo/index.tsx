@@ -13,8 +13,8 @@ import React from "react";
 import classes from "./index.module.css";
 import { useTranslation } from "react-i18next";
 import Image from "~/components/Image";
-import { Link } from "@remix-run/react";
 import RichText from "../RichText";
+import { Link } from "~/components/localized-link";
 
 export interface Props extends React.HTMLAttributes<HTMLElement> {
   movie: MovieType;

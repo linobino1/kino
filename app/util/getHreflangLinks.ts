@@ -11,7 +11,6 @@ export const getLocalizedPathnames = (
   const urlLanguage = returnLanguageIfSupported(pathname.split("/")[1]);
   const pathnames: Record<Language, string> = {};
 
-  console.log("urlLanguage", urlLanguage);
   switch (urlLanguage) {
     case "en":
       pathnames.en = pathname;

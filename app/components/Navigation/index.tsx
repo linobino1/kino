@@ -4,10 +4,10 @@ import type {
   Media,
   Navigation as NavigationType,
 } from "payload/generated-types";
-import { NavLink } from "@remix-run/react";
 import { Image } from "~/components/Image";
 import classes from "./index.module.css";
 import LanguageSwitch from "../LanguageSwitch";
+import { NavLink } from "~/components/localized-link";
 
 type Props = {
   navigation?: NavigationType;
@@ -64,7 +64,7 @@ export const Navigation: React.FC<Props> = ({
               </div>
             ) : (
               <NavLink
-                to={href}
+                to={href as string}
                 className={({ isActive }) =>
                   `${classes.navItem} ${isActive && classes.active}`
                 }

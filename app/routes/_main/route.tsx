@@ -43,16 +43,18 @@ export const handle = {
 };
 
 export default function Layout() {
-  const { navigations } = useLoaderData<typeof loader>();
+  const navigations = useLoaderData<typeof loader>()?.navigations;
   const { site } = useRouteLoaderData<typeof rootLoader>("root")!;
 
   return (
     <>
       <div className={classes.aboveFooter}>
-        <Header site={site} navigations={navigations} />
+        {navigations && site && (
+          <Header site={site} navigations={navigations} />
+        )}
         <Outlet />
       </div>
-      <Footer site={site} navigations={navigations} />
+      {navigations && site && <Footer site={site} navigations={navigations} />}
     </>
   );
 }

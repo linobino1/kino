@@ -1,12 +1,12 @@
 import type { Media } from "payload/generated-types";
 import React, { Fragment } from "react";
 import { escape } from "html-escaper";
-import { Link } from "@remix-run/react";
 import { MyReactPlayer } from "../../MyReactPlayer";
 import { Image } from "~/components/Image";
 import classes from "./index.module.css";
 import { Node as SlateNode } from "slate";
 import ArrowOutward from "~/components/icons/ArrowOutward";
+import { Link } from "~/components/localized-link";
 
 export type Node = {
   type: string;

@@ -1,9 +1,10 @@
 import type { ActionFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Form, Link, useActionData } from "@remix-run/react";
+import { Form, useActionData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import classes from "./auth.module.css";
 import i18next from "~/i18next.server";
+import { Link } from "~/components/localized-link";
 
 // i18n namespace
 const ns = "auth";

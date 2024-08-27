@@ -1,11 +1,11 @@
 import { EventsListItem } from "./item";
-import { Link } from "@remix-run/react";
 import type { Event, ScreeningSery, Site } from "payload/generated-types";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import classes from "./index.module.css";
 import { JsonLd } from "cms/structured-data";
 import { eventsListSchema as screeningsListMarkup } from "cms/structured-data/screening";
+import { Link } from "~/components/localized-link";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   from?: string;

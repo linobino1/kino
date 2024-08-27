@@ -1,6 +1,7 @@
-import { Link } from "@remix-run/react";
+import { Link, useLocation } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import classes from "./index.module.css";
+import { getLocalizedPathnames } from "~/util/getHreflangLinks";
 
 export const languages = {
   en: { nativeName: "English" },
@@ -13,27 +14,28 @@ export type Props = {
 
 export default function LanguageSwitch({ className }: Props) {
   const { i18n } = useTranslation();
+  const { pathname } = useLocation();
+  const pathnames = getLocalizedPathnames(pathname);
 
   return (
     <div className={className}>
-      {(Object.keys(languages) as Array<keyof typeof languages>).map((lng) => {
-        const query = new URLSearchParams();
-        query.set("lng", lng);
-
-        return (
-          <Link
-            key={lng}
-            className={`${classes.language} ${
-              i18n.language === lng && classes.active
-            }`}
-            to={`?${query.toString()}`}
-            rel="alternate"
-            hrefLang={lng}
-          >
-            {lng.toUpperCase()}
-          </Link>
-        );
-      })}
+      {Object.keys(pathnames).map(
+        (lang) =>
+          lang !== "none" && (
+            <Link
+              key={lang}
+              className={`${classes.language} ${
+                i18n.language === lang && classes.active
+              }`}
+              to={pathnames[lang] as string}
+              rel="alternate"
+              hrefLang={lang}
+              onClick={() => i18n.changeLanguage(lang)}
+            >
+              {lang.toUpperCase()}
+            </Link>
+          )
+      )}
     </div>
   );
 }

@@ -4,7 +4,7 @@ import {
   type MetaFunction,
   json,
 } from "@remix-run/node";
-import { Link, useLoaderData, useRouteLoaderData } from "@remix-run/react";
+import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { Page } from "~/components/Page";
 import { mergeMeta, pageMeta } from "~/util/pageMeta";
@@ -19,6 +19,7 @@ import type { loader as rootLoader } from "app/root";
 import Gutter from "~/components/Gutter";
 import { cacheControlShortWithSWR } from "~/util/cache-control/cacheControlShortWithSWR";
 import { routeHeaders } from "~/util/cache-control/routeHeaders";
+import { Link } from "~/components/localized-link";
 
 export const headers = routeHeaders;
 
@@ -119,7 +120,7 @@ export default function Index() {
         <section className={classes.upcoming}>
           <h2>{t("Our Next Screenings")}</h2>
           <EventsList items={events.docs} site={site} />
-          <Link to="/screenings" className={classes.allScreeningsButton}>
+          <Link to="/events" className={classes.allScreeningsButton}>
             {t("See all screenings")}
           </Link>
         </section>

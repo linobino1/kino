@@ -1,9 +1,10 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import classes from "./auth.module.css";
 import i18next from "~/i18next.server";
+import { Link } from "~/components/localized-link";
 
 // i18n namespace
 const ns = "auth";

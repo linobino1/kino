@@ -15,7 +15,7 @@ export default defineConfig({
         unstable_singleFetch: true,
         unstable_lazyRouteDiscovery: true,
       },
-      // routes: customRouteConfig,
+      routes: customRouteConfig,
     }),
     tsconfigPaths(),
   ],

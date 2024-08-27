@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
-import { Link, useLoaderData, useRouteLoaderData } from "@remix-run/react";
+import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import type {
   FilmPrint,
@@ -32,6 +32,7 @@ import environment from "~/util/environment";
 import { serializeToPlainText } from "~/components/RichText/Serialize";
 import EventInfo from "~/components/EventInfo";
 import { routeHeaders } from "~/util/cache-control/routeHeaders";
+import { Link } from "~/components/localized-link";
 
 export const loader = async ({
   params,
@@ -112,7 +113,7 @@ export const meta: MetaFunction<
             "PPpp"
           ),
           synopsis: (
-            (event.films?.[0].filmprint as FilmPrint).movie as MovieType
+            (event.films?.[0]?.filmprint as FilmPrint).movie as MovieType
           ).synopsis,
         });
 

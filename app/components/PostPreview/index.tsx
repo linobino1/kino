@@ -5,8 +5,8 @@ import Image from "~/components/Image";
 import RichText from "~/components/RichText";
 import classes from "./index.module.css";
 import { useTranslation } from "react-i18next";
-import { Link } from "@remix-run/react";
 import type { LinkableCollection } from "cms/types";
+import { Link } from "~/components/localized-link";
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   post: Post;
@@ -22,12 +22,13 @@ export const PostPreview: React.FC<Props> = (props) => {
       link = (post.link.doc?.value as LinkableCollection)?.url;
       break;
     case "external":
-      link = post.link?.url;
+      link = post.link?.url ?? "";
       target = "_blank";
       break;
     case "none":
       link = post.details?.length ? post.url : undefined;
   }
+  console.log("url", post.url);
   return (
     <div {...props} className={`${classes.container} ${props.className}`}>
       <Image

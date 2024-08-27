@@ -5,13 +5,14 @@ import type {
   Navigation as NavigationType,
 } from "payload/generated-types";
 import { Navigation } from "../Navigation";
-import { Link, useLocation } from "@remix-run/react";
+import { useLocation } from "@remix-run/react";
 import { Image } from "~/components/Image";
 import { UserStatus } from "../UserStatus";
 import classes from "./index.module.css";
 import { Hamburger } from "./Hamburger";
 import Gutter from "../Gutter";
 import { useTranslation } from "react-i18next";
+import { Link } from "~/components/localized-link";
 
 type Props = {
   site: Site;
