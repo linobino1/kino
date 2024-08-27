@@ -41,15 +41,16 @@ export const links: LinksFunction = () => {
 
 export async function loader({
   request,
-  params: { lang },
+  // parmams.lang doesn't reliably get the language from the URL, request.url does
+  // params: { lang },
   context: { payload, user },
 }: LoaderFunctionArgs) {
-  const urlLang = returnLanguageIfSupported(lang);
+  const url = new URL(request.url);
+  const urlLang = returnLanguageIfSupported(url.pathname.split("/")[1]);
 
   // If we're not already on a localized URL, redirect to the one that i18next thinks is best
   if (!urlLang) {
     const requestLang = await i18next.getLocale(request);
-    const url = new URL(request.url);
     const to = localizeTo(url.pathname, requestLang) as string;
     throw redirect(to);
   }

@@ -1,4 +1,3 @@
-/* eslint-disable no-case-declarations */
 import React from "react";
 import {
   json,
@@ -7,7 +6,6 @@ import {
   type MetaFunction,
 } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import i18next from "~/i18next.server";
 import Page from "~/components/Page";
 import { mergeMeta, pageMeta } from "~/util/pageMeta";
 import { ErrorPage } from "~/components/ErrorPage";
@@ -18,15 +16,11 @@ import { routeHeaders } from "~/util/cache-control/routeHeaders";
 export const ErrorBoundary = ErrorPage;
 
 export const loader = async ({
-  request,
-  params,
   context: { payload },
+  params: { lang: locale, staticPage: slug },
 }: LoaderFunctionArgs) => {
-  const locale = await i18next.getLocale(request);
-
-  // catch /en and /de and redirect to /en/home or /de/home
-  const url = new URL(request.url);
-  if (url.pathname === `/${locale}`) {
+  // if path is sth. like /en, this route will match, but locale will be undefined and the locale will be in the staticPage param
+  if (!locale && slug) {
     throw redirect(`/`);
   }
 
@@ -34,7 +28,7 @@ export const loader = async ({
     collection: "staticPages",
     where: {
       slug: {
-        equals: params?.staticPage,
+        equals: slug,
       },
     },
     locale,
@@ -65,13 +59,13 @@ export const meta: MetaFunction<
   }
 > = mergeMeta(({ data, matches }) => {
   const site = matches.find((match) => match?.id === "root")?.data.site;
-  return pageMeta(data?.page.meta, site?.meta);
+  return pageMeta(data?.page?.meta, site?.meta);
 });
 
 export const StaticPage: React.FC = () => {
   const { page } = useLoaderData<typeof loader>();
 
-  return <Page layout={page.layout} />;
+  return <Page layout={page?.layout} />;
 };
 
 export default StaticPage;
