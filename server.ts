@@ -9,6 +9,8 @@ import { createRequestHandler } from "@remix-run/express";
 import * as Sentry from "@sentry/node";
 import { nodeProfilingIntegration } from "@sentry/profiling-node";
 
+import { themoviedb } from "./cms/MigrateMovie/tmdb";
+
 // patch in Remix runtime globals
 require("dotenv").config();
 sourceMapSupport.install();
@@ -62,6 +64,11 @@ async function start() {
   });
 
   app.use(payload.authenticate);
+
+  // init themoviedb api
+  themoviedb.defaults.params = {
+    api_key: process.env.THEMOVIEDB_API_KEY,
+  };
 
   // Express Server setup
   app.use(compression());
