@@ -24,7 +24,12 @@ export const UserStatus: React.FC<Props> = ({ className }) => {
           <Link to="/auth/me" className={classes.name}>
             {t("signed in as {{name}}", { name: user.name })}
           </Link>
-          <Link to="/admin" className={classes.admin} target="_blank">
+          <Link
+            to="/admin"
+            className={classes.admin}
+            target="_blank"
+            localize={false}
+          >
             {t("backend")}
           </Link>
         </div>
