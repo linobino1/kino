@@ -49,7 +49,7 @@ export async function loader({
   const urlLang = returnLanguageIfSupported(url.pathname.split("/")[1]);
 
   // If we're not already on a localized URL, redirect to the one that i18next thinks is best
-  if (!urlLang) {
+  if (!urlLang && url.pathname !== "/") {
     const requestLang = await i18next.getLocale(request);
     const to = localizeTo(url.pathname, requestLang) as string;
     throw redirect(to);
