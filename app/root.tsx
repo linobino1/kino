@@ -4,7 +4,7 @@ import type {
   MetaFunction,
   HeadersFunction,
 } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import {
   Links,
   Meta,
@@ -43,8 +43,16 @@ export async function loader({
   params: { lang },
   context: { payload, user },
 }: LoaderFunctionArgs) {
-  const locale =
-    returnLanguageIfSupported(lang) ?? (await i18next.getLocale(request));
+  const urlLang = returnLanguageIfSupported(lang);
+
+  // If we're not already on a localized URL, redirect to the one that i18next thinks is best
+  if (!urlLang) {
+    const requestLang = await i18next.getLocale(request);
+    const url = new URL(request.url);
+    throw redirect(`/${requestLang}${url.pathname}`);
+  }
+
+  const locale = urlLang;
 
   const site = await payload.findGlobal({
     slug: "site",
