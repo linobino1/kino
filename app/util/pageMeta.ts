@@ -76,10 +76,15 @@ export const mergeMeta = <
             ("charSet" in meta &&
               "charSet" in parentMeta &&
               meta.charSet === parentMeta.charSet) ||
-            // HACK: we only allow one rel=xxx meta tag for each rel type
+            // hrefLang are always defined in the parentMeta
+            ("hrefLang" in meta &&
+              "hrefLang" in parentMeta &&
+              meta.hrefLang === parentMeta.hrefLang) ||
+            // icon are always defined in the parentMeta
             ("rel" in meta &&
               "rel" in parentMeta &&
-              meta.rel === parentMeta.rel) ||
+              meta.rel === parentMeta.rel &&
+              meta.rel === "icon") ||
             ("title" in meta && "title" in parentMeta)
         );
         if (index == -1) {

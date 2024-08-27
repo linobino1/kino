@@ -27,6 +27,7 @@ import { locationSchema } from "cms/structured-data/location";
 import { addContext } from "cms/structured-data";
 import { cacheControlShortWithSWR } from "./util/cache-control/cacheControlShortWithSWR";
 import { returnLanguageIfSupported } from "./i18n";
+import { getHreflangLinks } from "./util/getHreflangLinks";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -79,8 +80,12 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => ({
   "Content-Language": loaderHeaders.get("Content-Language") as string,
 });
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({
+  data,
+  location: { pathname },
+}) => {
   return [
+    ...getHreflangLinks(pathname),
     {
       tagName: "link",
       rel: "icon",
