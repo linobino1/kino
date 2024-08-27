@@ -12,6 +12,7 @@ import { UserStatus } from "../UserStatus";
 import classes from "./index.module.css";
 import { Hamburger } from "./Hamburger";
 import Gutter from "../Gutter";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   site: Site;
@@ -25,9 +26,10 @@ const Header: React.FC<Props> = ({ site, navigations }) => {
   const { pathname } = useLocation();
 
   // close menu on navigation
+  const { i18n } = useTranslation();
   useEffect(() => {
     setMenuIsOpen(false);
-  }, [pathname]);
+  }, [pathname, i18n.language]);
 
   // lock body scroll when menu is open
   useEffect(() => {
