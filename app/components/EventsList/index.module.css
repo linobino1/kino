@@ -46,6 +46,7 @@
 .item img {
   object-fit: cover;
   width: 100%;
+  height: auto;
   aspect-ratio: 1/1;
 }
 .info {
