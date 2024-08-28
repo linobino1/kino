@@ -55,7 +55,7 @@ export async function loader({
     throw redirect(to);
   }
 
-  const locale = urlLang;
+  const locale = urlLang as string;
 
   const site = await payload.findGlobal({
     slug: "site",
