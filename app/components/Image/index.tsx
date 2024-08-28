@@ -17,11 +17,15 @@ export const Image: React.FC<Props> = ({
   srcSet,
   src,
   alt,
+  width,
+  height,
   ...props
 }) => {
   // use src and alt from image if provided
   src ||= image?.url || undefined;
   alt ||= image?.alt || undefined;
+  width ||= image?.width || undefined;
+  height ||= image?.height || undefined;
 
   // transform srcSet array to string
   if (typeof srcSet === "object") {
@@ -32,7 +36,16 @@ export const Image: React.FC<Props> = ({
       .join(", ");
   }
 
-  return <img {...props} src={src} alt={alt} srcSet={srcSet} />;
+  return (
+    <img
+      {...props}
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      srcSet={srcSet}
+    />
+  );
 };
 
 export default Image;
