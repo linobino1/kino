@@ -31,6 +31,7 @@ export default function LanguageSwitch({ className }: Props) {
               rel="alternate"
               hrefLang={lang}
               onClick={() => i18n.changeLanguage(lang)}
+              preventScrollReset
               reloadDocument
             >
               {lang.toUpperCase()}

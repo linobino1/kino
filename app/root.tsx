@@ -26,9 +26,11 @@ import type { MovieTheater, WithContext } from "schema-dts";
 import { locationSchema } from "cms/structured-data/location";
 import { addContext } from "cms/structured-data";
 import { cacheControlShortWithSWR } from "./util/cache-control/cacheControlShortWithSWR";
-import { returnLanguageIfSupported } from "./i18n";
+import { returnLanguageIfSupported, supportedLngs } from "./i18n";
 import { getHreflangLinks } from "./util/getHreflangLinks";
 import { localizeTo } from "./components/localized-link/util/localizeTo";
+import { i18nCookie } from "./cookie";
+import { useChangeLanguage } from "remix-i18next";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -57,17 +59,21 @@ export async function loader({
 
   const locale = urlLang as string;
 
-  const site = await payload.findGlobal({
-    slug: "site",
-    depth: 3,
-    locale,
-  });
+  const [site, serializedI18nCookie] = await Promise.all([
+    payload.findGlobal({
+      slug: "site",
+      depth: 3,
+      locale,
+    }),
+    i18nCookie.serialize(locale),
+  ]);
 
   return json(
     {
       user,
       site,
       locale,
+      serializedI18nCookie,
       publicKeys: {
         PAYLOAD_PUBLIC_SERVER_URL: environment().PAYLOAD_PUBLIC_SERVER_URL,
         HCAPTCHA_SITE_KEY: environment().HCAPTCHA_SITE_KEY,
@@ -142,21 +148,19 @@ export const handle = {
   i18n: "common", // i18n namespace
 };
 
-export function useChangeLanguage(locale: string) {
-  const { i18n } = useTranslation();
-  useEffect(() => {
-    i18n.changeLanguage(locale);
-    document.cookie = `i18n=${locale}; path=/; samesite=strict`;
-  }, [locale, i18n]);
-}
-
 export default function App() {
   // Get the locale from the loader
-  const { locale, publicKeys, site } = useLoaderData<typeof loader>();
+  const { locale, serializedI18nCookie, publicKeys, site } =
+    useLoaderData<typeof loader>();
   const { t, i18n } = useTranslation();
 
   // handle locale change
   useChangeLanguage(locale);
+
+  // Set locale cookie
+  useEffect(() => {
+    document.cookie = serializedI18nCookie;
+  }, [serializedI18nCookie]);
 
   const structuredData: WithContext<MovieTheater> = addContext(
     locationSchema(site)
@@ -181,7 +185,17 @@ export default function App() {
           }}
         />
         <Outlet />
-        <ScrollRestoration />
+        <ScrollRestoration
+          getKey={(location) => {
+            // strip locale from pathname
+            const regex = new RegExp(`^/(${supportedLngs.join("|")})`);
+            return (
+              location.pathname.replace(regex, "/").replace("//", "/") +
+              location.search +
+              location.hash
+            );
+          }}
+        />
         <Scripts />
         {false && (
           <div className={classes.cookiesWrapper}>

@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 import { Page } from "~/components/Page";
 import { mergeMeta, pageMeta } from "~/util/pageMeta";
 import classes from "./index.module.css";
-import i18next from "~/i18next.server";
 import Pagination from "~/components/Pagination";
 import PostPreview from "~/components/PostPreview";
 import { JsonLd } from "cms/structured-data";
@@ -130,12 +129,15 @@ export default function Index() {
             <>
               {JsonLd(postsListSchema(posts.docs))}
               <ul className={classes.posts}>
-                {posts.docs.map((post) => (
-                  <li key={post.slug}>
-                    <PostPreview post={post} />
-                    <hr />
-                  </li>
-                ))}
+                {posts.docs
+                  .concat(posts.docs)
+                  .concat(posts.docs)
+                  .map((post, index) => (
+                    <li key={index}>
+                      <PostPreview post={post} />
+                      <hr />
+                    </li>
+                  ))}
               </ul>
             </>
           ) : (
