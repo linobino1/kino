@@ -19,6 +19,12 @@
 .navItem.active:hover {
   color: inherit;
 }
+@media screen and (max-width: 768px) {
+  .navItem.active {
+    text-decoration: underline;
+    pointer-events: none;
+  }
+}
 .navItem {
   display: inline-block;
   padding: 0.5rem 1rem;
