@@ -26,7 +26,6 @@ export default defineConfig({
       org: "leo-hilsheimer",
       project: "kino-im-blauen-salon",
       authToken: process.env.SENTRY_AUTH_TOKEN,
-      release: process.env.BUILD_NUMBER,
     }),
   ],
   ssr: {

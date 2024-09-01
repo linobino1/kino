@@ -15,8 +15,8 @@ RUN pnpm install --prod false --frozen-lockfile
 # we'll need the sentry auth token to upload sourcemaps during the build
 ARG SENTRY_AUTH_TOKEN
 ENV SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
-ARG RELEASE_NAME
-ENV RELEASE_NAME=${RELEASE_NAME}
+ARG SENTRY_RELEASE
+ENV SENTRY_RELEASE=${SENTRY_RELEASE}
 
 # we need those certificates to be able to connect to sentry
 RUN apt-get update && apt-get install -y ca-certificates
