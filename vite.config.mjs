@@ -3,6 +3,9 @@ import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { customRouteConfig } from "./app/customRouteConfig";
 import { sentryVitePlugin } from "@sentry/vite-plugin";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export default defineConfig({
   plugins: [
