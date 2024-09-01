@@ -24,6 +24,8 @@ Sentry.init({
     }),
     Sentry.replayIntegration(),
   ],
+
+  release: environment().BUILD_NUMBER,
 });
 
 async function hydrate() {

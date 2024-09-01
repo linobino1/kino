@@ -83,6 +83,7 @@ export async function loader({
         MAILCHIMP_SIGNUP_URL: environment().MAILCHIMP_SIGNUP_URL,
         CDN_CGI_IMAGE_URL: environment().CDN_CGI_IMAGE_URL,
         SENTRY_DSN: environment().SENTRY_DSN,
+        BUILD_NUMBER: environment().BUILD_NUMBER || "dev",
       },
     },
     {
