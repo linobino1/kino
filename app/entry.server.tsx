@@ -22,7 +22,6 @@ export function handleError(error: any, { request }: { request: Request }) {
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
   tracesSampleRate: 1,
-  release: process.env.BUILD_NUMBER,
 });
 
 const ABORT_DELAY = 5000;
