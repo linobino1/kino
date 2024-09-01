@@ -32,6 +32,14 @@ async function start() {
   invariant(process.env.PAYLOAD_SECRET, "PAYLOAD_SECRET is required");
   invariant(process.env.THEMOVIEDB_API_KEY, "THEMOVIEDB_API_KEY is required");
 
+  await payload.init({
+    secret: process.env.PAYLOAD_SECRET,
+    express: app,
+    onInit: () => {
+      payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`);
+    },
+  });
+
   app.use(payload.authenticate);
 
   // init themoviedb api
