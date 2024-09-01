@@ -11,6 +11,7 @@ import * as Sentry from "@sentry/remix";
 import environment from "./util/environment";
 
 Sentry.init({
+  environment: environment().NODE_ENV,
   dsn: environment().SENTRY_DSN,
   tracesSampleRate: 1,
   replaysSessionSampleRate: 0.1,

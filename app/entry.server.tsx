@@ -20,6 +20,7 @@ export function handleError(error: any, { request }: { request: Request }) {
 }
 
 Sentry.init({
+  environment: process.env.NODE_ENV,
   dsn: process.env.SENTRY_DSN,
   tracesSampleRate: 1,
 });
