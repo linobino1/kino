@@ -29,12 +29,14 @@ export const loader = async ({
     },
   });
 
-  if (!data.docs.length) {
+  const post = data.docs[0];
+
+  if (!post) {
     throw new Response("Post not found", { status: 404 });
   }
 
   return {
-    post: data.docs[0],
+    post,
   };
 };
 
