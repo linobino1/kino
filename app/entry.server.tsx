@@ -12,6 +12,17 @@ import { I18nextProvider, initReactI18next } from "react-i18next";
 import Backend from "i18next-fs-backend";
 import i18n, { returnLanguageIfSupported } from "./i18n"; // your i18n configuration file
 import { resolve } from "node:path";
+import * as Sentry from "@sentry/remix";
+
+export function handleError(error: any, { request }: { request: Request }) {
+  Sentry.captureRemixServerException(error, "remix.server", request);
+  console.error(error);
+}
+
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  tracesSampleRate: 1,
+});
 
 const ABORT_DELAY = 5000;
 

@@ -89,11 +89,6 @@ async function start() {
 
   app.use(morgan("tiny"));
 
-  // sentry debug route
-  app.get("/debug-sentry", function mainHandler(req, res) {
-    throw new Error("My first Sentry error!");
-  });
-
   // robots.txt
   app.get("/robots.txt", function (req, res) {
     res.type("text/plain");

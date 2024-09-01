@@ -1,5 +1,5 @@
-import { RemixBrowser } from "@remix-run/react";
-import { startTransition, StrictMode } from "react";
+import { RemixBrowser, useLocation, useMatches } from "@remix-run/react";
+import { startTransition, StrictMode, useEffect } from "react";
 import { hydrateRoot } from "react-dom/client";
 import i18n from "./i18n";
 import i18next from "i18next";
@@ -7,6 +7,24 @@ import { I18nextProvider, initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-http-backend";
 import { getInitialNamespaces } from "remix-i18next";
+import * as Sentry from "@sentry/remix";
+import environment from "./util/environment";
+
+Sentry.init({
+  dsn: environment().SENTRY_DSN,
+  tracesSampleRate: 1,
+  replaysSessionSampleRate: 0.1,
+  replaysOnErrorSampleRate: 1,
+
+  integrations: [
+    Sentry.browserTracingIntegration({
+      useEffect,
+      useLocation,
+      useMatches,
+    }),
+    Sentry.replayIntegration(),
+  ],
+});
 
 async function hydrate() {
   await i18next

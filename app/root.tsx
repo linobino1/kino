@@ -31,6 +31,7 @@ import { getHreflangLinks } from "./util/getHreflangLinks";
 import { localizeTo } from "./components/localized-link/util/localizeTo";
 import { i18nCookie } from "./cookie";
 import { useChangeLanguage } from "remix-i18next";
+import { withSentry } from "@sentry/remix";
 
 export const ErrorBoundary = ErrorPage;
 
@@ -81,6 +82,9 @@ export async function loader({
         NODE_ENV: environment().NODE_ENV,
         MAILCHIMP_SIGNUP_URL: environment().MAILCHIMP_SIGNUP_URL,
         CDN_CGI_IMAGE_URL: environment().CDN_CGI_IMAGE_URL,
+        SENTRY_DSN: environment().SENTRY_DSN,
+        // SENTRY_ORG: environment().SENTRY_ORG,
+        // SENTRY_PROJECT: environment().SENTRY_PROJECT,
       },
     },
     {
@@ -148,7 +152,7 @@ export const handle = {
   i18n: "common", // i18n namespace
 };
 
-export default function App() {
+function App() {
   // Get the locale from the loader
   const { locale, serializedI18nCookie, publicKeys, site } =
     useLoaderData<typeof loader>();
@@ -218,3 +222,5 @@ export default function App() {
     </html>
   );
 }
+
+export default withSentry(App);

@@ -2,10 +2,25 @@ import React from "react";
 import { useRouteError, isRouteErrorResponse } from "@remix-run/react";
 import environment from "~/util/environment";
 import Page from "../Page";
+import {
+  captureRemixErrorBoundaryError,
+  captureException,
+} from "@sentry/remix";
 
 export const ErrorPage: React.FC = () => {
   let error = useRouteError();
   let children = null;
+
+  captureRemixErrorBoundaryError(error);
+
+  if (
+    !isRouteErrorResponse(error) ||
+    (isRouteErrorResponse(error) && error.status >= 500)
+  ) {
+    console.log("captured error with sentry");
+    captureException(error);
+    // console.error(error);
+  }
 
   if (isRouteErrorResponse(error)) {
     children = (
