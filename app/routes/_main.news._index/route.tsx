@@ -119,7 +119,11 @@ export default function Index() {
         <section className={classes.upcoming}>
           <h2>{t("Our Next Screenings")}</h2>
           <EventsList items={events.docs} site={site} />
-          <Link to="/events" className={classes.allScreeningsButton}>
+          <Link
+            to="/events"
+            className={classes.allScreeningsButton}
+            prefetch="intent"
+          >
             {t("See all screenings")}
           </Link>
         </section>

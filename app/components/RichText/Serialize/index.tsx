@@ -154,7 +154,12 @@ export const Serialize: SerializeFunction = ({ content }) => {
             // internal links
             if (node.linkType === "internal") {
               return (
-                <Link key={i} to={node.doc.value.url as string} target={target}>
+                <Link
+                  key={i}
+                  to={node.doc.value.url as string}
+                  target={target}
+                  prefetch="intent"
+                >
                   {inner}
                 </Link>
               );

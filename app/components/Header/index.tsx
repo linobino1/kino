@@ -45,7 +45,7 @@ const Header: React.FC<Props> = ({ site, navigations }) => {
       <header className={classes.headerWrapper}>
         <Gutter size="large">
           <div className={classes.header}>
-            <Link to="/">
+            <Link to="/" prefetch="intent">
               {(site.logo as Media) && (
                 <Image
                   className={classes.logo}

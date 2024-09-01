@@ -46,7 +46,7 @@ export const PostPreview: React.FC<Props> = (props) => {
       <h2>{post.title}</h2>
       <RichText content={post.content} className={classes.content} />
       {post.details?.length ? (
-        <Link className={classes.more} to={post.url}>
+        <Link className={classes.more} to={post.url} prefetch="intent">
           {t("Read more")}
         </Link>
       ) : null}

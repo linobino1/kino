@@ -164,7 +164,11 @@ export default function Item() {
           <div className={classes.location}>
             {(event.location as Location).name}
           </div>
-          <Link className={classes.season} to={(event.season as Season).url}>
+          <Link
+            className={classes.season}
+            to={(event.season as Season).url}
+            prefetch="intent"
+          >
             {(event.season as Season).name}
           </Link>
           <div className={classes.title}>{event.title}</div>
