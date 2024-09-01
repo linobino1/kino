@@ -64,8 +64,6 @@ declare global {
     CDN_CGI_IMAGE_URL: string;
     MAILCHIMP_SIGNUP_URL: string;
     SENTRY_DSN: string;
-    SENTRY_ORG: string;
-    SENTRY_PROJECT: string;
   }
   interface Window {
     ENV: AppEnvironment;

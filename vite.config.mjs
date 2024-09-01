@@ -23,8 +23,8 @@ export default defineConfig({
     }),
     tsconfigPaths(),
     sentryVitePlugin({
-      org: process.env.SENTRY_ORG,
-      project: process.env.SENTRY_PROJECT,
+      org: "leo-hilsheimer",
+      project: "kino-im-blauen-salon",
       authToken: process.env.SENTRY_AUTH_TOKEN,
     }),
   ],
