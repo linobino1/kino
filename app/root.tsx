@@ -27,7 +27,7 @@ import { locationSchema } from "cms/structured-data/location";
 import { addContext } from "cms/structured-data";
 import { cacheControlShortWithSWR } from "./util/cache-control/cacheControlShortWithSWR";
 import { returnLanguageIfSupported, supportedLngs } from "./i18n";
-import { getHreflangLinks } from "./util/getHreflangLinks";
+import { getCannonicalLink, getHreflangLinks } from "./util/getHreflangLinks";
 import { localizeTo } from "./components/localized-link/util/localizeTo";
 import { i18nCookie } from "./cookie";
 import { useChangeLanguage } from "remix-i18next";
@@ -101,12 +101,10 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => ({
   "Content-Language": loaderHeaders.get("Content-Language") as string,
 });
 
-export const meta: MetaFunction<typeof loader> = ({
-  data,
-  location: { pathname },
-}) => {
+export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
   return [
-    ...getHreflangLinks(pathname),
+    ...getHreflangLinks(location),
+    getCannonicalLink(location),
     {
       tagName: "link",
       rel: "icon",

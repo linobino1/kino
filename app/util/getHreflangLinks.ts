@@ -1,8 +1,14 @@
-import { Language, returnLanguageIfSupported } from "~/i18n";
+import type { Language } from "~/i18n";
+import { returnLanguageIfSupported } from "~/i18n";
 import environment from "./environment";
+import type { Path } from "@remix-run/react";
 
-const absoluteUrl = (pathname: string) => {
-  return `${environment().PAYLOAD_PUBLIC_SERVER_URL}${pathname}`;
+const absoluteUrl = (location: Path) => {
+  return (
+    new URL(location.pathname, environment().PAYLOAD_PUBLIC_SERVER_URL).href +
+    location.search +
+    location.hash
+  );
 };
 
 export const getLocalizedPathnames = (
@@ -31,12 +37,27 @@ export const getLocalizedPathnames = (
   return pathnames;
 };
 
-export const getHreflangLinks = (pathname: string) => {
-  const pathnames = getLocalizedPathnames(pathname);
+export const getHreflangLinks = (location: Path) => {
+  const pathnames = getLocalizedPathnames(location.pathname);
   return Object.keys(pathnames).map((lang) => ({
     tagName: "link",
     rel: "alternate",
-    href: absoluteUrl(pathnames[lang] as string),
+    href: absoluteUrl({ ...location, pathname: pathnames[lang] as string }),
     hrefLang: lang === "none" ? "x-default" : lang,
   }));
+};
+
+/**
+ * get the canonical link for the current page. We'll use the language-agnostic URL
+ */
+export const getCannonicalLink = (location: Path) => {
+  const pathnames = getLocalizedPathnames(location.pathname);
+  return {
+    tagName: "link",
+    rel: "canonical",
+    href: absoluteUrl({
+      ...location,
+      pathname: pathnames["none"] as string,
+    }),
+  };
 };
