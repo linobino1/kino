@@ -39,6 +39,7 @@
 }
 .container img.rentalLogo {
   max-height: 3em;
+  width: auto;
   margin-block: 0.4em;
 }
 .container a.trailer {
