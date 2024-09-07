@@ -80,6 +80,11 @@ export const mergeMeta = <
             ("hrefLang" in meta &&
               "hrefLang" in parentMeta &&
               meta.hrefLang === parentMeta.hrefLang) ||
+            // canonical links are always defined in the parentMeta
+            ("rel" in meta &&
+              "rel" in parentMeta &&
+              meta.rel === parentMeta.rel &&
+              meta.rel === "canonical") ||
             // icon are always defined in the parentMeta
             ("rel" in meta &&
               "rel" in parentMeta &&
