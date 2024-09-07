@@ -6,21 +6,21 @@
 
 @media screen and (min-width: 768px) {
   .gutter.small {
-    max-width: 45rem;
+    max-width: min(45rem, 96vw);
   }
 }
 @media screen and (min-width: 1024px) {
   .gutter.small {
-    max-width: 45rem;
+    max-width: min(45rem, 96vw);
   }
   .gutter.medium {
-    max-width: 60rem;
+    max-width: min(60rem, 96vw);
     margin-inline: auto;
   }
 }
 
 @media screen and (min-width: 1280px) {
   .gutter.large {
-    max-width: 80rem;
+    max-width: min(80rem, 96vw);
   }
 }
