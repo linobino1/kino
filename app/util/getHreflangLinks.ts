@@ -50,7 +50,7 @@ export const getHreflangLinks = (location: Path) => {
 /**
  * get the canonical link for the current page. We'll use the language-agnostic URL
  */
-export const getCannonicalLink = (location: Path) => {
+export const getCanonicalLink = (location: Path) => {
   const pathnames = getLocalizedPathnames(location.pathname);
   return {
     tagName: "link",
