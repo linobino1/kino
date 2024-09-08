@@ -84,7 +84,7 @@ export const meta: MetaFunction<
     },
     {
       name: "og:image",
-      content: (data?.season.header as Media).url,
+      content: (data?.season.header as Media)?.url,
     },
   ];
 });
