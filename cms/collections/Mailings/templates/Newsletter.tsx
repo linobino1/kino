@@ -134,10 +134,11 @@ export default function Newsletter({ mailing }: Props) {
               filmprint
                 ? (filmprint.languageVersion as LanguageVersion)?.name
                 : null,
-              `Mit: ${(movie.cast as Person[])
-                ?.slice(0, 3)
-                .map((x) => x.name)
-                .join(", ")}`,
+              movie.cast?.length &&
+                `Mit: ${(movie.cast as Person[])
+                  ?.slice(0, 3)
+                  .map((x) => x.name)
+                  .join(", ")}`,
             ]
               .filter(Boolean)
               .join(", ");
