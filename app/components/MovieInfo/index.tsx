@@ -46,7 +46,7 @@ export const MovieInfo: React.FC<Props> = ({
     (filmprint?.format as Format).name,
     // movie.ageRating ? t('ageRating {age}', { age: movie.ageRating}) : null,
     filmprint ? (filmprint.languageVersion as LanguageVersion)?.name : null,
-    movie.cast &&
+    movie.cast?.length &&
       t("starring {actors}", {
         actors: (movie.cast as Person[])
           ?.slice(0, 3)
