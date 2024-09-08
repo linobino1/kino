@@ -104,7 +104,7 @@ const Movies: CollectionConfig = {
       },
       // make sure the TMDB ID is empty or unique
       validate: async (value, { operation, t, payload }) => {
-        if (value === null) return true;
+        if (typeof value === undefined) return true;
 
         // on server we need the base url, on client we don't
         const baseUrl = process?.env
