@@ -107,9 +107,7 @@ const Movies: CollectionConfig = {
         if (typeof value === undefined) return true;
 
         // on server we need the base url, on client we don't
-        const baseUrl = process?.env
-          ? process.env.PAYLOAD_PUBLIC_SERVER_URL
-          : "";
+        const baseUrl = process?.env.PAYLOAD_PUBLIC_SERVER_URL ?? "";
         try {
           const res = await fetch(
             `${baseUrl}/api/movies?where[tmdbId][equals]=${value}`
