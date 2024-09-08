@@ -35,7 +35,7 @@ export const MovieInfo: React.FC<Props> = ({
 
   const specs = [
     movie.originalTitle,
-    (movie.genres as Genre[]).map((x) => x.name).join(", "),
+    (movie.genres as Genre[])?.map((x) => x.name).join(", "),
     (movie.countries as Country[])?.map((x) => x.name).join(", "),
     movie.year,
     movie.directors &&
@@ -43,7 +43,7 @@ export const MovieInfo: React.FC<Props> = ({
         directors: (movie.directors as Person[])?.map((x) => x.name).join(", "),
       }),
     t("duration {duration}", { duration: movie.duration }),
-    (filmprint?.format as Format).name,
+    (filmprint?.format as Format)?.name,
     // movie.ageRating ? t('ageRating {age}', { age: movie.ageRating}) : null,
     filmprint ? (filmprint.languageVersion as LanguageVersion)?.name : null,
     movie.cast?.length &&
