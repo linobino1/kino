@@ -98,7 +98,6 @@ const Events: CollectionConfig = {
       admin: {
         condition: (data) => data?.type !== "screening",
       },
-      validate: requiredForNonScreeningEvents,
     },
     {
       type: "row",

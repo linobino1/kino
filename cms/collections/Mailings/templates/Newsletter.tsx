@@ -194,11 +194,13 @@ export default function Newsletter({ mailing }: Props) {
                   >
                     {event.title}
                   </Heading>
-                  <Text
-                    style={{ marginBlock: 0, fontSize, fontStyle: "italic" }}
-                  >
-                    {subtitle}
-                  </Text>
+                  {subtitle && (
+                    <Text
+                      style={{ marginBlock: 0, fontSize, fontStyle: "italic" }}
+                    >
+                      {subtitle}
+                    </Text>
+                  )}
                   <Text style={{ fontSize }}>
                     {event.type === "screening"
                       ? movie?.synopsis

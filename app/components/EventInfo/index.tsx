@@ -25,7 +25,9 @@ export const EventInfo: React.FC<Props> = ({ event, className, ...props }) => {
         sizes="260px"
       />
       <h2>{event.title}</h2>
-      <div className={classes.subtitle}>{event.subtitle}</div>
+      {event.subtitle && (
+        <div className={classes.subtitle}>{event.subtitle}</div>
+      )}
       {event.info && <RichText className={classes.info} content={event.info} />}
     </div>
   );
