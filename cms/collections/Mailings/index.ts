@@ -113,6 +113,7 @@ export const Mailings: CollectionConfig = {
       hooks: {
         beforeChange: [generateHTML],
       },
+      validate: () => true, // by default has a 40k char limit
       admin: {
         components: {
           Field: HtmlField,
