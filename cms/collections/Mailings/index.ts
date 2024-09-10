@@ -15,6 +15,7 @@ export const Mailings: CollectionConfig = {
     components: {
       BeforeList: [HowTo],
     },
+    useAsTitle: "subject",
   },
   defaultSort: "-updatedAt",
   access: {
@@ -24,6 +25,12 @@ export const Mailings: CollectionConfig = {
     delete: isAdminOrEditor,
   },
   fields: [
+    {
+      name: "subject",
+      type: "text",
+      label: t("Subject"),
+      required: true,
+    },
     {
       type: "row",
       fields: [

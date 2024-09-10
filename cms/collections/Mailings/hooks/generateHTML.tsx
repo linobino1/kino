@@ -61,6 +61,7 @@ export const generateHTML: FieldHook = async ({ data, req }) => {
       ...item,
       event: events[index],
     })),
+    subject: data.subject,
   };
 
   return render(<Newsletter mailing={mailing} />);

@@ -3,6 +3,7 @@ import type { Props as NewsletterProps } from "./templates/Newsletter";
 export const seed: NewsletterProps = {
   mailing: {
     language: "de",
+    subject: "KULT SNEAK",
     footer: {
       image: {
         id: "669a38b2080db7e7077e207a",
