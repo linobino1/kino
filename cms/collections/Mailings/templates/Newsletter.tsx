@@ -267,6 +267,10 @@ export default function Newsletter({ mailing }: Props) {
               <Link href="https://kinoimblauensalon.de">
                 www.kinoimblauensalon.de
               </Link>
+              <br />
+              <br />
+              <br />
+              <Link href="{{ UnsubscribeURL }}">newsletter abbestellen</Link>
             </Text>
           </Section>
         </Container>
