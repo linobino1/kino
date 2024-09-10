@@ -109,7 +109,7 @@ export const Mailings: CollectionConfig = {
     },
     {
       name: "html",
-      type: "text",
+      type: "textarea",
       hooks: {
         beforeChange: [generateHTML],
       },
