@@ -62,7 +62,8 @@ declare global {
     S3_SECRET_KEY: string;
     MEDIA_URL: string;
     CDN_CGI_IMAGE_URL: string;
-    MAILCHIMP_SIGNUP_URL: string;
+    LISTMONK_API_ENDPOINT: string;
+    LISTMONK_LIST_ID: string;
     SENTRY_DSN: string;
     SENTRY_RELEASE: string;
     BUILD_NUMBER: string;

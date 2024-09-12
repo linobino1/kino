@@ -1,22 +1,20 @@
-import { Form } from "@remix-run/react";
-import { useFormFields, useMailChimpForm } from "use-mailchimp-form";
+import { useFetcher } from "@remix-run/react";
 import classes from "./index.module.css";
 import { useTranslation } from "react-i18next";
-import environment from "~/util/environment";
-import { type HTMLAttributes } from "react";
+import { type HTMLAttributes, useRef, useState } from "react";
+import type { action } from "~/routes/newsletter-signup";
 
 export interface Props extends HTMLAttributes<HTMLDivElement> {}
 
 const NewsletterSignup: React.FC<Props> = ({ className, ...props }) => {
   const { t } = useTranslation();
-  const url = environment().MAILCHIMP_SIGNUP_URL;
-  const { loading, error, success, message, handleSubmit, reset } =
-    useMailChimpForm(url);
-  const { fields, handleFieldChange } = useFormFields({
-    EMAIL: "",
-    FNAME: "",
-    LNAME: "",
-  });
+  let [key, setKey] = useState<string>(() => Math.random().toString());
+  function reset() {
+    setKey(Math.random().toString());
+    formRef.current?.reset();
+  }
+  const fetcher = useFetcher<typeof action>({ key });
+  const formRef = useRef<HTMLFormElement | null>(null);
 
   return (
     <div
@@ -24,60 +22,57 @@ const NewsletterSignup: React.FC<Props> = ({ className, ...props }) => {
       className={[classes.container, className].filter(Boolean).join(" ")}
     >
       <div className={classes.title}>{t("newsletter.cta")}</div>
-      {success && (
+      {fetcher.data?.success ? (
         <div className={classes.success}>
           <p>{t("newsletter.success")}</p>
           <button type="button" onClick={reset}>
             {t("newsletter.subscribeAgain")}
           </button>
         </div>
+      ) : (
+        <fetcher.Form
+          ref={formRef}
+          action="/newsletter-signup"
+          method="post"
+          className={classes.form}
+        >
+          <label htmlFor="name">{t("newsletter.name")}</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            autoComplete="name"
+            placeholder={t("newsletter.name")}
+            required
+          />
+          <label htmlFor="email">{t("newsletter.email")}</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            autoComplete="email"
+            placeholder={t("newsletter.email")}
+            required
+          />
+          {fetcher.data && (
+            <p
+              className={[
+                classes.message,
+                !fetcher.data.success && classes.error,
+              ]
+                .filter(Boolean)
+                .join(" ")}
+            >
+              {fetcher.data.message}
+            </p>
+          )}
+          <button type="submit">
+            {fetcher.state === "idle"
+              ? t("newsletter.subscribe")
+              : t("newsletter.sending")}
+          </button>
+        </fetcher.Form>
       )}
-      <Form
-        onSubmit={(event) => {
-          event.preventDefault();
-          handleSubmit(fields);
-        }}
-        className={[classes.form, success && classes.hidden].join(" ")}
-      >
-        <label htmlFor="FNAME">{t("newsletter.firstName")}</label>
-        <input
-          type="text"
-          name="FNAME"
-          id="FNAME"
-          autoComplete="given-name"
-          value={fields.FNAME}
-          onChange={handleFieldChange}
-          placeholder={t("newsletter.firstName")}
-          required
-        />
-        <label htmlFor="LNAME">{t("newsletter.lastName")}</label>
-        <input
-          type="text"
-          name="LNAME"
-          id="LNAME"
-          autoComplete="family-name"
-          value={fields.LNAME}
-          onChange={handleFieldChange}
-          placeholder={t("newsletter.lastName")}
-          required
-        />
-        <label htmlFor="EMAIL">{t("newsletter.email")}</label>
-        <input
-          type="email"
-          name="EMAIL"
-          id="EMAIL"
-          autoComplete="email"
-          value={fields.EMAIL}
-          onChange={handleFieldChange}
-          placeholder={t("newsletter.email")}
-          required
-        />
-        {error && <p className={classes.error}>{error}</p>}
-        {message && <p>{message}</p>}
-        <button type="submit">
-          {loading ? t("newsletter.sending") : t("newsletter.subscribe")}
-        </button>
-      </Form>
     </div>
   );
 };

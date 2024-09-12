@@ -25,6 +25,9 @@
 .success button:hover {
   text-decoration: none;
 }
+.message {
+  background-color: white;
+}
 .error {
   color: red;
 }

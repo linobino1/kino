@@ -13,16 +13,18 @@
   "duration {duration}": "{{duration}} min",
   "newsletter": {
     "cta": "Bleiben Sie auf dem Laufenden!",
-    "firstName": "Vorname",
-    "lastName": "Nachname",
+    "name": "Name",
     "email": "Email-Adresse",
     "subscribe": "Newsletter abonnieren",
     "sending": "Sende...",
     "success": "Vielen Dank für Ihre Anmeldung.",
     "subscribeAgain": "Weitere Adresse anmelden",
-    "error": "Ups, da ist etwas schiefgelaufen. Bitte versuchen Sie es später noch einmal.",
     "empty": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
-    "duplicate": "Zu viele Anfragen für diese E-Mail-Adresse."
+    "duplicate": "Zu viele Anfragen für diese E-Mail-Adresse.",
+    "error": {
+      "network": "Unser Newsletter-System ist momentan nicht erreichbar. Bitte versuche es später erneut.",
+      "unknown": "Ein unbekannter Fehler ist aufgetreten. Bitte versuche es später erneut."
+    }
   },
   "Read more": "Weiterlesen",
   "signed in as {{name}}": "angemeldet als {{name}}",

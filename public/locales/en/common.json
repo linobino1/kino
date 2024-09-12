@@ -7,16 +7,18 @@
   "starring {actors}": "with {{actors}}",
   "newsletter": {
     "cta": "Subscribe to our newsletter",
-    "firstName": "First Name",
-    "lastName": "Last Name",
+    "name": "Name",
     "email": "Email Address",
     "subscribe": "Submit",
     "sending": "Sending...",
     "success": "Thank you for subscribing!",
     "subscribeAgain": "Subscribe again",
-    "error": "An unexpected internal error has occurred.",
     "empty": "Please enter a valid email address.",
-    "duplicate": "Too many subscribe attempts for this email address."
+    "duplicate": "Too many subscribe attempts for this email address.",
+    "error": {
+      "network": "Our newsletter service is currently unavailable. Please try again later.",
+      "unknown": "An unknown error occurred. Please try again later."
+    }
   },
   "More Info": "More Info",
   "Read more": "Read more",
