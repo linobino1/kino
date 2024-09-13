@@ -1,11 +1,6 @@
 .container {
   min-height: 11em;
 }
-@media screen and (min-width: 768px) {
-  .container {
-    padding-right: 2em;
-  }
-}
 .title {
   font: var(--font);
   font-weight: var(--font-weight-semi-bold);

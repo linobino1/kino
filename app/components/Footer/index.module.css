@@ -30,7 +30,7 @@
 }
 .footer a:hover {
   cursor: pointer;
-  filter: brightness(0.5);
+  filter: brightness(0.7);
   transition: filter 0.4s;
 }
 /** Grid Layout ************************************************************************/
@@ -58,9 +58,10 @@
 .logos {
   grid-area: 3 / 1 / 4 / 5;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
+  justify-content: space-evenly;
+  gap: 5vw;
   margin-block: 2rem;
 }
 
