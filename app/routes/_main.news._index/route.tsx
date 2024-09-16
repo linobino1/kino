@@ -133,15 +133,12 @@ export default function Index() {
             <>
               {JsonLd(postsListSchema(posts.docs))}
               <ul className={classes.posts}>
-                {posts.docs
-                  .concat(posts.docs)
-                  .concat(posts.docs)
-                  .map((post, index) => (
-                    <li key={index}>
-                      <PostPreview post={post} />
-                      <hr />
-                    </li>
-                  ))}
+                {posts.docs.map((post, index) => (
+                  <li key={index}>
+                    <PostPreview post={post} />
+                    <hr />
+                  </li>
+                ))}
               </ul>
             </>
           ) : (
