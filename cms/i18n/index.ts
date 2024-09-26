@@ -37,19 +37,11 @@ export const fixedT = (
   locale: string,
   replacers: Record<string, string> = {}
 ): string => {
-  switch (locale) {
-    case "en":
-      return replace(
-        en.hasOwnProperty(key) ? en[key as TranslationKeyEN] : key,
-        replacers
-      );
-    case "de":
-      return replace(
-        de.hasOwnProperty(key) ? de[key as TranslationKeyDE] : key,
-        replacers
-      );
-  }
-  return key;
+  const data = locale == "en" ? en : de;
+  return replace(
+    data.hasOwnProperty(key) ? data[key as TranslationKeyEN] : key,
+    replacers
+  );
 };
 
 /**
