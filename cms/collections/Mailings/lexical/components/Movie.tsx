@@ -14,6 +14,7 @@ import type {
 } from "payload/generated-types";
 import { SerializeLexicalToEmail } from "../SerializeLexicalToEmail";
 import { bgGrey, containerWidth, fontSize } from "../../templates/Newsletter";
+import Shorten from "./Shorten";
 
 type MovieProps = {
   movie: MovieType;
@@ -71,7 +72,9 @@ const Movie: React.FC<MovieProps> = ({ movie, color, additionalText }) => {
           <Text style={{ marginBlock: 0, fontSize, fontStyle: "italic" }}>
             {subtitle}
           </Text>
-          <Text style={{ fontSize }}>{movie?.synopsis}</Text>
+          <Text style={{ fontSize }}>
+            <Shorten text={movie?.synopsis} />
+          </Text>
           {additionalText && (
             <SerializeLexicalToEmail
               nodes={additionalText.root.children as any}

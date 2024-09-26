@@ -33,11 +33,17 @@ export const generateHTML: FieldHook = async ({ data, req }) => {
       cookie: `payload-token=${extractTokenFromRequest(req)}`,
     },
   };
-  const [headerImage, footerImage] = await Promise.all([
+  const [headerImage, headerOverlay, footerImage] = await Promise.all([
     // header image (if set)
-    data.headerImage &&
+    data.header.image &&
       fetch(
-        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/media/${data.headerImage}`,
+        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/media/${data.header.image}`,
+        fetchOptions
+      ).then((res) => res.json()),
+    // header overlay (if set)
+    data.header.overlay &&
+      fetch(
+        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/media/${data.header.overlay}`,
         fetchOptions
       ).then((res) => res.json()),
     // footer image (if set)
@@ -53,7 +59,11 @@ export const generateHTML: FieldHook = async ({ data, req }) => {
     ...data,
     // @ts-ignore why is SerializedLexicalEditorState not assignable to SerializedLexicalEditorState?
     content,
-    headerImage,
+    header: {
+      ...data?.header,
+      image: headerImage,
+      overlay: headerOverlay,
+    },
     footer: {
       ...data?.footer,
       image: footerImage,

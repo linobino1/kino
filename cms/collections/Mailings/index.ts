@@ -58,10 +58,23 @@ export const Mailings: CollectionConfig = {
       ],
     },
     {
-      name: "headerImage",
-      label: t("Header Image"),
-      type: "upload",
-      relationTo: "media",
+      type: "group",
+      name: "header",
+      label: t("Header"),
+      fields: [
+        {
+          name: "image",
+          label: t("Image"),
+          type: "upload",
+          relationTo: "media",
+        },
+        {
+          name: "overlay",
+          label: t("Overlay"),
+          type: "upload",
+          relationTo: "media",
+        },
+      ],
     },
     {
       name: "content",
@@ -75,25 +88,6 @@ export const Mailings: CollectionConfig = {
           }),
         ],
       }),
-    },
-    {
-      name: "events",
-      label: t("Events"),
-      type: "array",
-      fields: [
-        {
-          name: "event",
-          label: t("Event"),
-          type: "relationship",
-          relationTo: "events",
-        },
-        {
-          name: "additionalText",
-          label: t("additional info"),
-          type: "richText",
-          editor: lexicalEditor({}),
-        },
-      ],
     },
     {
       type: "group",

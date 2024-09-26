@@ -10,18 +10,13 @@ import {
   Text,
   Font,
 } from "@react-email/components";
-import type {
-  Mailing,
-  Media,
-  Event as EventType,
-} from "payload/generated-types";
+import type { Mailing, Media } from "payload/generated-types";
 import { seed } from "../seed";
 import { SerializeLexicalToEmail } from "../lexical/SerializeLexicalToEmail";
 import { parseISO } from "date-fns";
 import { de } from "date-fns/locale";
 import { formatInTimeZone } from "date-fns-tz";
 import { Node as SlateNode } from "slate";
-import Event from "../lexical/components/Event";
 
 const tz = process.env.TIMEZONE ?? "Europe/Berlin";
 
@@ -39,6 +34,7 @@ export type Props = {
 };
 
 export const bgGrey = "#f2f2f2";
+export const textGrey = "#7f8c8d";
 export const containerWidth = 580;
 export const fontSize = "16px";
 
@@ -80,9 +76,9 @@ export default function Newsletter({ mailing }: Props) {
         />
       </Head>
       <Body style={{ padding: 0, margin: 0 }}>
-        {typeof mailing.headerImage === "object" && (
+        {typeof mailing.header?.image === "object" && (
           <Img
-            src={(mailing.headerImage as Media).url ?? ""}
+            src={(mailing.header.image as Media).url ?? ""}
             alt="header"
             style={{
               objectFit: "cover",
@@ -91,19 +87,24 @@ export default function Newsletter({ mailing }: Props) {
             }}
           />
         )}
+        {typeof mailing.header?.overlay === "object" && (
+          <Img
+            src={(mailing.header.overlay as Media).url ?? ""}
+            alt="header"
+            style={{
+              position: "absolute",
+              top: 0,
+              objectFit: "cover",
+              width: "100%",
+              height: "400px",
+              opacity: 0.5,
+            }}
+          />
+        )}
         <SerializeLexicalToEmail
           nodes={mailing.content?.root.children as any}
           color={color}
         />
-        {false &&
-          mailing.events?.map((item, index) => (
-            <Event
-              key={index}
-              event={item.event as EventType}
-              color={color}
-              additionalText={item.additionalText}
-            />
-          ))}
         {typeof footer?.image === "object" && footer.label && footer.link && (
           <Section
             style={{
@@ -136,7 +137,7 @@ export default function Newsletter({ mailing }: Props) {
         )}
         <Container
           style={{
-            color: "#7f8c8d",
+            color: textGrey,
             textAlign: "center",
             fontSize: "12px",
             lineHeight: "18px",
@@ -158,7 +159,9 @@ export default function Newsletter({ mailing }: Props) {
               <br />
               <br />
               <br />
-              <Link href="{{ UnsubscribeURL }}">newsletter abbestellen</Link>
+              <Link href="{{ UnsubscribeURL }}" style={{ color: textGrey }}>
+                newsletter abbestellen
+              </Link>
             </Text>
           </Section>
         </Container>

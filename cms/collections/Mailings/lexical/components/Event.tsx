@@ -25,6 +25,7 @@ import {
   slateToPlainText,
   fontSize,
 } from "../../templates/Newsletter";
+import Shorten from "./Shorten";
 
 type EventProps = {
   event: EventType;
@@ -58,6 +59,11 @@ const Event: React.FC<EventProps> = ({ event, color, additionalText }) => {
       .filter(Boolean)
       .join(", ");
   }
+
+  const description =
+    event.type === "screening"
+      ? movie?.synopsis
+      : slateToPlainText(event.info as any);
 
   return (
     <Section style={{ backgroundColor: bgGrey, paddingBlock: "20px" }}>
@@ -111,9 +117,7 @@ const Event: React.FC<EventProps> = ({ event, color, additionalText }) => {
             </Text>
           )}
           <Text style={{ fontSize }}>
-            {event.type === "screening"
-              ? movie?.synopsis
-              : slateToPlainText(event.info)}
+            <Shorten text={description} moreLink={event.url} />
           </Text>
           {additionalText && (
             <SerializeLexicalToEmail

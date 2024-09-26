@@ -133,7 +133,7 @@
   "Comma-separated list of tags.": "Komma-getrennte Tags.",
   "Slug": "URL Slug",
   "Rented by": "Entliehen von",
-  "Header": "Titelbild",
+  "Header": "Header",
   "Heading": "Überschrift",
   "Add a link to the post header.": "Verlinke das Titelbild.",
   "AdminExplainPostLinkType": "Wähle 'Keine(r)' um das Titelbild mit der Detailseite zu verlinken, falls diese existiert.",
@@ -163,5 +163,6 @@
   "additional info": "zusätzliche Informationen",
   "Wordpress Import Info": "Wordpress Import Info",
   "Imported from Wordpress": "Von Wordpress importiert",
-  "Notes": "Notes"
+  "Notes": "Notes",
+  "Overlay": "Overlay"
 }
