@@ -28,7 +28,6 @@ export const action: ActionFunction = async ({ request }) => {
       }
     );
   } catch (error) {}
-  console.log(res);
 
   if (!res?.ok) {
     if (!res || res.status === 404) {
