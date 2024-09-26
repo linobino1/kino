@@ -107,9 +107,26 @@ export const migrateFilmprints = async ({ payload }: migrateVideothekProps) => {
       "unknown";
     if (internationalTitle === "unknown") {
       console.warn(`No title found for videothek film ${id}, skipping import`);
-      return;
+      continue;
     }
     let slug = slugFormat(internationalTitle);
+
+    // check if the movie already exists
+    let existing = await payload.find({
+      collection: "movies",
+      where: {
+        slug: {
+          equals: slug,
+        },
+      },
+      limit: 1,
+    });
+    if (existing.docs.length > 0) {
+      console.warn(
+        `Movie ${internationalTitle} already exists, skipping import`
+      );
+      continue;
+    }
 
     let data: Partial<Movie> = {
       internationalTitle,
@@ -141,18 +158,22 @@ export const migrateFilmprints = async ({ payload }: migrateVideothekProps) => {
         await downloadFile(item.featuredImage?.node?.mediaItemUrl, filePath);
       }
 
-      const media = await payload.create({
-        collection: "media",
-        data: {
-          filename: `${slug}-backdrop.jpg`,
-          alt: item.featuredImage?.node?.altText,
-        },
-        filePath,
-        locale: "de",
-        draft: true,
-      });
+      try {
+        const media = await payload.create({
+          collection: "media",
+          data: {
+            filename: `${slug}-backdrop.jpg`,
+            alt: item.featuredImage?.node?.altText,
+          },
+          filePath,
+          locale: "de",
+          draft: true,
+        });
 
-      data.still = media.id;
+        data.still = media.id;
+      } catch (e) {
+        console.warn(`Error creating media for ${slug}: ${e}`);
+      }
     }
 
     // sound format is now on the filmprint, let's just put it in the notes

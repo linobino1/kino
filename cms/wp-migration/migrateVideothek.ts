@@ -89,9 +89,26 @@ export const migrateVideothek = async ({ payload }: migrateVideothekProps) => {
       "unknown";
     if (internationalTitle === "unknown") {
       console.warn(`No title found for videothek film ${id}, skipping import`);
-      return;
+      continue;
     }
     let slug = slugFormat(internationalTitle);
+
+    // check if the movie already exists
+    let existing = await payload.find({
+      collection: "movies",
+      where: {
+        slug: {
+          equals: slug,
+        },
+      },
+      limit: 1,
+    });
+    if (existing.docs.length > 0) {
+      console.warn(
+        `Movie ${internationalTitle} already exists, skipping import`
+      );
+      continue;
+    }
 
     let notes: string[] = [];
     let data: Partial<Movie> = {
