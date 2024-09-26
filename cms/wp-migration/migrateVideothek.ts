@@ -131,14 +131,19 @@ export const migrateVideothek = async ({ payload }: migrateVideothekProps) => {
     }
     // create a new person for the director
     if (item.videothek?.filmRegie?.nodes[0]?.name) {
-      let director = await createOrUpdateDoc({
-        payload,
-        collection: "persons",
-        data: {
-          name: item.videothek?.filmRegie?.nodes[0]?.name,
-        },
-      });
-      data.directors = [director.id];
+      try {
+        let director = await createOrUpdateDoc({
+          payload,
+          collection: "persons",
+          data: {
+            name: item.videothek?.filmRegie?.nodes[0]?.name,
+          },
+        });
+        data.directors = [director.id];
+      } catch (e) {
+        console.error(e);
+        notes.push(`Regisseur: ${item.videothek?.filmRegie?.nodes[0]?.name}`);
+      }
     }
 
     // create the still image
