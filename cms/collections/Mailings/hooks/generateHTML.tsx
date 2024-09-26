@@ -5,6 +5,7 @@ import Newsletter, {
 } from "../templates/Newsletter";
 import { render } from "@react-email/components";
 import type { FieldHook } from "payload/types";
+import { addDepth } from "../lexical/addDepth";
 
 export const generateHTML: FieldHook = async ({ data, req }) => {
   if (!data) {
@@ -18,14 +19,21 @@ export const generateHTML: FieldHook = async ({ data, req }) => {
   //   `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/mailings/${result.id}?depth=4`,
   // );
 
-  // let's fetch the details we need...
+  // let's add depth to the lexical content
+  const content = await addDepth({
+    json: data.content,
+    payload: req.payload,
+    locale: "de",
+  });
+
+  // and fetch the header and footer images
   const fetchOptions: RequestInit = {
     credentials: "include",
     headers: {
       cookie: `payload-token=${extractTokenFromRequest(req)}`,
     },
   };
-  const [headerImage, footerImage, events] = await Promise.all([
+  const [headerImage, footerImage] = await Promise.all([
     // header image (if set)
     data.headerImage &&
       fetch(
@@ -38,31 +46,22 @@ export const generateHTML: FieldHook = async ({ data, req }) => {
         `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/media/${data.footer.image}`,
         fetchOptions
       ).then((res) => res.json()),
-    // screenings with depth 3
-    Promise.all(
-      data.events.map((item: any) =>
-        fetch(
-          `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/events/${item.event}?depth=3`,
-          fetchOptions
-        ).then((res) => res.json())
-      )
-    ),
   ]);
 
   // assemble the "deep" mailing doc
   const mailing: NewsletterProps["mailing"] = {
     ...data,
+    // @ts-ignore why is SerializedLexicalEditorState not assignable to SerializedLexicalEditorState?
+    content,
     headerImage,
     footer: {
       ...data?.footer,
       image: footerImage,
     },
-    events: data.events.map((item: any, index: number) => ({
-      ...item,
-      event: events[index],
-    })),
     subject: data.subject,
   };
 
-  return render(<Newsletter mailing={mailing} />);
+  // console.log("mailing", JSON.stringify(mailing, null, 2));
+
+  return await render(<Newsletter mailing={mailing} />);
 };

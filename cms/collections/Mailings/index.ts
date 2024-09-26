@@ -1,11 +1,14 @@
 import { t } from "../../i18n";
 import type { CollectionConfig } from "payload/types";
 import HtmlField from "./fields/HtmlField";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { BlocksFeature, lexicalEditor } from "@payloadcms/richtext-lexical";
 import { isAdminOrEditor } from "../../access";
 import { colorPickerField } from "@innovixx/payload-color-picker-field";
 import { generateHTML } from "./hooks/generateHTML";
 import HowTo from "./components/HowTo";
+import { MovieBlock } from "./lexical/blocks/MovieBlock";
+import { EventBlock } from "./lexical/blocks/EventBlock";
+import { FilmPrintBlock } from "./lexical/blocks/FilmPrintBlock";
 
 export const Mailings: CollectionConfig = {
   slug: "mailings",
@@ -64,7 +67,14 @@ export const Mailings: CollectionConfig = {
       name: "content",
       label: t("Content"),
       type: "richText",
-      editor: lexicalEditor({}),
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+          BlocksFeature({
+            blocks: [EventBlock, FilmPrintBlock, MovieBlock],
+          }),
+        ],
+      }),
     },
     {
       name: "events",

@@ -11,10 +11,14 @@ import {
 } from "./RichTextNodeFormat";
 import type { SerializedLexicalNode } from "./types";
 import { Heading, Text, Link, Hr } from "@react-email/components";
+import Event from "./components/Event";
+import Gutter from "./components/Gutter";
+import FilmPrint from "./components/FilmPrint";
+import Movie from "./components/Movie";
 
 interface Props {
   nodes: SerializedLexicalNode[];
-  color?: string;
+  color: string;
 }
 const fontSize = "16px";
 
@@ -89,9 +93,9 @@ export function SerializeLexicalToEmail({ nodes, color }: Props): JSX.Element {
                   item.checked = false;
                 }
               }
-              return SerializeLexicalToEmail({ nodes: node.children });
+              return SerializeLexicalToEmail({ nodes: node.children, color });
             } else {
-              return SerializeLexicalToEmail({ nodes: node.children });
+              return SerializeLexicalToEmail({ nodes: node.children, color });
             }
           }
         };
@@ -104,9 +108,11 @@ export function SerializeLexicalToEmail({ nodes, color }: Props): JSX.Element {
           }
           case "paragraph": {
             return (
-              <Text key={index} style={{ textAlign, fontSize }}>
-                {serializedChildren}
-              </Text>
+              <Gutter key={index}>
+                <Text key={index} style={{ textAlign, fontSize }}>
+                  {serializedChildren}
+                </Text>
+              </Gutter>
             );
           }
           case "heading": {
@@ -122,18 +128,23 @@ export function SerializeLexicalToEmail({ nodes, color }: Props): JSX.Element {
             }
 
             return (
-              <Heading
-                key={index}
-                style={{ textAlign, fontSize, fontWeight, marginBlock }}
-              >
-                {serializedChildren}
-              </Heading>
+              <Gutter key={index}>
+                <Heading
+                  style={{ textAlign, fontSize, fontWeight, marginBlock }}
+                >
+                  {serializedChildren}
+                </Heading>
+              </Gutter>
             );
           }
           case "list": {
             type List = Extract<keyof JSX.IntrinsicElements, "ul" | "ol">;
             const Tag = node?.tag as List;
-            return <Tag key={index}>{serializedChildren}</Tag>;
+            return (
+              <Gutter key={index}>
+                <Tag key={index}>{serializedChildren}</Tag>;
+              </Gutter>
+            );
           }
           case "listitem": {
             if (node?.checked != null) {
@@ -158,9 +169,11 @@ export function SerializeLexicalToEmail({ nodes, color }: Props): JSX.Element {
           }
           case "quote": {
             return (
-              <blockquote key={index} style={{ textAlign }}>
-                {serializedChildren}
-              </blockquote>
+              <Gutter key={index}>
+                <blockquote key={index} style={{ textAlign }}>
+                  {serializedChildren}
+                </blockquote>
+              </Gutter>
             );
           }
           case "link": {
@@ -180,21 +193,64 @@ export function SerializeLexicalToEmail({ nodes, color }: Props): JSX.Element {
             if (!media.mimeType.startsWith("image/")) {
               throw new Error("Only images are supported");
             }
-            return <img key={index} src={media.url} alt={media.alt} />;
+            return (
+              <Gutter key={index}>
+                <img key={index} src={media.url} alt={media.alt} />;
+              </Gutter>
+            );
 
           case "horizontalrule":
             return (
-              <Hr
-                key={index}
-                style={{
-                  borderColor: color,
-                  borderStyle: "dotted",
-                  borderBottomWidth: "4px",
-                  borderTopWidth: 0,
-                  marginBlock: "1em",
-                }}
-              />
+              <Gutter key={index}>
+                <Hr
+                  key={index}
+                  style={{
+                    borderColor: color,
+                    borderStyle: "dotted",
+                    borderBottomWidth: "4px",
+                    borderTopWidth: 0,
+                    marginBlock: "1em",
+                  }}
+                />
+              </Gutter>
             );
+
+          case "block":
+            switch (node.fields.blockType) {
+              case "eventBlock":
+                return (
+                  <Event
+                    key={index}
+                    event={node.fields.event}
+                    color={color}
+                    additionalText={node.fields.additionalText}
+                  />
+                );
+              case "filmPrintBlock":
+                return (
+                  <FilmPrint
+                    key={index}
+                    filmPrint={node.fields.filmPrint}
+                    additionalText={node.fields.additionalText}
+                    color={color}
+                  />
+                );
+              case "movieBlock":
+                return (
+                  <Movie
+                    key={index}
+                    movie={node.fields.movie}
+                    additionalText={node.fields.additionalText}
+                    color={color}
+                  />
+                );
+              default:
+                return (
+                  <p key={index}>
+                    unimplemented block type {node.fields.blockType}
+                  </p>
+                );
+            }
 
           default:
             return <p key={index}>unimplemented node type {node.type}</p>;

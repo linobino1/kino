@@ -3,7 +3,6 @@ import {
   Body,
   Container,
   Head,
-  Heading,
   Html,
   Img,
   Link,
@@ -12,16 +11,9 @@ import {
   Font,
 } from "@react-email/components";
 import type {
-  Country,
-  FilmPrint,
-  Format,
-  Genre,
-  LanguageVersion,
   Mailing,
   Media,
-  Movie,
-  Person,
-  Event,
+  Event as EventType,
 } from "payload/generated-types";
 import { seed } from "../seed";
 import { SerializeLexicalToEmail } from "../lexical/SerializeLexicalToEmail";
@@ -29,10 +21,11 @@ import { parseISO } from "date-fns";
 import { de } from "date-fns/locale";
 import { formatInTimeZone } from "date-fns-tz";
 import { Node as SlateNode } from "slate";
+import Event from "../lexical/components/Event";
 
 const tz = process.env.TIMEZONE ?? "Europe/Berlin";
 
-const formatDate = (iso: string, format: string) => {
+export const formatDate = (iso: string, format: string) => {
   const date = parseISO(iso);
   return formatInTimeZone(date, tz, format, { locale: de });
 };
@@ -44,13 +37,15 @@ export const slateToPlainText = (content: any) => {
 export type Props = {
   mailing: Omit<Mailing, "updatedAt" | "createdAt" | "id">;
 };
-const bgGrey = "#f2f2f2";
-const containerWidth = 580;
-const fontSize = "16px";
+
+export const bgGrey = "#f2f2f2";
+export const containerWidth = 580;
+export const fontSize = "16px";
 
 export default function Newsletter({ mailing }: Props) {
   const color = mailing.color ?? "#000";
   const { footer } = mailing;
+
   return (
     <Html
       lang={mailing.language ?? "de"}
@@ -96,126 +91,19 @@ export default function Newsletter({ mailing }: Props) {
             }}
           />
         )}
-        <Container
-          style={{
-            paddingBottom: "20px",
-            paddingInline: "5px",
-            width: "100%",
-            maxWidth: containerWidth,
-          }}
-        >
-          <SerializeLexicalToEmail
-            nodes={mailing.content?.root.children as any}
-            color={color}
-          />
-        </Container>
-        {mailing.events?.map((item, index) => {
-          const event = item.event as Event;
-          const filmprint = event.films?.[0]?.filmprint as
-            | FilmPrint
-            | undefined;
-          const movie = filmprint?.movie as Movie | undefined;
-
-          let subtitle = event.subtitle;
-          if (event.type === "screening" && movie) {
-            subtitle = [
-              movie.originalTitle !== movie.title &&
-                `OT: ${movie.originalTitle}`,
-              (movie.genres as Genre[]).map((x) => x.name).join(", "),
-              (movie.countries as Country[])?.map((x) => x.name).join(", "),
-              movie.year,
-              movie.directors &&
-                `R: ${(movie.directors as Person[])
-                  ?.map((x) => x.name)
-                  .join(", ")}`,
-
-              `${movie.duration} min`,
-              (filmprint?.format as Format).name,
-              filmprint
-                ? (filmprint.languageVersion as LanguageVersion)?.name
-                : null,
-              movie.cast?.length &&
-                `Mit: ${(movie.cast as Person[])
-                  ?.slice(0, 3)
-                  .map((x) => x.name)
-                  .join(", ")}`,
-            ]
-              .filter(Boolean)
-              .join(", ");
-          }
-          const additionalText = item.additionalText;
-
-          return (
-            <Section
+        <SerializeLexicalToEmail
+          nodes={mailing.content?.root.children as any}
+          color={color}
+        />
+        {false &&
+          mailing.events?.map((item, index) => (
+            <Event
               key={index}
-              style={{ backgroundColor: bgGrey, paddingBlock: "20px" }}
-            >
-              <Container
-                style={{
-                  backgroundColor: "#FFFFFF",
-                  width: "100%",
-                  maxWidth: containerWidth,
-                }}
-              >
-                <Link href={event.url} style={{ display: "contents" }}>
-                  <Img
-                    src={(event.header as Media).url ?? ""}
-                    style={{
-                      width: "100%",
-                      height: "auto",
-                      aspectRatio: "16 / 9",
-                      objectFit: "cover",
-                    }}
-                  />
-                  <Text
-                    style={{
-                      color: "#000000",
-                      borderColor: color,
-                      borderStyle: "inset",
-                      borderWidth: "2px",
-                      padding: "10px",
-                      margin: 0,
-                      fontSize: "18px",
-                      lineHeight: "27px",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    {`${formatDate(event.date, "dd. LLL - p")} Uhr`}
-                  </Text>
-                </Link>
-                <Container style={{ padding: "20px" }}>
-                  <Heading
-                    style={{
-                      borderColor: color,
-                      marginBlock: 0,
-                      fontSize: "23px",
-                    }}
-                  >
-                    {event.title}
-                  </Heading>
-                  {subtitle && (
-                    <Text
-                      style={{ marginBlock: 0, fontSize, fontStyle: "italic" }}
-                    >
-                      {subtitle}
-                    </Text>
-                  )}
-                  <Text style={{ fontSize }}>
-                    {event.type === "screening"
-                      ? movie?.synopsis
-                      : slateToPlainText(event.info)}
-                  </Text>
-                  {additionalText && (
-                    <SerializeLexicalToEmail
-                      nodes={additionalText.root.children as any}
-                    />
-                  )}
-                </Container>
-              </Container>
-            </Section>
-          );
-        })}
+              event={item.event as EventType}
+              color={color}
+              additionalText={item.additionalText}
+            />
+          ))}
         {typeof footer?.image === "object" && footer.label && footer.link && (
           <Section
             style={{
