@@ -16,5 +16,6 @@ export const migrateKeywords: MigrationFunction = async ({
     data: {
       tags: data.keywords.map((keyword) => keyword.name).join(", "),
     },
+    draft: true,
   });
 };

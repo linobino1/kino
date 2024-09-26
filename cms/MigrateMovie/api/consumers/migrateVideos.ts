@@ -21,5 +21,6 @@ export const migrateVideos: MigrationFunction = async ({ payload, movie }) => {
     data: {
       trailer,
     },
+    draft: true,
   });
 };

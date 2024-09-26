@@ -42,5 +42,6 @@ export const migrateReleaseDates: MigrationFunction = async ({
     data: {
       ageRating,
     },
+    draft: true,
   });
 };

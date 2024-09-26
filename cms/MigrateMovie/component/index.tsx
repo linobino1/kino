@@ -8,24 +8,20 @@ import { useTranslation } from "react-i18next";
 export const MigrateMovie: React.FC = () => {
   const locale = useLocale();
   const { t } = useTranslation();
-  // states:
-  // initial: show search input
-  // loading: show loading
-  // results: show results of tmdb find
-  // preview: show preview of movie with form to select backdrop and poster image
-  // success: show success message and link to the created movie
-  const [state, setState] = useState<string>("initial");
+  const [state, setState] = useState<
+    | "initial" // show search input
+    | "loading" // show loading
+    | "chooseMovie" // show results of tmdb find
+    | "chooseBackdrop" // show backdrops of movie
+    | "choosePoster" // show posters of movie
+    | "success" // show success message
+  >("initial");
   const [error, setError] = useState<string>("");
   const [warnings, setWarnings] = useState<[]>([]);
   const [query, setQuery] = useState<string>("");
-  const [tmdbId, setTmdbId] = useState<string>("");
-  const [images, setImages] = useState<{
-    backdrop?: string;
-    poster?: string;
-  }>({
-    backdrop: undefined,
-    poster: undefined,
-  });
+  const [tmdbId, setTmdbId] = useState<string | null>(null);
+  const backdrop = useRef<string | null>(null);
+  const poster = useRef<string | null>(null);
   const [searchResults, setSearchResults] = useState<tmdbFindResult>();
   const [previewData, setPreviewData] = useState<tmdbPreviewResult>();
   const [migratedMovie, setMigratedMovie] = useState<Movie>();
@@ -35,7 +31,7 @@ export const MigrateMovie: React.FC = () => {
   const cancel = () => {
     setState("initial");
     setSearchResults(undefined);
-    setTmdbId("");
+    setTmdbId(null);
     setPreviewData(undefined);
     setError("");
   };
@@ -57,7 +53,7 @@ export const MigrateMovie: React.FC = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.success) {
-          setState("results");
+          setState("chooseMovie");
           setSearchResults(res.data);
         } else {
           setState("initial");
@@ -70,13 +66,11 @@ export const MigrateMovie: React.FC = () => {
       });
   };
 
-  const preview = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSelectMovie = async (tmdbId: string) => {
     setError("");
-    if (state !== "loading") setState("loading");
-
-    const tmdbId = "tmdbId" in e.target && (e.target.tmdbId as any).value;
     setTmdbId(tmdbId);
+
+    if (state !== "loading") setState("loading");
 
     fetch("/api/migrate-movie/preview", {
       method: "POST",
@@ -91,8 +85,14 @@ export const MigrateMovie: React.FC = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.success) {
-          setState("preview");
           setPreviewData(res.data);
+          if (res.data.images.backdrops.length) {
+            setState("chooseBackdrop");
+          } else if (res.data.images.posters.length) {
+            setState("choosePoster");
+          } else {
+            migrate();
+          }
         } else {
           setState("initial");
           setError(res.message);
@@ -104,23 +104,32 @@ export const MigrateMovie: React.FC = () => {
       });
   };
 
-  const onImageChoiceChange =
-    (type: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = images;
-      value[type as keyof typeof images] = e.target.value;
-      setImages(value);
-    };
+  const onSelectBackdrop = (filePath: string) => {
+    backdrop.current = filePath;
+    if (previewData?.images.posters.length) {
+      setState("choosePoster");
+    } else {
+      migrate();
+    }
+  };
 
-  const migrate = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSelectPoster = (filePath: string) => {
+    poster.current = filePath;
+    migrate();
+  };
+
+  const migrate = async () => {
     setError("");
-    if (state !== "loading") setState("loading");
+    setState("loading");
 
     fetch("/api/migrate-movie/migrate", {
       method: "POST",
       body: JSON.stringify({
         tmdbId,
-        images,
+        images: {
+          backdrop: backdrop.current,
+          poster: poster.current,
+        },
         locale,
       }),
       headers: {
@@ -151,6 +160,10 @@ export const MigrateMovie: React.FC = () => {
   });
   return (
     <div className="container">
+      <pre>tmdbId: {tmdbId}</pre>
+      <pre>backdrop: {backdrop.current}</pre>
+      <pre>poster: {poster.current}</pre>
+      {/* <pre>{JSON.stringify(previewData, null, 2)}</pre> */}
       {state === "loading" && <div ref={loading}>{t("Loading...")}</div>}
       {state === "success" && migratedMovie && (
         <div ref={success}>
@@ -182,7 +195,7 @@ export const MigrateMovie: React.FC = () => {
         </div>
       )}
       {(state === "initial" ||
-        (state === "results" && !searchResults?.results.length)) && (
+        (state === "chooseMovie" && !searchResults?.results.length)) && (
         <form onSubmit={search} className="initial">
           <label
             htmlFor="query"
@@ -209,83 +222,61 @@ export const MigrateMovie: React.FC = () => {
           )}
         </form>
       )}
-      {state === "results" && (
-        <form onSubmit={preview}>
-          {searchResults?.results.length ? (
-            <>
-              <ul className="results">
-                {searchResults.results.map((result: any) => (
-                  <li key={result.id}>
-                    <label>
-                      <input
-                        type="radio"
-                        name="tmdbId"
-                        value={result.id}
-                        required={true}
-                      />
-                      <div className="movie">
-                        <img
-                          alt=""
-                          src={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
-                        />
-                        <div className="info">
-                          <h3>{result.original_title}</h3>
-                          <span>{result.release_date.split("-")[0]}</span>
-                          <p>{result.overview}</p>
-                        </div>
-                      </div>
-                    </label>
-                  </li>
-                ))}
-              </ul>
-              <button type="submit" value="search">
-                {t("Proceed")}
-              </button>
-            </>
-          ) : (
+      {state === "chooseMovie" && (
+        <>
+          {!searchResults?.results.length && (
             <p className="error">{t("No results found")}</p>
           )}
-        </form>
-      )}
-      {state === "preview" && previewData && (
-        <form onSubmit={migrate} className="preview">
-          <div className="title">{previewData.movie.original_title}</div>
-          {["backdrop", "poster"].map((type: string) => (
-            <div key={type} className="imageSelector" data-type={type}>
-              <label htmlFor={type}>
-                {t("Choose a {{type}}:", {
-                  type: t(type),
-                })}
+          <div className="tmdbResults">
+            {searchResults?.results.map((result: any, index: number) => (
+              <label
+                key={index}
+                className="item"
+                onClick={() => onSelectMovie(result.id)}
+              >
+                <img
+                  alt=""
+                  src={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
+                />
+                <div className="info">
+                  <h3>{result.original_title}</h3>
+                  <span>{result.release_date?.split("-")[0]}</span>
+                  <p>{result.overview}</p>
+                </div>
               </label>
-              <div className="choices" onChange={onImageChoiceChange(type)}>
-                {previewData.images[
-                  `${type}s` as keyof tmdbPreviewResult["images"]
-                ]
-                  .slice(0, 5)
-                  .map((image: any) => (
-                    <label key={image.file_path} className="choice">
-                      <input
-                        type="radio"
-                        name={type}
-                        value={image.file_path}
-                        required={true}
-                      />
-                      <img
-                        alt=""
-                        src={`https://image.tmdb.org/t/p/w500${image.file_path}`}
-                      />
-                    </label>
-                  ))}
-              </div>
-            </div>
-          ))}
-          <button type="submit" value="migrate">
-            {t("Confirm")}
-          </button>
-          <button type="button" data-button-type="cancel" onClick={cancel}>
-            {t("Cancel")}
-          </button>
-        </form>
+            ))}
+          </div>
+        </>
+      )}
+      {state === "chooseBackdrop" && (
+        <div>
+          <p>{t("Choose a backdrop:")}</p>
+          <div className="backdrops">
+            {previewData?.images.backdrops.map((image: any) => (
+              <img
+                key={image.file_path}
+                src={`https://image.tmdb.org/t/p/w500${image.file_path}`}
+                alt=""
+                onClick={() => onSelectBackdrop(image.file_path)}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+      {state === "choosePoster" && (
+        <div>
+          <p>{t("Choose a poster:")}</p>
+          <div className="posters">
+            {previewData?.images.posters.map((image: any) => (
+              <img
+                key={image.file_path}
+                src={`https://image.tmdb.org/t/p/w500${image.file_path}`}
+                alt=""
+                onClick={() => onSelectPoster(image.file_path)}
+              />
+            ))}
+          </div>
+        </div>
       )}
       <button
         type="button"

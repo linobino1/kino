@@ -11,8 +11,8 @@ interface ImagesMigrationFunction {
   (
     context: Parameters<MigrationFunction>[0],
     images: {
-      poster: string;
-      backdrop: string;
+      poster?: string;
+      backdrop?: string;
     }
   ): Promise<void>;
 }
@@ -34,27 +34,31 @@ export const migrateImages: ImagesMigrationFunction = async (
 
   // find or create poster
   let poster: Media | undefined, still: Media | undefined;
-  try {
-    poster = await updateOrCreateImage(
-      images.poster,
-      "w500",
-      path.join(tmpDir, `${movie.slug}-poster.jpg`),
-      payload
-    );
-  } catch (err) {
-    warnings.push(new Error(`Unable to create poster (${err})`));
+  if (images.poster) {
+    try {
+      poster = await updateOrCreateImage(
+        images.poster,
+        "w500",
+        path.join(tmpDir, `${movie.slug}-poster.jpg`),
+        payload
+      );
+    } catch (err) {
+      warnings.push(new Error(`Unable to create poster (${err})`));
+    }
   }
 
   // find or create still
-  try {
-    still = await updateOrCreateImage(
-      images.backdrop,
-      "original",
-      path.join(tmpDir, `${movie.slug}-backdrop.jpg`),
-      payload
-    );
-  } catch (err) {
-    warnings.push(new Error(`Unable to create still (${err})`));
+  if (images.backdrop) {
+    try {
+      still = await updateOrCreateImage(
+        images.backdrop,
+        "original",
+        path.join(tmpDir, `${movie.slug}-backdrop.jpg`),
+        payload
+      );
+    } catch (err) {
+      warnings.push(new Error(`Unable to create still (${err})`));
+    }
   }
 
   // update movie
@@ -62,9 +66,10 @@ export const migrateImages: ImagesMigrationFunction = async (
     collection: "movies",
     id: movie.id,
     data: {
-      poster,
-      still,
+      poster: poster?.id,
+      still: still?.id,
     },
+    draft: true,
   });
 };
 
@@ -80,7 +85,7 @@ export const downloadTmdbImage = async (
   size: "original" | "w500"
 ) => {
   await new Promise((resolve, reject) => {
-    const url = `${tmdbMediaUrl}/t/p/${size}/${tmdbFilepath}`;
+    const url = `${tmdbMediaUrl}/t/p/${size}${tmdbFilepath}`;
 
     https
       .get(url, (response) => {
@@ -98,6 +103,7 @@ export const downloadTmdbImage = async (
         response.pipe(fileWriter);
       })
       .on("error", (error) => {
+        console.error(error);
         reject(error);
       });
   });

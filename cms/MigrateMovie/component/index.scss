@@ -8,12 +8,12 @@
 }
 .container label {
   display: block;
-  margin-block-end: .5rem;
+  margin-block-end: 0.5rem;
 }
 .container button {
   cursor: pointer;
   font-weight: 500;
-  margin-inline: .5rem;
+  margin-inline: 0.5rem;
 }
 .container button[data-button-type="cancel"] {
   color: var(--theme-elevation-400);
@@ -43,10 +43,10 @@
 .error {
   color: #e74c3c;
   font-size: 1rem;
-  margin-block-start: .5rem;
+  margin-block-start: 0.5rem;
 }
 /** RESULTS *******************************************************/
-ul.results {
+.tmdbResults {
   margin-block: 1rem;
   padding: 0;
   list-style: none;
@@ -54,30 +54,30 @@ ul.results {
   flex-direction: column;
   gap: 1em;
 }
-ul.results li .movie {
+.tmdbResults .item {
+  height: unset;
+  text-align: left;
+  font: inherit;
   display: flex;
   border: 1px solid var(--theme-elevation-100);
   cursor: pointer;
   min-height: 10em;
-  align-items: center;
+  padding: 0.8em;
 }
-ul.results li input[type="radio"] {
+.tmdbResults .item input[type="radio"] {
   display: none;
 }
-ul.results li input[type="radio"]:checked + .movie {
-  border-color: blue;
+.tmdbResults .item .info {
+  padding-inline: 0.8em;
 }
-ul.results li .info {
-  padding: .8em;
+.tmdbResults .item h3 {
+  margin-block-end: 0.2em;
 }
-ul.results li h3 {
-  margin-block-end: .2em;
+.tmdbResults .item p {
+  margin-block: 0.2em;
+  line-height: normal;
 }
-ul.results li p {
-  margin-block: .2em;
-  
-}
-ul.results li img {
+.tmdbResults .item img {
   width: 8em;
   height: auto;
   flex-shrink: 0;
@@ -87,21 +87,23 @@ ul.results li img {
 
 /** PREVIEW *******************************************************/
 /* // image selector */
-.imageSelector .choices {
+.backdrops,
+.posters {
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-block: 1rem;
   flex-wrap: wrap;
 }
-.imageSelector .choice img {
+.backdrops img,
+.posters img {
   border: 4px solid transparent;
 }
-.imageSelector[data-type="backdrop"] .choice {
-  width: 20rem;
+.backdrops img {
+  max-width: 40rem;
 }
-.imageSelector[data-type="poster"] .choice {
-  width: 15rem;
+.posters img {
+  max-width: 20rem;
 }
 .imageSelector .choice input {
   display: none;
@@ -121,7 +123,7 @@ button.reset {
   box-shadow: none;
   font: inherit;
   margin: 0;
-  padding: 0;;
+  padding: 0;
 }
 button.reset:hover {
   text-decoration: underline;

@@ -10,7 +10,7 @@ import { migrateImages } from "./consumers/migrateImages";
  * Create a movie in database from themoviedb.org data and user selected images
  * @returns the created movie
  */
-export const migrate: MigrateFunction = async ({ images, payload, tmdbId }) => {
+export const migrate: MigrateFunction = async ({ payload, tmdbId, images }) => {
   const warnings: Error[] = [];
 
   // migrate base data

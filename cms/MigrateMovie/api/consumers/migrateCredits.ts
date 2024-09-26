@@ -1,5 +1,5 @@
 import type { Payload } from "payload";
-import type { Job, Movie, Person } from "payload/generated-types";
+import type { Job, Person } from "payload/generated-types";
 import type { tmdbPerson } from "../../tmdb/types";
 import { getTmdbData } from "../helpers";
 import type { MigrationFunction } from "../types";
@@ -16,7 +16,7 @@ export const migrateCredits: MigrationFunction = async ({
   const data = await getTmdbData("credits", movie.tmdbId);
 
   // cast
-  const cast: Person[] = [];
+  const cast: string[] = [];
   await Promise.all(
     data.cast.map(async (person: tmdbPerson) => {
       let doc: Person;
@@ -47,13 +47,13 @@ export const migrateCredits: MigrationFunction = async ({
         warnings.push(
           new Error(`Could neither find or create person ${person.name}`)
         );
-      cast.push(doc);
+      cast.push(doc.id);
     })
   );
 
   // crew and directors
-  const crew: Movie["crew"] = [];
-  const directors: Person[] = [];
+  const crew: { job: string; person: string }[] = [];
+  const directors: string[] = [];
   await Promise.all(
     data.crew.map(async (tmdbPerson: tmdbPerson) => {
       let person: Person;
@@ -90,12 +90,12 @@ export const migrateCredits: MigrationFunction = async ({
       const job = await migrateJob(payload, warnings, tmdbPerson.job);
 
       crew.push({
-        person,
-        job,
+        person: person.id,
+        job: job.id,
       });
 
       // add to directors
-      if (job?.name === "Director") directors.push(person);
+      if (job?.name === "Director") directors.push(person.id);
     })
   );
 
@@ -108,6 +108,7 @@ export const migrateCredits: MigrationFunction = async ({
       crew,
       directors,
     },
+    draft: true,
   });
 };
 

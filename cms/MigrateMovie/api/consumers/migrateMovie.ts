@@ -13,15 +13,15 @@ export const migrateMovie = async (
   const data = await getTmdbData("movie", tmdbId, tmdbLng);
 
   // create genres
-  let genres: Genre[] = [];
+  let genres: string[] = [];
   await Promise.all(
     data.genres.map(async (genre: any) => {
-      genres.push(await migrateGenre(payload, tmdbId, warnings, genre));
+      genres.push((await migrateGenre(payload, tmdbId, warnings, genre)).id);
     })
   );
 
   // create production companies
-  let productionCompanies: Company[] = [];
+  let productionCompanies: string[] = [];
   await Promise.all(
     data.production_companies.map(async (company: tmdbCompany) => {
       let doc: Company;
@@ -51,14 +51,15 @@ export const migrateMovie = async (
         ).docs[0] as unknown as Company;
       }
 
-      if (!doc)
+      if (doc) {
+        productionCompanies.push(doc.id);
+      } else {
         warnings.push(
           new Error(
             `Could neither find or create production company ${company.name}`
           )
         );
-
-      productionCompanies.push(doc);
+      }
     })
   );
 
