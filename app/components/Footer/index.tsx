@@ -44,7 +44,7 @@ export const Footer: React.FC<Props> = ({ site, navigations }) => {
                 src="/img/zkm.svg"
                 alt="Zenrum für Kunst und Medien Karlsruhe"
                 className={classes.logo}
-                height={25}
+                height={42}
               />
             </Link>
             <Link to="https://www.themoviedb.org/" rel="noopener noreferrer">
