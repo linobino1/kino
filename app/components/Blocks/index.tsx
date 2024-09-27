@@ -1,5 +1,5 @@
 import type { PageLayout } from "cms/fields/pageLayout";
-import React from "react";
+import React, { Suspense } from "react";
 import type { Media } from "payload/generated-types";
 import { Heading } from "../Heading";
 import { HeaderImage } from "../HeaderImage";
@@ -73,12 +73,14 @@ export const Block: React.FC<BlockProps> = ({ block, ...props }) => {
 
     case "rawHTML":
       return (
-        <Gutter>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: block.html,
-            }}
-          />
+        <Gutter size="small">
+          <Suspense>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: block.html,
+              }}
+            />
+          </Suspense>
         </Gutter>
       );
 
