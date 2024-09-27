@@ -76,7 +76,7 @@ export default function Newsletter({ mailing }: Props) {
         />
       </Head>
       <Body style={{ padding: 0, margin: 0 }}>
-        {typeof mailing.header?.image === "object" && (
+        {mailing.header?.image && typeof mailing.header.image === "object" && (
           <Img
             src={(mailing.header.image as Media).url ?? ""}
             alt="header"
@@ -87,20 +87,20 @@ export default function Newsletter({ mailing }: Props) {
             }}
           />
         )}
-        {typeof mailing.header?.overlay === "object" && (
-          <Img
-            src={(mailing.header.overlay as Media).url ?? ""}
-            alt="header"
-            style={{
-              position: "absolute",
-              top: 0,
-              objectFit: "cover",
-              width: "100%",
-              height: "400px",
-              opacity: 0.5,
-            }}
-          />
-        )}
+        {mailing.header?.overlay &&
+          typeof mailing.header.overlay === "object" && (
+            <Img
+              src={(mailing.header.overlay as Media).url ?? ""}
+              alt="header"
+              style={{
+                position: "absolute",
+                top: 0,
+                objectFit: "contain",
+                width: "100%",
+                height: "400px",
+              }}
+            />
+          )}
         <SerializeLexicalToEmail
           nodes={mailing.content?.root.children as any}
           color={color}
