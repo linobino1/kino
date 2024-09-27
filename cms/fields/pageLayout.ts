@@ -7,6 +7,7 @@ import { Heading } from "../blocks/Heading";
 import { Image } from "../blocks/Image";
 import { Gallery } from "../blocks/Gallery";
 import { Video } from "../blocks/Video";
+import { RawHTML } from "../blocks/RawHTML";
 import { t } from "../i18n";
 import Events from "../blocks/Events";
 
@@ -38,6 +39,7 @@ export const pageLayout = (props?: Props): Field => {
           Gallery,
           Video,
           Events,
+          RawHTML,
         ],
         defaultValue: defaultLayout,
       },

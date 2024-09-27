@@ -71,6 +71,17 @@ export const Block: React.FC<BlockProps> = ({ block, ...props }) => {
         </Gutter>
       );
 
+    case "rawHTML":
+      return (
+        <Gutter>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: block.html,
+            }}
+          />
+        </Gutter>
+      );
+
     default:
     case "outlet":
       return children as React.ReactElement;
