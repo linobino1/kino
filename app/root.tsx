@@ -77,10 +77,10 @@ export async function loader({
       serializedI18nCookie,
       publicKeys: {
         PAYLOAD_PUBLIC_SERVER_URL: environment().PAYLOAD_PUBLIC_SERVER_URL,
-        HCAPTCHA_SITE_KEY: environment().HCAPTCHA_SITE_KEY,
+        TURNSTILE_SITE_KEY: environment().TURNSTILE_SITE_KEY,
         TIMEZONE: environment().TIMEZONE,
         NODE_ENV: environment().NODE_ENV,
-        LISTMONK_API_ENDPOINT: environment().LISTMONK_API_ENDPOINT,
+        LISTMONK_URL: environment().LISTMONK_URL,
         LISTMONK_LIST_ID: environment().LISTMONK_LIST_ID,
         CDN_CGI_IMAGE_URL: environment().CDN_CGI_IMAGE_URL,
         SENTRY_DSN: environment().SENTRY_DSN,

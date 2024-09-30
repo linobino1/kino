@@ -11,9 +11,6 @@ dependencies:
   '@aws-sdk/lib-storage':
     specifier: ^3.400.0
     version: 3.624.0(@aws-sdk/client-s3@3.624.0)
-  '@hcaptcha/react-hcaptcha':
-    specifier: ^1.8.1
-    version: 1.10.2(react-dom@18.3.1)(react@18.3.1)
   '@innovixx/payload-color-picker-field':
     specifier: ^1.1.1
     version: 1.1.1(payload@2.26.0)(react-dom@18.3.1)(react@18.3.1)
@@ -158,6 +155,9 @@ dependencies:
   react-router-dom:
     specifier: '5'
     version: 5.3.4(react@18.3.1)
+  react-turnstile:
+    specifier: ^1.1.4
+    version: 1.1.4(react-dom@18.3.1)(react@18.3.1)
   remix-custom-routes:
     specifier: ^1.0.1
     version: 1.0.1
@@ -2730,22 +2730,6 @@ packages:
     resolution: {integrity: sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==}
     dependencies:
       '@hapi/hoek': 9.3.0
-    dev: false
-
-  /@hcaptcha/loader@1.2.4:
-    resolution: {integrity: sha512-3MNrIy/nWBfyVVvMPBKdKrX7BeadgiimW0AL/a/8TohNtJqxoySKgTJEXOQvYwlHemQpUzFrIsK74ody7JiMYw==}
-    dev: false
-
-  /@hcaptcha/react-hcaptcha@1.10.2(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-dLmuk0LTHixvx6mW562QUaJUzj97B1p+a468UV81vVsKR7Kmf8SY/8X2VYMoYUfop4r1lU9ycosGtpIobsYlmw==}
-    peerDependencies:
-      react: '>= 16.3.0'
-      react-dom: '>= 16.3.0'
-    dependencies:
-      '@babel/runtime': 7.25.0
-      '@hcaptcha/loader': 1.2.4
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
     dev: false
 
   /@humanwhocodes/config-array@0.11.14:
@@ -14352,6 +14336,16 @@ packages:
       dom-helpers: 5.2.1
       loose-envify: 1.4.0
       prop-types: 15.8.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    dev: false
+
+  /react-turnstile@1.1.4(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-oluyRWADdsufCt5eMqacW4gfw8/csr6Tk+fmuaMx0PWMKP1SX1iCviLvD2D5w92eAzIYDHi/krUWGHhlfzxTpQ==}
+    peerDependencies:
+      react: '>= 16.13.1'
+      react-dom: '>= 16.13.1'
+    dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
     dev: false

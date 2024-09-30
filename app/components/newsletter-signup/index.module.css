@@ -26,6 +26,11 @@
 .error {
   color: red;
 }
+.captcha {
+  font: var(--font-small);
+  margin-block: 0;
+  opacity: 0.5;
+}
 .form {
   display: flex;
   flex-direction: column;
@@ -71,9 +76,13 @@
   align-items: center;
   cursor: pointer;
 }
-.form button:hover {
+.form button:hover:not(:disabled) {
   background-color: var(--color-theme);
   color: var(--color-white);
+}
+.form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 @media screen and (max-width: 768px) {
   .form input {

@@ -22,7 +22,6 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.400.0",
     "@aws-sdk/lib-storage": "^3.400.0",
-    "@hcaptcha/react-hcaptcha": "^1.8.1",
     "@innovixx/payload-color-picker-field": "^1.1.1",
     "@payloadcms/bundler-webpack": "^1.0.6",
     "@payloadcms/db-mongodb": "^1.5.1",
@@ -71,6 +70,7 @@
     "react-player": "^2.12.0",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "5",
+    "react-turnstile": "^1.1.4",
     "remix-custom-routes": "^1.0.1",
     "remix-i18next": "^5.4.0",
     "schema-dts": "^1.1.2",

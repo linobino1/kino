@@ -1,8 +1,10 @@
 import { useFetcher } from "@remix-run/react";
 import classes from "./index.module.css";
 import { useTranslation } from "react-i18next";
-import { type HTMLAttributes, useRef, useState } from "react";
+import { type HTMLAttributes, useRef, useState, useEffect } from "react";
 import type { action } from "~/routes/newsletter-signup";
+import Turnstile from "react-turnstile";
+import environment from "~/util/environment";
 
 export interface Props extends HTMLAttributes<HTMLDivElement> {}
 
@@ -15,6 +17,20 @@ const NewsletterSignup: React.FC<Props> = ({ className, ...props }) => {
   }
   const fetcher = useFetcher<typeof action>({ key });
   const formRef = useRef<HTMLFormElement | null>(null);
+
+  const [captchaState, setCaptchaState] = useState<
+    "checking" | "verified" | "error"
+  >("checking");
+
+  // wake up listmonk when the user interacts with the form
+  const [isActive, setIsActive] = useState(false);
+  const [triggeredWakeUp, setTriggeredWakeUp] = useState(false);
+  useEffect(() => {
+    if (!triggeredWakeUp && isActive) {
+      fetch("/listmonk-wakeup", { method: "post" });
+      setTriggeredWakeUp(true);
+    }
+  }, [isActive, triggeredWakeUp]);
 
   return (
     <div
@@ -43,6 +59,7 @@ const NewsletterSignup: React.FC<Props> = ({ className, ...props }) => {
             id="name"
             autoComplete="name"
             placeholder={t("newsletter.name")}
+            onFocus={() => setIsActive(true)}
             required
           />
           <label htmlFor="email">{t("newsletter.email")}</label>
@@ -54,6 +71,22 @@ const NewsletterSignup: React.FC<Props> = ({ className, ...props }) => {
             placeholder={t("newsletter.email")}
             required
           />
+          {isActive && (
+            <>
+              <Turnstile
+                sitekey={environment().TURNSTILE_SITE_KEY}
+                execution="render"
+                onVerify={() => setCaptchaState("verified")}
+                onError={() => setCaptchaState("error")}
+              />
+              <p className={classes.captcha}>
+                {captchaState === "checking" &&
+                  t("newsletter.captcha.checking")}
+                {captchaState === "verified" && t("newsletter.captcha.success")}
+                {captchaState === "error" && t("newsletter.captcha.error")}
+              </p>
+            </>
+          )}
           {fetcher.data && (
             <p
               className={[
@@ -66,7 +99,10 @@ const NewsletterSignup: React.FC<Props> = ({ className, ...props }) => {
               {fetcher.data.message}
             </p>
           )}
-          <button type="submit">
+          <button
+            type="submit"
+            disabled={isActive && captchaState !== "verified"}
+          >
             {fetcher.state === "idle"
               ? t("newsletter.subscribe")
               : t("newsletter.sending")}

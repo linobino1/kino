@@ -18,6 +18,11 @@
     "error": {
       "network": "Our newsletter service is currently unavailable. Please try again later.",
       "unknown": "An unknown error occurred. Please try again later."
+    },
+    "captcha": {
+      "checking": "Spam test running...",
+      "success": "Spam test passed:)",
+      "error": "Your connection has been blocked by our spam filter. Please try again later."
     }
   },
   "More Info": "More Info",

@@ -24,6 +24,11 @@
     "error": {
       "network": "Unser Newsletter-System ist momentan nicht erreichbar. Bitte versuche es später erneut.",
       "unknown": "Ein unbekannter Fehler ist aufgetreten. Bitte versuche es später erneut."
+    },
+    "captcha": {
+      "checking": "Spam-Prüfung läuft...",
+      "success": "Spam-Prüfung bestanden:)",
+      "error": "Leider hat deine Verbindung unseren Spamschutz nicht passiert. Bitte versuche es später erneut."
     }
   },
   "Read more": "Weiterlesen",
