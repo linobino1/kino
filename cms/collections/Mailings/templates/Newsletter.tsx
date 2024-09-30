@@ -76,6 +76,27 @@ export default function Newsletter({ mailing }: Props) {
         />
       </Head>
       <Body style={{ padding: 0, margin: 0 }}>
+        <Container
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            display: "flex",
+            justifyContent: "center",
+            zIndex: 1000,
+          }}
+        >
+          <Link
+            style={{
+              color: textGrey,
+              fontSize: "12px",
+            }}
+            href="{{ MessageURL }}"
+          >
+            Diese E-Mail im Browser anzeigen
+          </Link>
+        </Container>
         {mailing.header?.image && typeof mailing.header.image === "object" && (
           <Img
             src={(mailing.header.image as Media).url ?? ""}
