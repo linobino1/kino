@@ -37,33 +37,35 @@ const Event: React.FC<EventProps> = ({ event, color, additionalText }) => {
   const filmprint = event.films?.[0]?.filmprint as FilmPrint | undefined;
   const movie = filmprint?.movie as Movie | undefined;
 
-  let subtitle = event.subtitle;
-  if (event.type === "screening" && movie) {
-    subtitle = [
-      movie.originalTitle !== movie.title && `OT: ${movie.originalTitle}`,
-      (movie.genres as Genre[]).map((x) => x.name).join(", "),
-      (movie.countries as Country[])?.map((x) => x.name).join(", "),
-      movie.year,
-      movie.directors &&
-        `R: ${(movie.directors as Person[])?.map((x) => x.name).join(", ")}`,
+  // if an event has a general info, use only the title and info. Otherwise, use title, subtitle and info
+  let subtitle = event.subtitle; // might be undefined
+  let description;
+  if (event.info) {
+    description = slateToPlainText(event.info as any);
+  } else {
+    if (event.type === "screening" && movie) {
+      description = movie?.synopsis;
+      subtitle = [
+        movie.originalTitle !== movie.title && `OT: ${movie.originalTitle}`,
+        (movie.genres as Genre[]).map((x) => x.name).join(", "),
+        (movie.countries as Country[])?.map((x) => x.name).join(", "),
+        movie.year,
+        movie.directors &&
+          `R: ${(movie.directors as Person[])?.map((x) => x.name).join(", ")}`,
 
-      `${movie.duration} min`,
-      (filmprint?.format as Format).name,
-      filmprint ? (filmprint.languageVersion as LanguageVersion)?.name : null,
-      movie.cast?.length &&
-        `Mit: ${(movie.cast as Person[])
-          ?.slice(0, 3)
-          .map((x) => x.name)
-          .join(", ")}`,
-    ]
-      .filter(Boolean)
-      .join(", ");
+        `${movie.duration} min`,
+        (filmprint?.format as Format).name,
+        filmprint ? (filmprint.languageVersion as LanguageVersion)?.name : null,
+        movie.cast?.length &&
+          `Mit: ${(movie.cast as Person[])
+            ?.slice(0, 3)
+            .map((x) => x.name)
+            .join(", ")}`,
+      ]
+        .filter(Boolean)
+        .join(", ");
+    }
   }
-
-  const description =
-    event.type === "screening"
-      ? movie?.synopsis
-      : slateToPlainText(event.info as any);
 
   return (
     <Section style={{ backgroundColor: bgGrey, paddingBlock: "20px" }}>
