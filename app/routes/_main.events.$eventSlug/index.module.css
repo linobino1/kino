@@ -39,6 +39,12 @@ a.tag {
   margin-block: 1rem 2rem;
 }
 
+a.icsLink,
+a.icsLink:visited {
+  font: var(--font-small);
+  color: inherit;
+}
+
 /** MOVIES   ************************************************/
 .main > * {
   margin-block-end: 2rem;

@@ -47,5 +47,6 @@
   "See all screenings": "See all screenings",
   "event.meta.title": "{{ title }} on {{date}}",
   "screening.meta.description": "Screening on {{date}}. {{synopsis}}",
-  "Supporting Film": "Supporting Film"
+  "Supporting Film": "Supporting Film",
+  "Add to calendar": "Add event to my calendar"
 }

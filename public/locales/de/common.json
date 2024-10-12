@@ -56,5 +56,6 @@
   "See all screenings": "Alle Vorstellungen",
   "event.meta.title": "{{ title }} am {{date}}",
   "screening.meta.description": "Vorstellung am {{date}}. {{synopsis}}",
-  "Supporting Film": "Vorfilm"
+  "Supporting Film": "Vorfilm",
+  "Add to calendar": "Termin zu meinem Kalender hinzufügen"
 }

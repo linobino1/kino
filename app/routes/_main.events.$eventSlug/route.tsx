@@ -35,7 +35,6 @@ import { Link } from "~/components/localized-link";
 
 export const loader = async ({
   params,
-  request,
   context: { payload },
   params: { lang: locale },
 }: LoaderFunctionArgs) => {
@@ -145,6 +144,7 @@ export default function Item() {
   const event = loaderData.event as unknown as Event;
   const navigation = loaderData.navigation as unknown as Navigation;
   const site = routeLoaderData?.site as unknown as Site;
+  const { t } = useTranslation();
 
   return (
     <Page className={classes.container}>
@@ -199,6 +199,14 @@ export default function Item() {
             ))}
           {event.type === "event" && <EventInfo event={event} />}
         </div>
+        <hr style={{ marginTop: 0, marginBottom: "1rem" }} />
+        <Link
+          to={`/ics/event/${event.id}`}
+          target="_blank"
+          className={classes.icsLink}
+        >
+          {t("Add to calendar")}
+        </Link>
       </Gutter>
     </Page>
   );
