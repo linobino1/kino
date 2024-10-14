@@ -1,12 +1,18 @@
 {
   "extends": "./tsconfig.base.json",
-  // "compilerOptions": {
-  //   "paths": {
-  //     "~/*": ["./remix/app/*"],
-  //     "@/*": ["./payload/src/*"],
-  //     "@payload-config": ["./payload/src/payload.config.ts"]
-  //   }
-  // },
+  "include": [
+    "cms/next-env.d.ts",
+    "cms/**/*.ts",
+    "cms/**/*.tsx",
+    ".next/types/**/*.ts",
+    "frontend/**/*.ts",
+    "frontend/**/*.tsx",
+    "frontend/**/.server/**/*.ts",
+    "frontend/**/.server/**/*.tsx",
+    "frontend/**/.client/**/*.ts",
+    "frontend/**/.client/**/*.tsx"
+  ],
+  "exclude": ["node_modules", "cms/node_modules", "frontend/node_modules"],
   "references": [
     {
       "path": "./frontend"
