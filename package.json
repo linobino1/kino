@@ -1,0 +1,13 @@
+{
+  "name": "payload-remix-monorepo",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "pnpm -r --stream --filter \"{**}\" --parallel dev"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@types/node": "^22.5.4"
+  }
+}

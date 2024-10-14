@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.base.json",
+  // "compilerOptions": {
+  //   "paths": {
+  //     "~/*": ["./remix/app/*"],
+  //     "@/*": ["./payload/src/*"],
+  //     "@payload-config": ["./payload/src/payload.config.ts"]
+  //   }
+  // },
+  "references": [
+    {
+      "path": "./remix"
+    },
+    {
+      "path": "./payload"
+    }
+  ]
+}
