@@ -23,16 +23,16 @@ importers:
   cms:
     dependencies:
       '@payloadcms/db-mongodb':
-        specifier: beta
+        specifier: 3.0.0-beta.113
         version: 3.0.0-beta.113(@aws-sdk/client-sso-oidc@3.670.0)(payload@3.0.0-beta.113)
       '@payloadcms/next':
-        specifier: beta
+        specifier: 3.0.0-beta.113
         version: 3.0.0-beta.113(graphql@16.9.0)(monaco-editor@0.52.0)(next@15.0.0-canary.173)(payload@3.0.0-beta.113)(react-dom@19.0.0-rc-3edc000d-20240926)(react@19.0.0-rc-3edc000d-20240926)(types-react@19.0.0-rc.1)(typescript@5.6.2)
       '@payloadcms/plugin-cloud':
-        specifier: beta
+        specifier: 3.0.0-beta.113
         version: 3.0.0-beta.113(@aws-sdk/client-sso-oidc@3.670.0)(payload@3.0.0-beta.113)
       '@payloadcms/richtext-lexical':
-        specifier: beta
+        specifier: 3.0.0-beta.113
         version: 3.0.0-beta.113(@faceless-ui/modal@3.0.0-beta.2)(@faceless-ui/scroll-info@2.0.0-beta.0)(@lexical/headless@0.18.0)(@lexical/link@0.18.0)(@lexical/list@0.18.0)(@lexical/mark@0.18.0)(@lexical/markdown@0.18.0)(@lexical/react@0.18.0)(@lexical/rich-text@0.18.0)(@lexical/selection@0.18.0)(@lexical/table@0.18.0)(@lexical/utils@0.18.0)(@payloadcms/next@3.0.0-beta.113)(lexical@0.18.0)(monaco-editor@0.52.0)(next@15.0.0-canary.173)(payload@3.0.0-beta.113)(react-dom@19.0.0-rc-3edc000d-20240926)(react@19.0.0-rc-3edc000d-20240926)(types-react@19.0.0-rc.1)(typescript@5.6.2)
       cross-env:
         specifier: ^7.0.3
@@ -44,7 +44,7 @@ importers:
         specifier: 15.0.0-canary.173
         version: 15.0.0-canary.173(react-dom@19.0.0-rc-3edc000d-20240926)(react@19.0.0-rc-3edc000d-20240926)
       payload:
-        specifier: beta
+        specifier: 3.0.0-beta.113
         version: 3.0.0-beta.113(graphql@16.9.0)(monaco-editor@0.52.0)(react-dom@19.0.0-rc-3edc000d-20240926)(react@19.0.0-rc-3edc000d-20240926)(typescript@5.6.2)
       react:
         specifier: 19.0.0-rc-3edc000d-20240926
