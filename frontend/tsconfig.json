@@ -24,8 +24,7 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./app/*"],
-      "@payload-config": ["../payload/src/payload.config.ts"]
+      "~/*": ["./app/*"]
     },
 
     // Vite takes care of building everything, not tsc.

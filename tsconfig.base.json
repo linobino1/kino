@@ -19,9 +19,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./payload/src/*"],
-      "@payload-config": ["./payload/src/payload.config.ts"],
-      "~/*": ["./remix/app/*"]
+      "@/*": ["./cms/src/*"],
+      "@payload-config": ["./cms/src/payload.config.ts"],
+      "~/*": ["./frontend/app/*"]
     },
     "target": "ES2017"
   },

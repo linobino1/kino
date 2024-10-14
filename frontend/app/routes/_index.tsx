@@ -1,6 +1,6 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { getPayload } from "payload";
-import config from "@payload-config";
+import config from "cms/src/payload.config";
 import { useLoaderData } from "@remix-run/react";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
