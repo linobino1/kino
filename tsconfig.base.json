@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["@remix-run/node", "vite/client"],
+    "baseUrl": ".",
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
     "skipLibCheck": true,
@@ -15,11 +14,6 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
     "paths": {
       "@/*": ["./cms/src/*"],
       "@payload-config": ["./cms/src/payload.config.ts"],
@@ -27,5 +21,5 @@
     },
     "target": "ES2017"
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "cms/node_modules", "frontend/node_modules"]
 }
