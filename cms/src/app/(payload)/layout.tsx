@@ -8,6 +8,8 @@ import React from 'react'
 import './custom.scss'
 import { importMap } from './admin/importMap'
 
+import './uno.css'
+
 type Args = {
   children: React.ReactNode
 }
