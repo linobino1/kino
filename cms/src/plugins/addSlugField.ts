@@ -55,7 +55,7 @@ const field: Field = {
   type: 'text',
   unique: true,
   index: true,
-  label: 'URL Slug',
+  label: 'Slug',
   admin: {
     position: 'sidebar',
     description: 'Wird automatisch generiert, wenn das Feld leer ist.',

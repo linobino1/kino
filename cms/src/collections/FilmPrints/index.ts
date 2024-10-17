@@ -160,7 +160,7 @@ export const FilmPrints: CollectionConfig = {
           fields: [
             {
               name: 'rental',
-              label: 'Entliehen von',
+              label: 'Geliehen von',
               type: 'relationship',
               relationTo: 'rentals',
               hasMany: false,
