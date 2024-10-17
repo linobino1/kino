@@ -104,7 +104,7 @@ export const Movies: CollectionConfig = {
       },
       // make sure the TMDB ID is empty or unique
       // @ts-expect-error https://github.com/payloadcms/payload/issues/7549
-      validate: async (value, { operation, t, payload }) => {
+      validate: async (value, { operation, payload }) => {
         if (typeof value === undefined) return true
 
         // on server we need the base url, on client we don't
@@ -118,7 +118,7 @@ export const Movies: CollectionConfig = {
             return `<a href="/admin/collections/movies/${movie.id}">${movie.title}</a> wurde schon angelegt`
           }
         } catch (err) {
-          return t('Unable to validate TMDB ID')
+          return 'Fehler beim Überprüfen der Eindeutigkeit der TMDB ID'
         }
         return true
       },
