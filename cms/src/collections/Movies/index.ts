@@ -104,22 +104,24 @@ export const Movies: CollectionConfig = {
       },
       // make sure the TMDB ID is empty or unique
       // @ts-expect-error https://github.com/payloadcms/payload/issues/7549
-      validate: async (value, { operation, payload }) => {
+      validate: async (value, { operation, req: { payload } }) => {
         if (typeof value === undefined) return true
 
-        // on server we need the base url, on client we don't
-        const baseUrl = process?.env.PAYLOAD_PUBLIC_SERVER_URL ?? ''
-        try {
-          const res = await fetch(`${baseUrl}/api/movies?where[tmdbId][equals]=${value}`)
-          const data = await res.json()
-          const totalDocs = operation === 'update' ? 1 : 0 // when updating, the current movie is included in totalDocs
-          if (data.totalDocs > totalDocs) {
-            const movie = data.docs[0]
-            return `<a href="/admin/collections/movies/${movie.id}">${movie.title}</a> wurde schon angelegt`
-          }
-        } catch (err) {
-          return 'Fehler beim Überprüfen der Eindeutigkeit der TMDB ID'
+        const res = await payload.find({
+          collection: 'movies',
+          where: {
+            tmdbId: {
+              equals: value,
+            },
+          },
+        })
+
+        const maxDocs = operation === 'update' ? 1 : 0 // when updating, the current movie is included in totalDocs
+        if (res.totalDocs > maxDocs) {
+          const movie = res.docs[0]
+          return `<a href="/admin/collections/movies/${movie.id}">${movie.title}</a> wurde schon angelegt`
         }
+
         return true
       },
     },
