@@ -1,11 +1,10 @@
-import React from 'react'
 import type { Config, Plugin, FieldHookArgs } from 'payload'
 
 /**
  * this plugin adds a url field to a collection if you add the following to the collection config:
  * custom: {
  *  addUrlField: {
- *   hook: (slug?: string) => `my/path/${slug || ''}`,
+ *   hook: (slug?: string) => `/my/path/${slug || ''}`,
  * },
  */
 export const addUrlField: Plugin = (incomingConfig: Config): Config => {
@@ -33,9 +32,7 @@ export const addUrlField: Plugin = (incomingConfig: Config): Config => {
                   hooks: {
                     beforeChange: [
                       ({ siblingData }: FieldHookArgs): string => {
-                        const relativeUrl =
-                          collection.custom?.addUrlField.hook(siblingData.slug) || ''
-                        return `${process.env.PAYLOAD_PUBLIC_SERVER_URL || ''}${relativeUrl || ''}`
+                        return collection.custom?.addUrlField.hook(siblingData.slug) || ''
                       },
                     ],
                   },
