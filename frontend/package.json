@@ -11,10 +11,10 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@payloadcms/db-mongodb": "3.0.0-beta.113",
-    "@payloadcms/next": "3.0.0-beta.113",
-    "@payloadcms/plugin-cloud": "3.0.0-beta.113",
-    "@payloadcms/richtext-lexical": "3.0.0-beta.113",
+    "@payloadcms/db-mongodb": "3.0.0-beta.115",
+    "@payloadcms/next": "3.0.0-beta.115",
+    "@payloadcms/plugin-cloud": "3.0.0-beta.115",
+    "@payloadcms/richtext-lexical": "3.0.0-beta.115",
     "@remix-run/node": "^2.13.1",
     "@remix-run/react": "^2.13.1",
     "@remix-run/serve": "^2.13.1",
@@ -24,7 +24,7 @@
     "graphql": "^16.8.1",
     "isbot": "^4.1.0",
     "next": "15.0.0-canary.173",
-    "payload": "3.0.0-beta.113",
+    "payload": "3.0.0-beta.115",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sharp": "0.32.6"

@@ -12,13 +12,5 @@
     "frontend/**/.client/**/*.ts",
     "frontend/**/.client/**/*.tsx"
   ],
-  "exclude": ["node_modules", "cms/node_modules", "frontend/node_modules"],
-  "references": [
-    {
-      "path": "./frontend"
-    },
-    {
-      "path": "./cms"
-    }
-  ]
+  "exclude": ["node_modules", "cms/node_modules", "frontend/node_modules"]
 }
