@@ -1,15 +1,14 @@
 import type { CollectionConfig } from 'payload'
-import { t } from '@/i18n'
 import pageLayout from '@/fields/pageLayout'
 
 export const ScreeningSeries: CollectionConfig = {
   slug: 'screeningSeries',
   labels: {
-    singular: t('Screening Series singular'),
-    plural: t('Screening Series'),
+    singular: 'Vorstellungsreihe',
+    plural: 'Vorstellungsreihen',
   },
   admin: {
-    group: t('Calendar'),
+    group: 'Kalender',
     useAsTitle: 'name',
     defaultColumns: ['name'],
   },
@@ -27,7 +26,7 @@ export const ScreeningSeries: CollectionConfig = {
   fields: [
     {
       name: 'name',
-      label: t('Name'),
+      label: 'Name',
       type: 'text',
       localized: true,
       required: true,

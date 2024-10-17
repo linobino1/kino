@@ -1,6 +1,5 @@
 import type { Config, Plugin, Field, CollectionBeforeChangeHook, CollectionConfig } from 'payload'
 import slugify from 'slugify'
-import { t } from '@/i18n'
 
 export const slugFormat = (s: string): string => {
   if (!s) return s
@@ -56,10 +55,10 @@ const field: Field = {
   type: 'text',
   unique: true,
   index: true,
-  label: t('Slug'),
+  label: 'URL Slug',
   admin: {
     position: 'sidebar',
-    description: t('Will be automatically generated if left blank.'),
+    description: 'Wird automatisch generiert, wenn das Feld leer ist.',
   },
 }
 /**

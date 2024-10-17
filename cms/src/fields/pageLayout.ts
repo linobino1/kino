@@ -8,7 +8,6 @@ import { Image } from '../blocks/Image'
 import { Gallery } from '../blocks/Gallery'
 import { Video } from '../blocks/Video'
 import { RawHTML } from '../blocks/RawHTML'
-import { t } from '@/i18n'
 import Events from '../blocks/Events'
 
 export type PageLayout = StaticPage['layout']
@@ -21,12 +20,12 @@ export const pageLayout = (props?: Props): Field => {
   const { defaultLayout } = props || {}
   return {
     name: 'layout',
-    label: t('Layout'),
+    label: 'Layout',
     type: 'group',
     fields: [
       {
         name: 'blocks',
-        label: t('Blocks'),
+        label: 'Blöcke',
         type: 'blocks',
         required: true,
         minRows: 1,
@@ -35,13 +34,13 @@ export const pageLayout = (props?: Props): Field => {
       },
       {
         name: 'type',
-        label: t('Layout Type'),
+        label: 'Art',
         type: 'select',
         defaultValue: 'default',
         required: true,
         options: [
-          { label: t('Default'), value: 'default' },
-          { label: t('Info'), value: 'info' },
+          { label: 'Default', value: 'default' },
+          { label: 'Info', value: 'info' },
         ],
       },
     ],

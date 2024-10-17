@@ -1,14 +1,13 @@
 import type { CollectionConfig } from 'payload'
-import { t } from '@/i18n'
 
 export const Conditions: CollectionConfig = {
   slug: 'conditions',
   labels: {
-    singular: t('Condition'),
-    plural: t('Conditions'),
+    singular: 'Zustand',
+    plural: 'Zustände',
   },
   admin: {
-    group: t('Configuration'),
+    group: 'Konfiguration',
     defaultColumns: ['name'],
     useAsTitle: 'name',
   },

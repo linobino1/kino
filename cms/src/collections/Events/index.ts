@@ -1,27 +1,24 @@
 import type { CollectionConfig, Validate } from 'payload'
 import type { Movie } from '@/payload-types'
-import type { CustomTFunction } from '@/translations'
-import { t } from '@/i18n'
 import { getDefaultDocId } from '@/fields/default'
 // import { MigrateMovieButton } from '@/MigrateMovie/admin/Button'
 import { isAdminOrEditor } from '@/access'
 import { slugGenerator } from './util/slugGenerator'
 import { updateImages } from './hooks/updateImages'
 
-const requiredForNonScreeningEvents: Validate = (value: string, { data, req: { t: reqT } }) => {
-  if (data?.type !== 'screening' && !value)
-    return (reqT as CustomTFunction)('backend:Field is required for non-screening events')
+const requiredForNonScreeningEvents: Validate = (value: string, { data }) => {
+  if (data?.type !== 'screening' && !value) return 'Feld ist für nicht-Vorstellungen erforderlich'
   return true
 }
 
 export const Events: CollectionConfig = {
   slug: 'events',
   labels: {
-    singular: t('Event'),
-    plural: t('Events'),
+    singular: 'Event',
+    plural: 'Events',
   },
   admin: {
-    group: t('Calendar'),
+    group: 'Kalender',
     defaultColumns: ['date', 'title', '_status'],
     useAsTitle: 'title',
   },
@@ -52,23 +49,22 @@ export const Events: CollectionConfig = {
   fields: [
     {
       name: 'type',
-      label: t('Type'),
+      label: 'Art',
       type: 'select',
       options: [
-        { label: t('Screening'), value: 'screening' },
-        { label: t('Event'), value: 'event' },
+        { label: 'Vorstellung', value: 'screening' },
+        { label: 'Event', value: 'event' },
       ],
       defaultValue: 'screening',
     },
     {
       name: 'title',
-      label: t('Title'),
+      label: 'Titel',
       type: 'text',
       localized: true,
       admin: {
-        description: t(
-          'Leave blank to use the title of the first feature film, if this is a screening',
-        ),
+        description:
+          'Leer lassen, um den Titel des ersten Spielfilms zu verwenden, falls es sich um eine Vorstellung handelt',
       },
       validate: requiredForNonScreeningEvents,
       hooks: {
@@ -90,7 +86,7 @@ export const Events: CollectionConfig = {
     },
     {
       name: 'subtitle',
-      label: t('Subtitle'),
+      label: 'Untertitel',
       type: 'text',
       localized: true,
       admin: {
@@ -102,7 +98,7 @@ export const Events: CollectionConfig = {
       fields: [
         {
           name: 'date',
-          label: t('Date & Time'),
+          label: 'Datum & Uhrzeit',
           type: 'date',
           required: true,
           defaultValue: () => {
@@ -114,13 +110,14 @@ export const Events: CollectionConfig = {
             date: {
               pickerAppearance: 'dayAndTime',
             },
-            description: t('adminWarningTimezone'),
+            description:
+              'Achtung: wenn du dich in einer anderen Zeitzone als das Kino befindest, musst du den Unterschied ausgleichen.',
             width: '50%',
           },
         },
         {
           name: 'location',
-          label: t('Location'),
+          label: 'Spielstätte',
           type: 'relationship',
           relationTo: 'locations',
           defaultValue: () => getDefaultDocId('locations'),
@@ -135,7 +132,7 @@ export const Events: CollectionConfig = {
       fields: [
         {
           name: 'season',
-          label: t('Season'),
+          label: 'Spielzeit',
           type: 'relationship',
           relationTo: 'seasons',
           hasMany: false,
@@ -151,7 +148,7 @@ export const Events: CollectionConfig = {
         },
         {
           name: 'series',
-          label: t('Screening Series singular'),
+          label: 'Vorstellungsreihe',
           type: 'relationship',
           relationTo: 'screeningSeries',
           hasMany: false,
@@ -163,7 +160,7 @@ export const Events: CollectionConfig = {
     },
     {
       name: 'header',
-      label: t('Header Image'),
+      label: 'Titelbild',
       type: 'upload',
       relationTo: 'media',
       admin: {
@@ -173,7 +170,7 @@ export const Events: CollectionConfig = {
     },
     {
       name: 'poster',
-      label: t('Poster'),
+      label: 'Filmposter',
       type: 'upload',
       relationTo: 'media',
       admin: {
@@ -183,10 +180,11 @@ export const Events: CollectionConfig = {
     },
     {
       name: 'info',
-      label: t('Info'),
+      label: 'Info',
       type: 'richText',
       admin: {
-        description: t('AdminExplainScreeningInfo'),
+        description:
+          'Infos zur Veranstaltung. Bei Veranstaltungen ohne Filme bildet das den Hauptinhalt.',
       },
       localized: true,
       required: false,
@@ -194,7 +192,7 @@ export const Events: CollectionConfig = {
     },
     {
       name: 'films',
-      label: t('Films'),
+      label: 'Filme',
       type: 'array',
       minRows: 1,
       required: true,
@@ -211,7 +209,7 @@ export const Events: CollectionConfig = {
         // },
         {
           name: 'filmprint',
-          label: t('Film'),
+          label: 'Filmkopie',
           type: 'relationship',
           relationTo: 'filmPrints',
           required: true,
@@ -223,18 +221,18 @@ export const Events: CollectionConfig = {
         },
         {
           name: 'isSupportingFilm',
-          label: t('Is Supporting Film'),
+          label: 'Ist Vorfilm',
           type: 'checkbox',
           defaultValue: false,
         },
         {
           name: 'info',
-          label: t('Info'),
+          label: 'Info',
           type: 'richText',
           localized: true,
           required: false,
           admin: {
-            description: t('AdminExplainFilmInfo'),
+            description: 'Infos zum Film / der Kopie.',
           },
         },
       ],
@@ -244,24 +242,25 @@ export const Events: CollectionConfig = {
     },
     {
       name: 'moderator',
-      label: t('Moderator'),
+      label: 'Moderation',
       type: 'text',
       required: false,
     },
     {
       name: 'guest',
-      label: t('Guest'),
+      label: 'Gast',
       type: 'text',
       required: false,
     },
     {
       name: 'excludeFromUpcoming',
-      label: t('excludeFromUpcomingScreenings'),
+      label: 'Nicht im Programm anzeigen',
       type: 'checkbox',
       defaultValue: false,
       admin: {
         position: 'sidebar',
-        description: t('excludeFromUpcomingScreeningsDescription'),
+        description:
+          'Wenn der Haken gesetzt ist, wird die Vorstellung nicht auf der Startseite und in der Liste der kommenden Vorstellungen angezeigt.',
       },
     },
   ],

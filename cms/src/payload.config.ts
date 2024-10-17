@@ -4,7 +4,6 @@ import { buildConfig } from 'payload'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { slateEditor } from '@payloadcms/richtext-slate'
 import { s3Storage } from '@payloadcms/storage-s3'
-import { en } from 'payload/i18n/en'
 import { de } from 'payload/i18n/de'
 import { addUrlField } from './plugins/addUrlField'
 import { addSlugField } from './plugins/addSlugField'
@@ -39,7 +38,6 @@ import { Blog } from './globals/pages/Blog'
 import { EventsPage } from './globals/pages/EventsPage'
 import { SeasonsPage } from './globals/pages/Seasons'
 import { Archive } from './globals/pages/Archive'
-import { translations } from './translations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -144,12 +142,9 @@ export default buildConfig({
   },
   // admin panel localization (to be removed)
   i18n: {
-    fallbackLanguage: 'de',
     supportedLanguages: {
-      en,
       de,
     },
-    translations: translations,
   },
   upload: {
     defCharset: 'utf8',

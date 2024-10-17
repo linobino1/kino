@@ -1,16 +1,15 @@
 import type { CollectionConfig } from 'payload'
-import { t } from '@/i18n'
 import { metaField } from '@/fields/meta'
 import { pageLayout } from '@/fields/pageLayout'
 
 export const Pages: CollectionConfig = {
   slug: 'staticPages',
   labels: {
-    singular: t('Static page'),
-    plural: t('Static pages'),
+    singular: 'Statische Seite',
+    plural: 'Statische Seiten',
   },
   admin: {
-    group: t('Pages'),
+    group: 'Seiten',
     defaultColumns: ['title'],
     useAsTitle: 'title',
   },
@@ -25,7 +24,7 @@ export const Pages: CollectionConfig = {
   fields: [
     {
       name: 'title',
-      label: t('Title'),
+      label: 'Titel',
       type: 'text',
       localized: true,
       required: true,
@@ -40,6 +39,6 @@ export const Pages: CollectionConfig = {
         },
       ],
     }),
-    metaField(t('Meta')),
+    metaField('Meta'),
   ],
 }

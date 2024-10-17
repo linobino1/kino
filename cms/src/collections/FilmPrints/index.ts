@@ -1,6 +1,5 @@
 import type { CollectionConfig } from 'payload'
 import type { Movie, Format } from '@/payload-types'
-import { t } from '@/i18n'
 import analogDigitalTypeField from './fields'
 // import { MigrateMovieButton } from '@/MigrateMovie/admin/Button'
 import { isAdminOrEditor } from '@/access'
@@ -9,12 +8,12 @@ import { Locale } from '@/types'
 export const FilmPrints: CollectionConfig = {
   slug: 'filmPrints',
   labels: {
-    singular: t('Film Print'),
-    plural: t('Film Prints'),
+    singular: 'Filmkopie',
+    plural: 'Filmkopien',
   },
   defaultSort: '-createdAt',
   admin: {
-    group: t('Movie Database'),
+    group: 'Filmdatenbank',
     defaultColumns: ['title', 'format', 'languageVersion', 'isRented', '_status'],
     useAsTitle: 'title',
   },
@@ -106,17 +105,17 @@ export const FilmPrints: CollectionConfig = {
     // },
     {
       name: 'title',
-      label: t('Title'),
+      label: 'Titel',
       type: 'text',
       unique: true,
       admin: {
         position: 'sidebar',
-        description: t('Will be automatically generated if left blank.'),
+        description: 'Wird automatisch generiert, wenn das Feld leer ist.',
       },
     },
     {
       name: 'movie',
-      label: t('Movie'),
+      label: 'Film',
       type: 'relationship',
       relationTo: 'movies',
       required: true,
@@ -130,7 +129,7 @@ export const FilmPrints: CollectionConfig = {
     analogDigitalTypeField('type'),
     {
       name: 'format',
-      label: t('Film Format'),
+      label: 'Filmformat',
       type: 'relationship',
       relationTo: 'formats',
       required: true,
@@ -138,7 +137,7 @@ export const FilmPrints: CollectionConfig = {
     },
     {
       name: 'languageVersion',
-      label: t('Language Version'),
+      label: 'Sprachfassung',
       type: 'relationship',
       relationTo: 'languageVersions',
       hasMany: false,
@@ -146,7 +145,7 @@ export const FilmPrints: CollectionConfig = {
     },
     {
       name: 'isRented',
-      label: t('Is rental'),
+      label: 'Ist Leihkopie',
       type: 'checkbox',
       defaultValue: false,
     },
@@ -154,14 +153,14 @@ export const FilmPrints: CollectionConfig = {
       type: 'tabs',
       tabs: [
         {
-          label: t('Details'),
+          label: 'Details',
           // admin: {
           //   condition: (data) => !data?.isRented,
           // },
           fields: [
             {
               name: 'rental',
-              label: t('Rented by'),
+              label: 'Entliehen von',
               type: 'relationship',
               relationTo: 'rentals',
               hasMany: false,
@@ -172,7 +171,7 @@ export const FilmPrints: CollectionConfig = {
             },
             {
               name: 'carrier',
-              label: t('Carrier'),
+              label: 'Träger',
               type: 'relationship',
               relationTo: 'carriers',
               admin: {
@@ -182,7 +181,7 @@ export const FilmPrints: CollectionConfig = {
             },
             {
               name: 'category',
-              label: t('Category'),
+              label: 'Kategorie',
               type: 'relationship',
               relationTo: 'categories',
               admin: {
@@ -192,7 +191,7 @@ export const FilmPrints: CollectionConfig = {
             },
             {
               name: 'numActs',
-              label: t('Number of Acts'),
+              label: 'Anzahl Akte',
               type: 'number',
               admin: {
                 condition: (data) => data?.type === 'analog' && !data?.isRented,
@@ -201,7 +200,7 @@ export const FilmPrints: CollectionConfig = {
             },
             {
               name: 'aspectRatio',
-              label: t('Aspect Ratio'),
+              label: 'Seitenverhältnis',
               type: 'relationship',
               relationTo: 'aspectRatios',
               admin: {
@@ -211,7 +210,7 @@ export const FilmPrints: CollectionConfig = {
             },
             {
               name: 'color',
-              label: t('Color'),
+              label: 'Farbe',
               type: 'relationship',
               relationTo: 'colors',
               required: true,
@@ -221,7 +220,7 @@ export const FilmPrints: CollectionConfig = {
             },
             {
               name: 'soundFormat',
-              label: t('Sound Format'),
+              label: 'Tonformat',
               type: 'relationship',
               relationTo: 'soundFormats',
               admin: {
@@ -231,7 +230,7 @@ export const FilmPrints: CollectionConfig = {
             },
             {
               name: 'condition',
-              label: t('Condition'),
+              label: 'Zustand',
               type: 'relationship',
               relationTo: 'conditions',
               admin: {

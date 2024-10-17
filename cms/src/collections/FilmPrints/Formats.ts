@@ -1,15 +1,14 @@
 import type { CollectionConfig } from 'payload'
-import { t } from '@/i18n'
 import analogDigitalTypeField from './fields'
 
 export const Formats: CollectionConfig = {
   slug: 'formats',
   labels: {
-    singular: t('Film Format'),
-    plural: t('Film Formats'),
+    singular: 'Filmformat',
+    plural: 'Filmformate',
   },
   admin: {
-    group: t('Configuration'),
+    group: 'Konfiguration',
     defaultColumns: ['type', 'name'],
     useAsTitle: 'name',
   },
@@ -20,7 +19,7 @@ export const Formats: CollectionConfig = {
     analogDigitalTypeField('type'),
     {
       name: 'name',
-      label: t('Name'),
+      label: 'Name',
       type: 'text',
       required: true,
     },

@@ -1,14 +1,13 @@
 import type { CollectionConfig } from 'payload'
-import { t } from '@/i18n'
 
 export const LanguageVersions: CollectionConfig = {
   slug: 'languageVersions',
   labels: {
-    singular: t('Language Version'),
-    plural: t('Language Versions'),
+    singular: 'Sprachfassung',
+    plural: 'Sprachfassungen',
   },
   admin: {
-    group: t('Configuration'),
+    group: 'Konfiguration',
     defaultColumns: ['abbreviation', 'name'],
     useAsTitle: 'name',
   },
@@ -18,14 +17,14 @@ export const LanguageVersions: CollectionConfig = {
   fields: [
     {
       name: 'name',
-      label: t('Name'),
+      label: 'Name',
       type: 'text',
       localized: true,
       required: true,
     },
     {
       name: 'abbreviation',
-      label: t('Abbreviation'),
+      label: 'Kürzel',
       type: 'text',
       localized: true,
       required: true,

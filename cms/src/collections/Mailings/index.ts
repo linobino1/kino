@@ -1,4 +1,3 @@
-import { t } from '@/i18n'
 import type { CollectionConfig } from 'payload'
 import { BlocksFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import { isAdminOrEditor } from '@/access'
@@ -11,7 +10,7 @@ import { FilmPrintBlock } from './lexical/blocks/FilmPrintBlock'
 export const Mailings: CollectionConfig = {
   slug: 'mailings',
   admin: {
-    group: t('Mailings'),
+    group: 'Mailings',
     defaultColumns: ['id', 'updatedAt'],
     components: {
       beforeList: ['/collections/Mailings/components/HowTo'],
@@ -29,7 +28,7 @@ export const Mailings: CollectionConfig = {
     {
       name: 'subject',
       type: 'text',
-      label: t('Subject'),
+      label: 'Betreff',
       required: true,
     },
     {
@@ -38,18 +37,18 @@ export const Mailings: CollectionConfig = {
         // TODO
         // colorPickerField({
         //   name: 'color',
-        //   label: t('Color'),
+        //   label: "Farbe",
         //   defaultValue: '#000000',
         // }),
         {
           name: 'color',
-          label: t('Color'),
+          label: 'Farbe',
           type: 'text',
           defaultValue: '#000000',
         },
         {
           name: 'language',
-          label: t('Language'),
+          label: 'Sprache',
           type: 'radio',
           options: [
             { value: 'en', label: 'English' },
@@ -65,17 +64,17 @@ export const Mailings: CollectionConfig = {
     {
       type: 'group',
       name: 'header',
-      label: t('Header'),
+      label: 'Header',
       fields: [
         {
           name: 'image',
-          label: t('Image'),
+          label: 'Bild',
           type: 'upload',
           relationTo: 'media',
         },
         {
           name: 'overlay',
-          label: t('Overlay'),
+          label: 'Overlay',
           type: 'upload',
           relationTo: 'media',
         },
@@ -83,7 +82,7 @@ export const Mailings: CollectionConfig = {
     },
     {
       name: 'content',
-      label: t('Content'),
+      label: 'Inhalt',
       type: 'richText',
       editor: lexicalEditor({
         features: ({ defaultFeatures }) => [
@@ -97,17 +96,17 @@ export const Mailings: CollectionConfig = {
     {
       type: 'group',
       name: 'footer',
-      label: t('Footer'),
+      label: 'Footer',
       fields: [
         {
           name: 'image',
-          label: t('Image'),
+          label: 'Bild',
           type: 'upload',
           relationTo: 'media',
         },
         {
           name: 'label',
-          label: t('Label'),
+          label: 'Bezeichnung',
           type: 'text',
         },
         {

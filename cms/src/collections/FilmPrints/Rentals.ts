@@ -1,14 +1,13 @@
 import type { CollectionConfig } from 'payload'
-import { t } from '@/i18n'
 
 export const Rentals: CollectionConfig = {
   slug: 'rentals',
   labels: {
-    singular: t('Rental'),
-    plural: t('Rentals'),
+    singular: 'Verleih',
+    plural: 'Verleihe',
   },
   admin: {
-    group: t('Configuration'),
+    group: 'Konfiguration',
     defaultColumns: ['name'],
     useAsTitle: 'name',
   },
@@ -18,25 +17,25 @@ export const Rentals: CollectionConfig = {
   fields: [
     {
       name: 'name',
-      label: t('Name'),
+      label: 'Name',
       type: 'text',
       required: true,
     },
     {
       name: 'logo',
-      label: t('Logo'),
+      label: 'Logo',
       type: 'upload',
       relationTo: 'media',
     },
     {
       name: 'credits',
-      label: t('Credits'),
+      label: 'Credits',
       type: 'textarea',
       localized: true,
       required: true,
-      defaultValue: ({ locale }: { locale: string }) => t('rentalCreditsDefault')[locale],
+      defaultValue: 'Leihgabe der Filmkopie mit freundlicher Unterstützung von XXX.',
       admin: {
-        description: t('Edit in all languages!'),
+        description: 'In allen Sprachen bearbeiten!',
       },
     },
   ],

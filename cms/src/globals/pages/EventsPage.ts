@@ -1,14 +1,13 @@
 import type { GlobalConfig } from 'payload'
-import { t } from '@/i18n'
 import { metaField } from '@/fields/meta'
 import pageLayout from '@/fields/pageLayout'
 
 export const EventsPage: GlobalConfig = {
   slug: 'eventsPage',
   admin: {
-    group: t('Pages'),
-    description: t('AdminExplainEventsPage'),
+    group: 'Seiten',
+    description: 'Die Seite "Vorstellungen" listet alle Vorstellungen ab dem heutigen Tage.',
   },
-  label: t('Screenings'),
-  fields: [pageLayout(), metaField(t('Meta'))],
+  label: 'Vorstellungen',
+  fields: [pageLayout(), metaField('Meta')],
 }

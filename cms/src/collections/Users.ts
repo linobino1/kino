@@ -1,5 +1,4 @@
 import type { CollectionConfig } from 'payload'
-import { t } from '@/i18n'
 
 /**
  * Backend users
@@ -7,12 +6,12 @@ import { t } from '@/i18n'
 export const Users: CollectionConfig = {
   slug: 'users',
   labels: {
-    singular: t('User'),
-    plural: t('Users'),
+    singular: 'Benutzer',
+    plural: 'Benutzer',
   },
   auth: true,
   admin: {
-    group: t('System'),
+    group: 'System',
     useAsTitle: 'name',
     defaultColumns: ['name'],
   },
@@ -28,21 +27,21 @@ export const Users: CollectionConfig = {
     // Email added by default
     {
       name: 'name',
-      label: t('Name'),
+      label: 'Name',
       type: 'text',
       required: true,
     },
     {
       name: 'role',
-      label: t('Role'),
+      label: 'Rolle',
       type: 'select',
       options: [
         {
-          label: t('Admin'),
+          label: 'Admin',
           value: 'admin',
         },
         {
-          label: t('Editor'),
+          label: 'Editor',
           value: 'editor',
         },
       ],

@@ -1,11 +1,10 @@
 import type { Block } from 'payload'
-import { t } from '@/i18n'
 
 export const Content: Block = {
   slug: 'content',
   labels: {
-    singular: t('Content'),
-    plural: t('Content'),
+    singular: 'Inhalt',
+    plural: 'Inhalt',
   },
   fields: [
     {

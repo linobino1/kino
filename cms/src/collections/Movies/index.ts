@@ -1,6 +1,5 @@
 import type { CollectionConfig, PayloadRequest } from 'payload'
 import type { Movie } from '@/payload-types'
-import { t } from '@/i18n'
 import { isAdminOrEditor } from '@/access'
 
 export const ageRatingAges = [0, 6, 12, 16, 18]
@@ -8,8 +7,8 @@ export const ageRatingAges = [0, 6, 12, 16, 18]
 export const Movies: CollectionConfig = {
   slug: 'movies',
   labels: {
-    singular: t('Movie'),
-    plural: t('Movies'),
+    singular: 'Film',
+    plural: 'Filme',
   },
   hooks: {
     afterDelete: [
@@ -36,7 +35,7 @@ export const Movies: CollectionConfig = {
   },
   admin: {
     listSearchableFields: ['title', 'internationalTitle', 'originalTitle'],
-    group: t('Movie Database'),
+    group: 'Filmdatenbank',
     defaultColumns: ['internationalTitle', 'directors', 'year', '_status'],
     useAsTitle: 'internationalTitle',
     components: {
@@ -68,35 +67,36 @@ export const Movies: CollectionConfig = {
   fields: [
     {
       name: 'title',
-      label: t('Title'),
+      label: 'Titel',
       type: 'text',
       localized: true,
       required: true,
       admin: {
-        description: t('AdminExplainMovieTitle'),
+        description:
+          'Titel des Films, wie er auf der Webseite verwendet wird. Übersetzungen können in den Sprachversionen angelegt werden.',
       },
     },
     {
       name: 'internationalTitle',
-      label: t('International Title'),
+      label: 'Internationaler Titel',
       type: 'text',
       required: true,
       admin: {
-        description: t('AdminExplainInternationalTitle'),
+        description: 'Internationaler Titel des Films, gewöhnlich der englische Titel',
       },
     },
     {
       name: 'originalTitle',
-      label: t('Original Title'),
+      label: 'Originaltitel',
       type: 'text',
       required: true,
       admin: {
-        description: t('AdminExplainOriginalTitle'),
+        description: 'Originaltitel des Films',
       },
     },
     {
       name: 'tmdbId',
-      label: t('TMDB ID'),
+      label: 'themoviedb.org ID',
       type: 'number',
       admin: {
         readOnly: true,
@@ -115,10 +115,7 @@ export const Movies: CollectionConfig = {
           const totalDocs = operation === 'update' ? 1 : 0 // when updating, the current movie is included in totalDocs
           if (data.totalDocs > totalDocs) {
             const movie = data.docs[0]
-            return t('MovieExists', {
-              title: movie.internationalTitle,
-              id: movie.id,
-            })
+            return `<a href="/admin/collections/movies/${movie.id}">${movie.title}</a> wurde schon angelegt`
           }
         } catch (err) {
           return t('Unable to validate TMDB ID')
@@ -128,27 +125,28 @@ export const Movies: CollectionConfig = {
     },
     {
       name: 'still',
-      label: t('Film Still'),
+      label: 'Filmstill',
       type: 'upload',
       relationTo: 'media',
       required: true,
       admin: {
-        description: t('AdminExplainFilmStill'),
+        description:
+          'Titelbild im Querformat (16:9 o.ä.) mit einer Mindestbreite von 2000px. In der Regel sollte ein Standbild aus dem Film verwendet werden.',
       },
     },
     {
       name: 'poster',
-      label: t('Poster'),
+      label: 'Filmposter',
       type: 'upload',
       relationTo: 'media',
       required: true,
       admin: {
-        description: t('AdminExplainPoster'),
+        description: 'Filmposter im Porträtformat (2:3) mit einer Mindestbreite von 200px',
       },
     },
     {
       name: 'directors',
-      label: t('Director'),
+      label: 'Regie',
       type: 'relationship',
       relationTo: 'persons',
       hasMany: true,
@@ -156,32 +154,32 @@ export const Movies: CollectionConfig = {
     },
     {
       name: 'duration',
-      label: t('Playing Time'),
+      label: 'Laufzeit',
       type: 'number',
       min: 0,
       admin: {
-        description: t('Duration in minutes'),
+        description: 'Dauer in Minuten',
       },
       required: true,
     },
     {
       name: 'ageRating',
-      label: t('Age Rating'),
+      label: 'Altersfreigabe',
       type: 'select',
       options: ageRatingAges
         .map((x) => ({
-          label: t('ageRating {age}', { age: `${x}` }),
+          label: `ab ${x} Jahren`,
           value: `${x}`,
         }))
         .concat({
-          label: t('Not rated'),
+          label: 'nicht zertifiziert',
           value: '',
         }),
       defaultValue: '0',
     },
     {
       name: 'countries',
-      label: t('Country of Production'),
+      label: 'Produktionsland',
       type: 'relationship',
       relationTo: 'countries',
       hasMany: true,
@@ -189,7 +187,7 @@ export const Movies: CollectionConfig = {
     },
     {
       name: 'year',
-      label: t('Year of publication'),
+      label: 'Erscheinungsjahr',
       type: 'number',
       required: true,
     },
@@ -216,13 +214,13 @@ export const Movies: CollectionConfig = {
     },
     {
       name: 'isHfgProduction',
-      label: t('Is a HfG Production'),
+      label: 'Ist eine HfG-Produktion',
       type: 'checkbox',
       defaultValue: false,
     },
     {
       name: 'genres',
-      label: t('Genre'),
+      label: 'Genre',
       type: 'relationship',
       relationTo: 'genres',
       hasMany: true,
@@ -231,30 +229,30 @@ export const Movies: CollectionConfig = {
     },
     {
       name: 'synopsis',
-      label: t('Synopsis'),
+      label: 'Synopsis',
       type: 'textarea',
       localized: true,
       admin: {
-        description: t('AdminExplainSynopsis'),
+        description: 'Kurze Inhaltsangabe, maximal 350 Zeichen',
       },
       required: true,
     },
     {
       name: 'trailer',
-      label: t('Trailer'),
+      label: 'Trailer',
       type: 'text',
       required: false,
     },
     {
-      label: t('Credits'),
+      label: 'Credits',
       type: 'tabs',
       tabs: [
         {
-          label: t('Cast'),
+          label: 'Darsteller',
           fields: [
             {
               name: 'cast',
-              label: t('Cast'),
+              label: 'Darsteller',
               type: 'relationship',
               relationTo: 'persons',
               hasMany: true,
@@ -262,23 +260,23 @@ export const Movies: CollectionConfig = {
           ],
         },
         {
-          label: t('Crew'),
+          label: 'Crew',
           fields: [
             {
               name: 'crew',
-              label: t('Crew'),
+              label: 'Crew',
               type: 'array',
               fields: [
                 {
                   name: 'person',
-                  label: t('Person'),
+                  label: 'Person',
                   type: 'relationship',
                   relationTo: 'persons',
                   required: true,
                 },
                 {
                   name: 'job',
-                  label: t('Job'),
+                  label: 'Tätigkeit',
                   type: 'relationship',
                   relationTo: 'jobs',
                   hasMany: false,
@@ -289,11 +287,11 @@ export const Movies: CollectionConfig = {
           ],
         },
         {
-          label: t('Production Companies'),
+          label: 'Produktionsfirmen',
           fields: [
             {
               name: 'productionCompanies',
-              label: t('Production Companies'),
+              label: 'Produktionsfirmen',
               type: 'relationship',
               relationTo: 'companies',
               hasMany: true,
@@ -304,27 +302,27 @@ export const Movies: CollectionConfig = {
     },
     {
       name: 'tags',
-      label: t('Tags'),
+      label: 'Tags',
       type: 'text',
       admin: {
-        description: t('Comma-separated list of tags.'),
+        description: 'Komma-getrennte Tags.',
         condition: (data) => !data?.isRented,
       },
     },
     {
       type: 'collapsible',
-      label: t('Wordpress Import Info'),
+      label: 'Wordpress Import Info',
       fields: [
         {
           name: 'isMigratedFromWordpress',
           type: 'checkbox',
-          label: t('Imported from Wordpress'),
+          label: 'Von Wordpress importiert',
           defaultValue: () => false,
         },
         {
           name: 'wordpressMigrationNotes',
           type: 'textarea',
-          label: t('Notes'),
+          label: 'Notizen',
         },
       ],
     },

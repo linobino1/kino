@@ -1,5 +1,4 @@
 import type { Block } from 'payload'
-import { t } from '@/i18n'
 
 /**
  * This is a placeholder block that can be used to add a custom block to a page.
@@ -8,8 +7,8 @@ import { t } from '@/i18n'
 export const Outlet: Block = {
   slug: 'outlet',
   labels: {
-    singular: t('Outlet'),
-    plural: t('Outlets'),
+    singular: 'Outlet',
+    plural: 'Outlets',
   },
   fields: [],
 }

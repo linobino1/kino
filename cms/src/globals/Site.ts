@@ -1,23 +1,22 @@
 import type { GlobalConfig } from 'payload'
-import { t } from '@/i18n'
 import { metaField } from '@/fields/meta'
 
 export const Site: GlobalConfig = {
   slug: 'site',
   admin: {
-    group: t('System'),
+    group: 'System',
   },
-  label: t('Site Configuration'),
+  label: 'Seiteneinstellungen',
   fields: [
     {
       name: 'logo',
-      label: t('Logo'),
+      label: 'Logo',
       type: 'upload',
       relationTo: 'media',
     },
     {
       name: 'logoMobile',
-      label: t('Logo (mobile)'),
+      label: 'Logo (mobil)',
       type: 'upload',
       relationTo: 'media',
     },
@@ -28,66 +27,66 @@ export const Site: GlobalConfig = {
     },
     {
       name: 'footerContent',
-      label: t('Footer Content'),
+      label: 'Inhalt im Footer',
       type: 'richText',
       localized: true,
     },
     {
       name: 'location',
-      label: t('Location'),
+      label: 'Spielstätte',
       type: 'group',
       fields: [
         {
           name: 'country',
-          label: t('Country'),
+          label: 'Land',
           type: 'relationship',
           relationTo: 'countries',
           required: true,
         },
         {
           name: 'region',
-          label: t('Region'),
+          label: 'Region',
           type: 'text',
           required: true,
         },
         {
           name: 'city',
-          label: t('City'),
+          label: 'Stadt',
           type: 'text',
           required: true,
         },
         {
           name: 'zip',
-          label: t('Zip'),
+          label: 'PLZ',
           type: 'text',
           required: true,
         },
         {
           name: 'street',
-          label: t('Street'),
+          label: 'Straße',
           type: 'text',
           required: true,
         },
         {
           name: 'name',
-          label: t('Name'),
+          label: 'Name',
           type: 'text',
           required: true,
         },
         {
           name: 'latitude',
-          label: t('Latitude'),
+          label: 'Breitengrad',
           type: 'text',
           required: true,
         },
         {
           name: 'longitude',
-          label: t('Longitude'),
+          label: 'Längengrad',
           type: 'text',
           required: true,
         },
       ],
     },
-    metaField(t('Global Meta')),
+    metaField('Globale Metadaten'),
   ],
 }

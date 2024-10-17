@@ -1,14 +1,13 @@
 import type { CollectionConfig } from 'payload'
-import { t } from '@/i18n'
 
 export const Countries: CollectionConfig = {
   slug: 'countries',
   labels: {
-    singular: t('Country'),
-    plural: t('Countries'),
+    singular: 'Land',
+    plural: 'Länder',
   },
   admin: {
-    group: t('Configuration'),
+    group: 'Konfiguration',
     defaultColumns: ['name'],
     useAsTitle: 'name',
   },
@@ -20,14 +19,14 @@ export const Countries: CollectionConfig = {
       name: 'id',
       type: 'text',
       admin: {
-        description: t('alpha2 country code'),
+        description: 'Ländercode (2-stellig)',
       },
       required: true,
       unique: true,
     },
     {
       name: 'name',
-      label: t('Name'),
+      label: 'Name',
       type: 'text',
       required: true,
       localized: true,

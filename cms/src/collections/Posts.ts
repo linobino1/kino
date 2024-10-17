@@ -1,5 +1,4 @@
 import type { CollectionConfig } from 'payload'
-import { t } from '@/i18n'
 import { Content } from '@/blocks/Content'
 import { Image } from '@/blocks/Image'
 import { Gallery } from '@/blocks/Gallery'
@@ -9,7 +8,7 @@ import { LinkableCollectionSlugs } from '@/types'
 export const Posts: CollectionConfig = {
   slug: 'posts',
   admin: {
-    group: t('Blog'),
+    group: 'Blog',
     defaultColumns: ['date', 'title'],
     useAsTitle: 'title',
   },
@@ -43,54 +42,55 @@ export const Posts: CollectionConfig = {
     },
     {
       name: 'header',
-      label: t('Header Image'),
+      label: 'Titelbild',
       type: 'upload',
       relationTo: 'media',
       required: true,
     },
     {
       name: 'content',
-      label: t('Preview'),
+      label: 'Vorschau',
       type: 'richText',
       localized: true,
       required: true,
     },
     {
       name: 'details',
-      label: t('Detail'),
+      label: 'Details',
       type: 'blocks',
       blocks: [Content, Image, Gallery, Video],
       admin: {
-        description: t('Add a detail page for the post'),
+        description: 'Füge eine Detailseite für diesen Post hinzu',
       },
     },
     {
       type: 'group',
-      label: t('Link'),
+      label: 'Link',
       name: 'link',
       admin: {
-        description: t('Add a link to the post header.'),
+        description: 'Verlinke das Titelbild.',
       },
       fields: [
         {
           name: 'type',
-          label: t('Type'),
+          label: 'Art',
           type: 'radio',
           defaultValue: 'none',
           admin: {
-            description: t('AdminExplainPostLinkType'),
+            description:
+              "Wähle 'Keine(r)' um das Titelbild mit der Detailseite zu verlinken, falls diese existiert.",
           },
           options: [
             {
-              label: t('None'),
+              label: 'Keine(r)',
               value: 'none',
             },
             {
-              label: t('Internal Link'),
+              label: 'Interner Link',
               value: 'internal',
             },
             {
-              label: t('External Link'),
+              label: 'Externer Link',
               value: 'external',
             },
           ],

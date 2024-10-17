@@ -1,15 +1,14 @@
 import type { CollectionConfig } from 'payload'
-import { t } from '@/i18n'
 import { defaultField } from '@/fields/default'
 
 export const Locations: CollectionConfig = {
   slug: 'locations',
   labels: {
-    singular: t('Location'),
-    plural: t('Locations'),
+    singular: 'Spielstätte',
+    plural: 'Spielstätten',
   },
   admin: {
-    group: t('Configuration'),
+    group: 'Konfiguration',
     useAsTitle: 'name',
     defaultColumns: ['name'],
   },
@@ -24,7 +23,7 @@ export const Locations: CollectionConfig = {
   fields: [
     {
       name: 'name',
-      label: t('Name'),
+      label: 'Name',
       localized: true,
       type: 'text',
     },

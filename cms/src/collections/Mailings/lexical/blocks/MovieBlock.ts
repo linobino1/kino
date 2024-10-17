@@ -1,5 +1,4 @@
 import type { Block } from 'payload'
-import { t } from '@/i18n'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 export const MovieBlock: Block = {
@@ -20,7 +19,7 @@ export const MovieBlock: Block = {
     },
     {
       name: 'additionalText',
-      label: t('additional info'),
+      label: 'zusätzliche Informationen',
       type: 'richText',
       editor: lexicalEditor({
         features: ({ defaultFeatures }) => defaultFeatures,

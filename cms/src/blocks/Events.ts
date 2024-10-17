@@ -1,11 +1,10 @@
 import type { Block } from 'payload'
-import { t } from '@/i18n'
 
 export const Events: Block = {
   slug: 'events',
   labels: {
-    singular: t('Events'),
-    plural: t('Events'),
+    singular: 'Event',
+    plural: 'Events',
   },
   fields: [
     {
@@ -13,11 +12,11 @@ export const Events: Block = {
       type: 'radio',
       options: [
         {
-          label: t('populateManually'),
+          label: 'Manuell befüllen',
           value: 'manual',
         },
         {
-          label: t('byScreeningSeries'),
+          label: 'nach Vorstellungsreihe',
           value: 'screeningSeries',
         },
       ],
@@ -26,14 +25,14 @@ export const Events: Block = {
       name: 'events',
       type: 'array',
       labels: {
-        singular: t('Events'),
-        plural: t('Events'),
+        singular: 'Events',
+        plural: 'Events',
       },
       minRows: 1,
       fields: [
         {
           name: 'doc',
-          label: t('Event'),
+          label: 'Event',
           type: 'relationship',
           relationTo: 'events',
           required: true,
@@ -45,7 +44,7 @@ export const Events: Block = {
     },
     {
       name: 'screeningSeries',
-      label: t('Screening Series singular'),
+      label: 'Vorstellungsreihe',
       type: 'relationship',
       relationTo: 'screeningSeries',
       hasMany: false,

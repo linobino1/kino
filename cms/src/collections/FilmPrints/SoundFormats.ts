@@ -1,14 +1,13 @@
 import type { CollectionConfig } from 'payload'
-import { t } from '@/i18n'
 
 export const SoundFormats: CollectionConfig = {
   slug: 'soundFormats',
   labels: {
-    singular: t('Sound Format'),
-    plural: t('Sound Formats'),
+    singular: 'Tonformat',
+    plural: 'Tonformate',
   },
   admin: {
-    group: t('Configuration'),
+    group: 'Konfiguration',
     defaultColumns: ['name'],
     useAsTitle: 'name',
   },
@@ -18,7 +17,7 @@ export const SoundFormats: CollectionConfig = {
   fields: [
     {
       name: 'name',
-      label: t('Name'),
+      label: 'Name',
       type: 'text',
       localized: true,
       required: true,

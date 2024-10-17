@@ -1,34 +1,33 @@
 import type { Field } from 'payload'
-import { t } from '@/i18n'
 import type { Site } from '@/payload-types'
 
 export type Meta = Site['meta']
 
-export const metaField = (label: Record<string, string>): Field => ({
+export const metaField = (label?: string): Field => ({
   name: 'meta',
   label,
   type: 'group',
   fields: [
     {
       name: 'title',
-      label: t('Title'),
+      label: 'Titel',
       localized: true,
       type: 'text',
     },
     {
       name: 'description',
-      label: t('Description'),
+      label: 'Beschreibung',
       localized: true,
       type: 'textarea',
     },
     {
       name: 'keywords',
-      label: t('Keywords'),
+      label: 'Keywords',
       type: 'text',
     },
     {
       name: 'image',
-      label: t('Image'),
+      label: 'Bild',
       type: 'upload',
       relationTo: 'media',
     },

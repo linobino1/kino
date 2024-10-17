@@ -1,14 +1,13 @@
 import type { CollectionConfig } from 'payload'
-import { t } from '@/i18n'
 
 export const Carriers: CollectionConfig = {
   slug: 'carriers',
   labels: {
-    singular: t('Carrier'),
-    plural: t('Carriers'),
+    singular: 'Träger',
+    plural: 'Träger',
   },
   admin: {
-    group: t('Configuration'),
+    group: 'Konfiguration',
     defaultColumns: ['type', 'name'],
     useAsTitle: 'name',
   },
@@ -18,7 +17,7 @@ export const Carriers: CollectionConfig = {
   fields: [
     {
       name: 'name',
-      label: t('Name'),
+      label: 'Name',
       type: 'text',
       localized: true,
       required: true,

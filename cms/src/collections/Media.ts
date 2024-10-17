@@ -1,5 +1,4 @@
 import type { CollectionConfig } from 'payload'
-import { t } from '@/i18n'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -9,11 +8,11 @@ const dirname = path.dirname(filename)
 export const Media: CollectionConfig = {
   slug: 'media',
   labels: {
-    singular: t('Media file'),
-    plural: t('Media'),
+    singular: 'Mediendatei',
+    plural: 'Medien',
   },
   admin: {
-    group: t('Media'),
+    group: 'Medien',
     pagination: {
       defaultLimit: 100,
       limits: [50, 100, 250, 500],
@@ -34,7 +33,7 @@ export const Media: CollectionConfig = {
       label: 'Alt Text',
       type: 'text',
       admin: {
-        description: t('Leave empty to use the filename as alt text'),
+        description: 'Leer lassen, um den Dateinamen als Alt-Text zu verwenden',
       },
       hooks: {
         beforeValidate: [
@@ -54,7 +53,7 @@ export const Media: CollectionConfig = {
     {
       name: 'tmdbFilepath',
       type: 'text',
-      label: t('TMDB Filepath'),
+      label: 'TMDB Dateipfad',
       required: false,
       unique: false,
       admin: {

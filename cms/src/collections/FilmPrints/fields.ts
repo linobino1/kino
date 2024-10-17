@@ -1,19 +1,18 @@
 import type { Field } from 'payload'
-import { t } from '@/i18n'
 
 function analogDigitalTypeField(name: string): Field {
   return {
     name,
-    label: t('Type'),
+    label: 'Art',
     type: 'radio',
     defaultValue: 'analog',
     options: [
       {
-        label: t('analog'),
+        label: 'analog',
         value: 'analog',
       },
       {
-        label: t('digital'),
+        label: 'digital',
         value: 'digital',
       },
     ],

@@ -119,7 +119,7 @@ const HtmlField = () => {
           />
         </>
       ) : (
-        <p>{t('not available')}</p>
+        <p>{'nicht verfügbar'}</p>
       )}
     </div>
   )

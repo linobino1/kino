@@ -1,5 +1,4 @@
 import type { Field } from 'payload'
-import { t } from '@/i18n'
 
 /**
  * a helper function to get the id of the default doc for a collection with a 'default' field
@@ -22,7 +21,7 @@ export const getDefaultDocId = async (collection: string): Promise<string | unde
 export const defaultField = (collection: string): Field => ({
   name: 'default',
   type: 'checkbox',
-  label: t('is default for this collection'),
+  label: 'wird als Standard verwendet',
   hooks: {
     beforeChange: [
       async ({ req, value }) => {

@@ -1,15 +1,14 @@
 import type { CollectionConfig } from 'payload'
 import type { FieldHookArgs } from 'payload'
-import { t } from '@/i18n'
 
 export const Seasons: CollectionConfig = {
   slug: 'seasons',
   labels: {
-    singular: t('Season'),
-    plural: t('Seasons'),
+    singular: 'Spielzeit',
+    plural: 'Spielzeiten',
   },
   admin: {
-    group: t('Configuration'),
+    group: 'Konfiguration',
     useAsTitle: 'name',
   },
   defaultSort: '-sort',
@@ -27,14 +26,14 @@ export const Seasons: CollectionConfig = {
   fields: [
     {
       name: 'name',
-      label: t('Name'),
+      label: 'Name',
       type: 'text',
       localized: true,
       required: true,
     },
     {
       name: 'header',
-      label: t('Header'),
+      label: 'Header',
       type: 'upload',
       relationTo: 'media',
       required: true,

@@ -1,16 +1,15 @@
 import type { CollectionConfig } from 'payload'
-import { t } from '@/i18n'
 
 export const Navigations: CollectionConfig = {
   slug: 'navigations',
   admin: {
-    group: t('System'),
+    group: 'System',
     useAsTitle: 'type',
     defaultColumns: ['type'],
   },
   labels: {
-    singular: t('Navigation'),
-    plural: t('Navigations'),
+    singular: 'Menü',
+    plural: 'Menüs',
   },
   fields: [
     {
@@ -42,7 +41,7 @@ export const Navigations: CollectionConfig = {
     },
     {
       name: 'items',
-      label: t('Items'),
+      label: 'Elemente',
       type: 'array',
       minRows: 1,
       admin: {
@@ -53,31 +52,31 @@ export const Navigations: CollectionConfig = {
       fields: [
         {
           name: 'type',
-          label: t('Type'),
+          label: 'Art',
           type: 'radio',
           defaultValue: 'internal',
           options: [
             {
-              label: t('Internal Link'),
+              label: 'Interner Link',
               value: 'internal',
             },
             {
-              label: t('External Link'),
+              label: 'Externer Link',
               value: 'external',
             },
             {
-              label: t('Subnavigation'),
+              label: 'Untermenü',
               value: 'subnavigation',
             },
             {
-              label: t('Language Switch'),
+              label: 'Sprachwahlschalter',
               value: 'language',
             },
           ],
         },
         {
           name: 'name',
-          label: t('Name'),
+          label: 'Name',
           type: 'text',
           localized: true,
           required: true,
@@ -88,7 +87,7 @@ export const Navigations: CollectionConfig = {
         // internal link
         {
           name: 'page',
-          label: t('Page'),
+          label: 'Seite',
           type: 'relationship',
           relationTo: 'staticPages',
           admin: {
@@ -97,7 +96,7 @@ export const Navigations: CollectionConfig = {
         },
         {
           name: 'relPath',
-          label: t('Relative Path'),
+          label: 'Relative URL',
           type: 'text',
           admin: {
             condition: (data, siblingData) => siblingData.type === 'internal',
@@ -123,7 +122,7 @@ export const Navigations: CollectionConfig = {
         // subnavigation
         {
           name: 'subnavigation',
-          label: t('Subnavigation'),
+          label: 'Untermenü',
           type: 'relationship',
           relationTo: 'navigations',
           admin: {
@@ -132,7 +131,7 @@ export const Navigations: CollectionConfig = {
         },
         {
           name: 'newTab',
-          label: t('Open in new tab'),
+          label: 'In neuem Tab öffnen',
           type: 'checkbox',
           defaultValue: false,
           admin: {
