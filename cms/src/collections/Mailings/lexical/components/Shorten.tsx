@@ -1,5 +1,3 @@
-'use client'
-
 import { Link } from '@react-email/components'
 
 type ShortenProps = {

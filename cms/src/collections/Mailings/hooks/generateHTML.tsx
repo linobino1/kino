@@ -1,11 +1,10 @@
-'use client'
-
 import React from 'react'
 import { extractTokenFromRequest } from '@/util/extractTokenFromRequest'
 import Newsletter, { type Props as NewsletterProps } from '../templates/Newsletter'
 import { render } from '@react-email/components'
 import type { FieldHook } from 'payload'
 import { addDepth } from '../lexical/addDepth'
+import { env } from '@/util/env'
 
 export const generateHTML: FieldHook = async ({ data, req }) => {
   if (!data) {
@@ -16,7 +15,7 @@ export const generateHTML: FieldHook = async ({ data, req }) => {
   // const id = data.id;
   // const token = extractTokenFromRequest(req);
   // const response = await fetch(
-  //   `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/mailings/${result.id}?depth=4`,
+  //   `${env.BACKEND_URL}/api/mailings/${result.id}?depth=4`,
   // );
 
   // let's add depth to the lexical content
@@ -36,22 +35,19 @@ export const generateHTML: FieldHook = async ({ data, req }) => {
   const [headerImage, headerOverlay, footerImage] = await Promise.all([
     // header image (if set)
     data.header.image &&
-      fetch(
-        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/media/${data.header.image}`,
-        fetchOptions,
-      ).then((res) => res.json()),
+      fetch(`${env.BACKEND_URL}/api/media/${data.header.image}`, fetchOptions).then((res) =>
+        res.json(),
+      ),
     // header overlay (if set)
     data.header.overlay &&
-      fetch(
-        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/media/${data.header.overlay}`,
-        fetchOptions,
-      ).then((res) => res.json()),
+      fetch(`${env.BACKEND_URL}/api/media/${data.header.overlay}`, fetchOptions).then((res) =>
+        res.json(),
+      ),
     // footer image (if set)
     data.footer.image &&
-      fetch(
-        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/media/${data.footer.image}`,
-        fetchOptions,
-      ).then((res) => res.json()),
+      fetch(`${env.BACKEND_URL}/api/media/${data.footer.image}`, fetchOptions).then((res) =>
+        res.json(),
+      ),
   ])
 
   // assemble the "deep" mailing doc

@@ -34,7 +34,8 @@ export const Mailings: CollectionConfig = {
     {
       type: 'row',
       fields: [
-        // TODO
+        // TODO: use color picker when it's available
+        // https://github.com/innovixx/payload-color-picker-field/issues/7
         // colorPickerField({
         //   name: 'color',
         //   label: "Farbe",

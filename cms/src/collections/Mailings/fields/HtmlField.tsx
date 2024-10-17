@@ -1,8 +1,7 @@
 'use client'
 
-import { useField } from '@payloadcms/ui'
 import React, { useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useField } from '@payloadcms/ui'
 
 const stylesButton: React.CSSProperties = {
   fontWeight: 'bold',
@@ -20,7 +19,6 @@ const stylesButton: React.CSSProperties = {
 }
 
 const HtmlField = () => {
-  const { t } = useTranslation()
   const { value } = useField({ path: 'html' })
   const [copied, setCopied] = React.useState(false)
   const [showHowTo, setShowHowTo] = React.useState(false)
@@ -37,7 +35,7 @@ const HtmlField = () => {
   return (
     <div>
       <label className="field-label">
-        {t('HTML')}
+        {'HTML'}
         {typeof value === 'string' && value.length > 0 && (
           <button
             onClick={(e) => {
@@ -52,7 +50,7 @@ const HtmlField = () => {
             }}
             style={stylesButton}
           >
-            {t('Copy to clipboard')}
+            {'In die Zwischenablage kopieren'}
           </button>
         )}
         {copied && <span style={{ marginLeft: 5 }}>{'✅'}</span>}
@@ -64,7 +62,7 @@ const HtmlField = () => {
               onClick={() => setShowHowTo(true)}
               style={{ cursor: 'pointer', textDecoration: 'underline' }}
             >
-              What now?
+              {"Wie geht's weiter?"}
             </div>
           )}
           {showHowTo && (
@@ -80,10 +78,10 @@ const HtmlField = () => {
                 background: 'white',
               }}
             >
-              <p>Now we have our email content, let's send it!</p>
+              <p>{'So verschickst du die eben verfasste Email:'}</p>
               <ol>
                 <li>
-                  Log in at{' '}
+                  {'Melde dich bei'}
                   <a
                     target="_blank"
                     href="https://news.kinoimblauensalon.de"
@@ -91,22 +89,23 @@ const HtmlField = () => {
                   >
                     news.kinoimblauensalon.de
                   </a>
-                  .
+                  {' an.'}
                 </li>
-                <li>Create a new campaign.</li>
+                <li>{'Erstelle eine neue Kampagne'}</li>
                 <li>
-                  Give it a name (not important), a subject (important), and assign it to the
-                  "Newsletter" list.
+                  {
+                    'Gib der Kampagne einen Namen (nicht wichtig), einen Betreff (wichtig) und weise sie der Liste `Newsletter` zu.'
+                  }
                 </li>
-                <li>Click "Continue".</li>
-                <li>In the "Content Editor" tab, choose the format "Raw HTML".</li>
-                <li>Paste the HTML code you copied earlier.</li>
-                <li>Click "Save Changes".</li>
-                <li>Go back to the "Campaign" tab and send a test email to yourself.</li>
-                <li>Send or schedule the campaign.</li>
+                <li>{'Klicke auf `Weiter`'}</li>
+                <li>{'Navigiere zum `Content Editor`'}</li>
+                <li>{'Wähle das Format `Raw HTML` aus'}</li>
+                <li>{'Klicke auf `Speichern`'}</li>
+                <li>{'Navigiere zurück zum `Kampagne` Tab'}</li>
+                <li>{'Versende die Kampagne sofort oder richte einen Terminversand ein'}</li>
               </ol>
               <button style={stylesButton} onClick={() => setShowHowTo(false)}>
-                Close
+                {'Schließen'}
               </button>
             </div>
           )}

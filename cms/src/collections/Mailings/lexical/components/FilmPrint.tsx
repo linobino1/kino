@@ -1,5 +1,3 @@
-'use client'
-
 import { Container, Heading, Img, Section, Text } from '@react-email/components'
 import type {
   Country,
