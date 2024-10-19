@@ -17,7 +17,8 @@
     "paths": {
       "@/*": ["./cms/src/*"],
       "@payload-config": ["./cms/src/payload.config.ts"],
-      "~/*": ["./frontend/app/*"]
+      "~/*": ["./frontend/app/*"],
+      "shared/": ["./shared/*"]
     },
     "target": "ES2017"
   },

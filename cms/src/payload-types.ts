@@ -51,7 +51,7 @@ export interface Config {
     seasonsPage: SeasonsPage;
     archive: Archive;
   };
-  locale: 'en' | 'de';
+  locale: 'de' | 'en';
   user: User & {
     collection: 'users';
   };

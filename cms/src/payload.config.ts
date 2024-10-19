@@ -38,6 +38,10 @@ import { Blog } from './globals/pages/Blog'
 import { EventsPage } from './globals/pages/EventsPage'
 import { SeasonsPage } from './globals/pages/Seasons'
 import { Archive } from './globals/pages/Archive'
+import { locales, siteTitle } from 'shared/config'
+import { search } from './views/tmdb-migrate/endpoints/search'
+import { preview } from './views/tmdb-migrate/endpoints/preview'
+import { migrate } from './views/tmdb-migrate/endpoints/migrate'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -46,10 +50,26 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     importMap: {
-      // baseDir: path.resolve(dirname),
       baseDir: '@',
     },
+    components: {
+      beforeDashboard: ['/components/MigrateMovieLink'],
+      views: {
+        customView: {
+          Component: '/views/tmdb-migrate/index',
+          path: '/tmdb-migrate',
+          meta: {
+            title: 'Neuen Film anlegen',
+          },
+        },
+      },
+    },
+    meta: {
+      title: siteTitle,
+      titleSuffix: ` - ${siteTitle}`,
+    },
   },
+  endpoints: [search, preview, migrate],
   collections: [
     // Movie Database
     Movies,
@@ -137,7 +157,7 @@ export default buildConfig({
   // content localization
   localization: {
     defaultLocale: 'de',
-    locales: ['en', 'de'],
+    locales: [...locales],
     fallback: true,
   },
   // admin panel localization (to be removed)

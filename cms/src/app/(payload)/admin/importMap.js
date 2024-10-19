@@ -70,6 +70,8 @@ import { ItalicFeatureClient as ItalicFeatureClient_68 } from '@payloadcms/richt
 import { default as default_69 } from '@/collections/Mailings/fields/HtmlField'
 import { default as default_70 } from '@/collections/Mailings/components/HowTo'
 import { default as default_71 } from '@/components/RowLabelNavigationItem'
+import { default as default_72 } from '@/components/MigrateMovieLink'
+import { default as default_73 } from '@/views/tmdb-migrate/index'
 
 export const importMap = {
   "/components/UrlField#default": default_0,
@@ -143,5 +145,7 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_68,
   "/collections/Mailings/fields/HtmlField#default": default_69,
   "/collections/Mailings/components/HowTo#default": default_70,
-  "/components/RowLabelNavigationItem#default": default_71
+  "/components/RowLabelNavigationItem#default": default_71,
+  "/components/MigrateMovieLink#default": default_72,
+  "/views/tmdb-migrate/index#default": default_73
 }
