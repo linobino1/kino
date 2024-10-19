@@ -3,7 +3,7 @@ import type { Movie, Format } from '@/payload-types'
 import analogDigitalTypeField from './fields'
 // import { MigrateMovieButton } from '@/MigrateMovie/admin/Button'
 import { isAdminOrEditor } from '@/access'
-import { Locale } from '@/types'
+import { type Locale } from 'shared/config'
 
 export const FilmPrints: CollectionConfig = {
   slug: 'filmPrints',

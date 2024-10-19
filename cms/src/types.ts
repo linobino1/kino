@@ -1,16 +1,5 @@
 // manually created types go here
-
-export type Locale = Config['locale']
-
-import type {
-  Post,
-  StaticPage,
-  Event,
-  ScreeningSery,
-  FilmPrint,
-  Season,
-  Config,
-} from '@/payload-types'
+import type { Post, StaticPage, Event, ScreeningSery, FilmPrint, Season } from '@/payload-types'
 import { CollectionSlug } from 'payload'
 
 // each collection that has a url field must be added to this type

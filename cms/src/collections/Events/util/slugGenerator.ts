@@ -1,6 +1,6 @@
 import type { slugGeneratorArgs } from '@/plugins/addSlugField'
 import type { Movie } from '@/payload-types'
-import { Locale } from '@/types'
+import { type Locale } from 'shared/config'
 
 export const slugGenerator = async ({ data, req }: slugGeneratorArgs) => {
   // if the event is not a screening we need the title

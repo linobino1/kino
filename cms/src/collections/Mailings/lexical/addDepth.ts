@@ -1,6 +1,6 @@
 import type { Payload } from 'payload'
 import type { SerializedLexicalEditorState, SerializedLexicalNode } from './types'
-import { Locale } from '@/types'
+import { type Locale } from 'shared/config'
 
 /**
  * replaces event IDs in event blocks with the actual event objects

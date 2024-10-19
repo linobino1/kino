@@ -1,0 +1,52 @@
+{
+  "No upcoming screenings.": "No upcoming screenings.",
+  "CookieBannerText": "This website uses cookies to ensure you get the best experience on our website.",
+  "ageRating {age}": "FSK {{age}}",
+  "duration {duration}": "{{duration}} min",
+  "directed by {directors}": "Director: {{directors}}",
+  "starring {actors}": "with {{actors}}",
+  "newsletter": {
+    "cta": "Subscribe to our newsletter",
+    "name": "Name",
+    "email": "Email Address",
+    "subscribe": "Submit",
+    "sending": "Sending...",
+    "success": "Thank you for subscribing!",
+    "subscribeAgain": "Subscribe again",
+    "empty": "Please enter a valid email address.",
+    "duplicate": "Too many subscribe attempts for this email address.",
+    "error": {
+      "network": "Our newsletter service is currently unavailable. Please try again later.",
+      "unknown": "An unknown error occurred. Please try again later."
+    },
+    "captcha": {
+      "checking": "Spam test running...",
+      "success": "Spam test passed:)",
+      "error": "Your connection has been blocked by our spam filter. Please try again later."
+    }
+  },
+  "More Info": "More Info",
+  "Read more": "Read more",
+  "No screenings for this season.": "No screenings for this season.",
+  "filter.isHfgProduction": "HfG Production",
+  "filter.isHfgProduction.true": "yes",
+  "filter.isHfgProduction.false": "no",
+  "filter.directors": "All Directors",
+  "filter.countries": "All Countries",
+  "filter.decade": "All Decades",
+  "filter.genre": "All Genres",
+  "filter.color": "All Color Types",
+  "filter.languageVersion": "All Languages",
+  "filter.format": "All Formats",
+  "search...": "search...",
+  "reset filters": "reset filters",
+  "Our Next Screenings": "Upcoming Screenings",
+  "Upcoming Screenings": "Upcoming Screenings",
+  "Past Screenings": "Past Screenings",
+  "News": "News",
+  "See all screenings": "See all screenings",
+  "event.meta.title": "{{ title }} on {{date}}",
+  "screening.meta.description": "Screening on {{date}}. {{synopsis}}",
+  "Supporting Film": "Supporting Film",
+  "Add to calendar": "Add event to my calendar"
+}

@@ -121,6 +121,7 @@ export interface Media {
   id: string;
   alt?: string | null;
   tmdbFilepath?: string | null;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;

@@ -1,0 +1,14 @@
+.language {
+  padding-inline: 0.5em;
+  padding-block: 0.2em;
+}
+.language,
+.language:active,
+.language:visited {
+  font: inherit;
+  text-decoration: none;
+  color: inherit;
+}
+.language.active {
+  display: none;
+}
