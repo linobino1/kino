@@ -21,6 +21,7 @@ const schema = z.object({
 })
 
 const clientSchema = schema.pick({
+  NODE_ENV: true,
   BACKEND_URL: true,
   FRONTEND_URL: true,
   MEDIA_URL: true,

@@ -45,17 +45,16 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return {
     locale,
     i18nCookie: serializedI18nCookie,
-    envClient,
+    env: envClient,
     site,
   }
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const data = useRouteLoaderData<typeof loader>('root')
-  const { locale, i18nCookie, envClient } = data ?? {
+  const { locale, i18nCookie } = data ?? {
     locale: defaultLocale,
     i18nCookie: '',
-    envClient: {},
   }
 
   const { i18n } = useTranslation()
@@ -70,11 +69,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang={locale} dir={i18n.dir()} className="font-sans">
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.process = ${JSON.stringify({ env: envClient })}`,
-          }}
-        />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />

@@ -2,9 +2,11 @@ import React from 'react'
 import { useRouteError, isRouteErrorResponse } from '@remix-run/react'
 import { captureRemixErrorBoundaryError, captureException } from '@sentry/remix'
 import { Page } from './Page'
+import { useEnv } from '~/util/useEnv'
 
 export const ErrorPage: React.FC = () => {
   const error = useRouteError()
+  const env = useEnv()
   let children = null
 
   captureRemixErrorBoundaryError(error)
@@ -26,7 +28,7 @@ export const ErrorPage: React.FC = () => {
       <>
         <h1>Error</h1>
         <p>{error.message}</p>
-        {process.env.NODE_ENV === 'development' && <pre>{error.stack}</pre>}
+        {env?.NODE_ENV === 'development' && <pre>{error.stack}</pre>}
       </>
     )
   } else {
