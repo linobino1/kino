@@ -7,7 +7,6 @@ import { ErrorPage } from '~/components/ErrorPage'
 import type { loader as rootLoader } from '~/root'
 import { payload } from '~/util/payload.server'
 import { Locale } from 'shared/config'
-import { classes } from '~/classes'
 // import { cacheControlShortWithSWR } from '~/util/cache-control/cacheControlShortWithSWR'
 // import { routeHeaders } from '~/util/cache-control/routeHeaders'
 
@@ -44,7 +43,7 @@ export default function Layout() {
 
   return (
     <>
-      <div className={classes.aboveFooter}>
+      <div className="min-h-screen">
         {navigations && site && <Header site={site} navigations={navigations} />}
         <Outlet />
       </div>

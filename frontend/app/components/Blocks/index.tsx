@@ -29,7 +29,8 @@ export const Block: React.FC<BlockProps> = ({ block, ...props }) => {
       return <Heading text={block.text ?? undefined} />
 
     case 'headerImage':
-      const { ...props } = block
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { blockType, blockName, ...props } = block
       return <HeaderImage {...props} />
 
     case 'image':

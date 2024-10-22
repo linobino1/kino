@@ -1,4 +1,10 @@
-import { defineConfig, presetWebFonts, presetIcons, presetUno, presetWind } from 'unocss'
+import {
+  defineConfig,
+  presetWebFonts,
+  presetIcons,
+  presetUno,
+  presetWind,
+} from 'unocss'
 
 export default defineConfig({
   presets: [
@@ -16,6 +22,29 @@ export default defineConfig({
     }),
   ],
   theme: {
+    fontSize: {
+      //--font-xxx-big: normal 300 2.5rem/1 var(--font-family);
+      // --font-xx-big: normal 300 1.9rem/1 var(--font-family);
+      // --font-x-big: normal 300 1.7rem/1.2 var(--font-family);
+      // --font-big: normal 300 1.3rem/1.2 var(--font-family);
+      // --font: normal 300 1rem/1.4 var(--font-family);
+      // --font-small: normal 300 0.9rem/1.4 var(--font-family);
+      // --font-x-small: normal 300 0.8rem/1.4 var(--font-family);
+      // --font-h2: var(--font-weight-bold) 1.9rem/1 var(--font-family)
+      //
+      // mobile:
+      // --font-xxx-big: normal 300 1.9rem/1 var(--font-family);
+      // --font-xx-big: normal 300 1.7rem/1 var(--font-family);
+      // --font-x-big: normal 300 1.3rem/1.2 var(--font-family);
+      // --font-big: normal 300 1.15rem/1.2 var(--font-family);
+      xs: ['0.8rem', '1.4'], // x-small
+      sm: ['0.9rem', '1.4'], // small
+      base: ['1rem', '1.4'], // base
+      lg: ['clamp(1.15rem, (100vw - 640px) * 99, 1.3rem)', '1.4'], // big
+      xl: ['clamp(1.3rem, (100vw - 640px) * 99, 1.7rem)', '1.4'], // x-big
+      '2xl': ['clamp(1.7rem, (100vw - 640px) * 99, 1.9rem)', '1'], // xx-big
+      '3xl': ['clamp(1.9rem, (100vw - 640px) * 99, 2.5rem)', '1'], // xxx-big
+    },
     colors: {
       theme: {
         50: '#E3E6F7',

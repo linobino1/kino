@@ -9,6 +9,7 @@ import {
 } from '@remix-run/react'
 import '@unocss/reset/tailwind-compat.css'
 import 'virtual:uno.css'
+import './global.css'
 import { envClient } from './env.server'
 import { i18nCookie } from './cookies'
 import { useTranslation } from 'react-i18next'
@@ -19,7 +20,6 @@ import { LoaderFunctionArgs } from '@remix-run/node'
 import { returnLanguageIfSupported } from './util/i18n/returnLanguageIfSupported'
 import { localizeTo } from './util/i18n/localizeTo'
 import { defaultLocale, locales } from 'shared/config'
-import LanguageSwitch from './components/LanguageSwitch'
 import { payload } from '~/util/payload.server'
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -68,7 +68,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   }, [locale, i18nCookie])
 
   return (
-    <html lang={locale} dir={i18n.dir()} className="">
+    <html lang={locale} dir={i18n.dir()} className="font-sans">
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -81,7 +81,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <LanguageSwitch />
         {children}
         <ScrollRestoration
           getKey={(location) => {

@@ -13,7 +13,7 @@ export interface Props extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, '
 
 export const Image: React.FC<Props> = ({ image, srcSet, src, alt, width, height, ...props }) => {
   // use src and alt from image if provided
-  src ||= (image?.url && getImageUrl(image.url)) || undefined
+  src ||= image?.url || undefined
   alt ||= image?.alt || undefined
   width ||= image?.width || undefined
   height ||= image?.height || undefined

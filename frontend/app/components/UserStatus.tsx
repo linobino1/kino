@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { classes } from '~/classes'
 import type { User } from '@/payload-types'
 import { Link } from '~/components/localized-link'
+import { cn } from '~/util/cn'
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   className?: string
@@ -18,7 +19,7 @@ export const UserStatus: React.FC<Props> = ({ className }) => {
     rootData.user) as User
 
   return (
-    <div className={`${classes.container} ${className}`}>
+    <div className={cn('', className)}>
       {user ? (
         <div className={classes.signedIn}>
           <Link to="/auth/me" className={classes.name}>
