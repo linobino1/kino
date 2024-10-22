@@ -25,7 +25,7 @@ export const migrateCredits: MigrationFunction = async ({ payload, movie, warnin
             name: person.name,
           },
         })) as unknown as Person
-      } catch (err) {
+      } catch {
         // could not be created, try to find it
         doc = (
           await payload.find({
@@ -59,7 +59,7 @@ export const migrateCredits: MigrationFunction = async ({ payload, movie, warnin
             name: tmdbPerson.name,
           },
         })) as unknown as Person
-      } catch (err) {
+      } catch {
         // could not be created, try to find it
         person = (
           await payload.find({
@@ -136,11 +136,11 @@ const migrateJob = async (
           },
           locale,
         })
-      } catch (err) {
+      } catch {
         warnings.push(new Error(`Could not add job name ${tmdbJob} to ${locale} version`))
       }
     })
-  } catch (err) {
+  } catch {
     // could not be created, try to find it
     job = (
       await payload.find({

@@ -171,7 +171,7 @@ export const MigrateMovieComponent: React.FC = () => {
         <form onSubmit={search} className="mb-8 space-y-8">
           <p className="max-w-prose">
             Mit diesem Tool können Filmdaten von{' '}
-            <a href="https://www.themoviedb.org/" target="_blank">
+            <a href="https://www.themoviedb.org/" target="_blank" rel="noreferrer">
               The Movie Database
             </a>{' '}
             in das System migriert werden um dann für eine Filmkopie bzw. Vorstellung verwendet

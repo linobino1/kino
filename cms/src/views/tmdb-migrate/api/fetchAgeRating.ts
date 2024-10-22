@@ -5,7 +5,7 @@ import { ageRatingAges } from '@/collections/Movies'
 /**
  *
  * @param tmdbId id of the movie on themoviedb.org
- * @returns string | undefined age certification of the latest release in germany
+ * @returns string | undefined age certification of the latest release in germany
  */
 export async function fetchAgeRating(tmdbId: number): Promise<Movie['ageRating'] | undefined> {
   const data = await tmdbFetch('releaseDates', tmdbId)

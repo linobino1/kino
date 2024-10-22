@@ -11,11 +11,12 @@ const HowTo = () => {
         <li>Edit the content as needed.</li>
         <li>Hit Save.</li>
         <li>
-          Scroll down, verify that the HTML preview looks good, and click "Copy to clipboard".
+          Scroll down, verify that the HTML preview looks good, and click &quot;Copy to
+          clipboard&quot;.
         </li>
         <li>
-          Click "What now?" to see the next steps.{' '}
-          <i>The button will appear underneath the "Copy to clipboard" button.</i>
+          Click &quot;What now?&quot; to see the next steps.{' '}
+          <i>The button will appear underneath the &quot;Copy to clipboard&quot; button.</i>
         </li>
       </ol>
     </Gutter>

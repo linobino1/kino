@@ -27,8 +27,8 @@ export const migrate: Endpoint = {
       return Response.json({ success: false, message: 'Unauthorized' }, { status: 401 })
     }
 
-    const { payload, locale } = req
-    const { tmdbId, images } = await req.json?.()
+    const { payload } = req
+    const { tmdbId, images } = req.json ? await req.json() : {}
 
     if (isNaN(tmdbId)) {
       return Response.json({ success: false, message: 'Invalid TMDB ID' }, { status: 400 })

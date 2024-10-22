@@ -20,6 +20,6 @@ export default defineConfig({
     UnoCSS(),
   ],
   ssr: {
-    noExternal: ['remix-custom-routes'],
+    noExternal: ['remix-custom-routes', 'remix-i18next', 'payload'],
   },
 })

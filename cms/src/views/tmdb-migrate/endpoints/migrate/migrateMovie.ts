@@ -14,7 +14,7 @@ export const migrateMovie = async (
   const data = await tmdbFetch('movie', tmdbId, defaultLanguage)
 
   // create genres
-  let genres: string[] = []
+  const genres: string[] = []
   await Promise.all(
     data.genres.map(async (genre: any) => {
       genres.push((await migrateGenre(payload, tmdbId, warnings, genre)).id)
@@ -22,7 +22,7 @@ export const migrateMovie = async (
   )
 
   // create production companies
-  let productionCompanies: string[] = []
+  const productionCompanies: string[] = []
   await Promise.all(
     data.production_companies.map(async (company: tmdbCompany) => {
       let doc: Company
@@ -36,7 +36,7 @@ export const migrateMovie = async (
           },
           locale: defaultLanguage,
         })) as unknown as Company
-      } catch (err) {
+      } catch {
         // could not be created, try to find it
         doc = (
           await payload.find({
@@ -60,10 +60,10 @@ export const migrateMovie = async (
     }),
   )
 
-  let movie = await payload.create({
+  const movie = await payload.create({
     collection: 'movies',
     draft: true,
-    // @ts-ignore data is partial, that is ok because draft is true
+    // @ts-expect-error data is partial, that is ok because draft is true
     data: {
       originalTitle: data.original_title,
       title: data.title,
@@ -87,7 +87,7 @@ export const migrateMovie = async (
     if (locale === defaultLanguage) continue // we already have the default language...
 
     // fetch movie details from TMDB in language
-    let dataTranslated = await tmdbFetch('movie', tmdbId, locale)
+    const dataTranslated = await tmdbFetch('movie', tmdbId, locale)
 
     // title & synopsis
     await payload.update({
@@ -128,7 +128,7 @@ const migrateGenre = async (
       locale: defaultLanguage,
     })) as unknown as Genre
     created = true
-  } catch (err) {
+  } catch {
     // could not be created, try to find it
     genre = (
       await payload.find({
@@ -153,7 +153,7 @@ const migrateGenre = async (
 
       tmdbFetch('movie', tmdbId, locale)
         .then(async (tmdbMovieLng) => {
-          let name = tmdbMovieLng.genres.find((g) => g.id === tmdbGenre.id)?.name
+          const name = tmdbMovieLng.genres.find((g) => g.id === tmdbGenre.id)?.name
 
           try {
             await payload.update({

@@ -26,7 +26,7 @@ export const Movies: CollectionConfig = {
               },
             },
           })
-        } catch (err) {
+        } catch {
           // at least we tried..
         }
         return true
@@ -105,7 +105,7 @@ export const Movies: CollectionConfig = {
       // make sure the TMDB ID is empty or unique
       // @ts-expect-error https://github.com/payloadcms/payload/issues/7549
       validate: async (value, { operation, req: { payload } }) => {
-        if (typeof value === undefined) return true
+        if (typeof value === 'undefined') return true
 
         const res = await payload.find({
           collection: 'movies',

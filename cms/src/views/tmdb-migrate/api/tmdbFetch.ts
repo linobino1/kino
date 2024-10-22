@@ -67,7 +67,7 @@ export async function tmdbFetch(
       },
     })
     data = JSON.parse(res?.data)
-  } catch (err) {
+  } catch {
     throw new Error('Unable to get themoviedb response for movie')
   }
   if (!data || data.success === false) {

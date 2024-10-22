@@ -1,8 +1,8 @@
-import { locales } from 'shared/config'
+import { Locale, locales } from 'shared/config'
 
-export const returnLanguageIfSupported = (lang?: string): string | undefined => {
-  if ((locales as unknown as string[]).includes(lang ?? '')) {
-    return lang
+export const returnLanguageIfSupported = (lang?: string): Locale | undefined => {
+  if (locales.includes(lang as Locale)) {
+    return lang as Locale
   }
   return undefined
 }

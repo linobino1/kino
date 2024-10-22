@@ -1,7 +1,7 @@
 import { type ContainerProps, Container } from '@react-email/components'
 import { containerWidth } from '../../templates/Newsletter'
 
-const Gutter: React.FC<ContainerProps> = ({ style, ...props }) => {
+const Gutter: React.FC<ContainerProps> = ({ ...props }) => {
   return (
     <Container
       {...props}

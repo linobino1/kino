@@ -8,7 +8,6 @@ import {
   useRouteLoaderData,
 } from '@remix-run/react'
 import '@unocss/reset/tailwind-compat.css'
-// eslint-disable-next-line import/no-unresolved
 import 'virtual:uno.css'
 import { envClient } from './env.server'
 import { i18nCookie } from './cookies'
@@ -19,8 +18,9 @@ import i18next from './i18next.server'
 import { LoaderFunctionArgs } from '@remix-run/node'
 import { returnLanguageIfSupported } from './util/i18n/returnLanguageIfSupported'
 import { localizeTo } from './util/i18n/localizeTo'
-import { defaultLocale } from 'shared/config'
+import { defaultLocale, locales } from 'shared/config'
 import LanguageSwitch from './components/LanguageSwitch'
+import { payload } from '~/util/payload.server'
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url)
@@ -33,10 +33,20 @@ export async function loader({ request }: LoaderFunctionArgs) {
     throw redirect(to)
   }
 
+  const [site, serializedI18nCookie] = await Promise.all([
+    payload.findGlobal({
+      slug: 'site',
+      depth: 3,
+      locale,
+    }),
+    i18nCookie.serialize(locale),
+  ])
+
   return {
     locale,
-    i18nCookie: await i18nCookie.serialize(locale),
+    i18nCookie: serializedI18nCookie,
     envClient,
+    site,
   }
 }
 
@@ -73,7 +83,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body>
         <LanguageSwitch />
         {children}
-        <ScrollRestoration />
+        <ScrollRestoration
+          getKey={(location) => {
+            // strip locale from pathname
+            const regex = new RegExp(`^/(${locales.join('|')})`)
+            return (
+              location.pathname.replace(regex, '/').replace('//', '/') +
+              location.search +
+              location.hash
+            )
+          }}
+        />
         <Scripts />
       </body>
     </html>

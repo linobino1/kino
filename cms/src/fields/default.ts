@@ -1,4 +1,4 @@
-import type { Field } from 'payload'
+import type { CollectionSlug, Field } from 'payload'
 
 /**
  * a helper function to get the id of the default doc for a collection with a 'default' field
@@ -10,7 +10,7 @@ export const getDefaultDocId = async (collection: string): Promise<string | unde
     return (
       await fetch(`/api/${collection}/?where[default][equals]=true`).then((res) => res.json())
     ).docs[0].id
-  } catch (e) {
+  } catch {
     return undefined
   }
 }
@@ -18,7 +18,7 @@ export const getDefaultDocId = async (collection: string): Promise<string | unde
 /**
  * a checkbox to mark a doc as default for a collection
  */
-export const defaultField = (collection: string): Field => ({
+export const defaultField = (collection: CollectionSlug): Field => ({
   name: 'default',
   type: 'checkbox',
   label: 'wird als Standard verwendet',
@@ -28,7 +28,6 @@ export const defaultField = (collection: string): Field => ({
         // unset previous default doc to false
         if (value) {
           await req.payload.update({
-            // @ts-ignore collection must be a valid collection slug
             collection,
             where: {
               default: {

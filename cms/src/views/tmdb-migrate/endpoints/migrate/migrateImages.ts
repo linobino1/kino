@@ -26,7 +26,7 @@ export const migrateImages: ImagesMigrationFunction = async (
   let tmpDir
   try {
     tmpDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'tmdb-migrate-images-'))
-  } catch (err) {
+  } catch {
     throw new Error('Unable to create temp directory for images')
   }
 
@@ -129,7 +129,7 @@ export async function updateOrCreateImage(
   }
 
   // upload image to payload
-  let image: Media = (
+  const image: Media = (
     await payload.find({
       collection: 'media',
       where: {

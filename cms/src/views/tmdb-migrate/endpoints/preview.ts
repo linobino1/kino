@@ -18,7 +18,7 @@ export const preview: Endpoint = {
     }
 
     // check if movie has already been created
-    let doc = (
+    const doc = (
       await payload.find({
         collection: 'movies',
         where: {

@@ -80,7 +80,6 @@ export const addSlugField: Plugin = (incomingConfig: Config): Config => {
   // Spread the existing config
   const config: Config = {
     ...incomingConfig,
-    // @ts-ignore
     collections: [
       ...(incomingConfig.collections?.map((collection) =>
         collection.custom?.addSlugField

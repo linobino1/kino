@@ -70,7 +70,7 @@ export function SerializeLexicalToEmail({ nodes, color }: Props): React.ReactNod
         }
 
         // alignment
-        let textAlign = (node.format ?? 'left') as 'left' | 'center' | 'right'
+        const textAlign = (node.format ?? 'left') as 'left' | 'center' | 'right'
 
         // NOTE: Hacky fix for
         // https://github.com/facebook/lexical/blob/d10c4e6e55261b2fdd7d1845aed46151d0f06a8c/packages/lexical-list/src/LexicalListItemNode.ts#L133

@@ -108,6 +108,7 @@ export interface Movie {
   tags?: string | null;
   isMigratedFromWordpress?: boolean | null;
   wordpressMigrationNotes?: string | null;
+  url: string;
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -121,10 +122,9 @@ export interface Media {
   id: string;
   alt?: string | null;
   tmdbFilepath?: string | null;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
-  url?: string | null;
+  url: string;
   thumbnailURL?: string | null;
   filename?: string | null;
   mimeType?: string | null;
@@ -141,6 +141,7 @@ export interface Media {
 export interface Person {
   id: string;
   name: string;
+  url: string;
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -152,6 +153,7 @@ export interface Person {
 export interface Country {
   id: string;
   name: string;
+  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -162,6 +164,7 @@ export interface Country {
 export interface Genre {
   id: string;
   name: string;
+  url: string;
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -173,6 +176,7 @@ export interface Genre {
 export interface Job {
   id: string;
   name: string;
+  url: string;
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -184,6 +188,7 @@ export interface Job {
 export interface Company {
   id: string;
   name: string;
+  url: string;
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -222,6 +227,7 @@ export interface Format {
   id: string;
   type?: ('analog' | 'digital') | null;
   name: string;
+  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -233,6 +239,7 @@ export interface LanguageVersion {
   id: string;
   name: string;
   abbreviation: string;
+  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -245,6 +252,7 @@ export interface Rental {
   name: string;
   logo?: (string | null) | Media;
   credits: string;
+  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -255,6 +263,7 @@ export interface Rental {
 export interface Carrier {
   id: string;
   name: string;
+  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -265,6 +274,7 @@ export interface Carrier {
 export interface Category {
   id: string;
   name: string;
+  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -275,6 +285,7 @@ export interface Category {
 export interface AspectRatio {
   id: string;
   name: string;
+  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -285,6 +296,7 @@ export interface AspectRatio {
 export interface Color {
   id: string;
   name: string;
+  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -295,6 +307,7 @@ export interface Color {
 export interface SoundFormat {
   id: string;
   name: string;
+  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -305,6 +318,7 @@ export interface SoundFormat {
 export interface Condition {
   id: string;
   name: string;
+  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -357,6 +371,7 @@ export interface Location {
   id: string;
   name?: string | null;
   default?: boolean | null;
+  url: string;
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -482,6 +497,7 @@ export interface Navigation {
         id?: string | null;
       }[]
     | null;
+  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -695,6 +711,7 @@ export interface Mailing {
     link?: string | null;
   };
   html?: string | null;
+  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -706,6 +723,7 @@ export interface User {
   id: string;
   name: string;
   role?: ('admin' | 'editor') | null;
+  url: string;
   updatedAt: string;
   createdAt: string;
   email: string;

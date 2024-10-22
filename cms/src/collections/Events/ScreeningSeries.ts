@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import pageLayout from '@/fields/pageLayout'
+import { pageLayout } from '@/fields/pageLayout'
 
 export const ScreeningSeries: CollectionConfig = {
   slug: 'screeningSeries',

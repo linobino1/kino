@@ -53,7 +53,7 @@ export const generateHTML: FieldHook = async ({ data, req }) => {
   // assemble the "deep" mailing doc
   const mailing: NewsletterProps['mailing'] = {
     ...data,
-    // @ts-ignore why is SerializedLexicalEditorState not assignable to SerializedLexicalEditorState?
+    // @ts-expect-error why is SerializedLexicalEditorState not assignable to SerializedLexicalEditorState?
     content,
     header: {
       ...data?.header,
