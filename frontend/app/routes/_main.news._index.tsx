@@ -1,4 +1,9 @@
-import { redirect, type LoaderFunctionArgs, type MetaFunction, json } from '@remix-run/node'
+import {
+  redirect,
+  type LoaderFunctionArgs,
+  type MetaFunction,
+  HeadersFunction,
+} from '@remix-run/node'
 import { useLoaderData, useRouteLoaderData } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
 import { Page } from '~/components/Page'
@@ -10,14 +15,15 @@ import { postsListSchema } from '~/structured-data/post'
 import EventsList from '~/components/EventsList'
 import type { loader as rootLoader } from '~/root'
 import Gutter from '~/components/Gutter'
-// import { cacheControlShortWithSWR } from '~/util/cache-control/cacheControlShortWithSWR'
-// import { routeHeaders } from '~/util/cache-control/routeHeaders'
+import { cacheControlShortWithSWR } from '~/util/cache-control/cacheControlShortWithSWR'
 import { Link } from '~/components/localized-link'
 import { Locale } from 'shared/config'
 import { classes } from '~/classes'
 import { getPayload } from '~/util/getPayload.server'
 
-// export const headers = routeHeaders
+export const headers: HeadersFunction = () => ({
+  'Cache-Control': cacheControlShortWithSWR,
+})
 
 export const loader = async ({ request, params: { lang: locale } }: LoaderFunctionArgs) => {
   const payload = await getPayload()
@@ -75,19 +81,11 @@ export const loader = async ({ request, params: { lang: locale } }: LoaderFuncti
     })
   }
 
-  return json(
-    {
-      page,
-      posts,
-      events,
-    },
-    // {
-    //   headers: {
-    //     // cache this data for 10 minutes, and allow stale data to be served while revalidating for 1h
-    //     'Cache-Control': cacheControlShortWithSWR,
-    //   },
-    // },
-  )
+  return {
+    page,
+    posts,
+    events,
+  }
 }
 
 export const meta: MetaFunction<

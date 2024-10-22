@@ -4,6 +4,13 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 import UnoCSS from 'unocss/vite'
 import { customRoutesConfig } from './app/customRoutesConfig'
 
+declare module '@remix-run/node' {
+  // this is a temporary workaround for getting proper types with the v3_singleFetch future flag
+  interface Future {
+    v3_singleFetch: true
+  }
+}
+
 export default defineConfig({
   plugins: [
     remix({
