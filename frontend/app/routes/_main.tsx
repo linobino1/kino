@@ -5,15 +5,17 @@ import Footer from '~/components/Footer'
 import Header from '~/components/Header'
 import { ErrorPage } from '~/components/ErrorPage'
 import type { loader as rootLoader } from '~/root'
-import { payload } from '~/util/payload.server'
 import { Locale } from 'shared/config'
+import { getPayload } from '~/util/getPayload.server'
 // import { cacheControlShortWithSWR } from '~/util/cache-control/cacheControlShortWithSWR'
 // import { routeHeaders } from '~/util/cache-control/routeHeaders'
 
 export const ErrorBoundary = ErrorPage
 
 export const loader = async ({ params: { lang: locale } }: LoaderFunctionArgs) => {
-  const navigations = await payload.find({
+  const navigations = await (
+    await getPayload()
+  ).find({
     collection: 'navigations',
     depth: 12,
     locale: locale as Locale,

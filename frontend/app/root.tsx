@@ -20,7 +20,7 @@ import { LoaderFunctionArgs } from '@remix-run/node'
 import { returnLanguageIfSupported } from './util/i18n/returnLanguageIfSupported'
 import { localizeTo } from './util/i18n/localizeTo'
 import { defaultLocale, locales } from 'shared/config'
-import { payload } from '~/util/payload.server'
+import { getPayload } from './util/getPayload.server'
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url)
@@ -34,7 +34,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   }
 
   const [site, serializedI18nCookie] = await Promise.all([
-    payload.findGlobal({
+    (await getPayload()).findGlobal({
       slug: 'site',
       depth: 3,
       locale,

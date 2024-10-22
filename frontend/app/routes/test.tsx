@@ -1,10 +1,12 @@
 import type { MetaFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
-import { payload } from '~/util/payload.server'
+import { getPayload } from '~/util/getPayload.server'
 
 export const loader = async () => {
-  const users = await payload.find({
+  const users = await (
+    await getPayload()
+  ).find({
     collection: 'users',
   })
   return { users }

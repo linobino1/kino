@@ -13,13 +13,14 @@ import Gutter from '~/components/Gutter'
 // import { cacheControlShortWithSWR } from '~/util/cache-control/cacheControlShortWithSWR'
 // import { routeHeaders } from '~/util/cache-control/routeHeaders'
 import { Link } from '~/components/localized-link'
-import { payload } from '~/util/payload.server'
 import { Locale } from 'shared/config'
 import { classes } from '~/classes'
+import { getPayload } from '~/util/getPayload.server'
 
 // export const headers = routeHeaders
 
 export const loader = async ({ request, params: { lang: locale } }: LoaderFunctionArgs) => {
+  const payload = await getPayload()
   // compare date for upcoming screenings
   const today = new Date()
   today.setHours(0, 0, 0, 0)
