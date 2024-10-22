@@ -2,6 +2,7 @@ import { Blocks } from './Blocks'
 import React from 'react'
 import { type PageLayout } from '@/fields/pageLayout'
 import { classes } from '~/classes'
+import { cn } from '~/util/cn'
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   layout?: PageLayout
@@ -10,11 +11,14 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const Page: React.FC<Props> = ({ layout, layoutType, children, ...props }) => {
+  const type = layout?.type || layoutType || 'default'
   return (
     <div
       {...props}
-      data-layout-type={layout?.type || layoutType || 'default'}
-      className={`${classes.page} ${props.className}`}
+      className={cn({
+        'bg-theme-500 text-white': type === 'default',
+        'bg-white text-black': type === 'info',
+      })}
     >
       {layout?.blocks ? (
         <Blocks blocks={layout.blocks} className={classes.blocks}>

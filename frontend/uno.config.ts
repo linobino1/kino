@@ -1,10 +1,4 @@
-import {
-  defineConfig,
-  presetWebFonts,
-  presetIcons,
-  presetUno,
-  presetWind,
-} from 'unocss'
+import { defineConfig, presetWebFonts, presetIcons, presetUno, presetWind } from 'unocss'
 
 export default defineConfig({
   presets: [
@@ -22,6 +16,17 @@ export default defineConfig({
     }),
   ],
   theme: {
+    breakpoints: {
+      xs: '450px',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1536px',
+    },
+    fontFamily: {
+      calendar: 'Tahoma, Geneva, sans-serif',
+    },
     fontSize: {
       //--font-xxx-big: normal 300 2.5rem/1 var(--font-family);
       // --font-xx-big: normal 300 1.9rem/1 var(--font-family);

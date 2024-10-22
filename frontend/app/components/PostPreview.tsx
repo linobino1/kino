@@ -3,16 +3,16 @@ import React from 'react'
 import Date from '~/components/Date'
 import Image from '~/components/Image'
 import RichText from '~/components/RichText'
-import { classes } from '~/classes'
 import { useTranslation } from 'react-i18next'
 import type { LinkableCollection } from '@/types'
 import { Link } from '~/components/localized-link'
+import { cn } from '~/util/cn'
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   post: Post
 }
 
-export const PostPreview: React.FC<Props> = (props) => {
+export const PostPreview: React.FC<Props> = ({ className, ...props }) => {
   const { t } = useTranslation()
   const { post } = props
   let link: string | undefined
@@ -29,11 +29,13 @@ export const PostPreview: React.FC<Props> = (props) => {
       link = post.details?.length ? post.url : undefined
   }
   return (
-    <div {...props} className={`${classes.container} ${props.className}`}>
+    <div {...props} className={cn('gap-x-8 sm:grid sm:grid-cols-2', className)}>
       <Image
         image={post.header as Media}
         onClick={link ? () => window.open(link, target) : undefined}
-        className={link ? classes.link : undefined}
+        className={cn('', {
+          'cursor-pointer': link,
+        })}
         srcSet={[
           { options: { width: 500 }, size: '500w' },
           { options: { width: 768 }, size: '768w' },
@@ -42,14 +44,16 @@ export const PostPreview: React.FC<Props> = (props) => {
         ]}
         sizes="(max-width: 768px) 100vw, 500px"
       />
-      <Date className={classes.date} iso={post.date} format="PPP" />
-      <h2>{post.title}</h2>
-      <RichText content={post.content} className={classes.content} />
-      {post.details?.length ? (
-        <Link className={classes.more} to={post.url} prefetch="intent">
-          {t('Read more')}
-        </Link>
-      ) : null}
+      <div className="max-sm:mt-4">
+        <Date className="text-sm" iso={post.date} format="PPP" />
+        <h2 className="mb-4 mt-1 break-words text-2xl font-semibold uppercase">{post.title}</h2>
+        <RichText content={post.content} />
+        {post.details?.length ? (
+          <Link className="mt-4 inline-block text-sm underline" to={post.url} prefetch="intent">
+            {t('Read more')}
+          </Link>
+        ) : null}
+      </div>
     </div>
   )
 }

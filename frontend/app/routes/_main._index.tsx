@@ -12,7 +12,7 @@ import Pagination from '~/components/Pagination'
 import PostPreview from '~/components/PostPreview'
 import { JsonLd } from '~/structured-data'
 import { postsListSchema } from '~/structured-data/post'
-import EventsList from '~/components/EventsList'
+import { EventsList } from '~/components/EventsList'
 import type { loader as rootLoader } from '~/root'
 import Gutter from '~/components/Gutter'
 import { cacheControlShortWithSWR } from '~/util/cache-control/cacheControlShortWithSWR'
@@ -121,8 +121,8 @@ export default function Index() {
               <ul className={classes.posts}>
                 {posts.docs.map((post, index) => (
                   <li key={index}>
-                    <PostPreview post={post} />
-                    <hr />
+                    <PostPreview post={post} className="py-8" />
+                    {index !== posts.docs.length - 1 && <hr />}
                   </li>
                 ))}
               </ul>
