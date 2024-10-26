@@ -87,7 +87,6 @@ export const loader = async ({ request, params: { lang: locale } }: LoaderFuncti
       limit: 3,
     }),
   ])
-  console.log('page size', JSON.stringify(pages.docs[0]).length)
 
   // if we cannot find the page in the database, we throw a 404 error
   const page = pages.docs[0]

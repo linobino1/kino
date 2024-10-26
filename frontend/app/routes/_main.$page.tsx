@@ -42,8 +42,6 @@ export const loader = async ({
     i18next.getFixedT(locale as string),
   ])
 
-  console.log('page size', JSON.stringify(res.docs[0]).length)
-
   const page = res.docs[0]
 
   if (!page) {

@@ -13,7 +13,6 @@ import Gutter from '~/components/Gutter'
 import Pagination from '~/components/Pagination'
 import EventsList from '~/components/EventsList'
 import { useTranslation } from 'react-i18next'
-import ErrorPage from '~/components/ErrorPage'
 
 export const headers: HeadersFunction = () => ({
   'Cache-Control': cacheControlShortWithSWR,
