@@ -149,13 +149,7 @@ export default buildConfig({
       },
       bucket: process.env.S3_BUCKET || '',
       collections: {
-        media: {
-          prefix: 'media/',
-          disablePayloadAccessControl: true, // serve files directly from S3
-          generateFileURL: (file) => {
-            return `${process.env.MEDIA_URL}/${file.filename}`
-          },
-        },
+        media: true,
       },
     }),
     seoPlugin({
