@@ -78,7 +78,7 @@ const Header: React.FC<Props> = ({ site, navigations }) => {
       </header>
       <div
         className={cn(
-          'z-60 fixed flex h-full min-h-screen w-screen flex-col items-end overflow-y-auto bg-white pb-16 pt-4 text-2xl transition-opacity duration-500 md:hidden',
+          'z-60 fixed z-40 flex h-full min-h-screen w-screen flex-col items-end overflow-y-auto bg-white pb-12 pt-14 text-2xl transition-opacity duration-500 md:hidden',
           {
             'pointer-events-none opacity-0': !menuIsOpen,
             'pointer-events-auto opacity-100': menuIsOpen,
