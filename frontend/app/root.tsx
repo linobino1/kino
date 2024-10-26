@@ -6,12 +6,13 @@ import {
   redirect,
   Scripts,
   ScrollRestoration,
+  useLocation,
   useRouteLoaderData,
 } from '@remix-run/react'
 import '@unocss/reset/tailwind-compat.css'
 import 'virtual:uno.css'
 import './global.css'
-import { envClient } from './env.server'
+import { ClientEnvironment, envClient } from './env.server'
 import { i18nCookie } from './cookies'
 import { useTranslation } from 'react-i18next'
 import { useEffect } from 'react'
@@ -26,6 +27,7 @@ import { generateMetadata } from './util/generateMetadata'
 import { setCachedUser } from './util/userCache.server'
 import { Media } from '@/payload-types'
 import { getOptimizedImageUrl } from './util/media/getOptimizedImageUrl'
+import { getCanonicalLink, getHreflangLinks } from './util/i18n/getHreflangLinks'
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url)
@@ -65,10 +67,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export const meta: MetaFunction = () => generateMetadata({ title: siteTitle })
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const location = useLocation()
   const data = useRouteLoaderData<typeof loader>('root')
   const { locale, i18nCookie, site, env } = data ?? {
     locale: defaultLocale,
     i18nCookie: '',
+    env: {} as ClientEnvironment,
   }
 
   const { i18n } = useTranslation()
@@ -85,6 +89,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {getHreflangLinks(location, env).map((link, index) => (
+          <link key={index} rel="alternate" hrefLang={link.hrefLang} href={link.href} />
+        ))}
+        <link rel="canonical" href={getCanonicalLink(location, env).href} />
         <link rel="icon" href={getOptimizedImageUrl(site?.favicon as Media, env)} />
         <Meta />
         <Links />

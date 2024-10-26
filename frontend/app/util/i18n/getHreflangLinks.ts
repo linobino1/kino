@@ -1,9 +1,10 @@
 import { returnLanguageIfSupported } from './returnLanguageIfSupported'
 import type { Path } from '@remix-run/react'
 import { Locale } from 'shared/config'
+import type { ClientEnvironment } from '~/env.server'
 
-const absoluteUrl = (location: Path) => {
-  return process.env.FRONTEND_URL + location.pathname + location.search + location.hash
+const absoluteUrl = (location: Path, env: ClientEnvironment) => {
+  return env.FRONTEND_URL + location.pathname + location.search + location.hash
 }
 
 export const getLocalizedPathnames = (pathname: string): Record<Locale | 'none', string> => {
@@ -38,15 +39,18 @@ export const getLocalizedPathnames = (pathname: string): Record<Locale | 'none',
   return pathnames
 }
 
-export const getHreflangLinks = (location: Path) => {
+export const getHreflangLinks = (location: Path, env: ClientEnvironment) => {
   const pathnames = getLocalizedPathnames(location.pathname)
   return Object.keys(pathnames).map((lang) => ({
     tagName: 'link',
     rel: 'alternate',
-    href: absoluteUrl({
-      ...location,
-      pathname: pathnames[lang as keyof typeof pathnames],
-    }),
+    href: absoluteUrl(
+      {
+        ...location,
+        pathname: pathnames[lang as keyof typeof pathnames],
+      },
+      env,
+    ),
     hrefLang: lang === 'none' ? 'x-default' : lang,
   }))
 }
@@ -54,14 +58,17 @@ export const getHreflangLinks = (location: Path) => {
 /**
  * get the canonical link for the current page. We'll use the language-agnostic URL
  */
-export const getCanonicalLink = (location: Path) => {
+export const getCanonicalLink = (location: Path, env: ClientEnvironment) => {
   const pathnames = getLocalizedPathnames(location.pathname)
   return {
     tagName: 'link',
     rel: 'canonical',
-    href: absoluteUrl({
-      ...location,
-      pathname: pathnames['none'] as string,
-    }),
+    href: absoluteUrl(
+      {
+        ...location,
+        pathname: pathnames['none'] as string,
+      },
+      env,
+    ),
   }
 }
