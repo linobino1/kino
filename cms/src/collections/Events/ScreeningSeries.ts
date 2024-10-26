@@ -1,5 +1,5 @@
+import pageLayout from '@/fields/pageLayout'
 import type { CollectionConfig } from 'payload'
-import { pageLayout } from '@/fields/pageLayout'
 
 export const ScreeningSeries: CollectionConfig = {
   slug: 'screeningSeries',
@@ -31,21 +31,6 @@ export const ScreeningSeries: CollectionConfig = {
       localized: true,
       required: true,
     },
-    pageLayout({
-      defaultLayout: [
-        {
-          blockType: 'headerImage',
-        },
-        {
-          blockType: 'heading',
-        },
-        {
-          blockType: 'content',
-        },
-        {
-          blockType: 'outlet',
-        },
-      ],
-    }),
+    pageLayout,
   ],
 }

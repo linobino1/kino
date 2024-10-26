@@ -1,52 +1,70 @@
-import type { RemixLinkProps } from '@remix-run/react/dist/components'
-import React from 'react'
+import { type PaginatedDocs } from 'payload'
 import { Link, useSearchParams } from '@remix-run/react'
 import { classes } from '~/classes'
+import { cn } from '~/util/cn'
+import { LinkProps } from '@remix-run/react'
 
-export interface Props extends React.HTMLAttributes<HTMLElement> {
-  hasNextPage: boolean
-  hasPrevPage: boolean
-  nextPage?: number | null
-  prevPage?: number | null
-  limit: number
-  page?: number
-  pagingCounter: number
-  totalDocs: number
-  totalPages: number
-  linkProps?: Omit<RemixLinkProps, 'to'>
+export type Props = React.HTMLAttributes<HTMLDivElement> &
+  PaginatedDocs & {
+    linkProps?: Omit<LinkProps, 'to'>
+  }
+
+type PageLinkProps = Omit<LinkProps, 'to'> & {
+  to: string
+  disabled: boolean
 }
+const PageLink: React.FC<PageLinkProps> = ({ to, disabled, ...props }) => (
+  <Link
+    {...props}
+    to={to}
+    className={cn('text-xl', { 'opacity-50': disabled })}
+    prefetch="intent"
+    aria-disabled={disabled}
+  />
+)
 
-export const Pagination: React.FC<Props> = (props) => {
+export const Pagination: React.FC<Props> = ({
+  linkProps,
+  page,
+  nextPage,
+  hasNextPage,
+  prevPage,
+  hasPrevPage,
+  totalPages,
+  // we don't want to pass these to the div
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  docs,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  totalDocs,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  limit,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  pagingCounter,
+  className,
+  ...props
+}) => {
   const [searchParams] = useSearchParams()
 
-  searchParams.set('page', `${props.nextPage || props.totalPages}`)
+  searchParams.set('page', `${nextPage || totalPages}`)
   const next = `?${searchParams.toString()}`
 
-  searchParams.set('page', `${props.prevPage || props.totalPages}`)
+  searchParams.set('page', `${prevPage || totalPages}`)
   const prev = `?${searchParams.toString()}`
 
-  return props.totalPages > 1 ? (
-    <div className={classes.container}>
-      <Link
-        to={prev}
-        className={classes.prev}
-        prefetch="intent"
-        aria-disabled={!props.hasPrevPage}
-        {...props.linkProps}
-      >
+  return totalPages > 1 ? (
+    <div
+      {...props}
+      className={cn('mx-auto grid w-[20em] grid-cols-3 items-center text-center', className)}
+    >
+      <PageLink to={prev} disabled={!hasPrevPage} {...linkProps}>
         &lt;
-      </Link>
+      </PageLink>
       <div className={classes.current}>
-        {props.page} / {props.totalPages}
+        {page} / {totalPages}
       </div>
-      <Link
-        to={next}
-        className={classes.next}
-        aria-disabled={!props.hasNextPage}
-        {...props.linkProps}
-      >
+      <PageLink to={next} disabled={!hasNextPage} {...linkProps}>
         &gt;
-      </Link>
+      </PageLink>
     </div>
   ) : null
 }

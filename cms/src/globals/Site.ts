@@ -1,5 +1,4 @@
 import type { GlobalConfig } from 'payload'
-import { metaField } from '@/fields/meta'
 
 export const Site: GlobalConfig = {
   slug: 'site',
@@ -87,6 +86,5 @@ export const Site: GlobalConfig = {
         },
       ],
     },
-    metaField('Globale Metadaten'),
   ],
 }

@@ -1,30 +1,40 @@
 import React from 'react'
-import { Serialize } from './Serialize'
-import { classes } from '~/classes'
+import { serializeLexical } from './serialize'
+import { cn } from '~/util/cn'
 
-export const RichText: React.FC<{
+type Props = {
   className?: string
   content: any
-}> = ({ className, content }) => {
-  // don't render if there is no content (or if there is only one empty content, which happens
-  // when you delete all content from the rich text editor field)
-  if (
-    !content ||
-    content.length === 0 ||
-    (content.length === 1 && content[0].children.length === 0) ||
-    (content[0].children.length === 1 && content[0].children[0].text === '')
-  )
-    return null
-
-  return (
-    <div className={[classes.container, className].filter(Boolean).join(' ')}>
-      <Serialize content={content} />
-    </div>
-  )
+  enableGutter?: boolean
+  enableProse?: boolean
+  enableMarginBlock?: boolean
 }
 
-export const RichTextPlain: ({ content }: { content: any }) => string = () => {
-  return 's'
+export const RichText: React.FC<Props> = ({
+  className,
+  content,
+  enableProse = true,
+  enableMarginBlock = true,
+}) => {
+  if (!content) {
+    return null
+  }
+
+  return (
+    <div className={className}>
+      <div
+        className={cn('!max-w-none', {
+          prose: enableProse,
+        })}
+      >
+        {content &&
+          !Array.isArray(content) &&
+          typeof content === 'object' &&
+          'root' in content &&
+          serializeLexical({ nodes: content?.root?.children, enableMarginBlock })}
+      </div>
+    </div>
+  )
 }
 
 export default RichText

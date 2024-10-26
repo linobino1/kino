@@ -1,17 +1,19 @@
+import pageLayout from '@/fields/pageLayout'
 import type { CollectionConfig } from 'payload'
-import { metaField } from '@/fields/meta'
-import { pageLayout } from '@/fields/pageLayout'
 
 export const Pages: CollectionConfig = {
-  slug: 'staticPages',
+  slug: 'pages',
   labels: {
-    singular: 'Statische Seite',
-    plural: 'Statische Seiten',
+    singular: 'Seite',
+    plural: 'Seiten',
   },
   admin: {
     group: 'Seiten',
-    defaultColumns: ['title'],
+    defaultColumns: ['title', 'slug'],
     useAsTitle: 'title',
+    components: {
+      beforeList: ['@/components/MagicSlugsExplanation'],
+    },
   },
   custom: {
     addUrlField: {
@@ -29,16 +31,16 @@ export const Pages: CollectionConfig = {
       localized: true,
       required: true,
     },
-    pageLayout({
-      defaultLayout: [
-        {
-          blockType: 'heading',
-        },
-        {
-          blockType: 'content',
-        },
+    {
+      name: 'layoutType',
+      label: 'Layout',
+      type: 'radio',
+      defaultValue: 'default',
+      options: [
+        { label: 'Standard', value: 'default' },
+        { label: 'Info', value: 'info' },
       ],
-    }),
-    metaField('Meta'),
+    },
+    pageLayout,
   ],
 }

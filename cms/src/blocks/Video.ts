@@ -6,6 +6,7 @@ export const Video: Block = {
     singular: 'Video',
     plural: 'Videos',
   },
+  interfaceName: 'VideoBlockType',
   fields: [
     {
       name: 'url',

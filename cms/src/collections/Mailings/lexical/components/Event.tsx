@@ -11,14 +11,9 @@ import type {
   Event as EventType,
 } from '@/payload-types'
 import { SerializeLexicalToEmail } from '../SerializeLexicalToEmail'
-import {
-  bgGrey,
-  containerWidth,
-  formatDate,
-  slateToPlainText,
-  fontSize,
-} from '../../templates/Newsletter'
+import { bgGrey, containerWidth, formatDate, fontSize } from '../../templates/Newsletter'
 import Shorten from './Shorten'
+import { serializeLexicalToPlainText } from '../serializeLexicalToPlainText'
 
 type EventProps = {
   event: EventType
@@ -34,7 +29,7 @@ const Event: React.FC<EventProps> = ({ event, color, additionalText }) => {
   let subtitle = event.subtitle // might be undefined
   let description
   if (event.info) {
-    description = slateToPlainText(event.info as any)
+    description = serializeLexicalToPlainText(event.info as any)
   } else {
     if (event.type === 'screening' && movie) {
       description = movie?.synopsis
@@ -109,7 +104,7 @@ const Event: React.FC<EventProps> = ({ event, color, additionalText }) => {
             <Text style={{ marginBlock: 0, fontSize, fontStyle: 'italic' }}>{subtitle}</Text>
           )}
           <Text style={{ fontSize }}>
-            <Shorten text={description} moreLink={event.url} />
+            <Shorten text={description ?? ''} moreLink={event.url} />
           </Text>
           {additionalText && (
             <SerializeLexicalToEmail nodes={additionalText.root.children as any} color={color} />

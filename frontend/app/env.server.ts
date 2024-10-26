@@ -4,6 +4,8 @@ const schema = z.object({
   NODE_ENV: z.string().default('development'),
   BACKEND_URL: z.string().default('http://localhost:3000'),
   FRONTEND_URL: z.string().default('http://localhost:5173'),
+  DATABASE_URI: z.string(),
+  PAYLOAD_SECRET: z.string(),
   S3_ENABLED: z.string().default('false'),
   S3_ENDPOINT: z.string().optional(),
   S3_BUCKET: z.string().optional(),

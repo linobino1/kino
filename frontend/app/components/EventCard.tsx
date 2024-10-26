@@ -4,19 +4,27 @@ import { Date as DateComponent } from '~/components/Date'
 import { useTranslation } from 'react-i18next'
 import { Image } from '~/components/Image'
 import { classes } from '~/classes'
+import Tag from './Tag'
+import { cn } from '~/util/cn'
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   event: Event
   activeScreeningSery?: ScreeningSery
 }
 
-export const EventCard: React.FC<Props> = ({ event, activeScreeningSery }) => {
+export const EventCard: React.FC<Props> = ({ event, activeScreeningSery, className, ...props }) => {
   const { t } = useTranslation()
   const today = new Date()
   today.setHours(0, 0, 0, 0)
   const isPast = new Date(Date.parse(event.date)) < today
   return (
-    <div className="relative flex flex-col bg-white text-black shadow-md transition-transform duration-300 ease-in-out hover:-translate-y-2">
+    <div
+      {...props}
+      className={cn(
+        'relative flex flex-col bg-white text-black shadow-md transition-transform duration-200 ease-in-out hover:-translate-y-[7px]',
+        className,
+      )}
+    >
       <div
         className="p3 absolute -top-2.5 left-2 flex flex-col items-center bg-white/80 pb-4 uppercase leading-[1]"
         style={{ textShadow: '0px 0px 10px rgb(0 0 0 / 30%)' }}
@@ -25,7 +33,7 @@ export const EventCard: React.FC<Props> = ({ event, activeScreeningSery }) => {
         <DateComponent iso={event.date as string} className="" format="MMM" />
         <DateComponent
           iso={event.date as string}
-          className="font-calendar text-3xl font-semibold"
+          className="font-calendar text-4xl font-semibold"
           format="dd"
         />
         {isPast && (
@@ -46,9 +54,7 @@ export const EventCard: React.FC<Props> = ({ event, activeScreeningSery }) => {
       <div className="flex aspect-[3/2] flex-col">
         <div className="m-[0.3em] flex min-h-6 items-center justify-end">
           {event.series && activeScreeningSery?.id !== (event.series as ScreeningSery)?.id && (
-            <div className="bg-turquoise-500 inline-flex max-w-32 rounded-lg px-[0.5em] py-[0.2em] text-center text-sm font-semibold leading-none text-white">
-              {(event.series as ScreeningSery).name}
-            </div>
+            <Tag>{(event.series as ScreeningSery).name}</Tag>
           )}
         </div>
         <div className="flex flex-1 flex-col gap-4 px-4 pb-4">

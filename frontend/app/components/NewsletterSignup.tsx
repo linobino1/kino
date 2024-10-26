@@ -3,11 +3,17 @@ import { useTranslation } from 'react-i18next'
 import { type HTMLAttributes, useRef, useState, useEffect } from 'react'
 import type { action } from '~/routes/newsletter-signup'
 import Turnstile from 'react-turnstile'
-import { classes } from '~/classes'
+import { cn } from '~/util/cn'
+import Button from './Button'
+import { useEnv } from '~/util/useEnv'
 
 export type Props = HTMLAttributes<HTMLDivElement>
 
+const input =
+  'border border-gray-300 rounded p-[0.1em] focus:outline-none text-black focus:ring-2 focus:ring-blue focus:border-primary-500'
+
 const NewsletterSignup: React.FC<Props> = ({ className, ...props }) => {
+  const env = useEnv()
   const { t } = useTranslation()
   const [key, setKey] = useState<string>(() => Math.random().toString())
   function reset() {
@@ -30,23 +36,23 @@ const NewsletterSignup: React.FC<Props> = ({ className, ...props }) => {
   }, [isActive, triggeredWakeUp])
 
   return (
-    <div {...props} className={[classes.container, className].filter(Boolean).join(' ')}>
-      <div className={classes.title}>{t('newsletter.cta')}</div>
+    <div {...props} className={cn('min-h-[11em]', className)}>
+      <div className="mb-3 font-semibold">{t('newsletter.cta')}</div>
       {fetcher.data?.success ? (
-        <div className={classes.success}>
+        <div className="">
           <p>{t('newsletter.success')}</p>
-          <button type="button" onClick={reset}>
-            {t('newsletter.subscribeAgain')}
-          </button>
+          <Button onClick={reset}>{t('newsletter.subscribeAgain')}</Button>
         </div>
       ) : (
         <fetcher.Form
           ref={formRef}
           action="/newsletter-signup"
           method="post"
-          className={classes.form}
+          className="flex w-full flex-col gap-2"
         >
-          <label htmlFor="name">{t('newsletter.name')}</label>
+          <label htmlFor="name" className="sr-only">
+            {t('newsletter.name')}
+          </label>
           <input
             type="text"
             name="name"
@@ -55,8 +61,11 @@ const NewsletterSignup: React.FC<Props> = ({ className, ...props }) => {
             placeholder={t('newsletter.name')}
             onFocus={() => setIsActive(true)}
             required
+            className={input}
           />
-          <label htmlFor="email">{t('newsletter.email')}</label>
+          <label htmlFor="email" className="sr-only">
+            {t('newsletter.email')}
+          </label>
           <input
             type="email"
             name="email"
@@ -64,16 +73,17 @@ const NewsletterSignup: React.FC<Props> = ({ className, ...props }) => {
             autoComplete="email"
             placeholder={t('newsletter.email')}
             required
+            className={input}
           />
           {isActive && (
             <>
               <Turnstile
-                sitekey={process.env.TURNSTILE_SITE_KEY}
+                sitekey={env?.TURNSTILE_SITE_KEY ?? ''}
                 execution="render"
                 onVerify={() => setCaptchaState('verified')}
                 onError={() => setCaptchaState('error')}
               />
-              <p className={classes.captcha}>
+              <p className="text-sm opacity-50">
                 {captchaState === 'checking' && t('newsletter.captcha.checking')}
                 {captchaState === 'verified' && t('newsletter.captcha.success')}
                 {captchaState === 'error' && t('newsletter.captcha.error')}
@@ -81,17 +91,19 @@ const NewsletterSignup: React.FC<Props> = ({ className, ...props }) => {
             </>
           )}
           {fetcher.data && (
-            <p
-              className={[classes.message, !fetcher.data.success && classes.error]
-                .filter(Boolean)
-                .join(' ')}
-            >
+            <p className={cn('bg-white', { 'text-red-500': !fetcher.data.success })}>
               {fetcher.data.message}
             </p>
           )}
-          <button type="submit" disabled={isActive && captchaState !== 'verified'}>
+          <Button
+            type="submit"
+            disabled={isActive && captchaState !== 'verified'}
+            className="my-2 w-full"
+            look="white"
+            size="sm"
+          >
             {fetcher.state === 'idle' ? t('newsletter.subscribe') : t('newsletter.sending')}
-          </button>
+          </Button>
         </fetcher.Form>
       )}
     </div>

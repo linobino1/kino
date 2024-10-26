@@ -6,6 +6,7 @@ export const Image: Block = {
     singular: 'Bild',
     plural: 'Bilder',
   },
+  interfaceName: 'ImageBlockType',
   fields: [
     {
       name: 'image',

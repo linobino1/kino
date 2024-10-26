@@ -10,7 +10,7 @@ import { cn } from '~/util/cn'
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   from?: string
   items: Event[]
-  site: Site
+  site?: Site
   className?: string
   activeScreeningSery?: ScreeningSery
   emptyMessage?: string
@@ -18,10 +18,10 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 export const EventsList: React.FC<Props> = ({
   items,
-  className,
   activeScreeningSery,
   emptyMessage,
   site,
+  className,
   ...props
 }) => {
   const { t } = useTranslation()
@@ -30,7 +30,7 @@ export const EventsList: React.FC<Props> = ({
     <div
       {...props}
       className={cn(
-        'xs:grid-cols-[repeat(auto-fill,minmax(13em,auto))] xs:grid-cols-2 grid gap-4 sm:grid-cols-[repeat(auto-fill,minmax(15em,auto))]',
+        'xs:grid-cols-[repeat(auto-fill,minmax(13em,auto))] xs:grid-cols-2 my-4 grid gap-4 sm:grid-cols-[repeat(auto-fill,minmax(15em,auto))]',
         className,
       )}
     >

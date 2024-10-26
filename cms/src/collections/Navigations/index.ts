@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { updatePaths } from './hooks/updatePaths'
 
 export const Navigations: CollectionConfig = {
   slug: 'navigations',
@@ -10,6 +11,9 @@ export const Navigations: CollectionConfig = {
   labels: {
     singular: 'Menü',
     plural: 'Menüs',
+  },
+  hooks: {
+    beforeChange: [updatePaths],
   },
   fields: [
     {
@@ -89,7 +93,7 @@ export const Navigations: CollectionConfig = {
           name: 'page',
           label: 'Seite',
           type: 'relationship',
-          relationTo: 'staticPages',
+          relationTo: 'pages',
           admin: {
             condition: (data, siblingData) => siblingData.type === 'internal',
           },
@@ -100,6 +104,7 @@ export const Navigations: CollectionConfig = {
           type: 'text',
           admin: {
             condition: (data, siblingData) => siblingData.type === 'internal',
+            readOnly: true,
           },
         },
         // external link

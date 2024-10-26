@@ -1,13 +1,16 @@
 import React from 'react'
 import { useRouteError, isRouteErrorResponse } from '@remix-run/react'
 import { captureRemixErrorBoundaryError, captureException } from '@sentry/remix'
-import { Page } from './Page'
 import { useEnv } from '~/util/useEnv'
+import PageLayout from './PageLayout'
+import { useTranslation } from 'react-i18next'
+import Gutter from './Gutter'
+import Hero from './Hero'
 
 export const ErrorPage: React.FC = () => {
   const error = useRouteError()
   const env = useEnv()
-  let children = null
+  const { t } = useTranslation()
 
   captureRemixErrorBoundaryError(error)
 
@@ -17,36 +20,31 @@ export const ErrorPage: React.FC = () => {
     // console.error(error);
   }
 
-  if (isRouteErrorResponse(error)) {
-    children = (
-      <h1>
-        {error.status} {error.data}
-      </h1>
-    )
-  } else if (error instanceof Error) {
-    children = (
-      <>
-        <h1>Error</h1>
-        <p>{error.message}</p>
-        {env?.NODE_ENV === 'development' && <pre>{error.stack}</pre>}
-      </>
-    )
-  } else {
-    children = <h1>Unknown Error</h1>
-  }
   return (
-    <Page
-      layout={{
-        blocks: [
-          {
-            blockType: 'outlet',
-          },
-        ],
-        type: 'default',
-      }}
-    >
-      {children}
-    </Page>
+    <PageLayout type={'info'}>
+      <Gutter className="text-center">
+        <Hero type="headline" headline={t('Error')} />
+        {isRouteErrorResponse(error) ? (
+          <p>
+            {error.status} {error.data}
+          </p>
+        ) : error instanceof Error ? (
+          <>
+            <p dangerouslySetInnerHTML={{ __html: error.message }} />
+
+            {env?.NODE_ENV === 'development' && (
+              <div className="mt-8 text-left">
+                <h2 className="mt-4 font-bold">this will only show in development:</h2>
+                <hr className="my-2" />
+                <pre className="w-full text-xs">{error.stack}</pre>
+              </div>
+            )}
+          </>
+        ) : (
+          <p>{t('error.unkown')}</p>
+        )}
+      </Gutter>
+    </PageLayout>
   )
 }
 

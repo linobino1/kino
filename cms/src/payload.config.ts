@@ -2,8 +2,8 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { buildConfig } from 'payload'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { slateEditor } from '@payloadcms/richtext-slate'
 import { s3Storage } from '@payloadcms/storage-s3'
+import { seoPlugin } from '@payloadcms/plugin-seo'
 import { de } from 'payload/i18n/de'
 import { addUrlField } from './plugins/addUrlField'
 import { addSlugField } from './plugins/addSlugField'
@@ -34,19 +34,25 @@ import { Companies } from './collections/Movies/Companies'
 import { Countries } from './collections/Movies/Countries'
 import { Navigations } from './collections/Navigations'
 import { Site } from './globals/Site'
-import { Blog } from './globals/pages/Blog'
-import { EventsPage } from './globals/pages/EventsPage'
-import { SeasonsPage } from './globals/pages/Seasons'
-import { Archive } from './globals/pages/Archive'
 import { locales, siteTitle } from 'shared/config'
 import { search } from './views/tmdb-migrate/endpoints/search'
 import { preview } from './views/tmdb-migrate/endpoints/preview'
 import { migrate } from './views/tmdb-migrate/endpoints/migrate'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { SlateToLexicalFeature } from '@payloadcms/richtext-lexical/migrate'
+import { slateEditor } from '@payloadcms/richtext-slate'
+
+import * as dotenv from 'dotenv'
+
+dotenv.config() // required when using node scripts outside of NextJS
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  cors: {
+    origins: [process.env.FRONTEND_URL ?? 'http://localhost:5173'],
+  },
   admin: {
     user: Users.slug,
     importMap: {
@@ -92,6 +98,7 @@ export default buildConfig({
 
     // Pages
     Pages,
+    // StaticPages,
 
     // Configuration
     Formats,
@@ -115,13 +122,14 @@ export default buildConfig({
     Navigations,
     Users,
   ],
-  globals: [Site, Blog, EventsPage, SeasonsPage, Archive],
-  editor: slateEditor({
-    admin: {
-      elements: ['h2', 'h3', 'h4', 'h5', 'h6', 'link', 'ol', 'ul', 'indent', 'upload'],
-      leaves: ['bold', 'italic', 'underline', 'strikethrough'],
+  globals: [Site],
+  editor: lexicalEditor({
+    features({ defaultFeatures }) {
+      return [...defaultFeatures, SlateToLexicalFeature({ disableHooks: true })]
+      // return [...defaultFeatures]
     },
   }),
+  // editor: slateEditor({}),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
@@ -152,6 +160,17 @@ export default buildConfig({
           },
         },
       },
+    }),
+    seoPlugin({
+      collections: ['pages'],
+      generateImage: ({ doc }) => doc.hero?.image,
+      generateTitle: ({ doc }) => doc.hero?.headline,
+      generateURL: (doc: any) => doc.url,
+      uploadsCollection: 'media',
+    }),
+    seoPlugin({
+      globals: ['site'],
+      uploadsCollection: 'media',
     }),
   ],
   // content localization

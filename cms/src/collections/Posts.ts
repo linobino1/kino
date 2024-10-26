@@ -41,78 +41,97 @@ export const Posts: CollectionConfig = {
       },
     },
     {
-      name: 'header',
-      label: 'Titelbild',
-      type: 'upload',
-      relationTo: 'media',
-      required: true,
-    },
-    {
-      name: 'content',
-      label: 'Vorschau',
-      type: 'richText',
-      localized: true,
-      required: true,
-    },
-    {
-      name: 'details',
-      label: 'Details',
-      type: 'blocks',
-      blocks: [Content, Image, Gallery, Video],
-      admin: {
-        description: 'Füge eine Detailseite für diesen Post hinzu',
-      },
-    },
-    {
-      type: 'group',
-      label: 'Link',
-      name: 'link',
-      admin: {
-        description: 'Verlinke das Titelbild.',
-      },
-      fields: [
+      type: 'tabs',
+      tabs: [
         {
-          name: 'type',
-          label: 'Art',
-          type: 'radio',
-          defaultValue: 'none',
-          admin: {
-            description:
-              "Wähle 'Keine(r)' um das Titelbild mit der Detailseite zu verlinken, falls diese existiert.",
-          },
-          options: [
+          label: 'Vorschau',
+          fields: [
             {
-              label: 'Keine(r)',
-              value: 'none',
+              name: 'header',
+              label: 'Titelbild',
+              type: 'upload',
+              relationTo: 'media',
+              required: true,
             },
             {
-              label: 'Interner Link',
-              value: 'internal',
+              type: 'group',
+              label: false,
+              name: 'link',
+              admin: {
+                style: {
+                  border: 'none',
+                  paddingBlock: 0,
+                },
+              },
+              fields: [
+                {
+                  name: 'type',
+                  label: 'Verlinkung des Titelbilds',
+                  type: 'radio',
+                  defaultValue: 'none',
+                  admin: {
+                    description:
+                      "Wähle 'Keine(r)' um das Titelbild mit der Detailseite zu verlinken, falls diese existiert.",
+                  },
+                  options: [
+                    {
+                      label: 'Keine(r)',
+                      value: 'none',
+                    },
+                    {
+                      label: 'Interner Link',
+                      value: 'internal',
+                    },
+                    {
+                      label: 'Externer Link',
+                      value: 'external',
+                    },
+                  ],
+                },
+                // internal link
+                {
+                  name: 'doc',
+                  type: 'relationship',
+                  relationTo: LinkableCollectionSlugs,
+                  required: true,
+                  admin: {
+                    condition: (siblingData) => siblingData.link?.type === 'internal',
+                  },
+                },
+                // external link
+                {
+                  name: 'url',
+                  type: 'text',
+                  required: true,
+                  admin: {
+                    condition: (siblingData) => siblingData.link?.type === 'external',
+                  },
+                },
+              ],
             },
             {
-              label: 'Externer Link',
-              value: 'external',
+              name: 'content',
+              label: 'Text',
+              type: 'richText',
+              localized: true,
+              required: true,
             },
           ],
         },
-        // internal link
         {
-          name: 'doc',
-          type: 'relationship',
-          relationTo: LinkableCollectionSlugs,
-          required: true,
-          admin: {
-            condition: (siblingData) => siblingData.link?.type === 'internal',
-          },
-        },
-        // external link
-        {
-          name: 'url',
-          type: 'text',
-          required: true,
-          admin: {
-            condition: (siblingData) => siblingData.link?.type === 'external',
-          },
+          label: 'Inhalt',
+          fields: [
+            {
+              name: 'details',
+              label: false,
+              type: 'blocks',
+              blocks: [Content, Image, Gallery, Video],
+              admin: {
+                description:
+                  'Ausführliche Informationen zum Beitrag. Hieraus wird die Detailseite für den Post generiert. Ein Post kann auch ohne Detailseite existieren.',
+              },
+            },
+          ],
         },
       ],
     },

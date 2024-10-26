@@ -12,38 +12,43 @@ export const addUrlField: Plugin = (incomingConfig: Config): Config => {
   const config: Config = {
     ...incomingConfig,
     collections: [
-      ...(incomingConfig.collections ?? []).map((collection) => ({
-        ...collection,
-        admin: {
-          ...collection.admin,
-          enableRichTextLink: true,
-          enableRichTextRelationship: true,
-        },
-        fields: [
-          ...collection.fields.concat([
-            {
-              name: 'url',
-              type: 'text',
-              required: true,
-              validate: () => true as const,
-              hooks: {
-                beforeChange: [
-                  ({ siblingData }: FieldHookArgs): string => {
-                    return collection.custom?.addUrlField.hook(siblingData.slug) || ''
-                  },
-                ],
-              },
+      ...(incomingConfig.collections ?? []).map((collection) =>
+        collection.custom?.addUrlField
+          ? {
+              ...collection,
               admin: {
-                position: 'sidebar',
-                readOnly: true,
-                components: {
-                  Field: '@/components/UrlField',
-                },
+                ...collection.admin,
+                enableRichTextLink: true,
+                enableRichTextRelationship: true,
               },
-            },
-          ]),
-        ],
-      })),
+              fields: [
+                ...collection.fields.concat([
+                  {
+                    name: 'url',
+                    type: 'text',
+                    label: 'URL',
+                    required: true,
+                    validate: () => true as const,
+                    hooks: {
+                      beforeChange: [
+                        ({ siblingData }: FieldHookArgs): string => {
+                          return collection.custom?.addUrlField.hook(siblingData.slug) || ''
+                        },
+                      ],
+                    },
+                    admin: {
+                      position: 'sidebar',
+                      readOnly: true,
+                      components: {
+                        Field: '@/components/UrlField',
+                      },
+                    },
+                  },
+                ]),
+              ],
+            }
+          : collection,
+      ),
     ],
   }
 

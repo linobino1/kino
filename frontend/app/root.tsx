@@ -1,6 +1,7 @@
 import {
   Links,
   Meta,
+  MetaFunction,
   Outlet,
   redirect,
   Scripts,
@@ -19,12 +20,17 @@ import i18next from './i18next.server'
 import { LoaderFunctionArgs } from '@remix-run/node'
 import { returnLanguageIfSupported } from './util/i18n/returnLanguageIfSupported'
 import { localizeTo } from './util/i18n/localizeTo'
-import { defaultLocale, locales } from 'shared/config'
+import { defaultLocale, locales, siteTitle } from 'shared/config'
 import { getPayload } from './util/getPayload.server'
+import { generateMetadata } from './util/generateMetadata'
+import { setCachedUser } from './util/userCache.server'
+import { Media } from '@/payload-types'
+import { getOptimizedImageUrl } from './util/media/getOptimizedImageUrl'
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url)
   const locale = returnLanguageIfSupported(url.pathname.split('/')[1])
+  const payload = await getPayload()
 
   // redirect unlocalized routes to the user's preferred language
   if (!locale) {
@@ -33,8 +39,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
     throw redirect(to)
   }
 
-  const [site, serializedI18nCookie] = await Promise.all([
-    (await getPayload()).findGlobal({
+  const [user, site, serializedI18nCookie] = await Promise.all([
+    (await payload.auth(request)).user,
+    payload.findGlobal({
       slug: 'site',
       depth: 3,
       locale,
@@ -42,7 +49,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
     i18nCookie.serialize(locale),
   ])
 
+  // save the user globally
+  setCachedUser(user)
+
   return {
+    user: user,
     locale,
     i18nCookie: serializedI18nCookie,
     env: envClient,
@@ -50,9 +61,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
   }
 }
 
+// fallback meta
+export const meta: MetaFunction = () => generateMetadata({ title: siteTitle })
+
 export function Layout({ children }: { children: React.ReactNode }) {
   const data = useRouteLoaderData<typeof loader>('root')
-  const { locale, i18nCookie } = data ?? {
+  const { locale, i18nCookie, site, env } = data ?? {
     locale: defaultLocale,
     i18nCookie: '',
   }
@@ -71,6 +85,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href={getOptimizedImageUrl(site?.favicon as Media, env)} />
         <Meta />
         <Links />
       </head>

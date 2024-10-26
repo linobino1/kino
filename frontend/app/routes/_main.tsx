@@ -7,6 +7,8 @@ import type { loader as rootLoader } from '~/root'
 import { Locale } from 'shared/config'
 import { getPayload } from '~/util/getPayload.server'
 import { cacheControlShortWithSWR } from '~/util/cache-control/cacheControlShortWithSWR'
+import { cache } from '~/util/cache.server'
+import { getCachedUser } from '~/util/userCache.server'
 
 export const headers = {
   'Cache-Control': cacheControlShortWithSWR,
@@ -15,12 +17,20 @@ export const headers = {
 export const ErrorBoundary = ErrorPage
 
 export const loader = async ({ params: { lang: locale } }: LoaderFunctionArgs) => {
-  const navigations = await (
-    await getPayload()
-  ).find({
-    collection: 'navigations',
-    depth: 12,
-    locale: locale as Locale,
+  const payload = await getPayload()
+  const navigations = await cache({
+    key: 'navigations',
+    forceFresh: !!getCachedUser(),
+    async getFreshValue() {
+      console.log('fetching navigations')
+      return await payload.find({
+        collection: 'navigations',
+        // TODO: we should use depth: 0 here to save ca. 80kb of data, but we need the slug from each page doc.
+        // we could use a beforeChange hook on the navigation collection to add the slug to each navigation item.
+        depth: 1,
+        locale: locale as Locale,
+      })
+    },
   })
 
   return {
@@ -33,12 +43,11 @@ export const handle = {
 }
 
 export default function Layout() {
-  const navigations = useLoaderData<typeof loader>()?.navigations
+  const navigations = useLoaderData<typeof loader>().navigations
   const { site } = useRouteLoaderData<typeof rootLoader>('root')!
-
   return (
     <>
-      <div className="min-h-screen">
+      <div className="flex min-h-screen flex-col">
         {navigations && site && <Header site={site} navigations={navigations} />}
         <Outlet />
       </div>

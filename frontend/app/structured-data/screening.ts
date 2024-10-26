@@ -5,14 +5,14 @@ import { locationSchema } from './location'
 import { itemList } from '.'
 import { movieSchema } from './movie'
 
-export const eventSchema = (event: Event, site: Site): SchemaOrgEvent | ScreeningEvent => {
+export const eventSchema = (event: Event, site?: Site): SchemaOrgEvent | ScreeningEvent => {
   let res: SchemaOrgEvent | ScreeningEvent = {
     '@type': 'Event',
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     name: event.title as string,
     startDate: event.date,
-    location: locationSchema(site),
+    location: site ? locationSchema(site) : undefined,
   }
 
   // add screening specific properties
@@ -29,6 +29,6 @@ export const eventSchema = (event: Event, site: Site): SchemaOrgEvent | Screenin
   return res
 }
 
-export const eventsListSchema = (events: Event[], site: Site): ItemList => {
+export const eventsListSchema = (events: Event[], site?: Site): ItemList => {
   return itemList(events.map((s) => eventSchema(s, site)))
 }

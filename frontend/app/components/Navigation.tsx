@@ -1,5 +1,5 @@
 import React from 'react'
-import type { StaticPage, Media, Navigation as NavigationType } from '@/payload-types'
+import type { Media, Navigation as NavigationType, Page } from '@/payload-types'
 import { Image } from '~/components/Image'
 import LanguageSwitch from '~/components/LanguageSwitch'
 import { NavLink } from '~/components/localized-link/NavLink'
@@ -9,12 +9,20 @@ type Props = {
   navigation?: NavigationType
   className?: string
   isChild?: boolean
+  condensed?: boolean
 }
 
-export const navItemClassName = 'px-4 py-4 md:py-2 hover:text-black'
+export const navItemClassName = 'px-4 py-4 md:py-2 hover:text-black w-fit h-fit'
 
-export const Navigation: React.FC<Props> = ({ navigation, isChild = false, className }) => {
-  const _navItemClassName = navItemClassName
+export const Navigation: React.FC<Props> = ({
+  navigation,
+  condensed = false,
+  isChild = false,
+  className,
+}) => {
+  const _navItemClassName = cn(navItemClassName, {
+    'py-0 md:py-0 px-3': condensed,
+  })
 
   // each item renders as either an internal link, an external link with an icon or text, or another navigation
   return navigation ? (
@@ -25,8 +33,7 @@ export const Navigation: React.FC<Props> = ({ navigation, isChild = false, class
         }
 
         const href =
-          item.relPath ||
-          ((item.page as StaticPage) ? `/${(item.page as StaticPage).slug}` : item.url)
+          item.relPath || ((item.page as Page) ? `/${(item.page as Page).slug}` : item.url)
 
         // image or plain text
         const inner: React.ReactNode = item.icon ? (

@@ -1,50 +1,72 @@
 import type { Field } from 'payload'
-import type { StaticPage } from '@/payload-types'
 import { Content } from '../blocks/Content'
-import { HeaderImage } from '../blocks/HeaderImage'
-import { Outlet } from '../blocks/Outlet'
-import { Heading } from '../blocks/Heading'
 import { Image } from '../blocks/Image'
 import { Gallery } from '../blocks/Gallery'
 import { Video } from '../blocks/Video'
 import { RawHTML } from '../blocks/RawHTML'
 import Events from '../blocks/Events'
 
-export type PageLayout = StaticPage['layout']
-
 export type Props = {
   defaultLayout?: any
 }
 
-export const pageLayout = (props?: Props): Field => {
-  const { defaultLayout } = props || {}
-  return {
-    name: 'layout',
-    label: 'Layout',
-    type: 'group',
-    fields: [
-      {
-        name: 'blocks',
-        label: 'Blöcke',
-        type: 'blocks',
-        required: true,
-        minRows: 1,
-        blocks: [Heading, HeaderImage, Content, Outlet, Image, Gallery, Video, Events, RawHTML],
-        defaultValue: defaultLayout,
-      },
-      {
-        name: 'type',
-        label: 'Art',
-        type: 'select',
-        defaultValue: 'default',
-        required: true,
-        options: [
-          { label: 'Default', value: 'default' },
-          { label: 'Info', value: 'info' },
-        ],
-      },
-    ],
-  }
+export const pageLayout: Field = {
+  type: 'tabs',
+  tabs: [
+    {
+      name: 'hero',
+      label: 'Hero',
+      fields: [
+        {
+          name: 'type',
+          label: 'Art',
+          type: 'radio',
+          defaultValue: 'image',
+          options: [
+            { label: 'Bild', value: 'image' },
+            { label: 'Nur Überschrift', value: 'headline' },
+            { label: 'Kein Hero', value: 'none' },
+          ],
+        },
+        {
+          name: 'headline',
+          label: 'Überschrift',
+          type: 'text',
+          localized: true,
+          required: true,
+          admin: {
+            condition: (_, siblingData) => siblingData?.type !== 'none',
+          },
+        },
+        {
+          name: 'image',
+          label: 'Bild',
+          type: 'upload',
+          relationTo: 'media',
+          required: true,
+          admin: {
+            condition: (_, siblingData) => siblingData?.type === 'image',
+          },
+        },
+      ],
+    },
+    {
+      label: 'Inhalt',
+      fields: [
+        {
+          name: 'blocks',
+          label: false,
+          type: 'blocks',
+          blocks: [Content, Gallery, Image, Video, Events, RawHTML],
+          defaultValue: [
+            {
+              blockType: Content.slug,
+            },
+          ],
+        },
+      ],
+    },
+  ],
 }
 
 export default pageLayout

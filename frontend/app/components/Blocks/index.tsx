@@ -1,22 +1,19 @@
-import type { PageLayout } from '@/fields/pageLayout'
 import React, { Suspense } from 'react'
-import type { Media } from '@/payload-types'
-import { Heading } from '../Heading'
-import { HeaderImage } from '../HeaderImage'
+import type { Media, Page } from '@/payload-types'
 import { Gallery } from '../Gallery'
 import { MyReactPlayer } from '../MyReactPlayer'
 import { Image } from '../Image'
 import { RichText } from '../RichText'
 import Gutter from '../Gutter'
-import EventsBlock from './EventsBlock'
+import { EventsBlock } from './EventsBlock'
 
-export interface BlockProps extends React.HTMLAttributes<HTMLDivElement> {
-  block?: PageLayout['blocks'][0]
+type Block = NonNullable<Page['blocks']>[number]
+
+type BlockProps = React.HTMLAttributes<HTMLDivElement> & {
+  block: Block
 }
 
-export const Block: React.FC<BlockProps> = ({ block, ...props }) => {
-  const { children } = props
-  if (!block) return null
+const RenderBlock: React.FC<BlockProps> = ({ block }) => {
   switch (block.blockType) {
     case 'content':
       return (
@@ -24,14 +21,6 @@ export const Block: React.FC<BlockProps> = ({ block, ...props }) => {
           <RichText content={block.content} />
         </Gutter>
       )
-
-    case 'heading':
-      return <Heading text={block.text ?? undefined} />
-
-    case 'headerImage':
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { blockType, blockName, ...props } = block
-      return <HeaderImage {...props} />
 
     case 'image':
       return (
@@ -54,7 +43,7 @@ export const Block: React.FC<BlockProps> = ({ block, ...props }) => {
     case 'gallery':
       return (
         <Gutter size="small">
-          <Gallery images={block.images} />
+          <Gallery images={block.images?.map((item) => item.image as Media) ?? []} />
         </Gutter>
       )
 
@@ -86,26 +75,24 @@ export const Block: React.FC<BlockProps> = ({ block, ...props }) => {
       )
 
     default:
-    case 'outlet':
-      return children as React.ReactElement
+      // @ts-expect-error if all types are implemented, this is not possible...
+      return <p>{`unimplemented block type ${block.blockType}`}</p>
   }
 }
 
 export interface BlocksProps extends React.HTMLAttributes<HTMLDivElement> {
-  blocks: PageLayout['blocks']
+  blocks: Block[]
 }
 
-export const Blocks: React.FC<BlocksProps> = ({ blocks, children, ...props }) => {
+export const RenderBlocks: React.FC<BlocksProps> = ({ blocks, ...props }) => {
   if (!Array.isArray(blocks)) return null
   return (
     <div {...props}>
-      {blocks.map((block, i) => (
-        <Block key={i} block={block}>
-          {children}
-        </Block>
+      {blocks.map((block, index) => (
+        <RenderBlock key={index} block={block} />
       ))}
     </div>
   )
 }
 
-export default Blocks
+export default RenderBlocks

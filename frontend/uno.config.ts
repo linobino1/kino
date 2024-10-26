@@ -1,20 +1,36 @@
-import { defineConfig, presetWebFonts, presetIcons, presetUno, presetWind } from 'unocss'
+import {
+  defineConfig,
+  presetWebFonts,
+  presetIcons,
+  presetUno,
+  presetWind,
+  transformerDirectives,
+  presetTypography,
+} from 'unocss'
 
 export default defineConfig({
   presets: [
     presetUno(),
     presetWind(),
     presetIcons(),
+    presetTypography({
+      cssExtend: {
+        p: {
+          'line-height': '1.4',
+        },
+      },
+    }),
     presetWebFonts({
       provider: 'google',
       fonts: {
         sans: {
           name: 'DM Sans',
-          weights: [100, 200, 300, 400, 500, 600, 700],
+          weights: [300, 400, 500, 600, 700],
         },
       },
     }),
   ],
+  transformers: [transformerDirectives()],
   theme: {
     breakpoints: {
       xs: '450px',
@@ -42,13 +58,14 @@ export default defineConfig({
       // --font-xx-big: normal 300 1.7rem/1 var(--font-family);
       // --font-x-big: normal 300 1.3rem/1.2 var(--font-family);
       // --font-big: normal 300 1.15rem/1.2 var(--font-family);
-      xs: ['0.8rem', '1.4'], // x-small
-      sm: ['0.9rem', '1.4'], // small
-      base: ['1rem', '1.4'], // base
-      lg: ['clamp(1.15rem, (100vw - 640px) * 99, 1.3rem)', '1.4'], // big
-      xl: ['clamp(1.3rem, (100vw - 640px) * 99, 1.7rem)', '1.4'], // x-big
-      '2xl': ['clamp(1.7rem, (100vw - 640px) * 99, 1.9rem)', '1'], // xx-big
-      '3xl': ['clamp(1.9rem, (100vw - 640px) * 99, 2.5rem)', '1'], // xxx-big
+      xs: ['0.8rem', '1.2'], // x-small
+      sm: ['0.9rem', '1.2'], // small
+      base: ['1rem', '1.2'], // base
+      lg: ['clamp(1.15rem, (100vw - 640px) * 99, 1.3rem)', '1.2'], // big
+      xl: ['clamp(1.3rem, (100vw - 640px) * 99, 1.5rem)', '1.2'], // x-big
+      '2xl': ['clamp(1.5rem, (100vw - 640px) * 99, 1.7rem)', '1'], // xx-big
+      '3xl': ['clamp(1.7rem, (100vw - 640px) * 99, 1.9rem)', '1'], // xxx-big
+      '4xl': ['clamp(1.9rem, (100vw - 640px) * 99, 2.5rem)', '1'], // xxx-big
     },
     colors: {
       theme: {
@@ -128,6 +145,19 @@ export default defineConfig({
         800: '#551407',
         900: '#2A0A04',
         950: '#180602',
+      },
+      neutral: {
+        50: '#F0F0F0',
+        100: '#E0E0E0',
+        200: '#C4C4C4',
+        300: '#A6A6A6',
+        400: '#8A8A8A',
+        500: '#6B6B6B',
+        600: '#575757',
+        700: '#404040',
+        800: '#2B2B2B',
+        900: '#141414',
+        950: '#0A0A0A',
       },
     },
   },

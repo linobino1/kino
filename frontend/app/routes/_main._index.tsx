@@ -6,8 +6,6 @@ import {
 } from '@remix-run/node'
 import { useLoaderData, useRouteLoaderData } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
-import { Page } from '~/components/Page'
-import { mergeMeta, pageMeta } from '~/util/pageMeta'
 import Pagination from '~/components/Pagination'
 import PostPreview from '~/components/PostPreview'
 import { JsonLd } from '~/structured-data'
@@ -20,13 +18,24 @@ import { Link } from '~/components/localized-link'
 import { Locale } from 'shared/config'
 import { classes } from '~/classes'
 import { getPayload } from '~/util/getPayload.server'
+import PageLayout from '~/components/PageLayout'
+import i18next from '~/i18next.server'
+import ErrorPage from '~/components/ErrorPage'
+import Hero from '~/components/Hero'
+import { cn } from '~/util/cn'
+import Button from '~/components/Button'
+import { generateMetadata } from '~/util/generateMetadata'
+import { getEnvFromMatches } from '~/util/getEnvFromMatches'
+
+export const ErrorBoundary = ErrorPage
 
 export const headers: HeadersFunction = () => ({
   'Cache-Control': cacheControlShortWithSWR,
 })
 
 export const loader = async ({ request, params: { lang: locale } }: LoaderFunctionArgs) => {
-  const payload = await getPayload()
+  const [payload, t] = await Promise.all([getPayload(), i18next.getFixedT(locale as string)])
+
   // compare date for upcoming screenings
   const today = new Date()
   today.setHours(0, 0, 0, 0)
@@ -34,9 +43,14 @@ export const loader = async ({ request, params: { lang: locale } }: LoaderFuncti
   // pagination for posts
   const postsPage = parseInt(new URL(request.url).searchParams.get('page') || '1')
 
-  const [page, posts, events] = await Promise.all([
-    payload.findGlobal({
-      slug: 'blog',
+  const [pages, posts, events] = await Promise.all([
+    payload.find({
+      collection: 'pages',
+      where: {
+        slug: {
+          equals: 'home',
+        },
+      },
       locale: locale as Locale,
     }),
     payload.find({
@@ -73,6 +87,13 @@ export const loader = async ({ request, params: { lang: locale } }: LoaderFuncti
       limit: 3,
     }),
   ])
+  console.log('page size', JSON.stringify(pages.docs[0]).length)
+
+  // if we cannot find the page in the database, we throw a 404 error
+  const page = pages.docs[0]
+  if (!page) {
+    throw new Error(t('error.404'))
+  }
 
   // Redirect to the last page if the requested page is greater than the total number of page
   if (postsPage > posts.totalPages) {
@@ -88,51 +109,49 @@ export const loader = async ({ request, params: { lang: locale } }: LoaderFuncti
   }
 }
 
-export const meta: MetaFunction<
-  typeof loader,
-  {
-    root: typeof rootLoader
-  }
-> = mergeMeta(({ data, matches }) => {
-  const site = matches.find((match) => match?.id === 'root')?.data.site
-  return pageMeta(data?.page.meta, site?.meta)
-})
+export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
+  generateMetadata({
+    title: data?.page.meta?.title,
+    description: data?.page.meta?.description,
+    image: data?.page.meta?.image,
+    env: getEnvFromMatches(matches),
+  })
 
-export default function Index() {
+const h2 = 'text-xl font-bold my-8'
+
+export default function LandingPage() {
   const { page, posts, events } = useLoaderData<typeof loader>()
   const { site } = useRouteLoaderData<typeof rootLoader>('root')!
   const { t } = useTranslation()
 
   return (
-    <Page layout={page.layout} className={classes.page}>
+    <PageLayout type={page?.layoutType}>
+      <Hero {...page.hero} />
       <Gutter>
-        <section className={classes.upcoming}>
-          <h2>{t('Our Next Screenings')}</h2>
-          <EventsList items={events.docs} site={site} />
-          <Link to="/events" className={classes.allScreeningsButton} prefetch="intent">
+        <h2 className={h2}>{t('Our Next Screenings')}</h2>
+        <EventsList items={events.docs} site={site} />
+        <Link to="/events" prefetch="intent" className="contents">
+          <Button className="mx-auto my-12" size="lg">
             {t('See all screenings')}
-          </Link>
-        </section>
-        <section className={classes.news}>
-          <h2>{t('News')}</h2>
-          {posts.docs?.length ? (
-            <>
-              {JsonLd(postsListSchema(posts.docs))}
-              <ul className={classes.posts}>
-                {posts.docs.map((post, index) => (
-                  <li key={index}>
-                    <PostPreview post={post} className="py-8" />
-                    {index !== posts.docs.length - 1 && <hr />}
-                  </li>
-                ))}
-              </ul>
-            </>
-          ) : (
-            <div className={classes.empty}>{t('No posts.')}</div>
-          )}
-          <Pagination {...posts} linkProps={{ prefetch: 'intent' }} />
-        </section>
+          </Button>
+        </Link>
+
+        <h2 className={cn(h2, 'mb-0')}>{t('News')}</h2>
+        {JsonLd(postsListSchema(posts.docs))}
+        {posts.docs?.length ? (
+          <ul className={classes.posts}>
+            {posts.docs.map((post, index) => (
+              <li key={index}>
+                <PostPreview post={post} className="py-8" />
+                {index !== posts.docs.length - 1 && <hr />}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className={classes.empty}>{t('No posts.')}</div>
+        )}
+        <Pagination className="my-8" {...posts} linkProps={{ prefetch: 'intent' }} />
       </Gutter>
-    </Page>
+    </PageLayout>
   )
 }

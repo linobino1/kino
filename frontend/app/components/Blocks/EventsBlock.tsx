@@ -1,18 +1,17 @@
-import type { Event, Site, StaticPage } from '@/payload-types'
+import type { Event, EventsBlockType, Site } from '@/payload-types'
 import { EventsList } from '../EventsList'
 import { useRouteLoaderData } from '@remix-run/react'
 import type { loader as rootLoader } from '~/root'
 import { useEffect, useState } from 'react'
-import qs from 'qs'
 import { useTranslation } from 'react-i18next'
+import type { RequestBody } from '~/routes/api.events'
+import { Locale } from 'shared/config'
 
-type EventsBlockProps = Extract<
-  NonNullable<StaticPage['layout']['blocks'][number]>,
-  { blockType: 'screenings' }
->
+type Props = EventsBlockType
 
-const EventsBlock: React.FC<EventsBlockProps> = ({ type, screeningSeries, events }) => {
-  const { t } = useTranslation()
+export const EventsBlock: React.FC<Props> = ({ type, screeningSeries, events }) => {
+  const { t, i18n } = useTranslation()
+  const locale = i18n.language as Locale
   const [loading, setLoading] = useState(true)
   const [docs, setDocs] = useState<Event[]>([])
   const site = useRouteLoaderData<typeof rootLoader>('root')?.site as unknown as Site
@@ -20,55 +19,41 @@ const EventsBlock: React.FC<EventsBlockProps> = ({ type, screeningSeries, events
   // fetch screenings
   useEffect(() => {
     ;(async () => {
-      let ids: string[] = []
-      const deepDocs: Event[] = []
+      let data: RequestBody
       switch (type) {
         case 'manual':
-          ids =
-            events
-              ?.map((event: any) => (typeof event.doc === 'string' ? event.doc : event.doc?.id))
-              .filter(Boolean) ?? []
-
+          data = {
+            collection: 'events',
+            eventIDs: events?.map((event: any) => event.doc?.id) ?? [],
+            locale,
+          }
           break
+
         case 'screeningSeries':
-          const query = qs.stringify({
-            depth: 0,
-            where: {
-              and: [
-                {
-                  _status: {
-                    equals: 'published',
-                  },
-                },
-                {
-                  series: {
-                    equals:
-                      typeof screeningSeries === 'string' ? screeningSeries : screeningSeries?.id,
-                  },
-                },
-              ],
-            },
-            sort: 'date',
-          })
-          const res = await fetch(
-            `${environment().PAYLOAD_PUBLIC_SERVER_URL || ''}/api/events?${query}`,
-          )
-          const data = await res.json()
-          ids = data.docs.map((doc: Event) => doc.id)
+          data = {
+            collection: 'screeningSeries',
+            screeningSeriesID:
+              typeof screeningSeries === 'string' ? screeningSeries : (screeningSeries?.id ?? ''),
+            locale,
+          }
           break
       }
 
-      await Promise.all(
-        ids.map(async (id, index) => {
-          return fetch(`${environment().PAYLOAD_PUBLIC_SERVER_URL || ''}/api/events/${id}?depth=3`)
-            .then((res) => res.json())
-            .then((data) => {
-              deepDocs[index] = data
-            })
-        }),
-      )
+      const res = await fetch('/api/events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
 
-      setDocs(deepDocs)
+      if (!res.ok) {
+        return
+      }
+
+      const json = await res.json()
+
+      setDocs(json.docs)
       setLoading(false)
     })()
   }, [type, events, screeningSeries])

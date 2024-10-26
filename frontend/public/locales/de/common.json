@@ -31,6 +31,11 @@
       "error": "Leider hat deine Verbindung unseren Spamschutz nicht passiert. Bitte versuche es später erneut."
     }
   },
+  "Error": "Fehler",
+  "error": {
+    "404": "Die Seite {{url}} konnte nicht gefunden werden.",
+    "unknown": "Ein unbekannter Fehler ist aufgetreten. Bitte versuche es später erneut."
+  },
   "Read more": "Weiterlesen",
   "signed in as {{name}}": "angemeldet als {{name}}",
   "Video is not available.": "Video ist nicht verfügbar.",
@@ -57,5 +62,6 @@
   "event.meta.title": "{{ title }} am {{date}}",
   "screening.meta.description": "Vorstellung am {{date}}. {{synopsis}}",
   "Supporting Film": "Vorfilm",
-  "Add to calendar": "Termin zu meinem Kalender hinzufügen"
+  "Add to calendar": "Termin zu meinem Kalender hinzufügen",
+  "Season not found.": "Spielzeit konnte nicht gefunden werden."
 }

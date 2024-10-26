@@ -3,13 +3,15 @@ import type { Block } from 'payload'
 export const Events: Block = {
   slug: 'events',
   labels: {
-    singular: 'Event',
+    singular: 'Events',
     plural: 'Events',
   },
+  interfaceName: 'EventsBlockType',
   fields: [
     {
       name: 'type',
       type: 'radio',
+      required: true,
       options: [
         {
           label: 'Manuell befüllen',

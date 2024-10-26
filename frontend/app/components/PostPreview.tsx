@@ -15,35 +15,45 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export const PostPreview: React.FC<Props> = ({ className, ...props }) => {
   const { t } = useTranslation()
   const { post } = props
-  let link: string | undefined
+  let href: string | undefined | null
   let target = '_self'
   switch (post.link?.type) {
     case 'internal':
-      link = (post.link.doc?.value as LinkableCollection)?.url
+      href = (post.link.doc?.value as LinkableCollection)?.url
       break
     case 'external':
-      link = post.link?.url ?? ''
+      href = post.link?.url ?? ''
       target = '_blank'
       break
     case 'none':
-      link = post.details?.length ? post.url : undefined
+      href = post.details?.length ? post.url : undefined
   }
+
+  const image = (
+    <Image
+      image={post.header as Media}
+      onClick={href ? () => window.open(href, target) : undefined}
+      className={cn('', {
+        'cursor-pointer': href,
+      })}
+      srcSet={[
+        { options: { width: 500 }, size: '500w' },
+        { options: { width: 768 }, size: '768w' },
+        { options: { width: 1000 }, size: '1000w' },
+        { options: { width: 1500 }, size: '1500w' },
+      ]}
+      sizes="(max-width: 768px) 100vw, 500px"
+    />
+  )
   return (
     <div {...props} className={cn('gap-x-8 sm:grid sm:grid-cols-2', className)}>
-      <Image
-        image={post.header as Media}
-        onClick={link ? () => window.open(link, target) : undefined}
-        className={cn('', {
-          'cursor-pointer': link,
-        })}
-        srcSet={[
-          { options: { width: 500 }, size: '500w' },
-          { options: { width: 768 }, size: '768w' },
-          { options: { width: 1000 }, size: '1000w' },
-          { options: { width: 1500 }, size: '1500w' },
-        ]}
-        sizes="(max-width: 768px) 100vw, 500px"
-      />
+      {href ? (
+        <Link to={href} prefetch={post.link?.type === 'external' ? 'none' : 'intent'}>
+          {image}
+        </Link>
+      ) : (
+        image
+      )}
       <div className="max-sm:mt-4">
         <Date className="text-sm" iso={post.date} format="PPP" />
         <h2 className="mb-4 mt-1 break-words text-2xl font-semibold uppercase">{post.title}</h2>

@@ -18,7 +18,7 @@ export interface Config {
     posts: Post;
     mailings: Mailing;
     media: Media;
-    staticPages: StaticPage;
+    pages: Page;
     formats: Format;
     aspectRatios: AspectRatio;
     carriers: Carrier;
@@ -46,10 +46,6 @@ export interface Config {
   };
   globals: {
     site: Site;
-    blog: Blog;
-    eventsPage: EventsPage;
-    seasonsPage: SeasonsPage;
-    archive: Archive;
   };
   locale: 'de' | 'en';
   user: User & {
@@ -108,7 +104,6 @@ export interface Movie {
   tags?: string | null;
   isMigratedFromWordpress?: boolean | null;
   wordpressMigrationNotes?: string | null;
-  url: string;
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -122,10 +117,9 @@ export interface Media {
   id: string;
   alt?: string | null;
   tmdbFilepath?: string | null;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
-  url: string;
+  url?: string | null;
   thumbnailURL?: string | null;
   filename?: string | null;
   mimeType?: string | null;
@@ -142,7 +136,6 @@ export interface Media {
 export interface Person {
   id: string;
   name: string;
-  url: string;
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -154,7 +147,6 @@ export interface Person {
 export interface Country {
   id: string;
   name: string;
-  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -165,7 +157,6 @@ export interface Country {
 export interface Genre {
   id: string;
   name: string;
-  url: string;
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -177,7 +168,6 @@ export interface Genre {
 export interface Job {
   id: string;
   name: string;
-  url: string;
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -189,7 +179,6 @@ export interface Job {
 export interface Company {
   id: string;
   name: string;
-  url: string;
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -228,7 +217,6 @@ export interface Format {
   id: string;
   type?: ('analog' | 'digital') | null;
   name: string;
-  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -240,7 +228,6 @@ export interface LanguageVersion {
   id: string;
   name: string;
   abbreviation: string;
-  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -253,7 +240,6 @@ export interface Rental {
   name: string;
   logo?: (string | null) | Media;
   credits: string;
-  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -264,7 +250,6 @@ export interface Rental {
 export interface Carrier {
   id: string;
   name: string;
-  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -275,7 +260,6 @@ export interface Carrier {
 export interface Category {
   id: string;
   name: string;
-  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -286,7 +270,6 @@ export interface Category {
 export interface AspectRatio {
   id: string;
   name: string;
-  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -297,7 +280,6 @@ export interface AspectRatio {
 export interface Color {
   id: string;
   name: string;
-  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -308,7 +290,6 @@ export interface Color {
 export interface SoundFormat {
   id: string;
   name: string;
-  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -319,7 +300,6 @@ export interface SoundFormat {
 export interface Condition {
   id: string;
   name: string;
-  url: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -338,20 +318,40 @@ export interface Event {
   series?: (string | null) | ScreeningSery;
   header?: (string | null) | Media;
   poster?: (string | null) | Media;
-  info?:
-    | {
+  info?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
         [k: string]: unknown;
-      }[]
-    | null;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   films?:
     | {
         filmprint: string | FilmPrint;
         isSupportingFilm?: boolean | null;
-        info?:
-          | {
+        info?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
               [k: string]: unknown;
-            }[]
-          | null;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
         id?: string | null;
       }[]
     | null;
@@ -372,7 +372,6 @@ export interface Location {
   id: string;
   name?: string | null;
   default?: boolean | null;
-  url: string;
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -398,81 +397,14 @@ export interface Season {
 export interface ScreeningSery {
   id: string;
   name: string;
-  layout: {
-    blocks: (
-      | {
-          text?: string | null;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'heading';
-        }
-      | {
-          image: string | Media;
-          navigation?: (string | null) | Navigation;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'headerImage';
-        }
-      | {
-          content?:
-            | {
-                [k: string]: unknown;
-              }[]
-            | null;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'content';
-        }
-      | {
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'outlet';
-        }
-      | {
-          image: string | Media;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'image';
-        }
-      | {
-          images?:
-            | {
-                image: string | Media;
-                id?: string | null;
-              }[]
-            | null;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'gallery';
-        }
-      | {
-          url: string;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'video';
-        }
-      | {
-          type?: ('manual' | 'screeningSeries') | null;
-          events?:
-            | {
-                doc: string | Event;
-                id?: string | null;
-              }[]
-            | null;
-          screeningSeries?: (string | null) | ScreeningSery;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'events';
-        }
-      | {
-          html: string;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'rawHTML';
-        }
-    )[];
-    type: 'default' | 'info';
+  hero?: {
+    type?: ('image' | 'headline' | 'none') | null;
+    headline?: string | null;
+    image?: (string | null) | Media;
   };
+  blocks?:
+    | (ContentBlockType | GalleryBlockType | ImageBlockType | VideoBlockType | EventsBlockType | RawHTMLBlockType)[]
+    | null;
   url: string;
   slug?: string | null;
   updatedAt: string;
@@ -480,120 +412,89 @@ export interface ScreeningSery {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "navigations".
+ * via the `definition` "ContentBlockType".
  */
-export interface Navigation {
-  id: string;
-  type: 'main' | 'mobile' | 'footer' | 'socialMedia' | 'subnavigation';
-  items?:
+export interface ContentBlockType {
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'content';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GalleryBlockType".
+ */
+export interface GalleryBlockType {
+  images?:
     | {
-        type?: ('internal' | 'external' | 'subnavigation' | 'language') | null;
-        name?: string | null;
-        page?: (string | null) | StaticPage;
-        relPath?: string | null;
-        url?: string | null;
-        icon?: (string | null) | Media;
-        subnavigation?: (string | null) | Navigation;
-        newTab?: boolean | null;
+        image: string | Media;
         id?: string | null;
       }[]
     | null;
-  url: string;
-  updatedAt: string;
-  createdAt: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'gallery';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "staticPages".
+ * via the `definition` "ImageBlockType".
  */
-export interface StaticPage {
-  id: string;
-  title: string;
-  layout: {
-    blocks: (
-      | {
-          text?: string | null;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'heading';
-        }
-      | {
-          image: string | Media;
-          navigation?: (string | null) | Navigation;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'headerImage';
-        }
-      | {
-          content?:
-            | {
-                [k: string]: unknown;
-              }[]
-            | null;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'content';
-        }
-      | {
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'outlet';
-        }
-      | {
-          image: string | Media;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'image';
-        }
-      | {
-          images?:
-            | {
-                image: string | Media;
-                id?: string | null;
-              }[]
-            | null;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'gallery';
-        }
-      | {
-          url: string;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'video';
-        }
-      | {
-          type?: ('manual' | 'screeningSeries') | null;
-          events?:
-            | {
-                doc: string | Event;
-                id?: string | null;
-              }[]
-            | null;
-          screeningSeries?: (string | null) | ScreeningSery;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'events';
-        }
-      | {
-          html: string;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'rawHTML';
-        }
-    )[];
-    type: 'default' | 'info';
-  };
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    keywords?: string | null;
-    image?: (string | null) | Media;
-  };
+export interface ImageBlockType {
+  image: string | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'image';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VideoBlockType".
+ */
+export interface VideoBlockType {
   url: string;
-  slug?: string | null;
-  updatedAt: string;
-  createdAt: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'video';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EventsBlockType".
+ */
+export interface EventsBlockType {
+  type: 'manual' | 'screeningSeries';
+  events?:
+    | {
+        doc: string | Event;
+        id?: string | null;
+      }[]
+    | null;
+  screeningSeries?: (string | null) | ScreeningSery;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'events';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RawHTMLBlockType".
+ */
+export interface RawHTMLBlockType {
+  html: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'rawHTML';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -604,46 +505,6 @@ export interface Post {
   title: string;
   date: string;
   header: string | Media;
-  content: {
-    [k: string]: unknown;
-  }[];
-  details?:
-    | (
-        | {
-            content?:
-              | {
-                  [k: string]: unknown;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'content';
-          }
-        | {
-            image: string | Media;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'image';
-          }
-        | {
-            images?:
-              | {
-                  image: string | Media;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'gallery';
-          }
-        | {
-            url: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'video';
-          }
-      )[]
-    | null;
   link?: {
     type?: ('none' | 'internal' | 'external') | null;
     doc?:
@@ -652,8 +513,8 @@ export interface Post {
           value: string | Post;
         } | null)
       | ({
-          relationTo: 'staticPages';
-          value: string | StaticPage;
+          relationTo: 'pages';
+          value: string | Page;
         } | null)
       | ({
           relationTo: 'events';
@@ -673,8 +534,50 @@ export interface Post {
         } | null);
     url?: string | null;
   };
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  details?: (ContentBlockType | ImageBlockType | GalleryBlockType | VideoBlockType)[] | null;
   url: string;
   slug?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: string;
+  title: string;
+  layoutType?: ('default' | 'info') | null;
+  hero?: {
+    type?: ('image' | 'headline' | 'none') | null;
+    headline?: string | null;
+    image?: (string | null) | Media;
+  };
+  blocks?:
+    | (ContentBlockType | GalleryBlockType | ImageBlockType | VideoBlockType | EventsBlockType | RawHTMLBlockType)[]
+    | null;
+  url: string;
+  slug?: string | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (string | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -712,7 +615,29 @@ export interface Mailing {
     link?: string | null;
   };
   html?: string | null;
-  url: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigations".
+ */
+export interface Navigation {
+  id: string;
+  type: 'main' | 'mobile' | 'footer' | 'socialMedia' | 'subnavigation';
+  items?:
+    | {
+        type?: ('internal' | 'external' | 'subnavigation' | 'language') | null;
+        name?: string | null;
+        page?: (string | null) | Page;
+        relPath?: string | null;
+        url?: string | null;
+        icon?: (string | null) | Media;
+        subnavigation?: (string | null) | Navigation;
+        newTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -724,7 +649,6 @@ export interface User {
   id: string;
   name: string;
   role?: ('admin' | 'editor') | null;
-  url: string;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -772,8 +696,8 @@ export interface PayloadLockedDocument {
         value: string | Media;
       } | null)
     | ({
-        relationTo: 'staticPages';
-        value: string | StaticPage;
+        relationTo: 'pages';
+        value: string | Page;
       } | null)
     | ({
         relationTo: 'formats';
@@ -898,11 +822,21 @@ export interface Site {
   logo?: (string | null) | Media;
   logoMobile?: (string | null) | Media;
   favicon?: (string | null) | Media;
-  footerContent?:
-    | {
+  footerContent?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
         [k: string]: unknown;
-      }[]
-    | null;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   location: {
     country: string | Country;
     region: string;
@@ -916,367 +850,6 @@ export interface Site {
   meta?: {
     title?: string | null;
     description?: string | null;
-    keywords?: string | null;
-    image?: (string | null) | Media;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "blog".
- */
-export interface Blog {
-  id: string;
-  layout: {
-    blocks: (
-      | {
-          text?: string | null;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'heading';
-        }
-      | {
-          image: string | Media;
-          navigation?: (string | null) | Navigation;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'headerImage';
-        }
-      | {
-          content?:
-            | {
-                [k: string]: unknown;
-              }[]
-            | null;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'content';
-        }
-      | {
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'outlet';
-        }
-      | {
-          image: string | Media;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'image';
-        }
-      | {
-          images?:
-            | {
-                image: string | Media;
-                id?: string | null;
-              }[]
-            | null;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'gallery';
-        }
-      | {
-          url: string;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'video';
-        }
-      | {
-          type?: ('manual' | 'screeningSeries') | null;
-          events?:
-            | {
-                doc: string | Event;
-                id?: string | null;
-              }[]
-            | null;
-          screeningSeries?: (string | null) | ScreeningSery;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'events';
-        }
-      | {
-          html: string;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'rawHTML';
-        }
-    )[];
-    type: 'default' | 'info';
-  };
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    keywords?: string | null;
-    image?: (string | null) | Media;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "eventsPage".
- */
-export interface EventsPage {
-  id: string;
-  layout: {
-    blocks: (
-      | {
-          text?: string | null;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'heading';
-        }
-      | {
-          image: string | Media;
-          navigation?: (string | null) | Navigation;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'headerImage';
-        }
-      | {
-          content?:
-            | {
-                [k: string]: unknown;
-              }[]
-            | null;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'content';
-        }
-      | {
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'outlet';
-        }
-      | {
-          image: string | Media;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'image';
-        }
-      | {
-          images?:
-            | {
-                image: string | Media;
-                id?: string | null;
-              }[]
-            | null;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'gallery';
-        }
-      | {
-          url: string;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'video';
-        }
-      | {
-          type?: ('manual' | 'screeningSeries') | null;
-          events?:
-            | {
-                doc: string | Event;
-                id?: string | null;
-              }[]
-            | null;
-          screeningSeries?: (string | null) | ScreeningSery;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'events';
-        }
-      | {
-          html: string;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'rawHTML';
-        }
-    )[];
-    type: 'default' | 'info';
-  };
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    keywords?: string | null;
-    image?: (string | null) | Media;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "seasonsPage".
- */
-export interface SeasonsPage {
-  id: string;
-  layout: {
-    blocks: (
-      | {
-          text?: string | null;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'heading';
-        }
-      | {
-          image: string | Media;
-          navigation?: (string | null) | Navigation;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'headerImage';
-        }
-      | {
-          content?:
-            | {
-                [k: string]: unknown;
-              }[]
-            | null;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'content';
-        }
-      | {
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'outlet';
-        }
-      | {
-          image: string | Media;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'image';
-        }
-      | {
-          images?:
-            | {
-                image: string | Media;
-                id?: string | null;
-              }[]
-            | null;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'gallery';
-        }
-      | {
-          url: string;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'video';
-        }
-      | {
-          type?: ('manual' | 'screeningSeries') | null;
-          events?:
-            | {
-                doc: string | Event;
-                id?: string | null;
-              }[]
-            | null;
-          screeningSeries?: (string | null) | ScreeningSery;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'events';
-        }
-      | {
-          html: string;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'rawHTML';
-        }
-    )[];
-    type: 'default' | 'info';
-  };
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    keywords?: string | null;
-    image?: (string | null) | Media;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "archive".
- */
-export interface Archive {
-  id: string;
-  layout: {
-    blocks: (
-      | {
-          text?: string | null;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'heading';
-        }
-      | {
-          image: string | Media;
-          navigation?: (string | null) | Navigation;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'headerImage';
-        }
-      | {
-          content?:
-            | {
-                [k: string]: unknown;
-              }[]
-            | null;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'content';
-        }
-      | {
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'outlet';
-        }
-      | {
-          image: string | Media;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'image';
-        }
-      | {
-          images?:
-            | {
-                image: string | Media;
-                id?: string | null;
-              }[]
-            | null;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'gallery';
-        }
-      | {
-          url: string;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'video';
-        }
-      | {
-          type?: ('manual' | 'screeningSeries') | null;
-          events?:
-            | {
-                doc: string | Event;
-                id?: string | null;
-              }[]
-            | null;
-          screeningSeries?: (string | null) | ScreeningSery;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'events';
-        }
-      | {
-          html: string;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'rawHTML';
-        }
-    )[];
-    type: 'default' | 'info';
-  };
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    keywords?: string | null;
     image?: (string | null) | Media;
   };
   updatedAt?: string | null;

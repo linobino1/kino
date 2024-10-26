@@ -6,6 +6,7 @@ export const RawHTML: Block = {
     singular: 'HTML',
     plural: 'HTML',
   },
+  interfaceName: 'RawHTMLBlockType',
   fields: [
     {
       name: 'html',

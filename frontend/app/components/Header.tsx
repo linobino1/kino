@@ -39,7 +39,7 @@ const Header: React.FC<Props> = ({ site, navigations }) => {
   const mainNavigation = navigations.find((x) => x.type === 'main')
   return (
     <>
-      <header className="sticky top-0 w-full border-b border-gray-200 bg-white text-sm uppercase text-gray-500">
+      <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white text-sm uppercase text-gray-500">
         <Gutter
           size="large"
           className="grid grid-cols-[min-content_1fr_min-content] items-center py-2"
@@ -73,7 +73,7 @@ const Header: React.FC<Props> = ({ site, navigations }) => {
             navigation={mainNavigation}
             className="justify-self-end border-r border-gray-300 max-md:hidden"
           />
-          <UserStatus className={cn(navItemClassName, 'text-nowrap pr-2 max-md:hidden')} />
+          <UserStatus className={cn('text-nowrap pl-3 max-md:hidden')} />
         </Gutter>
       </header>
       <div

@@ -16,17 +16,12 @@ import { SerializeLexicalToEmail } from '../lexical/SerializeLexicalToEmail'
 import { parseISO } from 'date-fns'
 import { de } from 'date-fns/locale'
 import { formatInTimeZone } from 'date-fns-tz'
-import { Node as SlateNode } from 'slate'
 
 const tz = process.env.TIMEZONE ?? 'Europe/Berlin'
 
 export const formatDate = (iso: string, format: string) => {
   const date = parseISO(iso)
   return formatInTimeZone(date, tz, format, { locale: de })
-}
-
-export const slateToPlainText = (content: any) => {
-  return content?.map((n: any) => SlateNode.string(n)).join('\n')
 }
 
 export type Props = {

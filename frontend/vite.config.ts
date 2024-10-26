@@ -27,7 +27,12 @@ export default defineConfig({
     UnoCSS(),
   ],
   ssr: {
-    noExternal: ['remix-custom-routes', 'remix-i18next', 'payload'].concat(
+    noExternal: [
+      'remix-custom-routes',
+      'remix-i18next',
+      'payload',
+      '@payloadcms/richtext-lexical',
+    ].concat(
       // not sure why this is necessary, but deployments on vercel throw runtime error if @payloadcms/db-mongodb is noExternal
       process.env.NODE_ENV === 'development' ? ['@payloadcms/db-mongodb'] : [],
     ),

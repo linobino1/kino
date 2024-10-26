@@ -7,8 +7,10 @@ import { createInstance } from 'i18next'
 import i18next from './i18next.server'
 import { I18nextProvider, initReactI18next } from 'react-i18next'
 import i18n from './i18n'
-import de from '../public/locales/de/common.json'
-import en from '../public/locales/en/common.json'
+import commonDE from '../public/locales/de/common.json'
+import authDE from '../public/locales/de/auth.json'
+import commonEN from '../public/locales/en/common.json'
+import authEN from '../public/locales/en/auth.json'
 import { returnLanguageIfSupported } from './util/i18n/returnLanguageIfSupported'
 
 const ABORT_DELAY = 5000
@@ -32,8 +34,8 @@ export default async function handleRequest(
     lng,
     ns,
     resources: {
-      de: { common: de },
-      en: { common: en },
+      de: { common: commonDE, auth: authDE },
+      en: { common: commonEN, auth: authEN },
     },
   })
 

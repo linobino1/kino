@@ -1,8 +1,7 @@
 import React from 'react'
-import { extractTokenFromRequest } from '@/util/extractTokenFromRequest'
 import Newsletter, { type Props as NewsletterProps } from '../templates/Newsletter'
 import { render } from '@react-email/components'
-import type { FieldHook } from 'payload'
+import { extractJWT, type FieldHook } from 'payload'
 import { addDepth } from '../lexical/addDepth'
 import { env } from '@/util/env'
 
@@ -29,7 +28,7 @@ export const generateHTML: FieldHook = async ({ data, req }) => {
   const fetchOptions: RequestInit = {
     credentials: 'include',
     headers: {
-      cookie: `payload-token=${extractTokenFromRequest(req)}`,
+      cookie: `payload-token=${extractJWT(req)}`,
     },
   }
   const [headerImage, headerOverlay, footerImage] = await Promise.all([
