@@ -30,7 +30,7 @@ export const EventsList: React.FC<Props> = ({
     <div
       {...props}
       className={cn(
-        'xs:grid-cols-[repeat(auto-fill,minmax(13em,auto))] xs:grid-cols-2 my-4 grid gap-4 sm:grid-cols-[repeat(auto-fill,minmax(15em,auto))]',
+        'xs:grid-cols-[repeat(auto-fill,minmax(13em,auto))] xs:grid-cols-2 my-4 grid gap-8 sm:grid-cols-[repeat(auto-fill,minmax(15em,auto))] sm:gap-4',
         className,
       )}
     >

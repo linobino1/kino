@@ -51,7 +51,7 @@ export const EventCard: React.FC<Props> = ({ event, activeScreeningSery, classNa
         sizes="(max-width: 500px) 100vw, (max-width: 700px) 50vw, (max-width: 1024px) 33vw, 310px"
         className="xs:aspect-square aspect-[16/9] object-cover"
       />
-      <div className="flex aspect-[3/2] flex-col">
+      <div className="flex flex-col sm:aspect-[3/2]">
         <div className="m-[0.3em] flex min-h-6 items-center justify-end">
           {event.series && activeScreeningSery?.id !== (event.series as ScreeningSery)?.id && (
             <Tag>{(event.series as ScreeningSery).name}</Tag>
