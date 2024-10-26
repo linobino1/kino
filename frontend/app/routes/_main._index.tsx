@@ -91,7 +91,7 @@ export const loader = async ({ request, params: { lang: locale } }: LoaderFuncti
   // if we cannot find the page in the database, we throw a 404 error
   const page = pages.docs[0]
   if (!page) {
-    throw new Error(t('error.404'))
+    throw new Error(t('error.404', { url: 'home' }))
   }
 
   // Redirect to the last page if the requested page is greater than the total number of page
