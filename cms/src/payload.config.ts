@@ -39,8 +39,6 @@ import { search } from './views/tmdb-migrate/endpoints/search'
 import { preview } from './views/tmdb-migrate/endpoints/preview'
 import { migrate } from './views/tmdb-migrate/endpoints/migrate'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { SlateToLexicalFeature } from '@payloadcms/richtext-lexical/migrate'
-import { slateEditor } from '@payloadcms/richtext-slate'
 
 import * as dotenv from 'dotenv'
 
@@ -125,8 +123,7 @@ export default buildConfig({
   globals: [Site],
   editor: lexicalEditor({
     features({ defaultFeatures }) {
-      return [...defaultFeatures, SlateToLexicalFeature({ disableHooks: true })]
-      // return [...defaultFeatures]
+      return [...defaultFeatures]
     },
   }),
   // editor: slateEditor({}),
