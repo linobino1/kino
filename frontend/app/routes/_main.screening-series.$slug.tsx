@@ -13,7 +13,7 @@ import Gutter from '~/components/Gutter'
 import Pagination from '~/components/Pagination'
 import EventsList from '~/components/EventsList'
 import { useTranslation } from 'react-i18next'
-import RenderBlocks from '~/components/Blocks'
+import { RenderBlocks } from '~/components/Blocks/RenderBlocks'
 
 export const headers: HeadersFunction = () => ({
   'Cache-Control': cacheControlShortWithSWR,

@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import type { Media, Page } from '@/payload-types'
 import { Gallery } from '../Gallery'
 import { MyReactPlayer } from '../MyReactPlayer'
@@ -6,6 +6,8 @@ import { Image } from '../Image'
 import { RichText } from '../RichText'
 import Gutter from '../Gutter'
 import { EventsBlock } from './EventsBlock'
+import RawHtmlBlock from './RawHtmlBlock'
+import KronolithCalendarEmbed from './KronolithCalendarEmbed'
 
 type Block = NonNullable<Page['blocks']>[number]
 
@@ -64,13 +66,14 @@ const RenderBlock: React.FC<BlockProps> = ({ block }) => {
     case 'rawHTML':
       return (
         <Gutter size="small">
-          <Suspense>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: block.html,
-              }}
-            />
-          </Suspense>
+          <RawHtmlBlock {...block} />
+        </Gutter>
+      )
+
+    case 'kronolithCalendarEmbed':
+      return (
+        <Gutter size="small">
+          <KronolithCalendarEmbed {...block} />
         </Gutter>
       )
 

@@ -1,10 +1,11 @@
 import type { Field } from 'payload'
-import { Content } from '../blocks/Content'
-import { Image } from '../blocks/Image'
-import { Gallery } from '../blocks/Gallery'
-import { Video } from '../blocks/Video'
-import { RawHTML } from '../blocks/RawHTML'
-import Events from '../blocks/Events'
+import { Content } from '@/blocks/Content'
+import { Image } from '@/blocks/Image'
+import { Gallery } from '@/blocks/Gallery'
+import { Video } from '@/blocks/Video'
+import { KronolithCalendarEmbed } from '@/blocks/KronolithCalendarEmbed'
+import { Events } from '@/blocks/Events'
+import RawHTML from '@/blocks/RawHTML'
 
 export type Props = {
   defaultLayout?: any
@@ -57,7 +58,7 @@ export const pageLayout: Field = {
           name: 'blocks',
           label: false,
           type: 'blocks',
-          blocks: [Content, Gallery, Image, Video, Events, RawHTML],
+          blocks: [Content, Gallery, Image, Video, Events, RawHTML, KronolithCalendarEmbed],
           defaultValue: [
             {
               blockType: Content.slug,

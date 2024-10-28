@@ -403,7 +403,15 @@ export interface ScreeningSery {
     image?: (string | null) | Media;
   };
   blocks?:
-    | (ContentBlockType | GalleryBlockType | ImageBlockType | VideoBlockType | EventsBlockType | RawHTMLBlockType)[]
+    | (
+        | ContentBlockType
+        | GalleryBlockType
+        | ImageBlockType
+        | VideoBlockType
+        | EventsBlockType
+        | RawHTMLBlockType
+        | KronolithCalendarEmbedBlockType
+      )[]
     | null;
   url: string;
   slug?: string | null;
@@ -498,6 +506,16 @@ export interface RawHTMLBlockType {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "KronolithCalendarEmbedBlockType".
+ */
+export interface KronolithCalendarEmbedBlockType {
+  url: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'kronolithCalendarEmbed';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts".
  */
 export interface Post {
@@ -569,7 +587,15 @@ export interface Page {
     image?: (string | null) | Media;
   };
   blocks?:
-    | (ContentBlockType | GalleryBlockType | ImageBlockType | VideoBlockType | EventsBlockType | RawHTMLBlockType)[]
+    | (
+        | ContentBlockType
+        | GalleryBlockType
+        | ImageBlockType
+        | VideoBlockType
+        | EventsBlockType
+        | RawHTMLBlockType
+        | KronolithCalendarEmbedBlockType
+      )[]
     | null;
   url: string;
   slug?: string | null;
