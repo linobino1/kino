@@ -54,7 +54,7 @@ export const Hero: React.FC<Props> = ({ type, headline, image, children, classNa
           className={cn(
             'break-words text-center text-4xl font-semibold uppercase leading-tight tracking-widest',
             {
-              'mb-8 bg-white p-4 text-black': type === 'image',
+              'mb-8 bg-white p-2 text-black': type === 'image',
               'my-[1.5em]': type === 'headline',
             },
           )}
