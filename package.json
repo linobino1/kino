@@ -24,7 +24,15 @@
   "pnpm": {
     "overrides": {
       "@types/react": "npm:types-react@19.0.0-rc.1",
-      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
+      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
+      "@payloadcms/db-mongodb": "3.0.0-beta.119",
+      "@payloadcms/next": "3.0.0-beta.119",
+      "@payloadcms/plugin-seo": "3.0.0-beta.119",
+      "@payloadcms/richtext-lexical": "3.0.0-beta.119",
+      "@payloadcms/storage-s3": "3.0.0-beta.119",
+      "@payloadcms/translations": "3.0.0-beta.119",
+      "@payloadcms/ui": "3.0.0-beta.119",
+      "payload": "3.0.0-beta.119"
     }
   },
   "overrides": {
