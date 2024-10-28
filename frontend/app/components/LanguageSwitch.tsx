@@ -1,12 +1,12 @@
 import { Link, useLocation } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
-import { locales } from 'shared/config'
+import { Locale, locales } from 'shared/config'
 import { cn } from '~/util/cn'
 import { getLocalizedPathnames } from '~/util/i18n/getHreflangLinks'
 
-export const languages = {
-  en: { nativeName: 'English' },
-  de: { nativeName: 'Deutsch' },
+const icons: Record<Locale, { icon: string; label: string }> = {
+  en: { icon: '🇬🇧', label: 'english' },
+  de: { icon: '🇩🇪', label: 'deutsch' },
 }
 
 export type Props = {
@@ -19,7 +19,7 @@ export default function LanguageSwitch({ className }: Props) {
   const pathnames = getLocalizedPathnames(pathname)
 
   return (
-    <div className={className}>
+    <div className={cn('', className)}>
       {locales.map((lang) => (
         <Link
           key={lang}
@@ -33,7 +33,11 @@ export default function LanguageSwitch({ className }: Props) {
           preventScrollReset
           reloadDocument
         >
-          {lang.toUpperCase()}
+          <span className="md:sr-only">
+            {icons[lang].label}
+            &nbsp;
+          </span>
+          {icons[lang].icon}
         </Link>
       ))}
     </div>

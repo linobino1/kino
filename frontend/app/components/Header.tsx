@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import type { Media, Site, Navigation as NavigationType } from '@/payload-types'
-import { navItemClassName, Navigation } from './Navigation'
+import { Navigation, navItemClassName } from './Navigation'
 import { useLocation } from '@remix-run/react'
 import { Image } from '~/components/Image'
 import { UserStatus } from './UserStatus'
@@ -9,6 +9,7 @@ import { Gutter } from './Gutter'
 import { useTranslation } from 'react-i18next'
 import { Link } from '~/components/localized-link'
 import { cn } from '~/util/cn'
+import LanguageSwitch from './LanguageSwitch'
 
 type Props = {
   site: Site
@@ -73,12 +74,15 @@ const Header: React.FC<Props> = ({ site, navigations }) => {
             navigation={mainNavigation}
             className="justify-self-end border-r border-gray-300 max-md:hidden"
           />
-          <UserStatus className={cn('text-nowrap pl-3 max-md:hidden')} />
+          <nav className="flex items-center">
+            <UserStatus className={cn('text-nowrap pl-3 max-md:hidden')} />
+            <LanguageSwitch className={'pl-4 max-md:hidden'} />
+          </nav>
         </Gutter>
       </header>
       <div
         className={cn(
-          'z-60 fixed z-40 flex h-full min-h-screen w-screen flex-col items-end overflow-y-auto bg-white pb-12 pt-14 text-2xl transition-opacity duration-500 md:hidden',
+          'z-60 fixed z-40 flex h-full min-h-screen w-screen flex-col items-end overflow-y-auto bg-white pb-16 pt-14 text-2xl transition-opacity duration-500 md:hidden',
           {
             'pointer-events-none opacity-0': !menuIsOpen,
             'pointer-events-auto opacity-100': menuIsOpen,
@@ -86,8 +90,9 @@ const Header: React.FC<Props> = ({ site, navigations }) => {
         )}
         aria-hidden={!menuIsOpen}
       >
-        <UserStatus className={navItemClassName} />
+        <LanguageSwitch className={navItemClassName} />
         <Navigation navigation={mainNavigation} className="flex-col items-end" />
+        <UserStatus className={navItemClassName} />
       </div>
     </>
   )

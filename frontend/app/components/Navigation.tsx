@@ -1,7 +1,6 @@
 import React from 'react'
 import type { Media, Navigation as NavigationType, Page } from '@/payload-types'
 import { Image } from '~/components/Image'
-import LanguageSwitch from '~/components/LanguageSwitch'
 import { NavLink } from '~/components/localized-link/NavLink'
 import { cn } from '~/util/cn'
 
@@ -29,7 +28,7 @@ export const Navigation: React.FC<Props> = ({
     <nav className={cn('flex flex-wrap', className)}>
       {navigation?.items?.map((item) => {
         if (item.type === 'language') {
-          return <LanguageSwitch key={item.id} className={_navItemClassName} />
+          return null
         }
 
         const href =
@@ -49,7 +48,7 @@ export const Navigation: React.FC<Props> = ({
               <div className="group relative cursor-pointer max-md:contents">
                 <div
                   className={cn(_navItemClassName, {
-                    'text-gray-400 after:ml-2 after:inline-block after:w-4 after:text-center after:text-[0.8em] max-md:after:content-["▼"]':
+                    'text-gray-400 after:ml-2 after:inline-block after:min-w-4 after:text-center after:text-[0.8em] after:text-gray-300 max-md:after:content-["▼"]':
                       item.subnavigation,
                   })}
                 >
@@ -74,7 +73,7 @@ export const Navigation: React.FC<Props> = ({
                 className={({ isActive }) =>
                   cn(_navItemClassName, {
                     'text-black hover:text-inherit': isActive,
-                    'after:ml-2 after:inline-block after:w-4 after:text-center after:text-[0.8em] after:text-gray-400 max-md:after:content-["|"]':
+                    'after:ml-2 after:inline-block after:min-w-4 after:text-center after:text-[0.8em] after:text-gray-300 max-md:py-2 max-md:after:content-["|"]':
                       isChild,
                   })
                 }
