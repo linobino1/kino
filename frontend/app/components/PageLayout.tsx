@@ -11,7 +11,7 @@ export const PageLayout: React.FC<Props> = ({ type = 'default', className, ...pr
     <div
       {...props}
       className={cn(
-        'flex-1',
+        'flex-1 pb-12',
         {
           'bg-theme-500 text-white': type === 'default',
           'bg-theme-500 text-yellow-500': type === 'info',
