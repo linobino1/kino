@@ -121,7 +121,7 @@ export default function Newsletter({ mailing }: Props) {
           <Section
             style={{
               width: '100%',
-              backgroundImage: `url(${(footer.image as Media).url ?? ''})`,
+              backgroundImage: `url(${encodeURI((footer.image as Media).url ?? '')})`,
               backgroundSize: 'cover',
               minHeight: '40px',
               textAlign: 'center',
