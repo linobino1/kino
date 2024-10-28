@@ -14,6 +14,9 @@ export const Pages: CollectionConfig = {
     components: {
       beforeList: ['@/components/MagicSlugsExplanation'],
     },
+    pagination: {
+      defaultLimit: 20,
+    },
   },
   custom: {
     addUrlField: {
