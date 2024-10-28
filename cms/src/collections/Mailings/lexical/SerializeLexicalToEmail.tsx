@@ -165,6 +165,7 @@ export function SerializeLexicalToEmail({ nodes, color }: Props): React.ReactNod
               </Gutter>
             )
           }
+          case 'autolink':
           case 'link': {
             return (
               <Link key={index} href={node.fields.url} target={'target="_blank"'}>
