@@ -63,5 +63,6 @@
   "screening.meta.description": "Vorstellung am {{date}}. {{synopsis}}",
   "Supporting Film": "Vorfilm",
   "Add to calendar": "Termin zu meinem Kalender hinzufügen",
-  "Season not found.": "Spielzeit konnte nicht gefunden werden."
+  "Season not found.": "Spielzeit konnte nicht gefunden werden.",
+  "Sign In": "Anmelden"
 }
