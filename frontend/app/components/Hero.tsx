@@ -41,11 +41,11 @@ export const Hero: React.FC<Props> = ({ type, headline, image, children, classNa
             className="h-full w-full object-cover object-[center_33%]"
           />
           <div className="absolute inset-0 bg-black/20" />
-          <div className="absolute inset-0 flex h-full flex-col justify-between py-4">
+          <div className="absolute inset-0 flex h-full flex-col justify-between sm:py-4">
             <Gutter size="large" className="flex justify-end">
               <Navigation navigation={socialNavigation} className="translate-x-4" />
             </Gutter>
-            {type === 'overlay' && <Gutter>{children}</Gutter>}
+            {type === 'overlay' && <Gutter className="max-sm:pb-4">{children}</Gutter>}
           </div>
         </div>
       )}

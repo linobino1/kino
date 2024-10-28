@@ -31,36 +31,18 @@ import RichText from '~/components/RichText'
 import Button from '~/components/Button'
 import Gutter from '~/components/Gutter'
 import { lexicalToPlainText } from '~/components/RichText/lexicalToPlainText'
+import { cn } from '~/util/cn'
+import { env } from '~/env.server'
 
 export const headers: HeadersFunction = () => ({
   'Cache-Control': cacheControlShortWithSWR,
 })
 
-export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
-  const { t } = useTranslation()
-  const env = getEnvFromMatches(matches)
-
-  if (!data || !env) return []
-
-  const { event } = data
-
-  return generateMetadata({
-    title: t('event.meta.title', {
-      title: event.title,
-      date: formatInTimeZone(parseISO(event?.date || ''), env.TIMEZONE, 'PPp'),
-    }),
-    description:
-      event.type === 'event'
-        ? lexicalToPlainText(event.info)
-        : // description is more specific for screenings
-          t('screening.meta.description', {
-            date: formatInTimeZone(parseISO(event.date || ''), env.TIMEZONE, 'PPpp'),
-            synopsis: ((event.films?.[0]?.filmprint as FilmPrint).movie as MovieType).synopsis,
-          }),
-    image: event.header,
+export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
+  generateMetadata({
+    ...data?.meta,
     env: getEnvFromMatches(matches),
   })
-}
 
 export const loader = async ({
   params: { lang: locale, slug },
@@ -89,8 +71,36 @@ export const loader = async ({
 
   return {
     event,
+    meta: {
+      title: t('event.meta.title', {
+        title: event.title,
+        date: formatInTimeZone(parseISO(event?.date || ''), env.TIMEZONE, 'PPp'),
+      }),
+      description:
+        event.type === 'event'
+          ? lexicalToPlainText(event.info)
+          : // description is more specific for screenings
+            t('screening.meta.description', {
+              date: formatInTimeZone(parseISO(event.date || ''), env.TIMEZONE, 'PPpp'),
+              synopsis: ((event.films?.[0]?.filmprint as FilmPrint).movie as MovieType).synopsis,
+            }),
+      image: event.header,
+    },
   }
 }
+
+const Poster = ({ filmprint, className }: { filmprint: FilmPrint; className?: string }) => (
+  <Image
+    className={cn('float-left mb-2 mr-4 h-auto w-[min(15em,50%)] md:w-[260px]', className)}
+    image={(filmprint.movie as MovieType).poster as Media}
+    alt="movie poster"
+    srcSet={[
+      { options: { width: 260 }, size: '260w' },
+      { options: { width: 520 }, size: '520w' },
+    ]}
+    sizes="260px"
+  />
+)
 
 export default function EventPage() {
   const { t } = useTranslation()
@@ -131,34 +141,28 @@ export default function EventPage() {
           event.films?.map(({ filmprint, isSupportingFilm, info }, index) => (
             <div key={index} className="my-4">
               {index > 0 && <hr className="mb-8" />}
-              <Image
-                className="float-left mb-2 mr-4 h-auto w-[min(15em,50%)] md:w-[260px]"
-                image={((filmprint as FilmPrint).movie as MovieType).poster as Media}
-                alt={t('movie poster') as string}
-                srcSet={[
-                  { options: { width: 260 }, size: '260w' },
-                  { options: { width: 520 }, size: '520w' },
-                ]}
-                sizes="260px"
-              />
-              <h2 className="break-words text-3xl font-semibold uppercase">
-                {isSupportingFilm && (
-                  <span className="mr-2 text-nowrap text-sm">{`${t('Supporting Film')}: `}</span>
-                )}
-                {((filmprint as FilmPrint).movie as MovieType).title}
-              </h2>
-              <div className="text-sm text-neutral-200">
-                {movieSpecs({
-                  filmPrint: filmprint as FilmPrint,
-                  movie: (filmprint as FilmPrint).movie as MovieType,
-                  t,
-                }).map((item, index) => (
-                  <span key={index}>
-                    {index > 0 && <span className="whitespace-pre">{' | '}</span>}
-                    {item}
-                  </span>
-                ))}
+              <Poster filmprint={filmprint as FilmPrint} className="max-sm:hidden" />
+              <div className="mb-4">
+                <h2 className="break-words text-3xl font-semibold uppercase">
+                  {isSupportingFilm && (
+                    <span className="mr-2 text-nowrap text-sm max-sm:block">{`${t('Supporting Film')}: `}</span>
+                  )}
+                  {((filmprint as FilmPrint).movie as MovieType).title}
+                </h2>
+                <div className="text-sm text-neutral-200">
+                  {movieSpecs({
+                    filmPrint: filmprint as FilmPrint,
+                    movie: (filmprint as FilmPrint).movie as MovieType,
+                    t,
+                  }).map((item, index) => (
+                    <span key={index}>
+                      {index > 0 && <span className="whitespace-pre">{' | '}</span>}
+                      {item}
+                    </span>
+                  ))}
+                </div>
               </div>
+              <Poster filmprint={filmprint as FilmPrint} className="sm:hidden" />
               <p
                 className="my-4"
                 dangerouslySetInnerHTML={{
