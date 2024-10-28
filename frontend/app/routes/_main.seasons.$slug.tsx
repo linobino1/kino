@@ -72,7 +72,7 @@ export const loader = async ({
   }
 }
 
-export default function EventsPage() {
+export default function SeasonsDetailPage() {
   const { t } = useTranslation()
   const { season, events } = useLoaderData<typeof loader>()
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>('root')
