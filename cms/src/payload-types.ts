@@ -409,7 +409,6 @@ export interface ScreeningSery {
         | ImageBlockType
         | VideoBlockType
         | EventsBlockType
-        | RawHTMLBlockType
         | KronolithCalendarEmbedBlockType
       )[]
     | null;
@@ -493,16 +492,6 @@ export interface EventsBlockType {
   id?: string | null;
   blockName?: string | null;
   blockType: 'events';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "RawHTMLBlockType".
- */
-export interface RawHTMLBlockType {
-  html: string;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'rawHTML';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -593,7 +582,6 @@ export interface Page {
         | ImageBlockType
         | VideoBlockType
         | EventsBlockType
-        | RawHTMLBlockType
         | KronolithCalendarEmbedBlockType
       )[]
     | null;

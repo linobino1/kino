@@ -5,7 +5,6 @@ import { Gallery } from '@/blocks/Gallery'
 import { Video } from '@/blocks/Video'
 import { KronolithCalendarEmbed } from '@/blocks/KronolithCalendarEmbed'
 import { Events } from '@/blocks/Events'
-import RawHTML from '@/blocks/RawHTML'
 
 export type Props = {
   defaultLayout?: any
@@ -58,7 +57,7 @@ export const pageLayout: Field = {
           name: 'blocks',
           label: false,
           type: 'blocks',
-          blocks: [Content, Gallery, Image, Video, Events, RawHTML, KronolithCalendarEmbed],
+          blocks: [Content, Gallery, Image, Video, Events, KronolithCalendarEmbed],
           defaultValue: [
             {
               blockType: Content.slug,

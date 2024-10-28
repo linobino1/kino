@@ -6,7 +6,6 @@ import { Image } from '../Image'
 import { RichText } from '../RichText'
 import Gutter from '../Gutter'
 import { EventsBlock } from './EventsBlock'
-import RawHtmlBlock from './RawHtmlBlock'
 import KronolithCalendarEmbed from './KronolithCalendarEmbed'
 
 type Block = NonNullable<Page['blocks']>[number]
@@ -60,13 +59,6 @@ const RenderBlock: React.FC<BlockProps> = ({ block }) => {
       return (
         <Gutter>
           <EventsBlock {...block} />
-        </Gutter>
-      )
-
-    case 'rawHTML':
-      return (
-        <Gutter size="small">
-          <RawHtmlBlock {...block} />
         </Gutter>
       )
 
