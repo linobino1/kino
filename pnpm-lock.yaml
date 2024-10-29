@@ -8,6 +8,7 @@ overrides:
   '@types/react': npm:types-react@19.0.0-rc.1
   '@types/react-dom': npm:types-react-dom@19.0.0-rc.1
   '@payloadcms/db-mongodb': 3.0.0-beta.119
+  '@payloadcms/email-nodemailer': 3.0.0-beta.119
   '@payloadcms/next': 3.0.0-beta.119
   '@payloadcms/plugin-seo': 3.0.0-beta.119
   '@payloadcms/richtext-lexical': 3.0.0-beta.119
@@ -56,6 +57,9 @@ importers:
       '@payloadcms/db-mongodb':
         specifier: 3.0.0-beta.119
         version: 3.0.0-beta.119(@aws-sdk/client-sso-oidc@3.670.0(@aws-sdk/client-sts@3.670.0))(payload@3.0.0-beta.119(graphql@16.9.0)(monaco-editor@0.52.0)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)(typescript@5.6.3))
+      '@payloadcms/email-nodemailer':
+        specifier: 3.0.0-beta.119
+        version: 3.0.0-beta.119(payload@3.0.0-beta.119(graphql@16.9.0)(monaco-editor@0.52.0)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)(typescript@5.6.3))
       '@payloadcms/next':
         specifier: 3.0.0-beta.119
         version: 3.0.0-beta.119(graphql@16.9.0)(monaco-editor@0.52.0)(next@15.0.0(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)(sass@1.77.4))(payload@3.0.0-beta.119(graphql@16.9.0)(monaco-editor@0.52.0)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)(typescript@5.6.3))(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)(types-react@19.0.0-rc.1)(typescript@5.6.3)
@@ -101,6 +105,12 @@ importers:
       next:
         specifier: 15.0.0
         version: 15.0.0(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)(sass@1.77.4)
+      nodemailer:
+        specifier: ^6.9.16
+        version: 6.9.16
+      nodemailer-zeptomail-transport:
+        specifier: ^1.0.13
+        version: 1.0.13
       payload:
         specifier: 3.0.0-beta.119
         version: 3.0.0-beta.119(graphql@16.9.0)(monaco-editor@0.52.0)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)(typescript@5.6.3)
@@ -135,6 +145,9 @@ importers:
       '@types/node':
         specifier: ^22.5.4
         version: 22.7.5
+      '@types/nodemailer':
+        specifier: ^6.4.16
+        version: 6.4.16
       '@types/react':
         specifier: npm:types-react@19.0.0-rc.1
         version: types-react@19.0.0-rc.1
@@ -1951,6 +1964,12 @@ packages:
     peerDependencies:
       payload: 3.0.0-beta.119
 
+  '@payloadcms/email-nodemailer@3.0.0-beta.119':
+    resolution: {integrity: sha512-LdcxeXQZ97OGync+8p5blPAkwdRmUdYqNLHPC3yJqab9Epoj0qJ42Fip8v5mDI8UZ9iy+7iOxbnkqspcmob3Ew==}
+    engines: {node: ^18.20.2 || >=20.9.0}
+    peerDependencies:
+      payload: 3.0.0-beta.119
+
   '@payloadcms/graphql@3.0.0-beta.119':
     resolution: {integrity: sha512-6AKlMpBtyPj4DhNKncwYGAexnohtHddMbf0RKwpRypXKKYjBMrJMscmFkSxEF3fSz6ivMwujgr11TYP2zm7VIA==}
     hasBin: true
@@ -2771,6 +2790,9 @@ packages:
 
   '@types/node@22.7.5':
     resolution: {integrity: sha512-jML7s2NAzMWc//QSJ1a3prpk78cOPchGvXJsC3C6R6PSMoooztvRVQEz89gmBTBY1SPMaqo5teB4uNHPdetShQ==}
+
+  '@types/nodemailer@6.4.16':
+    resolution: {integrity: sha512-uz6hN6Pp0upXMcilM61CoKyjT7sskBoOWpptkjjJp8jIMlTdc3xG01U7proKkXzruMS4hS0zqtHNkNPFB20rKQ==}
 
   '@types/parse-json@4.0.2':
     resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
@@ -5053,6 +5075,17 @@ packages:
 
   node-releases@2.0.18:
     resolution: {integrity: sha512-d9VeXT4SJ7ZeOqGX6R5EM022wpL+eWPooLI+5UpWn2jCT1aosUQEhQP214x33Wkwx3JQMvIm+tIoVOdodFS40g==}
+
+  nodemailer-zeptomail-transport@1.0.13:
+    resolution: {integrity: sha512-bLnHcxqrVi0uWi3brWa9T2fZNr1TsT8TR20ch40LxnQ2JrCBdcNktNt9I+LbSP3u6mVoPuAW9WGVKX4uISmMKw==}
+
+  nodemailer@6.9.10:
+    resolution: {integrity: sha512-qtoKfGFhvIFW5kLfrkw2R6Nm6Ur4LNUMykyqu6n9BRKJuyQrqEGwdXXUAbwWEKt33dlWUGXb7rzmJP/p4+O+CA==}
+    engines: {node: '>=6.0.0'}
+
+  nodemailer@6.9.16:
+    resolution: {integrity: sha512-psAuZdTIRN08HKVd/E8ObdV6NO7NTBY3KsC30F7M4H1OnmLCUNaS56FpYxyb26zWLSyYF9Ozch9KYHhHegsiOQ==}
+    engines: {node: '>=6.0.0'}
 
   nopt@7.2.1:
     resolution: {integrity: sha512-taM24ViiimT/XntxbPyJQzCG+p4EKOpgD3mxFwW38mGjVUrfERQOeY4EDHjdnptttfHuHQXFx+lTP08Q+mLa/w==}
@@ -8933,6 +8966,11 @@ snapshots:
       - aws-crt
       - supports-color
 
+  '@payloadcms/email-nodemailer@3.0.0-beta.119(payload@3.0.0-beta.119(graphql@16.9.0)(monaco-editor@0.52.0)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)(typescript@5.6.3))':
+    dependencies:
+      nodemailer: 6.9.10
+      payload: 3.0.0-beta.119(graphql@16.9.0)(monaco-editor@0.52.0)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)(typescript@5.6.3)
+
   '@payloadcms/graphql@3.0.0-beta.119(graphql@16.9.0)(payload@3.0.0-beta.119(graphql@16.9.0)(monaco-editor@0.52.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.6.3))(typescript@5.6.3)':
     dependencies:
       graphql: 16.9.0
@@ -10182,6 +10220,10 @@ snapshots:
   '@types/node@22.7.5':
     dependencies:
       undici-types: 6.19.8
+
+  '@types/nodemailer@6.4.16':
+    dependencies:
+      '@types/node': 22.7.5
 
   '@types/parse-json@4.0.2': {}
 
@@ -12979,6 +13021,14 @@ snapshots:
       whatwg-url: 5.0.0
 
   node-releases@2.0.18: {}
+
+  nodemailer-zeptomail-transport@1.0.13:
+    dependencies:
+      nodemailer: 6.9.16
+
+  nodemailer@6.9.10: {}
+
+  nodemailer@6.9.16: {}
 
   nopt@7.2.1:
     dependencies:

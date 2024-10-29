@@ -39,6 +39,9 @@ import { search } from './views/tmdb-migrate/endpoints/search'
 import { preview } from './views/tmdb-migrate/endpoints/preview'
 import { migrate } from './views/tmdb-migrate/endpoints/migrate'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import { ZeptomailTransport } from 'nodemailer-zeptomail-transport'
+import { createTransport } from 'nodemailer'
 
 import * as dotenv from 'dotenv'
 
@@ -73,6 +76,21 @@ export default buildConfig({
       titleSuffix: ` - ${siteTitle}`,
     },
   },
+  // The email adapter is used to send password reset emails
+  ...(process.env.ZEPTOMAIL_API_KEY
+    ? {
+        email: nodemailerAdapter({
+          transport: createTransport(
+            new ZeptomailTransport({
+              apiKey: process.env.ZEPTOMAIL_API_KEY!,
+              region: 'eu',
+            }),
+          ),
+          defaultFromAddress: process.env.EMAIL_FROM_ADDRESS!,
+          defaultFromName: process.env.EMAIL_FROM_NAME!,
+        }),
+      }
+    : {}),
   endpoints: [search, preview, migrate],
   collections: [
     // Movie Database

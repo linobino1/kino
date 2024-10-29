@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "beta",
+    "@payloadcms/email-nodemailer": "beta",
     "@payloadcms/next": "beta",
     "@payloadcms/plugin-seo": "beta",
     "@payloadcms/richtext-lexical": "beta",
@@ -37,6 +38,8 @@
     "date-fns-tz": "^3.2.0",
     "escape-html": "^1.0.3",
     "next": "15.0.0",
+    "nodemailer": "^6.9.16",
+    "nodemailer-zeptomail-transport": "^1.0.13",
     "payload": "beta",
     "react": "19.0.0-rc-65a56d0e-20241020",
     "react-dom": "19.0.0-rc-65a56d0e-20241020",
@@ -50,6 +53,7 @@
   "devDependencies": {
     "@types/dotenv": "^8.2.3",
     "@types/node": "^22.5.4",
+    "@types/nodemailer": "^6.4.16",
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "@unocss/cli": "^0.63.4",
