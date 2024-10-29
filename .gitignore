@@ -25,4 +25,5 @@ cms/payload-types.ts
 /dist
 /public/build
 .env
-.env.server
+.env.*
+!.env.example
