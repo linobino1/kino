@@ -168,6 +168,11 @@ export function serializeLexical(props: Props): JSX.Element {
                 </blockquote>
               )
             }
+
+            case 'horizontalrule': {
+              return <hr key={index} className="not-prose" />
+            }
+
             case 'autolink':
             case 'link': {
               const { linkType, newTab, doc, url } = node.fields
