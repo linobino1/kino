@@ -4,7 +4,6 @@ import type {
   Location,
   Media,
   Movie as MovieType,
-  Rental,
   ScreeningSery,
   Season,
 } from '@/payload-types'
@@ -26,13 +25,13 @@ import { eventSchema } from '~/structured-data/screening'
 import { Date } from '~/components/Date'
 import Tag from '~/components/Tag'
 import Image from '~/components/Image'
-import { movieSpecs } from '~/util/movieSpecs'
 import RichText from '~/components/RichText'
-import Button from '~/components/Button'
 import Gutter from '~/components/Gutter'
 import { lexicalToPlainText } from '~/components/RichText/lexicalToPlainText'
 import { cn } from '~/util/cn'
 import { env } from '~/env.server'
+import { FilmPrintDetails } from '~/components/FilmPrintDetails'
+import React from 'react'
 
 export const headers: HeadersFunction = () => ({
   'Cache-Control': cacheControlShortWithSWR,
@@ -139,64 +138,15 @@ export default function EventPage() {
       <Gutter className="flex flex-col gap-4">
         {event.type === 'screening' &&
           event.films?.map(({ filmprint, isSupportingFilm, info }, index) => (
-            <div key={index} className="my-4">
-              {index > 0 && <hr className="mb-8" />}
-              <Poster filmprint={filmprint as FilmPrint} className="max-sm:hidden" />
-              <div className="mb-4">
-                <h2 className="break-words text-3xl font-semibold uppercase">
-                  {isSupportingFilm && (
-                    <span className="mr-2 text-nowrap text-sm max-sm:block">{`${t('Supporting Film')}: `}</span>
-                  )}
-                  {((filmprint as FilmPrint).movie as MovieType).title}
-                </h2>
-                <div className="text-sm text-neutral-200">
-                  {movieSpecs({
-                    filmPrint: filmprint as FilmPrint,
-                    movie: (filmprint as FilmPrint).movie as MovieType,
-                    t,
-                  }).map((item, index) => (
-                    <span key={index}>
-                      {index > 0 && <span className="whitespace-pre">{' | '}</span>}
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <Poster filmprint={filmprint as FilmPrint} className="sm:hidden" />
-              <p
+            <React.Fragment key={index}>
+              {index > 0 && <hr className="mb-4" />}
+              <FilmPrintDetails
+                filmPrint={filmprint as FilmPrint}
+                isSupportingFilm={!!isSupportingFilm}
+                additionalInfo={<RichText content={info} className="my-4" />}
                 className="my-4"
-                dangerouslySetInnerHTML={{
-                  __html: ((filmprint as FilmPrint).movie as MovieType).synopsis as string,
-                }}
               />
-              {info && <RichText content={info} className="my-4" />}
-              {((filmprint as FilmPrint).movie as MovieType).trailer && (
-                <Link
-                  className="contents"
-                  to={((filmprint as FilmPrint).movie as MovieType).trailer ?? ''}
-                  target="_blank"
-                >
-                  <Button className="my-4 uppercase">
-                    {t('Trailer')} <span className="i-material-symbols:play-arrow text-lg" />
-                  </Button>
-                </Link>
-              )}
-              {((filmprint as FilmPrint)?.rental as Rental) && (
-                <div className="inline-block max-sm:text-sm">
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: ((filmprint as FilmPrint)?.rental as Rental).credits as string,
-                    }}
-                  />
-                  {((filmprint as FilmPrint)?.rental as Rental)?.logo && (
-                    <Image
-                      className="my-2 h-12 w-auto"
-                      image={((filmprint as FilmPrint)?.rental as Rental)?.logo as Media}
-                    />
-                  )}
-                </div>
-              )}
-            </div>
+            </React.Fragment>
           ))}
         {event.type === 'event' && <div className="">non-screening event</div>}
       </Gutter>
