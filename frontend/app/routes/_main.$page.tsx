@@ -47,8 +47,9 @@ export const loader = async ({
 
   const page = res.docs[0]
 
+  console.log('URL:', url)
   if (!page) {
-    throw new Error(t('error.404', { url }))
+    throw new Response(t('error.404', { url }), { status: 404 })
   }
 
   return {

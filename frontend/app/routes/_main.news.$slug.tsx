@@ -52,7 +52,7 @@ export const loader = async ({
   const post = posts.docs[0]
 
   if (!post) {
-    throw new Error(t('error.404', { url }))
+    throw new Response(t('error.404', { url }), { status: 404 })
   }
 
   return {

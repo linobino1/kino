@@ -59,7 +59,7 @@ export const loader = async ({
   const page = pages.docs[0]
 
   if (!page) {
-    throw new Error(t('error.404', { url }))
+    throw new Response(t('error.404', { url }), { status: 404 })
   }
 
   // Redirect to the last page if the requested page is greater than the total number of page

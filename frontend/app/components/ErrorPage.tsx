@@ -25,9 +25,11 @@ export const ErrorPage: React.FC = () => {
       <Gutter className="text-center">
         <Hero type="headline" headline={t('Error')} />
         {isRouteErrorResponse(error) ? (
-          <p>
-            {error.status} {error.data}
-          </p>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: `${error.status} - ${error.data}`,
+            }}
+          />
         ) : error instanceof Error ? (
           <>
             <p dangerouslySetInnerHTML={{ __html: error.message }} />

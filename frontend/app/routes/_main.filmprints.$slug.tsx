@@ -50,7 +50,7 @@ export const loader = async ({
   const filmPrint = res.docs[0]
 
   if (!filmPrint) {
-    throw new Error(t('error.404', { url }))
+    throw new Response(t('error.404', { url }), { status: 404 })
   }
 
   return {
