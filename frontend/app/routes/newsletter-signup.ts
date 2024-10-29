@@ -3,11 +3,6 @@ import { env } from '~/env.server'
 import i18next from '~/i18next.server'
 
 const validateCaptcha = async (token: string): Promise<boolean> => {
-  // TODO
-  console.log('validateCaptcha', token)
-  console.log('TURNSTILE_SITE_KEY', env.TURNSTILE_SITE_KEY)
-  console.log('skip captcha validation')
-  return true
   try {
     const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
@@ -21,10 +16,8 @@ const validateCaptcha = async (token: string): Promise<boolean> => {
       }),
     })
     const data = await res.json()
-    console.log('validateCaptcha data', data)
     return !!data.success
   } catch (err) {
-    console.error('validateCaptcha error', err)
     return false
   }
 }
@@ -32,8 +25,6 @@ const validateCaptcha = async (token: string): Promise<boolean> => {
 export const action: ActionFunction = async ({ request }) => {
   const t = await i18next.getFixedT(request)
   const data = await request.formData()
-  console.log('formdata', data)
-  console.log('listmonk', env.LISTMONK_URL, env.LISTMONK_LIST_ID)
 
   // validate captcha
   if (!(await validateCaptcha(data.get('cf-turnstile-response') as string))) {
