@@ -25,6 +25,7 @@ import { FilmPrintCard } from '~/components/FilmPrintCard'
 import { Button } from '~/components/Button'
 import { Gutter } from '~/components/Gutter'
 import ErrorPage from '~/components/ErrorPage'
+import RenderBlocks from '~/components/Blocks/RenderBlocks'
 
 const limit = 20
 
@@ -51,6 +52,12 @@ export const loader = async ({
   const query = params.get('query') || ''
   const [payload, t] = await Promise.all([getPayload(), i18next.getFixedT(locale as string)])
 
+  // this route is used for both the filmprints page and the hfg-archive page, so we need to check which one it is
+  const isHfgArchivePage = url.includes('hfg-archive')
+  if (isHfgArchivePage) {
+    params.set('movie.isHfgProduction', 'true')
+  }
+
   // Get today's date at midnight
   const today = new Date()
   today.setHours(0, 0, 0, 0)
@@ -59,7 +66,7 @@ export const loader = async ({
     collection: 'pages',
     where: {
       slug: {
-        equals: 'filmprints',
+        equals: isHfgArchivePage ? 'hfg-archive' : 'filmprints',
       },
     },
     locale: locale as Locale,
@@ -99,6 +106,7 @@ export const loader = async ({
     query,
     filters: await filters.getApplied(),
     filmPrints,
+    isHfgArchivePage,
   }
 }
 
@@ -240,9 +248,7 @@ const getFilters = ({
 }
 
 export default function FilmprintsPage() {
-  const data = useLoaderData<typeof loader>()
-  const { page } = data
-  const { filmPrints, filters, query } = data
+  const { filmPrints, filters, query, page, isHfgArchivePage } = useLoaderData<typeof loader>()
   const { t } = useTranslation()
   const form = useRef<HTMLFormElement>(null)
   const navigate = useNavigate()
@@ -259,6 +265,7 @@ export default function FilmprintsPage() {
   return (
     <PageLayout type={page.layoutType}>
       <Hero {...page.hero} />
+      {page.blocks && <RenderBlocks blocks={page.blocks} />}
       <Form
         ref={form}
         method="GET"
@@ -279,21 +286,24 @@ export default function FilmprintsPage() {
             <span className="i-material-symbols:arrow-forward-ios-rounded" />
           </button>
         </div>
-        {filters.map((filter, index) => (
-          <select
-            key={index}
-            name={filter.name}
-            onChange={() => form.current?.submit()}
-            value={filter.value || ''}
-            className="border-1 rounded-full border-r-8 bg-neutral-100 px-2 py-1 text-xs text-black"
-          >
-            {filter.options.map((option, j) => (
-              <option key={j} value={option.value}>{`${t(
-                option.label || '',
-              )} (${option.count})`}</option>
-            ))}
-          </select>
-        ))}
+        {filters
+          // on the hfg-archive page, we hide the isHfgProduction filter
+          .filter((item) => (isHfgArchivePage ? item.name !== 'movie.isHfgProduction' : true))
+          .map((filter, index) => (
+            <select
+              key={index}
+              name={filter.name}
+              onChange={() => form.current?.submit()}
+              value={filter.value || ''}
+              className="border-1 rounded-full border-r-8 bg-neutral-100 px-2 py-1 text-xs text-black"
+            >
+              {filter.options.map((option, j) => (
+                <option key={j} value={option.value}>{`${t(
+                  option.label || '',
+                )} (${option.count})`}</option>
+              ))}
+            </select>
+          ))}
         <Button
           size="sm"
           type="button"

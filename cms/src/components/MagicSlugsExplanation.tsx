@@ -10,10 +10,13 @@ const MagicSlugsExplanation: React.FC<any> = () => {
           <i>home</i> - Startseite, zeigt die nächsten Vorstellungen und die neuesten Blog-Posts
         </li>
         <li>
+          <i>seasons</i> - Archiv aller Spielzeiten
+        </li>
+        <li>
           <i>filmprints</i> - Archiv aller Filmkopien
         </li>
         <li>
-          <i>seasons</i> - Archiv aller Spielzeiten
+          <i>hfg-archive</i> - Archiv aller HfG-Produktionen
         </li>
       </ul>
     </Gutter>
