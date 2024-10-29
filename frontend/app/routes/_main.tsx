@@ -14,7 +14,7 @@ export const headers = {
   'Cache-Control': cacheControlShortWithSWR,
 }
 
-export const ErrorBoundary = ErrorPage
+// export const ErrorBoundary = ErrorPage
 
 export const loader = async ({ params: { lang: locale } }: LoaderFunctionArgs) => {
   const payload = await getPayload()

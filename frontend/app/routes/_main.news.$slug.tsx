@@ -16,6 +16,9 @@ import { Media } from '@/payload-types'
 import RichText from '~/components/RichText'
 import { RenderBlocks } from '~/components/Blocks/RenderBlocks'
 import { lexicalToPlainText } from '~/components/RichText/lexicalToPlainText'
+import ErrorPage from '~/components/ErrorPage'
+
+export const ErrorBoundary = ErrorPage
 
 export const headers: HeadersFunction = () => ({
   'Cache-Control': cacheControlShortWithSWR,

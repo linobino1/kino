@@ -12,6 +12,9 @@ import Gutter from '~/components/Gutter'
 import Image from '~/components/Image'
 import { Media } from '@/payload-types'
 import Pagination from '~/components/Pagination'
+import ErrorPage from '~/components/ErrorPage'
+
+export const ErrorBoundary = ErrorPage
 
 export const headers: HeadersFunction = () => ({
   'Cache-Control': cacheControlShortWithSWR,

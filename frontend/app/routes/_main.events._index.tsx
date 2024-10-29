@@ -11,6 +11,9 @@ import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import EventsList from '~/components/EventsList'
 import Gutter from '~/components/Gutter'
+import ErrorPage from '~/components/ErrorPage'
+
+export const ErrorBoundary = ErrorPage
 
 export const headers: HeadersFunction = () => ({
   'Cache-Control': cacheControlShortWithSWR,

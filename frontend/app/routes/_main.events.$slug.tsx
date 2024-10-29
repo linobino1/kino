@@ -32,6 +32,9 @@ import { cn } from '~/util/cn'
 import { env } from '~/env.server'
 import { FilmPrintDetails } from '~/components/FilmPrintDetails'
 import React from 'react'
+import ErrorPage from '~/components/ErrorPage'
+
+export const ErrorBoundary = ErrorPage
 
 export const headers: HeadersFunction = () => ({
   'Cache-Control': cacheControlShortWithSWR,

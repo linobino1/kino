@@ -11,6 +11,9 @@ import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { Gutter } from '~/components/Gutter'
 import { Media, Movie as MovieType } from '@/payload-types'
 import { FilmPrintDetails } from '~/components/FilmPrintDetails'
+import ErrorPage from '~/components/ErrorPage'
+
+export const ErrorBoundary = ErrorPage
 
 export const headers: HeadersFunction = () => ({
   'Cache-Control': cacheControlShortWithSWR,

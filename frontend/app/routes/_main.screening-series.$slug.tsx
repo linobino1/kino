@@ -14,6 +14,9 @@ import Pagination from '~/components/Pagination'
 import EventsList from '~/components/EventsList'
 import { useTranslation } from 'react-i18next'
 import { RenderBlocks } from '~/components/Blocks/RenderBlocks'
+import ErrorPage from '~/components/ErrorPage'
+
+export const ErrorBoundary = ErrorPage
 
 export const headers: HeadersFunction = () => ({
   'Cache-Control': cacheControlShortWithSWR,

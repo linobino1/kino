@@ -24,8 +24,11 @@ import { Filters } from '~/util/filter'
 import { FilmPrintCard } from '~/components/FilmPrintCard'
 import { Button } from '~/components/Button'
 import { Gutter } from '~/components/Gutter'
+import ErrorPage from '~/components/ErrorPage'
 
 const limit = 20
+
+export const ErrorBoundary = ErrorPage
 
 export const headers: HeadersFunction = () => ({
   'Cache-Control': cacheControlShortWithSWR,

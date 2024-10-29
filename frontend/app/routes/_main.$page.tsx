@@ -9,6 +9,9 @@ import { Hero } from '~/components/Hero'
 import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { RenderBlocks } from '~/components/Blocks/RenderBlocks'
+import ErrorPage from '~/components/ErrorPage'
+
+export const ErrorBoundary = ErrorPage
 
 export const headers: HeadersFunction = () => ({
   'Cache-Control': cacheControlShortWithSWR,
