@@ -99,6 +99,7 @@ export function SerializeLexicalToEmail({ nodes, color }: Props): React.ReactNod
             return <br key={index} />
           }
           case 'paragraph': {
+            if (!node.children || node.children.length === 0) return null
             return (
               <Gutter key={index}>
                 <Text key={index} style={{ textAlign, fontSize }}>
