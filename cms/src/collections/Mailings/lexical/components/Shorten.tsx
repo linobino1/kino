@@ -19,7 +19,7 @@ const Shorten: React.FC<ShortenProps> = ({
 
   return (
     <>
-      {text.slice(0, length - 20)}
+      {text.slice(0, length - 20).trim()}
       {'... '}
       {moreLink ? <Link href={moreLink}>{moreLabel}</Link> : null}
     </>

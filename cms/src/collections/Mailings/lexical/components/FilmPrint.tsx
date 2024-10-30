@@ -73,7 +73,7 @@ const FilmPrint: React.FC<MovieProps> = ({ filmPrint, color, additionalText }) =
             <Text style={{ marginBlock: 0, fontSize, fontStyle: 'italic' }}>{subtitle}</Text>
           )}
           <Text style={{ fontSize }}>
-            <Shorten text={movie?.synopsis} />
+            <Shorten text={movie?.synopsis} moreLink={filmPrint.url} />
           </Text>
           {additionalText && (
             <SerializeLexicalToEmail nodes={additionalText.root.children as any} color={color} />
