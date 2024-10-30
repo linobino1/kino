@@ -1,4 +1,4 @@
-import { type LoaderFunctionArgs, HeadersFunction } from '@remix-run/node'
+import { type LoaderFunctionArgs, HeadersFunction } from '@remix-run/cloudflare'
 import type {
   FilmPrint,
   Location,

@@ -1,4 +1,4 @@
-import type { LoaderFunctionArgs } from '@remix-run/node'
+import type { LoaderFunctionArgs } from '@remix-run/cloudflare'
 import { Outlet, useLoaderData, useRouteLoaderData } from '@remix-run/react'
 import Footer from '~/components/Footer'
 import Header from '~/components/Header'

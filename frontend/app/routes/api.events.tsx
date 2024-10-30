@@ -1,4 +1,4 @@
-import { ActionFunctionArgs } from '@remix-run/node'
+import { ActionFunctionArgs } from '@remix-run/cloudflare'
 import { Where } from 'payload'
 import { Locale } from 'shared/config'
 import { getPayload } from '~/util/getPayload.server'

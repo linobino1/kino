@@ -1,5 +1,5 @@
-import type { ActionFunctionArgs } from '@remix-run/node'
-import { json } from '@remix-run/node'
+import type { ActionFunctionArgs } from '@remix-run/cloudflare'
+import { json } from '@remix-run/cloudflare'
 import { Form, useActionData } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
 import { classes } from '~/classes'

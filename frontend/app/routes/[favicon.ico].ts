@@ -1,5 +1,5 @@
 import { Media } from '@/payload-types'
-import { LoaderFunction, redirect } from '@remix-run/node'
+import { LoaderFunction, redirect } from '@remix-run/cloudflare'
 import { getPayload } from '~/util/getPayload.server'
 
 export const loader: LoaderFunction = async () => {

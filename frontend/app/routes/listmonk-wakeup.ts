@@ -1,5 +1,5 @@
-import type { ActionFunction } from '@remix-run/node'
-import { json } from '@remix-run/node'
+import type { ActionFunction } from '@remix-run/cloudflare'
+import { json } from '@remix-run/cloudflare'
 import { env } from '~/env.server'
 
 export const action: ActionFunction = async () => {

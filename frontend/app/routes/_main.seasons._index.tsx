@@ -1,4 +1,4 @@
-import { type LoaderFunctionArgs, HeadersFunction, redirect } from '@remix-run/node'
+import { type LoaderFunctionArgs, HeadersFunction, redirect } from '@remix-run/cloudflare'
 import { MetaFunction, useLoaderData } from '@remix-run/react'
 import { cacheControlShortWithSWR } from '~/util/cache-control/cacheControlShortWithSWR'
 import { Locale } from 'shared/config'

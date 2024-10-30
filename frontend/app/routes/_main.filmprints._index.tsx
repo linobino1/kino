@@ -1,4 +1,4 @@
-import { type LoaderFunctionArgs, HeadersFunction, redirect } from '@remix-run/node'
+import { type LoaderFunctionArgs, HeadersFunction, redirect } from '@remix-run/cloudflare'
 import {
   Form,
   Link,

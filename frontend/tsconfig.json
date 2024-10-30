@@ -1,7 +1,7 @@
 {
   "extends": "../tsconfig.base.json"
   // "compilerOptions": {
-  //   "types": ["@remix-run/node", "vite/client"],
+  //   "types": ["@remix-run/cloudflare", "vite/client"],
   //   "typeRoots": ["./app/env.d.ts"]
   // }
 }

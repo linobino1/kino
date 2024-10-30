@@ -1,4 +1,4 @@
-import { type LoaderFunctionArgs, HeadersFunction } from '@remix-run/node'
+import { type LoaderFunctionArgs, HeadersFunction } from '@remix-run/cloudflare'
 import { type loader as rootLoader } from '~/root'
 import { MetaFunction, useLoaderData, useRouteLoaderData } from '@remix-run/react'
 import { cacheControlShortWithSWR } from '~/util/cache-control/cacheControlShortWithSWR'

@@ -1,4 +1,4 @@
-import { type ActionFunctionArgs, type ActionFunction, replace } from '@remix-run/node'
+import { type ActionFunctionArgs, type ActionFunction, replace } from '@remix-run/cloudflare'
 import { Form, useActionData, useNavigate, useRouteLoaderData } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
 import { classes } from '~/classes'

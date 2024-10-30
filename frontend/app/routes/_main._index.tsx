@@ -3,7 +3,7 @@ import {
   type LoaderFunctionArgs,
   type MetaFunction,
   HeadersFunction,
-} from '@remix-run/node'
+} from '@remix-run/cloudflare'
 import { useLoaderData, useRouteLoaderData } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
 import Pagination from '~/components/Pagination'

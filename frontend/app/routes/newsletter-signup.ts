@@ -1,4 +1,4 @@
-import { json, type ActionFunction } from '@remix-run/node'
+import { json, type ActionFunction } from '@remix-run/cloudflare'
 import { env } from '~/env.server'
 import i18next from '~/i18next.server'
 

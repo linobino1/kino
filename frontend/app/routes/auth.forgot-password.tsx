@@ -1,6 +1,6 @@
 import { Form, useActionData } from '@remix-run/react'
-import type { ActionFunctionArgs } from '@remix-run/node'
-import { json } from '@remix-run/node'
+import type { ActionFunctionArgs } from '@remix-run/cloudflare'
+import { json } from '@remix-run/cloudflare'
 import { useTranslation } from 'react-i18next'
 import i18next from '~/i18next.server'
 import { getPayload } from '~/util/getPayload.server'
