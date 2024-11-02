@@ -1,0 +1,11 @@
+.DS_Store
+
+.env*
+*/.env*
+
+node_modules
+*/node_modules
+
+cms/.next
+
+cms/media
