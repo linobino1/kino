@@ -14,6 +14,7 @@ import { SerializeLexicalToEmail } from '../SerializeLexicalToEmail'
 import { bgGrey, containerWidth, formatDate, fontSize } from '../../templates/Newsletter'
 import Shorten from './Shorten'
 import { serializeLexicalToPlainText } from '../serializeLexicalToPlainText'
+import { getFrontendUrl } from '@/util/getFrontendUrl'
 
 type EventProps = {
   event: EventType
@@ -54,6 +55,8 @@ const Event: React.FC<EventProps> = ({ event, color, additionalText }) => {
     }
   }
 
+  const url = getFrontendUrl(event.url)
+
   return (
     <Section style={{ backgroundColor: bgGrey, paddingBlock: '20px' }}>
       <Container
@@ -63,7 +66,7 @@ const Event: React.FC<EventProps> = ({ event, color, additionalText }) => {
           maxWidth: containerWidth,
         }}
       >
-        <Link href={event.url} style={{ display: 'contents' }}>
+        <Link href={url} style={{ display: 'contents' }}>
           <Img
             src={(event.header as Media).url ?? ''}
             style={{
@@ -104,7 +107,7 @@ const Event: React.FC<EventProps> = ({ event, color, additionalText }) => {
             <Text style={{ marginBlock: 0, fontSize, fontStyle: 'italic' }}>{subtitle}</Text>
           )}
           <Text style={{ fontSize }}>
-            <Shorten text={description ?? ''} moreLink={event.url} />
+            <Shorten text={description ?? ''} moreLink={url} />
           </Text>
           {additionalText && (
             <SerializeLexicalToEmail nodes={additionalText.root.children as any} color={color} />

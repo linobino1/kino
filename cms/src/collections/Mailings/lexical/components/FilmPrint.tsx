@@ -12,6 +12,7 @@ import type {
 import { SerializeLexicalToEmail } from '../SerializeLexicalToEmail'
 import { bgGrey, containerWidth, fontSize } from '../../templates/Newsletter'
 import Shorten from './Shorten'
+import { getFrontendUrl } from '@/util/getFrontendUrl'
 
 type MovieProps = {
   filmPrint: FilmPrintType
@@ -40,6 +41,8 @@ const FilmPrint: React.FC<MovieProps> = ({ filmPrint, color, additionalText }) =
   ]
     .filter(Boolean)
     .join(', ')
+
+  const url = getFrontendUrl(filmPrint.url)
 
   return (
     <Section style={{ backgroundColor: bgGrey, paddingBlock: '20px' }}>
@@ -73,7 +76,7 @@ const FilmPrint: React.FC<MovieProps> = ({ filmPrint, color, additionalText }) =
             <Text style={{ marginBlock: 0, fontSize, fontStyle: 'italic' }}>{subtitle}</Text>
           )}
           <Text style={{ fontSize }}>
-            <Shorten text={movie?.synopsis} moreLink={filmPrint.url} />
+            <Shorten text={movie?.synopsis} moreLink={url} />
           </Text>
           {additionalText && (
             <SerializeLexicalToEmail nodes={additionalText.root.children as any} color={color} />

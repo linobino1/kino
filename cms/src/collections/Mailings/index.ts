@@ -3,7 +3,6 @@ import { BlocksFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import { isAdminOrEditor } from '@/access'
 // import { colorPickerField } from '@innovixx/payload-color-picker-field'
 import { generateHTML } from './hooks/generateHTML'
-import { MovieBlock } from './lexical/blocks/MovieBlock'
 import { EventBlock } from './lexical/blocks/EventBlock'
 import { FilmPrintBlock } from './lexical/blocks/FilmPrintBlock'
 
@@ -89,7 +88,7 @@ export const Mailings: CollectionConfig = {
         features: ({ defaultFeatures }) => [
           ...defaultFeatures,
           BlocksFeature({
-            blocks: [EventBlock, FilmPrintBlock, MovieBlock],
+            blocks: [EventBlock, FilmPrintBlock],
           }),
         ],
       }),

@@ -83,21 +83,6 @@ const traverseNodes = async ({
                 ).docs[0],
               },
             }
-          case 'movieBlock':
-            return {
-              ...node,
-              fields: {
-                ...node.fields,
-                movie: (
-                  await payload.find({
-                    collection: 'movies',
-                    where: { id: { equals: node.fields.movie } },
-                    depth: 3,
-                    locale,
-                  })
-                ).docs[0],
-              },
-            }
 
           default:
             return node

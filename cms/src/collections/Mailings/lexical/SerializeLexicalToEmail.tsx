@@ -14,7 +14,6 @@ import { Heading, Text, Link, Hr } from '@react-email/components'
 import Event from './components/Event'
 import Gutter from './components/Gutter'
 import FilmPrint from './components/FilmPrint'
-import Movie from './components/Movie'
 
 interface Props {
   nodes: SerializedLexicalNode[]
@@ -218,15 +217,6 @@ export function SerializeLexicalToEmail({ nodes, color }: Props): React.ReactNod
                   <FilmPrint
                     key={index}
                     filmPrint={node.fields.filmPrint}
-                    additionalText={node.fields.additionalText}
-                    color={color}
-                  />
-                )
-              case 'movieBlock':
-                return (
-                  <Movie
-                    key={index}
-                    movie={node.fields.movie}
                     additionalText={node.fields.additionalText}
                     color={color}
                   />
