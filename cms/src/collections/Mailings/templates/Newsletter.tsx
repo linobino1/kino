@@ -70,10 +70,10 @@ export default function Newsletter({ mailing }: Props) {
           fontStyle="bold"
         />
       </Head>
-      <Body style={{ padding: 0, margin: 0 }}>
+      <Body style={{ padding: 0, margin: 0, position: 'relative' }}>
         <Container
           style={{
-            position: 'fixed',
+            position: 'absolute',
             top: 0,
             left: 0,
             right: 0,
