@@ -2,7 +2,6 @@ import { type LoaderFunctionArgs, HeadersFunction } from '@remix-run/node'
 import type {
   FilmPrint,
   Location,
-  Media,
   Movie as MovieType,
   ScreeningSery,
   Season,
@@ -17,18 +16,15 @@ import { PageLayout } from '~/components/PageLayout'
 import { Hero } from '~/components/Hero'
 import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
-import { useTranslation } from 'react-i18next'
 import { formatInTimeZone } from 'date-fns-tz'
 import { parseISO } from 'date-fns'
 import { JsonLd } from '~/structured-data'
 import { eventSchema } from '~/structured-data/screening'
 import { Date } from '~/components/Date'
 import Tag from '~/components/Tag'
-import Image from '~/components/Image'
 import RichText from '~/components/RichText'
 import Gutter from '~/components/Gutter'
 import { lexicalToPlainText } from '~/components/RichText/lexicalToPlainText'
-import { cn } from '~/util/cn'
 import { env } from '~/env.server'
 import { FilmPrintDetails } from '~/components/FilmPrintDetails'
 import React from 'react'
@@ -91,21 +87,7 @@ export const loader = async ({
   }
 }
 
-const Poster = ({ filmprint, className }: { filmprint: FilmPrint; className?: string }) => (
-  <Image
-    className={cn('float-left mb-2 mr-4 h-auto w-[min(15em,50%)] md:w-[260px]', className)}
-    image={(filmprint.movie as MovieType).poster as Media}
-    alt="movie poster"
-    srcSet={[
-      { options: { width: 260 }, size: '260w' },
-      { options: { width: 520 }, size: '520w' },
-    ]}
-    sizes="260px"
-  />
-)
-
 export default function EventPage() {
-  const { t } = useTranslation()
   const { event } = useLoaderData<typeof loader>()
   const site = useRouteLoaderData<typeof rootLoader>('root')?.site
   return (
