@@ -1,4 +1,4 @@
-import { NodeTypes } from './types'
+import type { SerializedLexicalNode } from './types'
 
 export function lexicalToPlainText(json: any): string {
   if (!Array.isArray(json?.root?.children)) {
@@ -8,15 +8,20 @@ export function lexicalToPlainText(json: any): string {
   return serializeToPlainText(json?.root?.children)
 }
 
-function serializeToPlainText(nodes: NodeTypes[]): string {
+function serializeToPlainText(nodes: SerializedLexicalNode[]): string {
+  if (!Array.isArray(nodes)) return ''
   return nodes
-    .map((n): string => {
+    .map((n) => {
       if (n.type === 'text') {
         return n.text
       }
 
       if (n.type === 'block') {
         return ''
+      }
+
+      if (Array.isArray(n.children)) {
+        return serializeToPlainText(n.children)
       }
 
       return ''
