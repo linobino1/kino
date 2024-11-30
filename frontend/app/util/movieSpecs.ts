@@ -31,7 +31,7 @@ export const movieSpecs = ({
     (filmPrint?.format as Format)?.name,
     // movie.ageRating ? t('ageRating {age}', { age: movie.ageRating}) : "",
     filmPrint && (filmPrint.languageVersion as LanguageVersion)?.name,
-    movie.cast
+    movie.cast?.length
       ? t('starring {actors}', {
           actors: (movie.cast as Person[])
             ?.slice(0, 3)
