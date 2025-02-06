@@ -34,6 +34,7 @@ const Slider: React.FC<Props> = ({
     slidesToScroll: 1,
     dots: false,
     arrows: false,
+    swipeToSlide: true,
     responsive: [
       {
         breakpoint: 1024,
