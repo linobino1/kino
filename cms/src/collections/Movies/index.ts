@@ -39,11 +39,7 @@ export const Movies: CollectionConfig = {
     defaultColumns: ['internationalTitle', 'directors', 'year', '_status'],
     useAsTitle: 'internationalTitle',
     components: {
-      // TODO
-      // BeforeListTable: [
-      // add a button to migrate a movie from TMDB
-      // () => MigrateMovieButton({}),
-      // ],
+      beforeListTable: ['@/components/MigrateMovieLink'],
     },
   },
   access: {

@@ -1,11 +1,15 @@
 import { Button } from '@payloadcms/ui'
+import { BasePayload } from 'payload'
 
-// how to type a custom server component?
-const MigrateMovieLink: React.FC<any> = ({ payload: { config } }) => {
+type Props = {
+  payload: BasePayload
+}
+
+const MigrateMovieLink: React.FC<Props> = ({ payload: { config } }) => {
   return (
     <div>
       <a href={`${config.routes.admin}/tmdb-migrate`}>
-        <Button>Neuen Film anlegen</Button>
+        <Button>Film aus TMDB migrieren</Button>
       </a>
     </div>
   )
