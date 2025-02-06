@@ -18,7 +18,8 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "typecheck": "tsc",
     "migrate:v2": "cross-env tsx src/scripts/migrationV2/index.ts",
-    "migrate:slate": "cross-env tsx src/scripts/migrationV2/slateToLexical.ts"
+    "migrate:slate": "cross-env tsx src/scripts/migrationV2/slateToLexical.ts",
+    "seed": "tsx ./src/seed/run.ts"
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "beta",
@@ -36,7 +37,9 @@
     "cross-env": "^7.0.3",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
+    "deepmerge": "^4.3.1",
     "escape-html": "^1.0.3",
+    "glob": "^11.0.0",
     "next": "15.0.0",
     "nodemailer": "^6.9.16",
     "nodemailer-zeptomail-transport": "^1.0.13",

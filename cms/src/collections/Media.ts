@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+export const staticDir = path.resolve(dirname, '../../../media')
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -24,7 +25,7 @@ export const Media: CollectionConfig = {
     read: (): boolean => true, // Everyone can read Media
   },
   upload: {
-    staticDir: path.resolve(dirname, '../../../media'),
+    staticDir,
     mimeTypes: ['image/*', 'application/pdf'],
   },
   fields: [

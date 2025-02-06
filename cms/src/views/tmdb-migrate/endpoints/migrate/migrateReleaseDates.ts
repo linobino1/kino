@@ -1,6 +1,6 @@
 import type { Movie } from '@/payload-types'
 import type { MigrationFunction } from './types'
-import { tmdbFetch } from '../../api/tmdbFetch'
+import { tmdbFetch } from '@/third-party/tmdb/tmdbFetch'
 import { ageRatingAges } from '@/collections/Movies'
 
 export const migrateReleaseDates: MigrationFunction = async ({ payload, movie }) => {

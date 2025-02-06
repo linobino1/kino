@@ -1,7 +1,7 @@
 import { Endpoint } from 'payload'
-import { defaultLanguage } from '../api'
+import { defaultLanguage } from '@/third-party/tmdb'
 import { isAdminOrEditor } from '@/access'
-import { tmdbFetch } from '../api/tmdbFetch'
+import { tmdbFetch } from '@/third-party/tmdb/tmdbFetch'
 
 export const preview: Endpoint = {
   path: `/tmdb-migrate/preview/:tmdbId`,

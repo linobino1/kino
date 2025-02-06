@@ -1,5 +1,5 @@
 import { Endpoint } from 'payload'
-import { themoviedb } from '../api'
+import { tmdbAxiosClient } from '@/third-party/tmdb'
 import { isAdminOrEditor } from '@/access'
 
 export const search: Endpoint = {
@@ -13,7 +13,7 @@ export const search: Endpoint = {
     let data: any
 
     try {
-      const res = await themoviedb.get('/search/movie', {
+      const res = await tmdbAxiosClient.get('/search/movie', {
         params: {
           query: req?.routeParams?.query,
         },

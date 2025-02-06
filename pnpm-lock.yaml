@@ -102,9 +102,15 @@ importers:
       date-fns-tz:
         specifier: ^3.2.0
         version: 3.2.0(date-fns@4.1.0)
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
       escape-html:
         specifier: ^1.0.3
         version: 1.0.3
+      glob:
+        specifier: ^11.0.0
+        version: 11.0.0
       next:
         specifier: 15.0.0
         version: 15.0.0(@babel/core@7.24.5)(@opentelemetry/api@1.9.0)(react-dom@19.0.0-rc-65a56d0e-20241020(react@19.0.0-rc-65a56d0e-20241020))(react@19.0.0-rc-65a56d0e-20241020)(sass@1.77.4)

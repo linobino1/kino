@@ -1,9 +1,9 @@
 import type { Payload } from 'payload'
 import type { Job, Person } from '@/payload-types'
 import type { MigrationFunction } from './types'
-import { tmdbFetch } from '../../api/tmdbFetch'
-import { tmdbPerson } from '../../api/types'
-import { defaultLanguage } from '../../api'
+import { tmdbFetch } from '@/third-party/tmdb/tmdbFetch'
+import { tmdbPerson } from '@/third-party/tmdb/types'
+import { defaultLanguage } from '@/third-party/tmdb'
 import { locales } from 'shared/config'
 
 export const migrateCredits: MigrationFunction = async ({ payload, movie, warnings }) => {

@@ -1,4 +1,4 @@
-import { themoviedb } from '.'
+import { tmdbAxiosClient } from '.'
 import type {
   tmdbCredits,
   tmdbMovie,
@@ -61,7 +61,7 @@ export async function tmdbFetch(
   let data: any
   const path = endpoints[endpoint](tmdbId)
   try {
-    const res = await themoviedb.get(path, {
+    const res = await tmdbAxiosClient.get(path, {
       params: {
         language,
       },
@@ -71,7 +71,9 @@ export async function tmdbFetch(
     throw new Error('Unable to get themoviedb response for movie')
   }
   if (!data || data.success === false) {
-    throw new Error(`No data found for movie '${tmdbId}' at endpoint '${path}'`)
+    throw new Error(
+      `No data found for movie '${tmdbId}' at endpoint '${tmdbAxiosClient.defaults.baseURL}${path}'`,
+    )
   }
   return data
 }

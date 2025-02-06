@@ -44,6 +44,7 @@ import { ZeptomailTransport } from 'nodemailer-zeptomail-transport'
 import { createTransport } from 'nodemailer'
 
 import * as dotenv from 'dotenv'
+import { tmdbAxiosClient } from './third-party/tmdb'
 
 dotenv.config() // required when using node scripts outside of NextJS
 
@@ -51,6 +52,10 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  onInit() {
+    // set themoviedb.org API key from environment variable
+    tmdbAxiosClient.defaults.params.api_key = process.env.THEMOVIEDB_API_KEY
+  },
   cors: {
     origins: [process.env.FRONTEND_URL ?? 'http://localhost:5173'],
   },

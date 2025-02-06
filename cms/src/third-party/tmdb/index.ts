@@ -8,7 +8,7 @@ export const tmdbMediaUrl = 'https://image.tmdb.org'
  */
 export const defaultLanguage = 'en'
 
-export const themoviedb = new Axios({
+export const tmdbAxiosClient = new Axios({
   baseURL: 'https://api.themoviedb.org/3',
   params: {
     api_key: process.env.THEMOVIEDB_API_KEY,

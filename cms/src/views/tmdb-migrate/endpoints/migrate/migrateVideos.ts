@@ -1,4 +1,4 @@
-import { tmdbFetch } from '../../api/tmdbFetch'
+import { tmdbFetch } from '@/third-party/tmdb/tmdbFetch'
 import type { MigrationFunction } from './types'
 
 export const migrateVideos: MigrationFunction = async ({ payload, movie }) => {

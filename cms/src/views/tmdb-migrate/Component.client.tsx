@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import type { Movie } from '@/payload-types'
 import { Button, useLocale } from '@payloadcms/ui'
-import { tmdbImages, tmdbMovie } from './api/types'
+import type { tmdbImages, tmdbMovie } from '@/third-party/tmdb/types'
 
 export const MigrateMovieComponent: React.FC = () => {
   const locale = useLocale()

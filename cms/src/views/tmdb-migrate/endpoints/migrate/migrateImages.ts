@@ -5,7 +5,7 @@ import https from 'https'
 import path from 'path'
 import os from 'os'
 import fs from 'fs'
-import { tmdbMediaUrl } from '../../api'
+import { tmdbMediaUrl } from '@/third-party/tmdb'
 
 interface ImagesMigrationFunction {
   (
