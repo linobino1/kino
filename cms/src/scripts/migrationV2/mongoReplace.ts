@@ -6,7 +6,7 @@ export const mongoReplace = async (
   replacement: string,
 ) => {
   console.log(`Replacing ${needle} with ${replacement}...`)
-  const { db } = database.connection
+  const  db  = database.connection.db!
 
   const collections = (await db.listCollections().toArray()).map((collection) => collection.name)
 

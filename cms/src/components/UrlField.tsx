@@ -4,12 +4,12 @@ import { TextFieldClientComponent } from 'payload'
 import { FieldLabel, useField } from '@payloadcms/ui'
 import { env } from '@/util/env'
 
-const UrlField: TextFieldClientComponent = ({ field }) => {
-  const { value: relativeUrl } = useField({})
+const UrlField: TextFieldClientComponent = ({  path }) => {
+  const { value: relativeUrl } = useField({path})
   const absoluteUrl = `${env.FRONTEND_URL}${relativeUrl}`
   return typeof relativeUrl === 'string' ? (
     <>
-      <FieldLabel field={field} />
+      <FieldLabel path={path} />
       <a href={absoluteUrl} target="_blank" rel="noreferrer" className="mb-2 inline-block">
         {relativeUrl}
       </a>

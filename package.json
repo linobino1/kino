@@ -9,6 +9,7 @@
     "typecheck": "tsc --noEmit",
     "lint:fix": "eslint --fix .",
     "generate:types": "pnpm --filter cms generate:types",
+    "generate:importmap": "pnpm --filter cms generate:importmap",
     "seed": "pnpm --filter cms seed"
   },
   "devDependencies": {
@@ -23,25 +24,6 @@
     "prettier-plugin-tailwindcss": "^0.6.8",
     "typescript": "^5.6.3",
     "typescript-eslint": "^8.11.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "@types/react": "npm:types-react@19.0.0-rc.1",
-      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
-      "@payloadcms/db-mongodb": "3.0.0-beta.119",
-      "@payloadcms/email-nodemailer": "3.0.0-beta.119",
-      "@payloadcms/next": "3.0.0-beta.119",
-      "@payloadcms/plugin-seo": "3.0.0-beta.119",
-      "@payloadcms/richtext-lexical": "3.0.0-beta.119",
-      "@payloadcms/storage-s3": "3.0.0-beta.119",
-      "@payloadcms/translations": "3.0.0-beta.119",
-      "@payloadcms/ui": "3.0.0-beta.119",
-      "payload": "3.0.0-beta.119"
-    }
-  },
-  "overrides": {
-    "@types/react": "npm:types-react@19.0.0-rc.1",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
   },
   "packageManager": "pnpm@9.12.2+sha256.2ef6e547b0b07d841d605240dce4d635677831148cd30f6d564b8f4f928f73d2"
 }

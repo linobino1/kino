@@ -20,7 +20,7 @@ async function migrationV2() {
   payload.logger.info('rename staticpages collection to pages')
   // wait 2s until index is rebuilt
   await new Promise((resolve) => setTimeout(resolve, 2000))
-  await db.connection.db.collection('staticpages').rename('pages', { dropTarget: true })
+  await db.connection.db?.collection('staticpages').rename('pages', { dropTarget: true })
 
   // migrate staticPages collection to pages collection
   const pages = JSON.parse(JSON.stringify(await db.collections.pages.find({})))

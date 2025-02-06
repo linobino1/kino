@@ -41,15 +41,54 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
+  collectionsJoins: {};
+  collectionsSelect: {
+    movies: MoviesSelect<false> | MoviesSelect<true>;
+    filmPrints: FilmPrintsSelect<false> | FilmPrintsSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
+    screeningSeries: ScreeningSeriesSelect<false> | ScreeningSeriesSelect<true>;
+    posts: PostsSelect<false> | PostsSelect<true>;
+    mailings: MailingsSelect<false> | MailingsSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
+    formats: FormatsSelect<false> | FormatsSelect<true>;
+    aspectRatios: AspectRatiosSelect<false> | AspectRatiosSelect<true>;
+    carriers: CarriersSelect<false> | CarriersSelect<true>;
+    languageVersions: LanguageVersionsSelect<false> | LanguageVersionsSelect<true>;
+    soundFormats: SoundFormatsSelect<false> | SoundFormatsSelect<true>;
+    conditions: ConditionsSelect<false> | ConditionsSelect<true>;
+    seasons: SeasonsSelect<false> | SeasonsSelect<true>;
+    genres: GenresSelect<false> | GenresSelect<true>;
+    locations: LocationsSelect<false> | LocationsSelect<true>;
+    rentals: RentalsSelect<false> | RentalsSelect<true>;
+    colors: ColorsSelect<false> | ColorsSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    persons: PersonsSelect<false> | PersonsSelect<true>;
+    jobs: JobsSelect<false> | JobsSelect<true>;
+    companies: CompaniesSelect<false> | CompaniesSelect<true>;
+    countries: CountriesSelect<false> | CountriesSelect<true>;
+    navigations: NavigationsSelect<false> | NavigationsSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
+    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
+    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
+    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
+  };
   db: {
     defaultIDType: string;
   };
   globals: {
     site: Site;
   };
+  globalsSelect: {
+    site: SiteSelect<false> | SiteSelect<true>;
+  };
   locale: 'de' | 'en';
   user: User & {
     collection: 'users';
+  };
+  jobs: {
+    tasks: unknown;
+    workflows: unknown;
   };
 }
 export interface UserAuthOperations {
@@ -76,13 +115,31 @@ export interface UserAuthOperations {
  */
 export interface Movie {
   id: string;
+  /**
+   * Titel des Films, wie er auf der Webseite verwendet wird. Übersetzungen können in den Sprachversionen angelegt werden.
+   */
   title: string;
+  /**
+   * Internationaler Titel des Films, gewöhnlich der englische Titel
+   */
   internationalTitle: string;
+  /**
+   * Originaltitel des Films
+   */
   originalTitle: string;
   tmdbId?: number | null;
+  /**
+   * Titelbild im Querformat (16:9 o.ä.) mit einer Mindestbreite von 2000px. In der Regel sollte ein Standbild aus dem Film verwendet werden.
+   */
   still: string | Media;
+  /**
+   * Filmposter im Porträtformat (2:3) mit einer Mindestbreite von 200px
+   */
   poster: string | Media;
   directors: (string | Person)[];
+  /**
+   * Dauer in Minuten
+   */
   duration: number;
   ageRating?: ('0' | '6' | '12' | '16' | '18' | '') | null;
   countries: (string | Country)[];
@@ -90,6 +147,9 @@ export interface Movie {
   decade: number;
   isHfgProduction?: boolean | null;
   genres: (string | Genre)[];
+  /**
+   * Kurze Inhaltsangabe, maximal 350 Zeichen
+   */
   synopsis: string;
   trailer?: string | null;
   cast?: (string | Person)[] | null;
@@ -101,9 +161,15 @@ export interface Movie {
       }[]
     | null;
   productionCompanies?: (string | Company)[] | null;
+  /**
+   * Komma-getrennte Tags.
+   */
   tags?: string | null;
   isMigratedFromWordpress?: boolean | null;
   wordpressMigrationNotes?: string | null;
+  /**
+   * Wird automatisch generiert, wenn das Feld leer ist.
+   */
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -115,6 +181,9 @@ export interface Movie {
  */
 export interface Media {
   id: string;
+  /**
+   * Leer lassen, um den Dateinamen als Alt-Text zu verwenden
+   */
   alt?: string | null;
   tmdbFilepath?: string | null;
   updatedAt: string;
@@ -136,6 +205,9 @@ export interface Media {
 export interface Person {
   id: string;
   name: string;
+  /**
+   * Wird automatisch generiert, wenn das Feld leer ist.
+   */
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -145,6 +217,9 @@ export interface Person {
  * via the `definition` "countries".
  */
 export interface Country {
+  /**
+   * Ländercode (2-stellig)
+   */
   id: string;
   name: string;
   updatedAt: string;
@@ -157,6 +232,9 @@ export interface Country {
 export interface Genre {
   id: string;
   name: string;
+  /**
+   * Wird automatisch generiert, wenn das Feld leer ist.
+   */
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -168,6 +246,9 @@ export interface Genre {
 export interface Job {
   id: string;
   name: string;
+  /**
+   * Wird automatisch generiert, wenn das Feld leer ist.
+   */
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -179,6 +260,9 @@ export interface Job {
 export interface Company {
   id: string;
   name: string;
+  /**
+   * Wird automatisch generiert, wenn das Feld leer ist.
+   */
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -189,6 +273,9 @@ export interface Company {
  */
 export interface FilmPrint {
   id: string;
+  /**
+   * Wird automatisch generiert, wenn das Feld leer ist.
+   */
   title?: string | null;
   movie: string | Movie;
   type?: ('analog' | 'digital') | null;
@@ -204,6 +291,9 @@ export interface FilmPrint {
   soundFormat?: (string | null) | SoundFormat;
   condition?: (string | null) | Condition;
   url: string;
+  /**
+   * Wird automatisch generiert, wenn das Feld leer ist.
+   */
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -239,6 +329,9 @@ export interface Rental {
   id: string;
   name: string;
   logo?: (string | null) | Media;
+  /**
+   * In allen Sprachen bearbeiten!
+   */
   credits: string;
   updatedAt: string;
   createdAt: string;
@@ -310,14 +403,23 @@ export interface Condition {
 export interface Event {
   id: string;
   type?: ('screening' | 'event') | null;
+  /**
+   * Leer lassen, um den Titel des ersten Spielfilms zu verwenden, falls es sich um eine Vorstellung handelt
+   */
   title?: string | null;
   subtitle?: string | null;
+  /**
+   * Achtung: wenn du dich in einer anderen Zeitzone als das Kino befindest, musst du den Unterschied ausgleichen.
+   */
   date: string;
   location?: (string | null) | Location;
   season: string | Season;
   series?: (string | null) | ScreeningSery;
   header?: (string | null) | Media;
   poster?: (string | null) | Media;
+  /**
+   * Infos zur Veranstaltung. Bei Veranstaltungen ohne Filme bildet das den Hauptinhalt.
+   */
   info?: {
     root: {
       type: string;
@@ -337,6 +439,9 @@ export interface Event {
     | {
         filmprint: string | FilmPrint;
         isSupportingFilm?: boolean | null;
+        /**
+         * Infos zum Film / der Kopie.
+         */
         info?: {
           root: {
             type: string;
@@ -357,8 +462,14 @@ export interface Event {
     | null;
   moderator?: string | null;
   guest?: string | null;
+  /**
+   * Wenn der Haken gesetzt ist, wird die Vorstellung nicht auf der Startseite und in der Liste der kommenden Vorstellungen angezeigt.
+   */
   excludeFromUpcoming?: boolean | null;
   url: string;
+  /**
+   * Wird automatisch generiert, wenn das Feld leer ist.
+   */
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -372,6 +483,9 @@ export interface Location {
   id: string;
   name?: string | null;
   default?: boolean | null;
+  /**
+   * Wird automatisch generiert, wenn das Feld leer ist.
+   */
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -386,6 +500,9 @@ export interface Season {
   header: string | Media;
   sort?: string | null;
   url: string;
+  /**
+   * Wird automatisch generiert, wenn das Feld leer ist.
+   */
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -413,6 +530,9 @@ export interface ScreeningSery {
       )[]
     | null;
   url: string;
+  /**
+   * Wird automatisch generiert, wenn das Feld leer ist.
+   */
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -498,6 +618,9 @@ export interface EventsBlockType {
  * via the `definition` "KronolithCalendarEmbedBlockType".
  */
 export interface KronolithCalendarEmbedBlockType {
+  /**
+   * z.B. https://webmail.hfg-karlsruhe.de/services/ajax.php/kronolith/embed?token=bGumTYVcPSXJCOnQq5ddVk1&calendar=internal_hwwfPnACHMVRk4ZwVVQ4V--&container=kronolithCal&view=Monthlist
+   */
   url: string;
   id?: string | null;
   blockName?: string | null;
@@ -513,6 +636,9 @@ export interface Post {
   date: string;
   header: string | Media;
   link?: {
+    /**
+     * Wähle 'Keine(r)' um das Titelbild mit der Detailseite zu verlinken, falls diese existiert.
+     */
     type?: ('none' | 'internal' | 'external') | null;
     doc?:
       | ({
@@ -556,8 +682,14 @@ export interface Post {
     };
     [k: string]: unknown;
   };
+  /**
+   * Ausführliche Informationen zum Beitrag. Hieraus wird die Detailseite für den Post generiert. Ein Post kann auch ohne Detailseite existieren.
+   */
   details?: (ContentBlockType | ImageBlockType | GalleryBlockType | VideoBlockType)[] | null;
   url: string;
+  /**
+   * Wird automatisch generiert, wenn das Feld leer ist.
+   */
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -586,10 +718,16 @@ export interface Page {
       )[]
     | null;
   url: string;
+  /**
+   * Wird automatisch generiert, wenn das Feld leer ist.
+   */
   slug?: string | null;
   meta?: {
     title?: string | null;
     description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
     image?: (string | null) | Media;
   };
   updatedAt: string;
@@ -829,6 +967,535 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "movies_select".
+ */
+export interface MoviesSelect<T extends boolean = true> {
+  title?: T;
+  internationalTitle?: T;
+  originalTitle?: T;
+  tmdbId?: T;
+  still?: T;
+  poster?: T;
+  directors?: T;
+  duration?: T;
+  ageRating?: T;
+  countries?: T;
+  year?: T;
+  decade?: T;
+  isHfgProduction?: T;
+  genres?: T;
+  synopsis?: T;
+  trailer?: T;
+  cast?: T;
+  crew?:
+    | T
+    | {
+        person?: T;
+        job?: T;
+        id?: T;
+      };
+  productionCompanies?: T;
+  tags?: T;
+  isMigratedFromWordpress?: T;
+  wordpressMigrationNotes?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "filmPrints_select".
+ */
+export interface FilmPrintsSelect<T extends boolean = true> {
+  title?: T;
+  movie?: T;
+  type?: T;
+  format?: T;
+  languageVersion?: T;
+  isRented?: T;
+  rental?: T;
+  carrier?: T;
+  category?: T;
+  numActs?: T;
+  aspectRatio?: T;
+  color?: T;
+  soundFormat?: T;
+  condition?: T;
+  url?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  type?: T;
+  title?: T;
+  subtitle?: T;
+  date?: T;
+  location?: T;
+  season?: T;
+  series?: T;
+  header?: T;
+  poster?: T;
+  info?: T;
+  films?:
+    | T
+    | {
+        filmprint?: T;
+        isSupportingFilm?: T;
+        info?: T;
+        id?: T;
+      };
+  moderator?: T;
+  guest?: T;
+  excludeFromUpcoming?: T;
+  url?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "screeningSeries_select".
+ */
+export interface ScreeningSeriesSelect<T extends boolean = true> {
+  name?: T;
+  hero?:
+    | T
+    | {
+        type?: T;
+        headline?: T;
+        image?: T;
+      };
+  blocks?:
+    | T
+    | {
+        content?: T | ContentBlockTypeSelect<T>;
+        gallery?: T | GalleryBlockTypeSelect<T>;
+        image?: T | ImageBlockTypeSelect<T>;
+        video?: T | VideoBlockTypeSelect<T>;
+        events?: T | EventsBlockTypeSelect<T>;
+        kronolithCalendarEmbed?: T | KronolithCalendarEmbedBlockTypeSelect<T>;
+      };
+  url?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentBlockType_select".
+ */
+export interface ContentBlockTypeSelect<T extends boolean = true> {
+  content?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GalleryBlockType_select".
+ */
+export interface GalleryBlockTypeSelect<T extends boolean = true> {
+  images?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ImageBlockType_select".
+ */
+export interface ImageBlockTypeSelect<T extends boolean = true> {
+  image?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VideoBlockType_select".
+ */
+export interface VideoBlockTypeSelect<T extends boolean = true> {
+  url?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EventsBlockType_select".
+ */
+export interface EventsBlockTypeSelect<T extends boolean = true> {
+  type?: T;
+  events?:
+    | T
+    | {
+        doc?: T;
+        id?: T;
+      };
+  screeningSeries?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "KronolithCalendarEmbedBlockType_select".
+ */
+export interface KronolithCalendarEmbedBlockTypeSelect<T extends boolean = true> {
+  url?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts_select".
+ */
+export interface PostsSelect<T extends boolean = true> {
+  title?: T;
+  date?: T;
+  header?: T;
+  link?:
+    | T
+    | {
+        type?: T;
+        doc?: T;
+        url?: T;
+      };
+  content?: T;
+  details?:
+    | T
+    | {
+        content?: T | ContentBlockTypeSelect<T>;
+        image?: T | ImageBlockTypeSelect<T>;
+        gallery?: T | GalleryBlockTypeSelect<T>;
+        video?: T | VideoBlockTypeSelect<T>;
+      };
+  url?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mailings_select".
+ */
+export interface MailingsSelect<T extends boolean = true> {
+  subject?: T;
+  color?: T;
+  language?: T;
+  header?:
+    | T
+    | {
+        image?: T;
+        overlay?: T;
+      };
+  content?: T;
+  footer?:
+    | T
+    | {
+        image?: T;
+        label?: T;
+        link?: T;
+      };
+  html?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  tmdbFilepath?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  layoutType?: T;
+  hero?:
+    | T
+    | {
+        type?: T;
+        headline?: T;
+        image?: T;
+      };
+  blocks?:
+    | T
+    | {
+        content?: T | ContentBlockTypeSelect<T>;
+        gallery?: T | GalleryBlockTypeSelect<T>;
+        image?: T | ImageBlockTypeSelect<T>;
+        video?: T | VideoBlockTypeSelect<T>;
+        events?: T | EventsBlockTypeSelect<T>;
+        kronolithCalendarEmbed?: T | KronolithCalendarEmbedBlockTypeSelect<T>;
+      };
+  url?: T;
+  slug?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "formats_select".
+ */
+export interface FormatsSelect<T extends boolean = true> {
+  type?: T;
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "aspectRatios_select".
+ */
+export interface AspectRatiosSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "carriers_select".
+ */
+export interface CarriersSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "languageVersions_select".
+ */
+export interface LanguageVersionsSelect<T extends boolean = true> {
+  name?: T;
+  abbreviation?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "soundFormats_select".
+ */
+export interface SoundFormatsSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "conditions_select".
+ */
+export interface ConditionsSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seasons_select".
+ */
+export interface SeasonsSelect<T extends boolean = true> {
+  name?: T;
+  header?: T;
+  sort?: T;
+  url?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "genres_select".
+ */
+export interface GenresSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "locations_select".
+ */
+export interface LocationsSelect<T extends boolean = true> {
+  name?: T;
+  default?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "rentals_select".
+ */
+export interface RentalsSelect<T extends boolean = true> {
+  name?: T;
+  logo?: T;
+  credits?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "colors_select".
+ */
+export interface ColorsSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "persons_select".
+ */
+export interface PersonsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jobs_select".
+ */
+export interface JobsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "companies_select".
+ */
+export interface CompaniesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "countries_select".
+ */
+export interface CountriesSelect<T extends boolean = true> {
+  id?: T;
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigations_select".
+ */
+export interface NavigationsSelect<T extends boolean = true> {
+  type?: T;
+  items?:
+    | T
+    | {
+        type?: T;
+        name?: T;
+        page?: T;
+        relPath?: T;
+        url?: T;
+        icon?: T;
+        subnavigation?: T;
+        newTab?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users_select".
+ */
+export interface UsersSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-locked-documents_select".
+ */
+export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
+  document?: T;
+  globalSlug?: T;
+  user?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-preferences_select".
+ */
+export interface PayloadPreferencesSelect<T extends boolean = true> {
+  user?: T;
+  key?: T;
+  value?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-migrations_select".
+ */
+export interface PayloadMigrationsSelect<T extends boolean = true> {
+  name?: T;
+  batch?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site".
  */
 export interface Site {
@@ -864,10 +1531,45 @@ export interface Site {
   meta?: {
     title?: string | null;
     description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
     image?: (string | null) | Media;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site_select".
+ */
+export interface SiteSelect<T extends boolean = true> {
+  logo?: T;
+  logoMobile?: T;
+  favicon?: T;
+  footerContent?: T;
+  location?:
+    | T
+    | {
+        country?: T;
+        region?: T;
+        city?: T;
+        zip?: T;
+        street?: T;
+        name?: T;
+        latitude?: T;
+        longitude?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

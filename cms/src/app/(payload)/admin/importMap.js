@@ -1,8 +1,7 @@
 import { default as default_620ab8fef82812a756ba3c4df7d89b4b } from '@/components/MigrateMovieLink'
 import { default as default_3a9a8dd6b082ec6111b4c45ac969e42d } from '@/components/UrlField'
-import { RichTextCell as RichTextCell_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
-import { RichTextField as RichTextField_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
-import { getGenerateComponentMap as getGenerateComponentMap_ec38dd6bee95fe7974552968355b33ae } from '@payloadcms/richtext-lexical/generateComponentMap'
+import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
+import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { InlineToolbarFeatureClient as InlineToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { HorizontalRuleFeatureClient as HorizontalRuleFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { UploadFeatureClient as UploadFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
@@ -39,9 +38,8 @@ import { default as default_dc692b2e104b23c775b8ba04768ea3bd } from '@/views/tmd
 export const importMap = {
   "@/components/MigrateMovieLink#default": default_620ab8fef82812a756ba3c4df7d89b4b,
   "@/components/UrlField#default": default_3a9a8dd6b082ec6111b4c45ac969e42d,
-  "@payloadcms/richtext-lexical/client#RichTextCell": RichTextCell_e70f5e05f09f93e00b997edb1ef0c864,
-  "@payloadcms/richtext-lexical/client#RichTextField": RichTextField_e70f5e05f09f93e00b997edb1ef0c864,
-  "@payloadcms/richtext-lexical/generateComponentMap#getGenerateComponentMap": getGenerateComponentMap_ec38dd6bee95fe7974552968355b33ae,
+  "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
+  "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/client#InlineToolbarFeatureClient": InlineToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#HorizontalRuleFeatureClient": HorizontalRuleFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#UploadFeatureClient": UploadFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,

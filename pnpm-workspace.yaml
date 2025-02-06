@@ -1,3 +1,21 @@
 packages:
   - 'cms'
   - 'frontend'
+
+catalog:
+  lexical: '0.21.0'
+  payload: '3.20.0'
+  '@payloadcms/db-mongodb': '3.20.0'
+  '@payloadcms/email-nodemailer': '3.20.0'
+  '@payloadcms/next': '3.20.0'
+  '@payloadcms/plugin-seo': '3.20.0'
+  '@payloadcms/richtext-lexical': '3.20.0'
+  '@payloadcms/storage-s3': '3.20.0'
+  '@payloadcms/translations': '3.20.0'
+  '@payloadcms/ui': '3.20.0'
+
+  "react": "19.0.0"
+  "react-dom": "19.0.0"
+
+  "@types/react": "^19.0.7"
+  "@types/react-dom": "^19.0.3"
