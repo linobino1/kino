@@ -161,7 +161,7 @@ export default buildConfig({
     addUrlField,
     addSlugField,
     s3Storage({
-      enabled: process.env.S3_ENABLED === 'true',
+      enabled: process.env.S3_ENABLED === 'true' && process.env.NODE_ENV !== 'test',
       config: {
         endpoint: process.env.S3_ENDPOINT,
         credentials: {

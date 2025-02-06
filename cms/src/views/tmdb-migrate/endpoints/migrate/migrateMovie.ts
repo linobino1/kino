@@ -32,13 +32,11 @@ export const migrateMovie = async ({
   // migrate data from the various endpoints of themoviedb.org
   // any errors will be added to warnings
   try {
-    await Promise.all([
-      migrateCredits(context),
-      migrateReleaseDates(context),
-      migrateVideos(context),
-      migrateKeywords(context),
-      migrateImages(context, images),
-    ])
+    await migrateCredits(context)
+    await migrateReleaseDates(context)
+    await migrateVideos(context)
+    await migrateKeywords(context)
+    await migrateImages(context, images)
   } catch (err) {
     if (err instanceof Error) {
       warnings.push(err)

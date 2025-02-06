@@ -1,10 +1,10 @@
-import type { Payload } from 'payload'
 import type { Job, Person } from '@/payload-types'
 import type { MigrationFunction } from './types'
 import { tmdbFetch } from '@/third-party/tmdb/tmdbFetch'
-import { tmdbPerson } from '@/third-party/tmdb/types'
+import type { tmdbPerson } from '@/third-party/tmdb/types'
 import { defaultLanguage } from '@/third-party/tmdb'
-import { locales } from 'shared/config'
+import { findOrCreateDoc } from '@/util/findOrCreateDoc'
+import { updateDocInAllLocales } from '@/util/updateDocInAllLocales'
 
 export const migrateCredits: MigrationFunction = async ({ payload, movie, warnings }) => {
   if (!(typeof movie.tmdbId === 'number')) throw new Error('Cannot migrate credits without tmdbId')
@@ -13,82 +13,104 @@ export const migrateCredits: MigrationFunction = async ({ payload, movie, warnin
 
   // cast
   const cast: string[] = []
-  await Promise.all(
-    data.cast.map(async (person: tmdbPerson) => {
-      let doc: Person
-
-      // try to create person
-      try {
-        doc = (await payload.create({
+  for await (const castMember of data.cast as tmdbPerson[]) {
+    try {
+      const doc = (
+        await findOrCreateDoc({
           collection: 'persons',
           data: {
-            name: person.name,
+            name: castMember.name,
           },
-        })) as unknown as Person
-      } catch {
-        // could not be created, try to find it
-        doc = (
-          await payload.find({
-            collection: 'persons',
-            where: {
-              name: {
-                equals: person.name,
-              },
+          payload,
+          where: {
+            name: {
+              equals: castMember.name,
             },
-            limit: 1,
-          })
-        ).docs[0] as unknown as Person
-      }
-      if (!doc) warnings.push(new Error(`Could neither find or create person ${person.name}`))
+          },
+        })
+      ).doc
       cast.push(doc.id)
-    }),
-  )
+    } catch {
+      warnings.push(new Error(`Could neither find or create cast member ${castMember.name}`))
+    }
+  }
+  // console.log(`migrated ${cast.length} / ${data.cast.length} cast members`)
 
   // crew and directors
   const crew: { job: string; person: string }[] = []
   const directors: string[] = []
-  await Promise.all(
-    data.crew.map(async (tmdbPerson: tmdbPerson) => {
-      let person: Person
-
-      // try to create person
-      try {
-        person = (await payload.create({
+  for await (const crewMember of data.crew as tmdbPerson[]) {
+    let person: Person | undefined
+    try {
+      person = (
+        await findOrCreateDoc({
           collection: 'persons',
           data: {
-            name: tmdbPerson.name,
+            name: crewMember.name,
           },
-        })) as unknown as Person
-      } catch {
-        // could not be created, try to find it
-        person = (
-          await payload.find({
-            collection: 'persons',
-            where: {
-              name: {
-                equals: tmdbPerson.name,
-              },
+          payload,
+          where: {
+            name: {
+              equals: crewMember.name,
             },
-            limit: 1,
-          })
-        ).docs[0] as unknown as Person
-      }
+          },
+        })
+      ).doc
 
-      if (!person)
-        warnings.push(new Error(`Could neither find or create person ${tmdbPerson.name}`))
+      // is this a director?
+      if (['Director', 'director'].includes(crewMember.job)) directors.push(person.id)
+    } catch {
+      warnings.push(
+        new Error(
+          `Could not create crew member because person '${crewMember.name}' could not be found or created`,
+        ),
+      )
+      return
+    }
 
-      // migrate job
-      const job = await migrateJob(payload, warnings, tmdbPerson.job)
-
-      crew.push({
-        person: person.id,
-        job: job.id,
+    let job: Job | undefined
+    try {
+      const { doc, wasCreated } = await findOrCreateDoc({
+        collection: 'jobs',
+        data: {
+          name: crewMember.job,
+        },
+        payload,
+        where: {
+          name: {
+            like: crewMember.job,
+          },
+        },
+        locale: defaultLanguage,
       })
+      job = doc
 
-      // add to directors
-      if (job?.name === 'Director') directors.push(person.id)
-    }),
-  )
+      if (wasCreated) {
+        // HACK: we add the english name to all languages because jobs are not translated in themoviedb.org
+        await updateDocInAllLocales({
+          collection: 'jobs',
+          id: job.id,
+          data: {
+            name: crewMember.job,
+          },
+          payload,
+        })
+      }
+    } catch {
+      warnings.push(
+        new Error(
+          `Could not create crew item because job '${crewMember.job}' could not be found or created`,
+        ),
+      )
+      return
+    }
+
+    crew.push({
+      person: person.id,
+      job: job.id,
+    })
+  }
+  // console.log(`migrated ${crew.length} / ${data.crew.length} crew members`)
 
   // update movie
   await payload.update({
@@ -101,62 +123,4 @@ export const migrateCredits: MigrationFunction = async ({ payload, movie, warnin
     },
     draft: true,
   })
-}
-
-/**
- * migrate or find a job from themoviedb.org data
- * @returns
- */
-const migrateJob = async (
-  payload: Payload,
-  warnings: Error[],
-  tmdbJob: tmdbPerson['job'],
-): Promise<Job> => {
-  let job: Job
-
-  // try to create job
-  try {
-    job = (await payload.create({
-      collection: 'jobs',
-      data: {
-        name: tmdbJob,
-      },
-      locale: defaultLanguage,
-    })) as unknown as Job
-
-    // HACK: we add the english name to all languages because jobs are not translated in themoviedb.org
-    locales.forEach(async (locale) => {
-      if (locale === defaultLanguage) return // we already have the default language...
-      try {
-        await payload.update({
-          collection: 'jobs',
-          id: job.id,
-          data: {
-            name: tmdbJob,
-          },
-          locale,
-        })
-      } catch {
-        warnings.push(new Error(`Could not add job name ${tmdbJob} to ${locale} version`))
-      }
-    })
-  } catch {
-    // could not be created, try to find it
-    job = (
-      await payload.find({
-        collection: 'jobs',
-        where: {
-          name: {
-            equals: tmdbJob,
-          },
-        },
-        locale: defaultLanguage,
-        limit: 1,
-      })
-    ).docs[0] as unknown as Job
-  }
-
-  if (!job) warnings.push(new Error(`Could neither find or create job ${tmdbJob}`))
-
-  return job
 }

@@ -12,7 +12,7 @@ beforeAll(async () => {
 
   await Promise.all(collections.map((collection) => payload.delete({ collection, where: {} })))
 
-  server.listen({ onUnhandledRequest: 'bypass' })
+  server.listen({ onUnhandledRequest: 'error' })
   server.use(...handlers)
 })
 

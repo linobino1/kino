@@ -83,7 +83,7 @@ export const migrateMovieBase = async (
   if (!movie) throw new Error('Unable to create movie')
 
   // add translations
-  for (const locale of locales) {
+  for await (const locale of locales) {
     if (locale === defaultLanguage) continue // we already have the default language...
 
     // fetch movie details from TMDB in language
@@ -94,11 +94,11 @@ export const migrateMovieBase = async (
       collection: 'movies',
       id: movie.id,
       draft: true,
-      locale: locale,
       data: {
         title: dataTranslated.title,
         synopsis: dataTranslated.overview,
       },
+      locale,
     })
   }
 

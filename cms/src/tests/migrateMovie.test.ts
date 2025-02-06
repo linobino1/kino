@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest'
 import { migrateMovie } from '@/views/tmdb-migrate/endpoints/migrate/migrateMovie'
 import { getPayloadTestClient } from './getPayloadTestClient'
-import { Company, Genre } from '@/payload-types'
+import { Company, Genre, type Person } from '@/payload-types'
 
 test('migrate Casablanca from TMDB', async () => {
   const payload = await getPayloadTestClient()
@@ -64,4 +64,15 @@ test('migrate Casablanca from TMDB', async () => {
   expect(de.trailer).toBe('https://www.youtube.com/watch?v=MF7JH_54d8c')
   // would it be better to have localized trailers?
   // expect(de.trailer).toBe('https://www.youtube.com/watch?v=tYbRc8HIz2A')
+
+  expect(en.directors.length).toBe(1)
+  expect(de.directors.length).toBe(1)
+  expect(en.directors.some((director) => (director as Person).name === 'Michael Curtiz')).toBe(true)
+  expect(de.directors.some((director) => (director as Person).name === 'Michael Curtiz')).toBe(true)
+
+  expect(en.cast?.length).toBeGreaterThan(5)
+  expect(de.cast?.length).toBeGreaterThan(5)
+
+  expect(en.crew?.length).toBeGreaterThan(5)
+  expect(de.crew?.length).toBeGreaterThan(5)
 }, 30000)
