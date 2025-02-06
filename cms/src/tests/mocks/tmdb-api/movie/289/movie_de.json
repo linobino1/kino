@@ -1,0 +1,43 @@
+{
+  "adult": false,
+  "backdrop_path": "/rrsG3xYrWifoduZtsIZ4ntoDfBY.jpg",
+  "belongs_to_collection": null,
+  "budget": 878000,
+  "genres": [
+    { "id": 18, "name": "Drama" },
+    { "id": 10749, "name": "Liebesfilm" }
+  ],
+  "homepage": "",
+  "id": 289,
+  "imdb_id": "tt0034583",
+  "origin_country": ["US"],
+  "original_language": "en",
+  "original_title": "Casablanca",
+  "overview": "Während des Zweiten Weltkrieges betreibt der zynische Amerikaner Rick Blaine eine Bar in Casablanca, in der eines Tages der vor den Nazis geflohene Widerstandskämpfer Victor Laszlo mit seiner Frau Ilsa auftaucht. Von Nazi-Major Strasser verfolgt hoffen sie, dass ihnen Rick zur Flucht in die USA verhelfen kann. Nach anfänglicher Weigerung erfüllt Rick, der früher eine Affäre mit Ilsa hatte, ihren Wunsch. Kurz vor dem Abflug muss sich Ilsa endgültig zwischen den beiden Männern entscheiden.",
+  "popularity": 40.585,
+  "poster_path": "/9qxNdrySV2fb0BBNSPIg0NVtjuf.jpg",
+  "production_companies": [
+    {
+      "id": 174,
+      "logo_path": "/zhD3hhtKB5qyv7ZeL4uLpNxgMVU.png",
+      "name": "Warner Bros. Pictures",
+      "origin_country": "US"
+    }
+  ],
+  "production_countries": [{ "iso_3166_1": "US", "name": "United States of America" }],
+  "release_date": "1943-01-15",
+  "revenue": 10462500,
+  "runtime": 98,
+  "spoken_languages": [
+    { "english_name": "German", "iso_639_1": "de", "name": "Deutsch" },
+    { "english_name": "French", "iso_639_1": "fr", "name": "Français" },
+    { "english_name": "Italian", "iso_639_1": "it", "name": "Italiano" },
+    { "english_name": "English", "iso_639_1": "en", "name": "English" }
+  ],
+  "status": "Released",
+  "tagline": "Ich schau Dir in die Augen, Kleines!",
+  "title": "Kasablanca",
+  "video": false,
+  "vote_average": 8.158,
+  "vote_count": 5515
+}

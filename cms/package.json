@@ -19,7 +19,8 @@
     "typecheck": "tsc",
     "migrate:v2": "cross-env tsx src/scripts/migrationV2/index.ts",
     "migrate:slate": "cross-env tsx src/scripts/migrationV2/slateToLexical.ts",
-    "seed": "tsx ./src/seed/run.ts"
+    "seed": "tsx ./src/seed/run.ts",
+    "test": "vitest"
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "catalog:",
@@ -61,9 +62,12 @@
     "@types/react-dom": "catalog:",
     "@unocss/cli": "^0.63.4",
     "dotenv": "^16.4.5",
+    "msw": "^2.7.0",
     "npm-run-all": "^4.1.5",
     "tsx": "^4.19.1",
-    "unocss": "^0.63.4"
+    "unocss": "^0.63.4",
+    "vite-tsconfig-paths": "^4.2.1",
+    "vitest": "^3.0.5"
   },
   "engines": {
     "node": "^18.20.2 || >=20.9.0"
