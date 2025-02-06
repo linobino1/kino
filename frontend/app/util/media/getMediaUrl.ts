@@ -7,7 +7,7 @@ import { type ClientEnvironment } from '~/env.server'
  */
 export const getMediaUrl = (media: Media | string, env?: ClientEnvironment) => {
   if (typeof media === 'string') {
-    throw new Error('getMediaUrl() expects a Media object, but got a string')
+    throw new Error(`getMediaUrl() expects a Media object, but got a string ${media}`)
   }
 
   // if the media url is already an absolute URL, return it

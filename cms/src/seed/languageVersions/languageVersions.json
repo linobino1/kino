@@ -1,0 +1,102 @@
+[
+  {
+    "name": {
+      "de": "stumm",
+      "en": "silent"
+    },
+    "abbreviation": {
+      "de": "stumm",
+      "en": "silent"
+    }
+  },
+  {
+    "name": {
+      "de": "Englische Zwischentitel",
+      "en": "English Intertitles"
+    },
+    "abbreviation": {
+      "de": "engl. ZT",
+      "en": "engl. ZT"
+    }
+  },
+  {
+    "name": {
+      "de": "Deutsche Zwischentitel",
+      "en": "German Intertitles"
+    },
+    "abbreviation": {
+      "de": "dt. ZT",
+      "en": "dt. ZT"
+    }
+  },
+  {
+    "name": {
+      "de": "Englische Originalfassung",
+      "en": "English Original Version"
+    },
+    "abbreviation": {
+      "de": "engl. OF",
+      "en": "engl. OV"
+    }
+  },
+  {
+    "name": {
+      "de": "Ohne Dialog",
+      "en": "Without dialogue"
+    },
+    "abbreviation": {
+      "de": "Ohne Dialog",
+      "en": "Without dialogue"
+    }
+  },
+  {
+    "name": {
+      "de": "Originalfassung mit englischen Untertiteln",
+      "en": "Original Version with english Subtitles"
+    },
+    "abbreviation": {
+      "de": "OmeU",
+      "en": "OmeU"
+    }
+  },
+  {
+    "name": {
+      "de": "Originalfassung",
+      "en": "Original Version"
+    },
+    "abbreviation": {
+      "de": "OF",
+      "en": "OF"
+    }
+  },
+  {
+    "name": {
+      "de": "Deutsche Synchronfassung",
+      "en": "German Dub Version"
+    },
+    "abbreviation": {
+      "de": "DF",
+      "en": "DF"
+    }
+  },
+  {
+    "name": {
+      "de": "Originalfassung mit deutschen Untertiteln",
+      "en": "Original Version with german Subtitles"
+    },
+    "abbreviation": {
+      "de": "OmdU",
+      "en": "OmU"
+    }
+  },
+  {
+    "name": {
+      "de": "Deutsche Originalfassung",
+      "en": "German Original Version"
+    },
+    "abbreviation": {
+      "de": "dt. OF",
+      "en": "OV"
+    }
+  }
+]

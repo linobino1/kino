@@ -1,0 +1,38 @@
+[
+  {
+    "name": {
+      "de": "Schlecht",
+      "en": "Poor"
+    }
+  },
+  {
+    "name": {
+      "de": "In Ordnung",
+      "en": "Fair"
+    }
+  },
+  {
+    "name": {
+      "de": "Neu",
+      "en": "Mint"
+    }
+  },
+  {
+    "name": {
+      "de": "Sehr Gut +",
+      "en": "Very Good +"
+    }
+  },
+  {
+    "name": {
+      "de": "Sehr Gut",
+      "en": "Very Good"
+    }
+  },
+  {
+    "name": {
+      "de": "Gut",
+      "en": "Good"
+    }
+  }
+]

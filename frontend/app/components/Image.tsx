@@ -1,5 +1,6 @@
 import type { Media } from '@/payload-types'
 import React from 'react'
+import { getMediaUrl } from '~/util/media/getMediaUrl'
 import { getOptimizedImageUrl } from '~/util/media/getOptimizedImageUrl'
 import { useEnv } from '~/util/useEnv'
 
@@ -16,18 +17,20 @@ export const Image: React.FC<Props> = ({ image, srcSet, src, alt, width, height,
   const env = useEnv()
 
   // use src and alt from image if provided
-  src ||= image?.url || undefined
+  src ||= image ? getMediaUrl(image, env) : undefined
   alt ||= image?.alt || undefined
   width ||= image?.width || undefined
   height ||= image?.height || undefined
 
   // transform srcSet array to string
-  if (typeof srcSet === 'object') {
+  if (typeof srcSet === 'object' && env?.CDN_CGI_IMAGE_URL) {
     srcSet = srcSet
       .map((item) => {
         return `${getOptimizedImageUrl(src as string, env, item.options)} ${item.size}`
       })
       .join(', ')
+  } else {
+    srcSet = undefined
   }
 
   return <img {...props} src={src} alt={alt} width={width} height={height} srcSet={srcSet} />

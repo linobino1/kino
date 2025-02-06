@@ -13,7 +13,6 @@ import type {
 import { SerializeLexicalToEmail } from '../SerializeLexicalToEmail'
 import { bgGrey, containerWidth, formatDate, fontSize } from '../../templates/Newsletter'
 import Shorten from './Shorten'
-import { serializeLexicalToPlainText } from '../serializeLexicalToPlainText'
 import { getFrontendUrl } from '@/util/getFrontendUrl'
 
 type EventProps = {
@@ -23,39 +22,31 @@ type EventProps = {
 }
 
 const Event: React.FC<EventProps> = ({ event, color, additionalText }) => {
-  const filmprint = event.films?.[0]?.filmprint as FilmPrint | undefined
-  const movie = filmprint?.movie as Movie | undefined
+  let subtitle: string = event.subtitle ?? ''
+  if (event.isScreeningEvent) {
+    const filmprint = event.mainProgramFilmPrint as FilmPrint
+    const movie = filmprint.movie as Movie
+    subtitle = [
+      movie.originalTitle !== movie.title && `OT: ${movie.originalTitle}`,
+      (movie.genres as Genre[]).map((x) => x.name).join(', '),
+      (movie.countries as Country[])?.map((x) => x.name).join(', '),
+      movie.year,
+      movie.directors && `R: ${(movie.directors as Person[])?.map((x) => x.name).join(', ')}`,
 
-  // if an event has a general info, use only the title and info. Otherwise, use title, subtitle and info
-  let subtitle = event.subtitle // might be undefined
-  let description
-  if (event.info) {
-    description = serializeLexicalToPlainText(event.info as any)
-  } else {
-    if (event.type === 'screening' && movie) {
-      description = movie?.synopsis
-      subtitle = [
-        movie.originalTitle !== movie.title && `OT: ${movie.originalTitle}`,
-        (movie.genres as Genre[]).map((x) => x.name).join(', '),
-        (movie.countries as Country[])?.map((x) => x.name).join(', '),
-        movie.year,
-        movie.directors && `R: ${(movie.directors as Person[])?.map((x) => x.name).join(', ')}`,
-
-        `${movie.duration} min`,
-        (filmprint?.format as Format).name,
-        filmprint ? (filmprint.languageVersion as LanguageVersion)?.name : null,
-        movie.cast?.length &&
-          `Mit: ${(movie.cast as Person[])
-            ?.slice(0, 3)
-            .map((x) => x.name)
-            .join(', ')}`,
-      ]
-        .filter(Boolean)
-        .join(', ')
-    }
+      `${movie.duration} min`,
+      (filmprint?.format as Format).name,
+      filmprint ? (filmprint.languageVersion as LanguageVersion)?.name : null,
+      movie.cast?.length &&
+        `Mit: ${(movie.cast as Person[])
+          ?.slice(0, 3)
+          .map((x) => x.name)
+          .join(', ')}`,
+    ]
+      .filter(Boolean)
+      .join(', ')
   }
 
-  const url = getFrontendUrl(event.url)
+  const url = getFrontendUrl(event.url ?? '')
 
   return (
     <Section style={{ backgroundColor: bgGrey, paddingBlock: '20px' }}>
@@ -107,7 +98,7 @@ const Event: React.FC<EventProps> = ({ event, color, additionalText }) => {
             <Text style={{ marginBlock: 0, fontSize, fontStyle: 'italic' }}>{subtitle}</Text>
           )}
           <Text style={{ fontSize }}>
-            <Shorten text={description ?? ''} moreLink={url} />
+            <Shorten text={event.shortDescription ?? ''} moreLink={url} />
           </Text>
           {additionalText && (
             <SerializeLexicalToEmail nodes={additionalText.root.children as any} color={color} />

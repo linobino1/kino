@@ -1,0 +1,54 @@
+[
+  {
+    "type": "analog",
+    "name": "16mm viragiert"
+  },
+  {
+    "type": "analog",
+    "name": "35mm virage"
+  },
+  {
+    "type": "analog",
+    "name": "16mm (handkoloriert)"
+  },
+  {
+    "type": "analog",
+    "name": "35mm IB Tech"
+  },
+  {
+    "type": "analog",
+    "name": "VHS"
+  },
+  {
+    "type": "digital",
+    "name": "Digital"
+  },
+  {
+    "type": "digital",
+    "name": "DVD"
+  },
+  {
+    "type": "digital",
+    "name": "HD Video"
+  },
+  {
+    "type": "digital",
+    "name": "Bluray"
+  },
+  {
+    "type": "analog",
+    "name": "70mm"
+  },
+  {
+    "type": "analog",
+    "name": "35mm"
+  },
+  {
+    "type": "digital",
+    "name": "DCP"
+  },
+  {
+    "type": "analog",
+    "name": "16mm"
+  }
+]

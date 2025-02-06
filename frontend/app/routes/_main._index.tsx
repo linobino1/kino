@@ -51,6 +51,7 @@ export const loader = async ({ request, params: { lang: locale } }: LoaderFuncti
           equals: 'home',
         },
       },
+      depth: 1,
       locale: locale as Locale,
     }),
     payload.find({

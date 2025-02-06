@@ -9,7 +9,7 @@ export const postSchema = (post: Post): BlogPosting => {
     headline: post.title,
     articleBody: lexicalToPlainText(post.content),
     datePublished: post.date,
-    url: post.url,
+    url: post.url ?? '',
     image: (post.header as Media)?.url || undefined,
   }
 }

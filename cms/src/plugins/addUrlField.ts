@@ -27,7 +27,6 @@ export const addUrlField: Plugin = (incomingConfig: Config): Config => {
                     name: 'url',
                     type: 'text',
                     label: 'URL',
-                    required: true,
                     validate: () => true as const,
                     hooks: {
                       beforeChange: [

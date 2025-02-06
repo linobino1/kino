@@ -4,8 +4,8 @@ import type { CollectionConfig } from 'payload'
 export const ScreeningSeries: CollectionConfig = {
   slug: 'screeningSeries',
   labels: {
-    singular: 'Vorstellungsreihe',
-    plural: 'Vorstellungsreihen',
+    singular: 'Veranstaltungsreihe',
+    plural: 'Veranstaltungsreihen',
   },
   admin: {
     group: 'Kalender',

@@ -1,0 +1,37 @@
+[
+  {
+    "name": {
+      "de": "Kinemathek Karlsruhe",
+      "en": "Kinemathek Karlsruhe"
+    },
+    "isDefault": false
+  },
+  {
+    "name": {
+      "de": "Lichthöfe der HfG",
+      "en": "HfG Atrium"
+    },
+    "isDefault": false
+  },
+  {
+    "name": {
+      "de": "Kronenplatz",
+      "en": "Kronenplatz"
+    },
+    "isDefault": false
+  },
+  {
+    "name": {
+      "de": "Wiese vor der HfG",
+      "en": "Open Campus"
+    },
+    "isDefault": false
+  },
+  {
+    "name": {
+      "de": "Blauer Salon",
+      "en": "Blauer Salon"
+    },
+    "isDefault": true
+  }
+]

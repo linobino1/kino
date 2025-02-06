@@ -11,13 +11,14 @@ export const eventSchema = (event: Event, site?: Site): SchemaOrgEvent | Screeni
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     name: event.title as string,
+    description: event.shortDescription as string,
     startDate: event.date,
     location: site ? locationSchema(site) : undefined,
   }
 
-  // add screening specific properties
-  if (event.type === 'screening') {
-    const movie = (event.films?.[0]?.filmprint as FilmPrint).movie as Movie
+  // add ScreeningEvent specific properties
+  if (event.isScreeningEvent) {
+    const movie = (event.mainProgramFilmPrint as FilmPrint).movie as Movie
     res = {
       ...res,
       '@type': 'ScreeningEvent',

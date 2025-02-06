@@ -20,7 +20,7 @@ export const getOptimizedImageUrl = (
 ) => {
   // get the absolute url of the media
   if (typeof src === 'object') {
-    src = getMediaUrl(src) as string
+    src = getMediaUrl(src, env) as string
   }
 
   // build the options string

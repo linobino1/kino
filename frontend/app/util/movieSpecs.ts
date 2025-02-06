@@ -7,17 +7,13 @@ import type {
   Movie,
   Person,
 } from '@/payload-types'
-import { type TFunction } from 'i18next'
+import type { TFunction } from 'i18next'
 
-export const movieSpecs = ({
-  movie,
-  filmPrint,
-  t,
-}: {
-  movie: Movie
-  filmPrint: FilmPrint
-  t: TFunction
-}): string[] => {
+export const movieSpecs = ({ filmPrint, t }: { filmPrint: FilmPrint; t: TFunction }): string[] => {
+  const movie = filmPrint.movie as Movie
+  if (movie.directors.length && typeof movie.directors[0] === 'string') {
+    throw new Error('movieSpecs expects more depth')
+  }
   return [
     movie.originalTitle,
     (movie.genres as Genre[])?.map((x) => x.name).join(', '),

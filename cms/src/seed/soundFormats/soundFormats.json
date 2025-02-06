@@ -1,0 +1,50 @@
+[
+  {
+    "name": {
+      "de": "5.1",
+      "en": "5.1"
+    }
+  },
+  {
+    "name": {
+      "de": "Stereo",
+      "en": "Stereo"
+    }
+  },
+  {
+    "name": {
+      "de": "Magnetton",
+      "en": "Magnetic sound"
+    }
+  },
+  {
+    "name": {
+      "de": "Stumm",
+      "en": "Silent"
+    }
+  },
+  {
+    "name": {
+      "de": "Dolby Digital",
+      "en": "Dolby Digital"
+    }
+  },
+  {
+    "name": {
+      "de": "Dolby SR",
+      "en": "Dolby SR"
+    }
+  },
+  {
+    "name": {
+      "de": "Dolby A",
+      "en": "Dolby A"
+    }
+  },
+  {
+    "name": {
+      "de": "Mono",
+      "en": "Mono"
+    }
+  }
+]

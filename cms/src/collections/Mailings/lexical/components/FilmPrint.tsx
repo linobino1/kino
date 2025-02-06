@@ -42,7 +42,7 @@ const FilmPrint: React.FC<MovieProps> = ({ filmPrint, color, additionalText }) =
     .filter(Boolean)
     .join(', ')
 
-  const url = getFrontendUrl(filmPrint.url)
+  const url = getFrontendUrl(filmPrint.url ?? '')
 
   return (
     <Section style={{ backgroundColor: bgGrey, paddingBlock: '20px' }}>

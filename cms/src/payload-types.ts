@@ -290,7 +290,7 @@ export interface FilmPrint {
   color?: (string | null) | Color;
   soundFormat?: (string | null) | SoundFormat;
   condition?: (string | null) | Condition;
-  url: string;
+  url?: string | null;
   /**
    * Wird automatisch generiert, wenn das Feld leer ist.
    */
@@ -402,11 +402,13 @@ export interface Condition {
  */
 export interface Event {
   id: string;
-  type?: ('screening' | 'event') | null;
   /**
-   * Leer lassen, um den Titel des ersten Spielfilms zu verwenden, falls es sich um eine Vorstellung handelt
+   * Leer lassen, um den Titel des letzten Hauptfilms zu verwenden, falls es sich um eine Vorstellung handelt
    */
   title?: string | null;
+  /**
+   * Leer lassen, um die faktischen Infos des letzten Hauptfilms zu verwenden (Regie, Jahr, etc.)
+   */
   subtitle?: string | null;
   /**
    * Achtung: wenn du dich in einer anderen Zeitzone als das Kino befindest, musst du den Unterschied ausgleichen.
@@ -415,12 +417,15 @@ export interface Event {
   location?: (string | null) | Location;
   season: string | Season;
   series?: (string | null) | ScreeningSery;
-  header?: (string | null) | Media;
-  poster?: (string | null) | Media;
   /**
-   * Infos zur Veranstaltung. Bei Veranstaltungen ohne Filme bildet das den Hauptinhalt.
+   * Wenn der Haken gesetzt ist, wird die Vorstellung nicht auf der Startseite und in der Liste der kommenden Vorstellungen angezeigt.
    */
-  info?: {
+  excludeFromUpcoming?: boolean | null;
+  header?: (string | null) | Media;
+  /**
+   * Infos zur Veranstaltung. Bei Veranstaltungen ohne Programmpunkte bildet das den Hauptinhalt.
+   */
+  intro?: {
     root: {
       type: string;
       children: {
@@ -435,12 +440,15 @@ export interface Event {
     };
     [k: string]: unknown;
   } | null;
-  films?:
+  comment?: string | null;
+  programItems?:
     | {
-        filmprint: string | FilmPrint;
-        isSupportingFilm?: boolean | null;
+        type?: ('screening' | 'other') | null;
+        isMainProgram?: boolean | null;
+        poster?: (string | null) | Media;
+        filmPrint?: (string | null) | FilmPrint;
         /**
-         * Infos zum Film / der Kopie.
+         * Infos zu diesem Programmpunkt im Rahmen dieser Veranstaltung.
          */
         info?: {
           root: {
@@ -460,13 +468,10 @@ export interface Event {
         id?: string | null;
       }[]
     | null;
-  moderator?: string | null;
-  guest?: string | null;
-  /**
-   * Wenn der Haken gesetzt ist, wird die Vorstellung nicht auf der Startseite und in der Liste der kommenden Vorstellungen angezeigt.
-   */
-  excludeFromUpcoming?: boolean | null;
-  url: string;
+  isScreeningEvent?: boolean | null;
+  mainProgramFilmPrint?: (string | null) | FilmPrint;
+  shortDescription?: string | null;
+  url?: string | null;
   /**
    * Wird automatisch generiert, wenn das Feld leer ist.
    */
@@ -499,7 +504,7 @@ export interface Season {
   name: string;
   header: string | Media;
   sort?: string | null;
-  url: string;
+  url?: string | null;
   /**
    * Wird automatisch generiert, wenn das Feld leer ist.
    */
@@ -529,7 +534,7 @@ export interface ScreeningSery {
         | KronolithCalendarEmbedBlockType
       )[]
     | null;
-  url: string;
+  url?: string | null;
   /**
    * Wird automatisch generiert, wenn das Feld leer ist.
    */
@@ -686,7 +691,7 @@ export interface Post {
    * Ausführliche Informationen zum Beitrag. Hieraus wird die Detailseite für den Post generiert. Ein Post kann auch ohne Detailseite existieren.
    */
   details?: (ContentBlockType | ImageBlockType | GalleryBlockType | VideoBlockType)[] | null;
-  url: string;
+  url?: string | null;
   /**
    * Wird automatisch generiert, wenn das Feld leer ist.
    */
@@ -717,7 +722,7 @@ export interface Page {
         | KronolithCalendarEmbedBlockType
       )[]
     | null;
-  url: string;
+  url?: string | null;
   /**
    * Wird automatisch generiert, wenn das Feld leer ist.
    */
@@ -1033,27 +1038,29 @@ export interface FilmPrintsSelect<T extends boolean = true> {
  * via the `definition` "events_select".
  */
 export interface EventsSelect<T extends boolean = true> {
-  type?: T;
   title?: T;
   subtitle?: T;
   date?: T;
   location?: T;
   season?: T;
   series?: T;
+  excludeFromUpcoming?: T;
   header?: T;
-  poster?: T;
-  info?: T;
-  films?:
+  intro?: T;
+  comment?: T;
+  programItems?:
     | T
     | {
-        filmprint?: T;
-        isSupportingFilm?: T;
+        type?: T;
+        isMainProgram?: T;
+        poster?: T;
+        filmPrint?: T;
         info?: T;
         id?: T;
       };
-  moderator?: T;
-  guest?: T;
-  excludeFromUpcoming?: T;
+  isScreeningEvent?: T;
+  mainProgramFilmPrint?: T;
+  shortDescription?: T;
   url?: T;
   slug?: T;
   updatedAt?: T;

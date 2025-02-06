@@ -59,8 +59,12 @@
   "Past Screenings": "Vergangene Vorstellungen",
   "News": "Neuigkeiten",
   "See all screenings": "Alle Vorstellungen",
-  "event.meta.title": "{{ title }} am {{date}}",
-  "screening.meta.description": "Vorstellung am {{date}}. {{synopsis}}",
+  "event": {
+    "meta": {
+      "title": "{{ title }} am {{date}}",
+      "description": "{{location}} - {{date}}. {{info}}"
+    }
+  },
   "Supporting Film": "Vorfilm",
   "Add to calendar": "Termin zu meinem Kalender hinzufügen",
   "Season not found.": "Spielzeit konnte nicht gefunden werden.",

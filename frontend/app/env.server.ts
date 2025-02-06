@@ -12,7 +12,7 @@ const schema = z.object({
   S3_REGION: z.string().optional(),
   S3_ACCESS_KEY: z.string().optional(),
   S3_SECRET_KEY: z.string().optional(),
-  MEDIA_URL: z.string().default('http://localhost:3000/api/media'),
+  MEDIA_URL: z.string().optional(),
   CDN_CGI_IMAGE_URL: z.string().optional(),
   SENTRY_DSN: z.string().optional(),
   TURNSTILE_SITE_KEY: z.string(),

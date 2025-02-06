@@ -36,8 +36,7 @@ export const Hero: React.FC<Props> = ({ type, headline, image, children, classNa
               { options: { width: 2560 }, size: '2560w' },
             ]}
             sizes="100vw"
-            // @ts-expect-error fetchPriority is not working in React
-            fetchpriority="high"
+            fetchPriority="high"
             className="h-full w-full object-cover object-[center_33%]"
           />
           <div className="absolute inset-0 bg-black/20" />

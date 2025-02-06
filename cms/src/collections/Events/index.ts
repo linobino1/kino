@@ -1,21 +1,13 @@
-import type { CollectionConfig, Validate } from 'payload'
-import type { Movie } from '@/payload-types'
-import { getDefaultDocId } from '@/fields/default'
-// import { MigrateMovieButton } from '@/MigrateMovie/admin/Button'
+import type { CollectionConfig } from 'payload'
 import { isAdminOrEditor } from '@/access'
 import { slugGenerator } from './util/slugGenerator'
-import { updateImages } from './hooks/updateImages'
+import { generateImplicitData } from './hooks/generateImplicitData'
 
-const requiredForNonScreeningEvents: Validate = (value: string, { data }) => {
-  if (data?.type !== 'screening' && !value) return 'Feld ist für nicht-Vorstellungen erforderlich'
-  return true
-}
-
-export const Events: CollectionConfig = {
+export const Events: CollectionConfig<'events'> = {
   slug: 'events',
   labels: {
-    singular: 'Event',
-    plural: 'Events',
+    singular: 'Veranstaltung',
+    plural: 'Veranstaltungen',
   },
   admin: {
     group: 'Kalender',
@@ -23,7 +15,11 @@ export const Events: CollectionConfig = {
     useAsTitle: 'title',
   },
   versions: {
-    drafts: true,
+    drafts: {
+      autosave: {
+        interval: 500,
+      },
+    },
   },
   access: {
     read: (args) => {
@@ -44,44 +40,18 @@ export const Events: CollectionConfig = {
     },
   },
   hooks: {
-    beforeChange: [updateImages],
+    beforeValidate: [generateImplicitData],
   },
   fields: [
-    {
-      name: 'type',
-      label: 'Art',
-      type: 'select',
-      options: [
-        { label: 'Vorstellung', value: 'screening' },
-        { label: 'Event', value: 'event' },
-      ],
-      defaultValue: 'screening',
-    },
     {
       name: 'title',
       label: 'Titel',
       type: 'text',
       localized: true,
+      // required: true,
       admin: {
         description:
-          'Leer lassen, um den Titel des ersten Spielfilms zu verwenden, falls es sich um eine Vorstellung handelt',
-      },
-      validate: requiredForNonScreeningEvents,
-      hooks: {
-        beforeChange: [
-          // if the field is empty, we will fill it with the title of the first film
-          async ({ data, value, req }) => {
-            if (value) return value
-            if (!data?.films?.length) return undefined
-            const filmPrint = await req.payload.findByID({
-              collection: 'filmPrints',
-              id: data.films[0].filmprint,
-              locale: req.locale,
-              depth: 4,
-            })
-            return (filmPrint?.movie as Movie)?.title
-          },
-        ],
+          'Leer lassen, um den Titel des letzten Hauptfilms zu verwenden, falls es sich um eine Vorstellung handelt',
       },
     },
     {
@@ -90,7 +60,8 @@ export const Events: CollectionConfig = {
       type: 'text',
       localized: true,
       admin: {
-        condition: (data) => data?.type !== 'screening',
+        description:
+          'Leer lassen, um die faktischen Infos des letzten Hauptfilms zu verwenden (Regie, Jahr, etc.)',
       },
     },
     {
@@ -120,7 +91,14 @@ export const Events: CollectionConfig = {
           label: 'Spielstätte',
           type: 'relationship',
           relationTo: 'locations',
-          defaultValue: () => getDefaultDocId('locations'),
+          defaultValue: async ({ req: { payload } }) =>
+            (
+              await payload.find({
+                collection: 'locations',
+                limit: 1,
+                where: { default: { equals: true } },
+              })
+            ).docs[0].id,
           admin: {
             width: '50%',
           },
@@ -128,129 +106,32 @@ export const Events: CollectionConfig = {
       ],
     },
     {
-      type: 'row',
-      fields: [
-        {
-          name: 'season',
-          label: 'Spielzeit',
-          type: 'relationship',
-          relationTo: 'seasons',
-          hasMany: false,
-          required: true,
-          defaultValue: () =>
-            fetch(`/api/seasons/`)
-              .then((res) => res.json())
-              .then((res) => res.docs[0].id)
-              .catch(() => null),
-          admin: {
-            width: '50%',
-          },
-        },
-        {
-          name: 'series',
-          label: 'Vorstellungsreihe',
-          type: 'relationship',
-          relationTo: 'screeningSeries',
-          hasMany: false,
-          admin: {
-            width: '50%',
-          },
-        },
-      ],
-    },
-    {
-      name: 'header',
-      label: 'Titelbild',
-      type: 'upload',
-      relationTo: 'media',
-      admin: {
-        condition: (data) => data?.type !== 'screening',
-      },
-      validate: requiredForNonScreeningEvents,
-    },
-    {
-      name: 'poster',
-      label: 'Filmposter',
-      type: 'upload',
-      relationTo: 'media',
-      admin: {
-        condition: (data) => data?.type !== 'screening',
-      },
-      validate: requiredForNonScreeningEvents,
-    },
-    {
-      name: 'info',
-      label: 'Info',
-      type: 'richText',
-      admin: {
-        description:
-          'Infos zur Veranstaltung. Bei Veranstaltungen ohne Filme bildet das den Hauptinhalt.',
-      },
-      localized: true,
-      required: false,
-      validate: requiredForNonScreeningEvents,
-    },
-    {
-      name: 'films',
-      label: 'Filme',
-      type: 'array',
-      minRows: 1,
+      name: 'season',
+      label: 'Spielzeit',
+      type: 'relationship',
+      relationTo: 'seasons',
+      hasMany: false,
       required: true,
-      fields: [
-        // TODO
-        // {
-        //   name: 'migrateMovie',
-        //   type: 'ui',
-        //   admin: {
-        //     components: {
-        //       Field: () => MigrateMovieButton({ newTab: true }),
-        //     },
-        //   },
-        // },
-        {
-          name: 'filmprint',
-          label: 'Filmkopie',
-          type: 'relationship',
-          relationTo: 'filmPrints',
-          required: true,
-          filterOptions: {
-            _status: {
-              equals: 'published',
-            },
-          },
-        },
-        {
-          name: 'isSupportingFilm',
-          label: 'Ist Vorfilm',
-          type: 'checkbox',
-          defaultValue: false,
-        },
-        {
-          name: 'info',
-          label: 'Info',
-          type: 'richText',
-          localized: true,
-          required: false,
-          admin: {
-            description: 'Infos zum Film / der Kopie.',
-          },
-        },
-      ],
+      defaultValue: async ({ req: { payload } }) =>
+        (
+          await payload.find({
+            collection: 'seasons',
+            limit: 1,
+          })
+        ).docs[0].id,
       admin: {
-        condition: (data) => data?.type === 'screening',
+        position: 'sidebar',
       },
     },
     {
-      name: 'moderator',
-      label: 'Moderation',
-      type: 'text',
-      required: false,
-    },
-    {
-      name: 'guest',
-      label: 'Gast',
-      type: 'text',
-      required: false,
+      name: 'series',
+      label: 'Veranstaltungsreihe',
+      type: 'relationship',
+      relationTo: 'screeningSeries',
+      hasMany: false,
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
       name: 'excludeFromUpcoming',
@@ -261,6 +142,129 @@ export const Events: CollectionConfig = {
         position: 'sidebar',
         description:
           'Wenn der Haken gesetzt ist, wird die Vorstellung nicht auf der Startseite und in der Liste der kommenden Vorstellungen angezeigt.',
+      },
+    },
+    {
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'Überblick',
+          fields: [
+            {
+              name: 'header',
+              label: 'Titelbild',
+              type: 'upload',
+              relationTo: 'media',
+              admin: {
+                condition: (data) => data?.type !== 'screening',
+              },
+              required: true,
+            },
+            {
+              name: 'intro',
+              label: 'Einleitung',
+              type: 'richText',
+              admin: {
+                description:
+                  'Infos zur Veranstaltung. Bei Veranstaltungen ohne Programmpunkte bildet das den Hauptinhalt.',
+              },
+              localized: true,
+            },
+            {
+              name: 'comment',
+              label: 'Kommentar',
+              type: 'textarea',
+              required: false,
+              localized: true,
+            },
+          ],
+        },
+        {
+          label: 'Programmpunkte',
+          fields: [
+            {
+              name: 'programItems',
+              label: false,
+              labels: {
+                singular: 'Programmpunkt',
+                plural: 'Programmpunkte',
+              },
+              type: 'array',
+              fields: [
+                {
+                  name: 'type',
+                  label: 'Art',
+                  type: 'radio',
+                  options: [
+                    { label: 'Screening', value: 'screening' },
+                    { label: 'Andere', value: 'other' },
+                  ],
+                  defaultValue: 'screening',
+                },
+                {
+                  name: 'isMainProgram',
+                  label: 'Ist Hauptprogramm',
+                  type: 'checkbox',
+                  defaultValue: true,
+                },
+                {
+                  name: 'poster',
+                  label: 'Poster',
+                  type: 'upload',
+                  relationTo: 'media',
+                },
+                {
+                  name: 'filmPrint',
+                  label: 'Filmkopie',
+                  type: 'relationship',
+                  relationTo: 'filmPrints',
+                  required: true,
+                  filterOptions: {
+                    _status: {
+                      equals: 'published',
+                    },
+                  },
+                  admin: {
+                    condition: (_, siblingData) => siblingData?.type === 'screening',
+                  },
+                },
+                {
+                  name: 'info',
+                  label: 'Zusatzinfo',
+                  type: 'richText',
+                  localized: true,
+                  required: false,
+                  admin: {
+                    description: 'Infos zu diesem Programmpunkt im Rahmen dieser Veranstaltung.',
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'isScreeningEvent',
+      type: 'checkbox',
+      admin: {
+        hidden: true,
+      },
+    },
+    {
+      name: 'mainProgramFilmPrint',
+      type: 'relationship',
+      relationTo: 'filmPrints',
+      admin: {
+        hidden: true,
+      },
+    },
+    {
+      name: 'shortDescription',
+      type: 'textarea',
+      localized: true,
+      admin: {
+        hidden: true,
       },
     },
   ],

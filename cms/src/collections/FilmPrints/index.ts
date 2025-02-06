@@ -92,17 +92,6 @@ export const FilmPrints: CollectionConfig = {
     ],
   },
   fields: [
-    // TODO
-    // {
-    //   name: 'migrateMovie',
-    //   type: 'ui',
-    //   admin: {
-    //     condition: (data) => !data?.movie,
-    //     components: {
-    //       Field: MigrateMovieButton,
-    //     },
-    //   },
-    // },
     {
       name: 'title',
       label: 'Titel',

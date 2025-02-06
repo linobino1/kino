@@ -21,7 +21,6 @@ export const loader = async ({ params: { lang: locale } }: LoaderFunctionArgs) =
     key: 'navigations',
     forceFresh: !!getCachedUser(),
     async getFreshValue() {
-      console.log('fetching navigations')
       return await payload.find({
         collection: 'navigations',
         // TODO: we should use depth: 0 here to save ca. 80kb of data, but we need the slug from each page doc.

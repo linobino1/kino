@@ -1,11 +1,5 @@
 import { type LoaderFunctionArgs, HeadersFunction } from '@remix-run/node'
-import type {
-  FilmPrint,
-  Location,
-  Movie as MovieType,
-  ScreeningSery,
-  Season,
-} from '@/payload-types'
+import type { FilmPrint, Location, Media, ScreeningSery, Season } from '@/payload-types'
 import { type loader as rootLoader } from '~/root'
 import { Link, MetaFunction, useLoaderData, useRouteLoaderData } from '@remix-run/react'
 import { cacheControlShortWithSWR } from '~/util/cache-control/cacheControlShortWithSWR'
@@ -19,16 +13,17 @@ import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { formatInTimeZone } from 'date-fns-tz'
 import { parseISO } from 'date-fns'
 import { JsonLd } from '~/structured-data'
-import { eventSchema } from '~/structured-data/screening'
+import { eventSchema } from '~/structured-data/event'
 import { Date } from '~/components/Date'
 import Tag from '~/components/Tag'
 import RichText from '~/components/RichText'
 import Gutter from '~/components/Gutter'
-import { lexicalToPlainText } from '~/components/RichText/lexicalToPlainText'
 import { env } from '~/env.server'
 import { FilmPrintDetails } from '~/components/FilmPrintDetails'
 import React from 'react'
 import ErrorPage from '~/components/ErrorPage'
+import { AsideLayout } from '~/components/AsideLayout'
+import { Poster } from '~/components/Poster'
 
 export const ErrorBoundary = ErrorPage
 
@@ -74,14 +69,11 @@ export const loader = async ({
         title: event.title,
         date: formatInTimeZone(parseISO(event?.date || ''), env.TIMEZONE, 'PPp'),
       }),
-      description:
-        event.type === 'event'
-          ? lexicalToPlainText(event.info)
-          : // description is more specific for screenings
-            t('screening.meta.description', {
-              date: formatInTimeZone(parseISO(event.date || ''), env.TIMEZONE, 'PPpp'),
-              synopsis: ((event.films?.[0]?.filmprint as FilmPrint).movie as MovieType).synopsis,
-            }),
+      description: t('event.meta.description', {
+        date: formatInTimeZone(parseISO(event.date || ''), env.TIMEZONE, 'PPpp'),
+        location: (event.location as Location).name,
+        info: event.shortDescription,
+      }),
       image: event.header,
     },
   }
@@ -98,7 +90,7 @@ export default function EventPage() {
           <Date className="text-lg font-semibold" iso={event.date as string} format="P / p" />
           <br />
           <div className="text-lg">{(event.location as Location).name}</div>
-          <Link to={(event.season as Season).url} prefetch="intent">
+          <Link to={(event.season as Season).url ?? ''} prefetch="intent">
             {(event.season as Season).name}
           </Link>
           <div className="my-4 text-2xl font-semibold uppercase">{event.title}</div>
@@ -113,30 +105,30 @@ export default function EventPage() {
         </div>
       </Hero>
 
-      {event.info && (
+      {event.intro && (
         <Gutter>
-          <RichText content={event.info} className="" />{' '}
+          <RichText content={event.intro} />
         </Gutter>
       )}
 
-      {/* TODO: here we should just iterate all the program items and render them */}
-      <Gutter className="flex flex-col gap-4">
-        {event.type === 'screening' &&
-          event.films?.map(({ filmprint, isSupportingFilm, info }, index) => (
-            <React.Fragment key={index}>
-              {index > 0 && <hr className="mb-4" />}
+      <Gutter className="my-4 flex flex-col gap-4">
+        {event.programItems?.map(({ type, isMainProgram, info, filmPrint, poster }, index) => (
+          <React.Fragment key={index}>
+            {index > 0 && <hr className="my-4" />}
+            {type === 'screening' ? (
               <FilmPrintDetails
-                filmPrint={filmprint as FilmPrint}
-                isSupportingFilm={!!isSupportingFilm}
-                additionalInfo={<RichText content={info} className="my-4" />}
-                className="my-4"
+                filmPrint={filmPrint as FilmPrint}
+                isMainProgram={isMainProgram}
+                additionalInfo={<RichText content={info} />}
               />
-            </React.Fragment>
-          ))}
-        {event.type === 'event' && <div className="">non-screening event</div>}
+            ) : (
+              <AsideLayout aside={poster && <Poster image={poster as Media} />}>
+                <RichText content={info} />
+              </AsideLayout>
+            )}
+          </React.Fragment>
+        ))}
       </Gutter>
-
-      <div className="h-8" />
     </PageLayout>
   )
 }

@@ -9,7 +9,7 @@ export const Formats: CollectionConfig = {
   },
   admin: {
     group: 'Konfiguration',
-    defaultColumns: ['type', 'name'],
+    defaultColumns: ['name', 'type'],
     useAsTitle: 'name',
   },
   access: {

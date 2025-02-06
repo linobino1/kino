@@ -1,0 +1,38 @@
+[
+  {
+    "name": {
+      "de": "Newsreel",
+      "en": "Wochenschau"
+    }
+  },
+  {
+    "name": {
+      "de": "Werbung",
+      "en": "Commercial"
+    }
+  },
+  {
+    "name": {
+      "de": "Trailer",
+      "en": "Trailer"
+    }
+  },
+  {
+    "name": {
+      "de": "Kurzfilm",
+      "en": "Shortfilm"
+    }
+  },
+  {
+    "name": {
+      "de": "Spielfilm",
+      "en": "Feature Film"
+    }
+  },
+  {
+    "name": {
+      "de": "Keine",
+      "en": "None"
+    }
+  }
+]
