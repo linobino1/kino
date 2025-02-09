@@ -1,11 +1,12 @@
-.DS_Store
+.vscode
+.git
 
-.env*
-*/.env*
+**/.DS_Store
 
-node_modules
-*/node_modules
+**/.env*
 
-cms/.next
+**/node_modules
 
-cms/media
+**/.next
+
+/media

@@ -1,0 +1,24 @@
+{
+  "name": "@app/util",
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts",
+    "./env": "./src/env/index.ts",
+    "./env/*": "./src/env/*.ts",
+    "./projectRoot": "./src/projectRoot.ts",
+    "./payload/findOrCreateDoc": "./src/payload/findOrCreateDoc.ts",
+    "./payload/updateDocInAllLocales": "./src/payload/updateDocInAllLocales.ts"
+  },
+  "dependencies": {
+    "@app/i18n": "workspace:*",
+    "@app/types": "workspace:*",
+    "clsx": "^2.1.1",
+    "react": "catalog:",
+    "tailwind-merge": "^2.5.4",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "payload": "catalog:"
+  }
+}

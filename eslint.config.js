@@ -8,16 +8,20 @@ import eslintConfigPrettier from 'eslint-config-prettier'
 export default [
   { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
   {
-    ignores: ['cms/.next/**/*', 'frontend/build/**/*'],
+    ignores: [
+      'apps/backend/.next/**/*',
+      'apps/frontend/build/**/*',
+      'apps/frontend/.react-router/**/*',
+    ],
   },
   // basic configs
   { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
-  // cms
+  // backend
   {
-    files: ['cms/**/*'],
+    files: ['apps/backend/**/*'],
     plugins: {
       '@next/next': nextPlugin,
     },
@@ -36,6 +40,7 @@ export default [
       'no-case-declarations': 'off',
       '@typescript-eslint/no-unused-vars': 'warn',
       '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/consistent-type-imports': ['warn', { prefer: 'type-imports' }],
     },
   },
   eslintConfigPrettier,
