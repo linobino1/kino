@@ -158,7 +158,6 @@ export const Events: CollectionConfig<'events'> = {
               admin: {
                 condition: (data) => data?.type !== 'screening',
               },
-              required: true,
             },
             {
               name: 'intro',
@@ -174,7 +173,6 @@ export const Events: CollectionConfig<'events'> = {
               name: 'comment',
               label: 'Kommentar',
               type: 'textarea',
-              required: false,
               localized: true,
             },
           ],
@@ -190,6 +188,7 @@ export const Events: CollectionConfig<'events'> = {
                 plural: 'Programmpunkte',
               },
               type: 'array',
+              minRows: 1,
               fields: [
                 {
                   name: 'type',
