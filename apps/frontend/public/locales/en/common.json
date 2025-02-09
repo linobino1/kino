@@ -52,5 +52,11 @@
     }
   },
   "Supporting Film": "Supporting Film",
-  "Add to calendar": "Add event to my calendar"
+  "Add to calendar": "Add event to my calendar",
+
+  "Error": "Error",
+  "error": {
+    "404": "The requested page {{url}} could not be found.",
+    "unknown": "An unknown error occurred. Please try again later."
+  }
 }
