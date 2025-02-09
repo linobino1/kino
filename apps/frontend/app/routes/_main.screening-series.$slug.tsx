@@ -55,7 +55,7 @@ export const loader = async ({
   }
 
   const page = parseInt(new URL(url).searchParams.get('page') || '1')
-  const depth = 2
+  const depth = 3
   const today = new Date()
   today.setHours(0, 0, 0, 0)
   const [upcoming, past] = await Promise.all([
