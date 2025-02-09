@@ -1,7 +1,7 @@
-import type { HeadersFunction } from '@remix-run/node';
+import type { HeadersFunction } from '@remix-run/node'
 import { type LoaderFunctionArgs } from '@remix-run/node'
 import { type loader as rootLoader } from '~/root'
-import type { MetaFunction} from '@remix-run/react';
+import type { MetaFunction } from '@remix-run/react'
 import { useLoaderData, useRouteLoaderData } from '@remix-run/react'
 import { cacheControlShortWithSWR } from '~/util/cache-control/cacheControlShortWithSWR'
 import type { Locale } from '@app/i18n'
@@ -64,7 +64,7 @@ export const loader = async ({
       },
     },
     locale: locale as Locale,
-    depth: 2,
+    depth: 3,
     sort: 'date',
     pagination: true,
     page,
