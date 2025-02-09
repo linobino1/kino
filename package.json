@@ -1,19 +1,20 @@
 {
   "name": "kino-im-blauen-salon",
-  "version": "3.0.0",
-  "private": true,
   "type": "module",
   "scripts": {
-    "dev": "pnpm -r --stream --filter \"{**}\" --parallel dev",
+    "dev": "pnpm -r --stream --filter \"./apps/*\" --parallel dev",
+    "build": "pnpm -r --stream --filter \"./apps/*\" build",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "pnpm generate:types && pnpm -r --parallel typecheck",
     "lint:fix": "eslint --fix .",
-    "generate:types": "pnpm --filter cms generate:types",
-    "generate:importmap": "pnpm --filter cms generate:importmap",
-    "seed": "pnpm --filter cms seed",
+    "clean": "rm -rf node_modules && pnpm -r clean",
+    "generate:types": "pnpm --filter @app/payload generate:types",
+    "generate:importmap": "pnpm --filter @app/backend generate:importmap",
+    "seed": "pnpm --filter @app/seed start",
     "test": "pnpm --filter cms test"
   },
   "devDependencies": {
+    "@app/tsconfig": "workspace:*",
     "@eslint/js": "^9.13.0",
     "@next/eslint-plugin-next": "^15.0.0",
     "@types/node": "^22.5.4",

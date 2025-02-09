@@ -1,0 +1,12 @@
+{
+  "name": "@app/i18n",
+  "type": "module",
+  "exports": {
+    ".": "./index.ts",
+    "./i18next": "./i18next.ts"
+  },
+  "dependencies": {
+    "@payloadcms/translations": "catalog:",
+    "i18next": "catalog:"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@app/tsconfig",
+  "private": true,
+  "description": "A package to share tsconfig presets around the workspace",
+  "type": "module",
+  "files": [
+    "./base.json",
+    "./react.json"
+  ]
+}

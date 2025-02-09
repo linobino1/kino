@@ -1,0 +1,16 @@
+{
+  "extends": "@app/tsconfig/react.json",
+  "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "next-env.d.ts", ".next/types/**/*.ts"],
+  "compilerOptions": {
+    "paths": {
+      "#payload/*": ["../../packages/payload/src/*"],
+      "@payload-config": ["./src/payload.config.ts"]
+    },
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  }
+}

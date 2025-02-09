@@ -1,0 +1,10 @@
+{
+  "extends": "@app/tsconfig/react.json",
+  "include": ["**/*.ts", "**/*.tsx"],
+  "compilerOptions": {
+    "paths": {
+      "#payload/*": ["../../packages/payload/src/*"],
+      "~/*": ["./app/*"]
+    }
+  }
+}

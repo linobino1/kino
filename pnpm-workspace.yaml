@@ -1,9 +1,12 @@
 packages:
-  - 'cms'
-  - 'frontend'
+  - 'apps/*'
+  - 'packages/*'
 
 catalog:
+  i18next: '^24.2.1'
   lexical: '0.21.0'
+  msw: '^2.7.0'
+  next: '15.1.6'
   payload: '3.20.0'
   '@payloadcms/db-mongodb': '3.20.0'
   '@payloadcms/email-nodemailer': '3.20.0'
@@ -14,8 +17,12 @@ catalog:
   '@payloadcms/translations': '3.20.0'
   '@payloadcms/ui': '3.20.0'
 
-  "react": "19.0.0"
-  "react-dom": "19.0.0"
+  'react': '19.0.0'
+  'react-dom': '19.0.0'
 
-  "@types/react": "^19.0.7"
-  "@types/react-dom": "^19.0.3"
+  '@types/react': '^19.0.7'
+  '@types/react-dom': '^19.0.3'
+
+  unocss: '^65.4.3'
+  '@unocss/reset': '^65.4.3'
+  '@unocss/cli': '^65.4.3'

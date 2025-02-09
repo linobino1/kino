@@ -1,0 +1,21 @@
+{
+  "name": "@app/themoviedb",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./migrateMovie": "./src/migrate/migrateMovie.ts",
+    "./fetchData": "./src/fetchData.ts",
+    "./types": "./src/types.d.ts",
+    "./mocks/mswHandlers": "./src/mocks/mswHandlers.ts"
+  },
+  "dependencies": {
+    "@app/i18n": "workspace:*",
+    "@app/util": "workspace:*",
+    "axios": "^1.7.7"
+  },
+  "devDependencies": {
+    "@app/types": "workspace:*",
+    "msw": "catalog:",
+    "payload": "catalog:"
+  }
+}

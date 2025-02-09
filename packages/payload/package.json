@@ -1,0 +1,59 @@
+{
+  "name": "@app/payload",
+  "type": "module",
+  "imports": {
+    "#payload/*": "./src/*"
+  },
+  "exports": {
+    "./config": "./src/payload.config.ts",
+    "./util/getPayloadClient": "./src/util/getPayloadClient.ts",
+    "./seed": "./src/seed/seed.ts",
+    "./types": "./src/types.d.ts"
+  },
+  "scripts": {
+    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "typecheck": "tsc --noEmit",
+    "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
+    "clean": "rm -rf .next .turbo node_modules tsconfig.tsbuildinfo",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@app/i18n": "workspace:*",
+    "@app/themoviedb": "workspace:*",
+    "@app/util": "workspace:*",
+    "@payloadcms/db-mongodb": "catalog:",
+    "@payloadcms/email-nodemailer": "catalog:",
+    "@payloadcms/plugin-seo": "catalog:",
+    "@payloadcms/richtext-lexical": "catalog:",
+    "@payloadcms/storage-s3": "catalog:",
+    "@payloadcms/translations": "catalog:",
+    "@react-email/components": "^0.0.32",
+    "@types/escape-html": "^1.0.4",
+    "cookie-es": "^1.2.2",
+    "cross-env": "^7.0.3",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
+    "escape-html": "^1.0.3",
+    "nodemailer": "^6.9.16",
+    "nodemailer-zeptomail-transport": "^1.0.13",
+    "payload": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-email": "^3.0.6",
+    "react-i18next": "^15.0.3",
+    "slugify": "^1.6.6"
+  },
+  "devDependencies": {
+    "@app/types": "workspace:*",
+    "@types/node": "^22.5.4",
+    "@types/nodemailer": "^6.4.16",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "msw": "catalog:",
+    "vite-tsconfig-paths": "^4.2.1",
+    "vitest": "^3.0.5"
+  },
+  "engines": {
+    "node": "^18.20.2 || >=20.9.0"
+  }
+}

@@ -1,0 +1,218 @@
+{
+  "locale": "de",
+  "select": "auswählen",
+  "close": "schließen",
+  "back": "zurück",
+  "header": {
+    "sellToUs": "Jetzt anbieten!",
+    "about": "Über uns",
+    "faq": "FAQ's",
+    "contact": "Kontakt",
+    "toggleMenu": "Menü anzeigen/verbergen",
+    "home": "Start"
+  },
+  "footer": {
+    "home": "Start",
+    "about": "Über uns",
+    "inquiry": "Angebotsanfrage",
+    "contact": "Kontakt",
+    "faq": "FAQ's",
+    "imprint": "Impressum",
+    "privacyPolicy": "Datenschutzerklärung",
+    "termsAndConditions": "AGB",
+    "slogan": "Wir kaufen Ihre Komponenten für die Industrieautomation!"
+  },
+  "cookies": {
+    "text": "Diese Website verwendet Cookies, um sicherzustellen, dass Sie die bestmögliche Erfahrung auf unserer Website erzielen.",
+    "acceptAll": "Alle Akzeptieren",
+    "acceptFunctional": "Nur Notwendige",
+    "acceptSelection": "Auswahl akzeptieren",
+    "settings": {
+      "refine": "Auswahl anpassen",
+      "functional": "Notwendige",
+      "statistics": "Statistik",
+      "marketing": "Marketing"
+    }
+  },
+  "brands": {
+    "andMore": "Und viele mehr..."
+  },
+  "contactForm": {
+    "fields": {
+      "name": {
+        "label": "Name",
+        "error": "Bitte geben Sie Ihren Namen an"
+      },
+      "email": {
+        "label": "E-Mail Adresse",
+        "error": "Bitte geben Sie eine gültige E-Mail-Adresse ein"
+      },
+      "message": {
+        "label": "Ihre Nachricht",
+        "error": "Bitte geben Sie eine Nachricht ein"
+      }
+    },
+    "submit": "Absenden",
+    "submitting": "Wird gesendet...",
+    "success": "Vielen Dank! Ihre Nachricht wurde erfolgreich übermittelt."
+  },
+  "inquiry": {
+    "title": "Angebotsanfrage",
+    "items": {
+      "intro": "Welche Artikel möchten Sie verkaufen?"
+    },
+    "form": {
+      "brand": "Hersteller",
+      "itemNumber": "Artikelnummer",
+      "condition": "Zustand",
+      "quantity": "Menge",
+      "price": "Preis",
+      "comment": "Kommentar/Bemerkungen",
+      "confirm": "Bestätigen",
+      "confirmChanges": "Änderungen bestätigen",
+      "addAnother": "weiteren Artikel hinzufügen",
+      "files": {
+        "input": {
+          "addFiles": "Dateien anhängen",
+          "addMoreFiles": "Weitere Dateien anhängen",
+          "innerLabel": "Dateien hierher ziehen oder klicken",
+          "browse": "Dateien auswählen",
+          "numFiles": "{{numFiles}} Dateien ausgewählt",
+          "reset": "zurücksetzen",
+          "upload": "Upload starten",
+          "uploading": "Upload läuft...",
+          "error": {
+            "fileSize": "Bitte haben Sie Verständnis, dass wir keine Dateien über {{maxSize}} akzeptieren können.",
+            "malware": "Die Datei {{fileName}} hat unseren Malware Filter nicht passiert.",
+            "generic": "Beim Hochladen der Datei {{fileName}} ist ein Fehler aufgetreten."
+          }
+        },
+        "comment": {
+          "label": "Anmerkungen zu Ihren Dateien (optional)"
+        },
+        "list": {
+          "heading": "Ihre Dateien",
+          "remove": "entfernen"
+        }
+      },
+      "contact": {
+        "heading": "Ihre Kontaktdaten",
+        "company": "Firma",
+        "name": "Name",
+        "phone": "Telefon",
+        "email": "E-Mail",
+        "street": "Adresse"
+      },
+      "consentRequired": "Um die Formulardaten zwischenspeichern zu können, brauchen wir Ihre Zustimmung zur Verarbeitung Ihrer Daten. <0>Zustimmung jetzt erteilen</0>.",
+      "savedAt": "Zuletzt gespeichert: {{date}}",
+      "submit": "Absenden",
+      "submitting": "Wird gesendet...",
+      "cancel": "Abbrechen",
+      "error": {
+        "required": "Bitte füllen Sie dieses Feld aus",
+        "pleaseCorrectData": "Bitte korrigieren Sie Ihre Eingaben",
+        "pleaseSelect": "Bitte auswählen",
+        "numItems": "Bitte fügen Sie mindestens einen Artikel hinzu",
+        "contactFieldsMissing": "Bitte korrigieren Sie Ihre Kontaktdaten",
+        "nameIsRequired": "Bitte geben Sie Ihren Namen an",
+        "emailIsInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein"
+      }
+    },
+    "success": {
+      "heading": "Vielen Dank!",
+      "p": "Ihre Angebotsanfrage wurde erfolgreich übermittelt. Wir werden uns in Kürze bei Ihnen melden.\nEine Kopie Ihrer Angebotsanfrage wurde an Ihre E-Mail-Adresse {{email}} gesendet."
+    },
+    "error": {
+      "invalidKey": "Leider konnten wir Ihre zwischengespeicherte Angebotsanfrage nicht wiederherstellen."
+    }
+  },
+  "itemCondition": {
+    "su": {
+      "label": "SU",
+      "description": "Fabrikneu und originalverpackt",
+      "longDescription": "Fabrikneu, ungeöffnet, versiegelt und originalverpackt. Der Artikel ist unbenutzt mit unbeschädigtem Siegel und in einwandfreiem Zustand."
+    },
+    "no": {
+      "label": "NO",
+      "description": "Neu und unbenutzt",
+      "longDescription": "Neu und unbenutzt in geöffneter Originalverpackung. Der Artikel ist neu und unbenutzt, ohne Gebrauchs- & Montagespuren."
+    },
+    "ud": {
+      "label": "UD",
+      "description": "Gebraucht, aber in gutem Zustand",
+      "longDescription": "Gebraucht, aber in gutem Zustand. Der Artikel wurde bereits benutzt, weist jedoch keine oder nur geringfügige Gebrauchsspuren auf."
+    },
+    "rf": {
+      "label": "RF",
+      "description": "Generalüberholt und in gutem Zustand",
+      "longDescription": "Generalüberholt und in gutem Zustand. Der Artikel wurde generalüberholt und ist in einem  guten Zustand."
+    },
+    "popup": {
+      "heading": "Welchen Zustand hat mein Artikel?"
+    }
+  },
+  "processDiagram": {
+    "alt": "Unser Ankaufsprozess",
+    "delivery": "Anlieferung",
+    "inCaseOfTransportDamage": "Bei Trans-\nportschaden",
+    "reception": "Annahme",
+    "inspection": "Kontrolle/\nPrüfung",
+    "payment": "Zahlung",
+    "statusMail": "Statusmail",
+    "notification": "Mitteilung"
+  },
+  "email": {
+    "address": "PLC-Index GmbH & Co.KG\nTheodor-Krumm-Str. 10\n88213 Ravensburg\nDeutschland",
+    "footer": {
+      "companyName": "PLC-Index GmbH & Co.KG",
+      "address": "Theodor-Krumm-Str. 10, 88213 Ravensburg, Deutschland"
+    },
+    "outro": "Mit freundlichen Grüßen,\nIhr PLC-Index Team",
+    "contactData": {
+      "title": "Sie haben folgende Daten übermittelt:",
+      "name": "Name:",
+      "email": "E-Mail-Adresse:",
+      "phone": "Telefonnummer:",
+      "company": "Firma:",
+      "address": "Adresse:"
+    },
+    "contact": {
+      "subject": "Kontaktanfrage",
+      "heading": "Vielen Dank für Ihre Nachricht",
+      "preview": "Wir haben Ihre Nachricht erhalten und werden Ihnen schnellstmöglich antworten.",
+      "intro": "Wir haben Ihre Nachricht erhalten und werden Ihnen schnellstmöglich antworten.",
+      "message": "Ihre Nachricht:",
+      "plainTextAlternative": "Viele Dank für Ihre Anfrage. Wir werden uns in Kürze bei Ihnen melden."
+    },
+    "inquiry": {
+      "subject": "Angebotsanfrage",
+      "heading": "Vielen Dank für Ihre Angebotsanfrage",
+      "preview": "Wir haben Ihre Anfrage erhalten und werden Ihnen schnellstmöglich antworten.",
+      "intro": "Wir haben Ihre Anfrage erhalten und werden Ihnen schnellstmöglich antworten.",
+      "items": {
+        "title": "Artikel:",
+        "brand": "Hersteller",
+        "itemNumber": "Artikelnummer"
+      },
+      "files": {
+        "heading": "Übermittelte Dateien:"
+      },
+      "plainTextAlternative": "Vielen Dank für Ihre Angebotsanfrage. Wir werden uns in Kürze bei Ihnen melden."
+    },
+    "error": {
+      "emailAddressMissing": "E-Mail Adresse fehlt",
+      "couldNotSendEmail": "Es tut uns leid, Ihre Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es später erneut oder senden Sie eine E-Mail an {{emailSales}}."
+    }
+  },
+  "captcha": {
+    "error": "Captcha konnte nicht überprüft werden. Bitte versuchen Sie es erneut."
+  },
+  "userUploads": {
+    "invalidSecretLink": "Dieser Link ist ungültig!",
+    "fileNotFound": "Die Datei konnte nicht gefunden werden.",
+    "invalidMimeType": "Die Datei hat einen ungültigen Dateityp."
+  },
+  "error": {
+    "pageNotFound": "Die angeforderte Seite <i>{{url}}</i> konnte nicht gefunden werden."
+  }
+}

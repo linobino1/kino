@@ -1,0 +1,10 @@
+{
+  "name": "@app/types",
+  "type": "module",
+  "files": [
+    "./payload-types.ts"
+  ],
+  "devDependencies": {
+    "payload": "catalog:"
+  }
+}

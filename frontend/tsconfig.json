@@ -1,7 +1,0 @@
-{
-  "extends": "../tsconfig.base.json"
-  // "compilerOptions": {
-  //   "types": ["@remix-run/node", "vite/client"],
-  //   "typeRoots": ["./app/env.d.ts"]
-  // }
-}

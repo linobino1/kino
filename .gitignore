@@ -1,11 +1,14 @@
 .vscode
 
+.next
+
 /media
 
 .DS_Store
 
 .env*
 !.env.example
+
 node_modules
 
 tsconfig.tsbuildinfo
