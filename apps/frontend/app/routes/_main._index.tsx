@@ -46,6 +46,11 @@ export const loader = async ({ request, params: { lang: locale } }: LoaderFuncti
     }),
     payload.find({
       collection: 'posts',
+      where: {
+        _status: {
+          equals: 'published',
+        },
+      },
       sort: '-date',
       depth: 1,
       limit: 10,

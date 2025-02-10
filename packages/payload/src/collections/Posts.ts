@@ -19,6 +19,9 @@ export const Posts: CollectionConfig = {
       hook: (slug?: string) => `/news/${slug || ''}`,
     },
   },
+  versions: {
+    drafts: true,
+  },
   fields: [
     {
       name: 'title',

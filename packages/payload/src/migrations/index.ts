@@ -3,6 +3,7 @@ import * as migration_20250206_111921_migration from './20250206_111921_migratio
 import * as migration_20250206_190444_localize_media_alt from './20250206_190444_localize_media_alt';
 import * as migration_20250208_164718_events_v3 from './20250208_164718_events_v3';
 import * as migration_20250210_200748_slug_lock from './20250210_200748_slug_lock';
+import * as migration_20250210_215532_enable_drafts_on_posts from './20250210_215532_enable_drafts_on_posts';
 
 export const migrations = [
   {
@@ -28,6 +29,11 @@ export const migrations = [
   {
     up: migration_20250210_200748_slug_lock.up,
     down: migration_20250210_200748_slug_lock.down,
-    name: '20250210_200748_slug_lock'
+    name: '20250210_200748_slug_lock',
+  },
+  {
+    up: migration_20250210_215532_enable_drafts_on_posts.up,
+    down: migration_20250210_215532_enable_drafts_on_posts.down,
+    name: '20250210_215532_enable_drafts_on_posts'
   },
 ];
