@@ -12,7 +12,7 @@ export const translateImplicitData: CollectionAfterChangeHook<Event> = async ({
   operation,
 }) => {
   if (operation !== 'update') return
-  if (context.triggerImplicitDataHooks === false) return
+  if (context.triggerHooks === false) return
   if (!doc.isScreeningEvent || !doc.mainProgramFilmPrint) return
 
   const filmPrintID =
@@ -44,7 +44,7 @@ export const translateImplicitData: CollectionAfterChangeHook<Event> = async ({
         shortDescription: movie.synopsis[otherLocale],
       },
       context: {
-        triggerImplicitDataHooks: false,
+        triggerHooks: false,
       },
     })
   }

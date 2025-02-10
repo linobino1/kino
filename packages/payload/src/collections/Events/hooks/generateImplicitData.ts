@@ -11,7 +11,7 @@ export const generateImplicitData: CollectionBeforeValidateHook<Event> = async (
   data,
   req: { payload, locale, context },
 }) => {
-  if (context.triggerImplicitDataHooks === false) return
+  if (context.triggerHooks === false) return
   if (typeof data === 'undefined') return
 
   const isScreeningEvent = data.programItems?.some(

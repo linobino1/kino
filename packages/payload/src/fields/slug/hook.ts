@@ -4,7 +4,9 @@ import type { SlugGenerator } from './types'
 export const formatSlugHook =
   (fallback: string, generator: SlugGenerator): FieldHook =>
   (args) => {
-    const { data, operation, value } = args
+    const { data, operation, value, context } = args
+    if (context.triggerHooks === false) return
+
     if (typeof value === 'string') {
       return generator(args)
     }

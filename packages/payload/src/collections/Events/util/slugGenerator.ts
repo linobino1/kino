@@ -3,8 +3,8 @@ import type { Movie } from '@app/types/payload'
 import { formatSlug } from '@app/util/formatSlug'
 import { getDocId } from '@app/util/payload/getDocId'
 
-export const slugGenerator: SlugGenerator = async ({ value, data, req: { payload, locale } }) => {
-  if (typeof value === 'string') return formatSlug(value)
+export const slugGenerator: SlugGenerator = async ({ data, req: { payload, locale } }) => {
+  if (data.slugLock === false) return formatSlug(data.slug)
   const movie = data?.mainProgramFilmPrint
     ? (
         await payload.findByID({
@@ -15,10 +15,12 @@ export const slugGenerator: SlugGenerator = async ({ value, data, req: { payload
         })
       )?.movie
     : undefined
-  return [
-    (movie as Movie)?.internationalTitle || data?.title,
-    data?.date ? data.date.substr(0, 10) : false,
-  ]
-    .filter(Boolean)
-    .join('-')
+  return formatSlug(
+    [
+      (movie as Movie)?.internationalTitle || data?.title,
+      data?.date ? data.date.substr(0, 10) : false,
+    ]
+      .filter(Boolean)
+      .join('-'),
+  )
 }
