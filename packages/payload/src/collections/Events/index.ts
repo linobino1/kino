@@ -3,6 +3,9 @@ import { isAdminOrEditor } from '#payload/access'
 import { slugGenerator } from './util/slugGenerator'
 import { generateImplicitData } from './hooks/generateImplicitData'
 
+const isScreening = (data: any) =>
+  data?.programItems?.some((item: any) => item?.type === 'screening' && item?.isMainProgram)
+
 export const Events: CollectionConfig<'events'> = {
   slug: 'events',
   labels: {
@@ -51,7 +54,7 @@ export const Events: CollectionConfig<'events'> = {
       // required: true,
       admin: {
         description:
-          'Leer lassen, um den Titel des letzten Hauptfilms zu verwenden, falls es sich um eine Vorstellung handelt',
+          'Bei Filmvorstellungen wird der Titel des letzten Films im Hauptprogramm verwendet, wenn dieses Feld leer bleibt.',
       },
     },
     {
@@ -60,8 +63,9 @@ export const Events: CollectionConfig<'events'> = {
       type: 'text',
       localized: true,
       admin: {
+        condition: isScreening,
         description:
-          'Leer lassen, um die faktischen Infos des letzten Hauptfilms zu verwenden (Regie, Jahr, etc.)',
+          'Handelt es sich um eine Filmvorstellung, wird dieses Feld ignoriert, und stattdessen werden die Credits des Films verwendet. Für andere Veranstaltungen kann hier ein Untertitel eingetragen werden. Wird auf der Veranstaltungsseite und in den Veranstaltungs-"Tickets" angezeigt.',
       },
     },
     {
@@ -148,37 +152,11 @@ export const Events: CollectionConfig<'events'> = {
       type: 'tabs',
       tabs: [
         {
-          label: 'Überblick',
-          fields: [
-            {
-              name: 'header',
-              label: 'Titelbild',
-              type: 'upload',
-              relationTo: 'media',
-              admin: {
-                condition: (data) => data?.type !== 'screening',
-              },
-            },
-            {
-              name: 'intro',
-              label: 'Einleitung',
-              type: 'richText',
-              admin: {
-                description:
-                  'Infos zur Veranstaltung. Bei Veranstaltungen ohne Programmpunkte bildet das den Hauptinhalt.',
-              },
-              localized: true,
-            },
-            {
-              name: 'comment',
-              label: 'Kommentar',
-              type: 'textarea',
-              localized: true,
-            },
-          ],
-        },
-        {
           label: 'Programmpunkte',
+          admin: {
+            description:
+              'Wird ein Programmpunkt als Typ "Filmvorstellung" im "Hauptprogramm" hinzugefügt, zählt die Veranstaltung als Filmvorstellung.',
+          },
           fields: [
             {
               name: 'programItems',
@@ -189,28 +167,36 @@ export const Events: CollectionConfig<'events'> = {
               },
               type: 'array',
               minRows: 1,
+              validate: (data) => {
+                if (!data?.length) {
+                  return 'Es muss mindestens ein Programmpunkt angelegt werden.'
+                }
+                if (!data?.some((item: any) => item?.isMainProgram)) {
+                  return "Mindestens ein Programmpunkt muss als 'Hauptprogramm' markiert sein."
+                }
+                return true
+              },
               fields: [
                 {
-                  name: 'type',
-                  label: 'Art',
-                  type: 'radio',
-                  options: [
-                    { label: 'Screening', value: 'screening' },
-                    { label: 'Andere', value: 'other' },
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'type',
+                      label: false,
+                      type: 'radio',
+                      options: [
+                        { label: 'Filmvorstellung', value: 'screening' },
+                        { label: 'Andere', value: 'other' },
+                      ],
+                      defaultValue: 'screening',
+                    },
+                    {
+                      name: 'isMainProgram',
+                      label: 'Ist Hauptprogramm',
+                      type: 'checkbox',
+                      defaultValue: true,
+                    },
                   ],
-                  defaultValue: 'screening',
-                },
-                {
-                  name: 'isMainProgram',
-                  label: 'Ist Hauptprogramm',
-                  type: 'checkbox',
-                  defaultValue: true,
-                },
-                {
-                  name: 'poster',
-                  label: 'Poster',
-                  type: 'upload',
-                  relationTo: 'media',
                 },
                 {
                   name: 'filmPrint',
@@ -228,16 +214,63 @@ export const Events: CollectionConfig<'events'> = {
                   },
                 },
                 {
+                  name: 'poster',
+                  label: 'Poster',
+                  type: 'upload',
+                  relationTo: 'media',
+                  admin: {
+                    condition: (_, siblingData) => siblingData?.type === 'other',
+                    description:
+                      "Hier muss für 'Andere' Programmpunkte ein Bild ausgewählt werden. Wird auf der Veranstaltungsseite angezeigt, wo bei bei Vorstellungen das Filmposter erscheint. Hochkant empfohlen.",
+                  },
+                },
+                {
                   name: 'info',
-                  label: 'Zusatzinfo',
+                  label: 'Info',
                   type: 'richText',
                   localized: true,
                   required: false,
                   admin: {
-                    description: 'Infos zu diesem Programmpunkt im Rahmen dieser Veranstaltung.',
+                    description:
+                      "Bei Vorstellungen sind hier zusätzliche Informationen zur Filmkopie einzutragen, bei 'Anderen' Programmpunkten die vollständige Beschreibung.",
                   },
                 },
               ],
+            },
+          ],
+        },
+        {
+          label: 'Weitere Infos',
+          fields: [
+            {
+              name: 'header',
+              label: 'Titelbild',
+              type: 'upload',
+              relationTo: 'media',
+              admin: {
+                condition: (data) => data?.type !== 'screening',
+                description:
+                  'Muss nur für Veranstaltungen ohne Filme gesetzt werden, ansonsten wird das Filmstill verwendet.',
+              },
+            },
+            {
+              name: 'intro',
+              label: 'Einleitung',
+              type: 'richText',
+              admin: {
+                description:
+                  'Optional. Wird vor den Programmpunkten auf der Veranstaltungsseite angezeigt.',
+              },
+              localized: true,
+            },
+            {
+              name: 'comment',
+              label: 'Kommentar',
+              type: 'textarea',
+              localized: true,
+              admin: {
+                description: 'Optional. Wird auf den "Tickets" in Veranstaltungslisten angezeigt.',
+              },
             },
           ],
         },

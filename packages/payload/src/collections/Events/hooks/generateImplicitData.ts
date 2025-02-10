@@ -41,7 +41,7 @@ export const generateImplicitData: CollectionBeforeValidateHook<Event> = async (
       })
 
       // get title and header from last main film
-      title = (filmPrint?.movie as Movie)?.title
+      title ??= (filmPrint?.movie as Movie)?.title
       header = (filmPrint?.movie as Movie)?.still
       shortDescription = (filmPrint?.movie as Movie)?.synopsis
     }

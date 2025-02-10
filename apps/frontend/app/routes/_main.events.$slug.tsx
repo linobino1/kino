@@ -119,7 +119,7 @@ export default function EventPage() {
               />
             ) : (
               <AsideLayout aside={poster && <Poster image={poster as Media} />}>
-                <RichText content={info} />
+                <RichText content={info} enableMarginBlock={false} />
               </AsideLayout>
             )}
           </React.Fragment>
