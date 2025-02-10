@@ -1,4 +1,2 @@
-import Link from "./Link";
-import NavLink from "./NavLink";
-
-export { Link, NavLink };
+export { Link, type Props as LinkProps } from './Link'
+export { NavLink, type Props as NavLinkProps } from './NavLink'

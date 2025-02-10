@@ -15,27 +15,18 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export const PostPreview: React.FC<Props> = ({ className, ...props }) => {
   const { t } = useTranslation()
   const { post } = props
-  let href: string | undefined | null
-  let target = '_self'
-  switch (post.link?.type) {
-    case 'internal':
-      href = (post.link.doc?.value as LinkableCollection)?.url
-      break
-    case 'external':
-      href = post.link?.url ?? ''
-      target = '_blank'
-      break
-    case 'none':
-      href = post.details?.length ? post.url : undefined
-  }
+  const imageLink =
+    post.link?.type === 'internal'
+      ? (post.link.doc?.value as LinkableCollection)?.url
+      : post.link?.type === 'external'
+        ? post.link?.url
+        : post.details?.length
+          ? post.url
+          : undefined
 
   const image = (
     <Image
       image={post.header as Media}
-      onClick={href ? () => window.open(href, target) : undefined}
-      className={cn('', {
-        'cursor-pointer': href,
-      })}
       srcSet={[
         { options: { width: 500 }, size: '500w' },
         { options: { width: 768 }, size: '768w' },
@@ -47,8 +38,13 @@ export const PostPreview: React.FC<Props> = ({ className, ...props }) => {
   )
   return (
     <div {...props} className={cn('gap-x-8 sm:grid sm:grid-cols-2', className)}>
-      {href ? (
-        <Link to={href} prefetch={post.link?.type === 'external' ? 'none' : 'intent'}>
+      {imageLink ? (
+        <Link
+          to={imageLink}
+          target={post.link?.type === 'external' ? '_blank' : '_self'}
+          prefetch={post.link?.type === 'external' ? 'none' : 'intent'}
+          localize={post.link?.type !== 'external'}
+        >
           {image}
         </Link>
       ) : (
@@ -60,9 +56,9 @@ export const PostPreview: React.FC<Props> = ({ className, ...props }) => {
         <RichText content={post.content} />
         {post.details?.length ? (
           <Link
-            className="mt-4 inline-block text-sm underline"
             to={post.url ?? ''}
-            prefetch="intent"
+            prefetch={'intent'}
+            className="mt-4 inline-block text-sm underline"
           >
             {t('Read more')}
           </Link>
