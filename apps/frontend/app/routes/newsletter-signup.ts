@@ -10,8 +10,8 @@ const validateCaptcha = async (token: string): Promise<boolean> => {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({
-        secret: env.TURNSTILE_SECRET_KEY,
-        sitekey: env.TURNSTILE_SITE_KEY,
+        secret: env.TURNSTILE_SECRET_KEY!,
+        sitekey: env.TURNSTILE_SITE_KEY!,
         response: token,
       }),
     })

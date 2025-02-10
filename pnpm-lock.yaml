@@ -190,13 +190,13 @@ importers:
         specifier: 'catalog:'
         version: 3.20.0(51511eba7f2090157815ce02516614b3)
       '@remix-run/node':
-        specifier: ^2.13.1
+        specifier: ^2.15.3
         version: 2.15.3(typescript@5.7.3)
       '@remix-run/react':
-        specifier: ^2.13.1
+        specifier: ^2.15.3
         version: 2.15.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3)
       '@remix-run/serve':
-        specifier: ^2.13.1
+        specifier: ^2.15.3
         version: 2.15.3(typescript@5.7.3)
       '@sentry/node':
         specifier: ^7.110.1
@@ -302,7 +302,7 @@ importers:
         specifier: ^1.2.5
         version: 1.2.14
       '@remix-run/dev':
-        specifier: ^2.13.1
+        specifier: ^2.15.3
         version: 2.15.3(@remix-run/react@2.15.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3))(@remix-run/serve@2.15.3(typescript@5.7.3))(@types/node@22.13.1)(babel-plugin-macros@3.1.0)(sass@1.77.4)(typescript@5.7.3)(vite@5.4.14(@types/node@22.13.1)(sass@1.77.4))
       '@sentry/vite-plugin':
         specifier: ^2.22.3
