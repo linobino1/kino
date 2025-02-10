@@ -1,15 +1,6 @@
-import type { HeadersFunction} from '@remix-run/node';
 import { type LoaderFunctionArgs, redirect } from '@remix-run/node'
-import type {
-  MetaFunction} from '@remix-run/react';
-import {
-  Form,
-  Link,
-  useLoaderData,
-  useNavigate,
-  useSearchParams,
-} from '@remix-run/react'
-import { cacheControlShortWithSWR } from '~/util/cache-control/cacheControlShortWithSWR'
+import type { MetaFunction } from '@remix-run/react'
+import { Form, Link, useLoaderData, useNavigate, useSearchParams } from '@remix-run/react'
 import type { Locale } from '@app/i18n'
 import { getPayload } from '~/util/getPayload.server'
 import i18next from '~/i18next.server'
@@ -32,10 +23,6 @@ import RenderBlocks from '~/components/Blocks/RenderBlocks'
 const limit = 20
 
 export const ErrorBoundary = ErrorPage
-
-export const headers: HeadersFunction = () => ({
-  'Cache-Control': cacheControlShortWithSWR,
-})
 
 export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
   generateMetadata({

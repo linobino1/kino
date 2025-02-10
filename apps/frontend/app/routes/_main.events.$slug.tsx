@@ -1,10 +1,8 @@
-import type { HeadersFunction } from '@remix-run/node'
 import { type LoaderFunctionArgs } from '@remix-run/node'
 import type { FilmPrint, Location, Media, ScreeningSery, Season } from '@app/types/payload'
 import { type loader as rootLoader } from '~/root'
 import type { MetaFunction } from '@remix-run/react'
 import { Link, useLoaderData, useRouteLoaderData } from '@remix-run/react'
-import { cacheControlShortWithSWR } from '~/util/cache-control/cacheControlShortWithSWR'
 import type { Locale } from '@app/i18n'
 import { getPayload } from '~/util/getPayload.server'
 import i18next from '~/i18next.server'
@@ -28,10 +26,6 @@ import { AsideLayout } from '~/components/AsideLayout'
 import { Poster } from '~/components/Poster'
 
 export const ErrorBoundary = ErrorPage
-
-export const headers: HeadersFunction = () => ({
-  'Cache-Control': cacheControlShortWithSWR,
-})
 
 export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
   generateMetadata({

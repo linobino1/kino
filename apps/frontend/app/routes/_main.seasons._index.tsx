@@ -1,9 +1,8 @@
-import type { HeadersFunction} from '@remix-run/node';
 import { type LoaderFunctionArgs, redirect } from '@remix-run/node'
-import type { MetaFunction} from '@remix-run/react';
-import { useLoaderData } from '@remix-run/react'
-import { cacheControlShortWithSWR } from '~/util/cache-control/cacheControlShortWithSWR'
+import type { MetaFunction } from '@remix-run/react'
 import type { Locale } from '@app/i18n'
+import type { Media } from '@app/types/payload'
+import { useLoaderData } from '@remix-run/react'
 import { getPayload } from '~/util/getPayload.server'
 import i18next from '~/i18next.server'
 import { PageLayout } from '~/components/PageLayout'
@@ -12,15 +11,10 @@ import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import Gutter from '~/components/Gutter'
 import Image from '~/components/Image'
-import type { Media } from '@app/types/payload'
 import Pagination from '~/components/Pagination'
 import ErrorPage from '~/components/ErrorPage'
 
 export const ErrorBoundary = ErrorPage
-
-export const headers: HeadersFunction = () => ({
-  'Cache-Control': cacheControlShortWithSWR,
-})
 
 export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
   generateMetadata({

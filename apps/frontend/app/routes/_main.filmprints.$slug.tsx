@@ -1,9 +1,8 @@
-import type { HeadersFunction } from '@remix-run/node';
-import { type LoaderFunctionArgs } from '@remix-run/node'
-import type { MetaFunction} from '@remix-run/react';
-import { useLoaderData } from '@remix-run/react'
-import { cacheControlShortWithSWR } from '~/util/cache-control/cacheControlShortWithSWR'
+import type { LoaderFunctionArgs } from '@remix-run/node'
+import type { MetaFunction } from '@remix-run/react'
 import type { Locale } from '@app/i18n'
+import type { Media, Movie as MovieType } from '@app/types/payload'
+import { useLoaderData } from '@remix-run/react'
 import { getPayload } from '~/util/getPayload.server'
 import i18next from '~/i18next.server'
 import { PageLayout } from '~/components/PageLayout'
@@ -11,15 +10,10 @@ import { Hero } from '~/components/Hero'
 import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { Gutter } from '~/components/Gutter'
-import type { Media, Movie as MovieType } from '@app/types/payload'
 import { FilmPrintDetails } from '~/components/FilmPrintDetails'
 import ErrorPage from '~/components/ErrorPage'
 
 export const ErrorBoundary = ErrorPage
-
-export const headers: HeadersFunction = () => ({
-  'Cache-Control': cacheControlShortWithSWR,
-})
 
 export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
   generateMetadata({

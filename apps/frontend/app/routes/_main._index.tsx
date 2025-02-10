@@ -1,10 +1,5 @@
-import type {
-  HeadersFunction} from '@remix-run/node';
-import {
-  redirect,
-  type LoaderFunctionArgs,
-  type MetaFunction
-} from '@remix-run/node'
+import type { HeadersFunction } from '@remix-run/node'
+import { redirect, type LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
 import { useLoaderData, useRouteLoaderData } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
 import Pagination from '~/components/Pagination'
@@ -14,7 +9,6 @@ import { postsListSchema } from '~/structured-data/post'
 import { EventsList } from '~/components/EventsList'
 import type { loader as rootLoader } from '~/root'
 import Gutter from '~/components/Gutter'
-import { cacheControlShortWithSWR } from '~/util/cache-control/cacheControlShortWithSWR'
 import { Link } from '~/components/localized-link'
 import type { Locale } from '@app/i18n'
 import { classes } from '~/classes'
@@ -29,10 +23,6 @@ import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 
 export const ErrorBoundary = ErrorPage
-
-export const headers: HeadersFunction = () => ({
-  'Cache-Control': cacheControlShortWithSWR,
-})
 
 export const loader = async ({ request, params: { lang: locale } }: LoaderFunctionArgs) => {
   const [payload, t] = await Promise.all([getPayload(), i18next.getFixedT(locale as string)])
