@@ -6,7 +6,7 @@ export const LinkableCollectionSlugs: CollectionSlug[] = [
   'posts',
   'pages',
   'events',
-  'screeningSeries',
+  'eventSeries',
   'filmPrints',
   'seasons',
 ]

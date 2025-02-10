@@ -4,6 +4,8 @@ import * as migration_20250206_190444_localize_media_alt from './20250206_190444
 import * as migration_20250208_164718_events_v3 from './20250208_164718_events_v3';
 import * as migration_20250210_200748_slug_lock from './20250210_200748_slug_lock';
 import * as migration_20250210_215532_enable_drafts_on_posts from './20250210_215532_enable_drafts_on_posts';
+import * as migration_20250210_222846_rename_screeningSeries_eventSeries from './20250210_222846_rename_screeningSeries_eventSeries';
+import * as migration_20250210_224545_rename_screeningSeries_eventSeries_part2 from './20250210_224545_rename_screeningSeries_eventSeries_part2';
 
 export const migrations = [
   {
@@ -34,6 +36,16 @@ export const migrations = [
   {
     up: migration_20250210_215532_enable_drafts_on_posts.up,
     down: migration_20250210_215532_enable_drafts_on_posts.down,
-    name: '20250210_215532_enable_drafts_on_posts'
+    name: '20250210_215532_enable_drafts_on_posts',
+  },
+  {
+    up: migration_20250210_222846_rename_screeningSeries_eventSeries.up,
+    down: migration_20250210_222846_rename_screeningSeries_eventSeries.down,
+    name: '20250210_222846_rename_screeningSeries_eventSeries',
+  },
+  {
+    up: migration_20250210_224545_rename_screeningSeries_eventSeries_part2.up,
+    down: migration_20250210_224545_rename_screeningSeries_eventSeries_part2.down,
+    name: '20250210_224545_rename_screeningSeries_eventSeries_part2'
   },
 ];

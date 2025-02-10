@@ -10,7 +10,7 @@ import { Media } from './collections/Media'
 import { Movies } from './collections/Movies'
 import { FilmPrints } from './collections/FilmPrints'
 import { Events } from './collections/Events'
-import { ScreeningSeries } from './collections/Events/ScreeningSeries'
+import { EventSeries } from './collections/Events/EventSeries'
 import { Posts } from './collections/Posts'
 import { Mailings } from './collections/Mailings'
 import { Pages } from './collections/Pages'
@@ -72,7 +72,7 @@ const configPromise: Promise<Config> = (async () => ({
 
     // Screenings
     Events,
-    ScreeningSeries,
+    EventSeries,
 
     // Blog
     Posts,

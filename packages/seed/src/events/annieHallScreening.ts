@@ -75,7 +75,7 @@ export const annieHallScreening: DocGenerator<'events'> = ({ context, locale }) 
         isMainProgram: true,
       },
     ],
-    series: context.screeningSeries.get('Cinema of Colors')?.id as string,
+    series: context.eventSeries.get('Cinema of Colors')?.id as string,
     info: {
       root: {
         children: [

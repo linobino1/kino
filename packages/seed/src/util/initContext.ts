@@ -18,6 +18,6 @@ export const initContext = (payload: Payload): SeedContext => ({
   locations: new Map(),
   rentals: new Map(),
   categories: new Map(),
-  screeningSeries: new Map(),
+  eventSeries: new Map(),
   filmPrints: new Map(),
 })

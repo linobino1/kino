@@ -1,5 +1,5 @@
 import React from 'react'
-import type { Media, Event, ScreeningSery } from '@app/types/payload'
+import type { Media, Event, EventSery } from '@app/types/payload'
 import { Date as DateComponent } from '~/components/Date'
 import { useTranslation } from 'react-i18next'
 import { Image } from '~/components/Image'
@@ -9,10 +9,10 @@ import { cn } from '~/util/cn'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   event: Event
-  activeScreeningSery?: ScreeningSery
+  activeEventSery?: EventSery
 }
 
-export const EventCard: React.FC<Props> = ({ event, activeScreeningSery, className, ...props }) => {
+export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, ...props }) => {
   const { t } = useTranslation()
   const today = new Date()
   today.setHours(0, 0, 0, 0)
@@ -53,8 +53,8 @@ export const EventCard: React.FC<Props> = ({ event, activeScreeningSery, classNa
       />
       <div className="flex flex-col sm:aspect-[3/2]">
         <div className="m-[0.3em] flex min-h-6 items-center justify-end">
-          {event.series && activeScreeningSery?.id !== (event.series as ScreeningSery)?.id && (
-            <Tag>{(event.series as ScreeningSery).name}</Tag>
+          {event.series && activeEventSery?.id !== (event.series as EventSery)?.id && (
+            <Tag>{(event.series as EventSery).name}</Tag>
           )}
         </div>
         <div className="flex flex-1 flex-col gap-4 px-4 pb-4">

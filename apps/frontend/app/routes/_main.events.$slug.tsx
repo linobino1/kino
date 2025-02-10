@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs } from '@remix-run/node'
-import type { FilmPrint, Location, Media, ScreeningSery, Season } from '@app/types/payload'
+import type { FilmPrint, Location, Media, EventSery, Season } from '@app/types/payload'
 import type { loader as rootLoader } from '~/root'
 import type { MetaFunction } from '@remix-run/react'
 import type { Locale } from '@app/i18n'
@@ -92,11 +92,8 @@ export default function EventPage() {
           </Link>
           <div className="my-4 text-2xl font-semibold uppercase">{event.title}</div>
           {event.series && (
-            <Link
-              className="contents"
-              to={`/screening-series/${(event.series as ScreeningSery).slug}`}
-            >
-              <Tag>{(event.series as ScreeningSery)?.name}</Tag>
+            <Link className="contents" to={`/event-series/${(event.series as EventSery).slug}`}>
+              <Tag>{(event.series as EventSery)?.name}</Tag>
             </Link>
           )}
         </div>

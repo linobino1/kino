@@ -9,7 +9,7 @@ import type { Locale } from '@app/i18n'
 
 type Props = EventsBlockType
 
-export const EventsBlock: React.FC<Props> = ({ type, screeningSeries, events }) => {
+export const EventsBlock: React.FC<Props> = ({ type, eventSeries, events }) => {
   const { t, i18n } = useTranslation()
   const locale = i18n.language as Locale
   const [loading, setLoading] = useState(true)
@@ -29,11 +29,10 @@ export const EventsBlock: React.FC<Props> = ({ type, screeningSeries, events }) 
           }
           break
 
-        case 'screeningSeries':
+        case 'eventSeries':
           data = {
-            collection: 'screeningSeries',
-            screeningSeriesID:
-              typeof screeningSeries === 'string' ? screeningSeries : (screeningSeries?.id ?? ''),
+            collection: 'eventSeries',
+            eventSeriesID: typeof eventSeries === 'string' ? eventSeries : (eventSeries?.id ?? ''),
             locale,
           }
           break
@@ -56,7 +55,7 @@ export const EventsBlock: React.FC<Props> = ({ type, screeningSeries, events }) 
       setDocs(json.docs)
       setLoading(false)
     })()
-  }, [type, events, screeningSeries])
+  }, [type, events, eventSeries])
 
   return loading ? <p>{t('Loading...')}</p> : <EventsList items={docs} site={site} />
 }

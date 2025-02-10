@@ -1,10 +1,7 @@
 import type { DocGenerator } from '../types'
 import { translate } from '../util/translate'
 
-export const cinemaOfColors: DocGenerator<'screeningSeries'> = ({
-  locale,
-  context: { media },
-}) => ({
+export const cinemaOfColors: DocGenerator<'eventSeries'> = ({ locale, context: { media } }) => ({
   name: translate({ en: 'Cinema of Colors', de: 'Kino der Farben' }, locale),
   hero: {
     type: 'image',

@@ -10,12 +10,12 @@ export type RequestBody =
       locale: Locale
     }
   | {
-      collection: 'screeningSeries'
-      screeningSeriesID: string
+      collection: 'eventSeries'
+      eventSeriesID: string
       locale: Locale
     }
 /**
- * expects a body with many event ids or one screeningSeries id:
+ * expects a body with many event ids or one eventSeries id:
  * {
  *   "collection": "events",
  *   "ids": [
@@ -28,7 +28,7 @@ export type RequestBody =
  * or
  *
  * {
- *  "collection": "screeningSeries",
+ *  "collection": "eventSeries",
  *  "id": "123",
  *  "locale": "en"
  * }
@@ -53,13 +53,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       }
       break
 
-    case 'screeningSeries':
-      if (!body.screeningSeriesID) {
-        throw new Error('id required for screeningSeries')
+    case 'eventSeries':
+      if (!body.eventSeriesID) {
+        throw new Error('id required for eventSeries')
       }
       where = {
         series: {
-          equals: body.screeningSeriesID,
+          equals: body.eventSeriesID,
         },
       }
       break

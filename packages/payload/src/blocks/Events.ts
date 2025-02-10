@@ -18,8 +18,8 @@ export const Events: Block = {
           value: 'manual',
         },
         {
-          label: 'nach Vorstellungsreihe',
-          value: 'screeningSeries',
+          label: 'nach Veranstaltungsreihe',
+          value: 'eventSeries',
         },
       ],
     },
@@ -45,13 +45,13 @@ export const Events: Block = {
       },
     },
     {
-      name: 'screeningSeries',
-      label: 'Vorstellungsreihe',
+      name: 'eventSeries',
+      label: 'Veranstaltungsreihe',
       type: 'relationship',
-      relationTo: 'screeningSeries',
+      relationTo: 'eventSeries',
       hasMany: false,
       admin: {
-        condition: (_, siblingData) => siblingData.type === 'screeningSeries',
+        condition: (_, siblingData) => siblingData.type === 'eventSeries',
       },
     },
   ],

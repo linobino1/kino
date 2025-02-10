@@ -359,7 +359,7 @@ export const seed: NewsletterProps = {
                   slug: 'kino-der-farben',
                   createdAt: '2024-08-06T21:47:54.577Z',
                   updatedAt: '2024-08-06T21:50:05.706Z',
-                  url: 'https://kinoimblauensalon.de/screening-series/kino-der-farben',
+                  url: 'https://kinoimblauensalon.de/event-series/kino-der-farben',
                 },
                 films: [
                   {

@@ -140,7 +140,7 @@ export const Events: CollectionConfig<'events'> = {
       name: 'series',
       label: 'Veranstaltungsreihe',
       type: 'relationship',
-      relationTo: 'screeningSeries',
+      relationTo: 'eventSeries',
       hasMany: false,
       admin: {
         position: 'sidebar',

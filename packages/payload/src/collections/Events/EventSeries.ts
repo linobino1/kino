@@ -2,8 +2,8 @@ import type { CollectionConfig } from 'payload'
 import pageLayout from '#payload/fields/pageLayout'
 import { slugField } from '#payload/fields/slug'
 
-export const ScreeningSeries: CollectionConfig = {
-  slug: 'screeningSeries',
+export const EventSeries: CollectionConfig = {
+  slug: 'eventSeries',
   labels: {
     singular: 'Veranstaltungsreihe',
     plural: 'Veranstaltungsreihen',
@@ -18,7 +18,7 @@ export const ScreeningSeries: CollectionConfig = {
   },
   custom: {
     addUrlField: {
-      hook: (slug?: string) => `/screening-series/${slug || ''}`,
+      hook: (slug?: string) => `/event-series/${slug || ''}`,
     },
   },
   fields: [

@@ -20,8 +20,8 @@ export const ErrorBoundary = ErrorPage
 
 export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
   generateMetadata({
-    title: data?.screeningSeries?.name,
-    image: data?.screeningSeries?.hero?.image,
+    title: data?.eventSeries?.name,
+    image: data?.eventSeries?.hero?.image,
     env: getEnvFromMatches(matches),
   })
 
@@ -31,9 +31,9 @@ export const loader = async ({
 }: LoaderFunctionArgs) => {
   const [payload, t] = await Promise.all([getPayload(), i18next.getFixedT(locale as string)])
 
-  const screeningSeries = (
+  const eventSeries = (
     await payload.find({
-      collection: 'screeningSeries',
+      collection: 'eventSeries',
       where: {
         slug: {
           equals: slug,
@@ -44,8 +44,8 @@ export const loader = async ({
     })
   ).docs[0]
 
-  if (!screeningSeries) {
-    throw new Response(t('screeningSeries not found.'), { status: 404 })
+  if (!eventSeries) {
+    throw new Response(t('eventSeries not found.'), { status: 404 })
   }
 
   const page = parseInt(new URL(url).searchParams.get('page') || '1')
@@ -59,7 +59,7 @@ export const loader = async ({
         and: [
           {
             series: {
-              equals: screeningSeries.id,
+              equals: eventSeries.id,
             },
           },
           {
@@ -85,7 +85,7 @@ export const loader = async ({
         and: [
           {
             series: {
-              equals: screeningSeries.id,
+              equals: eventSeries.id,
             },
           },
           {
@@ -105,29 +105,29 @@ export const loader = async ({
   ])
 
   return {
-    screeningSeries,
+    eventSeries,
     upcoming,
     past,
   }
 }
 
-export default function ScreeningSeriesDetailPage() {
+export default function EventSeriesDetailPage() {
   const { t } = useTranslation()
-  const { screeningSeries, upcoming, past } = useLoaderData<typeof loader>()
+  const { eventSeries, upcoming, past } = useLoaderData<typeof loader>()
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>('root')
 
   const h2 = 'text-xl font-semibold my-12'
   return (
     <PageLayout type="default">
-      <Hero {...screeningSeries.hero} />
+      <Hero {...eventSeries.hero} />
       <Gutter className="mt-4">
-        <RenderBlocks blocks={screeningSeries?.blocks ?? []} />
+        <RenderBlocks blocks={eventSeries?.blocks ?? []} />
         {upcoming.docs.length > 0 && (
           <>
             <h2 className={h2}>{t('Upcoming Screenings')}</h2>
             <EventsList
               items={upcoming.docs}
-              activeScreeningSery={screeningSeries}
+              activeEventSery={eventSeries}
               site={rootLoaderData?.site}
             />
           </>
@@ -137,7 +137,7 @@ export default function ScreeningSeriesDetailPage() {
             <h2 className={h2}>{t('Past Screenings')}</h2>
             <EventsList
               items={past.docs}
-              activeScreeningSery={screeningSeries}
+              activeEventSery={eventSeries}
               site={rootLoaderData?.site}
             />
           </>

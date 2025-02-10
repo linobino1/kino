@@ -25,7 +25,7 @@ export type SeedContext = {
   locations: Map<string, RequiredDataFromCollectionSlug<'locations'>>
   rentals: Map<string, RequiredDataFromCollectionSlug<'rentals'>>
   categories: Map<string, RequiredDataFromCollectionSlug<'categories'>>
-  screeningSeries: Map<string, RequiredDataFromCollectionSlug<'screeningSeries'>>
+  eventSeries: Map<string, RequiredDataFromCollectionSlug<'eventSeries'>>
   filmPrints: Map<string, RequiredDataFromCollectionSlug<'filmPrints'>>
 }
 

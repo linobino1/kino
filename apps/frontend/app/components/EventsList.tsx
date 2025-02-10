@@ -1,4 +1,4 @@
-import type { Event, ScreeningSery, Site } from '@app/types/payload'
+import type { Event, EventSery, Site } from '@app/types/payload'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { JsonLd } from '~/structured-data'
@@ -12,13 +12,13 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   items: Event[]
   site?: Site
   className?: string
-  activeScreeningSery?: ScreeningSery
+  activeEventSery?: EventSery
   emptyMessage?: string
 }
 
 export const EventsList: React.FC<Props> = ({
   items,
-  activeScreeningSery,
+  activeEventSery,
   emptyMessage,
   site,
   className,
@@ -37,7 +37,7 @@ export const EventsList: React.FC<Props> = ({
       {JsonLd(screeningsListMarkup(items, site))}
       {items.map((item) => (
         <Link key={item.id} to={`/events/${item.slug as string}`} prefetch="intent">
-          <EventCard event={item} activeScreeningSery={activeScreeningSery} />
+          <EventCard event={item} activeEventSery={activeEventSery} />
         </Link>
       ))}
     </div>

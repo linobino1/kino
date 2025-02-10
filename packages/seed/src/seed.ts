@@ -1,6 +1,6 @@
 import { readdirSync, rmSync, existsSync, globSync } from 'fs'
 import path from 'path'
-import type { PayloadRequest} from 'payload';
+import type { PayloadRequest } from 'payload'
 import { type Payload } from 'payload'
 import { mediaDir } from '@app/util/mediaDir'
 import { migrateMovie } from '@app/themoviedb/migrateMovie'
@@ -21,7 +21,7 @@ import { seedSoundFormats } from './soundFormats'
 import { seedConditions } from './conditions'
 import { seedLocations } from './locations'
 import { seedSeasons } from './seasons'
-import { cinemaOfColors } from './screeningSeries/cinemaOfColors'
+import { cinemaOfColors } from './eventSeries/cinemaOfColors'
 import { initContext } from './util/initContext'
 import { casablancaFilmprint } from './filmprints/casablancaFilmprint'
 import { hfgRental } from './rentals/hfgRental'
@@ -169,7 +169,7 @@ export const seed = async (payload: Payload, req?: PayloadRequest): Promise<void
 
   payload.logger.info(`— seeding screening series...`)
   await seedDoc({
-    collection: 'screeningSeries',
+    collection: 'eventSeries',
     generator: cinemaOfColors,
     context,
   })
