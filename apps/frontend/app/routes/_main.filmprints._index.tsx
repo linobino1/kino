@@ -1,7 +1,7 @@
 import { type LoaderFunctionArgs, redirect } from '@remix-run/node'
 import type { MetaFunction } from '@remix-run/react'
-import { Form, Link, useLoaderData, useNavigate, useSearchParams } from '@remix-run/react'
 import type { Locale } from '@app/i18n'
+import { Form, useLoaderData, useNavigate, useSearchParams } from '@remix-run/react'
 import { getPayload } from '~/util/getPayload.server'
 import i18next from '~/i18next.server'
 import { PageLayout } from '~/components/PageLayout'
@@ -19,6 +19,7 @@ import { Button } from '~/components/Button'
 import { Gutter } from '~/components/Gutter'
 import ErrorPage from '~/components/ErrorPage'
 import RenderBlocks from '~/components/Blocks/RenderBlocks'
+import { Link } from '~/components/localized-link'
 
 const limit = 20
 
