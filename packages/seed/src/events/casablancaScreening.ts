@@ -10,6 +10,7 @@ export const casablancaScreening: DocGenerator<'events'> = ({ context }) => {
   return {
     _status: 'published',
     title: '',
+    header: '',
     date: date.toISOString(),
     season: context.seasons.get(`Winter term ${currentYear}`)?.id as string,
     location: context.locations.get('Blauer Salon')?.id as string,

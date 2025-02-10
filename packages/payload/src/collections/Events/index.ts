@@ -2,6 +2,8 @@ import type { CollectionConfig } from 'payload'
 import { isAdminOrEditor } from '#payload/access'
 import { slugGenerator } from './util/slugGenerator'
 import { generateImplicitData } from './hooks/generateImplicitData'
+import { translateImplicitData } from './hooks/translateImplicitData'
+import type { Event } from '@app/types/payload'
 
 const isScreening = (data: any) =>
   data?.programItems?.some((item: any) => item?.type === 'screening' && item?.isMainProgram)
@@ -44,6 +46,7 @@ export const Events: CollectionConfig<'events'> = {
   },
   hooks: {
     beforeValidate: [generateImplicitData],
+    afterChange: [translateImplicitData],
   },
   fields: [
     {
@@ -51,10 +54,16 @@ export const Events: CollectionConfig<'events'> = {
       label: 'Titel',
       type: 'text',
       localized: true,
-      // required: true,
+      required: true,
+      validate: (value: any, { data }: { data: Partial<Event> }) => {
+        if (!isScreening(data) && !value) {
+          return 'Der Titel darf nicht leer sein.'
+        }
+        return true
+      },
       admin: {
         description:
-          'Bei Filmvorstellungen wird der Titel des letzten Films im Hauptprogramm verwendet, wenn dieses Feld leer bleibt.',
+          'Bei Filmvorstellungen wird der Titel des letzten Films im Hauptprogramm verwendet, wenn dieses Feld leer bleibt. Refresh benötigt.',
       },
     },
     {
@@ -63,9 +72,8 @@ export const Events: CollectionConfig<'events'> = {
       type: 'text',
       localized: true,
       admin: {
-        condition: isScreening,
         description:
-          'Handelt es sich um eine Filmvorstellung, wird dieses Feld ignoriert, und stattdessen werden die Credits des Films verwendet. Für andere Veranstaltungen kann hier ein Untertitel eingetragen werden. Wird auf der Veranstaltungsseite und in den Veranstaltungs-"Tickets" angezeigt.',
+          'Dieses Feld bei einer Filmvorstellung leer lassen, um die Credits des Hauptfilms zu verwenden. Für sonstige Veranstaltungen kann hier ein Untertitel eingetragen werden. Wird auf der Veranstaltungsseite und in den Veranstaltungs-"Tickets" angezeigt.',
       },
     },
     {
@@ -218,6 +226,7 @@ export const Events: CollectionConfig<'events'> = {
                   label: 'Poster',
                   type: 'upload',
                   relationTo: 'media',
+                  required: true,
                   admin: {
                     condition: (_, siblingData) => siblingData?.type === 'other',
                     description:
@@ -247,10 +256,14 @@ export const Events: CollectionConfig<'events'> = {
               label: 'Titelbild',
               type: 'upload',
               relationTo: 'media',
+              required: true,
+              validate: (value: any, { data }: { data: Partial<Event> }) => {
+                if (isScreening(data)) return true
+                return value ? true : 'Es muss ein Titelbild ausgewählt werden.'
+              },
               admin: {
-                condition: (data) => data?.type !== 'screening',
                 description:
-                  'Muss nur für Veranstaltungen ohne Filme gesetzt werden, ansonsten wird das Filmstill verwendet.',
+                  'Muss nur für Veranstaltungen ohne Filme gesetzt werden, ansonsten wird das Filmstill verwendet. Refresh benötigt.',
               },
             },
             {

@@ -1,80 +1,31 @@
 import type { CollectionBeforeValidateHook } from 'payload'
 import type { Event, Movie } from '@app/types/payload'
-import { createHeadlessEditor } from '@payloadcms/richtext-lexical/lexical/headless'
 import type { LexicalRichTextAdapter } from '@payloadcms/richtext-lexical'
+import { type Locale } from '@app/i18n'
+import { createHeadlessEditor } from '@payloadcms/richtext-lexical/lexical/headless'
 import { getEnabledNodes } from '@payloadcms/richtext-lexical'
 import { $getRoot } from '@payloadcms/richtext-lexical/lexical'
+import { getMovieData } from './shared/getMovieData'
 
 export const generateImplicitData: CollectionBeforeValidateHook<Event> = async ({
   data,
-  req: { payload, locale },
+  req: { payload, locale, context },
 }) => {
+  if (context.triggerImplicitDataHooks === false) return
   if (typeof data === 'undefined') return
 
   const isScreeningEvent = data.programItems?.some(
     (item) => item.type === 'screening' && item.isMainProgram,
   )
 
-  let title = data.title
-  let header = data.header
-  let shortDescription: string | undefined
-  const mainProgramFilmPrint = data.programItems?.findLast((item) => item.isMainProgram)
-    ?.filmPrint as string | undefined
+  const mainProgramItem = data.programItems?.findLast((item) => item.isMainProgram)
+  const mainProgramFilmPrint =
+    typeof mainProgramItem?.filmPrint === 'string'
+      ? mainProgramItem?.filmPrint
+      : mainProgramItem?.filmPrint?.id
 
-  if (isScreeningEvent) {
-    if (mainProgramFilmPrint) {
-      const filmPrint = await payload.findByID({
-        collection: 'filmPrints',
-        id: mainProgramFilmPrint,
-        locale: locale,
-        depth: 1,
-        select: {
-          movie: true,
-        },
-        populate: {
-          movies: {
-            title: true,
-            still: true,
-            synopsis: true,
-          },
-        },
-      })
-
-      // get title and header from last main film
-      title ??= (filmPrint?.movie as Movie)?.title
-      header = (filmPrint?.movie as Movie)?.still
-      shortDescription = (filmPrint?.movie as Movie)?.synopsis
-    }
-  } else {
-    // get shortDescription from event.info (converted to plaintext)
-    if (data.intro) {
-      const headlessEditor = createHeadlessEditor({
-        nodes: getEnabledNodes({
-          editorConfig: (payload.config.editor as LexicalRichTextAdapter).editorConfig,
-        }),
-      })
-
-      try {
-        headlessEditor.update(
-          () => {
-            headlessEditor.setEditorState(headlessEditor.parseEditorState(data.intro as any))
-          },
-          { discrete: true }, // This should commit the editor state immediately
-        )
-      } catch (e) {
-        payload.logger.error({ err: e }, 'ERROR parsing editor state')
-      }
-
-      shortDescription = headlessEditor.getEditorState().read(() => $getRoot().getTextContent())
-    }
-  }
-
-  return {
-    ...data,
+  const update: Partial<Event> = {
     isScreeningEvent,
-    title,
-    header,
-    shortDescription,
     mainProgramFilmPrint,
     // get programItems.poster from programItems.filmPrint.movie.poster
     programItems: await Promise.all(
@@ -83,7 +34,6 @@ export const generateImplicitData: CollectionBeforeValidateHook<Event> = async (
           const filmPrint = await payload.findByID({
             collection: 'filmPrints',
             id: typeof item.filmPrint === 'string' ? item.filmPrint : item.filmPrint.id,
-            locale: locale,
             depth: 1,
             select: {
               movie: true,
@@ -103,5 +53,50 @@ export const generateImplicitData: CollectionBeforeValidateHook<Event> = async (
         return item
       }),
     ),
-  } satisfies Partial<Event>
+  }
+
+  if (isScreeningEvent && mainProgramFilmPrint) {
+    // for screenings, get shortDescription from movie.synopsis
+    // and title from movie.title (if not already set)
+    const movie = await getMovieData({
+      filmPrintID: mainProgramFilmPrint,
+      payload,
+      locale: locale as Locale,
+    })
+    if (movie) {
+      update.title = data.title || movie.title
+      update.shortDescription = movie.synopsis
+    }
+  } else {
+    // for non-screenings, get shortDescription from last main program item
+    if (mainProgramItem?.info) {
+      const headlessEditor = createHeadlessEditor({
+        nodes: getEnabledNodes({
+          editorConfig: (payload.config.editor as LexicalRichTextAdapter).editorConfig,
+        }),
+      })
+
+      try {
+        headlessEditor.update(
+          () => {
+            headlessEditor.setEditorState(
+              headlessEditor.parseEditorState(mainProgramItem.info as any),
+            )
+          },
+          { discrete: true }, // This should commit the editor state immediately
+        )
+      } catch (e) {
+        payload.logger.error({ err: e }, 'ERROR parsing editor state')
+      }
+
+      update.shortDescription = headlessEditor
+        .getEditorState()
+        .read(() => $getRoot().getTextContent())
+    }
+  }
+
+  return {
+    ...data,
+    ...update,
+  }
 }
