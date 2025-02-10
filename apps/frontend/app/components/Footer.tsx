@@ -5,10 +5,11 @@ import type { Navigation as NavigationType, Site } from '@app/types/payload'
 import NewsletterSignup from './NewsletterSignup'
 import Gutter from './Gutter'
 import { Link } from '@remix-run/react'
+import type { RequiredDataFromCollection } from 'payload'
 
 export type Props = {
   site: Site
-  navigations: NavigationType[]
+  navigations: RequiredDataFromCollection<NavigationType>[]
 }
 
 export const Footer: React.FC<Props> = ({ site, navigations }) => {

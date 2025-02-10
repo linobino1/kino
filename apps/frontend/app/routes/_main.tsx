@@ -12,20 +12,30 @@ export const loader = async ({ params: { lang: locale } }: LoaderFunctionArgs) =
   const payload = await getPayload()
   const navigations = await cache({
     key: 'navigations',
-    forceFresh: !!getCachedUser(),
+    forceFresh: !!getCachedUser() || process.env.NODE_ENV === 'development',
     async getFreshValue() {
-      return await payload.find({
-        collection: 'navigations',
-        // TODO: we should use depth: 0 here to save ca. 80kb of data, but we need the slug from each page doc.
-        // we could use a beforeChange hook on the navigation collection to add the slug to each navigation item.
-        depth: 1,
-        locale: locale as Locale,
-      })
+      return (
+        await payload.find({
+          collection: 'navigations',
+          depth: 1,
+          locale: locale as Locale,
+          select: {
+            items: true,
+            type: true,
+          },
+          populate: {
+            pages: {
+              url: true,
+              slug: true,
+            },
+          },
+        })
+      ).docs
     },
   })
 
   return {
-    navigations: navigations.docs,
+    navigations,
   }
 }
 
@@ -34,7 +44,7 @@ export const handle = {
 }
 
 export default function Layout() {
-  const navigations = useLoaderData<typeof loader>().navigations
+  const { navigations } = useLoaderData<typeof loader>()
   const { site } = useRouteLoaderData<typeof rootLoader>('root')!
   return (
     <>

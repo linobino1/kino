@@ -10,10 +10,11 @@ import { useTranslation } from 'react-i18next'
 import { Link } from '~/components/localized-link'
 import { cn } from '~/util/cn'
 import LanguageSwitch from './LanguageSwitch'
+import type { RequiredDataFromCollection } from 'payload'
 
 type Props = {
   site: Site
-  navigations: NavigationType[]
+  navigations: RequiredDataFromCollection<NavigationType>[]
 }
 
 const Header: React.FC<Props> = ({ site, navigations }) => {

@@ -3,9 +3,10 @@ import type { Media, Navigation as NavigationType, Page } from '@app/types/paylo
 import { Image } from '~/components/Image'
 import { NavLink } from '~/components/localized-link/NavLink'
 import { cn } from '~/util/cn'
+import type { RequiredDataFromCollection } from 'payload'
 
 type Props = {
-  navigation?: NavigationType
+  navigation?: RequiredDataFromCollection<NavigationType>
   className?: string
   isChild?: boolean
   condensed?: boolean
