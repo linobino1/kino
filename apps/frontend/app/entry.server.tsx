@@ -7,11 +7,9 @@ import { createInstance } from 'i18next'
 import i18next from './i18next.server'
 import { I18nextProvider, initReactI18next } from 'react-i18next'
 import i18n from './i18n'
-import commonDE from '../public/locales/de/common.json'
-import authDE from '../public/locales/de/auth.json'
-import commonEN from '../public/locales/en/common.json'
-import authEN from '../public/locales/en/auth.json'
-import { returnLanguageIfSupported } from './util/i18n/returnLanguageIfSupported'
+import { translations } from '@app/i18n/translations'
+import { getRequestLanguage } from './util/i18n/getRequestLanguage'
+import { getUrlLanguage } from './util/i18n/getUrlLanguage'
 
 const ABORT_DELAY = 5000
 
@@ -24,9 +22,7 @@ export default async function handleRequest(
   const callbackName = isbot(request.headers.get('user-agent')) ? 'onAllReady' : 'onShellReady'
 
   const instance = createInstance()
-  const url = new URL(request.url)
-  const urlLanguage = url.pathname.split('/')[1]
-  const lng = returnLanguageIfSupported(urlLanguage) ?? (await i18next.getLocale(request))
+  const lng = getUrlLanguage(request) ?? getRequestLanguage(request)
   const ns = i18next.getRouteNamespaces(remixContext)
 
   await instance.use(initReactI18next).init({
@@ -34,8 +30,8 @@ export default async function handleRequest(
     lng,
     ns,
     resources: {
-      de: { common: commonDE, auth: authDE },
-      en: { common: commonEN, auth: authEN },
+      de: { common: translations.de.common, auth: translations.de.auth },
+      en: { common: translations.en.common, auth: translations.en.auth },
     },
   })
 

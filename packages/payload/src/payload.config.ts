@@ -163,7 +163,7 @@ const configPromise: Promise<Config> = (async () => ({
     locales: [...locales],
     fallback: true,
   },
-  // admin panel localization (to be removed)
+  // admin panel localization
   i18n: {
     supportedLanguages: {
       de,

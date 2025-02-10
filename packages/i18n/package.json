@@ -3,7 +3,8 @@
   "type": "module",
   "exports": {
     ".": "./index.ts",
-    "./i18next": "./i18next.ts"
+    "./*": "./*.ts",
+    "./translations": "./translations/index.ts"
   },
   "dependencies": {
     "@payloadcms/translations": "catalog:",

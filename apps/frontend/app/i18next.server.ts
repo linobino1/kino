@@ -1,8 +1,7 @@
 import { RemixI18Next } from 'remix-i18next/server'
 import i18n from './i18n'
 import { i18nCookie } from './cookies'
-import de from '../public/locales/de/common.json'
-import en from '../public/locales/en/common.json'
+import { translations } from '@app/i18n/translations'
 
 const i18next = new RemixI18Next({
   detection: {
@@ -17,12 +16,8 @@ const i18next = new RemixI18Next({
   i18next: {
     ...i18n,
     resources: {
-      en: {
-        common: en,
-      },
-      de: {
-        common: de,
-      },
+      de: { common: translations.de.common, auth: translations.de.auth },
+      en: { common: translations.en.common, auth: translations.en.auth },
     },
   },
 })

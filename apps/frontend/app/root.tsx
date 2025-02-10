@@ -16,9 +16,7 @@ import { i18nCookie } from './cookies'
 import { useTranslation } from 'react-i18next'
 import { useEffect } from 'react'
 import { useChangeLanguage } from 'remix-i18next/react'
-import i18next from './i18next.server'
 import type { LoaderFunctionArgs } from '@remix-run/node'
-import { returnLanguageIfSupported } from './util/i18n/returnLanguageIfSupported'
 import { localizeTo } from './util/i18n/localizeTo'
 import { defaultLocale, locales } from '@app/i18n'
 import { siteTitle } from '@app/util/config'
@@ -29,18 +27,22 @@ import type { Media } from '@app/types/payload'
 import { getOptimizedImageUrl } from './util/media/getOptimizedImageUrl'
 import { getCanonicalLink, getHreflangLinks } from './util/i18n/getHreflangLinks'
 import { parseFrontendBrowserEnv, type FrontendBrowserEnvironment } from '@app/util/env'
+import { getUrlLanguage } from './util/i18n/getUrlLanguage'
+import { getRequestLanguage } from './util/i18n/getRequestLanguage'
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const url = new URL(request.url)
-  const locale = returnLanguageIfSupported(url.pathname.split('/')[1])
-  const payload = await getPayload()
+  // get the locale from the URL
+  const locale = getUrlLanguage(request)
 
   // redirect unlocalized routes to the user's preferred language
   if (!locale) {
-    const lang = await i18next.getLocale(request)
+    const lang = getRequestLanguage(request)
+    const url = new URL(request.url)
     const to = localizeTo(url.pathname, lang) as string
     throw redirect(to)
   }
+
+  const payload = await getPayload()
 
   const [user, site, serializedI18nCookie] = await Promise.all([
     (await payload.auth(request)).user,

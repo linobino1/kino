@@ -1,4 +1,6 @@
 import type { CollectionConfig } from 'payload'
+import { getBackendTFunction } from '@app/i18n/getBackendTFunction'
+import { getSafeLocale } from '@app/i18n/getSafeLocale'
 
 export const Rentals: CollectionConfig = {
   slug: 'rentals',
@@ -33,7 +35,10 @@ export const Rentals: CollectionConfig = {
       type: 'textarea',
       localized: true,
       required: true,
-      defaultValue: 'Leihgabe der Filmkopie mit freundlicher Unterstützung von XXX.',
+      defaultValue: async ({ req: { locale } }) => {
+        const t = await getBackendTFunction(getSafeLocale(locale))
+        return t('rentals.credits.default')
+      },
       admin: {
         description: 'In allen Sprachen bearbeiten!',
       },

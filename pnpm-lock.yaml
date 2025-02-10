@@ -213,6 +213,9 @@ importers:
       '@types/qs':
         specifier: ^6.9.16
         version: 6.9.18
+      '@unly/universal-language-detector':
+        specifier: ^2.0.3
+        version: 2.0.3
       '@unocss/reset':
         specifier: 'catalog:'
         version: 65.4.3
@@ -243,9 +246,6 @@ importers:
       i18next-browser-languagedetector:
         specifier: ^8.0.0
         version: 8.0.2
-      i18next-http-backend:
-        specifier: ^2.6.2
-        version: 2.7.3
       isbot:
         specifier: ^4.1.0
         version: 4.4.0
@@ -3174,6 +3174,15 @@ packages:
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
 
+  '@unly/iso3166-1@1.0.2':
+    resolution: {integrity: sha512-aL/7cmcfjpwOaKFr9XHcWP/Z7lQjKLm5NMcjncT96aeSJxfblmPLnH/8lnX0GrWWFA2/CseCxnA73u5eiZcClA==}
+
+  '@unly/universal-language-detector@2.0.3':
+    resolution: {integrity: sha512-UMmZIQS2XfJko8/GOrJc9ojO4UIF9HJM59NyQgcH+Ncrb0WBHL2L7EZ/7iZ/YcdoRnioonRECUQmmUELWt9z5Q==}
+
+  '@unly/utils@1.0.3':
+    resolution: {integrity: sha512-QTRknIDX56FvzGcIpBum5D/oRSlX3dkZ+l1op1jsFlYCTd925OGUb991V7zsFv3ePcqFfvfqfR5cNVv+w4JAOw==}
+
   '@unocss/astro@65.4.3':
     resolution: {integrity: sha512-yhPKH4CT2CFjvKR8lL6oS/7jarMWp4iSnYcNlTlZLmvTIS3dGxyhAsVy/xkdzdJ6sM+6FS0hUuQNv+NYvArRNg==}
     peerDependencies:
@@ -3333,6 +3342,9 @@ packages:
   abort-controller@3.0.0:
     resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
     engines: {node: '>=6.5'}
+
+  accept-language-parser@1.5.0:
+    resolution: {integrity: sha512-QhyTbMLYo0BBGg1aWbeMG4ekWtds/31BrEU+DONOg/7ax23vxpL03Pb7/zBmha2v7vdD3AyzZVWBVGEZxKOXWw==}
 
   accepts@1.3.8:
     resolution: {integrity: sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==}
@@ -3779,9 +3791,6 @@ packages:
     resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
     engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
     hasBin: true
-
-  cross-fetch@4.0.0:
-    resolution: {integrity: sha512-e4a5N8lVvuLgAWgnCrLr2PP0YyDOTHa9H/Rj54dirp61qXnNq46m82bRhNqIA5VccJtWBvPTFRV3TtvHUKPB1g==}
 
   cross-spawn@6.0.6:
     resolution: {integrity: sha512-VqCUuhcd1iB+dsv8gxPttb5iZh/D0iubSP21g36KXdEuf6I5JiioesUVjpCdHV9MZRUfVFlvwtIUyPfxo5trtw==}
@@ -4617,11 +4626,14 @@ packages:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
     engines: {node: '>=10.17.0'}
 
+  i18next-browser-languagedetector@4.0.1:
+    resolution: {integrity: sha512-RxSoX6mB8cab0CTIQ+klCS764vYRj+Jk621cnFVsINvcdlb/cdi3vQFyrPwmnowB7ReUadjHovgZX+RPIzHVQQ==}
+
   i18next-browser-languagedetector@8.0.2:
     resolution: {integrity: sha512-shBvPmnIyZeD2VU5jVGIOWP7u9qNG3Lj7mpaiPFpbJ3LVfHZJvVzKR4v1Cb91wAOFpNw442N+LGPzHOHsten2g==}
 
-  i18next-http-backend@2.7.3:
-    resolution: {integrity: sha512-FgZxrXdRA5u44xfYsJlEBL4/KH3f2IluBpgV/7riW0YW2VEyM8FzVt2XHAOi6id0Ppj7vZvCZVpp5LrGXnc8Ig==}
+  i18next@19.0.2:
+    resolution: {integrity: sha512-fBa43Ann2udP1CQAz3IQpOZ1dGAkmi3mMfzisOhH17igneSRbvZ7P2RNbL+L1iRYKMufBmVwnC7G3gqcyviZ9g==}
 
   i18next@23.16.8:
     resolution: {integrity: sha512-06r/TitrM88Mg5FdUXAKL96dJMzgqLE5dv3ryBAra4KCwD9mJ4ndOTS95ZuymIGoE+2hzfdaMak2X11/es7ZWg==}
@@ -5066,6 +5078,13 @@ packages:
 
   lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
+
+  lodash.get@4.4.2:
+    resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
+    deprecated: This package is deprecated. Use the optional chaining (?.) operator instead.
+
+  lodash.includes@4.3.0:
+    resolution: {integrity: sha512-W3Bx6mdkRTGtlJISOvVD/lbqjTlPPUDTMnlXZFnVwi9NKJ6tiAk6LVdlhZMm17VZisqhKcgzpO5Wz91PCt5b0w==}
 
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
@@ -10917,6 +10936,20 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
+  '@unly/iso3166-1@1.0.2': {}
+
+  '@unly/universal-language-detector@2.0.3':
+    dependencies:
+      '@unly/iso3166-1': 1.0.2
+      '@unly/utils': 1.0.3
+      accept-language-parser: 1.5.0
+      i18next: 19.0.2
+      i18next-browser-languagedetector: 4.0.1
+      lodash.get: 4.4.2
+      lodash.includes: 4.3.0
+
+  '@unly/utils@1.0.3': {}
+
   '@unocss/astro@65.4.3(rollup@4.34.6)(vite@5.4.14(@types/node@22.13.1)(sass@1.77.4))(vue@3.5.13(typescript@5.7.3))':
     dependencies:
       '@unocss/core': 65.4.3
@@ -11224,6 +11257,8 @@ snapshots:
   abort-controller@3.0.0:
     dependencies:
       event-target-shim: 5.0.1
+
+  accept-language-parser@1.5.0: {}
 
   accepts@1.3.8:
     dependencies:
@@ -11694,12 +11729,6 @@ snapshots:
   cross-env@7.0.3:
     dependencies:
       cross-spawn: 7.0.6
-
-  cross-fetch@4.0.0:
-    dependencies:
-      node-fetch: 2.7.0
-    transitivePeerDependencies:
-      - encoding
 
   cross-spawn@6.0.6:
     dependencies:
@@ -12784,15 +12813,17 @@ snapshots:
 
   human-signals@2.1.0: {}
 
+  i18next-browser-languagedetector@4.0.1:
+    dependencies:
+      '@babel/runtime': 7.26.7
+
   i18next-browser-languagedetector@8.0.2:
     dependencies:
       '@babel/runtime': 7.26.7
 
-  i18next-http-backend@2.7.3:
+  i18next@19.0.2:
     dependencies:
-      cross-fetch: 4.0.0
-    transitivePeerDependencies:
-      - encoding
+      '@babel/runtime': 7.26.7
 
   i18next@23.16.8:
     dependencies:
@@ -13201,6 +13232,10 @@ snapshots:
   lodash.camelcase@4.3.0: {}
 
   lodash.debounce@4.0.8: {}
+
+  lodash.get@4.4.2: {}
+
+  lodash.includes@4.3.0: {}
 
   lodash.merge@4.6.2: {}
 
