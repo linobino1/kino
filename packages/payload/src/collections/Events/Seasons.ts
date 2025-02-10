@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import type { FieldHookArgs } from 'payload'
+import { slugField } from '#payload/fields/slug'
 
 export const Seasons: CollectionConfig = {
   slug: 'seasons',
@@ -16,9 +17,6 @@ export const Seasons: CollectionConfig = {
     read: () => true,
   },
   custom: {
-    addSlugField: {
-      from: 'name',
-    },
     addUrlField: {
       hook: (slug?: string) => `/seasons/${slug || ''}`,
     },
@@ -31,6 +29,7 @@ export const Seasons: CollectionConfig = {
       localized: true,
       required: true,
     },
+    ...slugField('name'),
     {
       name: 'header',
       label: 'Header',

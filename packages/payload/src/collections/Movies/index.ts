@@ -2,8 +2,9 @@ import type { CollectionConfig, PayloadRequest } from 'payload'
 import type { Movie } from '@app/types/payload'
 import { isAdminOrEditor } from '#payload/access'
 import { ageRatingAges } from '@app/util/config'
+import { slugField } from '#payload/fields/slug'
 
-export const Movies: CollectionConfig = {
+export const Movies: CollectionConfig<'movies'> = {
   slug: 'movies',
   labels: {
     singular: 'Film',
@@ -49,11 +50,6 @@ export const Movies: CollectionConfig = {
           equals: 'published',
         },
       }
-    },
-  },
-  custom: {
-    addSlugField: {
-      from: 'internationalTitle',
     },
   },
   versions: {
@@ -323,5 +319,6 @@ export const Movies: CollectionConfig = {
         },
       ],
     },
+    ...slugField('internationalTitle'),
   ],
 }

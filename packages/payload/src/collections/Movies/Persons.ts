@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { slugField } from '#payload/fields/slug'
 
 export const Persons: CollectionConfig = {
   slug: 'persons',
@@ -14,11 +15,6 @@ export const Persons: CollectionConfig = {
   access: {
     read: () => true,
   },
-  custom: {
-    addSlugField: {
-      from: 'name',
-    },
-  },
   fields: [
     {
       name: 'name',
@@ -27,5 +23,6 @@ export const Persons: CollectionConfig = {
       required: true,
       unique: true,
     },
+    ...slugField('name'),
   ],
 }

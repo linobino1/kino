@@ -1,3 +1,4 @@
+import { SlugComponent as SlugComponent_dd4248bc06cf947c6b45acf9ed54f133 } from 'src/components/SlugComponent'
 import { MigrateMovieButton as MigrateMovieButton_a35a6519bac065a587079eac0f5a72d8 } from 'src/components/MigrateMovieButton'
 import { UrlField as UrlField_7b4e51c9f1241f2d23a5d566952ac202 } from 'src/components/UrlField'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -37,6 +38,7 @@ import { Logo as Logo_e577ad08317d2e8977edf3e679038fc8 } from 'src/components/gr
 import { TMDBMigration as TMDBMigration_b4543c28c07beb0098fe53a85cee14d7 } from 'src/views/TMDBMigration/index'
 
 export const importMap = {
+  "/components/SlugComponent#SlugComponent": SlugComponent_dd4248bc06cf947c6b45acf9ed54f133,
   "/components/MigrateMovieButton#MigrateMovieButton": MigrateMovieButton_a35a6519bac065a587079eac0f5a72d8,
   "/components/UrlField#UrlField": UrlField_7b4e51c9f1241f2d23a5d566952ac202,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,

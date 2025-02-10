@@ -1,5 +1,6 @@
-import pageLayout from '#payload/fields/pageLayout'
 import type { CollectionConfig } from 'payload'
+import pageLayout from '#payload/fields/pageLayout'
+import { slugField } from '#payload/fields/slug'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -22,9 +23,6 @@ export const Pages: CollectionConfig = {
     addUrlField: {
       hook: (slug?: string) => `/${slug || ''}`,
     },
-    addSlugField: {
-      from: 'title',
-    },
   },
   fields: [
     {
@@ -34,6 +32,7 @@ export const Pages: CollectionConfig = {
       localized: true,
       required: true,
     },
+    ...slugField('title'),
     {
       name: 'layoutType',
       label: 'Layout',

@@ -5,7 +5,6 @@ import { s3Storage } from '@payloadcms/storage-s3'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { de } from 'payload/i18n/de'
 import { addUrlField } from './plugins/addUrlField'
-import { addSlugField } from './plugins/addSlugField'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Movies } from './collections/Movies'
@@ -126,7 +125,6 @@ const configPromise: Promise<Config> = (async () => ({
   }),
   plugins: [
     addUrlField,
-    addSlugField,
     s3Storage({
       enabled: env.S3_ENABLED === 'true' && env.NODE_ENV !== 'test',
       config: {

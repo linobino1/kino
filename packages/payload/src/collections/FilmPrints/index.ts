@@ -3,6 +3,7 @@ import type { Movie, Format } from '@app/types/payload'
 import analogDigitalTypeField from './fields'
 import { isAdminOrEditor } from '#payload/access'
 import { type Locale } from '@app/i18n'
+import { slugField } from '#payload/fields/slug'
 
 export const FilmPrints: CollectionConfig = {
   slug: 'filmPrints',
@@ -33,9 +34,6 @@ export const FilmPrints: CollectionConfig = {
   custom: {
     addUrlField: {
       hook: (slug?: string) => `/filmprints/${slug || ''}`,
-    },
-    addSlugField: {
-      from: 'title',
     },
   },
   hooks: {
@@ -101,6 +99,7 @@ export const FilmPrints: CollectionConfig = {
         description: 'Wird automatisch generiert, wenn das Feld leer ist.',
       },
     },
+    ...slugField('title'),
     {
       name: 'movie',
       label: 'Film',

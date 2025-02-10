@@ -4,6 +4,7 @@ import { Image } from '#payload/blocks/Image'
 import { Gallery } from '#payload/blocks/Gallery'
 import { Video } from '#payload/blocks/Video'
 import { LinkableCollectionSlugs } from '#payload/plugins/addUrlField'
+import { slugField } from '../fields/slug'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -17,9 +18,6 @@ export const Posts: CollectionConfig = {
     addUrlField: {
       hook: (slug?: string) => `/news/${slug || ''}`,
     },
-    addSlugField: {
-      from: 'title',
-    },
   },
   fields: [
     {
@@ -28,6 +26,7 @@ export const Posts: CollectionConfig = {
       localized: true,
       required: true,
     },
+    ...slugField('title'),
     {
       name: 'date',
       type: 'date',

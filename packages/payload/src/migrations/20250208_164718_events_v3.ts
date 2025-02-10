@@ -122,8 +122,6 @@ export async function up({ payload, req, session }: MigrateUpArgs): Promise<void
     },
   ])
 
-  // throw new Error('Migration up function is not implemented')
-
   // run payload hooks in all locales
   for await (const locale of locales) {
     await payload.update({
@@ -135,7 +133,6 @@ export async function up({ payload, req, session }: MigrateUpArgs): Promise<void
       data: {},
     })
   }
-  throw new Error('Migration up function is not implemented')
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

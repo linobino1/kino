@@ -1,9 +1,10 @@
 import type { CollectionConfig } from 'payload'
+import type { Event } from '@app/types/payload'
 import { isAdminOrEditor } from '#payload/access'
-import { slugGenerator } from './util/slugGenerator'
 import { generateImplicitData } from './hooks/generateImplicitData'
 import { translateImplicitData } from './hooks/translateImplicitData'
-import type { Event } from '@app/types/payload'
+import { slugField } from '#payload/fields/slug'
+import { slugGenerator } from './util/slugGenerator'
 
 const isScreening = (data: any) =>
   data?.programItems?.some((item: any) => item?.type === 'screening' && item?.isMainProgram)
@@ -40,15 +41,15 @@ export const Events: CollectionConfig<'events'> = {
     addUrlField: {
       hook: (slug?: string) => `/events/${slug || ''}`,
     },
-    addSlugField: {
-      generator: slugGenerator,
-    },
   },
   hooks: {
     beforeValidate: [generateImplicitData],
     afterChange: [translateImplicitData],
   },
   fields: [
+    ...slugField('title', {
+      generator: slugGenerator,
+    }),
     {
       name: 'title',
       label: 'Titel',

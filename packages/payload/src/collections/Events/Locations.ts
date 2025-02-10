@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { defaultField } from '#payload/fields/default'
+import { slugField } from '#payload/fields/slug'
 
 export const Locations: CollectionConfig = {
   slug: 'locations',
@@ -15,11 +16,6 @@ export const Locations: CollectionConfig = {
   access: {
     read: () => true,
   },
-  custom: {
-    addSlugField: {
-      from: 'name',
-    },
-  },
   fields: [
     {
       name: 'name',
@@ -27,6 +23,7 @@ export const Locations: CollectionConfig = {
       localized: true,
       type: 'text',
     },
+    ...slugField('name'),
     defaultField('locations'),
   ],
 }

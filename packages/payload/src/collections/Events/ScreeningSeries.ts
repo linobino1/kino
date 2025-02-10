@@ -1,5 +1,6 @@
-import pageLayout from '#payload/fields/pageLayout'
 import type { CollectionConfig } from 'payload'
+import pageLayout from '#payload/fields/pageLayout'
+import { slugField } from '#payload/fields/slug'
 
 export const ScreeningSeries: CollectionConfig = {
   slug: 'screeningSeries',
@@ -19,9 +20,6 @@ export const ScreeningSeries: CollectionConfig = {
     addUrlField: {
       hook: (slug?: string) => `/screening-series/${slug || ''}`,
     },
-    addSlugField: {
-      from: 'name',
-    },
   },
   fields: [
     {
@@ -31,6 +29,7 @@ export const ScreeningSeries: CollectionConfig = {
       localized: true,
       required: true,
     },
+    ...slugField('name'),
     pageLayout,
   ],
 }
