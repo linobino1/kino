@@ -1,13 +1,15 @@
 'use client'
 
-import type { TextFieldClientComponent } from 'payload'
 import { FieldLabel, useField } from '@payloadcms/ui'
-// import { env } from '#payload/util/env'
-const env = { FRONTEND_URL: 'test' }
 
-const UrlField: TextFieldClientComponent = ({ path }) => {
+type Props = {
+  baseUrl: string
+  path: string
+}
+
+export const UrlField: React.FC<Props> = ({ path, baseUrl }) => {
   const { value: relativeUrl } = useField({ path })
-  const absoluteUrl = `${env.FRONTEND_URL}${relativeUrl}`
+  const absoluteUrl = `${baseUrl}${relativeUrl}`
   return typeof relativeUrl === 'string' ? (
     <>
       <FieldLabel path={path} />
@@ -17,5 +19,3 @@ const UrlField: TextFieldClientComponent = ({ path }) => {
     </>
   ) : null
 }
-
-export default UrlField

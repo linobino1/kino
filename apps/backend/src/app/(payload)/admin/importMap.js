@@ -1,5 +1,5 @@
 import { MigrateMovieButton as MigrateMovieButton_a35a6519bac065a587079eac0f5a72d8 } from 'src/components/MigrateMovieButton'
-import { default as default_7b4e51c9f1241f2d23a5d566952ac202 } from 'src/components/UrlField'
+import { UrlField as UrlField_7b4e51c9f1241f2d23a5d566952ac202 } from 'src/components/UrlField'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { InlineToolbarFeatureClient as InlineToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
@@ -38,7 +38,7 @@ import { TMDBMigration as TMDBMigration_b4543c28c07beb0098fe53a85cee14d7 } from 
 
 export const importMap = {
   "/components/MigrateMovieButton#MigrateMovieButton": MigrateMovieButton_a35a6519bac065a587079eac0f5a72d8,
-  "/components/UrlField#default": default_7b4e51c9f1241f2d23a5d566952ac202,
+  "/components/UrlField#UrlField": UrlField_7b4e51c9f1241f2d23a5d566952ac202,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/client#InlineToolbarFeatureClient": InlineToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,

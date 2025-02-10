@@ -1,3 +1,4 @@
+import { env } from '@app/util/env/backend.server'
 import type { Config, Plugin, FieldHookArgs, CollectionSlug } from 'payload'
 
 // each collection that has a url field must be added to this array
@@ -49,7 +50,12 @@ export const addUrlField: Plugin = (incomingConfig: Config): Config => {
                       position: 'sidebar',
                       readOnly: true,
                       components: {
-                        Field: '/components/UrlField',
+                        Field: {
+                          clientProps: {
+                            baseUrl: env.FRONTEND_URL,
+                          },
+                          path: '/components/UrlField#UrlField',
+                        },
                       },
                     },
                   },
