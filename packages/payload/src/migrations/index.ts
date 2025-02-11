@@ -6,6 +6,7 @@ import * as migration_20250210_200748_slug_lock from './20250210_200748_slug_loc
 import * as migration_20250210_215532_enable_drafts_on_posts from './20250210_215532_enable_drafts_on_posts';
 import * as migration_20250210_222846_rename_screeningSeries_eventSeries from './20250210_222846_rename_screeningSeries_eventSeries';
 import * as migration_20250210_224545_rename_screeningSeries_eventSeries_part2 from './20250210_224545_rename_screeningSeries_eventSeries_part2';
+import * as migration_20250211_083006_fix_event_series_links_in_richtext from './20250211_083006_fix_event_series_links_in_richtext';
 
 export const migrations = [
   {
@@ -46,6 +47,11 @@ export const migrations = [
   {
     up: migration_20250210_224545_rename_screeningSeries_eventSeries_part2.up,
     down: migration_20250210_224545_rename_screeningSeries_eventSeries_part2.down,
-    name: '20250210_224545_rename_screeningSeries_eventSeries_part2'
+    name: '20250210_224545_rename_screeningSeries_eventSeries_part2',
+  },
+  {
+    up: migration_20250211_083006_fix_event_series_links_in_richtext.up,
+    down: migration_20250211_083006_fix_event_series_links_in_richtext.down,
+    name: '20250211_083006_fix_event_series_links_in_richtext'
   },
 ];
