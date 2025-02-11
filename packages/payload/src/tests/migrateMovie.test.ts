@@ -6,6 +6,7 @@ import { type Person } from '@app/types/payload'
 
 test('migrate Casablanca from TMDB', async () => {
   const payload = await getPayloadTestClient()
+
   const { id } = await migrateMovie({
     payload,
     tmdbId: 289,
@@ -15,6 +16,8 @@ test('migrate Casablanca from TMDB', async () => {
       backdrop: '/rrsG3xYrWifoduZtsIZ4ntoDfBY.jpg',
     },
   })
+
+  expect(id).toBeDefined()
 
   const en = await payload.findByID({
     collection: 'movies',
@@ -70,7 +73,7 @@ test('migrate Casablanca from TMDB', async () => {
     })
   ).docs[0]
   expect(genre2).toBeDefined()
-  expect(genre2.slug).toBe('romance')
+  expect(genre2.slug).toBe('liebesfilm')
 
   expect(en.year).toBe(1943)
   expect(en.duration).toBe(102)

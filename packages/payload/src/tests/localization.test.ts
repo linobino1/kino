@@ -45,6 +45,11 @@ test('create a localized draft', async () => {
   const payload = await getPayloadTestClient()
   const collection = 'movies'
 
+  await payload.delete({
+    collection: 'movies',
+    where: { id: { exists: true } },
+  })
+
   const { id } = await payload.create({
     collection,
     // @ts-expect-error data is partial, that is ok because draft is true

@@ -1,18 +1,12 @@
-import { describe, expect, test } from 'vitest'
+import { expect, test } from 'vitest'
 import { getPayloadTestClient } from './getPayloadTestClient'
 import type { Person } from '@app/types/payload'
 
-describe('slug', async () => {
+test('slug', async () => {
   const payload = await getPayloadTestClient()
   const collection = 'persons'
 
-  await payload.delete({
-    collection,
-    where: {
-      name: { in: ['Max Mustermann', 'Maxi Musterfrau'] },
-    },
-  })
-
+  // create a person
   let doc: Person = await payload.create({
     collection,
     data: {
@@ -20,58 +14,52 @@ describe('slug', async () => {
     },
     locale: 'en',
   })
+  expect(doc.name).toBe('Max Mustermann')
+  expect(doc.slug).toBe('max-mustermann')
 
-  test('create a person', async () => {
-    expect(doc.name).toBe('Max Mustermann')
-    expect(doc.slug).toBe('max-mustermann')
+  // rename the person
+  doc = await payload.update({
+    collection,
+    id: doc.id,
+    data: {
+      name: 'Maxi Musterfrau',
+    },
   })
 
-  test('rename the person', async () => {
-    doc = await payload.update({
-      collection,
-      id: doc.id,
-      data: {
-        name: 'Maxi Musterfrau',
-      },
-    })
+  expect(doc.name).toBe('Maxi Musterfrau')
+  expect(doc.slug).toBe('maxi-musterfrau')
 
-    expect(doc.name).toBe('Maxi Musterfrau')
-    expect(doc.slug).toBe('maxi-musterfrau')
+  // unlock the slug
+  doc = await payload.update({
+    collection,
+    id: doc.id,
+    data: {
+      slug: 'my-custom-slug',
+      slugLock: false,
+    },
   })
 
-  test('unlock the slug', async () => {
-    doc = await payload.update({
-      collection,
-      id: doc.id,
-      data: {
-        slug: 'my-custom-slug',
-        slugLock: false,
-      },
-    })
+  expect(doc.name).toBe('Maxi Musterfrau')
+  expect(doc.slug).toBe('my-custom-slug')
 
-    expect(doc.name).toBe('Maxi Musterfrau')
-    expect(doc.slug).toBe('my-custom-slug')
+  // rename the person with unlocked slug
+  doc = await payload.findByID({
+    collection,
+    id: doc.id,
   })
 
-  test('rename the person with unlocked slug', async () => {
-    doc = await payload.findByID({
-      collection,
-      id: doc.id,
-    })
+  expect(doc.name).toBe('Maxi Musterfrau')
+  expect(doc.slug).toBe('my-custom-slug')
 
-    expect(doc.name).toBe('Maxi Musterfrau')
-    expect(doc.slug).toBe('my-custom-slug')
+  // change the name again, slug should not change
+  doc = await payload.update({
+    collection,
+    id: doc.id,
+    data: {
+      name: 'Max Mustermann',
+    },
+  })
 
-    // change the name again, slug should not change
-    doc = await payload.update({
-      collection,
-      id: doc.id,
-      data: {
-        name: 'Max Mustermann',
-      },
-    })
-
-    expect(doc.name).toBe('Max Mustermann')
-    expect(doc.slug).toBe('my-custom-slug')
-  }, 5000)
-})
+  expect(doc.name).toBe('Max Mustermann')
+  expect(doc.slug).toBe('my-custom-slug')
+}, 5000)

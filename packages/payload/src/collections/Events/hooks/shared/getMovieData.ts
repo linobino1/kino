@@ -25,6 +25,7 @@ export const getMovieData = async ({
           title: true,
           still: true,
           synopsis: true,
+          internationalTitle: true,
         },
       },
     })

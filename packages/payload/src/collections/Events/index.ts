@@ -4,7 +4,6 @@ import { isAdminOrEditor } from '#payload/access'
 import { generateImplicitData } from './hooks/generateImplicitData'
 import { translateImplicitData } from './hooks/translateImplicitData'
 import { slugField } from '#payload/fields/slug'
-import { slugGenerator } from './util/slugGenerator'
 
 const isScreening = (data: any) =>
   data?.programItems?.some((item: any) => item?.type === 'screening' && item?.isMainProgram)
@@ -47,8 +46,8 @@ export const Events: CollectionConfig<'events'> = {
     afterChange: [translateImplicitData],
   },
   fields: [
-    ...slugField('title', {
-      generator: slugGenerator,
+    ...slugField(undefined, {
+      generator: () => {}, // we'll handle this in the collection hook
     }),
     {
       name: 'title',
@@ -111,7 +110,7 @@ export const Events: CollectionConfig<'events'> = {
                 limit: 1,
                 where: { default: { equals: true } },
               })
-            ).docs[0].id,
+            ).docs[0]?.id,
           admin: {
             width: '50%',
           },

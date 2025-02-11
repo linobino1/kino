@@ -6,10 +6,12 @@ import { createHeadlessEditor } from '@payloadcms/richtext-lexical/lexical/headl
 import { getEnabledNodes } from '@payloadcms/richtext-lexical'
 import { $getRoot } from '@payloadcms/richtext-lexical/lexical'
 import { getMovieData } from './shared/getMovieData'
+import { formatSlug } from '@app/util/formatSlug'
 
 export const generateImplicitData: CollectionBeforeValidateHook<Event> = async ({
   data,
   req: { payload, locale, context },
+  originalDoc,
 }) => {
   if (context.triggerHooks === false) return
   if (typeof data === 'undefined') return
@@ -66,6 +68,14 @@ export const generateImplicitData: CollectionBeforeValidateHook<Event> = async (
     if (movie) {
       update.title = data.title || movie.title
       update.shortDescription = movie.synopsis
+
+      if (data.slugLock) {
+        update.slug = formatSlug(
+          [movie.internationalTitle || data.title, data.date ? data.date.substr(0, 10) : false]
+            .filter(Boolean)
+            .join('-'),
+        )
+      }
     }
   } else {
     // for non-screenings, get shortDescription from last main program item
@@ -92,6 +102,17 @@ export const generateImplicitData: CollectionBeforeValidateHook<Event> = async (
       update.shortDescription = headlessEditor
         .getEditorState()
         .read(() => $getRoot().getTextContent())
+
+      if (data.slugLock) update.slug = formatSlug(data.title)
+    }
+  }
+
+  // slug is not locked, we shoud not overwrite it
+  if (!data.slugLock) {
+    if (data.slug) {
+      update.slug = formatSlug(data.slug)
+    } else if (originalDoc?.slug) {
+      update.slug = formatSlug(originalDoc.slug)
     }
   }
 

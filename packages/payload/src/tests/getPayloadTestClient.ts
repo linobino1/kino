@@ -1,4 +1,4 @@
-import type { Payload } from 'payload';
+import type { Payload } from 'payload'
 import { getPayload } from 'payload'
 import configPromise from '#payload/payload.config'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
@@ -9,7 +9,8 @@ export const getPayloadTestClient = async (): Promise<Payload> => {
     config: {
       ...config,
       db: mongooseAdapter({
-        url: 'mongodb://localhost:27017/kinoimblauensalon-test',
+        // @ts-expect-error globalThis.__MONGO_URI__ is created by vitest-mongodb
+        url: globalThis.__MONGO_URI__,
       }),
     },
   })
