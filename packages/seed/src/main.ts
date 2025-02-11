@@ -9,4 +9,4 @@ const run = async (): Promise<void> => {
 
 run()
   .catch(console.error)
-  .finally(() => process.exit(1))
+  .finally(() => process.exit(0))
