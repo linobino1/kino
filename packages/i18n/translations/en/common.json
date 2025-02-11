@@ -49,6 +49,9 @@
     "meta": {
       "title": "{{ title }} on {{date}}",
       "description": "{{location}} - {{date}}. {{info}}"
+    },
+    "page": {
+      "partners": "Cooperation Partners:"
     }
   },
   "Supporting Film": "Supporting Film",

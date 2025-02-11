@@ -25,6 +25,8 @@ import React from 'react'
 import ErrorPage from '~/components/ErrorPage'
 import { AsideLayout } from '~/components/AsideLayout'
 import { Poster } from '~/components/Poster'
+import { useTranslation } from 'react-i18next'
+import Image from '~/components/Image'
 
 export const ErrorBoundary = ErrorPage
 
@@ -79,6 +81,7 @@ export const loader = async ({
 export default function EventPage() {
   const { event } = useLoaderData<typeof loader>()
   const site = useRouteLoaderData<typeof rootLoader>('root')?.site
+  const { t } = useTranslation()
   return (
     <PageLayout>
       {JsonLd(eventSchema(event, site))}
@@ -125,6 +128,18 @@ export default function EventPage() {
           </React.Fragment>
         ))}
       </Gutter>
+
+      {event.partnerLogos?.length && (
+        <Gutter className="text-center">
+          <hr className="my-4" />
+          <h3 className="font-xl my-8">{t('event.page.partners')}</h3>
+          <div className="flex justify-center gap-4">
+            {event.partnerLogos.map((logo, index) => (
+              <Image key={index} className="h-24 w-48 object-contain" image={logo as Media} />
+            ))}
+          </div>
+        </Gutter>
+      )}
     </PageLayout>
   )
 }

@@ -285,6 +285,17 @@ export const Events: CollectionConfig<'events'> = {
                 description: 'Optional. Wird auf den "Tickets" in Veranstaltungslisten angezeigt.',
               },
             },
+            {
+              name: 'partnerLogos',
+              label: 'Partner-Logos',
+              type: 'upload',
+              relationTo: 'media',
+              hasMany: true,
+              admin: {
+                description:
+                  'Optional. Werden auf der Veranstaltungsseite ganz unten angezeigt als Kooperationspartner.',
+              },
+            },
           ],
         },
       ],

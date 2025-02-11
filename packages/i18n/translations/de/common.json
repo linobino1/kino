@@ -63,6 +63,9 @@
     "meta": {
       "title": "{{ title }} am {{date}}",
       "description": "{{location}} - {{date}}. {{info}}"
+    },
+    "page": {
+      "partners": "Kooperationspartner:"
     }
   },
   "Supporting Film": "Vorfilm",
