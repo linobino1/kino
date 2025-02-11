@@ -6,7 +6,7 @@ import type {
 import type { translations } from './translations'
 
 export const locales = ['de', 'en'] as const
-export const defaultLocale = 'en'
+export const defaultLocale = 'de'
 
 export type Locale = (typeof locales)[number]
 
