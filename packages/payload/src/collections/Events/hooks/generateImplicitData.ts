@@ -42,14 +42,14 @@ export const generateImplicitData: CollectionBeforeValidateHook<Event> = async (
             },
             populate: {
               movies: {
-                still: true,
+                poster: true,
               },
             },
           })
 
           return {
             ...item,
-            poster: (filmPrint?.movie as Movie)?.still as string,
+            poster: (filmPrint?.movie as Movie)?.poster as string,
           }
         }
         return item
@@ -68,6 +68,7 @@ export const generateImplicitData: CollectionBeforeValidateHook<Event> = async (
     if (movie) {
       update.title = data.title || movie.title
       update.shortDescription = movie.synopsis
+      update.header = movie.still
 
       if (data.slugLock) {
         update.slug = formatSlug(
