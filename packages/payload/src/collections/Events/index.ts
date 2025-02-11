@@ -137,10 +137,10 @@ export const Events: CollectionConfig<'events'> = {
     },
     {
       name: 'series',
-      label: 'Veranstaltungsreihe',
+      label: 'Veranstaltungsreihe(n)',
       type: 'relationship',
       relationTo: 'eventSeries',
-      hasMany: false,
+      hasMany: true,
       admin: {
         position: 'sidebar',
       },

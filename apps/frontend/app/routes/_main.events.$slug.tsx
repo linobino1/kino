@@ -91,11 +91,13 @@ export default function EventPage() {
             {(event.season as Season).name}
           </Link>
           <div className="my-4 text-2xl font-semibold uppercase">{event.title}</div>
-          {event.series && (
-            <Link className="contents" to={`/event-series/${(event.series as EventSery).slug}`}>
-              <Tag>{(event.series as EventSery)?.name}</Tag>
-            </Link>
-          )}
+          <div className="flex gap-2">
+            {((event.series ?? []) as EventSery[]).map(({ slug, name }, index) => (
+              <Link key={index} className="contents" to={`/event-series/${slug}`}>
+                <Tag>{name}</Tag>
+              </Link>
+            ))}
+          </div>
         </div>
       </Hero>
 

@@ -15,6 +15,7 @@ export const annieHallScreening: DocGenerator<'events'> = ({ context, locale }) 
     date: date.toISOString(),
     season: context.seasons.get(`Winter term ${currentYear}`)?.id as string,
     location: context.locations.get('Blauer Salon')?.id as string,
+    series: [context.eventSeries.get('Cinema of Colors')?.id as string],
     programItems: [
       {
         type: 'screening',
@@ -75,7 +76,6 @@ export const annieHallScreening: DocGenerator<'events'> = ({ context, locale }) 
         isMainProgram: true,
       },
     ],
-    series: context.eventSeries.get('Cinema of Colors')?.id as string,
     info: {
       root: {
         children: [

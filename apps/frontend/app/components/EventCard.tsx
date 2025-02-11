@@ -52,10 +52,17 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
         className="xs:aspect-square aspect-[16/9] object-cover"
       />
       <div className="flex flex-col sm:aspect-[3/2]">
-        <div className="m-[0.3em] flex min-h-6 items-center justify-end">
-          {event.series && activeEventSery?.id !== (event.series as EventSery)?.id && (
-            <Tag>{(event.series as EventSery).name}</Tag>
-          )}
+        <div className="hide-scrollbar m-[0.3em] flex min-h-6 flex-row-reverse overflow-x-auto">
+          <div className="w-max shrink-0 space-x-2">
+            {((event.series ?? []) as EventSery[]).filter(Boolean).map(
+              ({ id, name }, index) =>
+                activeEventSery?.id !== id && (
+                  <Tag className="inline" key={index}>
+                    {name}
+                  </Tag>
+                ),
+            )}
+          </div>
         </div>
         <div className="flex flex-1 flex-col gap-4 px-4 pb-4">
           <DateComponent
