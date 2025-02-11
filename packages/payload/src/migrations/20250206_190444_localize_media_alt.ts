@@ -2,6 +2,7 @@ import type { MigrateDownArgs, MigrateUpArgs } from '@payloadcms/db-mongodb'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function up({ payload, req, session }: MigrateUpArgs): Promise<void> {
+  return
   await payload.db.connection.collection('media').updateMany(
     {
       _id: { $exists: true },

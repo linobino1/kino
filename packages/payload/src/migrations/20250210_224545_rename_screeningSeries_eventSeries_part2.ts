@@ -3,6 +3,7 @@ import { deepReplace } from '#payload/util/deepReplace'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function up({ payload, req, session }: MigrateUpArgs): Promise<void> {
+  return
   // let's replace all "screenings-series" with "event-series" in the "eventSeries" collection, so that the URLs are being updated
   const docs = await payload.db.connection.collection('eventSeries').find({}).toArray()
 

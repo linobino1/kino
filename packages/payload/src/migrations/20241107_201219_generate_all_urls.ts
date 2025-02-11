@@ -3,6 +3,7 @@ import type { CollectionSlug } from 'payload'
 
 // This migration will save all docs that have a missing URL field
 export async function up({ payload }: MigrateUpArgs): Promise<void> {
+  return
   const collections = payload.config.collections.filter(
     (collection) => !!collection.custom.addUrlField,
   )

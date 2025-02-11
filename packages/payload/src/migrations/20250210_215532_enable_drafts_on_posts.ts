@@ -2,6 +2,7 @@ import type { MigrateDownArgs, MigrateUpArgs } from '@payloadcms/db-mongodb'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function up({ payload, req, session }: MigrateUpArgs): Promise<void> {
+  return
   const posts = await payload.db.collections.posts.find()
   const PostsVersionModel = payload.db.versions.posts
 

@@ -3,6 +3,7 @@ import { locales } from '@app/i18n'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function up({ payload, req, session }: MigrateUpArgs): Promise<void> {
+  return
   // screening events films -> programItems
   await payload.db.connection.collection('events').updateMany(
     {

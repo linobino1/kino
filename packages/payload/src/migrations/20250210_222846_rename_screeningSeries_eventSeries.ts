@@ -2,7 +2,7 @@ import type { MigrateDownArgs, MigrateUpArgs } from '@payloadcms/db-mongodb'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function up({ payload, req, session }: MigrateUpArgs): Promise<void> {
-  // Migration code
+  return
   // await payload.db.connection.collection('screeningSeries').rename('eventSeries')
   await payload.db.connection.db?.renameCollection('screeningseries', 'eventseries', {
     dropTarget: true,

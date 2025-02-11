@@ -3,6 +3,7 @@ import type { CollectionSlug } from 'payload'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function up({ payload, req, session }: MigrateUpArgs): Promise<void> {
+  return
   // we'll add slugLock: false to all existing documents in collection that have the slug field
   const collections: CollectionSlug[] = payload.config.collections
     .filter((collection) =>
