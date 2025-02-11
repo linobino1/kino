@@ -123,6 +123,7 @@ const configPromise: Promise<Config> = (async () => ({
   db: mongooseAdapter({
     url: env.DATABASE_URI || '',
   }),
+  telemetry: false,
   plugins: [
     addUrlField,
     s3Storage({
