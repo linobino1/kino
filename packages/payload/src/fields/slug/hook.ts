@@ -1,22 +1,20 @@
+import { formatSlug } from '@app/util/formatSlug'
 import type { FieldHook } from 'payload'
-import type { SlugGenerator } from './types'
 
 export const formatSlugHook =
-  (fallback: string, generator: SlugGenerator): FieldHook =>
-  (args) => {
-    const { data, operation, value, context } = args
-    if (context.triggerHooks === false) return value
-    if (data?.slugLock === true) return value
+  (fallback: string): FieldHook =>
+  ({ data, operation, value, previousValue }) => {
+    if (data?.slugLock === false) return formatSlug(value ?? previousValue)
 
     if (typeof value === 'string') {
-      return generator(args)
+      return formatSlug(value)
     }
 
     if (operation === 'create' || !data?.slug) {
       const fallbackData = data?.[fallback] || data?.[fallback]
 
       if (fallbackData && typeof fallbackData === 'string') {
-        return generator(args)
+        return formatSlug(fallbackData)
       }
     }
 

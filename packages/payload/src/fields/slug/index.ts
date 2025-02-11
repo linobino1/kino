@@ -1,8 +1,5 @@
 import type { CheckboxField, FieldHook, TextField } from 'payload'
-
 import { formatSlugHook } from './hook'
-import { formatSlug } from '@app/util/formatSlug'
-import type { SlugGenerator } from './types'
 
 type Overrides = {
   slugOverrides?: Partial<TextField>
@@ -14,8 +11,6 @@ type Slug = (fieldToUse?: string, overrides?: Overrides) => [TextField, Checkbox
 
 export const slugField: Slug = (fieldToUse = 'title', overrides = {}) => {
   const { slugOverrides, checkboxOverrides, generator } = overrides
-
-  const defaultGenerator: SlugGenerator = async ({ value }) => formatSlug(value)
 
   const checkBoxField: CheckboxField = {
     name: 'slugLock',
@@ -37,7 +32,7 @@ export const slugField: Slug = (fieldToUse = 'title', overrides = {}) => {
     ...(slugOverrides || {}),
     hooks: {
       // Kept this in for hook or API based updates
-      beforeValidate: [formatSlugHook(fieldToUse, generator ?? defaultGenerator)],
+      beforeValidate: [generator ?? formatSlugHook(fieldToUse)],
     },
     admin: {
       position: 'sidebar',

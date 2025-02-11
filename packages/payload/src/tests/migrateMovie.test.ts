@@ -33,13 +33,14 @@ test('migrate Casablanca from TMDB', async () => {
 
   expect(en.title).toBe('Casablanca')
   expect(de.title).toBe('Kasablanca')
-  expect(de.slug).toBe('casablanca')
 
   expect(en.internationalTitle).toBe('Casablanca')
   expect(de.internationalTitle).toBe('Casablanca')
 
   expect(en.originalTitle).toBe('Casablanca')
   expect(de.originalTitle).toBe('Casablanca')
+
+  expect(de.slug).toBe('casablanca')
 
   expect(en.productionCompanies?.length).toBe(1)
   expect(de.productionCompanies?.length).toBe(1)
