@@ -6,7 +6,7 @@ catalog:
   i18next: '^24.2.1'
   lexical: '0.21.0'
   msw: '^2.7.0'
-  next: '15.1.6'
+  next: '15.1.7'
   payload: '3.23.0'
   '@payloadcms/db-mongodb': '3.23.0'
   '@payloadcms/email-nodemailer': '3.23.0'
