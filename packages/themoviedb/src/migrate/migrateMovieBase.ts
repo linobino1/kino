@@ -16,7 +16,8 @@ export const migrateMovieBase = async (
   const genres: string[] = []
   await Promise.all(
     data.genres.map(async (genre: any) => {
-      genres.push((await migrateGenre(payload, tmdbId, warnings, genre)).id)
+      const doc = await migrateGenre(payload, tmdbId, warnings, genre)
+      if (doc) genres.push(doc.id)
     }),
   )
 
@@ -113,7 +114,7 @@ const migrateGenre = async (
   tmdbId: number,
   warnings: Error[],
   tmdbGenre: tmdbMovie['genres'][0],
-): Promise<Genre> => {
+): Promise<Genre | undefined> => {
   let genre: Genre
   let created = false
 
@@ -147,32 +148,31 @@ const migrateGenre = async (
 
   // add translations
   if (created) {
-    locales.forEach(async (locale) => {
-      if (locale === defaultLanguage) return // we already have the default language...
+    for await (const locale of locales) {
+      if (locale === defaultLanguage) continue // we already have the default language...
 
-      fetchData('movie', tmdbId, locale)
-        .then(async (tmdbMovieLng) => {
-          const name = tmdbMovieLng.genres.find((g) => g.id === tmdbGenre.id)?.name
+      try {
+        const tmdbMovieLng = await fetchData('movie', tmdbId, locale)
+        const name = tmdbMovieLng.genres.find((g) => g.id === tmdbGenre.id)?.name
 
-          try {
-            await payload.update({
-              collection: 'genres',
-              id: genre.id,
-              data: {
-                name,
-              },
-              locale: locale,
-            })
-          } catch (err) {
-            console.error(err)
-            warnings.push(new Error(`Unable to add genre translation (${err})`))
-          }
-        })
-        .catch((err) => {
+        try {
+          await payload.update({
+            collection: 'genres',
+            id: genre.id,
+            data: {
+              name,
+            },
+            locale: locale,
+          })
+        } catch (err) {
           console.error(err)
-          warnings.push(new Error(`Unable to get genre translation (${err})`))
-        })
-    })
+          warnings.push(new Error(`Unable to add genre translation (${err})`))
+        }
+      } catch (err) {
+        console.error(err)
+        warnings.push(new Error(`Unable to get genre translation (${err})`))
+      }
+    }
   }
 
   return genre

@@ -15,7 +15,7 @@
     "typecheck": "tsc --noEmit",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "clean": "rm -rf .next .turbo node_modules tsconfig.tsbuildinfo",
-    "test": "vitest"
+    "test": "dotenv -e ../../.env vitest"
   },
   "dependencies": {
     "@app/i18n": "workspace:*",
@@ -48,6 +48,7 @@
     "@types/nodemailer": "^6.4.16",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "dotenv-cli": "8.0.0",
     "msw": "catalog:",
     "vite-tsconfig-paths": "^4.2.1",
     "vitest": "^3.0.5"

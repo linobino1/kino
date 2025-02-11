@@ -5,7 +5,8 @@ export const formatSlugHook =
   (fallback: string, generator: SlugGenerator): FieldHook =>
   (args) => {
     const { data, operation, value, context } = args
-    if (context.triggerHooks === false) return
+    if (context.triggerHooks === false) return value
+    if (data?.slugLock === true) return value
 
     if (typeof value === 'string') {
       return generator(args)

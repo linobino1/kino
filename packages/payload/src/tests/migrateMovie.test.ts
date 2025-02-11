@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest'
 import { migrateMovie } from '@app/themoviedb/migrateMovie'
 import { getPayloadTestClient } from './getPayloadTestClient'
-import type { Company, Genre} from '@app/types/payload';
+import type { Company, Genre } from '@app/types/payload'
 import { type Person } from '@app/types/payload'
 
 test('migrate Casablanca from TMDB', async () => {
@@ -33,6 +33,7 @@ test('migrate Casablanca from TMDB', async () => {
 
   expect(en.title).toBe('Casablanca')
   expect(de.title).toBe('Kasablanca')
+  expect(de.slug).toBe('casablanca')
 
   expect(en.internationalTitle).toBe('Casablanca')
   expect(de.internationalTitle).toBe('Casablanca')
@@ -49,8 +50,26 @@ test('migrate Casablanca from TMDB', async () => {
   expect(de.genres?.length).toBe(2)
   expect(en.genres.some((genre) => (genre as Genre).name === 'Drama')).toBe(true)
   expect(de.genres.some((genre) => (genre as Genre).name === 'Drama')).toBe(true)
+  const genre1 = (
+    await payload.find({
+      collection: 'genres',
+      where: { name: { equals: 'Drama' } },
+    })
+  ).docs[0]
+  expect(genre1).toBeDefined()
+  expect(genre1.slug).toBe('drama')
+
   expect(en.genres.some((genre) => (genre as Genre).name === 'Romance')).toBe(true)
   expect(de.genres.some((genre) => (genre as Genre).name === 'Liebesfilm')).toBe(true)
+  const genre2 = (
+    await payload.find({
+      collection: 'genres',
+      where: { name: { equals: 'Romance' } },
+      locale: 'en',
+    })
+  ).docs[0]
+  expect(genre2).toBeDefined()
+  expect(genre2.slug).toBe('romance')
 
   expect(en.year).toBe(1943)
   expect(en.duration).toBe(102)

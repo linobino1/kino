@@ -35,6 +35,7 @@ export const migrate: Endpoint = {
     try {
       movie = await migrateMovie({ payload, tmdbId, images, warnings: [] })
     } catch (err) {
+      console.error(err)
       return Response.json(
         { success: false, message: `Unable to create movie (${err})` },
         { status: 400 },

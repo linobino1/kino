@@ -11,7 +11,7 @@
     "generate:types": "pnpm --filter @app/payload generate:types",
     "generate:importmap": "pnpm --filter @app/backend generate:importmap",
     "seed": "pnpm --filter @app/seed start",
-    "test": "pnpm --filter cms test"
+    "test": "pnpm --filter @app/payload test"
   },
   "devDependencies": {
     "@app/tsconfig": "workspace:*",
