@@ -9,6 +9,7 @@ export const jazzClubPost: DocGenerator<'posts'> = ({ context, locale }) => {
   const currentYear = new Date().getFullYear()
 
   return {
+    _status: 'published',
     title: translate(
       {
         de: 'Rückblick: Jazz im Blauen Salon',
