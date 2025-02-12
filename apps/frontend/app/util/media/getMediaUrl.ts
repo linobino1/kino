@@ -7,7 +7,8 @@ import type { FrontendBrowserEnvironment } from '@app/util/env'
  */
 export const getMediaUrl = (media: Media | string, env?: FrontendBrowserEnvironment) => {
   if (typeof media === 'string') {
-    throw new Error(`getMediaUrl() expects a Media object, but got a string ${media}`)
+    console.error(`getMediaUrl() expects a Media object, but got a string ${media}`)
+    return ''
   }
 
   // if the media url is already an absolute URL, return it
