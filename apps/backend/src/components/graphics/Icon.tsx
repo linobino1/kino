@@ -8,5 +8,5 @@ export const Icon: React.FC<ServerComponentProps> = async ({ payload }) => {
       favicon: true,
     },
   })
-  return <img src={(favicon as Media).url as string} className="" />
+  return <img src={(favicon as Media | undefined)?.url as string} className="" />
 }
