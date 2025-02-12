@@ -54,7 +54,7 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
       <div className="flex flex-col sm:aspect-[3/2]">
         <div className="hide-scrollbar m-[0.3em] flex min-h-6 flex-row-reverse overflow-x-auto">
           <div className="w-max shrink-0 space-x-2">
-            {((event.series ?? []) as EventSery[]).filter(Boolean).map(
+            {((event.series ?? []) as EventSery[]).map(
               ({ id, name }, index) =>
                 activeEventSery?.id !== id && (
                   <Tag className="inline" key={index}>
