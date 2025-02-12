@@ -63,10 +63,12 @@ export const loader = async ({ request, params: { lang: locale } }: LoaderFuncti
       locale: locale as Locale,
       depth: 3,
       where: {
-        _status: {
-          equals: 'published',
-        },
         and: [
+          {
+            _status: {
+              equals: 'published',
+            },
+          },
           {
             date: {
               greater_than_equal: today,

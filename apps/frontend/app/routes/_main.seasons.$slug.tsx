@@ -53,9 +53,18 @@ export const loader = async ({
   const events = await payload.find({
     collection: 'events',
     where: {
-      season: {
-        equals: season.id,
-      },
+      and: [
+        {
+          _status: {
+            equals: 'published',
+          },
+        },
+        {
+          season: {
+            equals: season.id,
+          },
+        },
+      ],
     },
     locale: locale as Locale,
     depth: 3,

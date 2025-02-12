@@ -58,6 +58,11 @@ export const loader = async ({
       where: {
         and: [
           {
+            _status: {
+              equals: 'published',
+            },
+          },
+          {
             series: {
               equals: eventSeries.id,
             },
