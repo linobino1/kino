@@ -9,11 +9,14 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['@app/payload'],
   },
-  resolve: {
-    alias: {
-      'file-type': path.resolve(__dirname, '../../node_modules/file-type/index.js'),
-    },
-  },
+  resolve:
+    process.NODE_ENV === 'development'
+      ? {
+          alias: {
+            'file-type': path.resolve(__dirname, '../../node_modules/file-type/index.js'),
+          },
+        }
+      : {},
   ssr: {
     noExternal: ['remix-i18next', 'payload', '@payloadcms/richtext-lexical'].concat(
       // not sure why this is necessary, but deployments on vercel throw runtime error if @payloadcms/db-mongodb is noExternal
