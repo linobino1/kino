@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import UnoCSS from 'unocss/vite'
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [reactRouter(), tsconfigPaths(), UnoCSS()],
   optimizeDeps: {
     exclude: [
@@ -15,6 +15,7 @@ export default defineConfig({
     ],
   },
   ssr: {
-    noExternal: ['remix-i18next', 'payload', '@payloadcms/richtext-lexical'],
+    noExternal:
+      command === 'build' ? true : ['remix-i18next', 'payload', '@payloadcms/richtext-lexical'],
   },
-})
+}))

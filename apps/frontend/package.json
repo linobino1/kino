@@ -21,7 +21,6 @@
     "@react-router/serve": "7.1.5",
     "@unly/universal-language-detector": "^2.0.3",
     "@unocss/reset": "catalog:",
-    "@vercel/react-router": "^1.0.2",
     "cross-env": "^7.0.3",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
@@ -51,6 +50,8 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@types/react-slick": "^0.23.13",
+    "@vercel/node": "^5.1.2",
+    "@vercel/react-router": "^1.0.2",
     "unocss": "catalog:",
     "vite": "^5.4.11",
     "vite-tsconfig-paths": "^5.1.3"
