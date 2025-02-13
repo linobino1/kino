@@ -53,9 +53,5 @@
     "unocss": "catalog:",
     "vite": "^5.4.11",
     "vite-tsconfig-paths": "^5.1.3"
-  },
-  "engines": {
-    "node": ">=20.0.0",
-    "pnpm": ">=9.0.0"
   }
 }
