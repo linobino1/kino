@@ -1,12 +1,11 @@
 import { reactRouter } from '@react-router/dev/vite'
 import { defineConfig } from 'vite'
-import { vercelPreset } from '@vercel/react-router/vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import UnoCSS from 'unocss/vite'
 import path from 'path'
 
 export default defineConfig({
-  plugins: [reactRouter(), tsconfigPaths(), UnoCSS(), vercelPreset()],
+  plugins: [reactRouter(), tsconfigPaths(), UnoCSS()],
   optimizeDeps: {
     exclude: ['@app/payload'],
   },
