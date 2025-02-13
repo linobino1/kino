@@ -2,7 +2,7 @@ import React from 'react'
 import type { Media, Navigation as NavigationType, Page } from '@app/types/payload'
 import { Image } from '~/components/Image'
 import { NavLink } from '~/components/localized-link/NavLink'
-import { cn } from '~/util/cn'
+import { cn } from '@app/util/cn'
 import type { RequiredDataFromCollection } from 'payload'
 
 type Props = {

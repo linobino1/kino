@@ -3,7 +3,7 @@ import { useMatches } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
 import type { User } from '@app/types/payload'
 import { Link } from '~/components/localized-link'
-import { cn } from '~/util/cn'
+import { cn } from '@app/util/cn'
 import { useEnv } from '~/util/useEnv'
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {

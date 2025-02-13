@@ -1,4 +1,4 @@
-import { cn } from '~/util/cn'
+import { cn } from '@app/util/cn'
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   size?: 'small' | 'medium' | 'large'

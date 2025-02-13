@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Image } from '~/components/Image'
 import { classes } from '~/classes'
 import Tag from './Tag'
-import { cn } from '~/util/cn'
+import { cn } from '@app/util/cn'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   event: Event

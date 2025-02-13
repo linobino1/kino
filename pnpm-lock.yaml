@@ -219,9 +219,6 @@ importers:
       '@unocss/reset':
         specifier: 'catalog:'
         version: 65.4.3
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
       cookie-es:
         specifier: ^1.2.2
         version: 1.2.2
@@ -288,9 +285,6 @@ importers:
       slick-carousel:
         specifier: ^1.8.1
         version: 1.8.1(jquery@3.7.1)
-      tailwind-merge:
-        specifier: ^2.5.4
-        version: 2.6.0
       zod:
         specifier: ^3.23.8
         version: 3.24.1

@@ -1,4 +1,4 @@
-import type { JSX } from 'react';
+import type { JSX } from 'react'
 import React, { Fragment } from 'react'
 import type { Media as MediaType } from '@app/types/payload'
 import {
@@ -10,7 +10,7 @@ import {
   IS_SUPERSCRIPT,
   IS_UNDERLINE,
 } from './nodeFormat'
-import { cn } from '~/util/cn'
+import { cn } from '@app/util/cn'
 import { Link } from '@remix-run/react'
 import { Image } from '~/components/Image'
 import type { NodeTypes } from './types'

@@ -1,6 +1,6 @@
 import type { Media, Movie } from '@app/types/payload'
 import { Image, type Props as ImageProps } from '~/components/Image'
-import { cn } from '~/util/cn'
+import { cn } from '@app/util/cn'
 
 type Props = Omit<ImageProps, 'image'> &
   (

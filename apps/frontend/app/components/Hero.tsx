@@ -3,7 +3,7 @@ import { Image } from './Image'
 import { Gutter } from './Gutter'
 import { Navigation } from './Navigation'
 import { useMatches } from '@remix-run/react'
-import { cn } from '~/util/cn'
+import { cn } from '@app/util/cn'
 
 type Props = React.HTMLAttributes<HTMLDivElement> &
   Omit<NonNullable<Page['hero']>, 'type'> & {

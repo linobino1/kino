@@ -6,7 +6,7 @@ import RichText from '~/components/RichText'
 import { useTranslation } from 'react-i18next'
 import type { LinkableCollection } from '@app/payload/types'
 import { Link } from '~/components/localized-link'
-import { cn } from '~/util/cn'
+import { cn } from '@app/util/cn'
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   post: Post

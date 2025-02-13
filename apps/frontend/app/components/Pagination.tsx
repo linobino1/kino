@@ -1,7 +1,7 @@
 import { type PaginatedDocs } from 'payload'
 import { Link, useSearchParams } from '@remix-run/react'
 import { classes } from '~/classes'
-import { cn } from '~/util/cn'
+import { cn } from '@app/util/cn'
 import type { LinkProps } from '@remix-run/react'
 
 export type Props = React.HTMLAttributes<HTMLDivElement> &

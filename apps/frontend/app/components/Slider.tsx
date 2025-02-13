@@ -1,9 +1,9 @@
-import type { Settings } from 'react-slick';
+import type { Settings } from 'react-slick'
 import SlickSlider from 'react-slick'
 import React, { useRef, useState } from 'react'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import { cn } from '~/util/cn'
+import { cn } from '@app/util/cn'
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   maxSlidesToShow?: number

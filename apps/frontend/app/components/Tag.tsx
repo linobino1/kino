@@ -1,4 +1,4 @@
-import { cn } from '~/util/cn'
+import { cn } from '@app/util/cn'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   color?: 'turquoise'

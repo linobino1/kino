@@ -1,5 +1,5 @@
 import React from 'react'
-import { cn } from '~/util/cn'
+import { cn } from '@app/util/cn'
 import type { Page } from '@app/types/payload'
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {

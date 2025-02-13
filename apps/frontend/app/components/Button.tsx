@@ -1,4 +1,4 @@
-import { cn } from '~/util/cn'
+import { cn } from '@app/util/cn'
 
 export type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   look?: 'default' | 'white'

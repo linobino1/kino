@@ -8,7 +8,7 @@ import { Hamburger } from './Hamburger'
 import { Gutter } from './Gutter'
 import { useTranslation } from 'react-i18next'
 import { Link } from '~/components/localized-link'
-import { cn } from '~/util/cn'
+import { cn } from '@app/util/cn'
 import LanguageSwitch from './LanguageSwitch'
 import type { RequiredDataFromCollection } from 'payload'
 

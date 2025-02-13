@@ -1,8 +1,8 @@
 import { Link, useLocation } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
-import type { Locale} from '@app/i18n';
+import type { Locale } from '@app/i18n'
 import { locales } from '@app/i18n'
-import { cn } from '~/util/cn'
+import { cn } from '@app/util/cn'
 import { getLocalizedPathnames } from '~/util/i18n/getHreflangLinks'
 
 const icons: Record<Locale, { icon: string; label: string }> = {

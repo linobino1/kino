@@ -5,7 +5,7 @@ import { JsonLd } from '~/structured-data'
 import { eventsListSchema as screeningsListMarkup } from '~/structured-data/event'
 import { Link } from '~/components/localized-link'
 import EventCard from './EventCard'
-import { cn } from '~/util/cn'
+import { cn } from '@app/util/cn'
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   from?: string

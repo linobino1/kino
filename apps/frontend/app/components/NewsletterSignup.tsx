@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { type HTMLAttributes, useRef, useState, useEffect } from 'react'
 import type { action } from '~/routes/newsletter-signup'
 import Turnstile from 'react-turnstile'
-import { cn } from '~/util/cn'
+import { cn } from '@app/util/cn'
 import Button from './Button'
 import { useEnv } from '~/util/useEnv'
 

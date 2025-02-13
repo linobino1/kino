@@ -1,6 +1,6 @@
 import React from 'react'
 import { serializeLexical } from './serialize'
-import { cn } from '~/util/cn'
+import { cn } from '@app/util/cn'
 
 type Props = {
   className?: string
