@@ -28,8 +28,6 @@
     "@payloadcms/storage-s3": "catalog:",
     "@payloadcms/translations": "catalog:",
     "@react-email/components": "^0.0.32",
-    "@types/escape-html": "^1.0.4",
-    "cookie-es": "^1.2.2",
     "cross-env": "^7.0.3",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
@@ -39,11 +37,11 @@
     "payload": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "react-email": "^3.0.6",
-    "react-i18next": "^15.0.3"
+    "react-email": "^3.0.6"
   },
   "devDependencies": {
     "@app/types": "workspace:*",
+    "@types/escape-html": "^1.0.4",
     "@types/node": "^22.5.4",
     "@types/nodemailer": "^6.4.16",
     "@types/react": "catalog:",
