@@ -1,7 +1,8 @@
-import { type LoaderFunctionArgs, redirect } from '@remix-run/node'
-import type { MetaFunction } from '@remix-run/react'
+import type { Route } from './+types/filmprints.index'
 import type { Locale } from '@app/i18n'
-import { Form, useLoaderData, useNavigate, useSearchParams } from '@remix-run/react'
+import type { Payload, Where } from 'payload'
+import { redirect } from 'react-router'
+import { Form, useNavigate, useSearchParams } from 'react-router'
 import { getPayload } from '~/util/getPayload.server'
 import i18next from '~/i18next.server'
 import { PageLayout } from '~/components/PageLayout'
@@ -12,7 +13,6 @@ import { classes } from '~/classes'
 import Pagination from '~/components/Pagination'
 import { useTranslation } from 'react-i18next'
 import { useRef } from 'react'
-import type { Payload, Where } from 'payload'
 import { Filters } from '~/util/filter'
 import { FilmPrintCard } from '~/components/FilmPrintCard'
 import { Button } from '~/components/Button'
@@ -25,7 +25,7 @@ const limit = 20
 
 export const ErrorBoundary = ErrorPage
 
-export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
+export const meta: Route.MetaFunction = ({ data, matches }) =>
   generateMetadata({
     title: data?.page.meta?.title,
     description: data?.page.meta?.description,
@@ -33,10 +33,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
     env: getEnvFromMatches(matches),
   })
 
-export const loader = async ({
-  params: { lang: locale },
-  request: { url },
-}: LoaderFunctionArgs) => {
+export const loader = async ({ params: { lang: locale }, request: { url } }: Route.LoaderArgs) => {
   const params = new URL(url).searchParams
   const pageNumber = parseInt(params.get('page') || '1')
   const query = params.get('query') || ''
@@ -237,8 +234,9 @@ const getFilters = ({
   return filters
 }
 
-export default function FilmprintsPage() {
-  const { filmPrints, filters, query, page, isHfgArchivePage } = useLoaderData<typeof loader>()
+export default function FilmprintsPage({
+  loaderData: { filmPrints, filters, query, page, isHfgArchivePage },
+}: Route.ComponentProps) {
   const { t } = useTranslation()
   const form = useRef<HTMLFormElement>(null)
   const navigate = useNavigate()

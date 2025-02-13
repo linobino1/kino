@@ -1,8 +1,7 @@
-import { type LoaderFunctionArgs } from '@remix-run/node'
-import { type loader as rootLoader } from '~/root'
-import type { MetaFunction } from '@remix-run/react'
-import { useLoaderData, useRouteLoaderData } from '@remix-run/react'
+import type { Route } from './+types/events.index'
+import type { loader as rootLoader } from '~/root'
 import type { Locale } from '@app/i18n'
+import { useRouteLoaderData } from 'react-router'
 import { getPayload } from '~/util/getPayload.server'
 import i18next from '~/i18next.server'
 import { PageLayout } from '~/components/PageLayout'
@@ -15,7 +14,7 @@ import ErrorPage from '~/components/ErrorPage'
 
 export const ErrorBoundary = ErrorPage
 
-export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
+export const meta: Route.MetaFunction = ({ data, matches }) =>
   generateMetadata({
     title: data?.page.meta?.title,
     description: data?.page.meta?.description,
@@ -23,10 +22,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
     env: getEnvFromMatches(matches),
   })
 
-export const loader = async ({
-  params: { lang: locale },
-  request: { url },
-}: LoaderFunctionArgs) => {
+export const loader = async ({ params: { lang: locale }, request: { url } }: Route.LoaderArgs) => {
   const [payload, t] = await Promise.all([getPayload(), i18next.getFixedT(locale as string)])
 
   // Get today's date at midnight
@@ -81,8 +77,7 @@ export const loader = async ({
   }
 }
 
-export default function EventsPage() {
-  const { page, screenings } = useLoaderData<typeof loader>()
+export default function EventsPage({ loaderData: { page, screenings } }: Route.ComponentProps) {
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>('root')
   return (
     <PageLayout type={page.layoutType}>

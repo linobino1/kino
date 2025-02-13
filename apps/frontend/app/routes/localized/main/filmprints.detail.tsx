@@ -1,8 +1,6 @@
-import type { LoaderFunctionArgs } from '@remix-run/node'
-import type { MetaFunction } from '@remix-run/react'
+import type { Route } from './+types/filmprints.detail'
 import type { Locale } from '@app/i18n'
 import type { Media, Movie as MovieType } from '@app/types/payload'
-import { useLoaderData } from '@remix-run/react'
 import { getPayload } from '~/util/getPayload.server'
 import i18next from '~/i18next.server'
 import { PageLayout } from '~/components/PageLayout'
@@ -15,7 +13,7 @@ import ErrorPage from '~/components/ErrorPage'
 
 export const ErrorBoundary = ErrorPage
 
-export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
+export const meta: Route.MetaFunction = ({ data, matches }) =>
   generateMetadata({
     // TODO: title and description should clarify that this is a film print
     title: (data?.filmPrint.movie as MovieType).title,
@@ -27,7 +25,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
 export const loader = async ({
   params: { lang: locale, slug },
   request: { url },
-}: LoaderFunctionArgs) => {
+}: Route.LoaderArgs) => {
   const payload = await getPayload()
   const [res, t] = await Promise.all([
     payload.find({
@@ -54,9 +52,7 @@ export const loader = async ({
   }
 }
 
-export default function FilmPrintDetailPage() {
-  const { filmPrint } = useLoaderData<typeof loader>()
-
+export default function FilmPrintDetailPage({ loaderData: { filmPrint } }: Route.ComponentProps) {
   const movie = filmPrint.movie as MovieType
 
   return (

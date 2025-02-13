@@ -1,4 +1,4 @@
-import { RemixBrowser } from '@remix-run/react'
+import { HydratedRouter } from 'react-router/dom';
 import { startTransition } from 'react'
 import { hydrateRoot } from 'react-dom/client'
 import i18n from './i18n'
@@ -40,7 +40,7 @@ async function hydrate() {
     hydrateRoot(
       document,
       <I18nextProvider i18n={i18next}>
-        <RemixBrowser />
+        <HydratedRouter />
       </I18nextProvider>,
     )
   })

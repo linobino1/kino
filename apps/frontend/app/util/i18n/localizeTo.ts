@@ -1,4 +1,4 @@
-import { type LinkProps } from "@remix-run/react";
+import { type LinkProps } from "react-router";
 
 export const localizeTo = (
   to: LinkProps["to"],

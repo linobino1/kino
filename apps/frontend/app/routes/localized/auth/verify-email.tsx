@@ -1,6 +1,4 @@
-import type { LoaderFunctionArgs } from '@remix-run/node'
-import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import type { Route } from './+types/verify-email'
 import { useTranslation } from 'react-i18next'
 import { classes } from '~/classes'
 import i18next from '~/i18next.server'
@@ -10,7 +8,7 @@ import { getPayload } from '~/util/getPayload.server'
 // i18n namespace
 const ns = 'auth'
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
   const payload = await getPayload()
   const url = new URL(request.url)
   const t = await i18next.getFixedT(request, ns)
@@ -21,20 +19,19 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       token: url.searchParams.get('token') ?? '',
     })
   } catch {
-    return json({
+    return {
       success: false,
       message: t('your email address could not be verified'),
-    })
+    }
   }
 
-  return json({
+  return {
     success: true,
     message: t('your email address has been verified!'),
-  })
+  }
 }
 
-export default function VerifyEmail() {
-  const data = useLoaderData<typeof loader>()
+export default function VerifyEmail({ loaderData: data }: Route.ComponentProps) {
   const { t } = useTranslation(ns)
 
   return (

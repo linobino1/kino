@@ -21,5 +21,12 @@ export const mainNavigations: DocGenerator<'navigations'> = ({ context: { pages 
         page: pages.get('Screenings')?.id,
         id: '67a51314c2678dd65b58ff25',
       },
+      {
+        type: 'internal',
+        name: translate({ de: 'Open Air Kino', en: 'Open Air Cinema' }, locale),
+        newTab: false,
+        page: pages.get('Open Air Cinema')?.id,
+        id: '67a51314c2678dd65b58ff26',
+      },
     ],
   }) as RequiredDataFromCollectionSlug<'navigations'>

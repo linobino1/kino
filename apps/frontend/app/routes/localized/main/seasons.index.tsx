@@ -1,8 +1,7 @@
-import { type LoaderFunctionArgs, redirect } from '@remix-run/node'
-import type { MetaFunction } from '@remix-run/react'
+import type { Route } from './+types/seasons.index'
 import type { Locale } from '@app/i18n'
 import type { Media } from '@app/types/payload'
-import { useLoaderData } from '@remix-run/react'
+import { redirect } from 'react-router'
 import { getPayload } from '~/util/getPayload.server'
 import i18next from '~/i18next.server'
 import { PageLayout } from '~/components/PageLayout'
@@ -16,7 +15,7 @@ import ErrorPage from '~/components/ErrorPage'
 
 export const ErrorBoundary = ErrorPage
 
-export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
+export const meta: Route.MetaFunction = ({ data, matches }) =>
   generateMetadata({
     title: data?.page.meta?.title,
     description: data?.page.meta?.description,
@@ -24,10 +23,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
     env: getEnvFromMatches(matches),
   })
 
-export const loader = async ({
-  params: { lang: locale },
-  request: { url },
-}: LoaderFunctionArgs) => {
+export const loader = async ({ params: { lang: locale }, request: { url } }: Route.LoaderArgs) => {
   const [payload, t] = await Promise.all([getPayload(), i18next.getFixedT(locale as string)])
 
   const pageNumber = parseInt(new URL(url).searchParams.get('page') || '1')
@@ -71,8 +67,7 @@ export const loader = async ({
   }
 }
 
-export default function EventsPage() {
-  const { page, seasons } = useLoaderData<typeof loader>()
+export default function EventsPage({ loaderData: { page, seasons } }: Route.ComponentProps) {
   return (
     <PageLayout type={page.layoutType}>
       <Hero {...page.hero} />

@@ -1,14 +1,14 @@
-import type { LoaderFunctionArgs } from '@remix-run/node'
+import type { Route } from './+types/_layout'
 import type { loader as rootLoader } from '~/root'
 import type { Locale } from '@app/i18n'
-import { Outlet, useLoaderData, useRouteLoaderData } from '@remix-run/react'
+import { Outlet, useRouteLoaderData } from 'react-router'
 import Footer from '~/components/Footer'
 import Header from '~/components/Header'
 import { getPayload } from '~/util/getPayload.server'
 import { cache } from '~/util/cache.server'
 import { getCachedUser } from '~/util/userCache.server'
 
-export const loader = async ({ params: { lang: locale } }: LoaderFunctionArgs) => {
+export const loader = async ({ params: { lang: locale } }: Route.LoaderArgs) => {
   const payload = await getPayload()
   const navigations = await cache({
     key: 'navigations',
@@ -43,8 +43,7 @@ export const handle = {
   i18n: ['common'],
 }
 
-export default function Layout() {
-  const { navigations } = useLoaderData<typeof loader>()
+export default function Layout({ loaderData: { navigations } }: Route.ComponentProps) {
   const { site } = useRouteLoaderData<typeof rootLoader>('root')!
   return (
     <>

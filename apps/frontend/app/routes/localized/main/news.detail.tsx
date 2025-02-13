@@ -1,8 +1,6 @@
-import type { LoaderFunctionArgs } from '@remix-run/node'
-import type { MetaFunction } from '@remix-run/react'
+import type { Route } from './+types/news.detail'
 import type { Media } from '@app/types/payload'
 import type { Locale } from '@app/i18n'
-import { useLoaderData } from '@remix-run/react'
 import { getPayload } from '~/util/getPayload.server'
 import i18next from '~/i18next.server'
 import { PageLayout } from '~/components/PageLayout'
@@ -20,7 +18,7 @@ import ErrorPage from '~/components/ErrorPage'
 
 export const ErrorBoundary = ErrorPage
 
-export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
+export const meta: Route.MetaFunction = ({ data, matches }) =>
   data?.post &&
   generateMetadata({
     title: data.post.title,
@@ -32,7 +30,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
 export const loader = async ({
   params: { lang: locale, slug },
   request: { url },
-}: LoaderFunctionArgs) => {
+}: Route.LoaderArgs) => {
   const [payload, t] = await Promise.all([getPayload(), i18next.getFixedT(locale as string)])
 
   const posts = await payload.find({
@@ -56,9 +54,7 @@ export const loader = async ({
   }
 }
 
-export default function PostDetailPage() {
-  const { post } = useLoaderData<typeof loader>()
-
+export default function PostDetailPage({ loaderData: { post } }: Route.ComponentProps) {
   return (
     <PageLayout type={'default'}>
       {JsonLd(postSchema(post))}

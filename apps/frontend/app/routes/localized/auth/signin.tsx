@@ -1,6 +1,6 @@
-import { Form, useActionData } from '@remix-run/react'
-import type { ActionFunctionArgs } from '@remix-run/node'
-import { replace } from '@remix-run/node'
+import type { Route } from './+types/signin'
+import { Form } from 'react-router'
+import { replace } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import i18next from '~/i18next.server'
 import { Link } from '~/components/localized-link'
@@ -12,7 +12,7 @@ import Button from '~/components/Button'
 // i18n namespace
 const ns = 'auth'
 
-export const action = async ({ request }: ActionFunctionArgs) => {
+export const action = async ({ request }: Route.ActionArgs) => {
   const payload = await getPayload()
   const form = await request.formData()
   const t = await i18next.getFixedT(request, ns)
@@ -39,8 +39,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 }
 
-export default function SignIn() {
-  const actionData = useActionData<typeof action>()
+export default function SignIn({ actionData }: Route.ComponentProps) {
   const { t } = useTranslation(ns)
 
   return (

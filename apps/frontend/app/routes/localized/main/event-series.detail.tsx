@@ -1,8 +1,7 @@
-import type { LoaderFunctionArgs } from '@remix-run/node'
+import type { Route } from './+types/event-series.detail'
 import type { loader as rootLoader } from '~/root'
-import type { MetaFunction } from '@remix-run/react'
 import type { Locale } from '@app/i18n'
-import { useLoaderData, useRouteLoaderData } from '@remix-run/react'
+import { useRouteLoaderData } from 'react-router'
 import { getPayload } from '~/util/getPayload.server'
 import i18next from '~/i18next.server'
 import { PageLayout } from '~/components/PageLayout'
@@ -18,7 +17,7 @@ import ErrorPage from '~/components/ErrorPage'
 
 export const ErrorBoundary = ErrorPage
 
-export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
+export const meta: Route.MetaFunction = ({ data, matches }) =>
   generateMetadata({
     title: data?.eventSeries?.name,
     image: data?.eventSeries?.hero?.image,
@@ -28,7 +27,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
 export const loader = async ({
   params: { lang: locale, slug },
   request: { url },
-}: LoaderFunctionArgs) => {
+}: Route.LoaderArgs) => {
   const [payload, t] = await Promise.all([getPayload(), i18next.getFixedT(locale as string)])
 
   const eventSeries = (
@@ -116,9 +115,10 @@ export const loader = async ({
   }
 }
 
-export default function EventSeriesDetailPage() {
+export default function EventSeriesDetailPage({
+  loaderData: { eventSeries, upcoming, past },
+}: Route.ComponentProps) {
   const { t } = useTranslation()
-  const { eventSeries, upcoming, past } = useLoaderData<typeof loader>()
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>('root')
 
   const h2 = 'text-xl font-semibold my-12'

@@ -1,9 +1,10 @@
-import { type ActionFunctionArgs, type ActionFunction, replace } from '@remix-run/node'
-import { Form, useActionData, useNavigate, useRouteLoaderData } from '@remix-run/react'
+import type { Route } from './+types/me'
+import type { loader as rootLoader } from '~/root'
+import { replace } from 'react-router'
+import { Form, useNavigate, useRouteLoaderData } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { classes } from '~/classes'
 import { Link } from '~/components/localized-link'
-import type { loader as rootLoader } from '~/root'
 import { useEffect } from 'react'
 import { Button } from '~/components/Button'
 
@@ -13,7 +14,7 @@ const ns = 'auth'
 /**
  * sign out user
  */
-export const action: ActionFunction = async ({ request }: ActionFunctionArgs) => {
+export const action = async ({ request }: Route.ActionArgs) => {
   const form = await request.formData()
 
   switch (form.get('_action')) {
@@ -28,7 +29,6 @@ export const action: ActionFunction = async ({ request }: ActionFunctionArgs) =>
 
 export default function Me() {
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>('root')
-  const actionData = useActionData<typeof action>()
   const navigate = useNavigate()
   const { t } = useTranslation(ns)
   const user = rootLoaderData?.user
@@ -41,7 +41,6 @@ export default function Me() {
 
   return (
     <>
-      {actionData?.message && <p>{actionData.message as string}</p>}
       {user ? (
         <>
           {t('Signed in as {{user}}', { user: user.name })}

@@ -1,7 +1,8 @@
+import type { Route } from './+types'
 import type { loader as rootLoader } from '~/root'
 import type { Locale } from '@app/i18n'
-import { redirect, type LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
-import { useLoaderData, useRouteLoaderData } from '@remix-run/react'
+import { redirect } from 'react-router'
+import { useRouteLoaderData } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import Pagination from '~/components/Pagination'
 import PostPreview from '~/components/PostPreview'
@@ -23,7 +24,7 @@ import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 
 export const ErrorBoundary = ErrorPage
 
-export const loader = async ({ request, params: { lang: locale } }: LoaderFunctionArgs) => {
+export const loader = async ({ request, params: { lang: locale } }: Route.LoaderArgs) => {
   const [payload, t] = await Promise.all([getPayload(), i18next.getFixedT(locale as string)])
 
   // compare date for upcoming screenings
@@ -106,7 +107,7 @@ export const loader = async ({ request, params: { lang: locale } }: LoaderFuncti
   }
 }
 
-export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
+export const meta: Route.MetaFunction = ({ data, matches }) =>
   generateMetadata({
     title: data?.page.meta?.title,
     description: data?.page.meta?.description,
@@ -116,8 +117,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
 
 const h2 = 'text-xl font-bold my-8'
 
-export default function LandingPage() {
-  const { page, posts, events } = useLoaderData<typeof loader>()
+export default function LandingPage({ loaderData: { page, posts, events } }: Route.ComponentProps) {
   const { site } = useRouteLoaderData<typeof rootLoader>('root')!
   const { t } = useTranslation()
 

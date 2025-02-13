@@ -4,7 +4,7 @@ import { RichText } from './RichText'
 import type { Navigation as NavigationType, Site } from '@app/types/payload'
 import NewsletterSignup from './NewsletterSignup'
 import Gutter from './Gutter'
-import { Link } from '@remix-run/react'
+import { Link } from 'react-router';
 import type { RequiredDataFromCollection } from 'payload'
 
 export type Props = {

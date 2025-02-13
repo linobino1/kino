@@ -1,5 +1,5 @@
 import type { Media } from '@app/types/payload'
-import type { MetaDescriptor } from '@remix-run/react'
+import type { MetaDescriptor } from 'react-router';
 import type { FrontendBrowserEnvironment } from '@app/util/env'
 import { generateTitle } from './generateTitle'
 import { getOptimizedImageUrl } from './media/getOptimizedImageUrl'

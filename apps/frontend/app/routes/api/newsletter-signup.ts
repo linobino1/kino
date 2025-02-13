@@ -1,5 +1,6 @@
-import { json, type ActionFunction } from '@remix-run/node'
+import type { Route } from './+types/newsletter-signup'
 import { env } from '@app/util/env/frontend.server'
+import { data } from 'react-router'
 import i18next from '~/i18next.server'
 
 const validateCaptcha = async (token: string): Promise<boolean> => {
@@ -22,13 +23,13 @@ const validateCaptcha = async (token: string): Promise<boolean> => {
   }
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action = async ({ request }: Route.ActionArgs) => {
   const t = await i18next.getFixedT(request)
-  const data = await request.formData()
+  const formData = await request.formData()
 
   // validate captcha
-  if (!(await validateCaptcha(data.get('cf-turnstile-response') as string))) {
-    return json({
+  if (!(await validateCaptcha(formData.get('cf-turnstile-response') as string))) {
+    return data({
       success: false,
       message: `The humanity checks could not be validated on the server. Sorry, please try again.`,
     })
@@ -40,24 +41,22 @@ export const action: ActionFunction = async ({ request }) => {
       'Content-Type': 'application/json; charset=utf-8',
     },
     body: JSON.stringify({
-      email: data.get('email'),
-      name: data.get('name'),
+      email: formData.get('email'),
+      name: formData.get('name'),
       list_uuids: [env.LISTMONK_LIST_ID],
     }),
   })
 
   if (res.ok) {
-    return {
+    return data({
       success: true,
       message: t('newsletter.success'),
-      original_response: res.json(),
-    }
+    })
   } else {
-    return {
+    return data({
       success: false,
       // message: `We couldn't sign you up. Please try again.`,
       message: t('newsletter.error.unknown'),
-      original_response: res.json(),
-    }
+    })
   }
 }

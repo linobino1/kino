@@ -1,6 +1,5 @@
-import type { ActionFunctionArgs } from '@remix-run/node'
-import { json } from '@remix-run/node'
-import { Form, useActionData } from '@remix-run/react'
+import type { Route } from './+types/reset-password'
+import { Form } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { classes } from '~/classes'
 import i18next from '~/i18next.server'
@@ -13,7 +12,7 @@ import Button from '~/components/Button'
 // i18n namespace
 const ns = 'auth'
 
-export const action = async ({ request }: ActionFunctionArgs) => {
+export const action = async ({ request }: Route.ActionArgs) => {
   const payload = await getPayload()
   const url = new URL(request.url)
   const form = await request.formData()
@@ -29,20 +28,19 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       },
     })
   } catch {
-    return json({
+    return {
       success: false,
       message: t('either your password reset token or the new password is invalid'),
-    })
+    }
   }
 
-  return json({
+  return {
     success: true,
     message: t('your new password has been saved!'),
-  })
+  }
 }
 
-export default function VerifyEmail() {
-  const data = useActionData<typeof action>()
+export default function VerifyEmail({ actionData: data }: Route.ComponentProps) {
   const { t } = useTranslation(ns)
 
   return (

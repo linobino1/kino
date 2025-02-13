@@ -11,7 +11,7 @@ import {
   IS_UNDERLINE,
 } from './nodeFormat'
 import { cn } from '@app/util/cn'
-import { Link } from '@remix-run/react'
+import { Link } from 'react-router';
 import { Image } from '~/components/Image'
 import type { NodeTypes } from './types'
 import ArrowOutward from '../icons/ArrowOutward'

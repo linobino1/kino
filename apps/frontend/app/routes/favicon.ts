@@ -1,6 +1,6 @@
 import type { Media } from '@app/types/payload'
-import type { LoaderFunction} from '@remix-run/node';
-import { redirect } from '@remix-run/node'
+import type { LoaderFunction } from 'react-router'
+import { redirect } from 'react-router'
 import { getPayload } from '~/util/getPayload.server'
 
 export const loader: LoaderFunction = async () => {

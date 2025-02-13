@@ -1,6 +1,4 @@
-import { type LoaderFunctionArgs } from '@remix-run/node'
-import type { MetaFunction } from '@remix-run/react'
-import { useLoaderData } from '@remix-run/react'
+import type { Route } from './+types/page'
 import type { Locale } from '@app/i18n'
 import { getPayload } from '~/util/getPayload.server'
 import i18next from '~/i18next.server'
@@ -13,7 +11,7 @@ import ErrorPage from '~/components/ErrorPage'
 
 export const ErrorBoundary = ErrorPage
 
-export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
+export const meta: Route.MetaFunction = ({ data, matches }) =>
   generateMetadata({
     title: data?.page.meta?.title,
     description: data?.page.meta?.description,
@@ -22,9 +20,9 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
   })
 
 export const loader = async ({
-  params: { lang: locale, page: pageSlug },
+  params: { lang: locale, slug },
   request: { url },
-}: LoaderFunctionArgs) => {
+}: Route.LoaderArgs) => {
   const payload = await getPayload()
 
   const [res, t] = await Promise.all([
@@ -32,7 +30,7 @@ export const loader = async ({
       collection: 'pages',
       where: {
         slug: {
-          equals: pageSlug,
+          equals: slug,
         },
       },
       locale: locale as Locale,
@@ -52,11 +50,9 @@ export const loader = async ({
   }
 }
 
-export default function Page() {
-  const { page } = useLoaderData<typeof loader>()
+export default function Page({ loaderData: { page } }: Route.ComponentProps) {
   return (
     <PageLayout type={page.layoutType}>
-      {/* <pre>{JSON.stringify(page, null, 2)}</pre> */}
       <Hero {...page.hero} />
       <RenderBlocks blocks={page.blocks ?? []} />
     </PageLayout>

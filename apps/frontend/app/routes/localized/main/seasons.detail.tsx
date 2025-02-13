@@ -1,8 +1,7 @@
-import type { LoaderFunctionArgs } from '@remix-run/node'
+import type { Route } from './+types/seasons.detail'
 import type { loader as rootLoader } from '~/root'
-import type { MetaFunction } from '@remix-run/react'
 import type { Locale } from '@app/i18n'
-import { useLoaderData, useRouteLoaderData } from '@remix-run/react'
+import { useRouteLoaderData } from 'react-router'
 import { getPayload } from '~/util/getPayload.server'
 import i18next from '~/i18next.server'
 import { PageLayout } from '~/components/PageLayout'
@@ -17,7 +16,7 @@ import ErrorPage from '~/components/ErrorPage'
 
 export const ErrorBoundary = ErrorPage
 
-export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
+export const meta: Route.MetaFunction = ({ data, matches }) =>
   generateMetadata({
     title: data?.season?.name,
     image: data?.season?.header,
@@ -29,7 +28,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
 export const loader = async ({
   params: { lang: locale, slug },
   request: { url },
-}: LoaderFunctionArgs) => {
+}: Route.LoaderArgs) => {
   const [payload, t] = await Promise.all([getPayload(), i18next.getFixedT(locale as string)])
 
   const season = (
@@ -80,9 +79,10 @@ export const loader = async ({
   }
 }
 
-export default function SeasonsDetailPage() {
+export default function SeasonsDetailPage({
+  loaderData: { season, events },
+}: Route.ComponentProps) {
   const { t } = useTranslation()
-  const { season, events } = useLoaderData<typeof loader>()
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>('root')
   return (
     <PageLayout type="default">

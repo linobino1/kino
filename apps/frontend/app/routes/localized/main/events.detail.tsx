@@ -1,10 +1,9 @@
-import type { LoaderFunctionArgs } from '@remix-run/node'
+import type { Route } from './+types/events.detail'
 import type { FilmPrint, Location, Media, EventSery, Season } from '@app/types/payload'
 import type { loader as rootLoader } from '~/root'
-import type { MetaFunction } from '@remix-run/react'
 import type { Locale } from '@app/i18n'
 import { Link } from '~/components/localized-link'
-import { useLoaderData, useRouteLoaderData } from '@remix-run/react'
+import { useRouteLoaderData } from 'react-router'
 import { getPayload } from '~/util/getPayload.server'
 import i18next from '~/i18next.server'
 import { PageLayout } from '~/components/PageLayout'
@@ -30,7 +29,7 @@ import Image from '~/components/Image'
 
 export const ErrorBoundary = ErrorPage
 
-export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
+export const meta: Route.MetaFunction = ({ data, matches }) =>
   generateMetadata({
     ...data?.meta,
     env: getEnvFromMatches(matches),
@@ -39,7 +38,7 @@ export const meta: MetaFunction<typeof loader> = ({ data, matches }) =>
 export const loader = async ({
   params: { lang: locale, slug },
   request: { url },
-}: LoaderFunctionArgs) => {
+}: Route.LoaderArgs) => {
   const payload = await getPayload()
   const [res, t] = await Promise.all([
     payload.find({
@@ -78,8 +77,7 @@ export const loader = async ({
   }
 }
 
-export default function EventPage() {
-  const { event } = useLoaderData<typeof loader>()
+export default function EventPage({ loaderData: { event } }: Route.ComponentProps) {
   const site = useRouteLoaderData<typeof rootLoader>('root')?.site
   const { t } = useTranslation()
   return (

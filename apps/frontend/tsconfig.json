@@ -1,7 +1,8 @@
 {
   "extends": "@app/tsconfig/react.json",
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", ".react-router/types/**/*"],
   "compilerOptions": {
+    "rootDirs": [".", "./.react-router/types"],
     "paths": {
       "#payload/*": ["../../packages/payload/src/*"],
       "~/*": ["./app/*"]

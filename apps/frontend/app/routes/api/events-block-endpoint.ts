@@ -1,4 +1,4 @@
-import type { ActionFunctionArgs } from '@remix-run/node'
+import type { Route } from './+types/events-block-endpoint'
 import type { Where } from 'payload'
 import type { Locale } from '@app/i18n'
 import { getPayload } from '~/util/getPayload.server'
@@ -14,6 +14,7 @@ export type RequestBody =
       eventSeriesID: string
       locale: Locale
     }
+
 /**
  * expects a body with many event ids or one eventSeries id:
  * {
@@ -36,7 +37,7 @@ export type RequestBody =
  * Why are we not getting this data from the backend?
  * The idea is, that the backend is not required at all for the frontend to work. It might sleep until an admin accesses the admin panel. The Remix server-side can fetch the data from the database directly.
  */
-export const action = async ({ request }: ActionFunctionArgs) => {
+export const action = async ({ request }: Route.ActionArgs) => {
   const payload = await getPayload()
   const body = (await request.json()) as RequestBody
 
@@ -65,10 +66,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       break
   }
 
-  const events = payload.find({
+  const events = await payload.find({
     collection: 'events',
     where,
-    depth: 2,
+    depth: 3,
     locale: body.locale,
   })
 
