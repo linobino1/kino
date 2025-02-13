@@ -1,4 +1,4 @@
-import { createCookie } from '@remix-run/node'
+import { createCookie } from 'react-router';
 
 export const i18nCookie = createCookie('i18n', {
   sameSite: 'strict',

@@ -1,7 +1,7 @@
-import type { LoaderFunctionArgs } from '@remix-run/node'
+import type { LoaderFunctionArgs } from 'react-router';
 import type { loader as rootLoader } from '~/root'
 import type { Locale } from '@app/i18n'
-import { Outlet, useLoaderData, useRouteLoaderData } from '@remix-run/react'
+import { Outlet, useLoaderData, useRouteLoaderData } from 'react-router';
 import Footer from '~/components/Footer'
 import Header from '~/components/Header'
 import { getPayload } from '~/util/getPayload.server'

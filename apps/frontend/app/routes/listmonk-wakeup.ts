@@ -1,5 +1,4 @@
-import type { ActionFunction } from '@remix-run/node'
-import { json } from '@remix-run/node'
+import type { ActionFunction } from 'react-router'
 import { env } from '@app/util/env/frontend.server'
 
 export const action: ActionFunction = async () => {
@@ -8,12 +7,12 @@ export const action: ActionFunction = async () => {
     method: 'get',
   })
   if (!wakeUpResponse.ok) {
-    return json({
+    return Response.json({
       success: false,
       message: 'the newsletter server has a problem',
     })
   }
-  return json({
+  return Response.json({
     success: true,
     message: 'Listmonk is waking up',
   })

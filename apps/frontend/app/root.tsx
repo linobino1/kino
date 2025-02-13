@@ -1,4 +1,4 @@
-import type { MetaFunction } from '@remix-run/react'
+import type { MetaFunction } from 'react-router';
 import {
   Links,
   Meta,
@@ -8,7 +8,7 @@ import {
   ScrollRestoration,
   useLocation,
   useRouteLoaderData,
-} from '@remix-run/react'
+} from 'react-router';
 import '@unocss/reset/tailwind-compat.css'
 import 'virtual:uno.css'
 import './global.css'
@@ -16,7 +16,7 @@ import { i18nCookie } from './cookies'
 import { useTranslation } from 'react-i18next'
 import { useEffect } from 'react'
 import { useChangeLanguage } from 'remix-i18next/react'
-import type { LoaderFunctionArgs } from '@remix-run/node'
+import type { LoaderFunctionArgs } from 'react-router';
 import { localizeTo } from './util/i18n/localizeTo'
 import { defaultLocale, locales } from '@app/i18n'
 import { siteTitle } from '@app/util/config'

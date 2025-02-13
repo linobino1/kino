@@ -1,6 +1,6 @@
-import type { RouteConfig } from '@remix-run/route-config'
-import { layout, route, prefix } from '@remix-run/route-config'
-import { flatRoutes } from '@remix-run/fs-routes'
+import type { RouteConfig } from '@react-router/dev/routes';
+import { layout, route, prefix } from '@react-router/dev/routes';
+import { flatRoutes } from '@react-router/fs-routes';
 
 export default [
   ...prefix('/:lang?', [...(await flatRoutes({ rootDirectory: 'routes' }))]),

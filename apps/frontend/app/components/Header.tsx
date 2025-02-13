@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import type { Media, Site, Navigation as NavigationType } from '@app/types/payload'
 import { Navigation, navItemClassName } from './Navigation'
-import { useLocation } from '@remix-run/react'
+import { useLocation } from 'react-router';
 import { Image } from '~/components/Image'
 import { UserStatus } from './UserStatus'
 import { Hamburger } from './Hamburger'

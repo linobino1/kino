@@ -1,4 +1,4 @@
-import { json, type ActionFunction } from '@remix-run/node'
+import { type ActionFunction } from 'react-router'
 import { env } from '@app/util/env/frontend.server'
 import i18next from '~/i18next.server'
 
@@ -28,7 +28,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   // validate captcha
   if (!(await validateCaptcha(data.get('cf-turnstile-response') as string))) {
-    return json({
+    return Response.json({
       success: false,
       message: `The humanity checks could not be validated on the server. Sorry, please try again.`,
     })

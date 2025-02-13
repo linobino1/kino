@@ -1,6 +1,5 @@
-import type { LoaderFunctionArgs } from '@remix-run/node'
-import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import type { LoaderFunctionArgs } from 'react-router'
+import { useLoaderData } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { classes } from '~/classes'
 import i18next from '~/i18next.server'
@@ -21,13 +20,13 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       token: url.searchParams.get('token') ?? '',
     })
   } catch {
-    return json({
+    return Response.json({
       success: false,
       message: t('your email address could not be verified'),
     })
   }
 
-  return json({
+  return Response.json({
     success: true,
     message: t('your email address has been verified!'),
   })

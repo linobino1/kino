@@ -1,6 +1,6 @@
 import type { Event, EventsBlockType, Site } from '@app/types/payload'
 import { EventsList } from '../EventsList'
-import { useRouteLoaderData } from '@remix-run/react'
+import { useRouteLoaderData } from 'react-router';
 import type { loader as rootLoader } from '~/root'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'

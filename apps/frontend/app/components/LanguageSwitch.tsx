@@ -1,4 +1,4 @@
-import { Link, useLocation } from '@remix-run/react'
+import { Link, useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next'
 import type { Locale } from '@app/i18n'
 import { locales } from '@app/i18n'

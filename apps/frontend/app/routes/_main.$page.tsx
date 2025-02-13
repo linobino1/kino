@@ -1,6 +1,6 @@
-import { type LoaderFunctionArgs } from '@remix-run/node'
-import type { MetaFunction } from '@remix-run/react'
-import { useLoaderData } from '@remix-run/react'
+import { type LoaderFunctionArgs } from 'react-router';
+import type { MetaFunction } from 'react-router';
+import { useLoaderData } from 'react-router';
 import type { Locale } from '@app/i18n'
 import { getPayload } from '~/util/getPayload.server'
 import i18next from '~/i18next.server'

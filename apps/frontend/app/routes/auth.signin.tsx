@@ -1,6 +1,6 @@
-import { Form, useActionData } from '@remix-run/react'
-import type { ActionFunctionArgs } from '@remix-run/node'
-import { replace } from '@remix-run/node'
+import { Form, useActionData } from 'react-router';
+import type { ActionFunctionArgs } from 'react-router';
+import { replace } from 'react-router';
 import { useTranslation } from 'react-i18next'
 import i18next from '~/i18next.server'
 import { Link } from '~/components/localized-link'

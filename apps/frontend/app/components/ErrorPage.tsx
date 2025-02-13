@@ -1,6 +1,5 @@
 import React from 'react'
-import { useRouteError, isRouteErrorResponse } from '@remix-run/react'
-import { captureRemixErrorBoundaryError, captureException } from '@sentry/remix'
+import { useRouteError, isRouteErrorResponse } from 'react-router'
 import { useEnv } from '~/util/useEnv'
 import PageLayout from './PageLayout'
 import { useTranslation } from 'react-i18next'
@@ -11,14 +10,6 @@ export const ErrorPage: React.FC = () => {
   const error = useRouteError()
   const env = useEnv()
   const { t } = useTranslation()
-
-  captureRemixErrorBoundaryError(error)
-
-  if (!isRouteErrorResponse(error) || (isRouteErrorResponse(error) && error.status >= 500)) {
-    console.log('captured error with sentry')
-    captureException(error)
-    // console.error(error);
-  }
 
   return (
     <PageLayout type={'info'}>

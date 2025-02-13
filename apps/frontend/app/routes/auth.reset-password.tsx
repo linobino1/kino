@@ -1,6 +1,5 @@
-import type { ActionFunctionArgs } from '@remix-run/node'
-import { json } from '@remix-run/node'
-import { Form, useActionData } from '@remix-run/react'
+import type { ActionFunctionArgs } from 'react-router'
+import { Form, useActionData } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { classes } from '~/classes'
 import i18next from '~/i18next.server'
@@ -29,13 +28,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       },
     })
   } catch {
-    return json({
+    return Response.json({
       success: false,
       message: t('either your password reset token or the new password is invalid'),
     })
   }
 
-  return json({
+  return Response.json({
     success: true,
     message: t('your new password has been saved!'),
   })

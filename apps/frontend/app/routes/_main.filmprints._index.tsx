@@ -1,7 +1,7 @@
-import { type LoaderFunctionArgs, redirect } from '@remix-run/node'
-import type { MetaFunction } from '@remix-run/react'
+import { type LoaderFunctionArgs, redirect } from 'react-router';
+import type { MetaFunction } from 'react-router';
 import type { Locale } from '@app/i18n'
-import { Form, useLoaderData, useNavigate, useSearchParams } from '@remix-run/react'
+import { Form, useLoaderData, useNavigate, useSearchParams } from 'react-router';
 import { getPayload } from '~/util/getPayload.server'
 import i18next from '~/i18next.server'
 import { PageLayout } from '~/components/PageLayout'

@@ -1,6 +1,5 @@
-import { Form, useActionData } from '@remix-run/react'
-import type { ActionFunctionArgs } from '@remix-run/node'
-import { json } from '@remix-run/node'
+import { Form, useActionData } from 'react-router'
+import type { ActionFunctionArgs } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import i18next from '~/i18next.server'
 import { getPayload } from '~/util/getPayload.server'
@@ -23,12 +22,12 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         email: form.get('email') as string,
       },
     })
-    return json({
+    return Response.json({
       success: true,
       message: t('please check your inbox'),
     })
   } catch {
-    return json({
+    return Response.json({
       success: false,
       message: t('invalid email address given'),
     })

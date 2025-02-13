@@ -1,5 +1,5 @@
-import { type ActionFunctionArgs, type ActionFunction, replace } from '@remix-run/node'
-import { Form, useActionData, useNavigate, useRouteLoaderData } from '@remix-run/react'
+import { type ActionFunctionArgs, type ActionFunction, replace } from 'react-router';
+import { Form, useActionData, useNavigate, useRouteLoaderData } from 'react-router';
 import { useTranslation } from 'react-i18next'
 import { classes } from '~/classes'
 import { Link } from '~/components/localized-link'

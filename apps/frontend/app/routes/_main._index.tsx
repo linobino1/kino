@@ -1,7 +1,7 @@
 import type { loader as rootLoader } from '~/root'
 import type { Locale } from '@app/i18n'
-import { redirect, type LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
-import { useLoaderData, useRouteLoaderData } from '@remix-run/react'
+import { redirect, type LoaderFunctionArgs, type MetaFunction } from 'react-router';
+import { useLoaderData, useRouteLoaderData } from 'react-router';
 import { useTranslation } from 'react-i18next'
 import Pagination from '~/components/Pagination'
 import PostPreview from '~/components/PostPreview'

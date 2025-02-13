@@ -1,4 +1,4 @@
-import type { ActionFunctionArgs } from '@remix-run/node'
+import type { ActionFunctionArgs } from 'react-router';
 import type { Where } from 'payload'
 import type { Locale } from '@app/i18n'
 import { getPayload } from '~/util/getPayload.server'

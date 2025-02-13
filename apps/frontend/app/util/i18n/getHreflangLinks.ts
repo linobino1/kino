@@ -1,4 +1,4 @@
-import type { Path } from '@remix-run/react'
+import type { Path } from 'react-router';
 import type { Locale } from '@app/i18n'
 import type { FrontendBrowserEnvironment } from '@app/util/env'
 import { returnLanguageIfSupported } from './returnLanguageIfSupported'

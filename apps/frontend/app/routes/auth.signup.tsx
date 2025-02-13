@@ -1,6 +1,5 @@
-import { Form, useActionData } from '@remix-run/react'
-import type { ActionFunctionArgs } from '@remix-run/node'
-import { json } from '@remix-run/node'
+import { Form, useActionData } from 'react-router'
+import type { ActionFunctionArgs } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { classes } from '~/classes'
 import i18next from '~/i18next.server'
@@ -14,7 +13,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const payload = await getPayload()
   const t = await i18next.getFixedT(request, ns)
 
-  return json({
+  return Response.json({
     success: false,
     message: t('Registration is disabled!'),
   })
@@ -33,13 +32,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       overrideAccess: false,
     })
   } catch {
-    return json({
+    return Response.json({
       success: false,
       message: t('could not create account, maybe you are already registered?'),
     })
   }
 
-  return json({
+  return Response.json({
     success: true,
     message: t('your account has been created, please check your inbox now'),
   })
