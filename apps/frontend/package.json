@@ -21,6 +21,7 @@
     "@react-router/serve": "7.1.5",
     "@unly/universal-language-detector": "^2.0.3",
     "@unocss/reset": "catalog:",
+    "@vercel/react-router": "^1.0.2",
     "cross-env": "^7.0.3",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
