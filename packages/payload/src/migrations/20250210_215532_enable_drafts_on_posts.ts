@@ -30,9 +30,9 @@ export async function up({ payload, req, session }: MigrateUpArgs): Promise<void
         latest: true,
         __v: 0,
       })
-      console.log(`Created version for post: ${post._id.toString()}`)
+      console.info(`Created version for post: ${post._id.toString()}`)
     } else {
-      console.log(`Version already exists for post: ${post._id.toString()}`)
+      console.info(`Version already exists for post: ${post._id.toString()}`)
     }
   }
 }

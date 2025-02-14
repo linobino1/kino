@@ -32,9 +32,10 @@ export default [
       '@next/next/no-html-link-for-pages': 'off',
     },
   },
-  // global disabled rules
+  // global rules
   {
     rules: {
+      'no-console': ['warn', { allow: ['error', 'warn', 'info'] }],
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'no-case-declarations': 'off',

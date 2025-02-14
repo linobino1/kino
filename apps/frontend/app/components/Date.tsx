@@ -18,7 +18,7 @@ export const Date: React.FC<Props> = ({ iso, className, format }) => {
   const { i18n } = useTranslation()
   const locale = i18n.language === 'de' ? de : enUS
   if (!date || isNaN(date.getMilliseconds())) {
-    console.log('encountered invalid date', iso)
+    console.warn('encountered invalid date', iso)
     return <></>
   }
   const str = formatInTimeZone(date, tz, format ?? 'LLLL d, yyyy', {
