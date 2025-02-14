@@ -1,4 +1,4 @@
-import type { Genre, Media, Movie, Person } from '@app/types/payload'
+import type { Media, Movie, Person } from '@app/types/payload'
 import type { Movie as SchemaOrgMovie } from 'schema-dts'
 
 export const movieSchema = (movie: Movie): SchemaOrgMovie | null => {
@@ -16,9 +16,6 @@ export const movieSchema = (movie: Movie): SchemaOrgMovie | null => {
   }
   if (movie.directors.length) {
     res.director = (movie.directors[0] as Person).name
-  }
-  if (movie.genres.length) {
-    res.genre = (movie.genres[0] as Genre).name
   }
   return res
 }

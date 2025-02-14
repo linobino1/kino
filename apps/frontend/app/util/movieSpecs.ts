@@ -1,12 +1,4 @@
-import type {
-  Country,
-  FilmPrint,
-  Format,
-  Genre,
-  LanguageVersion,
-  Movie,
-  Person,
-} from '@app/types/payload'
+import type { Country, FilmPrint, Format, LanguageVersion, Movie, Person } from '@app/types/payload'
 import type { TFunction } from 'i18next'
 
 export const movieSpecs = ({ filmPrint, t }: { filmPrint: FilmPrint; t: TFunction }): string[] => {
@@ -16,7 +8,6 @@ export const movieSpecs = ({ filmPrint, t }: { filmPrint: FilmPrint; t: TFunctio
   }
   return [
     movie.originalTitle,
-    (movie.genres as Genre[])?.map((x) => x.name).join(', '),
     (movie.countries as Country[])?.map((x) => x.name).join(', '),
     `${movie.year}`,
     movie.directors &&
