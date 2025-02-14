@@ -1,32 +1,22 @@
 import type { KronolithCalendarEmbedBlockType } from '@app/types/payload'
-import { Suspense } from 'react'
 
 type Props = KronolithCalendarEmbedBlockType
 
 export const KronolithCalendarEmbed: React.FC<Props> = ({ url }) => {
+  const params = new URL(url).searchParams
+  const token = params.get('token')
+  const calendar = params.get('calendar')
+
+  if (!token || !calendar) {
+    return <div>Misconfigured Kronolith Calendar Embed</div>
+  }
+
   return (
-    <Suspense fallback="Error loading Kronolith calendar">
-      <div
-        dangerouslySetInnerHTML={{
-          __html: `
-          <div id="kronolithCal"></div>
-          <script src="${url}" type="text/javascript"></script>
-          `,
-        }}
-      />
-      <style>
-        {`
-        .kronolith_embedded {
-            overflow-x: scroll;
-        }
-        .kronolith_embedded .title {
-          margin-bottom: 0.5em;
-        }
-        .kronolith_embedded .title a {
-            color: white !important;
-        }
-      `}
-      </style>
-    </Suspense>
+    <iframe
+      src={`/api/kronolith.html?calendar=${calendar}&token=${token}`}
+      className="h-[700px] w-full"
+      width={500}
+      height={700}
+    />
   )
 }

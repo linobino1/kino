@@ -7,6 +7,7 @@ export default [
     route('/events-block-endpoint', './routes/api/events-block-endpoint.ts'),
     route('/listmonk-wakeup', './routes/api/listmonk-wakeup.ts'),
     route('/newsletter-signup', './routes/api/newsletter-signup.ts'),
+    route('/kronolith.html', './routes/api/kronolith-iframe.ts'),
   ]),
   layout('./routes/localized/_layout.tsx', [
     layout('./routes/localized/auth/_layout.tsx', [
