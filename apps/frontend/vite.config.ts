@@ -18,4 +18,7 @@ export default defineConfig(({ command }) => ({
     noExternal:
       command === 'build' ? true : ['remix-i18next', 'payload', '@payloadcms/richtext-lexical'],
   },
+  server: {
+    allowedHosts: true,
+  },
 }))
