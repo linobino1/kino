@@ -56,7 +56,7 @@ export const loader = async ({
 export default function PostDetailPage({ loaderData: { post } }: Route.ComponentProps) {
   return (
     <PageLayout type={'default'}>
-      {JsonLd(postSchema(post))}
+      <JsonLd {...postSchema(post)} />
       <Gutter size="small" className="mt-12">
         <Date iso={post.date} format="PPP" className="text-sm text-neutral-100" />
         <h1 className="mt-6 text-3xl font-semibold uppercase tracking-widest">{post.title}</h1>

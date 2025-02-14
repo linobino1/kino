@@ -80,9 +80,10 @@ export const loader = async ({
 export default function EventPage({ loaderData: { event } }: Route.ComponentProps) {
   const site = useRouteLoaderData<typeof rootLoader>('root')?.site
   const { t } = useTranslation()
+  const structuredData = eventSchema(event, site)
   return (
     <PageLayout>
-      {JsonLd(eventSchema(event, site))}
+      {structuredData && <JsonLd {...structuredData} />}
       <Hero type="overlay" headline={event.title} image={event.header}>
         <div className="leading-tight">
           <Date className="text-lg font-semibold" iso={event.date as string} format="P / p" />

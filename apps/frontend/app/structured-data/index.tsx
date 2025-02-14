@@ -1,17 +1,20 @@
-import React from 'react'
 import type { Thing, WithContext, ItemList } from 'schema-dts'
+import type { Schema } from './types'
 
-export function addContext<T extends Thing>(json: T): WithContext<T> {
-  const jsonWithContext = json as WithContext<T>
-  jsonWithContext['@context'] = 'https://schema.org'
-  return jsonWithContext
+export const addContextToSchema = <T extends Schema>(schema: T): WithContext<T> => {
+  return {
+    '@context': 'https://schema.org',
+    ...schema,
+  }
 }
 
-export function JsonLd<T extends Thing>(data: T): React.ReactNode {
+export function JsonLd<T extends Thing>(schema: T): React.ReactNode {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(addContext(data)) }}
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(addContextToSchema(schema)),
+      }}
     />
   )
 }

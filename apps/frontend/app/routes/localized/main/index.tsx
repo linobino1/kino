@@ -131,7 +131,7 @@ export default function LandingPage({ loaderData: { page, posts, events } }: Rou
         </Link>
 
         <h2 className={cn(h2, 'mb-0')}>{t('News')}</h2>
-        {JsonLd(postsListSchema(posts.docs))}
+        <JsonLd {...postsListSchema(posts.docs)} />
         {posts.docs?.length ? (
           <ul className={classes.posts}>
             {posts.docs.map((post, index) => (

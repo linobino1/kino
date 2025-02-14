@@ -34,7 +34,7 @@ export const EventsList: React.FC<Props> = ({
         className,
       )}
     >
-      {JsonLd(screeningsListMarkup(items, site))}
+      <JsonLd {...screeningsListMarkup(items, site)} />
       {items.map((item) => (
         <Link key={item.id} to={`/events/${item.slug as string}`} prefetch="intent">
           <EventCard event={item} activeEventSery={activeEventSery} />

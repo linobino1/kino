@@ -1,9 +1,10 @@
 import type { Genre, Media, Movie, Person } from '@app/types/payload'
 import type { Movie as SchemaOrgMovie } from 'schema-dts'
 
-export const movieSchema = (movie: Movie): SchemaOrgMovie => {
+export const movieSchema = (movie: Movie): SchemaOrgMovie | null => {
   if (movie?.directors?.length && typeof movie.directors[0] === 'string') {
-    throw new Error('movieSchema() expects directors to be populated')
+    console.warn('movieSchema() expects directors to be populated')
+    return null
   }
   const res: SchemaOrgMovie = {
     '@type': 'Movie',
