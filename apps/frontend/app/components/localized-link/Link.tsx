@@ -1,5 +1,5 @@
-import type { LinkProps } from 'react-router';
-import { Link as RemixLink } from 'react-router';
+import type { LinkProps } from 'react-router'
+import { Link as RemixLink } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { localizeTo } from '~/util/i18n/localizeTo'
 

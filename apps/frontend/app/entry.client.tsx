@@ -1,4 +1,4 @@
-import { HydratedRouter } from 'react-router/dom';
+import { HydratedRouter } from 'react-router/dom'
 import { startTransition } from 'react'
 import { hydrateRoot } from 'react-dom/client'
 import i18n from './i18n'

@@ -1,5 +1,5 @@
 import type { FilmPrint, Movie as MovieType, Media, Rental } from '@app/types/payload'
-import { Link } from 'react-router';
+import { Link } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { Image } from '~/components/Image'
 import { movieSpecs } from '~/util/movieSpecs'

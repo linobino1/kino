@@ -1,4 +1,4 @@
-import type { Locale} from '@app/i18n';
+import type { Locale } from '@app/i18n'
 import { locales } from '@app/i18n'
 
 export const returnLanguageIfSupported = (lang?: string): Locale | undefined => {

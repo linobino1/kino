@@ -1,5 +1,5 @@
-import type { NavLinkProps } from 'react-router';
-import { NavLink as RemixNavLink } from 'react-router';
+import type { NavLinkProps } from 'react-router'
+import { NavLink as RemixNavLink } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { localizeTo } from '~/util/i18n/localizeTo'
 

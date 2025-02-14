@@ -1,5 +1,5 @@
 import { LRUCache } from 'lru-cache'
-import type { CacheEntry, Cache, CachifiedOptions } from '@epic-web/cachified';
+import type { CacheEntry, Cache, CachifiedOptions } from '@epic-web/cachified'
 import { cachified, totalTtl } from '@epic-web/cachified'
 
 /* lru cache is not part of this package but a simple non-persistent cache */
