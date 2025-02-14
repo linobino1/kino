@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import type { Media, Site, Navigation as NavigationType } from '@app/types/payload'
 import { Navigation, navItemClassName } from './Navigation'
-import { useLocation } from 'react-router';
+import { useLocation } from 'react-router'
 import { Image } from '~/components/Image'
 import { UserStatus } from './UserStatus'
 import { Hamburger } from './Hamburger'
@@ -9,7 +9,7 @@ import { Gutter } from './Gutter'
 import { useTranslation } from 'react-i18next'
 import { Link } from '~/components/localized-link'
 import { cn } from '@app/util/cn'
-import LanguageSwitch from './LanguageSwitch'
+import { LanguageSwitch } from './LanguageSwitch'
 import type { RequiredDataFromCollection } from 'payload'
 
 type Props = {
@@ -17,7 +17,7 @@ type Props = {
   navigations: RequiredDataFromCollection<NavigationType>[]
 }
 
-const Header: React.FC<Props> = ({ site, navigations }) => {
+export const Header: React.FC<Props> = ({ site, navigations }) => {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
   const toggleMenu = () => setMenuIsOpen((prev) => !prev)
 
@@ -98,5 +98,3 @@ const Header: React.FC<Props> = ({ site, navigations }) => {
     </>
   )
 }
-
-export default Header

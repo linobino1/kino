@@ -1,7 +1,7 @@
 import React from 'react'
 import type { Media } from '@app/types/payload'
 import { Image } from '~/components/Image'
-import Slider from './Slider'
+import { Slider } from './Slider'
 
 export type Type = {
   images: Media[]
@@ -28,5 +28,3 @@ export const Gallery: React.FC<Type> = ({ images }) => {
     </div>
   )
 }
-
-export default Gallery

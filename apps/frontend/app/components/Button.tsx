@@ -24,4 +24,3 @@ export const Button: React.FC<Props> = ({ look = 'default', size = 'md', classNa
     />
   )
 }
-export default Button

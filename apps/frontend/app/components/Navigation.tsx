@@ -92,5 +92,3 @@ export const Navigation: React.FC<Props> = ({
     <></>
   )
 }
-
-export default Navigation

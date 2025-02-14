@@ -1,8 +1,8 @@
 import type { Post, Media } from '@app/types/payload'
 import React from 'react'
-import Date from '~/components/Date'
-import Image from '~/components/Image'
-import RichText from '~/components/RichText'
+import { Date } from '~/components/Date'
+import { Image } from '~/components/Image'
+import { RichText } from '~/components/RichText'
 import { useTranslation } from 'react-i18next'
 import type { LinkableCollection } from '@app/payload/types'
 import { Link } from '~/components/localized-link'
@@ -67,5 +67,3 @@ export const PostPreview: React.FC<Props> = ({ className, ...props }) => {
     </div>
   )
 }
-
-export default PostPreview

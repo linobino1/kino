@@ -14,7 +14,7 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
 // @ts-expect-error necessary
 const SliderComponent = SlickSlider.default ?? SlickSlider
 
-const Slider: React.FC<Props> = ({
+export const Slider: React.FC<Props> = ({
   maxSlidesToShow = 1,
   autoplay = false,
   autoplaySpeed = 5000,
@@ -82,5 +82,3 @@ const Slider: React.FC<Props> = ({
     </div>
   )
 }
-
-export default Slider

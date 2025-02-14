@@ -2,9 +2,9 @@ import React from 'react'
 import { Navigation } from './Navigation'
 import { RichText } from './RichText'
 import type { Navigation as NavigationType, Site } from '@app/types/payload'
-import NewsletterSignup from './NewsletterSignup'
-import Gutter from './Gutter'
-import { Link } from 'react-router';
+import { NewsletterSignup } from './NewsletterSignup'
+import { Gutter } from './Gutter'
+import { Link } from 'react-router'
 import type { RequiredDataFromCollection } from 'payload'
 
 export type Props = {
@@ -59,5 +59,3 @@ export const Footer: React.FC<Props> = ({ site, navigations }) => {
     </footer>
   )
 }
-
-export default Footer

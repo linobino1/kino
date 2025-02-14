@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router';
+import { Link, useLocation } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import type { Locale } from '@app/i18n'
 import { locales } from '@app/i18n'
@@ -14,7 +14,7 @@ export type Props = {
   className?: string
 }
 
-export default function LanguageSwitch({ className }: Props) {
+export function LanguageSwitch({ className }: Props) {
   const { i18n } = useTranslation()
   const { pathname } = useLocation()
   const pathnames = getLocalizedPathnames(pathname)

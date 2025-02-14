@@ -2,7 +2,7 @@ import type { Media, Navigation as NavigationType, Page } from '@app/types/paylo
 import { Image } from './Image'
 import { Gutter } from './Gutter'
 import { Navigation } from './Navigation'
-import { useMatches } from 'react-router';
+import { useMatches } from 'react-router'
 import { cn } from '@app/util/cn'
 
 type Props = React.HTMLAttributes<HTMLDivElement> &
@@ -64,5 +64,3 @@ export const Hero: React.FC<Props> = ({ type, headline, image, children, classNa
     </div>
   )
 }
-
-export default Hero

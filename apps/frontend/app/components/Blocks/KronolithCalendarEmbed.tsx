@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 
 type Props = KronolithCalendarEmbedBlockType
 
-const KronolithCalendarEmbed: React.FC<Props> = ({ url }) => {
+export const KronolithCalendarEmbed: React.FC<Props> = ({ url }) => {
   return (
     <Suspense fallback="Error loading Kronolith calendar">
       <div
@@ -30,4 +30,3 @@ const KronolithCalendarEmbed: React.FC<Props> = ({ url }) => {
     </Suspense>
   )
 }
-export default KronolithCalendarEmbed

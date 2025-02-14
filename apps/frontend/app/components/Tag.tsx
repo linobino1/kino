@@ -5,7 +5,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode
 }
 
-const Tag: React.FC<Props> = ({ color = 'turquoise', className, ...props }) => {
+export const Tag: React.FC<Props> = ({ color = 'turquoise', className, ...props }) => {
   return (
     <div
       {...props}
@@ -19,4 +19,3 @@ const Tag: React.FC<Props> = ({ color = 'turquoise', className, ...props }) => {
     />
   )
 }
-export default Tag

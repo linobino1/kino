@@ -4,7 +4,7 @@ import { useFetcher } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import Turnstile from 'react-turnstile'
 import { cn } from '@app/util/cn'
-import Button from './Button'
+import { Button } from './Button'
 import { useEnv } from '~/util/useEnv'
 
 export type Props = React.HTMLAttributes<HTMLDivElement>
@@ -12,7 +12,7 @@ export type Props = React.HTMLAttributes<HTMLDivElement>
 const input =
   'border border-gray-300 rounded p-[0.1em] focus:outline-none text-black focus:ring-2 focus:ring-blue focus:border-primary-500'
 
-const NewsletterSignup: React.FC<Props> = ({ className, ...props }) => {
+export const NewsletterSignup: React.FC<Props> = ({ className, ...props }) => {
   const env = useEnv()
   const { t } = useTranslation()
   const [key, setKey] = useState<string>(() => Math.random().toString())
@@ -107,5 +107,3 @@ const NewsletterSignup: React.FC<Props> = ({ className, ...props }) => {
     </div>
   )
 }
-
-export default NewsletterSignup

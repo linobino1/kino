@@ -21,5 +21,3 @@ export const Gutter: React.FC<Props> = ({ size = 'medium', className, ...props }
     </div>
   )
 }
-
-export default Gutter

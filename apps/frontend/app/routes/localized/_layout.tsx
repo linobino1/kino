@@ -26,6 +26,7 @@ export async function loader({ request }: Route.LoaderArgs) {
     i18nCookie: serializedI18nCookie,
   }
 }
+
 export default function LocalizedLayout({
   loaderData: { locale, i18nCookie },
 }: Route.ComponentProps) {

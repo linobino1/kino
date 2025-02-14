@@ -8,9 +8,9 @@ import { PageLayout } from '~/components/PageLayout'
 import { Hero } from '~/components/Hero'
 import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
-import Gutter from '~/components/Gutter'
-import Image from '~/components/Image'
-import Pagination from '~/components/Pagination'
+import { Gutter } from '~/components/Gutter'
+import { Image } from '~/components/Image'
+import { Pagination } from '~/components/Pagination'
 
 export const meta: Route.MetaFunction = ({ data, matches }) =>
   generateMetadata({

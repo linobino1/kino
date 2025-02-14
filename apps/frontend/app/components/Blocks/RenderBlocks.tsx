@@ -4,9 +4,9 @@ import { Gallery } from '../Gallery'
 import { MyReactPlayer } from '../MyReactPlayer'
 import { Image } from '../Image'
 import { RichText } from '../RichText'
-import Gutter from '../Gutter'
+import { Gutter } from '../Gutter'
 import { EventsBlock } from './EventsBlock'
-import KronolithCalendarEmbed from './KronolithCalendarEmbed'
+import { KronolithCalendarEmbed } from './KronolithCalendarEmbed'
 
 type Block = NonNullable<Page['blocks']>[number]
 
@@ -89,5 +89,3 @@ export const RenderBlocks: React.FC<BlocksProps> = ({ blocks, ...props }) => {
     </div>
   )
 }
-
-export default RenderBlocks

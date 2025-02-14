@@ -35,5 +35,3 @@ export const Image: React.FC<Props> = ({ image, srcSet, src, alt, width, height,
 
   return <img {...props} src={src} alt={alt} width={width} height={height} srcSet={srcSet} />
 }
-
-export default Image

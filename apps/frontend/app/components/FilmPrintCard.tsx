@@ -45,5 +45,3 @@ export const FilmPrintCard: React.FC<Props> = ({ item }) => {
     </div>
   )
 }
-
-export default FilmPrintCard

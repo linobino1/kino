@@ -36,5 +36,3 @@ export const RichText: React.FC<Props> = ({
     </div>
   )
 }
-
-export default RichText

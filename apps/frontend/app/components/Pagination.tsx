@@ -1,8 +1,8 @@
 import { type PaginatedDocs } from 'payload'
-import { Link, useSearchParams } from 'react-router';
+import { Link, useSearchParams } from 'react-router'
 import { classes } from '~/classes'
 import { cn } from '@app/util/cn'
-import type { LinkProps } from 'react-router';
+import type { LinkProps } from 'react-router'
 
 export type Props = React.HTMLAttributes<HTMLDivElement> &
   PaginatedDocs & {
@@ -68,5 +68,3 @@ export const Pagination: React.FC<Props> = ({
     </div>
   ) : null
 }
-
-export default Pagination

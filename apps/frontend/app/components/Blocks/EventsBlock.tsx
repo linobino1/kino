@@ -47,5 +47,3 @@ export const EventsBlock: React.FC<Props> = ({ type, eventSeries, events }) => {
 
   return data ? <EventsList items={data.docs} site={site} /> : <p>{t('Loading...')}</p>
 }
-
-export default EventsBlock

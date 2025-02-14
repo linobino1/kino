@@ -2,13 +2,13 @@ import type { Route } from './+types/_layout'
 import type { loader as rootLoader } from '~/root'
 import type { Locale } from '@app/i18n'
 import { Outlet, useRouteLoaderData } from 'react-router'
-import Footer from '~/components/Footer'
-import Header from '~/components/Header'
+import { Footer } from '~/components/Footer'
+import { Header } from '~/components/Header'
 import { getPayload } from '~/util/getPayload.server'
 import { cache } from '~/util/cache.server'
 import { getCachedUser } from '~/util/userCache.server'
 import { ErrorComponent } from '~/components/Error'
-import PageLayout from '~/components/PageLayout'
+import { PageLayout } from '~/components/PageLayout'
 
 export const loader = async ({ params: { lang: locale } }: Route.LoaderArgs) => {
   const payload = await getPayload()

@@ -3,9 +3,9 @@ import { Form } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import i18next from '~/i18next.server'
 import { getPayload } from '~/util/getPayload.server'
-import Label from '~/components/auth/Label'
-import Input from '~/components/auth/Input'
-import Button from '~/components/Button'
+import { Label } from '~/components/auth/Label'
+import { Input } from '~/components/auth/Input'
+import { Button } from '~/components/Button'
 
 // i18n namespace
 const ns = 'auth'

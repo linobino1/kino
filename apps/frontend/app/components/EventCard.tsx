@@ -4,7 +4,7 @@ import { Date as DateComponent } from '~/components/Date'
 import { useTranslation } from 'react-i18next'
 import { Image } from '~/components/Image'
 import { classes } from '~/classes'
-import Tag from './Tag'
+import { Tag } from './Tag'
 import { cn } from '@app/util/cn'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
@@ -79,5 +79,3 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
     </div>
   )
 }
-
-export default EventCard

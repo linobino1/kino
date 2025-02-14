@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { JsonLd } from '~/structured-data'
 import { eventsListSchema as screeningsListMarkup } from '~/structured-data/event'
 import { Link } from '~/components/localized-link'
-import EventCard from './EventCard'
+import { EventCard } from './EventCard'
 import { cn } from '@app/util/cn'
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
@@ -47,5 +47,3 @@ export const EventsList: React.FC<Props> = ({
     </div>
   )
 }
-
-export default EventsList

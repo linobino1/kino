@@ -21,5 +21,3 @@ export const PageLayout: React.FC<Props> = ({ type = 'default', className, ...pr
     />
   )
 }
-
-export default PageLayout

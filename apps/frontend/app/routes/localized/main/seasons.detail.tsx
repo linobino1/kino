@@ -8,9 +8,9 @@ import { PageLayout } from '~/components/PageLayout'
 import { Hero } from '~/components/Hero'
 import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
-import Gutter from '~/components/Gutter'
-import Pagination from '~/components/Pagination'
-import EventsList from '~/components/EventsList'
+import { Gutter } from '~/components/Gutter'
+import { Pagination } from '~/components/Pagination'
+import { EventsList } from '~/components/EventsList'
 import { useTranslation } from 'react-i18next'
 
 export const meta: Route.MetaFunction = ({ data, matches }) =>
