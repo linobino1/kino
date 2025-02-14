@@ -1,5 +1,5 @@
-import FilmprintsPage, { loader, meta, ErrorBoundary } from './filmprints.index'
+import FilmprintsPage, { loader, meta } from './filmprints.index'
 
-export { loader, meta, ErrorBoundary }
+export { loader, meta }
 
 export default FilmprintsPage

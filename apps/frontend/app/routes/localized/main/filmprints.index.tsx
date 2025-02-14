@@ -17,13 +17,10 @@ import { Filters } from '~/util/filter'
 import { FilmPrintCard } from '~/components/FilmPrintCard'
 import { Button } from '~/components/Button'
 import { Gutter } from '~/components/Gutter'
-import ErrorPage from '~/components/ErrorPage'
 import RenderBlocks from '~/components/Blocks/RenderBlocks'
 import { Link } from '~/components/localized-link'
 
 const limit = 20
-
-export const ErrorBoundary = ErrorPage
 
 export const meta: Route.MetaFunction = ({ data, matches }) =>
   generateMetadata({
@@ -62,7 +59,9 @@ export const loader = async ({ params: { lang: locale }, request: { url } }: Rou
   const page = pages.docs[0]
 
   if (!page) {
-    throw new Response(t('error.404', { url }), { status: 404 })
+    throw new Response(t('error.404', { url, interpolation: { escapeValue: false } }), {
+      status: 404,
+    })
   }
 
   // get all published film prints

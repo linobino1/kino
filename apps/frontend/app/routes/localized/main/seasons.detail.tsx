@@ -12,9 +12,6 @@ import Gutter from '~/components/Gutter'
 import Pagination from '~/components/Pagination'
 import EventsList from '~/components/EventsList'
 import { useTranslation } from 'react-i18next'
-import ErrorPage from '~/components/ErrorPage'
-
-export const ErrorBoundary = ErrorPage
 
 export const meta: Route.MetaFunction = ({ data, matches }) =>
   generateMetadata({
@@ -22,8 +19,6 @@ export const meta: Route.MetaFunction = ({ data, matches }) =>
     image: data?.season?.header,
     env: getEnvFromMatches(matches),
   })
-
-// export const errorBoundary = ErrorPage
 
 export const loader = async ({
   params: { lang: locale, slug },

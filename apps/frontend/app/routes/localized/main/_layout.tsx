@@ -7,6 +7,8 @@ import Header from '~/components/Header'
 import { getPayload } from '~/util/getPayload.server'
 import { cache } from '~/util/cache.server'
 import { getCachedUser } from '~/util/userCache.server'
+import { ErrorComponent } from '~/components/Error'
+import PageLayout from '~/components/PageLayout'
 
 export const loader = async ({ params: { lang: locale } }: Route.LoaderArgs) => {
   const payload = await getPayload()
@@ -39,19 +41,39 @@ export const loader = async ({ params: { lang: locale } }: Route.LoaderArgs) => 
   }
 }
 
-export const handle = {
-  i18n: ['common'],
-}
-
-export default function Layout({ loaderData: { navigations } }: Route.ComponentProps) {
+export const Layout = ({
+  children,
+  navigations,
+}: {
+  children: React.ReactNode
+  navigations?: Route.ComponentProps['loaderData']['navigations']
+}) => {
   const { site } = useRouteLoaderData<typeof rootLoader>('root')!
   return (
     <>
       <div className="flex min-h-screen flex-col">
         {navigations && site && <Header site={site} navigations={navigations} />}
-        <Outlet />
+        {children}
       </div>
       {navigations && site && <Footer site={site} navigations={navigations} />}
     </>
+  )
+}
+
+export default function MainLayout({ loaderData: { navigations } }: Route.ComponentProps) {
+  return (
+    <Layout navigations={navigations}>
+      <Outlet />
+    </Layout>
+  )
+}
+
+export function ErrorBoundary({ error, loaderData }: Route.ErrorBoundaryProps) {
+  return (
+    <Layout navigations={loaderData?.navigations}>
+      <PageLayout type={'info'}>
+        <ErrorComponent error={error} />
+      </PageLayout>
+    </Layout>
   )
 }

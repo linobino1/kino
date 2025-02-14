@@ -11,9 +11,6 @@ import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import Gutter from '~/components/Gutter'
 import Image from '~/components/Image'
 import Pagination from '~/components/Pagination'
-import ErrorPage from '~/components/ErrorPage'
-
-export const ErrorBoundary = ErrorPage
 
 export const meta: Route.MetaFunction = ({ data, matches }) =>
   generateMetadata({
@@ -51,7 +48,9 @@ export const loader = async ({ params: { lang: locale }, request: { url } }: Rou
   const page = pages.docs[0]
 
   if (!page) {
-    throw new Response(t('error.404', { url }), { status: 404 })
+    throw new Response(t('error.404', { url, interpolation: { escapeValue: false } }), {
+      status: 404,
+    })
   }
 
   // Redirect to the last page if the requested page is greater than the total number of page

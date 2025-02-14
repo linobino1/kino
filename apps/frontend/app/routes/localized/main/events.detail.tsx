@@ -21,13 +21,10 @@ import Gutter from '~/components/Gutter'
 import { env } from '@app/util/env/frontend.server'
 import { FilmPrintDetails } from '~/components/FilmPrintDetails'
 import React from 'react'
-import ErrorPage from '~/components/ErrorPage'
 import { AsideLayout } from '~/components/AsideLayout'
 import { Poster } from '~/components/Poster'
 import { useTranslation } from 'react-i18next'
 import Image from '~/components/Image'
-
-export const ErrorBoundary = ErrorPage
 
 export const meta: Route.MetaFunction = ({ data, matches }) =>
   generateMetadata({
@@ -39,6 +36,7 @@ export const loader = async ({
   params: { lang: locale, slug },
   request: { url },
 }: Route.LoaderArgs) => {
+  // throw new Error('Not implemented')
   const payload = await getPayload()
   const [res, t] = await Promise.all([
     payload.find({
@@ -57,7 +55,9 @@ export const loader = async ({
   const event = res.docs[0]
 
   if (!event) {
-    throw new Response(t('error.404', { url }), { status: 404 })
+    throw new Response(t('error.404', { url, interpolation: { escapeValue: false } }), {
+      status: 404,
+    })
   }
 
   return {

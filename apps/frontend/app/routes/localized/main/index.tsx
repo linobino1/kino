@@ -15,14 +15,11 @@ import { classes } from '~/classes'
 import { getPayload } from '~/util/getPayload.server'
 import PageLayout from '~/components/PageLayout'
 import i18next from '~/i18next.server'
-import ErrorPage from '~/components/ErrorPage'
 import Hero from '~/components/Hero'
 import { cn } from '@app/util/cn'
 import Button from '~/components/Button'
 import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
-
-export const ErrorBoundary = ErrorPage
 
 export const loader = async ({ request, params: { lang: locale } }: Route.LoaderArgs) => {
   const [payload, t] = await Promise.all([getPayload(), i18next.getFixedT(locale as string)])
@@ -90,7 +87,7 @@ export const loader = async ({ request, params: { lang: locale } }: Route.Loader
   // if we cannot find the page in the database, we throw a 404 error
   const page = pages.docs[0]
   if (!page) {
-    throw new Error(t('error.404', { url: 'home' }))
+    throw new Error(t('error.404', { url: 'home', interpolation: { escapeValue: false } }))
   }
 
   // Redirect to the last page if the requested page is greater than the total number of page

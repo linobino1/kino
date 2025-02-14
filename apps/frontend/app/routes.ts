@@ -9,18 +9,18 @@ export default [
     route('/newsletter-signup', './routes/api/newsletter-signup.ts'),
   ]),
   layout('./routes/localized/_layout.tsx', [
-    ...prefix('/:lang?', [
-      layout('./routes/localized/auth/_layout.tsx', [
-        ...prefix('/auth', [
-          route('/me', './routes/localized/auth/me.tsx'),
-          route('/signin', './routes/localized/auth/signin.tsx'),
-          route('/signup', './routes/localized/auth/signup.tsx'),
-          route('/forgot-password', './routes/localized/auth/forgot-password.tsx'),
-          route('/reset-password', './routes/localized/auth/reset-password.tsx'),
-          route('/verify-email', './routes/localized/auth/verify-email.tsx'),
-        ]),
+    layout('./routes/localized/auth/_layout.tsx', [
+      ...prefix('/:lang?/auth', [
+        route('/me', './routes/localized/auth/me.tsx'),
+        route('/signin', './routes/localized/auth/signin.tsx'),
+        route('/signup', './routes/localized/auth/signup.tsx'),
+        route('/forgot-password', './routes/localized/auth/forgot-password.tsx'),
+        route('/reset-password', './routes/localized/auth/reset-password.tsx'),
+        route('/verify-email', './routes/localized/auth/verify-email.tsx'),
       ]),
-      layout('./routes/localized/main/_layout.tsx', [
+    ]),
+    layout('./routes/localized/main/_layout.tsx', [
+      ...prefix('/:lang?', [
         index('./routes/localized/main/index.tsx'),
         route('/:slug', './routes/localized/main/page.tsx'),
         route('/events', './routes/localized/main/events.index.tsx'),

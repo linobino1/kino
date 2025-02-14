@@ -7,9 +7,6 @@ import { Hero } from '~/components/Hero'
 import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { RenderBlocks } from '~/components/Blocks/RenderBlocks'
-import ErrorPage from '~/components/ErrorPage'
-
-export const ErrorBoundary = ErrorPage
 
 export const meta: Route.MetaFunction = ({ data, matches }) =>
   generateMetadata({
@@ -42,7 +39,9 @@ export const loader = async ({
   const page = res.docs[0]
 
   if (!page) {
-    throw new Response(t('error.404', { url }), { status: 404 })
+    throw new Response(t('error.404', { url, interpolation: { escapeValue: false } }), {
+      status: 404,
+    })
   }
 
   return {

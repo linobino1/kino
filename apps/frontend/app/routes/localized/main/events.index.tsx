@@ -10,9 +10,6 @@ import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import EventsList from '~/components/EventsList'
 import Gutter from '~/components/Gutter'
-import ErrorPage from '~/components/ErrorPage'
-
-export const ErrorBoundary = ErrorPage
 
 export const meta: Route.MetaFunction = ({ data, matches }) =>
   generateMetadata({
@@ -68,7 +65,9 @@ export const loader = async ({ params: { lang: locale }, request: { url } }: Rou
   const page = pages.docs[0]
 
   if (!page) {
-    throw new Response(t('error.404', { url }), { status: 404 })
+    throw new Response(t('error.404', { url, interpolation: { escapeValue: false } }), {
+      status: 404,
+    })
   }
 
   return {

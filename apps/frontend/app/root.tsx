@@ -23,6 +23,7 @@ import { getOptimizedImageUrl } from './util/media/getOptimizedImageUrl'
 import { getCanonicalLink, getHreflangLinks } from './util/i18n/getHreflangLinks'
 import { parseFrontendBrowserEnv, type FrontendBrowserEnvironment } from '@app/util/env'
 import { getUrlLanguage } from './util/i18n/getUrlLanguage'
+import { ErrorComponent } from './components/Error'
 
 export async function loader({ request }: Route.LoaderArgs) {
   // get the locale from the URL
@@ -96,4 +97,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return <Outlet />
+}
+
+export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+  return <ErrorComponent error={error} />
 }

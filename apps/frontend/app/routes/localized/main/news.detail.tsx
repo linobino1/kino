@@ -14,9 +14,6 @@ import Image from '~/components/Image'
 import RichText from '~/components/RichText'
 import { RenderBlocks } from '~/components/Blocks/RenderBlocks'
 import { lexicalToPlainText } from '~/components/RichText/lexicalToPlainText'
-import ErrorPage from '~/components/ErrorPage'
-
-export const ErrorBoundary = ErrorPage
 
 export const meta: Route.MetaFunction = ({ data, matches }) =>
   data?.post &&
@@ -46,7 +43,9 @@ export const loader = async ({
   const post = posts.docs[0]
 
   if (!post) {
-    throw new Response(t('error.404', { url }), { status: 404 })
+    throw new Response(t('error.404', { url, interpolation: { escapeValue: false } }), {
+      status: 404,
+    })
   }
 
   return {

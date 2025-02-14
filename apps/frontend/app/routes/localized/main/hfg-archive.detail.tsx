@@ -1,5 +1,5 @@
-import FilmPrintDetailPage, { loader, meta, ErrorBoundary } from './filmprints.detail'
+import FilmPrintDetailPage, { loader, meta } from './filmprints.detail'
 
-export { loader, meta, ErrorBoundary }
+export { loader, meta }
 
 export default FilmPrintDetailPage
