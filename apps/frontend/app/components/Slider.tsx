@@ -1,6 +1,6 @@
 import type { Settings } from 'react-slick'
 import SlickSlider from 'react-slick'
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { cn } from '@app/util/cn'
@@ -22,9 +22,6 @@ const Slider: React.FC<Props> = ({
   ...props
 }) => {
   const sliderRef = useRef<any>(null)
-  // we are not using the activeSlide state yet
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [activeSlide, setActiveSlide] = useState(0)
 
   const settings: Settings = {
     infinite: true,
@@ -50,10 +47,6 @@ const Slider: React.FC<Props> = ({
         },
       },
     ],
-
-    beforeChange: (current: number, next: number) => {
-      setActiveSlide(next)
-    },
   }
 
   const Arrow: React.FC<{
@@ -65,7 +58,7 @@ const Slider: React.FC<Props> = ({
           type === 'next' ? sliderRef.current?.slickNext() : sliderRef.current?.slickPrev()
         }
         className={cn(
-          'flex h-full cursor-pointer items-center justify-center px-4 text-white transition-colors duration-300 hover:bg-gradient-to-b hover:from-transparent hover:via-black/30 hover:to-transparent',
+          'pointer-events-auto flex aspect-square h-12 cursor-pointer items-center justify-center rounded-full text-white transition-colors duration-300 hover:bg-black/30',
         )}
       >
         <div
@@ -82,7 +75,7 @@ const Slider: React.FC<Props> = ({
       <SliderComponent ref={sliderRef} {...settings}>
         {props.children}
       </SliderComponent>
-      <div className="absolute left-0 top-0 z-10 flex h-full w-full items-center justify-between">
+      <div className="pointer-events-none absolute left-0 top-0 z-10 flex h-full w-full items-center justify-between">
         <Arrow type="prev" />
         <Arrow type="next" />
       </div>

@@ -2,8 +2,6 @@ import React from 'react'
 import type { Media } from '@app/types/payload'
 import { Image } from '~/components/Image'
 import Slider from './Slider'
-// import 'react-responsive-carousel/lib/styles/carousel.min.css' // requires a loader
-// import { Carousel } from 'react-responsive-carousel'
 
 export type Type = {
   images: Media[]
@@ -12,7 +10,6 @@ export type Type = {
 export const Gallery: React.FC<Type> = ({ images }) => {
   return (
     <div className="my-6">
-      {/* <Carousel showArrows={true} showStatus={false} showThumbs={false} showIndicators={false}> */}
       <Slider>
         {images.map((image, index) => (
           <Image
@@ -28,7 +25,6 @@ export const Gallery: React.FC<Type> = ({ images }) => {
           />
         ))}
       </Slider>
-      {/* </Carousel> */}
     </div>
   )
 }
