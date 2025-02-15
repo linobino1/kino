@@ -10,7 +10,7 @@ export const Pages: CollectionConfig = {
   },
   admin: {
     group: 'Seiten',
-    defaultColumns: ['title', 'slug'],
+    defaultColumns: ['title', 'url'],
     useAsTitle: 'title',
     components: {
       beforeList: ['/components/MagicSlugsExplanation'],
