@@ -11,9 +11,19 @@ import { useEnv } from '~/util/useEnv'
 export interface Props extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'srcSet'> {
   image?: Media
   srcSet?: { options: object; size: string }[] | string
+  applyFocalPoint?: boolean
 }
 
-export const Image: React.FC<Props> = ({ image, srcSet, src, alt, width, height, ...props }) => {
+export const Image: React.FC<Props> = ({
+  image,
+  srcSet,
+  src,
+  alt,
+  width,
+  height,
+  applyFocalPoint = true,
+  ...props
+}) => {
   const env = useEnv()
 
   // use src and alt from image if provided
@@ -33,5 +43,20 @@ export const Image: React.FC<Props> = ({ image, srcSet, src, alt, width, height,
     srcSet = undefined
   }
 
-  return <img {...props} src={src} alt={alt} width={width} height={height} srcSet={srcSet} />
+  let objectPosition = 'center'
+  if (typeof image === 'object' && applyFocalPoint) {
+    objectPosition = `${image.focalX ?? 0 * 100}% ${image.focalY ?? 0 * 100}`
+  }
+
+  return (
+    <img
+      style={{ objectPosition }}
+      {...props}
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      srcSet={srcSet}
+    />
+  )
 }
