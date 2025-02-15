@@ -15,6 +15,7 @@
     "clean": "rm -rf node_modules .next .turbo tsconfig.tsbuildinfo"
   },
   "dependencies": {
+    "@app/i18n": "workspace:*",
     "@app/payload": "workspace:*",
     "@app/themoviedb": "workspace:*",
     "@app/util": "workspace:*",

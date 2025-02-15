@@ -107,6 +107,9 @@ importers:
 
   apps/backend:
     dependencies:
+      '@app/i18n':
+        specifier: workspace:*
+        version: link:../../packages/i18n
       '@app/payload':
         specifier: workspace:*
         version: link:../../packages/payload

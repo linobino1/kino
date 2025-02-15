@@ -33,9 +33,6 @@ import { Countries } from './collections/Movies/Countries'
 import { Navigations } from './collections/Navigations'
 import { Site } from './globals/Site'
 import { locales } from '@app/i18n'
-import { search } from './endpoints/tmdb/search'
-import { preview } from './endpoints/tmdb/preview'
-import { migrate } from './endpoints/tmdb/migrate'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { ZeptomailTransport } from 'nodemailer-zeptomail-transport'
@@ -62,7 +59,6 @@ const configPromise: Promise<Config> = (async () => ({
         }),
       }
     : {}),
-  endpoints: [search, preview, migrate],
   collections: [
     // Movie Database
     Movies,
