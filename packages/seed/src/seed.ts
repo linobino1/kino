@@ -35,6 +35,7 @@ import { cinemaOfColorsPost } from './posts/cinemaOfColorsPost'
 import { annieHallFilmprint } from './filmprints/annieHallFilmprint'
 import { openAirCinemaPage } from './pages/openAirCinema'
 import { bookingsPage } from './pages/bookings'
+import { news } from './pages/news'
 
 export const seed = async (payload: Payload, req?: PayloadRequest): Promise<void> => {
   if (process.env.NODE_ENV === 'production') {
@@ -219,7 +220,7 @@ export const seed = async (payload: Payload, req?: PayloadRequest): Promise<void
   }
 
   payload.logger.info(`— seeding pages...`)
-  for await (const generator of [landing, events, openAirCinemaPage, bookingsPage]) {
+  for await (const generator of [landing, events, news, openAirCinemaPage, bookingsPage]) {
     await seedDoc({
       collection: 'pages',
       generator,

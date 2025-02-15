@@ -1,17 +1,11 @@
 import type { Route } from './+types'
 import type { loader as rootLoader } from '~/root'
 import type { Locale } from '@app/i18n'
-import { redirect } from 'react-router'
 import { useRouteLoaderData } from 'react-router'
 import { useTranslation } from 'react-i18next'
-import { Pagination } from '~/components/Pagination'
-import { PostPreview } from '~/components/PostPreview'
-import { JsonLd } from '~/structured-data'
-import { postsListSchema } from '~/structured-data/post'
 import { EventsList } from '~/components/EventsList'
 import { Gutter } from '~/components/Gutter'
 import { Link } from '~/components/localized-link'
-import { classes } from '~/classes'
 import { getPayload } from '~/util/getPayload.server'
 import { PageLayout } from '~/components/PageLayout'
 import i18next from '~/i18next.server'
@@ -20,16 +14,14 @@ import { cn } from '@app/util/cn'
 import { Button } from '~/components/Button'
 import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
+import { PostsList } from '~/components/PostsList'
 
-export const loader = async ({ request, params: { lang: locale } }: Route.LoaderArgs) => {
+export const loader = async ({ params: { lang: locale } }: Route.LoaderArgs) => {
   const [payload, t] = await Promise.all([getPayload(), i18next.getFixedT(locale as string)])
 
   // compare date for upcoming screenings
   const today = new Date()
   today.setHours(0, 0, 0, 0)
-
-  // pagination for posts
-  const postsPage = parseInt(new URL(request.url).searchParams.get('page') || '1')
 
   const [pages, posts, events] = await Promise.all([
     payload.find({
@@ -40,6 +32,7 @@ export const loader = async ({ request, params: { lang: locale } }: Route.Loader
         },
       },
       depth: 1,
+      limit: 1,
       locale: locale as Locale,
     }),
     payload.find({
@@ -51,9 +44,8 @@ export const loader = async ({ request, params: { lang: locale } }: Route.Loader
       },
       sort: '-date',
       depth: 1,
-      limit: 10,
+      limit: 5,
       pagination: true,
-      page: postsPage,
       locale: locale as Locale,
     }),
     payload.find({
@@ -90,13 +82,6 @@ export const loader = async ({ request, params: { lang: locale } }: Route.Loader
     throw new Error(t('error.404', { url: 'home', interpolation: { escapeValue: false } }))
   }
 
-  // Redirect to the last page if the requested page is greater than the total number of page
-  if (postsPage > posts.totalPages) {
-    throw redirect(`?page=${posts.totalPages}`, {
-      status: 302,
-    })
-  }
-
   return {
     page,
     posts,
@@ -131,20 +116,12 @@ export default function LandingPage({ loaderData: { page, posts, events } }: Rou
         </Link>
 
         <h2 className={cn(h2, 'mb-0')}>{t('News')}</h2>
-        <JsonLd {...postsListSchema(posts.docs)} />
-        {posts.docs?.length ? (
-          <ul className={classes.posts}>
-            {posts.docs.map((post, index) => (
-              <li key={index}>
-                <PostPreview post={post} className="py-8" />
-                {index !== posts.docs.length - 1 && <hr />}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <div className={classes.empty}>{t('No posts.')}</div>
-        )}
-        <Pagination className="my-8" {...posts} linkProps={{ prefetch: 'intent' }} />
+        <PostsList posts={posts} pagination={false} />
+        <Link to="/news" prefetch="intent" className="contents">
+          <Button className="mx-auto my-12" size="lg">
+            {t('See all posts')}
+          </Button>
+        </Link>
       </Gutter>
     </PageLayout>
   )

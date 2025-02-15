@@ -45,6 +45,7 @@
   "Past Screenings": "Past Screenings",
   "News": "News",
   "See all screenings": "See all screenings",
+  "See all posts": "See all posts",
   "event": {
     "meta": {
       "title": "{{ title }} on {{date}}",

@@ -11,7 +11,7 @@ export const mainNavigations: DocGenerator<'navigations'> = ({ context: { pages 
         type: 'internal',
         name: translate({ de: 'Aktuell', en: 'News' }, locale),
         newTab: false,
-        page: pages.get('Home')?.id,
+        page: pages.get('News')?.id,
         id: '67a51314c2678dd65b58ff24',
       },
       {

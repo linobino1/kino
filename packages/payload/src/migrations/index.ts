@@ -10,6 +10,7 @@ import * as migration_20250211_083006_fix_event_series_links_in_richtext from '.
 import * as migration_20250211_160155_events_series_has_many from './20250211_160155_events_series_has_many';
 import * as migration_20250212_072144_fix_null_values_in_events_series from './20250212_072144_fix_null_values_in_events_series';
 import * as migration_20250212_074118_fix_null_values_in_events_series_versions from './20250212_074118_fix_null_values_in_events_series_versions';
+import * as migration_20250215_181351_add_news_page from './20250215_181351_add_news_page';
 
 export const migrations = [
   {
@@ -70,6 +71,11 @@ export const migrations = [
   {
     up: migration_20250212_074118_fix_null_values_in_events_series_versions.up,
     down: migration_20250212_074118_fix_null_values_in_events_series_versions.down,
-    name: '20250212_074118_fix_null_values_in_events_series_versions'
+    name: '20250212_074118_fix_null_values_in_events_series_versions',
+  },
+  {
+    up: migration_20250215_181351_add_news_page.up,
+    down: migration_20250215_181351_add_news_page.down,
+    name: '20250215_181351_add_news_page'
   },
 ];

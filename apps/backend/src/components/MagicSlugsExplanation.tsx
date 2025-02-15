@@ -1,6 +1,6 @@
 import { Gutter } from '@payloadcms/ui'
 
-const MagicSlugsExplanation: React.FC<any> = () => {
+export const MagicSlugsExplanation: React.FC<any> = () => {
   return (
     <Gutter className="my-4">
       <h3 className="mb-2">Magic Slugs</h3>
@@ -8,6 +8,12 @@ const MagicSlugsExplanation: React.FC<any> = () => {
       <ul>
         <li>
           <i>home</i> - Startseite, zeigt die nächsten Vorstellungen und die neuesten Blog-Posts
+        </li>
+        <li>
+          <i>events</i> - zeigt alle kommenden Vorstellungen
+        </li>
+        <li>
+          <i>news</i> - zeigt alle Blog-Posts
         </li>
         <li>
           <i>seasons</i> - Archiv aller Spielzeiten
@@ -22,4 +28,3 @@ const MagicSlugsExplanation: React.FC<any> = () => {
     </Gutter>
   )
 }
-export default MagicSlugsExplanation

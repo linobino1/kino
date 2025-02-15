@@ -59,6 +59,7 @@
   "Past Screenings": "Vergangene Vorstellungen",
   "News": "Neuigkeiten",
   "See all screenings": "Alle Vorstellungen",
+  "See all posts": "Alle Beiträge",
   "event": {
     "meta": {
       "title": "{{ title }} am {{date}}",

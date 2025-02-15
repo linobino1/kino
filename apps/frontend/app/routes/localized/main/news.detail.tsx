@@ -13,13 +13,13 @@ import { Date } from '~/components/Date'
 import { Image } from '~/components/Image'
 import { RichText } from '~/components/RichText'
 import { RenderBlocks } from '~/components/Blocks/RenderBlocks'
-import { lexicalToPlainText } from '~/components/RichText/lexicalToPlainText'
+import { getMetaDescription } from '~/util/posts/getMetaDescription'
 
 export const meta: Route.MetaFunction = ({ data, matches }) =>
   data?.post &&
   generateMetadata({
     title: data.post.title,
-    description: lexicalToPlainText(data?.post.content),
+    description: getMetaDescription(data.post, data.locale),
     image: data?.post.header,
     env: getEnvFromMatches(matches),
   })
@@ -49,6 +49,7 @@ export const loader = async ({
   }
 
   return {
+    locale: locale as Locale,
     post,
   }
 }
