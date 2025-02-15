@@ -3,7 +3,6 @@ import type { loader as rootLoader } from '~/root'
 import { replace } from 'react-router'
 import { Form, useNavigate, useRouteLoaderData } from 'react-router'
 import { useTranslation } from 'react-i18next'
-import { classes } from '~/classes'
 import { Link } from '~/components/localized-link'
 import { useEffect } from 'react'
 import { Button } from '~/components/Button'
@@ -52,7 +51,7 @@ export default function Me() {
           </Form>
         </>
       ) : (
-        <nav className={classes.nav}>
+        <nav>
           <Link to="/">{t('back')}</Link>
           <Link to="/auth/signin">{t('sign in')}</Link>
         </nav>

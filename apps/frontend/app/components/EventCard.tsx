@@ -3,7 +3,6 @@ import type { Media, Event, EventSery } from '@app/types/payload'
 import { Date as DateComponent } from '~/components/Date'
 import { useTranslation } from 'react-i18next'
 import { Image } from '~/components/Image'
-import { classes } from '~/classes'
 import { Tag } from './Tag'
 import { cn } from '@app/util/cn'
 
@@ -36,9 +35,7 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
           className="font-calendar text-4xl font-semibold"
           format="dd"
         />
-        {isPast && (
-          <DateComponent iso={event.date as string} className={classes.year} format="yyyy" />
-        )}
+        {isPast && <DateComponent iso={event.date as string} format="yyyy" />}
       </div>
       <Image
         image={event.header as Media}

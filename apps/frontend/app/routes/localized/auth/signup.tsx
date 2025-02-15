@@ -1,7 +1,6 @@
 import type { Route } from './+types/signup'
 import { Form } from 'react-router'
 import { useTranslation } from 'react-i18next'
-import { classes } from '~/classes'
 import i18next from '~/i18next.server'
 import { getPayload } from '~/util/getPayload.server'
 
@@ -52,7 +51,7 @@ export default function SignUp({ actionData: data }: Route.ComponentProps) {
       <h1>{t('sign up')}</h1>
       {data?.message && <p>{data.message}</p>}
       {!data?.success && (
-        <Form method="POST" className={classes.form}>
+        <Form method="POST">
           <label>
             {t('name')}
             <input type="name" name="name" />

@@ -9,7 +9,6 @@ import { PageLayout } from '~/components/PageLayout'
 import { Hero } from '~/components/Hero'
 import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
-import { classes } from '~/classes'
 import { Pagination } from '~/components/Pagination'
 import { useTranslation } from 'react-i18next'
 import { useRef } from 'react'
@@ -312,7 +311,7 @@ export default function FilmprintsPage({
             ))}
           </ul>
         ) : (
-          <div className={classes.empty}>{t('No films matching your search.')}</div>
+          <div>{t('No films matching your search.')}</div>
         )}
       </Gutter>
       <Pagination {...filmPrints} linkProps={{ prefetch: 'intent' }} className="mt-8" />

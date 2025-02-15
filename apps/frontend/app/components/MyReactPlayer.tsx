@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import ReactPlayer, { type ReactPlayerProps } from 'react-player'
 import { useTranslation } from 'react-i18next'
-import { classes } from '~/classes'
 
 export type Props = ReactPlayerProps
 
@@ -13,7 +12,7 @@ export const MyReactPlayer: React.FC<Props> = (props) => {
   const [isError, setIsError] = useState(false)
 
   return (
-    <div className={`${classes.container} ${isLoading && classes.loading}`}>
+    <div>
       <ReactPlayer
         {...props}
         width={'100%'}
@@ -23,13 +22,13 @@ export const MyReactPlayer: React.FC<Props> = (props) => {
         onError={() => setIsError(true)}
       />
       {isError && (
-        <p className={classes.message}>
+        <p>
           {t('Video is not available.')}
           <br />
           {typeof props.url === 'string' ? props.url : ''}
         </p>
       )}
-      {isLoading && <p className={classes.message}>{t('Loading...')}</p>}
+      {isLoading && <p>{t('Loading...')}</p>}
     </div>
   )
 }

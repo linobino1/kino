@@ -1,6 +1,5 @@
 import type { Route } from './+types/verify-email'
 import { useTranslation } from 'react-i18next'
-import { classes } from '~/classes'
 import i18next from '~/i18next.server'
 import { Link } from '~/components/localized-link'
 import { getPayload } from '~/util/getPayload.server'
@@ -38,7 +37,7 @@ export default function VerifyEmail({ loaderData: data }: Route.ComponentProps) 
     <>
       <h1>{data.message}</h1>
       {data.success && (
-        <nav className={classes.nav}>
+        <nav>
           <Link to="/auth/signin">{t('sign in')}</Link>
         </nav>
       )}

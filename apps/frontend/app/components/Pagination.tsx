@@ -1,6 +1,5 @@
 import { type PaginatedDocs } from 'payload'
 import { Link, useSearchParams } from 'react-router'
-import { classes } from '~/classes'
 import { cn } from '@app/util/cn'
 import type { LinkProps } from 'react-router'
 
@@ -59,7 +58,7 @@ export const Pagination: React.FC<Props> = ({
       <PageLink to={prev} disabled={!hasPrevPage} {...linkProps}>
         &lt;
       </PageLink>
-      <div className={classes.current}>
+      <div>
         {page} / {totalPages}
       </div>
       <PageLink to={next} disabled={!hasNextPage} {...linkProps}>
