@@ -13,7 +13,7 @@ import { PageLayout } from '~/components/PageLayout'
 export const loader = async ({ params: { lang: locale } }: Route.LoaderArgs) => {
   const payload = await getPayload()
   const navigations = await cache({
-    key: 'navigations',
+    key: `navigations_${locale}`,
     forceFresh: !!getCachedUser() || process.env.NODE_ENV === 'development',
     async getFreshValue() {
       return (
