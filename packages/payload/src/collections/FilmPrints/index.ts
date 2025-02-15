@@ -2,8 +2,9 @@ import type { CollectionConfig } from 'payload'
 import type { Movie, Format } from '@app/types/payload'
 import analogDigitalTypeField from './fields'
 import { isAdminOrEditor } from '#payload/access'
-import { type Locale } from '@app/i18n'
+import { defaultLocale } from '@app/i18n'
 import { slugField } from '#payload/fields/slug'
+import { formatSlug } from '@app/util/formatSlug'
 
 export const FilmPrints: CollectionConfig = {
   slug: 'filmPrints',
@@ -14,7 +15,7 @@ export const FilmPrints: CollectionConfig = {
   defaultSort: '-createdAt',
   admin: {
     group: 'Filmdatenbank',
-    defaultColumns: ['title', 'format', 'languageVersion', 'isRented', '_status'],
+    defaultColumns: ['title', 'slug', '_status'],
     useAsTitle: 'title',
   },
   versions: {
@@ -43,8 +44,8 @@ export const FilmPrints: CollectionConfig = {
         if (!req) return data // this hook is only used server-side
         if (!data?.movie || !data?.format) return data
 
-        // we'll name all filmprints in fallback language
-        const locale = req.payload.config.i18n.fallbackLanguage as Locale
+        // we'll name all filmprints in the default language
+        const locale = defaultLocale
 
         if (!data.title) {
           // create title from movie, format & language version (short)
@@ -82,6 +83,10 @@ export const FilmPrints: CollectionConfig = {
             })
           ).docs[0]
           data.title = `${movie.internationalTitle} ${format.name} ${languageVersion?.abbreviation}`
+        }
+
+        if (!data.slug) {
+          data.slug = formatSlug(data.title)
         }
 
         return data
