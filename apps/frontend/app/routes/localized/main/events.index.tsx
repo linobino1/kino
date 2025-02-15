@@ -26,7 +26,7 @@ export const loader = async ({ params: { lang: locale }, request: { url } }: Rou
   const today = new Date()
   today.setHours(0, 0, 0, 0)
 
-  const [pages, screenings] = await Promise.all([
+  const [pages, events] = await Promise.all([
     payload.find({
       collection: 'pages',
       where: {
@@ -72,17 +72,17 @@ export const loader = async ({ params: { lang: locale }, request: { url } }: Rou
 
   return {
     page,
-    screenings,
+    events,
   }
 }
 
-export default function EventsPage({ loaderData: { page, screenings } }: Route.ComponentProps) {
+export default function EventsPage({ loaderData: { page, events } }: Route.ComponentProps) {
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>('root')
   return (
     <PageLayout type={page.layoutType}>
       <Hero {...page.hero} />
       <Gutter>
-        <EventsList items={screenings.docs} site={rootLoaderData?.site} className="mb-24 mt-12" />
+        <EventsList items={events.docs} site={rootLoaderData?.site} className="mb-24 mt-12" />
       </Gutter>
     </PageLayout>
   )

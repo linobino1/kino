@@ -2,7 +2,7 @@ import type { Event, EventSery, Site } from '@app/types/payload'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { JsonLd } from '~/structured-data'
-import { eventsListSchema as screeningsListMarkup } from '~/structured-data/event'
+import { eventsListSchema } from '~/structured-data/event'
 import { Link } from '~/components/localized-link'
 import { EventCard } from './EventCard'
 import { cn } from '@app/util/cn'
@@ -34,7 +34,7 @@ export const EventsList: React.FC<Props> = ({
         className,
       )}
     >
-      <JsonLd {...screeningsListMarkup(items, site)} />
+      <JsonLd {...eventsListSchema(items, site)} />
       {items.map((item) => (
         <Link key={item.id} to={`/events/${item.slug as string}`} prefetch="intent">
           <EventCard event={item} activeEventSery={activeEventSery} />

@@ -19,7 +19,7 @@ import { PostsList } from '~/components/PostsList'
 export const loader = async ({ params: { lang: locale } }: Route.LoaderArgs) => {
   const [payload, t] = await Promise.all([getPayload(), i18next.getFixedT(locale as string)])
 
-  // compare date for upcoming screenings
+  // compare date for upcoming events
   const today = new Date()
   today.setHours(0, 0, 0, 0)
 
