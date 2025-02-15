@@ -84,6 +84,7 @@ export const Events: CollectionConfig<'events'> = {
           label: 'Datum & Uhrzeit',
           type: 'date',
           required: true,
+          timezone: true,
           defaultValue: () => {
             const res = new Date()
             res.setHours(19, 0, 0, 0)
@@ -92,10 +93,15 @@ export const Events: CollectionConfig<'events'> = {
           admin: {
             date: {
               pickerAppearance: 'dayAndTime',
+              displayFormat: 'PP HH:mm',
+              timeFormat: 'HH:mm',
             },
-            description:
-              'Achtung: wenn du dich in einer anderen Zeitzone als das Kino befindest, musst du den Unterschied ausgleichen.',
             width: '50%',
+            components: {
+              Cell: {
+                path: '/components/date/Cell.tsx#Cell',
+              },
+            },
           },
         },
         {

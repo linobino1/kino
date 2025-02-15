@@ -1,3 +1,4 @@
+import { timezone } from '@app/util/config'
 import type { DocGenerator } from '../types'
 import { translate } from '../util/translate'
 
@@ -13,6 +14,7 @@ export const annieHallScreening: DocGenerator<'events'> = ({ context, locale }) 
     title: '',
     header: '',
     date: date.toISOString(),
+    date_tz: timezone,
     season: context.seasons.get(`Winter term ${currentYear}`)?.id as string,
     location: context.locations.get('Blauer Salon')?.id as string,
     series: [context.eventSeries.get('Cinema of Colors')?.id as string],

@@ -15,13 +15,11 @@ import { SerializeLexicalToEmail } from '../lexical/SerializeLexicalToEmail'
 import { parseISO } from 'date-fns'
 import { de } from 'date-fns/locale'
 import { formatInTimeZone } from 'date-fns-tz'
-import { env } from '@app/util/env/backend.server'
-
-const tz = env.TIMEZONE ?? 'Europe/Berlin'
+import { timezone } from '@app/util/config'
 
 export const formatDate = (iso: string, format: string) => {
   const date = parseISO(iso)
-  return formatInTimeZone(date, tz, format, { locale: de })
+  return formatInTimeZone(date, timezone, format, { locale: de })
 }
 
 export type Props = {

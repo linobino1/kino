@@ -23,6 +23,8 @@
     "@payloadcms/richtext-lexical": "catalog:",
     "@payloadcms/ui": "catalog:",
     "cross-env": "^7.0.3",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
     "next": "catalog:",
     "payload": "catalog:",
     "react": "catalog:",

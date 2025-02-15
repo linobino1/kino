@@ -3,7 +3,7 @@ import { parseISO } from 'date-fns'
 import { formatInTimeZone } from 'date-fns-tz'
 import { enUS, de } from 'date-fns/locale'
 import { useTranslation } from 'react-i18next'
-import { useEnv } from '~/util/useEnv'
+import { timezone } from '@app/util/config'
 
 type Props = {
   iso: string
@@ -12,9 +12,8 @@ type Props = {
 }
 
 export const Date: React.FC<Props> = ({ iso, className, format }) => {
-  const env = useEnv()
   const date = parseISO(iso)
-  const tz = env?.TIMEZONE ?? 'UTC'
+  const tz = timezone ?? 'UTC'
   const { i18n } = useTranslation()
   const locale = i18n.language === 'de' ? de : enUS
   if (!date || isNaN(date.getMilliseconds())) {

@@ -1,6 +1,6 @@
 import { configurePayload } from '@app/payload/config'
 import { tmdbAxiosClient } from '@app/themoviedb'
-import { siteTitle } from '@app/util/config'
+import { siteTitle, timezone } from '@app/util/config'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -17,6 +17,10 @@ export default configurePayload({
     }
   },
   admin: {
+    timezones: {
+      supportedTimezones: [{ label: timezone, value: timezone }],
+      defaultTimezone: timezone,
+    },
     user: 'users',
     importMap: {
       baseDir: path.resolve(dirname, '.'),

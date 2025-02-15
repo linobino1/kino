@@ -18,13 +18,13 @@ import { Date } from '~/components/Date'
 import { Tag } from '~/components/Tag'
 import { RichText } from '~/components/RichText'
 import { Gutter } from '~/components/Gutter'
-import { env } from '@app/util/env/frontend.server'
 import { FilmPrintDetails } from '~/components/FilmPrintDetails'
 import React from 'react'
 import { AsideLayout } from '~/components/AsideLayout'
 import { Poster } from '~/components/Poster'
 import { useTranslation } from 'react-i18next'
 import { Image } from '~/components/Image'
+import { timezone } from '@app/util/config'
 
 export const meta: Route.MetaFunction = ({ data, matches }) =>
   generateMetadata({
@@ -65,10 +65,10 @@ export const loader = async ({
     meta: {
       title: t('event.meta.title', {
         title: event.title,
-        date: formatInTimeZone(parseISO(event?.date || ''), env.TIMEZONE, 'PPp'),
+        date: formatInTimeZone(parseISO(event?.date || ''), timezone, 'PPp'),
       }),
       description: t('event.meta.description', {
-        date: formatInTimeZone(parseISO(event.date || ''), env.TIMEZONE, 'PPpp'),
+        date: formatInTimeZone(parseISO(event.date || ''), timezone, 'PPpp'),
         location: (event.location as Location).name,
         info: event.shortDescription,
       }),

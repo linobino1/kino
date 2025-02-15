@@ -131,6 +131,12 @@ importers:
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
+      date-fns-tz:
+        specifier: ^3.2.0
+        version: 3.2.0(date-fns@4.1.0)
       next:
         specifier: 'catalog:'
         version: 15.1.7(@babel/core@7.26.8)(babel-plugin-macros@3.1.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4)

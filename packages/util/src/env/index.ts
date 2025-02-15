@@ -29,8 +29,6 @@ const variables = z.object({
   LISTMONK_URL: z.string().optional(),
   LISTMONK_LIST_ID: z.string().optional(),
 
-  TIMEZONE: z.string().default('UTC'),
-
   ZEPTOMAIL_API_KEY: z.string().optional(),
   EMAIL_FROM_ADDRESS: z.string().optional(),
   EMAIL_FROM_NAME: z.string().optional(),
@@ -55,7 +53,6 @@ const frontendBrowserEnv = variables.pick({
   TURNSTILE_SITE_KEY: true,
   LISTMONK_URL: true,
   LISTMONK_LIST_ID: true,
-  TIMEZONE: true,
 })
 
 export type BackendServerEnvironment = z.infer<typeof backendServerEnv>
