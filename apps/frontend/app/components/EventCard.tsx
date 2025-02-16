@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Image } from '~/components/Image'
 import { Tag } from './Tag'
 import { cn } from '@app/util/cn'
+import { Link } from './localized-link'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   event: Event
@@ -20,7 +21,7 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
     <div
       {...props}
       className={cn(
-        'relative flex flex-col bg-white text-black shadow-md transition-transform duration-200 ease-in-out hover:-translate-y-[7px]',
+        'relative flex flex-col bg-white text-black shadow-md transition-transform duration-200 ease-in-out',
         className,
       )}
     >
@@ -37,17 +38,19 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
         />
         {isPast && <DateComponent iso={event.date as string} format="yyyy" />}
       </div>
-      <Image
-        image={event.header as Media}
-        srcSet={[
-          { options: { width: 310, height: 310, fit: 'crop' }, size: '310w' },
-          { options: { width: 450, height: 450, fit: 'crop' }, size: '450w' },
-          { options: { width: 620, height: 620, fit: 'crop' }, size: '620w' },
-          { options: { width: 900, height: 900, fit: 'crop' }, size: '900w' },
-        ]}
-        sizes="(max-width: 500px) 100vw, (max-width: 700px) 50vw, (max-width: 1024px) 33vw, 310px"
-        className="xs:aspect-square aspect-[16/9] object-cover"
-      />
+      <Link to={event.url ?? ''} prefetch="intent" className="contents">
+        <Image
+          image={event.header as Media}
+          srcSet={[
+            { options: { width: 310, height: 310, fit: 'crop' }, size: '310w' },
+            { options: { width: 450, height: 450, fit: 'crop' }, size: '450w' },
+            { options: { width: 620, height: 620, fit: 'crop' }, size: '620w' },
+            { options: { width: 900, height: 900, fit: 'crop' }, size: '900w' },
+          ]}
+          sizes="(max-width: 500px) 100vw, (max-width: 700px) 50vw, (max-width: 1024px) 33vw, 310px"
+          className="xs:aspect-square aspect-[16/9] object-cover"
+        />
+      </Link>
       <div className="flex flex-col sm:aspect-[3/2]">
         <div className="hide-scrollbar m-[0.3em] flex min-h-6 flex-row-reverse overflow-x-auto">
           <div className="w-max shrink-0 space-x-2">
@@ -67,10 +70,16 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
             className="font-medium text-red-500"
             format="p"
           />
-          <div className="font-semibold uppercase">{event.title}</div>
-          <div className="flex flex-1 items-end text-sm uppercase text-gray-400">
+          <Link to={event.url ?? ''} prefetch="intent" className="font-semibold uppercase">
+            {event.title}
+          </Link>
+          <Link
+            to={event.url ?? ''}
+            prefetch="intent"
+            className="flex flex-1 items-end text-sm uppercase text-gray-400"
+          >
             {t('More Info')}
-          </div>
+          </Link>
         </div>
       </div>
     </div>

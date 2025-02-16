@@ -72,5 +72,11 @@
   "Supporting Film": "Vorfilm",
   "Add to calendar": "Termin zu meinem Kalender hinzufügen",
   "Season not found.": "Spielzeit konnte nicht gefunden werden.",
-  "Sign In": "Anmelden"
+  "Sign In": "Anmelden",
+  "ics": {
+    "button": {
+      "add_one": "Zu meinem Kalender hinzufügen",
+      "add_other": "{{count}} Vorstellungen zu meinem Kalender hinzufügen"
+    }
+  }
 }
