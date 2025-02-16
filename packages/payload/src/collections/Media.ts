@@ -1,10 +1,8 @@
 import type { CollectionConfig } from 'payload'
 import path from 'path'
-import { fileURLToPath } from 'url'
+import { projectRoot } from '@app/util/projectRoot'
 
-const filename = fileURLToPath(import.meta.url)
-const dirname = path.dirname(filename)
-export const staticDir = path.resolve(dirname, '../../../../media')
+export const staticDir = path.resolve(projectRoot, 'media')
 
 export const Media: CollectionConfig = {
   slug: 'media',
