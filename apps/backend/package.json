@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "dev:unocss": "unocss --out-file \"src/app/(payload)/uno.css\" \"./src/**/*.tsx\" \"../../packages/payload/src/**/*.tsx\" --watch",
-    "dev:next": "cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "dev:next": "cross-env NODE_OPTIONS=--no-deprecation next dev --turbo",
     "dev": "run-p dev:unocss dev:next",
     "build:unocss": "unocss --out-file \"src/app/(payload)/uno.css\" \"./src/**/*.tsx\" \"../../packages/payload/src/**/*.tsx\"",
     "build:next": "cross-env NODE_OPTIONS=--no-deprecation next build",
