@@ -13,7 +13,7 @@ export const Pages: CollectionConfig = {
     defaultColumns: ['title', 'url'],
     useAsTitle: 'title',
     components: {
-      beforeList: ['/components/MagicSlugsExplanation.tsx#MagicSlugsExplanation'],
+      beforeList: ['./components/MagicSlugsExplanation#MagicSlugsExplanation'],
     },
     pagination: {
       defaultLimit: 20,
