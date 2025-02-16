@@ -5,7 +5,7 @@ export const annieHallFilmprint: DocGenerator<'filmPrints'> = ({ context }) => (
   _status: 'published',
   movie: context.movies.get('Annie Hall')?.id as string,
   isRented: true,
-  rental: context.rentals.get('HfG Collection')?.id as string,
+  rental: context.rentals.get('DK Collection')?.id as string,
   format: context.formats.get('35mm')?.id as string,
   languageVersion: context.languageVersions.get('engl. OV')?.id as string,
 })

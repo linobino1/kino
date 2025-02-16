@@ -6,6 +6,7 @@ import { movieSpecs } from '~/util/movieSpecs'
 import { Button } from '~/components/Button'
 import { AsideLayout } from './AsideLayout'
 import { Poster } from './Poster'
+import { useRootLoaderData } from '~/util/useRootLoaderData'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   filmPrint: FilmPrint
@@ -20,6 +21,12 @@ export const FilmPrintDetails: React.FC<Props> = ({
   ...props
 }) => {
   const { t } = useTranslation()
+  const rootLoaderData = useRootLoaderData()
+
+  const rental = (filmPrint.isRented ? filmPrint.rental : rootLoaderData?.site?.defaultRental) as
+    | Rental
+    | undefined
+
   return (
     <AsideLayout {...props} aside={<Poster movie={filmPrint.movie as MovieType} />}>
       <div className="mb-4">
@@ -59,19 +66,14 @@ export const FilmPrintDetails: React.FC<Props> = ({
           </Button>
         </Link>
       )}
-      {((filmPrint as FilmPrint)?.rental as Rental) && (
+      {rental && (
         <div className="inline-block max-sm:text-sm">
           <div
             dangerouslySetInnerHTML={{
-              __html: ((filmPrint as FilmPrint)?.rental as Rental).credits as string,
+              __html: rental.credits as string,
             }}
           />
-          {((filmPrint as FilmPrint)?.rental as Rental)?.logo && (
-            <Image
-              className="my-2 h-12 w-auto"
-              image={((filmPrint as FilmPrint)?.rental as Rental)?.logo as Media}
-            />
-          )}
+          {rental.logo && <Image className="my-2 h-12 w-auto" image={rental.logo as Media} />}
         </div>
       )}
     </AsideLayout>

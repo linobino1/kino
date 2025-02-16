@@ -36,6 +36,7 @@ import { annieHallFilmprint } from './filmprints/annieHallFilmprint'
 import { openAirCinemaPage } from './pages/openAirCinema'
 import { bookingsPage } from './pages/bookings'
 import { news } from './pages/news'
+import { anotherRental } from './rentals/anotherRental'
 
 export const seed = async (payload: Payload, req?: PayloadRequest): Promise<void> => {
   if (process.env.NODE_ENV === 'production') {
@@ -143,13 +144,6 @@ export const seed = async (payload: Payload, req?: PayloadRequest): Promise<void
     }
   }
 
-  payload.logger.info(`— seeding globals...`)
-  await seedGlobal({
-    slug: 'site',
-    generator: site,
-    context,
-  })
-
   payload.logger.info(`— seeding miscanellous collections...`)
   await seedCountries(context)
   await seedAspectRatios(context)
@@ -164,11 +158,15 @@ export const seed = async (payload: Payload, req?: PayloadRequest): Promise<void
   await seedSeasons(context)
 
   payload.logger.info(`— seeding rentals...`)
-  await seedDoc({
-    collection: 'rentals',
-    generator: hfgRental,
-    context,
-  })
+  await Promise.all(
+    [hfgRental, anotherRental].map((generator) =>
+      seedDoc({
+        collection: 'rentals',
+        generator,
+        context,
+      }),
+    ),
+  )
 
   payload.logger.info(`— seeding screening series...`)
   await seedDoc({
@@ -251,5 +249,13 @@ export const seed = async (payload: Payload, req?: PayloadRequest): Promise<void
       context,
     })
   }
+
+  payload.logger.info(`— seeding globals...`)
+  await seedGlobal({
+    slug: 'site',
+    generator: site,
+    context,
+  })
+
   payload.logger.info('Seeded database successfully!')
 }

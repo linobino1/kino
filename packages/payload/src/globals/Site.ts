@@ -86,5 +86,15 @@ export const Site: GlobalConfig = {
         },
       ],
     },
+    {
+      name: 'defaultRental',
+      label: 'Standardverleiher',
+      type: 'relationship',
+      relationTo: 'rentals',
+      admin: {
+        description:
+          'Der Standardverleiher, der für Filme verwendet wird, wenn kein anderer Verleiher angegeben ist (sollte die HfG-Sammlung sein).',
+      },
+    },
   ],
 }
