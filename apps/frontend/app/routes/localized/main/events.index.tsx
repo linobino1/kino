@@ -82,7 +82,7 @@ export default function EventsPage({ loaderData: { page, events } }: Route.Compo
     <PageLayout type={page.layoutType}>
       <Hero {...page.hero} />
       <Gutter>
-        <EventsList items={events.docs} site={rootLoaderData?.site} className="mb-24 mt-12" />
+        <EventsList events={events.docs} site={rootLoaderData?.site} className="mb-24 mt-12" />
       </Gutter>
     </PageLayout>
   )

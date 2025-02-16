@@ -84,7 +84,7 @@ export default function SeasonsDetailPage({
       <Hero type="image" image={season.header} headline={season.name} />
       <Gutter className="mt-4">
         <EventsList
-          items={events.docs}
+          events={events.docs}
           site={rootLoaderData?.site}
           className="mb-24 mt-12"
           emptyMessage={t('No screenings for this season.')}

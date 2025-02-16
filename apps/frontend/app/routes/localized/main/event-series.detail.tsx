@@ -128,7 +128,7 @@ export default function EventSeriesDetailPage({
           <>
             <h2 className={h2}>{t('Upcoming Screenings')}</h2>
             <EventsList
-              items={upcoming.docs}
+              events={upcoming.docs}
               activeEventSery={eventSeries}
               site={rootLoaderData?.site}
             />
@@ -138,7 +138,7 @@ export default function EventSeriesDetailPage({
           <>
             <h2 className={h2}>{t('Past Screenings')}</h2>
             <EventsList
-              items={past.docs}
+              events={past.docs}
               activeEventSery={eventSeries}
               site={rootLoaderData?.site}
             />

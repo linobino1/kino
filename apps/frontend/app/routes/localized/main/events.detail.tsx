@@ -14,7 +14,7 @@ import { formatInTimeZone } from 'date-fns-tz'
 import { parseISO } from 'date-fns'
 import { JsonLd } from '~/structured-data'
 import { eventSchema } from '~/structured-data/event'
-import { Date } from '~/components/Date'
+import { Date as DateComponent } from '~/components/Date'
 import { Tag } from '~/components/Tag'
 import { RichText } from '~/components/RichText'
 import { Gutter } from '~/components/Gutter'
@@ -25,6 +25,7 @@ import { Poster } from '~/components/Poster'
 import { useTranslation } from 'react-i18next'
 import { Image } from '~/components/Image'
 import { timezone } from '@app/util/config'
+import { ICSDownloadButton } from '~/components/ICSDownloadButton'
 
 export const meta: Route.MetaFunction = ({ data, matches }) =>
   generateMetadata({
@@ -81,12 +82,24 @@ export default function EventPage({ loaderData: { event } }: Route.ComponentProp
   const site = useRouteLoaderData<typeof rootLoader>('root')?.site
   const { t } = useTranslation()
   const structuredData = eventSchema(event, site)
+
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const isUpcoming = event.date > today.toISOString()
+
   return (
     <PageLayout>
       {structuredData && <JsonLd {...structuredData} />}
       <Hero type="overlay" headline={event.title} image={event.header}>
         <div className="leading-tight">
-          <Date className="text-lg font-semibold" iso={event.date as string} format="P / p" />
+          <div className="flex items-center gap-4">
+            <DateComponent
+              className="text-lg font-semibold"
+              iso={event.date as string}
+              format="P / p"
+            />
+            {isUpcoming && <ICSDownloadButton events={[event]} showLabel={false} />}
+          </div>
           <br />
           <div className="text-lg">{(event.location as Location).name}</div>
           <Link to={(event.season as Season).url ?? ''} prefetch="intent">

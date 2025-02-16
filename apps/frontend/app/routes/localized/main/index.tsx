@@ -108,7 +108,7 @@ export default function LandingPage({ loaderData: { page, posts, events } }: Rou
       <Hero {...page.hero} />
       <Gutter>
         <h2 className={h2}>{t('Our Next Screenings')}</h2>
-        <EventsList items={events.docs} site={site} />
+        <EventsList events={events.docs} site={site} showICSDownload={false} />
         <Link to="/events" prefetch="intent" className="contents">
           <Button className="mx-auto my-12" size="lg">
             {t('See all screenings')}

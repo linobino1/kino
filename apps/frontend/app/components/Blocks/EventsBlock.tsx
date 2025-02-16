@@ -45,5 +45,5 @@ export const EventsBlock: React.FC<Props> = ({ type, eventSeries, events }) => {
 
   // return <pre>{JSON.stringify(data, null, 2)}</pre>
 
-  return data ? <EventsList items={data.docs} site={site} /> : <p>{t('Loading...')}</p>
+  return data ? <EventsList events={data.docs} site={site} /> : <p>{t('Loading...')}</p>
 }
