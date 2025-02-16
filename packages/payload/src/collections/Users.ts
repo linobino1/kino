@@ -1,3 +1,4 @@
+import { env } from '@app/util/env/backend.server'
 import type { CollectionConfig } from 'payload'
 
 /**
@@ -9,7 +10,12 @@ export const Users: CollectionConfig = {
     singular: 'Benutzer',
     plural: 'Benutzer',
   },
-  auth: true,
+  auth: {
+    cookies: {
+      domain: `.${env.BACKEND_URL.replace('https://', '')}`,
+      sameSite: 'Lax',
+    },
+  },
   admin: {
     group: 'System',
     useAsTitle: 'name',

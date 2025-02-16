@@ -8,6 +8,7 @@ import { getPayload } from '~/util/getPayload.server'
 import { Label } from '~/components/auth/Label'
 import { Input } from '~/components/auth/Input'
 import { Button } from '~/components/Button'
+import { env } from '@app/util/env/backend.server'
 
 // i18n namespace
 const ns = 'auth'
@@ -27,9 +28,11 @@ export const action = async ({ request }: Route.ActionArgs) => {
       overrideAccess: false,
     })
 
+    const domain = `.${env.FRONTEND_URL.replace('https://', '')}` // .kinoimblauensalon.de
+
     return replace('/', {
       headers: {
-        'Set-Cookie': `payload-token=${result.token}; Path=/; HttpOnly; Max-Age=${result.exp}`,
+        'Set-Cookie': `payload-token=${result.token}; Path=/; Domain=${domain}; HttpOnly; SameSite=Lax; Max-Age=${result.exp}`,
       },
     })
   } catch {
