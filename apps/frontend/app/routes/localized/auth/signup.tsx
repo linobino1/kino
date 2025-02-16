@@ -3,6 +3,9 @@ import { Form } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import i18next from '~/i18next.server'
 import { getPayload } from '~/util/getPayload.server'
+import { Label } from '~/components/auth/Label'
+import { Input } from '~/components/auth/Input'
+import { Button } from '~/components/Button'
 
 // i18n namespace
 const ns = 'auth'
@@ -48,26 +51,28 @@ export default function SignUp({ actionData: data }: Route.ComponentProps) {
 
   return (
     <>
-      <h1>{t('sign up')}</h1>
+      <h1 className="text-2xl font-semibold">{t('sign up')}</h1>
       {data?.message && <p>{data.message}</p>}
       {!data?.success && (
-        <Form method="POST">
-          <label>
+        <Form method="POST" className="mt-8 flex flex-col items-center gap-4">
+          <Label>
             {t('name')}
-            <input type="name" name="name" />
-          </label>
+            <Input type="name" name="name" />
+          </Label>
 
-          <label>
+          <Label>
             {t('email')}
-            <input type="email" name="email" />
-          </label>
+            <Input type="email" name="email" />
+          </Label>
 
-          <label>
+          <Label>
             {t('password')}
-            <input type="password" name="password" />
-          </label>
+            <Input type="password" name="password" />
+          </Label>
 
-          <button type="submit">{t('sign up')}</button>
+          <Button type="submit" className="mt-4">
+            {t('sign up')}
+          </Button>
         </Form>
       )}
     </>
