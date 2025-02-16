@@ -3,7 +3,7 @@
 import type { MigratedMovie } from '@app/themoviedb/types'
 import { getPayloadClient } from '@app/payload/util/getPayloadClient'
 import { migrateMovie } from '@app/themoviedb/migrateMovie'
-import { isAuthenticatedRequest } from 'src/util/isAuthenticatedRequest'
+import { isAuthenticatedRequest } from '@/util/isAuthenticatedRequest'
 
 export const migrate = async ({
   tmdbId,

@@ -2,7 +2,7 @@
 
 import { tmdbAxiosClient } from '@app/themoviedb'
 import type { tmdbMovie } from '@app/themoviedb/types'
-import { isAuthenticatedRequest } from 'src/util/isAuthenticatedRequest'
+import { isAuthenticatedRequest } from '@/util/isAuthenticatedRequest'
 
 export const search = async (
   prevState: any,

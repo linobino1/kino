@@ -1,11 +1,6 @@
 import { configurePayload } from '@app/payload/config'
 import { tmdbAxiosClient } from '@app/themoviedb'
 import { siteTitle, timezone } from '@app/util/config'
-import path from 'path'
-import { fileURLToPath } from 'url'
-
-const filename = fileURLToPath(import.meta.url)
-const dirname = path.dirname(filename)
 
 export default configurePayload({
   onInit() {
@@ -23,7 +18,7 @@ export default configurePayload({
     },
     user: 'users',
     importMap: {
-      baseDir: path.resolve(dirname, '.'),
+      baseDir: '@/',
     },
     components: {
       beforeDashboard: ['/components/MigrateMovieButton#MigrateMovieButton'],

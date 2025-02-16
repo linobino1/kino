@@ -4,7 +4,8 @@
   "compilerOptions": {
     "paths": {
       "#payload/*": ["../../packages/payload/src/*"],
-      "@payload-config": ["./src/payload.config.ts"]
+      "@payload-config": ["./src/payload.config.ts"],
+      "@/*": ["./src/*"]
     },
     "jsx": "preserve",
     "plugins": [

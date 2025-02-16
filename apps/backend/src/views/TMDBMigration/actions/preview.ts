@@ -4,7 +4,7 @@ import type { Locale } from '@app/i18n'
 import { getPayloadClient } from '@app/payload/util/getPayloadClient'
 import { defaultLanguage } from '@app/themoviedb'
 import { fetchData } from '@app/themoviedb/fetchData'
-import { isAuthenticatedRequest } from 'src/util/isAuthenticatedRequest'
+import { isAuthenticatedRequest } from '@/util/isAuthenticatedRequest'
 
 export const getPreviewData = async (
   tmdbId: number,
