@@ -69,6 +69,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
   const events = await payload.find({
     collection: 'events',
     where,
+    sort: 'date',
     depth: 3,
     locale: body.locale,
   })
