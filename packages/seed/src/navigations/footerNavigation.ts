@@ -2,9 +2,9 @@ import type { RequiredDataFromCollectionSlug } from 'payload'
 import type { DocGenerator } from '../types'
 import { translate } from '../util/translate'
 
-export const mainNavigation: DocGenerator<'navigations'> = ({ context: { pages }, locale }) =>
+export const footerNavigation: DocGenerator<'navigations'> = ({ context: { pages }, locale }) =>
   ({
-    type: 'main',
+    type: 'footer',
 
     items: [
       {
@@ -20,6 +20,13 @@ export const mainNavigation: DocGenerator<'navigations'> = ({ context: { pages }
         newTab: false,
         page: pages.get('Screenings')?.id,
         id: '67a51314c2678dd65b58ff25',
+      },
+      {
+        type: 'internal',
+        name: translate({ de: 'Spielzeiten', en: 'Seasons' }, locale),
+        newTab: false,
+        page: pages.get('Seasons')?.id,
+        id: '67a51314c2678dd65b58ff15',
       },
       {
         type: 'internal',

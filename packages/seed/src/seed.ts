@@ -9,7 +9,7 @@ import { translate } from './util/translate'
 import { landing } from './pages/landing'
 import { seedGlobal } from './util/seedGlobal'
 import { site } from './globals/site'
-import { mainNavigations } from './navigations/mainNavigation'
+import { mainNavigation } from './navigations/mainNavigation'
 import { events } from './pages/events'
 import { seedCountries } from './countries'
 import { seedAspectRatios } from './aspectRatios'
@@ -37,6 +37,8 @@ import { openAirCinemaPage } from './pages/openAirCinema'
 import { bookingsPage } from './pages/bookings'
 import { news } from './pages/news'
 import { anotherRental } from './rentals/anotherRental'
+import { seasons } from './pages/seasons'
+import { footerNavigation } from './navigations/footerNavigation'
 
 export const seed = async (payload: Payload, req?: PayloadRequest): Promise<void> => {
   if (process.env.NODE_ENV === 'production') {
@@ -218,7 +220,7 @@ export const seed = async (payload: Payload, req?: PayloadRequest): Promise<void
   }
 
   payload.logger.info(`— seeding pages...`)
-  for await (const generator of [landing, events, news, openAirCinemaPage, bookingsPage]) {
+  for await (const generator of [landing, events, seasons, news, openAirCinemaPage, bookingsPage]) {
     await seedDoc({
       collection: 'pages',
       generator,
@@ -229,8 +231,12 @@ export const seed = async (payload: Payload, req?: PayloadRequest): Promise<void
   payload.logger.info(`— seeding navigations...`)
   for await (const { generator, contextID } of [
     {
-      generator: mainNavigations,
+      generator: mainNavigation,
       contextID: 'main',
+    },
+    {
+      generator: footerNavigation,
+      contextID: 'footer',
     },
   ]) {
     await seedDoc({
