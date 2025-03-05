@@ -31,6 +31,7 @@ import { Jobs } from './collections/Movies/Jobs'
 import { Companies } from './collections/Movies/Companies'
 import { Countries } from './collections/Movies/Countries'
 import { Navigations } from './collections/Navigations'
+import { PressPdfs } from './collections/PressPdfs'
 import { Site } from './globals/Site'
 import { locales } from '@app/i18n'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -78,6 +79,7 @@ const configPromise: Promise<Config> = (async () => ({
 
     // Media
     Media,
+    PressPdfs,
 
     // Pages
     Pages,

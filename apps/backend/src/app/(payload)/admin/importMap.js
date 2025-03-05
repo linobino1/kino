@@ -36,6 +36,7 @@ import { MagicSlugsExplanation as MagicSlugsExplanation_3000e68c3854ff1d86843355
 import { default as default_fee00efa08d4d6c9be5f886e9971d8c8 } from '@/components/RowLabelNavigationItem'
 import { Icon as Icon_c6286fbc7f62f2ce3ef9c604e9c02147 } from '@/components/graphics/Icon'
 import { Logo as Logo_e577ad08317d2e8977edf3e679038fc8 } from '@/components/graphics/Logo'
+import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 import { TMDBMigration as TMDBMigration_b4543c28c07beb0098fe53a85cee14d7 } from '@/views/TMDBMigration/index'
 
 export const importMap = {
@@ -77,5 +78,6 @@ export const importMap = {
   "/components/RowLabelNavigationItem#default": default_fee00efa08d4d6c9be5f886e9971d8c8,
   "/components/graphics/Icon#Icon": Icon_c6286fbc7f62f2ce3ef9c604e9c02147,
   "/components/graphics/Logo#Logo": Logo_e577ad08317d2e8977edf3e679038fc8,
+  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
   "/views/TMDBMigration/index#TMDBMigration": TMDBMigration_b4543c28c07beb0098fe53a85cee14d7
 }
