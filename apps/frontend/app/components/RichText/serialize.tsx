@@ -1,20 +1,20 @@
 import type { JSX } from 'react'
 import React, { Fragment } from 'react'
 import type { Media as MediaType } from '@app/types/payload'
-import {
-  IS_BOLD,
-  IS_CODE,
-  IS_ITALIC,
-  IS_STRIKETHROUGH,
-  IS_SUBSCRIPT,
-  IS_SUPERSCRIPT,
-  IS_UNDERLINE,
-} from './nodeFormat'
 import { cn } from '@app/util/cn'
 import { Link } from 'react-router'
 import { Image } from '~/components/Image'
 import type { NodeTypes } from './types'
 import { ArrowOutward } from '../icons/ArrowOutward'
+import {
+  IS_BOLD,
+  IS_ITALIC,
+  IS_STRIKETHROUGH,
+  IS_UNDERLINE,
+  IS_CODE,
+  IS_SUBSCRIPT,
+  IS_SUPERSCRIPT,
+} from '@app/util/lexical/NodeFormat'
 
 type Props = {
   nodes: NodeTypes[]
@@ -193,7 +193,7 @@ export function serializeLexical(props: Props): JSX.Element {
             }
 
             case 'upload': {
-              const media = node.value as MediaType
+              const media = node.value as unknown as MediaType
               if (media === null || typeof media !== 'object') {
                 return null
               }
