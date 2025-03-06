@@ -18,6 +18,7 @@ export async function up({ payload, req, session }: MigrateUpArgs): Promise<void
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function down({ payload, req, session }: MigrateDownArgs): Promise<void> {
+  return
   // let's replace all "event-series" with "screening-series" in the "eventSeries" collection, so that the URLs are being updated
   const docs = await payload.db.connection.collection('eventSeries').find({}).toArray()
 

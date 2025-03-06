@@ -138,6 +138,7 @@ export async function up({ payload, req, session }: MigrateUpArgs): Promise<void
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function down({ payload, req, session }: MigrateDownArgs): Promise<void> {
+  return
   // Migration code
   throw new Error('Migration down function is not implemented')
 }

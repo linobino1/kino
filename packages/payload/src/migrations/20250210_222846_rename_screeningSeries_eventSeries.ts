@@ -11,6 +11,7 @@ export async function up({ payload, req, session }: MigrateUpArgs): Promise<void
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function down({ payload, req, session }: MigrateDownArgs): Promise<void> {
+  return
   // Migration code
   await payload.db.connection.db?.renameCollection('eventseries', 'screeningseries')
 }
