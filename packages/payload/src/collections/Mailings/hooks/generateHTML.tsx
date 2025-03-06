@@ -3,6 +3,7 @@ import { render } from '@react-email/components'
 import { extractJWT, type FieldHook } from 'payload'
 import { addDepth } from '../lexical/addDepth'
 import { env } from '@app/util/env/backend.server'
+import { mailingsLocale } from '@app/i18n'
 
 export const generateHTML: FieldHook = async ({ data, req }) => {
   if (!data) {
@@ -20,7 +21,7 @@ export const generateHTML: FieldHook = async ({ data, req }) => {
   const content = await addDepth({
     json: data.content,
     payload: req.payload,
-    locale: 'de',
+    locale: mailingsLocale,
   })
 
   // and fetch the header and footer images

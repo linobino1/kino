@@ -39,6 +39,8 @@ import { news } from './pages/news'
 import { anotherRental } from './rentals/anotherRental'
 import { seasons } from './pages/seasons'
 import { footerNavigation } from './navigations/footerNavigation'
+import { pressReleaseCurrentSeason } from './pressReleases/pressReleaseCurrentSeason'
+import { pressReleasesConfig } from './globals/pressReleasesConfig'
 
 export const seed = async (payload: Payload, req?: PayloadRequest): Promise<void> => {
   if (process.env.NODE_ENV === 'production') {
@@ -262,6 +264,20 @@ export const seed = async (payload: Payload, req?: PayloadRequest): Promise<void
     generator: site,
     context,
   })
+  await seedGlobal({
+    slug: 'pressReleasesConfig',
+    generator: pressReleasesConfig,
+    context,
+  })
+
+  payload.logger.info(`— seeding press releases...`)
+  for await (const generator of [pressReleaseCurrentSeason]) {
+    await seedDoc({
+      collection: 'pressReleases',
+      generator,
+      context,
+    })
+  }
 
   payload.logger.info('Seeded database successfully!')
 }

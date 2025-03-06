@@ -78,5 +78,12 @@
       "add_one": "Zu meinem Kalender hinzufügen",
       "add_other": "{{count}} Vorstellungen zu meinem Kalender hinzufügen"
     }
+  },
+  "pdf": {
+    "pageNumbers": "Seite {{pageNumber}} von {{totalPages}}",
+    "supportingFilm": "Vorfilm",
+    "coverCharge": "Eintritt frei, Spenden erbeten",
+    "title": "Pressemitteilung {{date}}",
+    "filename": "Pressemitteilung-{{date}}.pdf"
   }
 }

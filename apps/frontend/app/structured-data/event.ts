@@ -1,4 +1,3 @@
-import { parseISO } from 'date-fns'
 import type { Event, Site } from '@app/types/payload'
 import type { ItemList, ScreeningEvent, Event as SchemaOrgEvent } from 'schema-dts'
 import { locationSchema } from './location'
@@ -39,7 +38,7 @@ export const eventSchema = (event: Event, site?: Site): SchemaOrgEvent | Screeni
     res = {
       ...res,
       '@type': 'ScreeningEvent',
-      endDate: new Date(parseISO(event.date).getTime() + movie.duration * 60 * 1000).toISOString(),
+      endDate: new Date(new Date(event.date).getTime() + movie.duration * 60 * 1000).toISOString(),
       workPresented,
     }
   }

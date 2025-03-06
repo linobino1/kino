@@ -10,6 +10,7 @@ export default [
     route('/kronolith.html', './routes/api/kronolith-iframe.ts'),
     route('/ics', './routes/api/ics.ts'),
   ]),
+  route('/press-releases/:id.pdf', './routes/press-releases/route.tsx'),
   layout('./routes/localized/_layout.tsx', [
     layout('./routes/localized/auth/_layout.tsx', [
       ...prefix('/:lang?/auth', [

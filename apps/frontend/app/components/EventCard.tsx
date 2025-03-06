@@ -29,14 +29,14 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
         className="p3 absolute -top-2.5 left-2 flex flex-col items-center bg-white/80 pb-4 uppercase leading-[1]"
         style={{ textShadow: '0px 0px 10px rgb(0 0 0 / 30%)' }}
       >
-        <DateComponent iso={event.date as string} className="" format="EEEEEE" />
-        <DateComponent iso={event.date as string} className="" format="MMM" />
+        <DateComponent date={event.date as string} className="" format="EEEEEE" />
+        <DateComponent date={event.date as string} className="" format="MMM" />
         <DateComponent
-          iso={event.date as string}
+          date={event.date as string}
           className="font-calendar text-4xl font-semibold"
           format="dd"
         />
-        {isPast && <DateComponent iso={event.date as string} format="yyyy" />}
+        {isPast && <DateComponent date={event.date as string} format="yyyy" />}
       </div>
       <Link to={event.url ?? ''} prefetch="intent" className="contents">
         <Image
@@ -66,7 +66,7 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
         </div>
         <div className="flex flex-1 flex-col gap-4 px-4 pb-4">
           <DateComponent
-            iso={event.date as string}
+            date={event.date as string}
             className="font-medium text-red-500"
             format="p"
           />

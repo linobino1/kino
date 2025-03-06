@@ -8,6 +8,7 @@ export const seedLocations = async ({ payload, ...context }: SeedContext): Promi
       collection: 'locations',
       data: {
         name: name.de,
+        address: name.de + ', HfG Karlsruhe',
         default: isDefault,
       },
       locale: 'de',

@@ -1,7 +1,7 @@
 import type { Media, Post } from '@app/types/payload'
 import type { ItemList, BlogPosting } from 'schema-dts'
 import { itemList } from '.'
-import { lexicalToPlainText } from '~/components/RichText/lexicalToPlainText'
+import { lexicalToPlainText } from '@app/util/lexical/lexicalToPlainText'
 
 export const postSchema = (post: Post): BlogPosting => {
   return {

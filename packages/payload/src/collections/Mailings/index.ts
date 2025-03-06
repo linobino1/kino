@@ -9,7 +9,7 @@ import { FilmPrintBlock } from './lexical/blocks/FilmPrintBlock'
 export const Mailings: CollectionConfig = {
   slug: 'mailings',
   admin: {
-    group: 'Mailings',
+    group: 'Promo',
     defaultColumns: ['id', 'updatedAt'],
     components: {
       beforeList: ['/components/mailings/HowTo#HowTo'],

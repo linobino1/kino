@@ -1,16 +1,17 @@
-import * as migration_20241107_201219_generate_all_urls from './20241107_201219_generate_all_urls';
-import * as migration_20250206_111921_migration from './20250206_111921_migration';
-import * as migration_20250206_190444_localize_media_alt from './20250206_190444_localize_media_alt';
-import * as migration_20250208_164718_events_v3 from './20250208_164718_events_v3';
-import * as migration_20250210_200748_slug_lock from './20250210_200748_slug_lock';
-import * as migration_20250210_215532_enable_drafts_on_posts from './20250210_215532_enable_drafts_on_posts';
-import * as migration_20250210_222846_rename_screeningSeries_eventSeries from './20250210_222846_rename_screeningSeries_eventSeries';
-import * as migration_20250210_224545_rename_screeningSeries_eventSeries_part2 from './20250210_224545_rename_screeningSeries_eventSeries_part2';
-import * as migration_20250211_083006_fix_event_series_links_in_richtext from './20250211_083006_fix_event_series_links_in_richtext';
-import * as migration_20250211_160155_events_series_has_many from './20250211_160155_events_series_has_many';
-import * as migration_20250212_072144_fix_null_values_in_events_series from './20250212_072144_fix_null_values_in_events_series';
-import * as migration_20250212_074118_fix_null_values_in_events_series_versions from './20250212_074118_fix_null_values_in_events_series_versions';
-import * as migration_20250215_181351_add_news_page from './20250215_181351_add_news_page';
+import * as migration_20241107_201219_generate_all_urls from './20241107_201219_generate_all_urls'
+import * as migration_20250206_111921_migration from './20250206_111921_migration'
+import * as migration_20250206_190444_localize_media_alt from './20250206_190444_localize_media_alt'
+import * as migration_20250208_164718_events_v3 from './20250208_164718_events_v3'
+import * as migration_20250210_200748_slug_lock from './20250210_200748_slug_lock'
+import * as migration_20250210_215532_enable_drafts_on_posts from './20250210_215532_enable_drafts_on_posts'
+import * as migration_20250210_222846_rename_screeningSeries_eventSeries from './20250210_222846_rename_screeningSeries_eventSeries'
+import * as migration_20250210_224545_rename_screeningSeries_eventSeries_part2 from './20250210_224545_rename_screeningSeries_eventSeries_part2'
+import * as migration_20250211_083006_fix_event_series_links_in_richtext from './20250211_083006_fix_event_series_links_in_richtext'
+import * as migration_20250211_160155_events_series_has_many from './20250211_160155_events_series_has_many'
+import * as migration_20250212_072144_fix_null_values_in_events_series from './20250212_072144_fix_null_values_in_events_series'
+import * as migration_20250212_074118_fix_null_values_in_events_series_versions from './20250212_074118_fix_null_values_in_events_series_versions'
+import * as migration_20250215_181351_add_news_page from './20250215_181351_add_news_page'
+import * as migration_20250306_100232_press_releases from './20250306_100232_press_releases'
 
 export const migrations = [
   {
@@ -76,6 +77,11 @@ export const migrations = [
   {
     up: migration_20250215_181351_add_news_page.up,
     down: migration_20250215_181351_add_news_page.down,
-    name: '20250215_181351_add_news_page'
+    name: '20250215_181351_add_news_page',
   },
-];
+  {
+    up: migration_20250306_100232_press_releases.up,
+    down: migration_20250306_100232_press_releases.down,
+    name: '20250306_100232_press_releases',
+  },
+]

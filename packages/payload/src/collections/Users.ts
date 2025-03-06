@@ -12,8 +12,9 @@ export const Users: CollectionConfig = {
   },
   auth: {
     cookies: {
-      domain:
-        env.NODE_ENV === 'development' ? undefined : `.${env.BACKEND_URL.replace('https://', '')}`,
+      domain: env.BACKEND_URL.includes('localhost')
+        ? undefined
+        : `.${env.BACKEND_URL.replace('https://', '')}`,
       sameSite: 'Lax',
     },
   },

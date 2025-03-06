@@ -12,15 +12,6 @@ import {
 import type { Mailing, Media } from '@app/types/payload'
 import { seed } from '../seed'
 import { SerializeLexicalToEmail } from '../lexical/SerializeLexicalToEmail'
-import { parseISO } from 'date-fns'
-import { de } from 'date-fns/locale'
-import { formatInTimeZone } from 'date-fns-tz'
-import { timezone } from '@app/util/config'
-
-export const formatDate = (iso: string, format: string) => {
-  const date = parseISO(iso)
-  return formatInTimeZone(date, timezone, format, { locale: de })
-}
 
 export type Props = {
   mailing: Omit<Mailing, 'updatedAt' | 'createdAt' | 'id'>

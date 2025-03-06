@@ -2,7 +2,7 @@
   "name": "@app/seed",
   "type": "module",
   "scripts": {
-    "start": "dotenv -e ../../.env tsx ./src/main.ts",
+    "start": "cross-env SEEDING=true dotenv -e ../../.env tsx ./src/main.ts",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
@@ -11,6 +11,7 @@
     "@app/themoviedb": "workspace:*",
     "@app/types": "workspace:*",
     "@app/util": "workspace:*",
+    "cross-env": "7.0.3",
     "deepmerge": "^4.3.1",
     "dotenv-cli": "8.0.0",
     "glob": "11.0.1",

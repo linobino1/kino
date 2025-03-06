@@ -31,8 +31,9 @@ import { Jobs } from './collections/Movies/Jobs'
 import { Companies } from './collections/Movies/Companies'
 import { Countries } from './collections/Movies/Countries'
 import { Navigations } from './collections/Navigations'
-import { PressPdfs } from './collections/PressPdfs'
+import { PressReleases } from './collections/PressReleases'
 import { Site } from './globals/Site'
+import { PressReleasesConfig } from './globals/PressReleasesConfig'
 import { locales } from '@app/i18n'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
@@ -40,6 +41,7 @@ import { ZeptomailTransport } from 'nodemailer-zeptomail-transport'
 import { createTransport } from 'nodemailer'
 import { projectRoot } from '@app/util/projectRoot'
 import { env } from '@app/util/env/backend.server'
+import { translations } from '@app/i18n/translations/index'
 
 const configPromise: Promise<Config> = (async () => ({
   cors: {
@@ -79,7 +81,7 @@ const configPromise: Promise<Config> = (async () => ({
 
     // Media
     Media,
-    PressPdfs,
+    PressReleases,
 
     // Pages
     Pages,
@@ -107,7 +109,7 @@ const configPromise: Promise<Config> = (async () => ({
     Navigations,
     Users,
   ],
-  globals: [Site],
+  globals: [PressReleasesConfig, Site],
   editor: lexicalEditor({
     features({ defaultFeatures }) {
       return [...defaultFeatures]
@@ -167,6 +169,7 @@ const configPromise: Promise<Config> = (async () => ({
     supportedLanguages: {
       de,
     },
+    translations,
   },
   upload: {
     defCharset: 'utf8',

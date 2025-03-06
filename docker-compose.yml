@@ -1,0 +1,26 @@
+services:
+  backend:
+    build: .
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    env_file:
+      - .env
+    # environment:
+    #   DATABASE_URI: mongodb://db:27018/app
+    #   PAYLOAD_SECRET: secret
+    #   BACKEND_URL: http://localhost:3000
+    #   FRONTEND_URL: http://localhost:5173
+
+  db:
+    image: mongo:latest
+    ports:
+      - '27018:27017'
+    command:
+      - --storageEngine=wiredTiger
+    volumes:
+      - data:/data/db
+
+volumes:
+  data:

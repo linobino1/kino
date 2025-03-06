@@ -28,7 +28,6 @@
     "@payloadcms/storage-s3": "catalog:",
     "@payloadcms/translations": "catalog:",
     "@react-email/components": "^0.0.32",
-    "@react-pdf/renderer": "^4.3.0",
     "cross-env": "^7.0.3",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",

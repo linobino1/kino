@@ -27,6 +27,7 @@ import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0
 import { BlocksFeatureClient as BlocksFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { HtmlField as HtmlField_f875e1d07a685701d17850d298f67385 } from '@/components/mailings/HtmlField'
 import { HowTo as HowTo_88248679de5f830f6e07723bfd4d55c9 } from '@/components/mailings/HowTo'
+import { DownloadButton as DownloadButton_763dadc41549da1632b8924cfdf6be61 } from '@/components/DownloadButton'
 import { OverviewComponent as OverviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaTitleComponent as MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
@@ -68,6 +69,7 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#BlocksFeatureClient": BlocksFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "/components/mailings/HtmlField#HtmlField": HtmlField_f875e1d07a685701d17850d298f67385,
   "/components/mailings/HowTo#HowTo": HowTo_88248679de5f830f6e07723bfd4d55c9,
+  "/components/DownloadButton#DownloadButton": DownloadButton_763dadc41549da1632b8924cfdf6be61,
   "@payloadcms/plugin-seo/client#OverviewComponent": OverviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaTitleComponent": MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaDescriptionComponent": MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860,

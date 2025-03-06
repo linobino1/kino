@@ -10,8 +10,6 @@ import { PageLayout } from '~/components/PageLayout'
 import { Hero } from '~/components/Hero'
 import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
-import { formatInTimeZone } from 'date-fns-tz'
-import { parseISO } from 'date-fns'
 import { JsonLd } from '~/structured-data'
 import { eventSchema } from '~/structured-data/event'
 import { Date as DateComponent } from '~/components/Date'
@@ -24,8 +22,8 @@ import { AsideLayout } from '~/components/AsideLayout'
 import { Poster } from '~/components/Poster'
 import { useTranslation } from 'react-i18next'
 import { Image } from '~/components/Image'
-import { timezone } from '@app/util/config'
 import { ICSDownloadButton } from '~/components/ICSDownloadButton'
+import { formatDate } from '@app/util/formatDate'
 
 export const meta: Route.MetaFunction = ({ data, matches }) =>
   generateMetadata({
@@ -66,10 +64,10 @@ export const loader = async ({
     meta: {
       title: t('event.meta.title', {
         title: event.title,
-        date: formatInTimeZone(parseISO(event?.date || ''), timezone, 'PPp'),
+        date: formatDate(event.date, 'PPp', locale as Locale),
       }),
       description: t('event.meta.description', {
-        date: formatInTimeZone(parseISO(event.date || ''), timezone, 'PPpp'),
+        date: formatDate(event.date, 'PPp', locale as Locale),
         location: (event.location as Location).name,
         info: event.shortDescription,
       }),
@@ -95,7 +93,7 @@ export default function EventPage({ loaderData: { event } }: Route.ComponentProp
           <div className="flex items-center gap-4">
             <DateComponent
               className="text-lg font-semibold"
-              iso={event.date as string}
+              date={event.date as string}
               format="P / p"
             />
             {isUpcoming && <ICSDownloadButton events={[event]} showLabel={false} />}

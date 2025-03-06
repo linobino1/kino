@@ -1,28 +1,19 @@
 import React from 'react'
-import { parseISO } from 'date-fns'
-import { formatInTimeZone } from 'date-fns-tz'
-import { enUS, de } from 'date-fns/locale'
 import { useTranslation } from 'react-i18next'
-import { timezone } from '@app/util/config'
+import { formatDate } from '@app/util/formatDate'
+import type { Locale } from '@app/i18n'
 
 type Props = {
-  iso: string
+  date: string | Date
   format?: string
   className?: string
 }
 
-export const Date: React.FC<Props> = ({ iso, className, format }) => {
-  const date = parseISO(iso)
-  const tz = timezone ?? 'UTC'
+export const Date: React.FC<Props> = ({ date, className, format = 'LLLL d, yyyy' }) => {
   const { i18n } = useTranslation()
-  const locale = i18n.language === 'de' ? de : enUS
-  if (!date || isNaN(date.getMilliseconds())) {
-    console.warn('encountered invalid date', iso)
-    return <></>
-  }
-  const str = formatInTimeZone(date, tz, format ?? 'LLLL d, yyyy', {
-    locale,
-  })
+  const str = formatDate(date, format, i18n.language as Locale)
+
+  const iso = typeof date === 'string' ? date : date.toISOString()
 
   return (
     <time suppressHydrationWarning className={className} dateTime={iso}>

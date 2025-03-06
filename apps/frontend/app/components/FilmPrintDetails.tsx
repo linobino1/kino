@@ -2,11 +2,11 @@ import type { FilmPrint, Movie as MovieType, Media, Rental } from '@app/types/pa
 import { Link } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { Image } from '~/components/Image'
-import { movieSpecs } from '~/util/movieSpecs'
 import { Button } from '~/components/Button'
 import { AsideLayout } from './AsideLayout'
 import { Poster } from './Poster'
 import { useRootLoaderData } from '~/util/useRootLoaderData'
+import { getMovieSpecsString } from '@app/util/data/getMovieSpecsString'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   filmPrint: FilmPrint
@@ -37,15 +37,11 @@ export const FilmPrintDetails: React.FC<Props> = ({
           {((filmPrint as FilmPrint).movie as MovieType).title}
         </h2>
         <div className="text-sm text-neutral-200">
-          {movieSpecs({
+          {getMovieSpecsString({
+            type: 'full',
             filmPrint: filmPrint,
             t,
-          }).map((item, index) => (
-            <span key={index}>
-              {index > 0 && <span className="whitespace-pre">{' | '}</span>}
-              {item}
-            </span>
-          ))}
+          })}
         </div>
       </div>
       <p

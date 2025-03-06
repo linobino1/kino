@@ -3,8 +3,11 @@
   "type": "module",
   "exports": {
     "./*": "./src/*.ts",
+    "./data/*": "./src/data/*.ts",
     "./env": "./src/env/index.ts",
     "./env/*": "./src/env/*.ts",
+    "./lexical/*": "./src/lexical/*.ts",
+    "./media/*": "./src/media/*.ts",
     "./projectRoot": "./src/projectRoot.ts",
     "./payload/*": "./src/payload/*.ts"
   },
@@ -12,13 +15,18 @@
     "@app/i18n": "workspace:*",
     "@app/types": "workspace:*",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
     "react": "catalog:",
     "slugify": "1.6.6",
     "tailwind-merge": "^2.5.4",
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@payloadcms/richtext-lexical": "catalog:",
     "@types/react": "catalog:",
+    "i18next": "catalog:",
+    "monaco-editor": "catalog:",
     "payload": "catalog:"
   }
 }

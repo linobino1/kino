@@ -1,5 +1,10 @@
 import type { SeedContext } from '../types'
 
+export const getCurrentSeasonName = (): string => {
+  const currentYear = new Date().getFullYear()
+  return `Winter term ${currentYear}`
+}
+
 export const seedSeasons = async ({ payload, media, ...context }: SeedContext): Promise<void> => {
   payload.logger.info(`— seeding seasons...`)
   const currentYear = new Date().getFullYear()

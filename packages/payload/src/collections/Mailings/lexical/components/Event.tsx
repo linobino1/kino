@@ -11,9 +11,11 @@ import type {
   Event as EventType,
 } from '@app/types/payload'
 import { SerializeLexicalToEmail } from '../SerializeLexicalToEmail'
-import { bgGrey, containerWidth, formatDate, fontSize } from '../../templates/Newsletter'
+import { bgGrey, containerWidth, fontSize } from '../../templates/Newsletter'
 import Shorten from './Shorten'
 import { env } from '@app/util/env/backend.server'
+import { formatDate } from '@app/util/formatDate'
+import { mailingsLocale } from '@app/i18n'
 
 type EventProps = {
   event: EventType
@@ -81,7 +83,7 @@ const Event: React.FC<EventProps> = ({ event, color, additionalText }) => {
               textAlign: 'center',
             }}
           >
-            {`${formatDate(event.date, 'dd. LLL - p')} Uhr`}
+            {`${formatDate(event.date, 'dd. LLL - p', mailingsLocale)} Uhr`}
           </Text>
         </Link>
         <Container style={{ padding: '20px' }}>

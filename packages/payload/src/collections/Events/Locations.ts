@@ -20,10 +20,17 @@ export const Locations: CollectionConfig = {
     {
       name: 'name',
       label: 'Name',
+      required: true,
       localized: true,
       type: 'text',
     },
     ...slugField('name'),
     defaultField('locations'),
+    {
+      name: 'address',
+      label: 'Adresse',
+      type: 'textarea',
+      required: true,
+    },
   ],
 }

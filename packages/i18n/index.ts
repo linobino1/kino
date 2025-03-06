@@ -5,8 +5,11 @@ import type {
 } from '@payloadcms/translations'
 import type { translations } from './translations'
 
+export type { TFunction } from 'i18next'
+
 export const locales = ['de', 'en'] as const
-export const defaultLocale = 'de'
+export const defaultLocale = 'de' as const
+export const mailingsLocale = 'de' as const
 
 export type Locale = (typeof locales)[number]
 

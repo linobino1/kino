@@ -4,7 +4,7 @@ import type { Media as MediaType } from '@app/types/payload'
 import { cn } from '@app/util/cn'
 import { Link } from 'react-router'
 import { Image } from '~/components/Image'
-import type { NodeTypes } from './types'
+import type { NodeTypes } from '@app/util/lexical/types'
 import { ArrowOutward } from '../icons/ArrowOutward'
 import {
   IS_BOLD,

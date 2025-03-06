@@ -14,6 +14,11 @@ export default defineConfig(({ command }) => ({
       '@payloadcms/db-mongodb',
     ],
   },
+  build: {
+    rollupOptions: {
+      external: ['@payloadcms/richtext-lexical'],
+    },
+  },
   ssr: {
     noExternal:
       command === 'build' ? true : ['remix-i18next', 'payload', '@payloadcms/richtext-lexical'],

@@ -3,6 +3,7 @@ import { z } from 'zod'
 const variables = z.object({
   NODE_ENV: z.string().default('development'),
   CI: z.string().optional(),
+  SEEDING: z.string().optional(),
 
   FRONTEND_URL: z.string().default('http://localhost:5173'),
   BACKEND_URL: z.string().default('http://localhost:3000'),
@@ -40,6 +41,8 @@ const backendBrowserEnv = variables.pick({
   NODE_ENV: true,
   FRONTEND_URL: true,
   BACKEND_URL: true,
+  MEDIA_URL: true,
+  CDN_CGI_IMAGE_URL: true,
 })
 
 const frontendServerEnv = variables
