@@ -1,7 +1,7 @@
 import type { Media } from '@app/types/payload'
 import React from 'react'
-import { getMediaUrl } from '~/util/media/getMediaUrl'
-import { getOptimizedImageUrl } from '~/util/media/getOptimizedImageUrl'
+import { getMediaUrl } from '@app/util/media/getMediaUrl'
+import { getOptimizedImageUrl } from '@app/util/media/getOptimizedImageUrl'
 import { useEnv } from '~/util/useEnv'
 
 /**

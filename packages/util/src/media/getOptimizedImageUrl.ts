@@ -25,14 +25,14 @@ export const getOptimizedImageUrl = (
   env?: BackendBrowserEnvironment,
   options?: Options,
 ) => {
-  // do not optimize in development
-  if (env?.NODE_ENV === 'development') {
-    return getMediaUrl(src, env)
-  }
-
   // get the absolute url of the media
   if (typeof src === 'object') {
     src = getMediaUrl(src, env) as string
+  }
+
+  // do not optimize in development
+  if (env?.NODE_ENV === 'development') {
+    return src
   }
 
   // build the options string

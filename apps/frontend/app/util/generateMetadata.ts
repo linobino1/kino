@@ -2,7 +2,7 @@ import type { Media } from '@app/types/payload'
 import type { MetaDescriptor } from 'react-router'
 import type { FrontendBrowserEnvironment } from '@app/util/env'
 import { generateTitle } from './generateTitle'
-import { getOptimizedImageUrl } from './media/getOptimizedImageUrl'
+import { getOptimizedImageUrl } from '@app/util/media/getOptimizedImageUrl'
 
 type Props = {
   title?: string | null

@@ -1,11 +1,14 @@
 import type { Media } from '@app/types/payload'
-import type { BackendBrowserEnvironment } from '@app/util/env'
+import type { BackendBrowserEnvironment, FrontendBrowserEnvironment } from '@app/util/env'
 
 /**
  *
  * @returns an absolute URL to the media file
  */
-export const getMediaUrl = (media: Media | string, env?: BackendBrowserEnvironment) => {
+export const getMediaUrl = (
+  media: Media | string,
+  env?: BackendBrowserEnvironment | FrontendBrowserEnvironment,
+) => {
   if (typeof media === 'string') {
     console.error(`getMediaUrl() expects a Media object, but got a string ${media}`)
     return ''
