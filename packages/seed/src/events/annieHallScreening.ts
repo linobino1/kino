@@ -18,6 +18,13 @@ export const annieHallScreening: DocGenerator<'events'> = ({ context, locale }) 
     season: context.seasons.get(`Winter term ${currentYear}`)?.id as string,
     location: context.locations.get('Blauer Salon')?.id as string,
     series: [context.eventSeries.get('Cinema of Colors')?.id as string],
+    comment: translate(
+      {
+        de: 'Einführung: Prof. Dr. Peter Sloterdijk',
+        en: 'Introduction: Prof. Dr. Peter Sloterdijk',
+      },
+      locale,
+    ),
     programItems: [
       {
         type: 'screening',

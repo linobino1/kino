@@ -89,7 +89,7 @@ export default function EventPage({ loaderData: { event } }: Route.ComponentProp
     <PageLayout>
       {structuredData && <JsonLd {...structuredData} />}
       <Hero type="overlay" headline={event.title} image={event.header}>
-        <div className="leading-tight">
+        <div className="leading-tight md:my-8">
           <div className="flex items-center gap-4">
             <DateComponent
               className="text-lg font-semibold"
@@ -103,14 +103,15 @@ export default function EventPage({ loaderData: { event } }: Route.ComponentProp
           <Link to={(event.season as Season).url ?? ''} prefetch="intent">
             {(event.season as Season).name}
           </Link>
-          <div className="my-4 text-2xl font-semibold uppercase">{event.title}</div>
-          <div className="flex gap-2">
+          <div className="mt-4 text-2xl font-semibold uppercase">{event.title}</div>
+          <div className="mt-1 flex gap-2">
             {((event.series ?? []) as EventSery[]).map(({ slug, name }, index) => (
               <Link key={index} className="contents" to={`/event-series/${slug}`}>
                 <Tag>{name}</Tag>
               </Link>
             ))}
           </div>
+          {event.comment && <div className="mt-1">{event.comment}</div>}
         </div>
       </Hero>
 
