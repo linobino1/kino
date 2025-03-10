@@ -37,7 +37,7 @@ export const Hero: React.FC<Props> = ({ type, headline, image, children, classNa
             ]}
             sizes="100vw"
             fetchPriority="high"
-            className="h-full w-full object-cover object-[center_33%]"
+            className="h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-black/20" />
           <div className="absolute inset-0 flex h-full flex-col justify-between sm:py-4">
