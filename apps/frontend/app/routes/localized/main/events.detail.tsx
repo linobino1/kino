@@ -89,7 +89,7 @@ export default function EventPage({ loaderData: { event } }: Route.ComponentProp
     <PageLayout>
       {structuredData && <JsonLd {...structuredData} />}
       <Hero type="overlay" headline={event.title} image={event.header}>
-        <div className="leading-tight md:my-8">
+        <div className="leading-tight">
           <div className="flex items-center gap-4">
             <DateComponent
               className="text-lg font-semibold"

@@ -26,7 +26,7 @@ export const Hero: React.FC<Props> = ({ type, headline, image, children, classNa
   return (
     <div className={className} {...props}>
       {['image', 'overlay'].includes(type) && image && (
-        <div className="relative aspect-[16/9] max-h-[55vh] w-screen overflow-hidden">
+        <div className="relative w-full sm:aspect-[16/9] lg:max-h-[55vh]">
           <Image
             image={image as Media}
             srcSet={[
@@ -37,14 +37,13 @@ export const Hero: React.FC<Props> = ({ type, headline, image, children, classNa
             ]}
             sizes="100vw"
             fetchPriority="high"
-            className="h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/20" />
-          <div className="absolute inset-0 flex h-full flex-col justify-between sm:py-4">
+          <div className="relative flex h-full flex-col justify-between bg-black/20 py-4 lg:py-8">
             <Gutter size="large" className="flex justify-end">
               <Navigation navigation={socialNavigation} className="translate-x-4" />
             </Gutter>
-            {type === 'overlay' && <Gutter className="max-sm:pb-4">{children}</Gutter>}
+            {type === 'overlay' && <Gutter>{children}</Gutter>}
           </div>
         </div>
       )}
