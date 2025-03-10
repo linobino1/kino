@@ -24,10 +24,10 @@ catalog:
   '@types/react': '^19.0.7'
   '@types/react-dom': '^19.0.3'
 
-  'react-router': '7.2.0'
-  '@react-router/node': '7.2.0'
-  '@react-router/serve': '7.2.0'
-  '@react-router/dev': '7.2.0'
+  'react-router': '7.3.0'
+  '@react-router/node': '7.3.0'
+  '@react-router/serve': '7.3.0'
+  '@react-router/dev': '7.3.0'
 
   unocss: '^66.0.0'
   '@unocss/reset': '^66.0.0'
