@@ -23,7 +23,8 @@ export const Poster: React.FC<Props> = ({ movie, image, className, ...props }) =
     srcSet={[
       { options: { width: 260 }, size: '260w' },
       { options: { width: 520 }, size: '520w' },
+      { options: { width: 1040 }, size: '1040w' },
     ]}
-    sizes="260px"
+    sizes="(max-width: 640px) 100vw, 260px"
   />
 )
