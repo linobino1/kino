@@ -22,6 +22,7 @@
     "@payloadcms/next": "catalog:",
     "@payloadcms/plugin-seo": "catalog:",
     "@payloadcms/richtext-lexical": "catalog:",
+    "@payloadcms/storage-s3": "catalog:",
     "@payloadcms/ui": "catalog:",
     "cross-env": "^7.0.3",
     "date-fns": "^4.1.0",
@@ -39,8 +40,5 @@
     "@unocss/cli": "catalog:",
     "npm-run-all": "^4.1.5",
     "unocss": "catalog:"
-  },
-  "engines": {
-    "node": "^18.20.2 || >=20.9.0"
   }
 }
