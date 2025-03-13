@@ -2,6 +2,7 @@ import type { Media } from '@app/types/payload'
 import React from 'react'
 import { getMediaUrl } from '@app/util/media/getMediaUrl'
 import { getOptimizedImageUrl } from '@app/util/media/getOptimizedImageUrl'
+import { getObjectPosition } from '@app/util/media/getObjectPosition'
 import { useEnv } from '~/util/useEnv'
 
 /**
@@ -45,7 +46,7 @@ export const Image: React.FC<Props> = ({
 
   let objectPosition = 'center'
   if (typeof image === 'object' && applyFocalPoint) {
-    objectPosition = `${image.focalX ?? 0.5 * 100}% ${image.focalY ?? 0.5 * 100}%`
+    objectPosition = getObjectPosition(image)
   }
 
   return (

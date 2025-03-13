@@ -12,6 +12,7 @@ import {
 import type { Mailing, Media } from '@app/types/payload'
 import { seed } from '../seed'
 import { SerializeLexicalToEmail } from '../lexical/SerializeLexicalToEmail'
+import { getObjectPosition } from '@app/util/media/getObjectPosition'
 
 export type Props = {
   mailing: Omit<Mailing, 'updatedAt' | 'createdAt' | 'id'>
@@ -25,6 +26,12 @@ export const fontSize = '16px'
 export default function Newsletter({ mailing }: Props) {
   const color = mailing.color ?? '#000'
   const { footer } = mailing
+
+  const header = mailing.header?.image
+  const overlay = mailing.header?.overlay
+  if (typeof header === 'string' || typeof overlay === 'string') {
+    throw new Error('not enough depth')
+  }
 
   return (
     <Html
@@ -81,29 +88,55 @@ export default function Newsletter({ mailing }: Props) {
             Diese E-Mail im Browser anzeigen
           </Link>
         </Container>
-        {mailing.header?.image && typeof mailing.header.image === 'object' && (
-          <Img
-            src={(mailing.header.image as Media).url ?? ''}
-            alt="header"
+        {header && (
+          <Section
             style={{
-              objectFit: 'cover',
               width: '100%',
               height: '400px',
+              position: 'relative',
             }}
-          />
-        )}
-        {mailing.header?.overlay && typeof mailing.header.overlay === 'object' && (
-          <Img
-            src={(mailing.header.overlay as Media).url ?? ''}
-            alt="header"
-            style={{
-              position: 'absolute',
-              top: 0,
-              objectFit: 'contain',
-              width: '100%',
-              height: '400px',
-            }}
-          />
+          >
+            <Img
+              src={header.url ?? ''}
+              alt="header"
+              height={400}
+              style={{
+                width: '100%',
+                height: '100%',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                objectFit: 'cover',
+                objectPosition: getObjectPosition(header),
+              }}
+            />
+            {overlay && (
+              <Container
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                }}
+              >
+                <Img
+                  src={overlay.url ?? ''}
+                  alt="header"
+                  height={400}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                    objectPosition: getObjectPosition(overlay),
+                  }}
+                />
+              </Container>
+            )}
+          </Section>
         )}
         <SerializeLexicalToEmail nodes={mailing.content?.root.children as any} color={color} />
         {typeof footer?.image === 'object' && footer.label && footer.link && (
