@@ -1,46 +1,29 @@
 import { Container, Heading, Img, Section, Text } from '@react-email/components'
-import type {
-  Country,
-  FilmPrint as FilmPrintType,
-  Format,
-  Genre,
-  LanguageVersion,
-  Media,
-  Movie as MovieType,
-  Person,
-} from '@app/types/payload'
+import type { FilmPrint as FilmPrintType, Media, Movie as MovieType } from '@app/types/payload'
+import type { Locale, TFunction } from '@app/i18n'
 import { SerializeLexicalToEmail } from '../SerializeLexicalToEmail'
 import { bgGrey, containerWidth, fontSize } from '../../templates/Newsletter'
 import Shorten from './Shorten'
 import { env } from '@app/util/env/backend.server'
+import { getMovieSpecsString } from '@app/util/data/getMovieSpecsString'
 
 type MovieProps = {
   filmPrint: FilmPrintType
   color: string
   additionalText?: any
+  locale: Locale
+  t: TFunction
 }
 
-const FilmPrint: React.FC<MovieProps> = ({ filmPrint, color, additionalText }) => {
+const FilmPrint: React.FC<MovieProps> = ({ filmPrint, color, additionalText, locale, t }) => {
   const movie = filmPrint.movie as MovieType
 
-  const subtitle = [
-    movie.originalTitle !== movie.title && `OT: ${movie.originalTitle}`,
-    (movie.genres as Genre[]).map((x) => x.name).join(', '),
-    (movie.countries as Country[])?.map((x) => x.name).join(', '),
-    movie.year,
-    movie.directors && `R: ${(movie.directors as Person[])?.map((x) => x.name).join(', ')}`,
-
-    `${movie.duration} min`,
-    (filmPrint?.format as Format).name,
-    filmPrint ? (filmPrint.languageVersion as LanguageVersion)?.name : null,
-    movie.cast?.length &&
-      `Mit: ${(movie.cast as Person[])
-        ?.slice(0, 3)
-        .map((x) => x.name)
-        .join(', ')}`,
-  ]
-    .filter(Boolean)
-    .join(', ')
+  const subtitle = getMovieSpecsString({
+    type: 'newsletterSubtitle',
+    filmPrint,
+    t,
+    separator: ', ',
+  })
 
   const url = `${env.FRONTEND_URL}${filmPrint.url}`
 
@@ -79,7 +62,12 @@ const FilmPrint: React.FC<MovieProps> = ({ filmPrint, color, additionalText }) =
             <Shorten text={movie?.synopsis} moreLink={url} />
           </Text>
           {additionalText && (
-            <SerializeLexicalToEmail nodes={additionalText.root.children as any} color={color} />
+            <SerializeLexicalToEmail
+              nodes={additionalText.root.children as any}
+              color={color}
+              locale={locale}
+              t={t}
+            />
           )}
         </Container>
       </Container>

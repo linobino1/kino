@@ -4,6 +4,7 @@ import { extractJWT, type FieldHook } from 'payload'
 import { addDepth } from '../lexical/addDepth'
 import { env } from '@app/util/env/backend.server'
 import { mailingsLocale } from '@app/i18n'
+import { getFixedT } from '@app/i18n/getFixedT'
 
 export const generateHTML: FieldHook = async ({ data, req }) => {
   if (!data) {
@@ -66,7 +67,8 @@ export const generateHTML: FieldHook = async ({ data, req }) => {
     subject: data.subject,
   }
 
-  // console.log("mailing", JSON.stringify(mailing, null, 2));
+  const locale = mailing.language ?? 'de'
+  const t = await getFixedT(locale)
 
-  return await render(<Newsletter mailing={mailing} />)
+  return await render(<Newsletter mailing={mailing} t={t} locale={locale} />)
 }

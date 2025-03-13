@@ -6,6 +6,7 @@ export type Props = {
   t: TFunction
 }
 export type MovieSpecsItem =
+  | 'title'
   | 'originalTitle'
   | 'directors'
   | 'countries'
@@ -29,6 +30,7 @@ export const getMovieSpecs = ({ filmPrint, t }: Props): MovieSpecs => {
   const year = `${movie.year}`
 
   return {
+    title: movie.title,
     originalTitle: movie.originalTitle,
     directors:
       movie.directors &&

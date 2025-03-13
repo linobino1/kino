@@ -10,6 +10,7 @@ import {
   IS_SUPERSCRIPT,
 } from './RichTextNodeFormat'
 import type { SerializedLexicalNode } from './types'
+import type { Locale, TFunction } from '@app/i18n'
 import { Heading, Text, Link, Hr } from '@react-email/components'
 import Event from './components/Event'
 import Gutter from './components/Gutter'
@@ -18,10 +19,12 @@ import FilmPrint from './components/FilmPrint'
 interface Props {
   nodes: SerializedLexicalNode[]
   color: string
+  locale: Locale
+  t: TFunction
 }
 const fontSize = '16px'
 
-export function SerializeLexicalToEmail({ nodes, color }: Props): React.ReactNode {
+export function SerializeLexicalToEmail({ nodes, color, locale, t }: Props): React.ReactNode {
   return (
     <Fragment>
       {nodes?.map((node, index): React.ReactNode | null => {
@@ -84,9 +87,9 @@ export function SerializeLexicalToEmail({ nodes, color }: Props): React.ReactNod
                   item.checked = false
                 }
               }
-              return SerializeLexicalToEmail({ nodes: node.children, color })
+              return SerializeLexicalToEmail({ nodes: node.children, color, locale, t })
             } else {
-              return SerializeLexicalToEmail({ nodes: node.children, color })
+              return SerializeLexicalToEmail({ nodes: node.children, color, locale, t })
             }
           }
         }
@@ -188,16 +191,7 @@ export function SerializeLexicalToEmail({ nodes, color }: Props): React.ReactNod
           case 'horizontalrule':
             return (
               <Gutter key={index}>
-                <Hr
-                  key={index}
-                  style={{
-                    borderColor: color,
-                    borderStyle: 'dotted',
-                    borderBottomWidth: '4px',
-                    borderTopWidth: 0,
-                    marginBlock: '1em',
-                  }}
-                />
+                <Hr key={index} color={color} />
               </Gutter>
             )
 
@@ -210,6 +204,8 @@ export function SerializeLexicalToEmail({ nodes, color }: Props): React.ReactNod
                     event={node.fields.event}
                     color={color}
                     additionalText={node.fields.additionalText}
+                    locale={locale}
+                    t={t}
                   />
                 )
               case 'filmPrintBlock':
@@ -219,6 +215,8 @@ export function SerializeLexicalToEmail({ nodes, color }: Props): React.ReactNod
                     filmPrint={node.fields.filmPrint}
                     additionalText={node.fields.additionalText}
                     color={color}
+                    locale={locale}
+                    t={t}
                   />
                 )
               default:

@@ -21,6 +21,7 @@ export const getEventSubtitle = ({ event, t }: Props) => {
       type: 'subtitle',
       filmPrint: event.mainProgramFilmPrint,
       t,
+      separator: ' ',
     })
   }
 }

@@ -1,54 +1,39 @@
 import { Container, Heading, Img, Link, Section, Text } from '@react-email/components'
-import type {
-  Country,
-  FilmPrint,
-  Format,
-  Genre,
-  LanguageVersion,
-  Media,
-  Movie,
-  Person,
-  Event as EventType,
-} from '@app/types/payload'
+import React from 'react'
+import type { FilmPrint, Media, Movie, Event as EventType } from '@app/types/payload'
+import type { Locale, TFunction } from '@app/i18n'
 import { SerializeLexicalToEmail } from '../SerializeLexicalToEmail'
 import { bgGrey, containerWidth, fontSize } from '../../templates/Newsletter'
-import Shorten from './Shorten'
 import { env } from '@app/util/env/backend.server'
 import { formatDate } from '@app/util/formatDate'
 import { mailingsLocale } from '@app/i18n'
+import { getMovieSpecsString } from '@app/util/data/getMovieSpecsString'
+import Shorten from './Shorten'
+import Hr from './Hr'
 
 type EventProps = {
   event: EventType
   color: string
   additionalText?: any
+  locale: Locale
+  t: TFunction
 }
 
-const Event: React.FC<EventProps> = ({ event, color, additionalText }) => {
-  let subtitle: string = event.subtitle ?? ''
-  if (event.isScreeningEvent) {
-    const filmprint = event.mainProgramFilmPrint as FilmPrint
-    const movie = filmprint.movie as Movie
-    subtitle = [
-      movie.originalTitle !== movie.title && `OT: ${movie.originalTitle}`,
-      (movie.genres as Genre[]).map((x) => x.name).join(', '),
-      (movie.countries as Country[])?.map((x) => x.name).join(', '),
-      movie.year,
-      movie.directors && `R: ${(movie.directors as Person[])?.map((x) => x.name).join(', ')}`,
-
-      `${movie.duration} min`,
-      (filmprint?.format as Format).name,
-      filmprint ? (filmprint.languageVersion as LanguageVersion)?.name : null,
-      movie.cast?.length &&
-        `Mit: ${(movie.cast as Person[])
-          ?.slice(0, 3)
-          .map((x) => x.name)
-          .join(', ')}`,
-    ]
-      .filter(Boolean)
-      .join(', ')
-  }
+const Event: React.FC<EventProps> = ({ event, color, additionalText, locale, t }) => {
+  const subtitle = event.isScreeningEvent
+    ? getMovieSpecsString({
+        type: 'newsletterSubtitle',
+        filmPrint: event.mainProgramFilmPrint as FilmPrint,
+        t,
+        separator: ', ',
+      })
+    : (event.subtitle ?? '')
 
   const url = `${env.FRONTEND_URL}${event.url}`
+
+  const supportingProgramItems = event.programItems?.filter(
+    (x) => !x.isMainProgram && x.type === 'screening',
+  )
 
   return (
     <Section style={{ backgroundColor: bgGrey, paddingBlock: '20px' }}>
@@ -103,8 +88,38 @@ const Event: React.FC<EventProps> = ({ event, color, additionalText }) => {
             <Shorten text={event.shortDescription ?? ''} moreLink={url} />
           </Text>
           {additionalText && (
-            <SerializeLexicalToEmail nodes={additionalText.root.children as any} color={color} />
+            <SerializeLexicalToEmail
+              nodes={additionalText.root.children as any}
+              color={color}
+              locale={locale}
+              t={t}
+            />
           )}
+          {supportingProgramItems?.length ? (
+            <>
+              <Hr color={color} style={{ marginTop: '1.5em' }} />
+              {supportingProgramItems.map(({ filmPrint }, index) => (
+                <React.Fragment key={index}>
+                  <Text style={{ fontSize, marginBottom: 0 }}>
+                    <span>{t('mailings.event.supportingFilm')}: </span>
+                    <span style={{ fontWeight: 'bold' }}>
+                      {`${((filmPrint as FilmPrint).movie as Movie).title} (${
+                        ((filmPrint as FilmPrint).movie as Movie).year
+                      })`}
+                    </span>
+                  </Text>
+                  <Text style={{ fontSize, marginTop: 0, fontStyle: 'italic' }}>
+                    {getMovieSpecsString({
+                      items: ['directors', 'countries', 'format', 'language'],
+                      filmPrint: filmPrint as FilmPrint,
+                      t,
+                      separator: ', ',
+                    })}
+                  </Text>
+                </React.Fragment>
+              ))}
+            </>
+          ) : null}
         </Container>
       </Container>
     </Section>

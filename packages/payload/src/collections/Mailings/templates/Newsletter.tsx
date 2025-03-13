@@ -10,12 +10,14 @@ import {
   Font,
 } from '@react-email/components'
 import type { Mailing, Media } from '@app/types/payload'
-import { seed } from '../seed'
 import { SerializeLexicalToEmail } from '../lexical/SerializeLexicalToEmail'
 import { getObjectPosition } from '@app/util/media/getObjectPosition'
+import type { Locale, TFunction } from '@app/i18n'
 
 export type Props = {
   mailing: Omit<Mailing, 'updatedAt' | 'createdAt' | 'id'>
+  locale: Locale
+  t: TFunction
 }
 
 export const bgGrey = '#f2f2f2'
@@ -23,7 +25,7 @@ export const textGrey = '#7f8c8d'
 export const containerWidth = 580
 export const fontSize = '16px'
 
-export default function Newsletter({ mailing }: Props) {
+export default function Newsletter({ mailing, locale, t }: Props) {
   const color = mailing.color ?? '#000'
   const { footer } = mailing
 
@@ -35,7 +37,7 @@ export default function Newsletter({ mailing }: Props) {
 
   return (
     <Html
-      lang={mailing.language ?? 'de'}
+      lang={locale}
       dir="ltr"
       style={{
         fontFamily: 'Helvetica, Arial, sans',
@@ -138,7 +140,12 @@ export default function Newsletter({ mailing }: Props) {
             )}
           </Section>
         )}
-        <SerializeLexicalToEmail nodes={mailing.content?.root.children as any} color={color} />
+        <SerializeLexicalToEmail
+          nodes={mailing.content?.root.children as any}
+          color={color}
+          locale={locale}
+          t={t}
+        />
         {typeof footer?.image === 'object' && footer.label && footer.link && (
           <Section
             style={{
@@ -201,6 +208,3 @@ export default function Newsletter({ mailing }: Props) {
     </Html>
   )
 }
-
-// this is for using the react-email dev server with `pnpm email`
-Newsletter.PreviewProps = seed

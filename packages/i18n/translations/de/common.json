@@ -85,5 +85,10 @@
     "coverCharge": "Eintritt frei, Spenden erbeten",
     "title": "Pressemitteilung {{date}}",
     "filename": "Pressemitteilung-{{date}}.pdf"
+  },
+  "mailings": {
+    "event": {
+      "supportingFilm": "Im Vorprogramm"
+    }
   }
 }
