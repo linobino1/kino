@@ -5,8 +5,11 @@ import { isAdminOrEditor } from '#payload/access'
 import { generateHTML } from './hooks/generateHTML'
 import { EventBlock } from './lexical/blocks/EventBlock'
 import { FilmPrintBlock } from './lexical/blocks/FilmPrintBlock'
+import { createListmonkCampaign } from './hooks/createListmonkCampaign'
+import { updateListmonkCampaign } from './hooks/updateListmonkCampaign'
+import { deleteListmonkCampaign } from './hooks/deleteListmonkCampaign'
 
-export const Mailings: CollectionConfig = {
+export const Mailings: CollectionConfig<'mailings'> = {
   slug: 'mailings',
   admin: {
     group: 'Promo',
@@ -23,43 +26,131 @@ export const Mailings: CollectionConfig = {
     create: isAdminOrEditor,
     delete: isAdminOrEditor,
   },
+  hooks: {
+    beforeChange: [createListmonkCampaign, updateListmonkCampaign, deleteListmonkCampaign],
+  },
   fields: [
+    {
+      label: 'Listmonk Kampagne',
+      name: 'listmonkCampaignID',
+      type: 'text',
+      admin: {
+        position: 'sidebar',
+        components: {
+          Field: {
+            path: '/components/mailings/ListmonkCampaignIDField#ListmonkCampaignIDField',
+            clientProps: {
+              listmonkURL: process.env.LISTMONK_URL,
+            },
+          },
+        },
+      },
+    },
+    {
+      name: 'listmonkAction',
+      type: 'select',
+      options: ['create', 'update', 'delete'],
+      hidden: true,
+    },
+    {
+      label: 'tatsächlich versendet',
+      name: 'sentAt',
+      type: 'date',
+      admin: {
+        position: 'sidebar',
+        condition: (data) => data.sendAt && new Date(data.sendAt) < new Date(),
+        readOnly: true,
+      },
+    },
+    {
+      name: 'sendAtDate',
+      label: 'Versenden am',
+      type: 'date',
+      admin: {
+        position: 'sidebar',
+        condition: (data) => !data.sentAt,
+      },
+    },
+    {
+      name: 'sendAtTime',
+      label: 'Uhrzeit',
+      type: 'select',
+      defaultValue: 'morning',
+      options: [
+        { label: 'morgens', value: 'morning' },
+        { label: 'nachmittags', value: 'afternoon' },
+      ],
+      admin: {
+        position: 'sidebar',
+        condition: (data) => !data.sentAt,
+      },
+    },
+    {
+      name: 'sendAt',
+      label: 'Versanddatum',
+      type: 'date',
+      hooks: {
+        beforeChange: [
+          ({ data }) => {
+            if (!data?.sendAtDate || !data?.sendAtTime) {
+              return null
+            }
+            const res = new Date(data.sendAtDate)
+            switch (data.sendAtTime) {
+              case 'morning':
+                res.setHours(9)
+                break
+              case 'afternoon':
+                res.setHours(14)
+                break
+            }
+            return res
+          },
+        ],
+      },
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+        date: {
+          displayFormat: 'dd.MM.yyyy HH:mm',
+        },
+      },
+    },
+    {
+      name: 'language',
+      label: 'Sprache',
+      type: 'radio',
+      options: [
+        { value: 'en', label: 'English' },
+        { value: 'de', label: 'Deutsch' },
+      ],
+      defaultValue: 'de',
+      admin: {
+        readOnly: true,
+        position: 'sidebar',
+      },
+    },
+    // TODO: use color picker when it's available
+    // https://github.com/innovixx/payload-color-picker-field/issues/7
+    // colorPickerField({
+    //   name: 'color',
+    //   label: "Farbe",
+    //   defaultValue: '#000000',
+    // }),
+    {
+      name: 'color',
+      label: 'Farbe',
+      type: 'text',
+      defaultValue: '#000000',
+      admin: {
+        position: 'sidebar',
+      },
+    },
     {
       name: 'subject',
       type: 'text',
       label: 'Betreff',
       required: true,
-    },
-    {
-      type: 'row',
-      fields: [
-        // TODO: use color picker when it's available
-        // https://github.com/innovixx/payload-color-picker-field/issues/7
-        // colorPickerField({
-        //   name: 'color',
-        //   label: "Farbe",
-        //   defaultValue: '#000000',
-        // }),
-        {
-          name: 'color',
-          label: 'Farbe',
-          type: 'text',
-          defaultValue: '#000000',
-        },
-        {
-          name: 'language',
-          label: 'Sprache',
-          type: 'radio',
-          options: [
-            { value: 'en', label: 'English' },
-            { value: 'de', label: 'Deutsch' },
-          ],
-          defaultValue: 'de',
-          admin: {
-            readOnly: true,
-          },
-        },
-      ],
     },
     {
       type: 'group',
@@ -117,6 +208,7 @@ export const Mailings: CollectionConfig = {
     },
     {
       name: 'html',
+      label: 'Vorschau',
       type: 'textarea',
       hooks: {
         beforeChange: [generateHTML],

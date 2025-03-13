@@ -3,20 +3,27 @@ import React from 'react'
 
 export const HowTo = () => {
   return (
-    <Gutter>
-      <h3>How to use Mailings</h3>
-      <p>To create a new mailing, follow these steps:</p>
-      <ol>
-        <li>Create a new item or duplicate the latest item in the list of mailings.</li>
-        <li>Edit the content as needed.</li>
-        <li>Hit Save.</li>
+    <Gutter className="mb-8 mt-4 text-gray-700">
+      <h3>Anleitung</h3>
+      <p>Um einen neuen Newsletter zu verfassen, folge diesen Schritten:</p>
+      <ol className="my-2 max-w-[600px] space-y-2 leading-tight">
         <li>
-          Scroll down, verify that the HTML preview looks good, and click &quot;Copy to
-          clipboard&quot;.
+          Erstelle ein neues Element oder dupliziere das neueste Element in der Liste der
+          Newsletter.
+        </li>
+        <li>Bearbeite den Inhalt nach Bedarf, eine Vorschau wird unten angezeigt.</li>
+        <li>Klicke auf &quot;Speichern&quot;.</li>
+        <li>
+          Klicke auf &quot;Kampagne erstellen&quot; in der rechten Seitenleiste, um die Kampagne im
+          unserem Newslettersystem Listmonk zu erstellen.
         </li>
         <li>
-          Click &quot;What now?&quot; to see the next steps.{' '}
-          <i>The button will appear underneath the &quot;Copy to clipboard&quot; button.</i>
+          Klicke auf &quot;in Listmonk bearbeiten&quot; und melde dich unter dem sich öffnenden Link
+          an.
+        </li>
+        <li>
+          In der Kampagnenansicht bei Listmonk kannst du nochmal alle Daten prüfen und die Kampagne
+          dann freischalten mit dem Button &quot;Schedule campaign&quot; rechts oben.
         </li>
       </ol>
     </Gutter>

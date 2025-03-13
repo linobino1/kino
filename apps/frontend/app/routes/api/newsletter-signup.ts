@@ -43,7 +43,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
     body: JSON.stringify({
       email: formData.get('email'),
       name: formData.get('name'),
-      list_uuids: [env.LISTMONK_LIST_ID],
+      list_uuids: [env.LISTMONK_LIST_UUID],
     }),
   })
 

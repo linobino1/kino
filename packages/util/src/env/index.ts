@@ -28,6 +28,8 @@ const variables = z.object({
   TURNSTILE_SECRET_KEY: z.string().optional(),
 
   LISTMONK_URL: z.string().optional(),
+  LISTMONK_API_KEY: z.string().optional(),
+  LISTMONK_LIST_UUID: z.string().optional(),
   LISTMONK_LIST_ID: z.string().optional(),
 
   ZEPTOMAIL_API_KEY: z.string().optional(),
@@ -55,7 +57,7 @@ const frontendBrowserEnv = variables.pick({
   CDN_CGI_IMAGE_URL: true,
   TURNSTILE_SITE_KEY: true,
   LISTMONK_URL: true,
-  LISTMONK_LIST_ID: true,
+  LISTMONK_LIST_UUID: true,
 })
 
 export type BackendServerEnvironment = z.infer<typeof backendServerEnv>
