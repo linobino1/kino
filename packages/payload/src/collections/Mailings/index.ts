@@ -144,6 +144,7 @@ export const Mailings: CollectionConfig<'mailings'> = {
       defaultValue: '#000000',
       admin: {
         position: 'sidebar',
+        description: "Hex-Farbwert, z.B. '#FF0000' https://www.fffuel.co/cccolor/",
       },
     },
     {
