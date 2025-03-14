@@ -1,4 +1,5 @@
-import { Container, Heading, Img, Link, Section, Text } from '@react-email/components'
+import { Container, Heading, Link, Section, Text } from '@react-email/components'
+import Img from './Img'
 import React from 'react'
 import type { FilmPrint, Media, Movie, Event as EventType } from '@app/types/payload'
 import type { Locale, TFunction } from '@app/i18n'

@@ -1,4 +1,5 @@
-import { Container, Heading, Img, Section, Text } from '@react-email/components'
+import { Container, Heading, Section, Text } from '@react-email/components'
+import Img from './Img'
 import type { FilmPrint as FilmPrintType, Media, Movie as MovieType } from '@app/types/payload'
 import type { Locale, TFunction } from '@app/i18n'
 import { SerializeLexicalToEmail } from '../lexical/SerializeLexicalToEmail'

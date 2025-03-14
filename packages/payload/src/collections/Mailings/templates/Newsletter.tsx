@@ -1,14 +1,5 @@
-import {
-  Body,
-  Container,
-  Head,
-  Html,
-  Img,
-  Link,
-  Section,
-  Text,
-  Font,
-} from '@react-email/components'
+import { Body, Container, Head, Html, Link, Section, Text, Font } from '@react-email/components'
+import Img from '../components/Img'
 import type { Mailing, Media } from '@app/types/payload'
 import { SerializeLexicalToEmail } from '../lexical/SerializeLexicalToEmail'
 import { getObjectPosition } from '@app/util/media/getObjectPosition'
