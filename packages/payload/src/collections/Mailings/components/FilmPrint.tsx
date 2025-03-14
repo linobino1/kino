@@ -1,8 +1,8 @@
 import { Container, Heading, Img, Section, Text } from '@react-email/components'
 import type { FilmPrint as FilmPrintType, Media, Movie as MovieType } from '@app/types/payload'
 import type { Locale, TFunction } from '@app/i18n'
-import { SerializeLexicalToEmail } from '../SerializeLexicalToEmail'
-import { bgGrey, containerWidth, fontSize } from '../../templates/Newsletter'
+import { SerializeLexicalToEmail } from '../lexical/SerializeLexicalToEmail'
+import { bgGrey, containerWidth, fontSize } from '../templates/Newsletter'
 import Shorten from './Shorten'
 import { env } from '@app/util/env/backend.server'
 import { getMovieSpecsString } from '@app/util/data/getMovieSpecsString'
@@ -59,7 +59,7 @@ const FilmPrint: React.FC<MovieProps> = ({ filmPrint, color, additionalText, loc
             <Text style={{ marginBlock: 0, fontSize, fontStyle: 'italic' }}>{subtitle}</Text>
           )}
           <Text style={{ fontSize }}>
-            <Shorten text={movie?.synopsis} moreLink={url} />
+            <Shorten text={movie?.synopsis} moreLink={url} color={color} />
           </Text>
           {additionalText && (
             <SerializeLexicalToEmail

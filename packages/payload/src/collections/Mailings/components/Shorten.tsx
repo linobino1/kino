@@ -1,10 +1,11 @@
-import { Link } from '@react-email/components'
+import Link from './Link'
 
 type ShortenProps = {
   text: string
   length?: number
   moreLabel?: string
   moreLink?: string
+  color: string
 }
 
 const Shorten: React.FC<ShortenProps> = ({
@@ -12,6 +13,7 @@ const Shorten: React.FC<ShortenProps> = ({
   length = 400,
   moreLabel = 'weiterlesen',
   moreLink,
+  color,
 }) => {
   if (text.length <= length) {
     return <>{text}</>
@@ -21,7 +23,11 @@ const Shorten: React.FC<ShortenProps> = ({
     <>
       {text.slice(0, length - 20).trim()}
       {'... '}
-      {moreLink ? <Link href={moreLink}>{moreLabel}</Link> : null}
+      {moreLink ? (
+        <Link href={moreLink} color={color}>
+          {moreLabel}
+        </Link>
+      ) : null}
     </>
   )
 }

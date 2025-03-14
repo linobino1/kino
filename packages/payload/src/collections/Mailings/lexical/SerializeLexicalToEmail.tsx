@@ -12,11 +12,12 @@ import {
 import type { SerializedLexicalNode } from './types'
 import type { Locale, TFunction } from '@app/i18n'
 import { env } from '@app/util/env/backend.server'
-import { Heading, Text, Link } from '@react-email/components'
-import Event from './components/Event'
-import Gutter from './components/Gutter'
-import FilmPrint from './components/FilmPrint'
-import Hr from './components/Hr'
+import { Heading, Text } from '@react-email/components'
+import Event from '../components/Event'
+import Gutter from '../components/Gutter'
+import FilmPrint from '../components/FilmPrint'
+import Hr from '../components/Hr'
+import Link from '../components/Link'
 
 interface Props {
   nodes: SerializedLexicalNode[]
@@ -176,7 +177,7 @@ export function SerializeLexicalToEmail({ nodes, color, locale, t }: Props): Rea
             const href =
               linkType === 'internal' ? `${env.FRONTEND_URL}${(doc?.value as any).url}` : url
             return (
-              <Link href={href} key={index} target={'target="_blank"'}>
+              <Link href={href} key={index} target={'target="_blank"'} color={color}>
                 {serializedChildren}
               </Link>
             )
