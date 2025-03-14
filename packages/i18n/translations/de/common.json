@@ -87,6 +87,7 @@
     "filename": "Pressemitteilung-{{date}}.pdf"
   },
   "mailings": {
+    "openEmailInBrowser": "Diese E-Mail im Browser öffnen",
     "event": {
       "supportingFilm": "Im Vorprogramm"
     }

@@ -75,7 +75,7 @@ export function SerializeLexicalToEmail({ nodes, color, locale, t }: Props): Rea
         }
 
         // alignment
-        const textAlign = (node.format ?? 'left') as 'left' | 'center' | 'right'
+        const textAlign = (node.format ?? 'left') as 'left' | 'center' | 'right' | 'justify'
 
         // NOTE: Hacky fix for
         // https://github.com/facebook/lexical/blob/d10c4e6e55261b2fdd7d1845aed46151d0f06a8c/packages/lexical-list/src/LexicalListItemNode.ts#L133
@@ -116,18 +116,16 @@ export function SerializeLexicalToEmail({ nodes, color, locale, t }: Props): Rea
           case 'heading': {
             let fontSize = '16px'
             let fontWeight = 'normal'
-            let marginBlock = '1em'
             switch (node.tag) {
               case 'h1':
                 fontSize = '23px'
                 fontWeight = 'bold'
-                marginBlock = '50px'
                 break
             }
 
             return (
               <Gutter key={index}>
-                <Heading style={{ textAlign, fontSize, fontWeight, marginBlock }}>
+                <Heading className="my-4 sm:my-8" style={{ textAlign, fontSize, fontWeight }}>
                   {serializedChildren}
                 </Heading>
               </Gutter>

@@ -3,7 +3,7 @@ import Img from './Img'
 import type { FilmPrint as FilmPrintType, Media, Movie as MovieType } from '@app/types/payload'
 import type { Locale, TFunction } from '@app/i18n'
 import { SerializeLexicalToEmail } from '../lexical/SerializeLexicalToEmail'
-import { bgGrey, containerWidth, fontSize } from '../templates/Newsletter'
+import { bgGrey, fontSize } from '../templates/Newsletter'
 import Shorten from './Shorten'
 import { env } from '@app/util/env/backend.server'
 import { getMovieSpecsString } from '@app/util/data/getMovieSpecsString'
@@ -33,8 +33,6 @@ const FilmPrint: React.FC<MovieProps> = ({ filmPrint, color, additionalText, loc
       <Container
         style={{
           backgroundColor: '#FFFFFF',
-          width: '100%',
-          maxWidth: containerWidth,
         }}
       >
         <Img

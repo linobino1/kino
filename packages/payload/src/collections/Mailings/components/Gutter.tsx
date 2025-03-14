@@ -1,16 +1,7 @@
 import { type ContainerProps, Container } from '@react-email/components'
-import { containerWidth } from '../templates/Newsletter'
+import { cn } from '@app/util/cn'
 
-const Gutter: React.FC<ContainerProps> = ({ ...props }) => {
-  return (
-    <Container
-      {...props}
-      style={{
-        paddingInline: '5px',
-        width: '100%',
-        maxWidth: containerWidth,
-      }}
-    />
-  )
+const Gutter: React.FC<ContainerProps> = ({ className, ...props }) => {
+  return <Container {...props} className={cn('px-1 max-sm:px-4', className)} />
 }
 export default Gutter

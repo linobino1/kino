@@ -4,7 +4,7 @@ import React from 'react'
 import type { FilmPrint, Media, Movie, Event as EventType } from '@app/types/payload'
 import type { Locale, TFunction } from '@app/i18n'
 import { SerializeLexicalToEmail } from '../lexical/SerializeLexicalToEmail'
-import { bgGrey, containerWidth, fontSize } from '../templates/Newsletter'
+import { bgGrey, fontSize } from '../templates/Newsletter'
 import { env } from '@app/util/env/backend.server'
 import { formatDate } from '@app/util/formatDate'
 import { mailingsLocale } from '@app/i18n'
@@ -41,8 +41,6 @@ const Event: React.FC<EventProps> = ({ event, color, additionalText, locale, t }
       <Container
         style={{
           backgroundColor: '#FFFFFF',
-          width: '100%',
-          maxWidth: containerWidth,
         }}
       >
         <Link href={url} style={{ display: 'contents' }}>
@@ -85,7 +83,7 @@ const Event: React.FC<EventProps> = ({ event, color, additionalText, locale, t }
           {subtitle && (
             <Text style={{ marginBlock: 0, fontSize, fontStyle: 'italic' }}>{subtitle}</Text>
           )}
-          <Text style={{ fontSize }}>
+          <Text style={{ fontSize, textAlign: 'justify' }}>
             <Shorten text={event.shortDescription ?? ''} moreLink={url} color={color} />
           </Text>
           {additionalText && (
