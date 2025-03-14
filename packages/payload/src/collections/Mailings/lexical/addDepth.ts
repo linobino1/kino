@@ -40,6 +40,24 @@ const traverseNodes = async ({
 }): Promise<SerializedLexicalNode[]> => {
   return await Promise.all(
     nodes.map(async (node) => {
+      // add depth to link nodes
+      if (['link', 'autolink'].includes(node.type)) {
+        return {
+          ...node,
+          fields: {
+            ...node.fields,
+            doc: {
+              ...node.fields.doc,
+              value: await payload.findByID({
+                collection: node.fields.doc.relationTo,
+                id: node.fields.doc.value,
+                depth: 1,
+              }),
+            },
+          },
+        }
+      }
+
       if (node.children) {
         return {
           ...node,

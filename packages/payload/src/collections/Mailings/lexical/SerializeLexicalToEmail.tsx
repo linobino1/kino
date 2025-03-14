@@ -11,6 +11,7 @@ import {
 } from './RichTextNodeFormat'
 import type { SerializedLexicalNode } from './types'
 import type { Locale, TFunction } from '@app/i18n'
+import { env } from '@app/util/env/backend.server'
 import { Heading, Text, Link } from '@react-email/components'
 import Event from './components/Event'
 import Gutter from './components/Gutter'
@@ -171,8 +172,11 @@ export function SerializeLexicalToEmail({ nodes, color, locale, t }: Props): Rea
           }
           case 'autolink':
           case 'link': {
+            const { linkType, doc, url } = node.fields
+            const href =
+              linkType === 'internal' ? `${env.FRONTEND_URL}${(doc?.value as any).url}` : url
             return (
-              <Link key={index} href={node.fields.url} target={'target="_blank"'}>
+              <Link href={href} key={index} target={'target="_blank"'}>
                 {serializedChildren}
               </Link>
             )
