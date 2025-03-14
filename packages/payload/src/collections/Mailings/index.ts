@@ -45,6 +45,9 @@ export const Mailings: CollectionConfig<'mailings'> = {
           },
         },
       },
+      hooks: {
+        beforeDuplicate: [() => null],
+      },
     },
     {
       name: 'listmonkAction',
