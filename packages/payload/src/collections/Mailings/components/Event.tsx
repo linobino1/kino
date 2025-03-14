@@ -70,7 +70,7 @@ const Event: React.FC<EventProps> = ({ event, color, additionalText, locale, t }
             {`${formatDate(event.date, 'dd. LLL - p', mailingsLocale)} Uhr`}
           </Text>
         </Link>
-        <Container style={{ padding: '20px' }}>
+        <Container className="p-4">
           <Heading
             style={{
               borderColor: color,
