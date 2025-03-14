@@ -11,10 +11,11 @@ import {
 } from './RichTextNodeFormat'
 import type { SerializedLexicalNode } from './types'
 import type { Locale, TFunction } from '@app/i18n'
-import { Heading, Text, Link, Hr } from '@react-email/components'
+import { Heading, Text, Link } from '@react-email/components'
 import Event from './components/Event'
 import Gutter from './components/Gutter'
 import FilmPrint from './components/FilmPrint'
+import Hr from './components/Hr'
 
 interface Props {
   nodes: SerializedLexicalNode[]
