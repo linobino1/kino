@@ -44,14 +44,14 @@ export function SerializeLexicalToEmail({ nodes, color, locale, t }: Props): Rea
             }
             if (node.format & IS_STRIKETHROUGH) {
               text = (
-                <span key={index} className="line-through">
+                <span key={index} style={{ textDecoration: 'line-through' }}>
                   {text}
                 </span>
               )
             }
             if (node.format & IS_UNDERLINE) {
               text = (
-                <span key={index} className="underline">
+                <span key={index} style={{ textDecoration: 'underline' }}>
                   {text}
                 </span>
               )
