@@ -37,7 +37,7 @@ export const EventsList: React.FC<Props> = ({
       {events.length ? (
         <>
           <JsonLd {...eventsListSchema(events, site)} />
-          <ul className="xs:grid-cols-[repeat(auto-fill,minmax(13em,auto))] xs:grid-cols-2 grid gap-8 sm:grid-cols-[repeat(auto-fill,minmax(15em,auto))] sm:gap-4">
+          <ul className="xs:grid-cols-[repeat(auto-fill,minmax(13em,auto))] xs:grid-cols-2 grid gap-4 max-sm:gap-y-8 sm:grid-cols-[repeat(auto-fill,minmax(15em,auto))]">
             {events.map((item) => (
               <li key={item.id}>
                 <EventCard event={item} activeEventSery={activeEventSery} />
