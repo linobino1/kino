@@ -76,7 +76,7 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
           <Link
             to={event.url ?? ''}
             prefetch="intent"
-            className="flex flex-1 items-end text-sm uppercase text-gray-400"
+            className="flex flex-1 items-end text-sm uppercase text-gray-400 transition-colors hover:text-black"
           >
             {t('More Info')}
           </Link>

@@ -12,7 +12,7 @@ type Props = {
   condensed?: boolean
 }
 
-export const navItemClassName = 'px-4 py-4 md:py-2 hover:text-black w-fit h-fit'
+export const navItemClassName = 'px-4 py-4 md:py-2 hover:text-black transition-colors w-fit h-fit'
 
 export const Navigation: React.FC<Props> = ({
   navigation,
