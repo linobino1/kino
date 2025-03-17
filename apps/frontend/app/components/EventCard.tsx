@@ -6,6 +6,8 @@ import { Image } from '~/components/Image'
 import { Tag } from './Tag'
 import { cn } from '@app/util/cn'
 import { Link } from './localized-link'
+import { getEventSubtitle } from '@app/util/data/getEventSubtitle'
+import { ICSDownloadButton } from './ICSDownloadButton'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   event: Event
@@ -25,15 +27,12 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
         className,
       )}
     >
-      <div
-        className="p3 absolute -top-2.5 left-2 flex flex-col items-center bg-white/80 pb-4 uppercase leading-[1]"
-        style={{ textShadow: '0px 0px 10px rgb(0 0 0 / 30%)' }}
-      >
-        <DateComponent date={event.date as string} className="" format="EEEEEE" />
-        <DateComponent date={event.date as string} className="" format="MMM" />
+      <div className="p3 absolute -top-2.5 left-2 flex flex-col items-center bg-white pb-4 uppercase leading-none text-gray-700">
+        <DateComponent date={event.date as string} format="EEEEEE" />
+        <DateComponent date={event.date as string} format="MMM" />
         <DateComponent
           date={event.date as string}
-          className="font-calendar text-4xl font-semibold"
+          className="font-calendar text-4xl font-semibold text-black"
           format="dd"
         />
         {isPast && <DateComponent date={event.date as string} format="yyyy" />}
@@ -52,27 +51,47 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
         />
       </Link>
       <div className="flex flex-col sm:aspect-[3/2]">
-        <div className="hide-scrollbar m-[0.3em] flex min-h-6 flex-row-reverse overflow-x-auto">
-          <div className="w-max shrink-0 space-x-2">
+        <div className="hide-scrollbar flex min-h-6 flex-row-reverse overflow-x-auto">
+          <div className="flex w-max shrink-0 gap-2">
             {((event.series ?? []) as EventSery[]).map(
-              ({ id, name }, index) =>
+              ({ id, name, slug }, index) =>
                 activeEventSery?.id !== id && (
-                  <Tag className="inline" key={index}>
-                    {name}
-                  </Tag>
+                  <Link
+                    key={index}
+                    to={`/event-series/${slug}`}
+                    prefetch="intent"
+                    className="contents"
+                  >
+                    <Tag className="inline" key={index}>
+                      {name}
+                    </Tag>
+                  </Link>
                 ),
             )}
           </div>
         </div>
         <div className="flex flex-1 flex-col gap-4 px-4 pb-4">
-          <DateComponent
-            date={event.date as string}
-            className="font-medium text-red-500"
-            format="p"
-          />
-          <Link to={event.url ?? ''} prefetch="intent" className="font-semibold uppercase">
-            {event.title}
+          <div className="flex items-center gap-2">
+            <DateComponent
+              date={event.date as string}
+              className="font-medium text-red-500"
+              format="p"
+            />
+            {event.date > new Date().toISOString() && (
+              <ICSDownloadButton
+                events={[event]}
+                className="text-lg text-gray-300 text-red-500/30 transition-colors hover:text-red-500"
+                showLabel={false}
+              />
+            )}
+          </div>
+          <Link to={event.url ?? ''} prefetch="intent" className="space-y-1">
+            <h3 className="font-semibold uppercase leading-tight"> {event.title}</h3>
+            <div className="text-sm text-gray-500">{getEventSubtitle({ event, t })}</div>
           </Link>
+          <div className="text-balance text-sm font-semibold leading-tight tracking-tight">
+            {event.comment}
+          </div>
           <Link
             to={event.url ?? ''}
             prefetch="intent"
