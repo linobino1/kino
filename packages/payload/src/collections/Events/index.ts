@@ -268,8 +268,32 @@ export const Events: CollectionConfig<'events'> = {
                 return value ? true : 'Es muss ein Titelbild ausgewählt werden.'
               },
               admin: {
+                condition: (_, data) => !isScreening(data) || !data.headerLock,
                 description:
                   'Muss nur für Veranstaltungen ohne Filme gesetzt werden, ansonsten wird das Filmstill verwendet. Refresh benötigt.',
+              },
+            },
+            {
+              name: '_header',
+              label: 'Titelbild',
+              type: 'upload',
+              relationTo: 'media',
+              virtual: true, // this field is not stored in the database
+              admin: {
+                condition: (_, data) => isScreening(data) && data.headerLock,
+                readOnly: true,
+              },
+              hooks: {
+                afterRead: [({ data }) => data?.header],
+              },
+            },
+            {
+              name: 'headerLock',
+              label: 'Titelbild vom Hauptfilm übernehmen',
+              type: 'checkbox',
+              defaultValue: true,
+              admin: {
+                condition: (data) => isScreening(data),
               },
             },
             {

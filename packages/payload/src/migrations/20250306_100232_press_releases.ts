@@ -2,6 +2,7 @@ import type { MigrateDownArgs, MigrateUpArgs } from '@payloadcms/db-mongodb'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function up({ payload, req, session }: MigrateUpArgs): Promise<void> {
+  return
   // set locations.address to locations.name for a start
   await payload.db.connection.collection('locations').updateMany(
     {
@@ -182,6 +183,7 @@ export async function up({ payload, req, session }: MigrateUpArgs): Promise<void
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function down({ payload, req, session }: MigrateDownArgs): Promise<void> {
+  return
   // unset locations.address
   await payload.db.connection.collection('locations').updateMany(
     {

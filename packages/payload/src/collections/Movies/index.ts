@@ -32,6 +32,22 @@ export const Movies: CollectionConfig<'movies'> = {
         return true
       },
     ],
+    afterChange: [
+      async ({ doc, req: { payload }, previousDoc }) => {
+        // update all events that reference this movie if the movie's still has changed
+        if (previousDoc?.still !== doc.still) {
+          await payload.update({
+            collection: 'events',
+            where: {
+              'programItems.filmPrint.movie': {
+                equals: doc.id,
+              },
+            },
+            data: {}, // we just need to trigger the hooks
+          })
+        }
+      },
+    ],
   },
   admin: {
     listSearchableFields: ['title', 'internationalTitle', 'originalTitle'],

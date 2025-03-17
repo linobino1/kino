@@ -12,6 +12,7 @@ import * as migration_20250212_072144_fix_null_values_in_events_series from './2
 import * as migration_20250212_074118_fix_null_values_in_events_series_versions from './20250212_074118_fix_null_values_in_events_series_versions'
 import * as migration_20250215_181351_add_news_page from './20250215_181351_add_news_page'
 import * as migration_20250306_100232_press_releases from './20250306_100232_press_releases'
+import * as migration_20250317_105110_eventsHeaderLock from './20250317_105110_eventsHeaderLock'
 
 export const migrations = [
   {
@@ -83,5 +84,10 @@ export const migrations = [
     up: migration_20250306_100232_press_releases.up,
     down: migration_20250306_100232_press_releases.down,
     name: '20250306_100232_press_releases',
+  },
+  {
+    up: migration_20250317_105110_eventsHeaderLock.up,
+    down: migration_20250317_105110_eventsHeaderLock.down,
+    name: '20250317_105110_eventsHeaderLock',
   },
 ]

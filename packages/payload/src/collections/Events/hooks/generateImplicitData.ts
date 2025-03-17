@@ -26,7 +26,9 @@ export const generateImplicitData: CollectionBeforeValidateHook<Event> = async (
       ? mainProgramItem?.filmPrint
       : mainProgramItem?.filmPrint?.id
 
-  const slugLock = data && 'slugLock' in data ? data.slugLock : originalDoc?.slugLock
+  const slugLock = data && 'slugLock' in data ? data.slugLock : originalDoc?.slugLock !== false
+  const headerLock =
+    data && 'headerLock' in data ? data.headerLock : originalDoc?.headerLock !== false
 
   const update: Partial<Event> = {
     isScreeningEvent,
@@ -111,6 +113,11 @@ export const generateImplicitData: CollectionBeforeValidateHook<Event> = async (
   // slug lock is open, we should use data.slug or originalDoc.slug
   if (!slugLock && (data.slug || originalDoc?.slug)) {
     update.slug = formatSlug(data.slug ?? originalDoc?.slug)
+  }
+
+  // header lock is open, we should use data.header or originalDoc.header
+  if (!headerLock && (data.header || originalDoc?.header)) {
+    update.header = data.header ?? originalDoc?.header
   }
 
   return {
