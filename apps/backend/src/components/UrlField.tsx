@@ -16,7 +16,7 @@ export const UrlField: React.FC<Props> = ({
   const { value: relativeUrl } = useField({ path })
   const absoluteUrl = `${baseUrl}${relativeUrl}`
   return typeof relativeUrl === 'string' ? (
-    <>
+    <div>
       <FieldLabel label={label} localized={localized} path={path} required={required} />
       <a
         href={absoluteUrl}
@@ -26,6 +26,6 @@ export const UrlField: React.FC<Props> = ({
       >
         {relativeUrl}
       </a>
-    </>
+    </div>
   ) : null
 }
