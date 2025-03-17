@@ -44,7 +44,7 @@ export const Image: React.FC<Props> = ({
     srcSet = undefined
   }
 
-  let objectPosition = 'center'
+  let objectPosition = undefined
   if (typeof image === 'object' && applyFocalPoint) {
     objectPosition = getObjectPosition(image)
   }

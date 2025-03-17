@@ -70,6 +70,7 @@ export default function PostDetailPage({ loaderData: { post } }: Route.Component
             { options: { width: 1500 }, size: '1500w' },
           ]}
           sizes="(max-width: 768px) 100vw, 720px"
+          applyFocalPoint={false}
         />
         <RichText content={post.content} enableProse={false} className="mt-6 text-lg font-normal" />
       </Gutter>
