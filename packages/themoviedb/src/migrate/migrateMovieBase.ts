@@ -4,6 +4,7 @@ import type { tmdbCompany, tmdbMovie, MigratedMovie } from '../types'
 import { fetchData } from '../fetchData'
 import { defaultLanguage } from '../index'
 import { locales } from '@app/i18n'
+import { formatSlug } from '@app/util/formatSlug'
 
 export const migrateMovieBase = async (
   payload: Payload,
@@ -161,6 +162,7 @@ const migrateGenre = async (
             id: genre.id,
             data: {
               name,
+              slug: formatSlug(name),
             },
             locale: locale,
           })
