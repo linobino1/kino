@@ -26,6 +26,8 @@ export const generateImplicitData: CollectionBeforeValidateHook<Event> = async (
       ? mainProgramItem?.filmPrint
       : mainProgramItem?.filmPrint?.id
 
+  const slugLock = data && 'slugLock' in data ? data.slugLock : originalDoc?.slugLock
+
   const update: Partial<Event> = {
     isScreeningEvent,
     mainProgramFilmPrint,
@@ -70,13 +72,11 @@ export const generateImplicitData: CollectionBeforeValidateHook<Event> = async (
       update.shortDescription = movie.synopsis
       update.header = movie.still
 
-      if (data.slugLock) {
-        update.slug = formatSlug(
-          [movie.internationalTitle || data.title, data.date ? data.date.substr(0, 10) : false]
-            .filter(Boolean)
-            .join('-'),
-        )
-      }
+      update.slug = formatSlug(
+        [data.title || movie.internationalTitle, data.date ? data.date.substr(0, 10) : false]
+          .filter(Boolean)
+          .join('-'),
+      )
     }
   } else {
     // for non-screenings, get shortDescription from last main program item
@@ -104,17 +104,13 @@ export const generateImplicitData: CollectionBeforeValidateHook<Event> = async (
         .getEditorState()
         .read(() => $getRoot().getTextContent())
 
-      if (data.slugLock) update.slug = formatSlug(data.title)
+      update.slug = formatSlug(data.title)
     }
   }
 
-  // slug is not locked, we shoud not overwrite it
-  if (!data.slugLock) {
-    if (data.slug) {
-      update.slug = formatSlug(data.slug)
-    } else if (originalDoc?.slug) {
-      update.slug = formatSlug(originalDoc.slug)
-    }
+  // slug lock is open, we should use data.slug or originalDoc.slug
+  if (!slugLock && (data.slug || originalDoc?.slug)) {
+    update.slug = formatSlug(data.slug ?? originalDoc?.slug)
   }
 
   return {

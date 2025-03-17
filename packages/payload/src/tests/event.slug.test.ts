@@ -17,9 +17,10 @@ test('event slugs', async () => {
   expect(doc).toBeDefined()
 
   expect(doc.title).toBeOneOf(['Casablanca', 'Kasablanca'])
+  expect(doc.slugLock).toBe(true)
   expect(doc.slug).toBe(`casablanca-${date}`)
 
-  // update title, slug should not change
+  // update title, slug not change
   doc = await payload.update({
     collection: 'events',
     id: doc.id,
@@ -29,7 +30,8 @@ test('event slugs', async () => {
   })
 
   expect(doc.title).toBe('Casablanca 2')
-  expect(doc.slug).toBe(`casablanca-${date}`)
+  expect(doc.slugLock).toBe(true)
+  expect(doc.slug).toBe(`casablanca-2-${date}`)
 
   // unlock slug
   doc = await payload.update({
@@ -59,6 +61,7 @@ test('event slugs', async () => {
           poster: media.id,
         },
       ],
+      header: media.id,
     },
   })
 
