@@ -40,7 +40,7 @@ export const loader = async ({ params: { lang: locale }, request: { url } }: Rou
       depth: 3,
       limit: 12,
       pagination: true,
-      sort: '-sort',
+      sort: '-from',
       page: pageNumber,
     }),
   ])

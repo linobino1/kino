@@ -91,5 +91,9 @@
     "event": {
       "supportingFilm": "Im Vorprogramm"
     }
+  },
+  "seasons": {
+    "winterSemester": "Wintersemester {{year}}",
+    "summerSemester": "Sommersemester {{year}}"
   }
 }

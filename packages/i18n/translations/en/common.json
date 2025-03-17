@@ -68,5 +68,9 @@
       "add_one": "Add to my calendar",
       "add_other": "Add {{count}} events to my calendar"
     }
+  },
+  "seasons": {
+    "winterSemester": "Winter term {{year}}",
+    "summerSemester": "Sommer term {{year}}"
   }
 }

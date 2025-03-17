@@ -4,6 +4,7 @@ import { isAdminOrEditor } from '#payload/access'
 import { generateImplicitData } from './hooks/generateImplicitData'
 import { translateImplicitData } from './hooks/translateImplicitData'
 import { slugField } from '#payload/fields/slug'
+import { setSeason } from './hooks/setSeason'
 
 const isScreening = (data: any) =>
   data?.programItems?.some((item: any) => item?.type === 'screening' && item?.isMainProgram)
@@ -42,7 +43,7 @@ export const Events: CollectionConfig<'events'> = {
     },
   },
   hooks: {
-    beforeValidate: [generateImplicitData],
+    beforeValidate: [generateImplicitData, setSeason],
     afterChange: [translateImplicitData],
   },
   fields: [
@@ -130,15 +131,9 @@ export const Events: CollectionConfig<'events'> = {
       relationTo: 'seasons',
       hasMany: false,
       required: true,
-      defaultValue: async ({ req: { payload } }) =>
-        (
-          await payload.find({
-            collection: 'seasons',
-            limit: 1,
-          })
-        ).docs[0].id,
       admin: {
         position: 'sidebar',
+        readOnly: true,
       },
     },
     {
