@@ -65,7 +65,7 @@ export const loader = async ({
     sort: 'date',
     pagination: true,
     page,
-    limit: 20,
+    limit: 21,
   })
 
   return {
