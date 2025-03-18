@@ -16,6 +16,7 @@ export const PressReleases: CollectionConfig<'pressReleases'> = {
     preview: (doc) => {
       return `${env.FRONTEND_URL}/press-releases/${doc?.id}.pdf?preview=true`
     },
+    defaultColumns: ['date', 'title', 'season'],
   },
   access: {
     read: isAdminOrEditor,
