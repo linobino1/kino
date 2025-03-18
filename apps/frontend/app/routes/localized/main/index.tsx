@@ -11,7 +11,7 @@ import { PageLayout } from '~/components/PageLayout'
 import i18next from '~/i18next.server'
 import { Hero } from '~/components/Hero'
 import { cn } from '@app/util/cn'
-import { Button } from '~/components/Button'
+import { CTAButton } from '~/components/CTAButton'
 import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { PostsList } from '~/components/PostsList'
@@ -110,17 +110,13 @@ export default function LandingPage({ loaderData: { page, posts, events } }: Rou
         <h2 className={h2}>{t('Our Next Screenings')}</h2>
         <EventsList events={events.docs} site={site} showICSDownload={false} />
         <Link to="/events" prefetch="intent" className="contents">
-          <Button className="mx-auto my-12" size="lg">
-            {t('See all screenings')}
-          </Button>
+          <CTAButton className="mx-auto my-12">{t('See all screenings')}</CTAButton>
         </Link>
 
         <h2 className={cn(h2, 'mb-0')}>{t('News')}</h2>
         <PostsList posts={posts} pagination={false} />
         <Link to="/news" prefetch="intent" className="contents">
-          <Button className="mx-auto my-12" size="lg">
-            {t('See all posts')}
-          </Button>
+          <CTAButton className="mx-auto my-12">{t('See all posts')}</CTAButton>
         </Link>
       </Gutter>
     </PageLayout>

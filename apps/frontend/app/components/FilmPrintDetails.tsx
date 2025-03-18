@@ -1,12 +1,11 @@
-import type { FilmPrint, Movie as MovieType, Media, Rental } from '@app/types/payload'
-import { Link } from 'react-router'
+import type { FilmPrint, Movie as MovieType, Media, Rental, Movie } from '@app/types/payload'
 import { useTranslation } from 'react-i18next'
 import { Image } from '~/components/Image'
-import { Button } from '~/components/Button'
 import { AsideLayout } from './AsideLayout'
 import { Poster } from './Poster'
 import { useRootLoaderData } from '~/util/useRootLoaderData'
 import { getMovieSpecsString } from '@app/util/data/getMovieSpecsString'
+import { TrailerButton } from './TrailerButton'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   filmPrint: FilmPrint
@@ -28,7 +27,15 @@ export const FilmPrintDetails: React.FC<Props> = ({
     | undefined
 
   return (
-    <AsideLayout {...props} aside={<Poster movie={filmPrint.movie as MovieType} />}>
+    <AsideLayout
+      {...props}
+      aside={
+        <div className="flex flex-col gap-4">
+          <Poster movie={filmPrint.movie as MovieType} />
+          <TrailerButton movie={filmPrint.movie as Movie} className="max-sm:hidden" />
+        </div>
+      }
+    >
       <div className="mb-4">
         <h2 className="break-words text-3xl font-semibold uppercase">
           {!isMainProgram && (
@@ -51,17 +58,7 @@ export const FilmPrintDetails: React.FC<Props> = ({
         }}
       />
       {additionalInfo}
-      {((filmPrint as FilmPrint).movie as MovieType).trailer && (
-        <Link
-          className="contents"
-          to={((filmPrint as FilmPrint).movie as MovieType).trailer ?? ''}
-          target="_blank"
-        >
-          <Button className="my-4 uppercase">
-            {t('Trailer')} <span className="i-material-symbols:play-arrow text-lg" />
-          </Button>
-        </Link>
-      )}
+      <TrailerButton movie={filmPrint.movie as Movie} className="my-4 sm:hidden" />
       {rental && (
         <div className="inline-block max-sm:text-sm">
           <div
