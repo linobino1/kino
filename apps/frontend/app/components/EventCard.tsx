@@ -51,24 +51,22 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
         />
       </Link>
       <div className="flex flex-col sm:aspect-[3/2]">
-        <div className="hide-scrollbar flex min-h-6 flex-row-reverse overflow-x-auto">
-          <div className="flex w-max shrink-0 gap-2">
-            {((event.series ?? []) as EventSery[]).map(
-              ({ id, name, slug }, index) =>
-                activeEventSery?.id !== id && (
-                  <Link
-                    key={index}
-                    to={`/event-series/${slug}`}
-                    prefetch="intent"
-                    className="contents"
-                  >
-                    <Tag className="inline" key={index}>
-                      {name}
-                    </Tag>
-                  </Link>
-                ),
-            )}
-          </div>
+        <div className="flex min-h-6 flex-col items-end gap-y-[1.5px]">
+          {((event.series ?? []) as EventSery[]).map(
+            ({ id, name, slug }, index) =>
+              activeEventSery?.id !== id && (
+                <Link
+                  key={index}
+                  to={`/event-series/${slug}`}
+                  prefetch="intent"
+                  className="contents"
+                >
+                  <Tag className="inline" key={index}>
+                    {name}
+                  </Tag>
+                </Link>
+              ),
+          )}
         </div>
         <div className="flex flex-1 flex-col gap-4 px-4 pb-4">
           <div className="flex items-center gap-2">
