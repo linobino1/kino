@@ -17,6 +17,7 @@ export default [
         route('/me', './routes/localized/auth/me.tsx'),
         route('/signin', './routes/localized/auth/signin.tsx'),
         route('/signup', './routes/localized/auth/signup.tsx'),
+        route('/signout', './routes/localized/auth/signout.ts'),
         route('/forgot-password', './routes/localized/auth/forgot-password.tsx'),
         route('/reset-password', './routes/localized/auth/reset-password.tsx'),
         route('/verify-email', './routes/localized/auth/verify-email.tsx'),

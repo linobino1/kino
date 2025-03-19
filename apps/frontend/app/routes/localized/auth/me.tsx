@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next'
 import { Link } from '~/components/localized-link'
 import { useEffect } from 'react'
 import { Button } from '~/components/Button'
+import { localizeTo } from '~/util/i18n/localizeTo'
+import type { Locale } from '@app/i18n'
 
 // i18n namespace
 const ns = 'auth'
@@ -29,7 +31,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 export default function Me() {
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>('root')
   const navigate = useNavigate()
-  const { t } = useTranslation(ns)
+  const { t, i18n } = useTranslation(ns)
   const user = rootLoaderData?.user
 
   useEffect(() => {
@@ -43,11 +45,12 @@ export default function Me() {
       {user ? (
         <>
           {t('Signed in as {{user}}', { user: user.name })}
-          <Form method="POST" className="flex flex-col items-center gap-4">
-            <input type="hidden" name="id" value={user.id} />
-            <Button type="submit" name="_action" value="signOut">
-              {t('sign out')}
-            </Button>
+          <Form
+            method="post"
+            action={localizeTo('/auth/signout', i18n.language as Locale) as string}
+            className="flex flex-col items-center gap-4"
+          >
+            <Button type="submit">{t('sign out')}</Button>
           </Form>
         </>
       ) : (
