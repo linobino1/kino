@@ -28,11 +28,13 @@ export const action = async ({ request }: Route.ActionArgs) => {
       overrideAccess: false,
     })
 
-    const domain = `.${env.FRONTEND_URL.replace('https://', '')}` // .kinoimblauensalon.de
+    const domain = env.FRONTEND_URL.includes('localhost')
+      ? ''
+      : `Domain=.${env.FRONTEND_URL.replace('https://', '')}` // .kinoimblauensalon.de
 
     return replace('/', {
       headers: {
-        'Set-Cookie': `payload-token=${result.token}; Path=/; Domain=${domain}; HttpOnly; SameSite=Lax; Max-Age=${result.exp}`,
+        'Set-Cookie': `payload-token=${result.token}; Path=/; ${domain}; HttpOnly; SameSite=Lax; Max-Age=${result.exp}`,
       },
     })
   } catch {
