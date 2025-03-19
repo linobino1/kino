@@ -14,6 +14,7 @@ import * as migration_20250215_181351_add_news_page from './20250215_181351_add_
 import * as migration_20250306_100232_press_releases from './20250306_100232_press_releases';
 import * as migration_20250317_105110_eventsHeaderLock from './20250317_105110_eventsHeaderLock';
 import * as migration_20250317_213826_autoSeasons from './20250317_213826_autoSeasons';
+import * as migration_20250319_132726_eventsTitleLock from './20250319_132726_eventsTitleLock';
 
 export const migrations = [
   {
@@ -94,6 +95,11 @@ export const migrations = [
   {
     up: migration_20250317_213826_autoSeasons.up,
     down: migration_20250317_213826_autoSeasons.down,
-    name: '20250317_213826_autoSeasons'
+    name: '20250317_213826_autoSeasons',
+  },
+  {
+    up: migration_20250319_132726_eventsTitleLock.up,
+    down: migration_20250319_132726_eventsTitleLock.down,
+    name: '20250319_132726_eventsTitleLock'
   },
 ];

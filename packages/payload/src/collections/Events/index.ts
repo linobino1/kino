@@ -57,14 +57,35 @@ export const Events: CollectionConfig<'events'> = {
       localized: true,
       required: true,
       validate: (value: any, { data }: { data: Partial<Event> }) => {
-        if (!isScreening(data) && !value) {
-          return 'Der Titel darf nicht leer sein.'
-        }
-        return true
+        if (isScreening(data)) return true
+        return value ? true : 'Der Titel darf nicht leer sein.'
       },
       admin: {
+        condition: (_, data) => !isScreening(data) || !data.titleLock,
         description:
           'Bei Filmvorstellungen wird der Titel des letzten Films im Hauptprogramm verwendet, wenn dieses Feld leer bleibt. Refresh benötigt.',
+      },
+    },
+    {
+      name: '_title',
+      label: 'Titel',
+      type: 'text',
+      virtual: true, // this field is not stored in the database
+      admin: {
+        condition: (_, data) => isScreening(data) && data.titleLock,
+        readOnly: true,
+      },
+      hooks: {
+        afterRead: [({ data }) => data?.title],
+      },
+    },
+    {
+      name: 'titleLock',
+      label: 'Titel vom Hauptfilm übernehmen',
+      type: 'checkbox',
+      defaultValue: true,
+      admin: {
+        condition: (data) => isScreening(data),
       },
     },
     {

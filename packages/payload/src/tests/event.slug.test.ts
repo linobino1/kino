@@ -26,6 +26,7 @@ test('event slugs', async () => {
     id: doc.id,
     data: {
       title: 'Casablanca 2',
+      titleLock: false,
     },
   })
 
