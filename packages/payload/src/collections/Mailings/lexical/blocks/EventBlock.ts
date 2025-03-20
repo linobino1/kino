@@ -18,6 +18,23 @@ export const EventBlock: Block = {
       },
     },
     {
+      name: 'type',
+      label: 'Art',
+      type: 'radio',
+      defaultValue: 'compact',
+      options: [
+        {
+          label: 'Kompakt',
+          value: 'compact',
+        },
+        {
+          label: 'Programmpunkte ausklappen',
+          value: 'unfoldProgramItems',
+        },
+      ],
+      required: true,
+    },
+    {
       name: 'additionalText',
       label: 'zusätzliche Informationen',
       type: 'richText',

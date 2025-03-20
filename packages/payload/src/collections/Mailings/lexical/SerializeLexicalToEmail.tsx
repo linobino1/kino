@@ -206,6 +206,7 @@ export function SerializeLexicalToEmail({ nodes, color, locale, t }: Props): Rea
                   <Event
                     key={index}
                     event={node.fields.event}
+                    type={node.fields.type}
                     color={color}
                     additionalText={node.fields.additionalText}
                     locale={locale}
