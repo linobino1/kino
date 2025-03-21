@@ -57,8 +57,7 @@ export const getMovieSpecsString = ({
     case 'full':
       return [
         specs.directors,
-        specs.countries,
-        specs.year,
+        specs.countriesAndYear,
         specs.duration,
         specs.format,
         specs.language,
