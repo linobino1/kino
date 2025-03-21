@@ -58,7 +58,7 @@ test('event slugs', async () => {
         {
           type: 'other',
           isMainProgram: true,
-          info: lexicalContent,
+          info: lexicalContent(),
           poster: media.id,
         },
       ],

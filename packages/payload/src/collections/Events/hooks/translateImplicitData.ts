@@ -16,15 +16,24 @@ export const translateImplicitData: CollectionAfterChangeHook<Event> = async ({
   for await (const locale of locales) {
     // request locale is already done in the beforeChange hook
     if (locale === reqLocale) continue
+
+    const localizedDoc = await payload.findByID({
+      collection: 'events',
+      id: doc.id,
+      locale,
+      depth: 0,
+    })
+    const implicitData = await getImplicitEventData({
+      doc: localizedDoc,
+      locale,
+      payload,
+    })
+
     await payload.update({
       collection: 'events',
       id: doc.id,
       locale,
-      data: await getImplicitEventData({
-        doc,
-        locale,
-        payload,
-      }),
+      data: implicitData,
       context: {
         triggerHooks: false,
       },

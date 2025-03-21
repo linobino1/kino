@@ -22,7 +22,7 @@ export const createScreeningEvent = async ({ payload }: { payload: Payload }) =>
         {
           type: 'other',
           isMainProgram: false,
-          info: lexicalContent,
+          info: lexicalContent(),
           poster: media.id,
         },
         {
