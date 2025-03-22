@@ -10,9 +10,11 @@ export const generateImplicitData: CollectionBeforeValidateHook<Event> = async (
   data,
   req: { payload, locale, context },
   originalDoc,
+  operation,
 }) => {
-  if (context.triggerHooks === false) return
-  if (typeof data === 'undefined') return
+  if (context.triggerHooks === false) return data
+  if (typeof data === 'undefined') return data
+  if (operation !== 'update') return data
 
   const implicitData = await getImplicitEventData({
     data,

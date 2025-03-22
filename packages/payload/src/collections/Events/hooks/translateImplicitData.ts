@@ -9,8 +9,10 @@ import { getImplicitEventData } from './shared/getImplicitEventData'
 export const translateImplicitData: CollectionAfterChangeHook<Event> = async ({
   doc,
   req: { payload, locale: reqLocale, context },
+  operation,
 }) => {
   if (context.triggerHooks === false) return
+  if (operation !== 'update') return
 
   // add title and shortDescription in other locales
   for await (const locale of locales) {
