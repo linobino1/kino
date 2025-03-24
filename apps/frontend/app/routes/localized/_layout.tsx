@@ -15,7 +15,7 @@ export async function loader({ request }: Route.LoaderArgs) {
   if (!locale) {
     const url = new URL(request.url)
     const lang = getRequestLanguage(request)
-    const to = localizeTo(url.pathname, lang) as string
+    const to = localizeTo(url.pathname + url.search, lang) as string
     throw redirect(to)
   }
 
