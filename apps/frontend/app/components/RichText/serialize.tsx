@@ -1,4 +1,5 @@
 import type { JSX } from 'react'
+import type { Locale } from '@app/i18n'
 import React, { Fragment } from 'react'
 import type { Media as MediaType } from '@app/types/payload'
 import { cn } from '@app/util/cn'
@@ -15,6 +16,8 @@ import {
   IS_SUBSCRIPT,
   IS_SUPERSCRIPT,
 } from '@app/util/lexical/NodeFormat'
+import { localizeTo } from '~/util/i18n/localizeTo'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
   nodes: NodeTypes[]
@@ -23,6 +26,8 @@ type Props = {
 
 export function serializeLexical(props: Props): JSX.Element {
   const { nodes, enableMarginBlock } = props
+  const { i18n } = useTranslation()
+  const locale = i18n.language as Locale
   return (
     <Fragment>
       {nodes?.map((node, index): JSX.Element | null => {
@@ -180,7 +185,11 @@ export function serializeLexical(props: Props): JSX.Element {
 
               return (
                 <Link
-                  to={linkType === 'internal' ? (doc?.value as any).url : url}
+                  to={
+                    linkType === 'internal'
+                      ? localizeTo((doc?.value as any).url, locale)
+                      : (url ?? '')
+                  }
                   key={index}
                   target={newTab ? '_blank' : '_self'}
                   prefetch={linkType === 'internal' ? 'intent' : 'none'}
