@@ -5,13 +5,15 @@ import { Gallery } from '#payload/blocks/Gallery'
 import { Video } from '#payload/blocks/Video'
 import { LinkableCollectionSlugs } from '#payload/plugins/addUrlField'
 import { slugField } from '../fields/slug'
+import { env } from '@app/util/env/backend.server'
 
-export const Posts: CollectionConfig = {
+export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
   admin: {
     group: 'Blog',
     defaultColumns: ['date', 'title'],
     useAsTitle: 'title',
+    preview: (data) => `${env.FRONTEND_URL}/news/${data.slug}?preview=true`,
   },
   defaultSort: '-date',
   custom: {

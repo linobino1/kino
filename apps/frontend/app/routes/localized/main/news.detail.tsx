@@ -14,6 +14,7 @@ import { Image } from '~/components/Image'
 import { RichText } from '~/components/RichText'
 import { RenderBlocks } from '~/components/Blocks/RenderBlocks'
 import { getMetaDescription } from '~/util/posts/getMetaDescription'
+import { isPreview } from '~/util/isPreview'
 
 export const meta: Route.MetaFunction = ({ data, matches }) =>
   data?.post &&
@@ -30,17 +31,19 @@ export const loader = async ({
 }: Route.LoaderArgs) => {
   const [payload, t] = await Promise.all([getPayload(), i18next.getFixedT(locale as string)])
 
-  const posts = await payload.find({
-    collection: 'posts',
-    where: {
-      slug: {
-        equals: slug,
+  const post = (
+    await payload.find({
+      collection: 'posts',
+      where: {
+        slug: {
+          equals: slug,
+        },
       },
-    },
-    locale: locale as Locale,
-  })
-
-  const post = posts.docs[0]
+      locale: locale as Locale,
+      depth: 2,
+      draft: isPreview(url),
+    })
+  ).docs[0]
 
   if (!post) {
     throw new Response(t('error.404', { url, interpolation: { escapeValue: false } }), {
