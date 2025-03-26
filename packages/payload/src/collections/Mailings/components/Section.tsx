@@ -85,8 +85,8 @@ const Section: React.FC<MovieProps> = ({
               <Shorten text={description} moreLink={url} color={color} />
             </Text>
           )}
+          {children}
         </Container>
-        {children}
       </Container>
     </_Section>
   )
