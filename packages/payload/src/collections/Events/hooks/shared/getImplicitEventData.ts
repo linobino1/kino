@@ -47,32 +47,34 @@ export const getImplicitEventData = async ({ data, doc, originalDoc, locale, pay
     isScreeningEvent,
     mainProgramFilmPrint,
     // get programItems.poster from programItems.filmPrint.movie.poster
-    programItems: await Promise.all(
-      (event.programItems ?? []).map(async (item) => {
-        if (item.type === 'screening' && item.filmPrint) {
-          const filmPrint = await payload.findByID({
-            collection: 'filmPrints',
-            id: typeof item.filmPrint === 'string' ? item.filmPrint : item.filmPrint.id,
-            depth: 1,
-            select: {
-              movie: true,
-            },
-            populate: {
-              movies: {
-                poster: true,
-              },
-            },
-            locale,
-          })
+    programItems: event.programItems?.length
+      ? await Promise.all(
+          event.programItems.map(async (item) => {
+            if (item.type === 'screening' && item.filmPrint) {
+              const filmPrint = await payload.findByID({
+                collection: 'filmPrints',
+                id: typeof item.filmPrint === 'string' ? item.filmPrint : item.filmPrint.id,
+                depth: 1,
+                select: {
+                  movie: true,
+                },
+                populate: {
+                  movies: {
+                    poster: true,
+                  },
+                },
+                locale,
+              })
 
-          return {
-            ...item,
-            poster: (filmPrint?.movie as Movie)?.poster as string,
-          }
-        }
-        return item
-      }),
-    ),
+              return {
+                ...item,
+                poster: (filmPrint?.movie as Movie)?.poster as string,
+              }
+            }
+            return item
+          }),
+        )
+      : undefined,
   }
 
   if (isScreeningEvent && mainProgramFilmPrint) {
