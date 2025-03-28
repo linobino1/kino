@@ -5,7 +5,7 @@ import {
 } from './getMovieSpecs'
 
 type Type = 'custom' | 'filmPrintInfosShort' | 'subtitle' | 'newsletterSubtitle' | 'full'
-type Props = GetMovieSpecsProps & {
+export type Props = GetMovieSpecsProps & {
   separator?: string
 } & (
     | {

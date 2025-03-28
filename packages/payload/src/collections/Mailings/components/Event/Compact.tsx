@@ -8,6 +8,7 @@ import { env } from '@app/util/env/backend.server'
 import { getMovieSpecsString } from '@app/util/data/getMovieSpecsString'
 import Hr from '../Hr'
 import Section from '../Section'
+import { getEventSubtitle } from '@app/util/data/getEventSubtitle'
 
 type EventProps = {
   event: EventType
@@ -18,14 +19,11 @@ type EventProps = {
 }
 
 const Compact: React.FC<EventProps> = ({ event, color, additionalText, locale, t }) => {
-  const subtitle = event.isScreeningEvent
-    ? getMovieSpecsString({
-        type: 'newsletterSubtitle',
-        filmPrint: event.mainProgramFilmPrint as FilmPrint,
-        t,
-        separator: ', ',
-      })
-    : (event.subtitle ?? '')
+  const subtitle = getEventSubtitle({
+    event,
+    t,
+    movieSpecsProps: { type: 'newsletterSubtitle', separator: ', ' },
+  })
 
   const url = `${env.FRONTEND_URL}${event.url}`
 

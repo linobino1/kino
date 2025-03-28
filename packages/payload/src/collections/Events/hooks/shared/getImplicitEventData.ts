@@ -6,6 +6,7 @@ import { createHeadlessEditor } from '@payloadcms/richtext-lexical/lexical/headl
 import { getEnabledNodes } from '@payloadcms/richtext-lexical'
 import { $getRoot } from '@payloadcms/richtext-lexical/lexical'
 import { formatSlug } from '@app/util/formatSlug'
+import { lexicalToPlainText } from '@app/util/lexical/lexicalToPlainText'
 
 type Props = {
   locale: Locale
@@ -36,6 +37,9 @@ export const getImplicitEventData = async ({ data, doc, originalDoc, locale, pay
     typeof mainProgramItem?.filmPrint === 'string'
       ? mainProgramItem?.filmPrint
       : mainProgramItem?.filmPrint?.id
+
+  const hasManyMainProgramItems =
+    (event.programItems?.filter((item) => item.isMainProgram).length ?? 0) > 1
 
   const slugLock = event && 'slugLock' in event ? event.slugLock : originalDoc?.slugLock !== false
   const headerLock =
@@ -99,7 +103,11 @@ export const getImplicitEventData = async ({ data, doc, originalDoc, locale, pay
     })
     if (movie && typeof movie === 'object') {
       res.title = movie.title
-      res.shortDescription = movie.synopsis
+      res.shortDescription = hasManyMainProgramItems
+        ? event.intro
+          ? lexicalToPlainText(event.intro)
+          : ''
+        : movie.synopsis
       res.header = movie.still
 
       res.slug = formatSlug(
