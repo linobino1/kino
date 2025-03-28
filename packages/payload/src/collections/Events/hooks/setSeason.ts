@@ -8,10 +8,8 @@ export const setSeason: CollectionBeforeValidateHook<Event> = async ({
   data,
   req: { payload, context },
   originalDoc,
-  operation,
 }) => {
   if (context.triggerHooks === false) return data
-  if (operation !== 'update') return data
 
   const dateString = data?.date ?? originalDoc?.date
   if (!dateString) return data

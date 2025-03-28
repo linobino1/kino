@@ -57,6 +57,7 @@ export const Events: CollectionConfig<'events'> = {
       localized: true,
       required: true,
       validate: (value: any, { data }: { data: Partial<Event> }) => {
+        if (data._status === 'draft') return true
         if (isScreening(data)) return true
         return value ? true : 'Der Titel darf nicht leer sein.'
       },
@@ -197,11 +198,12 @@ export const Events: CollectionConfig<'events'> = {
               },
               type: 'array',
               minRows: 1,
-              validate: (data) => {
-                if (!data?.length) {
+              validate: (value, { data }: { data: Partial<Event> }) => {
+                if (data._status === 'draft') return true
+                if (!value?.length) {
                   return 'Es muss mindestens ein Programmpunkt angelegt werden.'
                 }
-                if (!data?.some((item: any) => item?.isMainProgram)) {
+                if (!value?.some((item: any) => item?.isMainProgram)) {
                   return "Mindestens ein Programmpunkt muss als 'Hauptprogramm' markiert sein."
                 }
                 return true
@@ -280,6 +282,7 @@ export const Events: CollectionConfig<'events'> = {
               relationTo: 'media',
               required: true,
               validate: (value: any, { data }: { data: Partial<Event> }) => {
+                if (data._status === 'draft') return true
                 if (isScreening(data)) return true
                 return value ? true : 'Es muss ein Titelbild ausgewählt werden.'
               },
