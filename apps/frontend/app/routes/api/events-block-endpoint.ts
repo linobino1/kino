@@ -59,9 +59,23 @@ export const action = async ({ request }: Route.ActionArgs) => {
         throw new Error('id required for eventSeries')
       }
       where = {
-        series: {
-          equals: body.eventSeriesID,
-        },
+        and: [
+          {
+            series: {
+              equals: body.eventSeriesID,
+            },
+          },
+          {
+            _status: {
+              equals: 'published',
+            },
+          },
+          {
+            excludeFromUpcoming: {
+              not_equals: true,
+            },
+          },
+        ],
       }
       break
   }
