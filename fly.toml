@@ -4,7 +4,7 @@
 #
 
 app = 'kino-cms'
-primary_region = 'ams'
+primary_region = 'fra'
 
 [build]
 
