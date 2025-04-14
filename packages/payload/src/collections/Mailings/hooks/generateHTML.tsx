@@ -19,11 +19,13 @@ export const generateHTML: FieldHook = async ({ data, req }) => {
   // );
 
   // let's add depth to the lexical content
-  const content = await addDepth({
-    json: data.content,
-    payload: req.payload,
-    locale: mailingsLocale,
-  })
+  const content = data.content
+    ? await addDepth({
+        json: data.content,
+        payload: req.payload,
+        locale: mailingsLocale,
+      })
+    : undefined
 
   // and fetch the header and footer images
   const fetchOptions: RequestInit = {
