@@ -5,6 +5,7 @@ import { getPayload } from '~/util/getPayload.server'
 import { siteTitle } from '@app/util/config'
 import { env } from '@app/util/env/backend.server'
 import * as ics from 'ics'
+import { formatSlug } from '@app/util/formatSlug'
 
 export const action = async ({ request }: Route.ActionArgs) => {
   const formData = await request.formData()
@@ -67,7 +68,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
     status: 200,
     headers: {
       'Content-Type': 'text/calendar; charset=utf-8',
-      'Content-Disposition': `inline; filename=${events.length === 1 ? events[0].title : siteTitle}.ics`,
+      'Content-Disposition': `inline; filename=${formatSlug(events.length === 1 ? events[0].title : siteTitle, { replacement: ' ', lower: false })}.ics`,
     },
   })
 }

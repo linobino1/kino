@@ -1,10 +1,18 @@
 import slugify from 'slugify'
 
-export const formatSlug = (val: any): string =>
+type SlugifyOptions = {
+  locale?: string
+  lower?: boolean
+  strict?: boolean
+  replacement?: string
+}
+
+export const formatSlug = (val: any, options?: SlugifyOptions): string =>
   typeof val === 'string'
     ? slugify(val, {
-        locale: 'de',
-        lower: true,
-        strict: true,
+        locale: options?.locale ?? 'de',
+        lower: options?.lower ?? true,
+        strict: options?.strict ?? true,
+        replacement: options?.replacement ?? '-',
       })
     : ''
