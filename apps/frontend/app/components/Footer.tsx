@@ -51,6 +51,17 @@ export const Footer: React.FC<Props> = ({ site, navigations }) => {
               className="h-[42px] w-auto"
             />
           </Link>
+          <Link
+            to="https://riemschneider-stiftung.de"
+            rel="noopener noreferrer"
+            className="contents"
+          >
+            <img
+              src="/img/riemschneider.svg"
+              alt="Riemschneider Stiftung"
+              className="h-[40px] w-auto"
+            />
+          </Link>
           <Link to="https://www.themoviedb.org/" rel="noopener noreferrer" className="contents">
             <img src="/img/tmdb.svg" alt="The Movie Database" className="h-[40px] w-auto" />
           </Link>
