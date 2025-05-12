@@ -1,6 +1,8 @@
 import React from 'react'
 import { serializeLexical } from './serialize'
 import { cn } from '@app/util/cn'
+import { useTranslation } from 'react-i18next'
+import type { Locale } from '@app/i18n'
 
 type Props = {
   className?: string
@@ -20,6 +22,9 @@ export const RichText: React.FC<Props> = ({
     return null
   }
 
+  const { i18n } = useTranslation()
+  const locale = i18n.language as Locale
+
   return (
     <div className={className}>
       <div
@@ -31,7 +36,7 @@ export const RichText: React.FC<Props> = ({
           !Array.isArray(content) &&
           typeof content === 'object' &&
           'root' in content &&
-          serializeLexical({ nodes: content?.root?.children, enableMarginBlock })}
+          serializeLexical({ nodes: content?.root?.children, enableMarginBlock, locale })}
       </div>
     </div>
   )

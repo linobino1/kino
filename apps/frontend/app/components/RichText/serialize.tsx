@@ -17,17 +17,15 @@ import {
   IS_SUPERSCRIPT,
 } from '@app/util/lexical/NodeFormat'
 import { localizeTo } from '~/util/i18n/localizeTo'
-import { useTranslation } from 'react-i18next'
 
 type Props = {
   nodes: NodeTypes[]
   enableMarginBlock?: boolean
+  locale: Locale
 }
 
 export function serializeLexical(props: Props): JSX.Element {
-  const { nodes, enableMarginBlock } = props
-  const { i18n } = useTranslation()
-  const locale = i18n.language as Locale
+  const { nodes, enableMarginBlock, locale } = props
   return (
     <Fragment>
       {nodes?.map((node, index): JSX.Element | null => {
