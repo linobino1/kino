@@ -6,10 +6,8 @@ import { getImplicitEventData } from './shared/getImplicitEventData'
 /**
  * add implicit data to other locales
  */
-export const translateImplicitData: CollectionAfterChangeHook<Event> = async ({
-  doc,
-  req: { payload, locale: reqLocale, context },
-}) => {
+export const translateImplicitData: CollectionAfterChangeHook<Event> = async ({ doc, req }) => {
+  const { payload, locale: reqLocale, context } = req
   if (context.triggerHooks === false) return
 
   // add title and shortDescription in other locales
@@ -22,6 +20,7 @@ export const translateImplicitData: CollectionAfterChangeHook<Event> = async ({
       id: doc.id,
       locale,
       depth: 0,
+      req,
     })
     const implicitData = await getImplicitEventData({
       doc: localizedDoc,
@@ -37,6 +36,7 @@ export const translateImplicitData: CollectionAfterChangeHook<Event> = async ({
       context: {
         triggerHooks: false,
       },
+      req,
     })
   }
 }
