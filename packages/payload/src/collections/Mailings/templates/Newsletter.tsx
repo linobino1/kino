@@ -187,7 +187,7 @@ export default function Newsletter({ mailing, locale, t }: Props) {
           >
             <Section style={{ padding: '20px' }}>
               <Text style={{ lineHeight: '18px' }}>
-                Kino im Blauen Salon e.V.
+                Kino im Blauen Salon
                 <br />
                 HfG Karlsruhe
                 <br />
