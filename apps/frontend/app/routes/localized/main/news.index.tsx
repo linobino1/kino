@@ -12,7 +12,7 @@ import { redirect } from 'react-router'
 import { getMetaDescription } from '~/util/posts/getMetaDescription'
 
 export const meta: Route.MetaFunction = ({ data, matches }) => {
-  const featuredPost = data.posts.docs[0]
+  const featuredPost = data?.posts.docs[0]
   return generateMetadata({
     title: data?.page.meta?.title,
     description: featuredPost

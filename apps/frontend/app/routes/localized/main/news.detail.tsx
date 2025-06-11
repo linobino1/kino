@@ -17,13 +17,14 @@ import { getMetaDescription } from '~/util/posts/getMetaDescription'
 import { isPreview } from '~/util/isPreview'
 
 export const meta: Route.MetaFunction = ({ data, matches }) =>
-  data?.post &&
-  generateMetadata({
-    title: data.post.title,
-    description: getMetaDescription(data.post, data.locale),
-    image: data?.post.header,
-    env: getEnvFromMatches(matches),
-  })
+  data?.post
+    ? generateMetadata({
+        title: data.post.title,
+        description: getMetaDescription(data.post, data.locale),
+        image: data?.post.header,
+        env: getEnvFromMatches(matches),
+      })
+    : []
 
 export const loader = async ({
   params: { lang: locale, slug },

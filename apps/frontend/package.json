@@ -16,6 +16,7 @@
     "@app/util": "workspace:*",
     "@epic-web/cachified": "^5.2.0",
     "@payloadcms/db-mongodb": "catalog:",
+    "@payloadcms/live-preview-react": "catalog:",
     "@payloadcms/richtext-lexical": "catalog:",
     "@react-pdf/renderer": "^4.3.0",
     "@react-router/node": "catalog:",
