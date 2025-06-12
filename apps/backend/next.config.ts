@@ -25,6 +25,9 @@ const nextConfig: NextConfig = {
       },
     ]
   },
+  experimental: {
+    authInterrupts: true,
+  },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })

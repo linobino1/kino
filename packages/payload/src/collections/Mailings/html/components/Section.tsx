@@ -37,7 +37,7 @@ const Section: React.FC<MovieProps> = ({
         <Link href={url} style={{ display: 'contents' }}>
           {header && (
             <Img
-              src={header.url ?? ''}
+              media={header as Media}
               style={{
                 width: '100%',
                 height: 'auto',

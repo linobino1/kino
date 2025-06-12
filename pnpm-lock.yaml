@@ -137,6 +137,9 @@ importers:
       '@app/util':
         specifier: workspace:*
         version: link:../../packages/util
+      '@payloadcms/live-preview-react':
+        specifier: 'catalog:'
+        version: 3.42.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@payloadcms/next':
         specifier: 'catalog:'
         version: 3.42.0(@types/react@19.1.7)(graphql@16.10.0)(monaco-editor@0.25.2)(next@15.3.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4))(payload@3.42.0(graphql@16.10.0)(typescript@5.8.2))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.2)

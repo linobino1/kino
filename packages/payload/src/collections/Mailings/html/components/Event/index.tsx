@@ -14,6 +14,10 @@ type EventProps = {
 }
 
 const Event: React.FC<EventProps> = ({ type, ...props }) => {
+  if (!props.event) {
+    return null
+  }
+
   switch (type) {
     case 'unfoldProgramItems':
       return <UnfoldProgramItems {...props} />
