@@ -3,8 +3,8 @@ import { BlocksFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import { isAdminOrEditor } from '#payload/access'
 // import { colorPickerField } from '@innovixx/payload-color-picker-field'
 import { generateHTML } from './hooks/generateHTML'
-import { EventBlock } from './lexical/blocks/EventBlock'
-import { FilmPrintBlock } from './lexical/blocks/FilmPrintBlock'
+import { EventBlock } from './html/lexical/blocks/EventBlock'
+import { FilmPrintBlock } from './html/lexical/blocks/FilmPrintBlock'
 import { createListmonkCampaign } from './hooks/createListmonkCampaign'
 import { updateListmonkCampaign } from './hooks/updateListmonkCampaign'
 import { deleteListmonkCampaign } from './hooks/deleteListmonkCampaign'
@@ -18,6 +18,10 @@ export const Mailings: CollectionConfig<'mailings'> = {
       beforeList: ['/components/mailings/HowTo#HowTo'],
     },
     useAsTitle: 'subject',
+    livePreview: {
+      url: ({ data }) => `/preview/mailing/${data.id}`,
+    },
+    preview: (doc) => `/preview/mailing/${doc.id}`,
   },
   defaultSort: '-updatedAt',
   access: {
@@ -28,6 +32,13 @@ export const Mailings: CollectionConfig<'mailings'> = {
   },
   hooks: {
     beforeChange: [createListmonkCampaign, updateListmonkCampaign, deleteListmonkCampaign],
+  },
+  versions: {
+    drafts: {
+      autosave: {
+        interval: 500,
+      },
+    },
   },
   fields: [
     {
@@ -219,9 +230,7 @@ export const Mailings: CollectionConfig<'mailings'> = {
       },
       validate: () => true, // by default has a 40k char limit
       admin: {
-        components: {
-          Field: '/components/mailings/HtmlField#HtmlField',
-        },
+        hidden: true,
       },
     },
   ],
