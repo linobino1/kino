@@ -19,6 +19,7 @@
     "@app/payload": "workspace:*",
     "@app/themoviedb": "workspace:*",
     "@app/util": "workspace:*",
+    "@payloadcms/live-preview-react": "catalog:",
     "@payloadcms/next": "catalog:",
     "@payloadcms/plugin-seo": "catalog:",
     "@payloadcms/richtext-lexical": "catalog:",

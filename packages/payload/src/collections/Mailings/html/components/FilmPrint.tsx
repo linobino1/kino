@@ -14,6 +14,9 @@ type MovieProps = {
 }
 
 const FilmPrint: React.FC<MovieProps> = ({ filmPrint, color, additionalText, locale, t }) => {
+  if (!filmPrint) {
+    return null
+  }
   const movie = filmPrint.movie as MovieType
 
   const subtitle = getMovieSpecsString({

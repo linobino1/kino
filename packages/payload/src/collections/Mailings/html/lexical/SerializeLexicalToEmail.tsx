@@ -18,6 +18,7 @@ import Gutter from '../components/Gutter'
 import FilmPrint from '../components/FilmPrint'
 import Hr from '../components/Hr'
 import Link from '../components/Link'
+import Img from '../components/Img'
 
 interface Props {
   nodes: SerializedLexicalNode[]
@@ -188,7 +189,7 @@ export function SerializeLexicalToEmail({ nodes, color, locale, t }: Props): Rea
             }
             return (
               <Gutter key={index}>
-                <img key={index} src={media.url} alt={media.alt} />;
+                <Img media={media} alt={media.alt} className="h-auto w-full" />
               </Gutter>
             )
 

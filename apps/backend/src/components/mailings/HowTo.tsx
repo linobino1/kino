@@ -11,8 +11,10 @@ export const HowTo = () => {
           Erstelle ein neues Element oder dupliziere das neueste Element in der Liste der
           Newsletter.
         </li>
-        <li>Bearbeite den Inhalt nach Bedarf, eine Vorschau wird unten angezeigt.</li>
-        <li>Klicke auf &quot;Speichern&quot;.</li>
+        <li>
+          Bearbeite den Inhalt, benutze zur Vorschau die Buttons &quot;Live-Vorschau&quot; bzw.
+          &quot;Vorschau&quot;.
+        </li>
         <li>
           Klicke auf &quot;Kampagne erstellen&quot; in der rechten Seitenleiste, um die Kampagne im
           unserem Newslettersystem Listmonk zu erstellen.
