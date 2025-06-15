@@ -3,6 +3,10 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 export const EventBlock: Block = {
   slug: 'eventBlock',
+  labels: {
+    singular: 'Event',
+    plural: 'Events',
+  },
   fields: [
     {
       name: 'event',
