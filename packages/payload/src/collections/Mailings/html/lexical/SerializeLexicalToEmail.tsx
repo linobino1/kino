@@ -202,6 +202,16 @@ export function SerializeLexicalToEmail({ nodes, color, locale, t }: Props): Rea
 
           case 'block':
             switch (node.fields.blockType) {
+              case 'imageBlock':
+                const { image, caption } = node.fields
+                return image ? (
+                  <Gutter key={index} className="my-2">
+                    <Img media={image} alt={image.alt} className="h-auto w-full" />
+                    {caption ? (
+                      <Text className="m-0 mt-1 text-end text-xs text-neutral-500">{caption}</Text>
+                    ) : null}
+                  </Gutter>
+                ) : null
               case 'eventBlock':
                 return (
                   <Event
