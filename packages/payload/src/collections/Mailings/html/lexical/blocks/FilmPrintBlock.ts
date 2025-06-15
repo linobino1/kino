@@ -3,6 +3,10 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 export const FilmPrintBlock: Block = {
   slug: 'filmPrintBlock',
+  labels: {
+    singular: 'Filmkopie',
+    plural: 'Filmkopien',
+  },
   fields: [
     {
       name: 'filmPrint',
