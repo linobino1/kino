@@ -1,6 +1,5 @@
 import {
   defineConfig,
-  presetWebFonts,
   presetIcons,
   presetUno,
   presetWind,
@@ -20,15 +19,6 @@ export default defineConfig({
         },
       },
     }),
-    presetWebFonts({
-      provider: 'google',
-      fonts: {
-        sans: {
-          name: 'DM Sans',
-          weights: [300, 400, 500, 600, 700],
-        },
-      },
-    }),
   ],
   transformers: [transformerDirectives()],
   theme: {
@@ -41,6 +31,7 @@ export default defineConfig({
       '2xl': '1536px',
     },
     fontFamily: {
+      sans: 'var(--font-dm-sans), Helvetica, Arial, sans-serif',
       calendar: 'Tahoma, Geneva, sans-serif',
     },
     fontSize: {

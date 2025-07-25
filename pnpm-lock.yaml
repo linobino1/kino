@@ -197,7 +197,7 @@ importers:
         version: 4.1.5
       unocss:
         specifier: 'catalog:'
-        version: 66.0.0(postcss@8.5.3)(vite@6.2.1(@types/node@22.13.10)(jiti@2.4.2)(sass@1.77.4)(tsx@4.19.3))(vue@3.5.13(typescript@5.8.2))
+        version: 66.0.0(postcss@8.5.6)(vite@6.2.1(@types/node@22.13.10)(jiti@2.4.2)(sass@1.77.4)(tsx@4.19.3))(vue@3.5.13(typescript@5.8.2))
 
   apps/frontend:
     dependencies:
@@ -216,6 +216,9 @@ importers:
       '@epic-web/cachified':
         specifier: ^5.2.0
         version: 5.5.1
+      '@next-font/plugin-vite':
+        specifier: ^1.3.2
+        version: 1.3.2(next-font@1.2.0)
       '@payloadcms/db-mongodb':
         specifier: 'catalog:'
         version: 3.42.0(payload@3.42.0(graphql@16.10.0)(typescript@5.8.2))
@@ -264,6 +267,9 @@ importers:
       monaco-editor:
         specifier: 'catalog:'
         version: 0.25.2
+      next-font:
+        specifier: ^1.2.0
+        version: 1.2.0
       payload:
         specifier: 'catalog:'
         version: 3.42.0(graphql@16.10.0)(typescript@5.8.2)
@@ -318,7 +324,7 @@ importers:
         version: 1.1.0(@react-router/dev@7.6.2(@react-router/serve@7.6.2(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.8.2))(@types/node@22.13.10)(babel-plugin-macros@3.1.0)(jiti@2.4.2)(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(sass@1.77.4)(tsx@4.19.3)(typescript@5.8.2)(vite@6.2.1(@types/node@22.13.10)(jiti@2.4.2)(sass@1.77.4)(tsx@4.19.3)))(@react-router/node@7.6.2(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.8.2))(isbot@5.1.23)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       unocss:
         specifier: 'catalog:'
-        version: 66.0.0(postcss@8.5.3)(vite@6.2.1(@types/node@22.13.10)(jiti@2.4.2)(sass@1.77.4)(tsx@4.19.3))(vue@3.5.13(typescript@5.8.2))
+        version: 66.0.0(postcss@8.5.6)(vite@6.2.1(@types/node@22.13.10)(jiti@2.4.2)(sass@1.77.4)(tsx@4.19.3))(vue@3.5.13(typescript@5.8.2))
       vite:
         specifier: ^6.2.0
         version: 6.2.1(@types/node@22.13.10)(jiti@2.4.2)(sass@1.77.4)(tsx@4.19.3)
@@ -1850,6 +1856,11 @@ packages:
   '@mswjs/interceptors@0.37.6':
     resolution: {integrity: sha512-wK+5pLK5XFmgtH3aQ2YVvA3HohS3xqV/OxuVOdNx9Wpnz7VE/fnC+e1A7ln6LFYeck7gOJ/dsZV6OLplOtAJ2w==}
     engines: {node: '>=18'}
+
+  '@next-font/plugin-vite@1.3.2':
+    resolution: {integrity: sha512-W14aNMBDn6D0ns7wQVZC+ge8czyud2cNQqu4EzIh6HY+ock4zr6paFiKAlJSzR+/Iwg6K1gegOFB59iGlLC+MQ==}
+    peerDependencies:
+      next-font: ~1.2.0
 
   '@next/env@15.1.2':
     resolution: {integrity: sha512-Hm3jIGsoUl6RLB1vzY+dZeqb+/kWPZ+h34yiWxW0dV87l8Im/eMOwpOA+a0L78U0HM04syEjXuRlCozqpwuojQ==}
@@ -4854,6 +4865,11 @@ packages:
     resolution: {integrity: sha512-WWdIxpyjEn+FhQJQQv9aQAYlHoNVdzIzUySNV1gHUPDSdZJ3yZn7pAAbQcV7B56Mvu881q9FZV+0Vx2xC44VWA==}
     engines: {node: ^18.17.0 || >=20.5.0}
 
+  nanoid@3.3.11:
+    resolution: {integrity: sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==}
+    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+
   nanoid@3.3.9:
     resolution: {integrity: sha512-SppoicMGpZvbF1l3z4x7No3OlIjP7QJvC9XR7AhZr1kL133KHnKPztkKDc+Ir4aJ/1VhTySrtKhrsycmrMQfvg==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -4873,6 +4889,9 @@ packages:
   new-find-package-json@2.0.0:
     resolution: {integrity: sha512-lDcBsjBSMlj3LXH2v/FW3txlh2pYTjmbOXPYJD93HI5EwuLzI11tdHSIpUMmfq/IOsldj4Ps8M8flhm+pCK4Ew==}
     engines: {node: '>=12.22.0'}
+
+  next-font@1.2.0:
+    resolution: {integrity: sha512-1yk8OM9gIACZfeS6BI7q3WX/WWP8DzNlD8+N4UJ6EsVq9+eOBNwyhPnvvGfj6alPan0xqQgzMbLD+2Pik//kLw==}
 
   next@15.1.2:
     resolution: {integrity: sha512-nLJDV7peNy+0oHlmY2JZjzMfJ8Aj0/dd3jCwSZS8ZiO5nkQfcZRqDrRN3U5rJtqVTQneIOGZzb6LCNrk7trMCQ==}
@@ -5239,6 +5258,10 @@ packages:
 
   postcss@8.5.3:
     resolution: {integrity: sha512-dle9A3yYxlBSrt8Fu+IpjGT8SY8hN0mlaA6GY8t0P5PjIOZemULz/E2Bnm/2dcUOena75OTNkHI76uZBNUUq3A==}
+    engines: {node: ^10 || ^12 || >=14}
+
+  postcss@8.5.6:
+    resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
     engines: {node: ^10 || ^12 || >=14}
 
   prelude-ls@1.2.1:
@@ -8091,6 +8114,11 @@ snapshots:
       outvariant: 1.4.3
       strict-event-emitter: 0.5.1
 
+  '@next-font/plugin-vite@1.3.2(next-font@1.2.0)':
+    dependencies:
+      next-font: 1.2.0
+      postcss: 8.5.6
+
   '@next/env@15.1.2': {}
 
   '@next/env@15.2.3': {}
@@ -9587,13 +9615,13 @@ snapshots:
     transitivePeerDependencies:
       - vue
 
-  '@unocss/postcss@66.0.0(postcss@8.5.3)':
+  '@unocss/postcss@66.0.0(postcss@8.5.6)':
     dependencies:
       '@unocss/config': 66.0.0
       '@unocss/core': 66.0.0
       '@unocss/rule-utils': 66.0.0
       css-tree: 3.1.0
-      postcss: 8.5.3
+      postcss: 8.5.6
       tinyglobby: 0.2.12
 
   '@unocss/preset-attributify@66.0.0':
@@ -9763,7 +9791,7 @@ snapshots:
       '@vue/shared': 3.5.13
       estree-walker: 2.0.2
       magic-string: 0.30.17
-      postcss: 8.5.3
+      postcss: 8.5.6
       source-map-js: 1.2.1
 
   '@vue/compiler-ssr@3.5.13':
@@ -12071,6 +12099,8 @@ snapshots:
 
   mute-stream@2.0.0: {}
 
+  nanoid@3.3.11: {}
+
   nanoid@3.3.9: {}
 
   natural-compare@1.4.0: {}
@@ -12084,6 +12114,8 @@ snapshots:
       debug: 4.4.0
     transitivePeerDependencies:
       - supports-color
+
+  next-font@1.2.0: {}
 
   next@15.1.2(@babel/core@7.24.5)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4):
     dependencies:
@@ -12572,6 +12604,12 @@ snapshots:
   postcss@8.5.3:
     dependencies:
       nanoid: 3.3.9
+      picocolors: 1.1.1
+      source-map-js: 1.2.1
+
+  postcss@8.5.6:
+    dependencies:
+      nanoid: 3.3.11
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
@@ -13612,12 +13650,12 @@ snapshots:
 
   universalify@2.0.1: {}
 
-  unocss@66.0.0(postcss@8.5.3)(vite@6.2.1(@types/node@22.13.10)(jiti@2.4.2)(sass@1.77.4)(tsx@4.19.3))(vue@3.5.13(typescript@5.8.2)):
+  unocss@66.0.0(postcss@8.5.6)(vite@6.2.1(@types/node@22.13.10)(jiti@2.4.2)(sass@1.77.4)(tsx@4.19.3))(vue@3.5.13(typescript@5.8.2)):
     dependencies:
       '@unocss/astro': 66.0.0(vite@6.2.1(@types/node@22.13.10)(jiti@2.4.2)(sass@1.77.4)(tsx@4.19.3))(vue@3.5.13(typescript@5.8.2))
       '@unocss/cli': 66.0.0
       '@unocss/core': 66.0.0
-      '@unocss/postcss': 66.0.0(postcss@8.5.3)
+      '@unocss/postcss': 66.0.0(postcss@8.5.6)
       '@unocss/preset-attributify': 66.0.0
       '@unocss/preset-icons': 66.0.0
       '@unocss/preset-mini': 66.0.0
