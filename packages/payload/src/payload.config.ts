@@ -191,13 +191,6 @@ const configPromise: Promise<Config> = (async () => ({
         handler: generateSitemap,
       },
     ],
-    access: {
-      run: ({ req }) => {
-        const authHeader = req.headers.get('authorization')
-        console.log('incoming auth header in payload:', authHeader)
-        return authHeader !== `Bearer ${env.CRON_SECRET}` // || env.NODE_ENV !== 'development'
-      },
-    },
   },
 }))()
 
