@@ -139,5 +139,21 @@ export const Posts: CollectionConfig<'posts'> = {
         },
       ],
     },
+    {
+      name: 'hasDetailPage',
+      type: 'checkbox',
+      admin: {
+        hidden: true,
+      },
+      hooks: {
+        beforeChange: [
+          ({ data }) =>
+            data?.details?.length &&
+            !(data.details.length === 1 && !Object.keys(data.details[0]).length)
+              ? true
+              : false,
+        ],
+      },
+    },
   ],
 }

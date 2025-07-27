@@ -36,9 +36,18 @@ export const loader = async ({
     await payload.find({
       collection: 'posts',
       where: {
-        slug: {
-          equals: slug,
-        },
+        and: [
+          {
+            slug: {
+              equals: slug,
+            },
+          },
+          {
+            hasDetailPage: {
+              equals: true,
+            },
+          },
+        ],
       },
       locale: locale as Locale,
       depth: 2,

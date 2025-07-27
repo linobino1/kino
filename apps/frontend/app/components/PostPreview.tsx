@@ -20,7 +20,7 @@ export const PostPreview: React.FC<Props> = ({ className, ...props }) => {
       ? (post.link.doc?.value as LinkableCollection)?.url
       : post.link?.type === 'external'
         ? post.link?.url
-        : post.details?.length
+        : post.hasDetailPage
           ? post.url
           : undefined
 
@@ -54,7 +54,7 @@ export const PostPreview: React.FC<Props> = ({ className, ...props }) => {
         <Date className="text-sm" date={post.date} format="PPP" />
         <h2 className="mb-4 mt-1 break-words text-2xl font-semibold uppercase">{post.title}</h2>
         <RichText content={post.content} />
-        {post.details?.length ? (
+        {post.hasDetailPage && (
           <Link
             to={post.url ?? ''}
             prefetch={'intent'}
@@ -62,7 +62,7 @@ export const PostPreview: React.FC<Props> = ({ className, ...props }) => {
           >
             {t('Read more')}
           </Link>
-        ) : null}
+        )}
       </div>
     </div>
   )

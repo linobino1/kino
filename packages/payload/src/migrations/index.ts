@@ -16,6 +16,7 @@ import * as migration_20250317_105110_eventsHeaderLock from './20250317_105110_e
 import * as migration_20250317_213826_autoSeasons from './20250317_213826_autoSeasons';
 import * as migration_20250319_132726_eventsTitleLock from './20250319_132726_eventsTitleLock';
 import * as migration_20250612_064720_enable_versions_mailings from './20250612_064720_enable_versions_mailings';
+import * as migration_20250727_095518_postHasDetailPageField from './20250727_095518_postHasDetailPageField';
 
 export const migrations = [
   {
@@ -106,6 +107,11 @@ export const migrations = [
   {
     up: migration_20250612_064720_enable_versions_mailings.up,
     down: migration_20250612_064720_enable_versions_mailings.down,
-    name: '20250612_064720_enable_versions_mailings'
+    name: '20250612_064720_enable_versions_mailings',
+  },
+  {
+    up: migration_20250727_095518_postHasDetailPageField.up,
+    down: migration_20250727_095518_postHasDetailPageField.down,
+    name: '20250727_095518_postHasDetailPageField'
   },
 ];
