@@ -9,6 +9,7 @@ export default [
     route('/newsletter-signup', './routes/api/newsletter-signup.ts'),
     route('/kronolith.html', './routes/api/kronolith-iframe.ts'),
     route('/ics', './routes/api/ics.ts'),
+    route('/generate-sitemap', './routes/api/generate-sitemap.ts'),
   ]),
   route('/press-releases/:id.pdf', './routes/press-releases/route.tsx'),
   layout('./routes/localized/_layout.tsx', [

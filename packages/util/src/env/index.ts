@@ -35,6 +35,8 @@ const variables = z.object({
   ZEPTOMAIL_API_KEY: z.string().optional(),
   EMAIL_FROM_ADDRESS: z.string().optional(),
   EMAIL_FROM_NAME: z.string().optional(),
+
+  CRON_SECRET: z.string().optional(),
 })
 
 const backendServerEnv = variables
