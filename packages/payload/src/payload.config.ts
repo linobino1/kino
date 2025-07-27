@@ -43,6 +43,7 @@ import { projectRoot } from '@app/util/projectRoot'
 import { env } from '@app/util/env/backend.server'
 import { translations } from '@app/i18n/translations/index'
 import { Sitemap } from './collections/Sitemap'
+import { generateSitemap } from './tasks/generateSitemap'
 
 const configPromise: Promise<Config> = (async () => ({
   cors: {
@@ -182,6 +183,21 @@ const configPromise: Promise<Config> = (async () => ({
   },
   graphQL: {
     disable: true,
+  },
+  jobs: {
+    tasks: [
+      {
+        slug: 'generateSitemap',
+        handler: generateSitemap,
+      },
+    ],
+    access: {
+      run: ({ req }) => {
+        const authHeader = req.headers.get('authorization')
+        console.log('incoming auth header in payload:', authHeader)
+        return authHeader !== `Bearer ${env.CRON_SECRET}` // || env.NODE_ENV !== 'development'
+      },
+    },
   },
 }))()
 

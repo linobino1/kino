@@ -1,6 +1,8 @@
 import { singleton } from './singleton.server'
 import { getPayloadClient } from '@app/payload/util/getPayloadClient'
 
+export { configPromise } from '@app/payload/util/getPayloadClient'
+
 /**
  * get a singleton instance of the payload client
  */

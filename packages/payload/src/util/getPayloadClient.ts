@@ -1,4 +1,6 @@
 import { getPayload as _getPayload } from 'payload'
-import { configurePayload } from '../payload.config'
+import configPromise from '../payload.config'
 
-export const getPayloadClient = async () => await _getPayload({ config: await configurePayload() })
+export { configPromise }
+
+export const getPayloadClient = async () => await _getPayload({ config: await configPromise })
