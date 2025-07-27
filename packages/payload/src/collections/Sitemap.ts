@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 export const Sitemap: CollectionConfig<'sitemap'> = {
   slug: 'sitemap',
+  dbName: 'sitemap',
   admin: {
     hidden: true,
   },
