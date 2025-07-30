@@ -103,15 +103,18 @@ export default function EventPage({ loaderData: { event } }: Route.ComponentProp
           <Link to={(event.season as Season).url ?? ''} prefetch="intent">
             {(event.season as Season).name}
           </Link>
-          <div className="mt-4 text-2xl font-semibold uppercase">{event.title}</div>
-          <div className="mt-1 flex gap-2">
-            {((event.series ?? []) as EventSery[]).map(({ slug, name }, index) => (
-              <Link key={index} className="contents" to={`/event-series/${slug}`}>
-                <Tag>{name}</Tag>
-              </Link>
-            ))}
-          </div>
-          {event.comment && <div className="mt-1">{event.comment}</div>}
+          <div className="mt-4 text-2xl font-semibold uppercase sm:text-3xl">{event.title}</div>
+          {event.series?.length ? (
+            <div className="my-1 flex gap-2">
+              {((event.series ?? []) as EventSery[]).map(({ slug, name }, index) => (
+                <Link key={index} className="contents" to={`/event-series/${slug}`}>
+                  <Tag>{name}</Tag>
+                </Link>
+              ))}
+            </div>
+          ) : null}
+          {event.subtitle && <p className="text-lg">{event.subtitle}</p>}
+          {event.comment && <p className="mt-3 font-semibold">{event.comment}</p>}
         </div>
       </Hero>
 
