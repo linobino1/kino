@@ -27,11 +27,16 @@ export const Image: React.FC<Props> = ({
 }) => {
   const env = useEnv()
 
+  // if a string instead of a Medie object is passed, that usually means, that the image has been deleted but is still referenced in richtext or a gallery, etc. We can handle this gracefully by generating a proper not-found image URL.
+  const isNotFound = typeof image === 'string'
+
   // use src and alt from image if provided
-  src ||= image ? getMediaUrl(image, env) : undefined
-  alt ||= image?.alt || undefined
-  width ||= image?.width || undefined
-  height ||= image?.height || undefined
+  if (typeof image === 'object' && image !== null) {
+    src ||= getMediaUrl(image, env)
+    alt ||= image.alt || undefined
+    width ||= image.width || undefined
+    height ||= image.height || undefined
+  }
 
   // transform srcSet array to string
   if (typeof srcSet === 'object' && env?.CDN_CGI_IMAGE_URL) {
@@ -47,6 +52,11 @@ export const Image: React.FC<Props> = ({
   let objectPosition = undefined
   if (typeof image === 'object' && applyFocalPoint) {
     objectPosition = getObjectPosition(image)
+  }
+
+  if (isNotFound) {
+    src = `${env?.MEDIA_URL || env?.FRONTEND_URL}/img/not-found.jpg`
+    srcSet = undefined
   }
 
   return (
