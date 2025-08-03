@@ -27,7 +27,7 @@
     "@payloadcms/richtext-lexical": "catalog:",
     "@payloadcms/storage-s3": "catalog:",
     "@payloadcms/translations": "catalog:",
-    "@react-email/components": "^0.0.32",
+    "@react-email/components": "^0.4.0",
     "cross-env": "^7.0.3",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
@@ -38,7 +38,7 @@
     "payload": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "react-email": "^3.0.6"
+    "react-email": "^4.2.3"
   },
   "devDependencies": {
     "@app/types": "workspace:*",
