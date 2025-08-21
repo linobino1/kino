@@ -15,7 +15,7 @@
     "@app/types": "workspace:*",
     "@app/util": "workspace:*",
     "@epic-web/cachified": "^5.2.0",
-    "@next-font/plugin-vite": "^1.3.2",
+    "@next-font/plugin-vite": "^1.4.0",
     "@payloadcms/db-mongodb": "catalog:",
     "@payloadcms/live-preview-react": "catalog:",
     "@payloadcms/richtext-lexical": "catalog:",
