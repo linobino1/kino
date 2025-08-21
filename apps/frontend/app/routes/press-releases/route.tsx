@@ -30,6 +30,7 @@ export const loader = async ({ params: { id }, request: { url } }: Route.LoaderA
     return new Response(`${error}`, { status: 500 })
   }
 
+  // @ts-expect-error can pass buffer to response
   return new Response(buffer, {
     headers: {
       'Content-Type': 'application/pdf',
