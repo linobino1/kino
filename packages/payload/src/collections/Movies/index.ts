@@ -25,6 +25,7 @@ export const Movies: CollectionConfig<'movies'> = {
                 in: ids,
               },
             },
+            req,
           })
         } catch {
           // at least we tried..
@@ -33,10 +34,10 @@ export const Movies: CollectionConfig<'movies'> = {
       },
     ],
     afterChange: [
-      async ({ doc, req: { payload }, previousDoc }) => {
+      async ({ doc, req, previousDoc }) => {
         // update all events that reference this movie if the movie's still has changed
         if (previousDoc?.still !== doc.still) {
-          await payload.update({
+          await req.payload.update({
             collection: 'events',
             where: {
               'programItems.filmPrint.movie': {
@@ -44,6 +45,7 @@ export const Movies: CollectionConfig<'movies'> = {
               },
             },
             data: {}, // we just need to trigger the hooks
+            req,
           })
         }
       },

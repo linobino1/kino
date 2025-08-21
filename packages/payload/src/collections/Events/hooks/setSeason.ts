@@ -6,17 +6,17 @@ import { getDocId } from '@app/util/payload/getDocId'
 
 export const setSeason: CollectionBeforeValidateHook<Event> = async ({
   data,
-  req: { payload, context },
+  req,
   originalDoc,
 }) => {
-  if (context.triggerHooks === false) return data
+  if (req.context.triggerHooks === false) return data
 
   const dateString = data?.date ?? originalDoc?.date
   if (!dateString) return data
 
   const date = new Date(dateString)
   let season = (
-    await payload.find({
+    await req.payload.find({
       collection: 'seasons',
       depth: 0,
       where: {
@@ -33,6 +33,7 @@ export const setSeason: CollectionBeforeValidateHook<Event> = async ({
           },
         ],
       },
+      req,
     })
   ).docs[0]
 

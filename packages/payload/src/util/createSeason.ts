@@ -8,9 +8,18 @@ import {
 import { getPayloadClient } from './getPayloadClient'
 import { getFixedT } from '@app/i18n/getFixedT'
 import { defaultLocale, locales } from '@app/i18n'
+import type { PayloadRequest } from 'payload'
 
-export const createSeason = async ({ date, header: header }: { date: Date; header: string }) => {
-  const payload = await getPayloadClient()
+export const createSeason = async ({
+  date,
+  header,
+  req,
+}: {
+  date: Date
+  header: string
+  req?: PayloadRequest
+}) => {
+  const payload = req?.payload ?? (await getPayloadClient())
   const t = await getFixedT(defaultLocale)
 
   const isWinterSemester = date.getMonth() <= 3 || date.getMonth() >= 10
@@ -37,6 +46,7 @@ export const createSeason = async ({ date, header: header }: { date: Date; heade
       slugLock: false,
       header,
     },
+    req,
   })
 
   // add translations
@@ -50,6 +60,7 @@ export const createSeason = async ({ date, header: header }: { date: Date; heade
         name: t(`seasons.${isWinterSemester ? 'winterSemester' : 'summerSemester'}`, { year }),
       },
       locale,
+      req,
     })
   }
 

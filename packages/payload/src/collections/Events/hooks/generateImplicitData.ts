@@ -8,17 +8,17 @@ import { getImplicitEventData } from './shared/getImplicitEventData'
  */
 export const generateImplicitData: CollectionBeforeValidateHook<Event> = async ({
   data,
-  req: { payload, locale, context },
+  req,
   originalDoc,
 }) => {
-  if (context.triggerHooks === false) return data
+  if (req.context.triggerHooks === false) return data
   if (typeof data === 'undefined') return data
 
   const implicitData = await getImplicitEventData({
     data,
     originalDoc,
-    locale: locale as Locale,
-    payload,
+    locale: req.locale as Locale,
+    req,
   })
 
   return {

@@ -37,6 +37,7 @@ export const defaultField = (collection: CollectionSlug): Field => ({
             data: {
               default: false,
             },
+            req,
           })
         }
         return value

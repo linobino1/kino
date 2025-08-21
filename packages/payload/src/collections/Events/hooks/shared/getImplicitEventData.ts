@@ -1,7 +1,7 @@
 import type { Event, Movie } from '@app/types/payload'
 import type { LexicalRichTextAdapter } from '@payloadcms/richtext-lexical'
 import type { Locale } from '@app/i18n'
-import type { Payload } from 'payload'
+import type { PayloadRequest } from 'payload'
 import { createHeadlessEditor } from '@payloadcms/richtext-lexical/lexical/headless'
 import { getEnabledNodes } from '@payloadcms/richtext-lexical'
 import { $getRoot } from '@payloadcms/richtext-lexical/lexical'
@@ -10,7 +10,7 @@ import { lexicalToPlainText } from '@app/util/lexical/lexicalToPlainText'
 
 type Props = {
   locale: Locale
-  payload: Payload
+  req: PayloadRequest
 } & ( // either data and maybe originalDoc is present as in beforeChange hook
   | {
       data: Partial<Event>
@@ -25,7 +25,7 @@ type Props = {
     }
 )
 
-export const getImplicitEventData = async ({ data, doc, originalDoc, locale, payload }: Props) => {
+export const getImplicitEventData = async ({ data, doc, originalDoc, locale, req }: Props) => {
   const event = data ?? doc
 
   const isScreeningEvent = event.programItems?.some(
@@ -55,7 +55,7 @@ export const getImplicitEventData = async ({ data, doc, originalDoc, locale, pay
       ? await Promise.all(
           event.programItems.map(async (item) => {
             if (item.type === 'screening' && item.filmPrint) {
-              const filmPrint = await payload.findByID({
+              const filmPrint = await req.payload.findByID({
                 collection: 'filmPrints',
                 id: typeof item.filmPrint === 'string' ? item.filmPrint : item.filmPrint.id,
                 depth: 1,
@@ -68,6 +68,7 @@ export const getImplicitEventData = async ({ data, doc, originalDoc, locale, pay
                   },
                 },
                 locale,
+                req,
               })
 
               return {
@@ -84,7 +85,7 @@ export const getImplicitEventData = async ({ data, doc, originalDoc, locale, pay
   if (isScreeningEvent && mainProgramFilmPrint) {
     // for screenings, get shortDescription from movie.synopsis
     // and title from movie.title (if not already set)
-    const { movie } = await payload.findByID({
+    const { movie } = await req.payload.findByID({
       collection: 'filmPrints',
       id: mainProgramFilmPrint,
       locale,
@@ -100,6 +101,7 @@ export const getImplicitEventData = async ({ data, doc, originalDoc, locale, pay
           internationalTitle: true,
         },
       },
+      req,
     })
     if (movie && typeof movie === 'object') {
       res.title = movie.title
@@ -121,7 +123,7 @@ export const getImplicitEventData = async ({ data, doc, originalDoc, locale, pay
     if (mainProgramItem?.info) {
       const headlessEditor = createHeadlessEditor({
         nodes: getEnabledNodes({
-          editorConfig: (payload.config.editor as LexicalRichTextAdapter).editorConfig,
+          editorConfig: (req.payload.config.editor as LexicalRichTextAdapter).editorConfig,
         }),
       })
 
@@ -135,7 +137,7 @@ export const getImplicitEventData = async ({ data, doc, originalDoc, locale, pay
           { discrete: true }, // This should commit the editor state immediately
         )
       } catch (e) {
-        payload.logger.error({ err: e }, 'ERROR parsing editor state')
+        req.payload.logger.error({ err: e }, 'ERROR parsing editor state')
       }
 
       res.shortDescription = headlessEditor.getEditorState().read(() => $getRoot().getTextContent())

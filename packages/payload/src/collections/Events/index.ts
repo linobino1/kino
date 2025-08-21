@@ -132,12 +132,13 @@ export const Events: CollectionConfig<'events'> = {
           label: 'Spielstätte',
           type: 'relationship',
           relationTo: 'locations',
-          defaultValue: async ({ req: { payload } }) =>
+          defaultValue: async ({ req }) =>
             (
-              await payload.find({
+              await req.payload.find({
                 collection: 'locations',
                 limit: 1,
                 where: { default: { equals: true } },
+                req,
               })
             ).docs[0]?.id,
           admin: {
