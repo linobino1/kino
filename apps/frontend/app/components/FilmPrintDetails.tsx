@@ -43,13 +43,17 @@ export const FilmPrintDetails: React.FC<Props> = ({
           )}
           {((filmPrint as FilmPrint).movie as MovieType).title}
         </h2>
-        <div className="text-sm text-neutral-200">
-          {getMovieSpecsString({
-            type: 'full',
-            filmPrint: filmPrint,
-            t,
-          })}
-        </div>
+        <div
+          className="text-sm text-neutral-200"
+          // avoid encoding issues
+          dangerouslySetInnerHTML={{
+            __html: getMovieSpecsString({
+              type: 'full',
+              filmPrint: filmPrint,
+              t,
+            }),
+          }}
+        ></div>
       </div>
       <p
         className="my-4"

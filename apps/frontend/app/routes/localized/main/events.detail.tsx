@@ -65,11 +65,17 @@ export const loader = async ({
       title: t('event.meta.title', {
         title: event.title,
         date: formatDate(event.date, 'PPp', locale as Locale),
+        interpolation: {
+          escapeValue: false,
+        },
       }),
       description: t('event.meta.description', {
         date: formatDate(event.date, 'PPp', locale as Locale),
         location: (event.location as Location).name,
         info: event.shortDescription,
+        interpolation: {
+          escapeValue: false,
+        },
       }),
       image: event.header,
     },
