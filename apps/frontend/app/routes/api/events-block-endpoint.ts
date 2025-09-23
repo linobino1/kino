@@ -86,6 +86,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
     sort: 'date',
     depth: 3,
     locale: body.locale,
+    limit: 99,
   })
 
   return events
