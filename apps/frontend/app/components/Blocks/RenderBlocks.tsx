@@ -1,7 +1,7 @@
 import React from 'react'
 import type { Media, Page } from '@app/types/payload'
 import { Gallery } from '../Gallery'
-import { MyReactPlayer } from '../MyReactPlayer'
+import { VideoEmbed } from '../VideoEmbed'
 import { Image } from '../Image'
 import { RichText } from '../RichText'
 import { Gutter } from '../Gutter'
@@ -51,7 +51,7 @@ const RenderBlock: React.FC<BlockProps> = ({ block }) => {
     case 'video':
       return (
         <Gutter size="small">
-          <MyReactPlayer url={block.url} />;
+          <VideoEmbed src={block.url} />
         </Gutter>
       )
 

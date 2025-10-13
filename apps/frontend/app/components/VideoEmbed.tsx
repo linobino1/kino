@@ -1,34 +1,30 @@
 import { useState } from 'react'
-import ReactPlayer, { type ReactPlayerProps } from 'react-player'
+import ReactPlayer from 'react-player'
 import { useTranslation } from 'react-i18next'
 
-export type Props = ReactPlayerProps
+export type Props = React.ComponentProps<typeof ReactPlayer>
 
-export const MyReactPlayer: React.FC<Props> = (props) => {
+export const VideoEmbed: React.FC<Props> = (props) => {
   const { t } = useTranslation()
 
   // loading and error state
-  const [isLoading, setIsLoading] = useState(true)
   const [isError, setIsError] = useState(false)
 
   return (
     <div>
       <ReactPlayer
         {...props}
-        width={'100%'}
-        height={'100%'}
+        style={{ width: '100%', height: 'auto', aspectRatio: '16/9' }}
         controls={true}
-        onReady={() => setIsLoading(false)}
         onError={() => setIsError(true)}
       />
       {isError && (
         <p>
           {t('Video is not available.')}
           <br />
-          {typeof props.url === 'string' ? props.url : ''}
+          {typeof props.src === 'string' ? props.src : ''}
         </p>
       )}
-      {isLoading && <p>{t('Loading...')}</p>}
     </div>
   )
 }
