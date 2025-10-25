@@ -5,5 +5,12 @@
       "path": "/api/generate-sitemap",
       "schedule": "0 0 * * *"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "permanent": true
+    }
   ]
 }
