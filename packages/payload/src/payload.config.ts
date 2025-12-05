@@ -129,10 +129,11 @@ const configPromise: Promise<Config> = (async () => ({
     connectOptions: {
       // Connection pool limits - critical to prevent hitting MongoDB connection limits
       maxPoolSize: 10, // Max connections per function instance
-      minPoolSize: 1,  // Keep at least 1 connection warm (Vercel recommendation)
-      maxIdleTimeMS: 5000, // Close idle connections after 5s (Vercel best practice)
-      serverSelectionTimeoutMS: 5000,
+      minPoolSize: 2,  // Keep 2 connections warm for better performance
+      maxIdleTimeMS: 60000, // Close idle connections after 60s (balance between cleanup and performance)
+      serverSelectionTimeoutMS: 30000, // 30s timeout for server selection
       socketTimeoutMS: 45000,
+      connectTimeoutMS: 30000, // 30s timeout for initial connection
     },
     afterOpenConnection: async (adapter) => {
       // Only use attachDatabasePool on Vercel (not available on other platforms like Fly.io)
