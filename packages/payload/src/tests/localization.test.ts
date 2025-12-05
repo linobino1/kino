@@ -52,7 +52,6 @@ test('create a localized draft', async () => {
 
   const { id } = await payload.create({
     collection,
-    // @ts-expect-error data is partial, that is ok because draft is true
     data: {
       title: 'Movie Title',
     },

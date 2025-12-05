@@ -1,0 +1,675 @@
+{
+  "buildManifest": {
+    "serverBundles": {
+      "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0": {
+        "id": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+        "file": "build/server/nodejs_eyJydW50aW1lIjoibm9kZWpzIn0/index.js",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    },
+    "routeIdToServerBundleId": {
+      "root": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/favicon": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/api/events-block-endpoint": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/api/listmonk-wakeup": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/api/newsletter-signup": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/api/kronolith-iframe": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/api/ics": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/api/generate-sitemap": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/press-releases/route": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/localized/auth/me": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/localized/auth/signin": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/localized/auth/signup": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/localized/auth/signout": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/localized/auth/forgot-password": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/localized/auth/reset-password": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/localized/auth/verify-email": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/localized/main/index": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/localized/main/page": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/localized/main/events.index": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/localized/main/events.detail": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/localized/main/news.index": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/localized/main/news.detail": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/localized/main/filmprints.index": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/localized/main/filmprints.detail": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/localized/main/seasons.index": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/localized/main/seasons.detail": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/localized/main/event-series.detail": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/localized/main/hfg-archive.index": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/localized/main/hfg-archive.detail": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/robots.txt": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/sitemap.xml": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/catchall": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0"
+    },
+    "routes": {
+      "root": {
+        "id": "root",
+        "file": "app/root.tsx",
+        "path": "",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/favicon": {
+        "id": "routes/favicon",
+        "parentId": "root",
+        "file": "app/routes/favicon.ts",
+        "path": "/favicon.ico",
+        "config": {}
+      },
+      "routes/api/events-block-endpoint": {
+        "id": "routes/api/events-block-endpoint",
+        "parentId": "root",
+        "file": "app/routes/api/events-block-endpoint.ts",
+        "path": "/api/events-block-endpoint",
+        "config": {}
+      },
+      "routes/api/listmonk-wakeup": {
+        "id": "routes/api/listmonk-wakeup",
+        "parentId": "root",
+        "file": "app/routes/api/listmonk-wakeup.ts",
+        "path": "/api/listmonk-wakeup",
+        "config": {}
+      },
+      "routes/api/newsletter-signup": {
+        "id": "routes/api/newsletter-signup",
+        "parentId": "root",
+        "file": "app/routes/api/newsletter-signup.ts",
+        "path": "/api/newsletter-signup",
+        "config": {}
+      },
+      "routes/api/kronolith-iframe": {
+        "id": "routes/api/kronolith-iframe",
+        "parentId": "root",
+        "file": "app/routes/api/kronolith-iframe.ts",
+        "path": "/api/kronolith.html",
+        "config": {}
+      },
+      "routes/api/ics": {
+        "id": "routes/api/ics",
+        "parentId": "root",
+        "file": "app/routes/api/ics.ts",
+        "path": "/api/ics",
+        "config": {}
+      },
+      "routes/api/generate-sitemap": {
+        "id": "routes/api/generate-sitemap",
+        "parentId": "root",
+        "file": "app/routes/api/generate-sitemap.ts",
+        "path": "/api/generate-sitemap",
+        "config": {}
+      },
+      "routes/press-releases/route": {
+        "id": "routes/press-releases/route",
+        "parentId": "root",
+        "file": "app/routes/press-releases/route.tsx",
+        "path": "/press-releases/:id.pdf",
+        "config": {}
+      },
+      "routes/localized/_layout": {
+        "id": "routes/localized/_layout",
+        "parentId": "root",
+        "file": "app/routes/localized/_layout.tsx",
+        "config": {}
+      },
+      "routes/localized/auth/_layout": {
+        "id": "routes/localized/auth/_layout",
+        "parentId": "routes/localized/_layout",
+        "file": "app/routes/localized/auth/_layout.tsx",
+        "config": {}
+      },
+      "routes/localized/auth/me": {
+        "id": "routes/localized/auth/me",
+        "parentId": "routes/localized/auth/_layout",
+        "file": "app/routes/localized/auth/me.tsx",
+        "path": "/:lang?/auth/me",
+        "config": {}
+      },
+      "routes/localized/auth/signin": {
+        "id": "routes/localized/auth/signin",
+        "parentId": "routes/localized/auth/_layout",
+        "file": "app/routes/localized/auth/signin.tsx",
+        "path": "/:lang?/auth/signin",
+        "config": {}
+      },
+      "routes/localized/auth/signup": {
+        "id": "routes/localized/auth/signup",
+        "parentId": "routes/localized/auth/_layout",
+        "file": "app/routes/localized/auth/signup.tsx",
+        "path": "/:lang?/auth/signup",
+        "config": {}
+      },
+      "routes/localized/auth/signout": {
+        "id": "routes/localized/auth/signout",
+        "parentId": "routes/localized/auth/_layout",
+        "file": "app/routes/localized/auth/signout.ts",
+        "path": "/:lang?/auth/signout",
+        "config": {}
+      },
+      "routes/localized/auth/forgot-password": {
+        "id": "routes/localized/auth/forgot-password",
+        "parentId": "routes/localized/auth/_layout",
+        "file": "app/routes/localized/auth/forgot-password.tsx",
+        "path": "/:lang?/auth/forgot-password",
+        "config": {}
+      },
+      "routes/localized/auth/reset-password": {
+        "id": "routes/localized/auth/reset-password",
+        "parentId": "routes/localized/auth/_layout",
+        "file": "app/routes/localized/auth/reset-password.tsx",
+        "path": "/:lang?/auth/reset-password",
+        "config": {}
+      },
+      "routes/localized/auth/verify-email": {
+        "id": "routes/localized/auth/verify-email",
+        "parentId": "routes/localized/auth/_layout",
+        "file": "app/routes/localized/auth/verify-email.tsx",
+        "path": "/:lang?/auth/verify-email",
+        "config": {}
+      },
+      "routes/localized/main/_layout": {
+        "id": "routes/localized/main/_layout",
+        "parentId": "routes/localized/_layout",
+        "file": "app/routes/localized/main/_layout.tsx",
+        "config": {}
+      },
+      "routes/localized/main/index": {
+        "id": "routes/localized/main/index",
+        "parentId": "routes/localized/main/_layout",
+        "file": "app/routes/localized/main/index.tsx",
+        "path": "/:lang?",
+        "index": true,
+        "config": {}
+      },
+      "routes/localized/main/page": {
+        "id": "routes/localized/main/page",
+        "parentId": "routes/localized/main/_layout",
+        "file": "app/routes/localized/main/page.tsx",
+        "path": "/:lang?/:slug",
+        "config": {}
+      },
+      "routes/localized/main/events.index": {
+        "id": "routes/localized/main/events.index",
+        "parentId": "routes/localized/main/_layout",
+        "file": "app/routes/localized/main/events.index.tsx",
+        "path": "/:lang?/events",
+        "config": {}
+      },
+      "routes/localized/main/events.detail": {
+        "id": "routes/localized/main/events.detail",
+        "parentId": "routes/localized/main/_layout",
+        "file": "app/routes/localized/main/events.detail.tsx",
+        "path": "/:lang?/events/:slug",
+        "config": {}
+      },
+      "routes/localized/main/news.index": {
+        "id": "routes/localized/main/news.index",
+        "parentId": "routes/localized/main/_layout",
+        "file": "app/routes/localized/main/news.index.tsx",
+        "path": "/:lang?/news",
+        "config": {}
+      },
+      "routes/localized/main/news.detail": {
+        "id": "routes/localized/main/news.detail",
+        "parentId": "routes/localized/main/_layout",
+        "file": "app/routes/localized/main/news.detail.tsx",
+        "path": "/:lang?/news/:slug",
+        "config": {}
+      },
+      "routes/localized/main/filmprints.index": {
+        "id": "routes/localized/main/filmprints.index",
+        "parentId": "routes/localized/main/_layout",
+        "file": "app/routes/localized/main/filmprints.index.tsx",
+        "path": "/:lang?/filmprints",
+        "config": {}
+      },
+      "routes/localized/main/filmprints.detail": {
+        "id": "routes/localized/main/filmprints.detail",
+        "parentId": "routes/localized/main/_layout",
+        "file": "app/routes/localized/main/filmprints.detail.tsx",
+        "path": "/:lang?/filmprints/:slug",
+        "config": {}
+      },
+      "routes/localized/main/seasons.index": {
+        "id": "routes/localized/main/seasons.index",
+        "parentId": "routes/localized/main/_layout",
+        "file": "app/routes/localized/main/seasons.index.tsx",
+        "path": "/:lang?/seasons",
+        "config": {}
+      },
+      "routes/localized/main/seasons.detail": {
+        "id": "routes/localized/main/seasons.detail",
+        "parentId": "routes/localized/main/_layout",
+        "file": "app/routes/localized/main/seasons.detail.tsx",
+        "path": "/:lang?/seasons/:slug",
+        "config": {}
+      },
+      "routes/localized/main/event-series.detail": {
+        "id": "routes/localized/main/event-series.detail",
+        "parentId": "routes/localized/main/_layout",
+        "file": "app/routes/localized/main/event-series.detail.tsx",
+        "path": "/:lang?/event-series/:slug",
+        "config": {}
+      },
+      "routes/localized/main/hfg-archive.index": {
+        "id": "routes/localized/main/hfg-archive.index",
+        "parentId": "routes/localized/main/_layout",
+        "file": "app/routes/localized/main/hfg-archive.index.tsx",
+        "path": "/:lang?/hfg-archive",
+        "config": {}
+      },
+      "routes/localized/main/hfg-archive.detail": {
+        "id": "routes/localized/main/hfg-archive.detail",
+        "parentId": "routes/localized/main/_layout",
+        "file": "app/routes/localized/main/hfg-archive.detail.tsx",
+        "path": "/:lang?/hfg-archive/:slug",
+        "config": {}
+      },
+      "routes/robots.txt": {
+        "id": "routes/robots.txt",
+        "parentId": "root",
+        "file": "app/routes/robots.txt.ts",
+        "path": "robots.txt",
+        "config": {}
+      },
+      "routes/sitemap.xml": {
+        "id": "routes/sitemap.xml",
+        "parentId": "root",
+        "file": "app/routes/sitemap.xml.ts",
+        "path": "sitemap.xml",
+        "config": {}
+      },
+      "routes/catchall": {
+        "id": "routes/catchall",
+        "parentId": "root",
+        "file": "app/routes/catchall.tsx",
+        "path": "*",
+        "config": {}
+      }
+    }
+  },
+  "reactRouterConfig": {
+    "appDirectory": "/Users/leohilsheimer/Sites/kino/apps/frontend/app",
+    "basename": "/",
+    "buildDirectory": "/Users/leohilsheimer/Sites/kino/apps/frontend/build",
+    "future": {
+      "v8_middleware": false,
+      "unstable_optimizeDeps": false,
+      "unstable_splitRouteModules": false,
+      "unstable_subResourceIntegrity": false,
+      "unstable_viteEnvironmentApi": false
+    },
+    "routes": {
+      "root": {
+        "id": "root",
+        "file": "root.tsx",
+        "path": ""
+      },
+      "routes/favicon": {
+        "id": "routes/favicon",
+        "parentId": "root",
+        "file": "./routes/favicon.ts",
+        "path": "/favicon.ico"
+      },
+      "routes/api/events-block-endpoint": {
+        "id": "routes/api/events-block-endpoint",
+        "parentId": "root",
+        "file": "./routes/api/events-block-endpoint.ts",
+        "path": "/api/events-block-endpoint"
+      },
+      "routes/api/listmonk-wakeup": {
+        "id": "routes/api/listmonk-wakeup",
+        "parentId": "root",
+        "file": "./routes/api/listmonk-wakeup.ts",
+        "path": "/api/listmonk-wakeup"
+      },
+      "routes/api/newsletter-signup": {
+        "id": "routes/api/newsletter-signup",
+        "parentId": "root",
+        "file": "./routes/api/newsletter-signup.ts",
+        "path": "/api/newsletter-signup"
+      },
+      "routes/api/kronolith-iframe": {
+        "id": "routes/api/kronolith-iframe",
+        "parentId": "root",
+        "file": "./routes/api/kronolith-iframe.ts",
+        "path": "/api/kronolith.html"
+      },
+      "routes/api/ics": {
+        "id": "routes/api/ics",
+        "parentId": "root",
+        "file": "./routes/api/ics.ts",
+        "path": "/api/ics"
+      },
+      "routes/api/generate-sitemap": {
+        "id": "routes/api/generate-sitemap",
+        "parentId": "root",
+        "file": "./routes/api/generate-sitemap.ts",
+        "path": "/api/generate-sitemap"
+      },
+      "routes/press-releases/route": {
+        "id": "routes/press-releases/route",
+        "parentId": "root",
+        "file": "./routes/press-releases/route.tsx",
+        "path": "/press-releases/:id.pdf"
+      },
+      "routes/localized/_layout": {
+        "id": "routes/localized/_layout",
+        "parentId": "root",
+        "file": "./routes/localized/_layout.tsx"
+      },
+      "routes/localized/auth/_layout": {
+        "id": "routes/localized/auth/_layout",
+        "parentId": "routes/localized/_layout",
+        "file": "./routes/localized/auth/_layout.tsx"
+      },
+      "routes/localized/auth/me": {
+        "id": "routes/localized/auth/me",
+        "parentId": "routes/localized/auth/_layout",
+        "file": "./routes/localized/auth/me.tsx",
+        "path": "/:lang?/auth/me"
+      },
+      "routes/localized/auth/signin": {
+        "id": "routes/localized/auth/signin",
+        "parentId": "routes/localized/auth/_layout",
+        "file": "./routes/localized/auth/signin.tsx",
+        "path": "/:lang?/auth/signin"
+      },
+      "routes/localized/auth/signup": {
+        "id": "routes/localized/auth/signup",
+        "parentId": "routes/localized/auth/_layout",
+        "file": "./routes/localized/auth/signup.tsx",
+        "path": "/:lang?/auth/signup"
+      },
+      "routes/localized/auth/signout": {
+        "id": "routes/localized/auth/signout",
+        "parentId": "routes/localized/auth/_layout",
+        "file": "./routes/localized/auth/signout.ts",
+        "path": "/:lang?/auth/signout"
+      },
+      "routes/localized/auth/forgot-password": {
+        "id": "routes/localized/auth/forgot-password",
+        "parentId": "routes/localized/auth/_layout",
+        "file": "./routes/localized/auth/forgot-password.tsx",
+        "path": "/:lang?/auth/forgot-password"
+      },
+      "routes/localized/auth/reset-password": {
+        "id": "routes/localized/auth/reset-password",
+        "parentId": "routes/localized/auth/_layout",
+        "file": "./routes/localized/auth/reset-password.tsx",
+        "path": "/:lang?/auth/reset-password"
+      },
+      "routes/localized/auth/verify-email": {
+        "id": "routes/localized/auth/verify-email",
+        "parentId": "routes/localized/auth/_layout",
+        "file": "./routes/localized/auth/verify-email.tsx",
+        "path": "/:lang?/auth/verify-email"
+      },
+      "routes/localized/main/_layout": {
+        "id": "routes/localized/main/_layout",
+        "parentId": "routes/localized/_layout",
+        "file": "./routes/localized/main/_layout.tsx"
+      },
+      "routes/localized/main/index": {
+        "id": "routes/localized/main/index",
+        "parentId": "routes/localized/main/_layout",
+        "file": "./routes/localized/main/index.tsx",
+        "path": "/:lang?",
+        "index": true
+      },
+      "routes/localized/main/page": {
+        "id": "routes/localized/main/page",
+        "parentId": "routes/localized/main/_layout",
+        "file": "./routes/localized/main/page.tsx",
+        "path": "/:lang?/:slug"
+      },
+      "routes/localized/main/events.index": {
+        "id": "routes/localized/main/events.index",
+        "parentId": "routes/localized/main/_layout",
+        "file": "./routes/localized/main/events.index.tsx",
+        "path": "/:lang?/events"
+      },
+      "routes/localized/main/events.detail": {
+        "id": "routes/localized/main/events.detail",
+        "parentId": "routes/localized/main/_layout",
+        "file": "./routes/localized/main/events.detail.tsx",
+        "path": "/:lang?/events/:slug"
+      },
+      "routes/localized/main/news.index": {
+        "id": "routes/localized/main/news.index",
+        "parentId": "routes/localized/main/_layout",
+        "file": "./routes/localized/main/news.index.tsx",
+        "path": "/:lang?/news"
+      },
+      "routes/localized/main/news.detail": {
+        "id": "routes/localized/main/news.detail",
+        "parentId": "routes/localized/main/_layout",
+        "file": "./routes/localized/main/news.detail.tsx",
+        "path": "/:lang?/news/:slug"
+      },
+      "routes/localized/main/filmprints.index": {
+        "id": "routes/localized/main/filmprints.index",
+        "parentId": "routes/localized/main/_layout",
+        "file": "./routes/localized/main/filmprints.index.tsx",
+        "path": "/:lang?/filmprints"
+      },
+      "routes/localized/main/filmprints.detail": {
+        "id": "routes/localized/main/filmprints.detail",
+        "parentId": "routes/localized/main/_layout",
+        "file": "./routes/localized/main/filmprints.detail.tsx",
+        "path": "/:lang?/filmprints/:slug"
+      },
+      "routes/localized/main/seasons.index": {
+        "id": "routes/localized/main/seasons.index",
+        "parentId": "routes/localized/main/_layout",
+        "file": "./routes/localized/main/seasons.index.tsx",
+        "path": "/:lang?/seasons"
+      },
+      "routes/localized/main/seasons.detail": {
+        "id": "routes/localized/main/seasons.detail",
+        "parentId": "routes/localized/main/_layout",
+        "file": "./routes/localized/main/seasons.detail.tsx",
+        "path": "/:lang?/seasons/:slug"
+      },
+      "routes/localized/main/event-series.detail": {
+        "id": "routes/localized/main/event-series.detail",
+        "parentId": "routes/localized/main/_layout",
+        "file": "./routes/localized/main/event-series.detail.tsx",
+        "path": "/:lang?/event-series/:slug"
+      },
+      "routes/localized/main/hfg-archive.index": {
+        "id": "routes/localized/main/hfg-archive.index",
+        "parentId": "routes/localized/main/_layout",
+        "file": "./routes/localized/main/hfg-archive.index.tsx",
+        "path": "/:lang?/hfg-archive"
+      },
+      "routes/localized/main/hfg-archive.detail": {
+        "id": "routes/localized/main/hfg-archive.detail",
+        "parentId": "routes/localized/main/_layout",
+        "file": "./routes/localized/main/hfg-archive.detail.tsx",
+        "path": "/:lang?/hfg-archive/:slug"
+      },
+      "routes/robots.txt": {
+        "id": "routes/robots.txt",
+        "parentId": "root",
+        "file": "./routes/robots.txt.ts",
+        "path": "robots.txt"
+      },
+      "routes/sitemap.xml": {
+        "id": "routes/sitemap.xml",
+        "parentId": "root",
+        "file": "./routes/sitemap.xml.ts",
+        "path": "sitemap.xml"
+      },
+      "routes/catchall": {
+        "id": "routes/catchall",
+        "parentId": "root",
+        "file": "./routes/catchall.tsx",
+        "path": "*"
+      }
+    },
+    "routeDiscovery": {
+      "mode": "lazy",
+      "manifestPath": "/__manifest"
+    },
+    "serverBuildFile": "index.js",
+    "serverModuleFormat": "esm",
+    "ssr": true,
+    "unstable_routeConfig": [
+      {
+        "id": "root",
+        "path": "",
+        "file": "root.tsx",
+        "children": [
+          {
+            "file": "./routes/favicon.ts",
+            "path": "/favicon.ico"
+          },
+          {
+            "file": "./routes/api/events-block-endpoint.ts",
+            "path": "/api/events-block-endpoint"
+          },
+          {
+            "file": "./routes/api/listmonk-wakeup.ts",
+            "path": "/api/listmonk-wakeup"
+          },
+          {
+            "file": "./routes/api/newsletter-signup.ts",
+            "path": "/api/newsletter-signup"
+          },
+          {
+            "file": "./routes/api/kronolith-iframe.ts",
+            "path": "/api/kronolith.html"
+          },
+          {
+            "file": "./routes/api/ics.ts",
+            "path": "/api/ics"
+          },
+          {
+            "file": "./routes/api/generate-sitemap.ts",
+            "path": "/api/generate-sitemap"
+          },
+          {
+            "file": "./routes/press-releases/route.tsx",
+            "path": "/press-releases/:id.pdf"
+          },
+          {
+            "file": "./routes/localized/_layout.tsx",
+            "children": [
+              {
+                "file": "./routes/localized/auth/_layout.tsx",
+                "children": [
+                  {
+                    "file": "./routes/localized/auth/me.tsx",
+                    "path": "/:lang?/auth/me"
+                  },
+                  {
+                    "file": "./routes/localized/auth/signin.tsx",
+                    "path": "/:lang?/auth/signin"
+                  },
+                  {
+                    "file": "./routes/localized/auth/signup.tsx",
+                    "path": "/:lang?/auth/signup"
+                  },
+                  {
+                    "file": "./routes/localized/auth/signout.ts",
+                    "path": "/:lang?/auth/signout"
+                  },
+                  {
+                    "file": "./routes/localized/auth/forgot-password.tsx",
+                    "path": "/:lang?/auth/forgot-password"
+                  },
+                  {
+                    "file": "./routes/localized/auth/reset-password.tsx",
+                    "path": "/:lang?/auth/reset-password"
+                  },
+                  {
+                    "file": "./routes/localized/auth/verify-email.tsx",
+                    "path": "/:lang?/auth/verify-email"
+                  }
+                ]
+              },
+              {
+                "file": "./routes/localized/main/_layout.tsx",
+                "children": [
+                  {
+                    "file": "./routes/localized/main/index.tsx",
+                    "index": true,
+                    "path": "/:lang?"
+                  },
+                  {
+                    "file": "./routes/localized/main/page.tsx",
+                    "path": "/:lang?/:slug"
+                  },
+                  {
+                    "file": "./routes/localized/main/events.index.tsx",
+                    "path": "/:lang?/events"
+                  },
+                  {
+                    "file": "./routes/localized/main/events.detail.tsx",
+                    "path": "/:lang?/events/:slug"
+                  },
+                  {
+                    "file": "./routes/localized/main/news.index.tsx",
+                    "path": "/:lang?/news"
+                  },
+                  {
+                    "file": "./routes/localized/main/news.detail.tsx",
+                    "path": "/:lang?/news/:slug"
+                  },
+                  {
+                    "file": "./routes/localized/main/filmprints.index.tsx",
+                    "path": "/:lang?/filmprints"
+                  },
+                  {
+                    "file": "./routes/localized/main/filmprints.detail.tsx",
+                    "path": "/:lang?/filmprints/:slug"
+                  },
+                  {
+                    "file": "./routes/localized/main/seasons.index.tsx",
+                    "path": "/:lang?/seasons"
+                  },
+                  {
+                    "file": "./routes/localized/main/seasons.detail.tsx",
+                    "path": "/:lang?/seasons/:slug"
+                  },
+                  {
+                    "file": "./routes/localized/main/event-series.detail.tsx",
+                    "path": "/:lang?/event-series/:slug"
+                  },
+                  {
+                    "file": "./routes/localized/main/hfg-archive.index.tsx",
+                    "path": "/:lang?/hfg-archive"
+                  },
+                  {
+                    "file": "./routes/localized/main/hfg-archive.detail.tsx",
+                    "path": "/:lang?/hfg-archive/:slug"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "file": "./routes/robots.txt.ts",
+            "path": "robots.txt"
+          },
+          {
+            "file": "./routes/sitemap.xml.ts",
+            "path": "sitemap.xml"
+          },
+          {
+            "file": "./routes/catchall.tsx",
+            "path": "*"
+          }
+        ]
+      }
+    ]
+  },
+  "viteConfig": {
+    "build": {
+      "assetsDir": "assets"
+    }
+  }
+}

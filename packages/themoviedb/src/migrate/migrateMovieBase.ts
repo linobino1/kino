@@ -64,7 +64,6 @@ export const migrateMovieBase = async (
   const movie = await payload.create({
     collection: 'movies',
     draft: true,
-    // @ts-expect-error data is partial, that is ok because draft is true
     data: {
       originalTitle: data.original_title,
       title: data.title,

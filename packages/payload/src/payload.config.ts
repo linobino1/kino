@@ -1,6 +1,7 @@
 import path from 'path'
 import { buildConfig, deepMerge, type Config } from 'payload'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { attachDatabasePool } from '@vercel/functions'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { de } from 'payload/i18n/de'
@@ -125,6 +126,21 @@ const configPromise: Promise<Config> = (async () => ({
   },
   db: mongooseAdapter({
     url: env.DATABASE_URI || '',
+    connectOptions: {
+      // Connection pool limits - critical to prevent hitting MongoDB connection limits
+      maxPoolSize: 10, // Max connections per function instance
+      minPoolSize: 1,  // Keep at least 1 connection warm (Vercel recommendation)
+      maxIdleTimeMS: 5000, // Close idle connections after 5s (Vercel best practice)
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    },
+    afterOpenConnection: async (adapter) => {
+      // Only use attachDatabasePool on Vercel (not available on other platforms like Fly.io)
+      if (process.env.VERCEL) {
+        const client = adapter.connection.getClient()
+        attachDatabasePool(client)
+      }
+    },
   }),
   telemetry: false,
   plugins: [

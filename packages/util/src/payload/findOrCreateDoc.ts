@@ -50,9 +50,8 @@ export const findOrCreateDoc = async <T extends CollectionSlug>({
 
   const created = await payload.create({
     collection,
-    // @ts-expect-error data may be partial if draft is true
     data,
-    draft,
+    draft: draft as true, // we are not allowed to pass false, but it still works
     locale,
   })
 

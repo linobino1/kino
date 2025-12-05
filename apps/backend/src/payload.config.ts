@@ -1,4 +1,5 @@
 import { configurePayload } from '@app/payload/config'
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { tmdbAxiosClient } from '@app/themoviedb'
 import { siteTitle, timezone } from '@app/util/config'
 import path from 'path'
@@ -8,6 +9,9 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default configurePayload({
+  db: mongooseAdapter({
+    url: process.env.DATABASE_URI || '',
+  }),
   onInit() {
     try {
       // set themoviedb.org API key from environment variable

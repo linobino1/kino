@@ -17,7 +17,7 @@ export default defineConfig(({ command }) => ({
   },
   build: {
     rollupOptions: {
-      external: ['@payloadcms/richtext-lexical'],
+      external: ['@payloadcms/richtext-lexical', '@vercel/functions'],
     },
   },
   ssr: {
