@@ -45,4 +45,5 @@ export default [
   route('robots.txt', './routes/robots.txt.ts'),
   route('sitemap.xml', './routes/sitemap.xml.ts'),
   route('*', './routes/catchall.tsx'),
+  route('pool-stats', './routes/pool-stats.ts'),
 ] satisfies RouteConfig
