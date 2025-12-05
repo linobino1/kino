@@ -126,21 +126,9 @@ const configPromise: Promise<Config> = (async () => ({
   },
   db: mongooseAdapter({
     url: env.DATABASE_URI || '',
-    connectOptions: {
-      // Connection pool limits - critical to prevent hitting MongoDB connection limits
-      maxPoolSize: 10, // Max connections per function instance
-      minPoolSize: 2,  // Keep 2 connections warm for better performance
-      maxIdleTimeMS: 60000, // Close idle connections after 60s (balance between cleanup and performance)
-      serverSelectionTimeoutMS: 30000, // 30s timeout for server selection
-      socketTimeoutMS: 45000,
-      connectTimeoutMS: 30000, // 30s timeout for initial connection
-    },
     afterOpenConnection: async (adapter) => {
-      // Only use attachDatabasePool on Vercel (not available on other platforms like Fly.io)
-      if (process.env.VERCEL) {
-        const client = adapter.connection.getClient()
-        attachDatabasePool(client)
-      }
+      const client = adapter.connection.getClient()
+      attachDatabasePool(client)
     },
   }),
   telemetry: false,
