@@ -40,6 +40,7 @@ import { Icon as Icon_c6286fbc7f62f2ce3ef9c604e9c02147 } from '../../../componen
 import { Logo as Logo_e577ad08317d2e8977edf3e679038fc8 } from '../../../components/graphics/Logo'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 import { TMDBMigration as TMDBMigration_b4543c28c07beb0098fe53a85cee14d7 } from '../../../views/TMDBMigration/index'
+import { CollectionCards as CollectionCards_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 
 export const importMap = {
   "/components/SlugComponent#SlugComponent": SlugComponent_dd4248bc06cf947c6b45acf9ed54f133,
@@ -83,5 +84,6 @@ export const importMap = {
   "/components/graphics/Icon#Icon": Icon_c6286fbc7f62f2ce3ef9c604e9c02147,
   "/components/graphics/Logo#Logo": Logo_e577ad08317d2e8977edf3e679038fc8,
   "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
-  "/views/TMDBMigration/index#TMDBMigration": TMDBMigration_b4543c28c07beb0098fe53a85cee14d7
+  "/views/TMDBMigration/index#TMDBMigration": TMDBMigration_b4543c28c07beb0098fe53a85cee14d7,
+  "@payloadcms/ui/rsc#CollectionCards": CollectionCards_ab83ff7e88da8d3530831f296ec4756a
 }
