@@ -54,9 +54,6 @@ catalogs:
     '@unocss/reset':
       specifier: ^66.0.0
       version: 66.5.10
-    '@vercel/functions':
-      specifier: ^3.3.4
-      version: 3.3.4
     i18next:
       specifier: ^24.2.1
       version: 24.2.3
@@ -161,9 +158,6 @@ importers:
       '@payloadcms/ui':
         specifier: 'catalog:'
         version: 3.65.0(@types/react@19.2.7)(monaco-editor@0.25.2)(next@15.5.9(@babel/core@7.28.5)(babel-plugin-macros@3.1.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(sass@1.77.4))(payload@3.65.0(graphql@16.12.0)(typescript@5.9.3))(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(typescript@5.9.3)
-      '@vercel/functions':
-        specifier: 'catalog:'
-        version: 3.3.4(@aws-sdk/credential-provider-web-identity@3.943.0)
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -252,9 +246,6 @@ importers:
       '@unocss/reset':
         specifier: 'catalog:'
         version: 66.5.10
-      '@vercel/functions':
-        specifier: 'catalog:'
-        version: 3.3.4(@aws-sdk/credential-provider-web-identity@3.943.0)
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -2680,19 +2671,6 @@ packages:
     resolution: {integrity: sha512-GegFDmcWe0V2CR/uN1f+iQuDh2R1vA6EAwSvl1nyL+6ue0/zLyF9yhdVnypIVlJnS6RK/xaLPOP6vWJnqRGhZg==}
     peerDependencies:
       vite: ^2.9.0 || ^3.0.0-0 || ^4.0.0 || ^5.0.0-0 || ^6.0.0-0 || ^7.0.0-0
-
-  '@vercel/functions@3.3.4':
-    resolution: {integrity: sha512-IoP8Xfr1QeCm+Dv5od3bfPiw/VgLKsA7IBd/88M/Wr421HdbH4b6bW5z8CTxiz1QRpalrPFZcLdMdxu+2hAjZg==}
-    engines: {node: '>= 20'}
-    peerDependencies:
-      '@aws-sdk/credential-provider-web-identity': '*'
-    peerDependenciesMeta:
-      '@aws-sdk/credential-provider-web-identity':
-        optional: true
-
-  '@vercel/oidc@3.0.5':
-    resolution: {integrity: sha512-fnYhv671l+eTTp48gB4zEsTW/YtRgRPnkI2nT7x6qw5rkI1Lq2hTmQIpHPgyThI0znLK+vX2n9XxKdXZ7BUbbw==}
-    engines: {node: '>= 20'}
 
   '@vercel/react-router@1.2.4':
     resolution: {integrity: sha512-ep4yczB3O24yMQ+08IBB/zamNTAW0BzgEv1urnhLnsvN6wrjACk/2M28obmyE0EEgW5YLNaYVbGKcYI3QSMcQw==}
@@ -9278,14 +9256,6 @@ snapshots:
       tinyglobby: 0.2.15
       unplugin-utils: 0.3.1
       vite: 7.2.6(@types/node@22.19.1)(jiti@2.6.1)(sass@1.77.4)(tsx@4.21.0)
-
-  '@vercel/functions@3.3.4(@aws-sdk/credential-provider-web-identity@3.943.0)':
-    dependencies:
-      '@vercel/oidc': 3.0.5
-    optionalDependencies:
-      '@aws-sdk/credential-provider-web-identity': 3.943.0
-
-  '@vercel/oidc@3.0.5': {}
 
   '@vercel/react-router@1.2.4(@react-router/dev@7.9.3(@react-router/serve@7.9.3(react-router@7.9.3(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3))(@types/node@22.19.1)(babel-plugin-macros@3.1.0)(jiti@2.6.1)(react-router@7.9.3(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(sass@1.77.4)(tsx@4.21.0)(typescript@5.9.3)(vite@7.2.6(@types/node@22.19.1)(jiti@2.6.1)(sass@1.77.4)(tsx@4.21.0)))(@react-router/node@7.9.3(react-router@7.9.3(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3))(isbot@5.1.32)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)':
     dependencies:

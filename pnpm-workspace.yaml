@@ -7,8 +7,6 @@ catalog:
   msw: '^2.7.0'
   next: '15.5.9'
 
-  '@vercel/functions': '^3.3.4'
-
   payload: '3.65.0'
   '@payloadcms/db-mongodb': '3.65.0'
   '@payloadcms/email-nodemailer': '3.65.0'

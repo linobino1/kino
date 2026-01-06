@@ -1,7 +1,6 @@
 import path from 'path'
 import { buildConfig, deepMerge, type Config } from 'payload'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { attachDatabasePool } from '@vercel/functions'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { de } from 'payload/i18n/de'
@@ -126,10 +125,6 @@ const configPromise: Promise<Config> = (async () => ({
   },
   db: mongooseAdapter({
     url: env.DATABASE_URI || '',
-    afterOpenConnection: async (adapter) => {
-      const client = adapter.connection.getClient()
-      attachDatabasePool(client)
-    },
   }),
   telemetry: false,
   plugins: [
