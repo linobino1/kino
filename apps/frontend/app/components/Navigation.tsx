@@ -21,7 +21,7 @@ export const Navigation: React.FC<Props> = ({
   className,
 }) => {
   const _navItemClassName = cn(navItemClassName, {
-    'py-0 md:py-0 px-3': condensed,
+    'cursor-pointer py-0 md:py-0 px-3': condensed,
   })
 
   // each item renders as either an internal link, an external link with an icon or text, or another navigation
@@ -49,7 +49,7 @@ export const Navigation: React.FC<Props> = ({
               <div className="group relative cursor-pointer max-md:contents">
                 <div
                   className={cn(_navItemClassName, {
-                    'text-gray-400 after:ml-2 after:inline-block after:min-w-4 after:text-center after:text-[0.8em] after:text-gray-300 max-md:after:content-["▼"]':
+                    'text-gray-400 after:ml-2 after:inline-block after:min-w-4 after:text-center after:text-[0.8em] after:text-gray-300 after:content-["▼"] md:after:hidden':
                       item.subnavigation,
                   })}
                 >
@@ -74,7 +74,7 @@ export const Navigation: React.FC<Props> = ({
                 className={({ isActive }) =>
                   cn(_navItemClassName, {
                     'text-black hover:text-inherit': isActive,
-                    'after:ml-2 after:inline-block after:min-w-4 after:text-center after:text-[0.8em] after:text-gray-300 max-md:py-2 max-md:after:content-["|"]':
+                    'after:ml-2 after:inline-block after:min-w-4 after:text-center after:text-[0.8em] after:text-gray-300 after:content-["|"] max-md:py-2 md:after:hidden':
                       isChild,
                   })
                 }

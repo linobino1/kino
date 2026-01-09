@@ -2,6 +2,8 @@ import type { Event } from '@app/types/payload'
 import { cn } from '@app/util/cn'
 import { Form } from 'react-router'
 import { useTranslation } from 'react-i18next'
+import { Icon } from '@iconify/react'
+import calendarIcon from '@iconify-icons/material-symbols/calendar-add-on'
 
 type Props = React.HTMLAttributes<HTMLButtonElement> & {
   events: Event[]
@@ -26,12 +28,12 @@ export const ICSDownloadButton: React.FC<Props> = ({ events, showLabel = true, c
       <input type="hidden" name="locale" value={i18n.language} />
       <button
         type="submit"
-        className="contents"
+        className="contents cursor-pointer"
         title={!showLabel ? label : undefined}
         aria-label={!showLabel ? label : undefined}
       >
         {showLabel && label}
-        <div className={cn('i-material-symbols:calendar-add-on text-xl', className)} />
+        <Icon icon={calendarIcon} className={cn('text-xl', className)} />
       </button>
     </Form>
   )

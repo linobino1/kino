@@ -9,8 +9,7 @@ import React from 'react'
 
 import { importMap } from './admin/importMap.js'
 import '@payloadcms/next/css'
-import './custom.scss'
-import './uno.css'
+import './payload.css'
 
 type Args = {
   children: React.ReactNode

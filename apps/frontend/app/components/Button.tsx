@@ -10,7 +10,7 @@ export const Button: React.FC<Props> = ({ look = 'default', size = 'md', classNa
     <button
       {...props}
       className={cn(
-        'flex w-fit items-center justify-center font-semibold tracking-tight shadow transition-colors',
+        'flex w-fit cursor-pointer items-center justify-center font-semibold tracking-tight shadow transition-colors',
         {
           'bg-theme-400 hover:bg-theme-300 text-white': look === 'default',
           'bg-red-500 text-white hover:bg-red-400': look === 'red',

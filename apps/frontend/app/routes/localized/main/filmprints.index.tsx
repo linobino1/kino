@@ -18,6 +18,8 @@ import { Button } from '~/components/Button'
 import { Gutter } from '~/components/Gutter'
 import { RenderBlocks } from '~/components/Blocks/RenderBlocks'
 import { Link } from '~/components/localized-link'
+import { Icon } from '@iconify/react'
+import arrow from '@iconify-icons/material-symbols/arrow-forward-ios-rounded'
 
 const limit = 20
 
@@ -263,13 +265,13 @@ export default function FilmprintsPage({
             name="query"
             defaultValue={query}
             placeholder={t('search...') || ''}
-            className="w-full rounded-full border border-gray-300 px-2 py-1"
+            className="w-full rounded-full border border-gray-300 bg-white px-2 py-1 text-neutral-700"
           />
           <button
             onClick={() => form.current?.submit()}
-            className="bg-theme-500 border-1 hover:bg-theme-600 absolute bottom-0 right-0 top-0 flex aspect-square items-center justify-center rounded-r-full border-neutral-200 text-white"
+            className="bg-theme-500 hover:bg-theme-600 absolute top-0 right-0 bottom-0 flex aspect-square cursor-pointer items-center justify-center rounded-r-full border-1 border-neutral-200 text-white"
           >
-            <span className="i-material-symbols:arrow-forward-ios-rounded" />
+            <Icon icon={arrow} />
           </button>
         </div>
         {filters
@@ -281,7 +283,7 @@ export default function FilmprintsPage({
               name={filter.name}
               onChange={() => form.current?.submit()}
               value={filter.value || ''}
-              className="border-1 rounded-full border-r-8 bg-neutral-100 px-2 py-1 text-xs text-black"
+              className="rounded-full border-1 border-r-8 border-neutral-100 bg-neutral-100 px-2 py-1 text-xs text-black"
             >
               {filter.options.map((option, j) => (
                 <option key={j} value={option.value}>{`${t(

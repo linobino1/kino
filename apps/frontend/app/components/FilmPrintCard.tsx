@@ -2,6 +2,8 @@ import React from 'react'
 import type { Country, FilmPrint, Media, Movie, Person } from '@app/types/payload'
 import { useTranslation } from 'react-i18next'
 import { Image } from '~/components/Image'
+import { Icon } from '@iconify/react'
+import arrow from '@iconify-icons/material-symbols/arrow-forward-ios-rounded'
 
 type Props = {
   item: FilmPrint
@@ -37,9 +39,9 @@ export const FilmPrintCard: React.FC<Props> = ({ item }) => {
         <div className="relative overflow-hidden leading-normal after:absolute after:bottom-0 after:left-0 after:z-10 after:h-[5rem] after:w-full after:bg-[linear-gradient(transparent,#FFFFFF)] after:content-['_'] sm:h-[25vw] lg:h-[20em]">
           {movie.synopsis}
         </div>
-        <div className="flex items-center gap-1 justify-self-end text-xs font-medium uppercase text-neutral-200">
+        <div className="flex items-center gap-1 justify-self-end text-xs font-medium text-neutral-200 uppercase">
           {t('More Info')}
-          <span className="i-material-symbols:arrow-forward-ios-rounded" />
+          <Icon icon={arrow} />
         </div>
       </div>
     </div>

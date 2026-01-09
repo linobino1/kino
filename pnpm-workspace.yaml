@@ -29,7 +29,3 @@ catalog:
   '@react-router/node': '7.11.0'
   '@react-router/serve': '7.11.0'
   '@react-router/dev': '7.11.0'
-
-  unocss: '^66.0.0'
-  '@unocss/reset': '^66.0.0'
-  '@unocss/cli': '^66.0.0'

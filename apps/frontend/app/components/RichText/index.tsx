@@ -29,7 +29,8 @@ export const RichText: React.FC<Props> = ({
     <div className={className}>
       <div
         className={cn('!max-w-none', {
-          prose: enableProse,
+          // prose: enableProse,
+          'prose prose-white': enableProse,
         })}
       >
         {content &&

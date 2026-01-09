@@ -27,7 +27,7 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
         className,
       )}
     >
-      <div className="p3 absolute -top-2.5 left-2 flex flex-col items-center bg-white pb-4 uppercase leading-none text-gray-700">
+      <div className="absolute -top-2.5 left-2 flex flex-col items-center bg-white p-3 pb-4 leading-none text-gray-700 uppercase">
         <DateComponent date={event.date as string} format="EEEEEE" />
         <DateComponent date={event.date as string} format="MMM" />
         <DateComponent
@@ -84,16 +84,16 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
             )}
           </div>
           <Link to={event.url ?? ''} prefetch="intent" className="space-y-1">
-            <h3 className="font-semibold uppercase leading-tight"> {event.title}</h3>
+            <h3 className="leading-tight font-semibold uppercase"> {event.title}</h3>
             <div className="text-sm text-gray-500">{getEventSubtitle({ event, t })}</div>
           </Link>
-          <div className="text-balance text-sm font-semibold leading-tight tracking-tight">
+          <div className="text-sm leading-tight font-semibold tracking-tight text-balance">
             {event.comment}
           </div>
           <Link
             to={event.url ?? ''}
             prefetch="intent"
-            className="flex flex-1 items-end text-sm uppercase text-gray-400 transition-colors hover:text-black"
+            className="flex flex-1 items-end text-sm text-gray-400 uppercase transition-colors hover:text-black"
           >
             {t('More Info')}
           </Link>

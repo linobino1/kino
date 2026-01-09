@@ -10,9 +10,8 @@ import {
   useLocation,
   useRouteLoaderData,
 } from 'react-router'
-import '@unocss/reset/tailwind-compat.css'
-import 'virtual:uno.css'
 import './global.css'
+import '@fontsource-variable/dm-sans'
 import { useTranslation } from 'react-i18next'
 import { defaultLocale, locales } from '@app/i18n'
 import { siteTitle } from '@app/util/config'
@@ -24,8 +23,6 @@ import { getCanonicalLink, getHreflangLinks } from './util/i18n/getHreflangLinks
 import { parseFrontendBrowserEnv, type FrontendBrowserEnvironment } from '@app/util/env'
 import { getUrlLanguage } from './util/i18n/getUrlLanguage'
 import { ErrorComponent } from './components/Error'
-import { DM_Sans } from 'next-font/google'
-import { cn } from '@app/util/cn'
 
 export async function loader({ request }: Route.LoaderArgs) {
   // get the locale from the URL
@@ -56,13 +53,6 @@ export async function loader({ request }: Route.LoaderArgs) {
 // fallback meta
 export const meta: MetaFunction = () => generateMetadata({ title: siteTitle })
 
-const dmSans = DM_Sans({
-  variable: '--font-dm-sans',
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  display: 'swap',
-})
-
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation()
   const data = useRouteLoaderData<typeof loader>('root')
@@ -73,7 +63,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const { i18n } = useTranslation()
 
   return (
-    <html lang={i18n.language} dir={i18n.dir()} className={cn('font-sans', dmSans.variable)}>
+    <html lang={i18n.language} dir={i18n.dir()}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -85,7 +75,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="font-sans">
         {children}
         <ScrollRestoration
           getKey={(location) => {

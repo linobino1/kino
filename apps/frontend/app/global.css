@@ -1,17 +1,145 @@
-* {
-  -webkit-font-smoothing: antialiased;
-}
-hr {
-  @apply border-0 border-t border-solid border-gray-400;
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+
+@theme {
+  /* Breakpoints */
+  --breakpoint-xs: 450px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  /* Font Families */
+  --font-sans: 'DM Sans Variable', Helvetica, Arial, sans-serif;
+  --font-calendar: Tahoma, Geneva, sans-serif;
+
+  /* Font Sizes */
+  --text-xs: 0.8rem;
+  --text-xs--line-height: 1.2;
+  --text-sm: 0.9rem;
+  --text-sm--line-height: 1.2;
+  --text-base: 1rem;
+  --text-base--line-height: 1.2;
+  --text-lg: clamp(1.15rem, (100vw - 640px) * 99, 1.3rem);
+  --text-lg--line-height: 1.2;
+  --text-xl: clamp(1.3rem, (100vw - 640px) * 99, 1.5rem);
+  --text-xl--line-height: 1.2;
+  --text-2xl: clamp(1.5rem, (100vw - 640px) * 99, 1.7rem);
+  --text-2xl--line-height: 1;
+  --text-3xl: clamp(1.7rem, (100vw - 640px) * 99, 1.9rem);
+  --text-3xl--line-height: 1;
+  --text-4xl: clamp(1.9rem, (100vw - 640px) * 99, 2.5rem);
+  --text-4xl--line-height: 1;
+
+  /* Theme Colors */
+  --color-theme-50: #e3e6f7;
+  --color-theme-100: #ccd1f0;
+  --color-theme-200: #99a2e1;
+  --color-theme-300: #6674d2;
+  --color-theme-400: #3748b9;
+  --color-theme-500: #283587;
+  --color-theme-600: #1f296a;
+  --color-theme-700: #182053;
+  --color-theme-800: #101537;
+  --color-theme-900: #080b1c;
+  --color-theme-950: #03050c;
+
+  /* Yellow Colors */
+  --color-yellow-50: #fffbe6;
+  --color-yellow-100: #fef6cd;
+  --color-yellow-200: #feed9a;
+  --color-yellow-300: #fde363;
+  --color-yellow-400: #fcda30;
+  --color-yellow-500: #f6cd03;
+  --color-yellow-600: #c5a402;
+  --color-yellow-700: #927a02;
+  --color-yellow-800: #655401;
+  --color-yellow-900: #322a01;
+  --color-yellow-950: #191500;
+
+  /* Red Colors */
+  --color-red-50: #fdebe7;
+  --color-red-100: #fbd3cb;
+  --color-red-200: #f6a797;
+  --color-red-300: #f27b64;
+  --color-red-400: #ee5030;
+  --color-red-500: #d63312;
+  --color-red-600: #a9280e;
+  --color-red-700: #7f1e0b;
+  --color-red-800: #551407;
+  --color-red-900: #2a0a04;
+  --color-red-950: #180602;
+
+  /* Neutral Colors */
+  --color-neutral-50: #f0f0f0;
+  --color-neutral-100: #e0e0e0;
+  --color-neutral-200: #c4c4c4;
+  --color-neutral-300: #a6a6a6;
+  --color-neutral-400: #8a8a8a;
+  --color-neutral-500: #6b6b6b;
+  --color-neutral-600: #575757;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #2b2b2b;
+  --color-neutral-900: #141414;
+  --color-neutral-950: #0a0a0a;
 }
 
-.hide-scrollbar {
-  /*FireFox*/
-  scrollbar-width: none;
-  /*IE10+*/
-  -ms-overflow-style: -ms-autohiding-scrollbar;
+@utility prose-white {
+  --tw-prose-body: var(--color-white);
+  --tw-prose-headings: var(--color-white);
+  --tw-prose-lead: var(--color-neutral-300);
+  --tw-prose-links: var(--color-white);
+  --tw-prose-bold: var(--color-white);
+  --tw-prose-counters: var(--color-neutral-400);
+  --tw-prose-bullets: var(--color-neutral-600);
+  --tw-prose-hr: var(--color-neutral-700);
+  --tw-prose-quotes: var(--color-neutral-100);
+  --tw-prose-quote-borders: var(--color-neutral-700);
+  --tw-prose-captions: var(--color-neutral-400);
+  --tw-prose-code: var(--color-white);
+  --tw-prose-pre-code: var(--color-neutral-300);
+  --tw-prose-pre-bg: rgb(0 0 0 / 50%);
+  --tw-prose-th-borders: var(--color-neutral-600);
+  --tw-prose-td-borders: var(--color-neutral-700);
+  --tw-prose-quote-borders: var(--color-neutral-300);
+  --tw-prose-invert-body: var(--color-neutral-800);
+  --tw-prose-invert-headings: var(--color-neutral-900);
+  --tw-prose-invert-lead: var(--color-neutral-700);
+  --tw-prose-invert-links: var(--color-neutral-900);
+  --tw-prose-invert-bold: var(--color-neutral-900);
+  --tw-prose-invert-counters: var(--color-neutral-600);
+  --tw-prose-invert-bullets: var(--color-neutral-400);
+  --tw-prose-invert-hr: var(--color-neutral-300);
+  --tw-prose-invert-quotes: var(--color-neutral-900);
+  --tw-prose-invert-quote-borders: var(--color-neutral-300);
+  --tw-prose-invert-captions: var(--color-neutral-700);
+  --tw-prose-invert-code: var(--color-neutral-900);
+  --tw-prose-invert-pre-code: var(--color-neutral-100);
+  --tw-prose-invert-pre-bg: var(--color-neutral-900);
+  --tw-prose-invert-th-borders: var(--color-neutral-300);
+  --tw-prose-invert-td-borders: var(--color-neutral-200);
+  --tw-prose-invert-quote-borders: var(--color-neutral-700);
 }
-.hide-scrollbar::-webkit-scrollbar {
-  /*Chrome, Safari, Edge*/
-  display: none;
+
+@layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+  }
+  hr {
+    @apply border-0 border-t border-solid border-gray-400;
+  }
+  .prose p {
+    line-height: 1.4;
+  }
+  .hide-scrollbar {
+    /*FireFox*/
+    scrollbar-width: none;
+    /*IE10+*/
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    /*Chrome, Safari, Edge*/
+    display: none;
+  }
 }

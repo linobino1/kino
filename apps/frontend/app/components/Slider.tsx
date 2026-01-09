@@ -4,6 +4,8 @@ import React, { useRef } from 'react'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { cn } from '@app/util/cn'
+import { Icon } from '@iconify/react'
+import playIcon from '@iconify-icons/material-symbols/play-arrow'
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   maxSlidesToShow?: number
@@ -61,9 +63,10 @@ export const Slider: React.FC<Props> = ({
           'pointer-events-auto flex aspect-square h-12 cursor-pointer items-center justify-center rounded-full text-white transition-colors duration-300 hover:bg-black/30',
         )}
       >
-        <div
-          className={cn('i-material-symbols:play-arrow text-lg', {
-            'rotate-180 transform': type === 'prev',
+        <Icon
+          icon={playIcon}
+          className={cn('text-lg', {
+            'rotate-180': type === 'prev',
           })}
         />
       </div>
@@ -75,7 +78,7 @@ export const Slider: React.FC<Props> = ({
       <SliderComponent ref={sliderRef} {...settings}>
         {props.children}
       </SliderComponent>
-      <div className="pointer-events-none absolute left-0 top-0 z-10 flex h-full w-full items-center justify-between">
+      <div className="pointer-events-none absolute top-0 left-0 z-10 flex h-full w-full items-center justify-between">
         <Arrow type="prev" />
         <Arrow type="next" />
       </div>

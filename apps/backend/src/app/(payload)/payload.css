@@ -1,0 +1,13 @@
+/* Define the Tailwind layers in the correct order */
+@layer theme, base, components, utilities;
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/* Import the Tailwind theme styles */
+@import 'tailwindcss/theme.css' layer(theme);
+
+/* Skip the preflight reset to avoid conflicts with Payload's admin styles */
+/* @import 'tailwindcss/preflight.css' layer(base); */
+
+/* Import Tailwind utilities */
+@import 'tailwindcss/utilities.css' layer(utilities);

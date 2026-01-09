@@ -10,7 +10,7 @@ import { useEnv } from '~/util/useEnv'
 export type Props = React.HTMLAttributes<HTMLDivElement>
 
 const input =
-  'border border-gray-300 rounded p-[0.1em] focus:outline-none text-black focus:ring-2 focus:ring-blue focus:border-primary-500'
+  'border border-gray-300 rounded p-[0.1em] focus:outline-none focus:ring-2 focus:ring-blue focus:border-primary-500'
 
 export const NewsletterSignup: React.FC<Props> = ({ className, ...props }) => {
   const env = useEnv()
