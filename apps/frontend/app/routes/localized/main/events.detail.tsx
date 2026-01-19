@@ -125,7 +125,7 @@ export default function EventPage({ loaderData: { event } }: Route.ComponentProp
       </Hero>
 
       {event.intro && (
-        <Gutter>
+        <Gutter className="mt-4">
           <RichText content={event.intro} />
         </Gutter>
       )}
