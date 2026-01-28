@@ -249,6 +249,15 @@ export const Movies: CollectionConfig<'movies'> = {
       required: true,
     },
     {
+      name: 'descriptionForPrintMaterial',
+      label: 'Flyertext',
+      type: 'textarea',
+      admin: {
+        description:
+          'Beschreibung des Films für Programmhefte und andere Printmedien. Wird nicht auf der Webseite angezeigt.',
+      },
+    },
+    {
       name: 'trailer',
       label: 'Trailer',
       type: 'text',
