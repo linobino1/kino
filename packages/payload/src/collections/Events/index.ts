@@ -23,7 +23,7 @@ export const Events: CollectionConfig<'events'> = {
   versions: {
     drafts: {
       autosave: {
-        interval: 500,
+        interval: 2000,
       },
     },
   },
