@@ -52,7 +52,9 @@ export const PressPDF: React.FC<Props> = ({ pressReleasesConfig, pressRelease, e
         fontSize: 12,
       }}
     >
-      <CoverSheet pressReleasesConfig={pressReleasesConfig} pressRelease={pressRelease} t={t} />
+      {pressRelease.createCoverSheet && (
+        <CoverSheet pressReleasesConfig={pressReleasesConfig} pressRelease={pressRelease} t={t} />
+      )}
 
       {events.map((event) => (
         <Event key={event.id} event={event} t={t} />

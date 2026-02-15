@@ -50,7 +50,7 @@ export const CoverSheet: React.FC<Props> = ({
       </View>
       <View style={{ marginTop: 32 }}>
         <Text style={{ fontWeight: 'bold', marginBottom: 16 }}>{`${siteTitle} - ${title}`}</Text>
-        <RichText data={coverText} />
+        {coverText && <RichText data={coverText} />}
       </View>
     </Page>
   )

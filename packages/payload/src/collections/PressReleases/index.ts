@@ -44,19 +44,37 @@ export const PressReleases: CollectionConfig<'pressReleases'> = {
       required: true,
     },
     {
-      name: 'title',
-      label: 'Titel',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'coverText',
-      label: 'Text auf Titelseite',
-      type: 'richText',
-      editor: lexicalEditor({
-        features: ({ defaultFeatures }) => defaultFeatures,
-      }),
-      required: true,
+      type: 'group',
+      label: 'Titelseite',
+      fields: [
+        {
+          name: 'createCoverSheet',
+          label: 'Titelseite erstellen',
+          type: 'checkbox',
+          defaultValue: false,
+        },
+        {
+          name: 'title',
+          label: 'Titel',
+          type: 'text',
+          required: true,
+          admin: {
+            condition: (_, siblingData) => !!siblingData?.createCoverSheet,
+          },
+        },
+        {
+          name: 'coverText',
+          label: 'Text auf Titelseite',
+          type: 'richText',
+          editor: lexicalEditor({
+            features: ({ defaultFeatures }) => defaultFeatures,
+          }),
+          required: true,
+          admin: {
+            condition: (_, siblingData) => !!siblingData?.createCoverSheet,
+          },
+        },
+      ],
     },
     {
       name: 'linkToPDF',
