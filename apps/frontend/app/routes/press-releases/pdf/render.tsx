@@ -17,9 +17,14 @@ export const renderPressPDF = async ({ pressRelease }: Props) => {
     await payload.find({
       collection: 'events',
       where: {
-        season: {
-          equals: getDocId(pressRelease.season),
-        },
+        and: [
+          { _status: { equals: 'published' } },
+          {
+            season: {
+              equals: getDocId(pressRelease.season),
+            },
+          },
+        ],
       },
       depth: 5,
       locale: pressRelease.locale,
