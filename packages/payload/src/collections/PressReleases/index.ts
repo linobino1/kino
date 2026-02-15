@@ -26,10 +26,17 @@ export const PressReleases: CollectionConfig<'pressReleases'> = {
   },
   fields: [
     {
+      name: 'title',
+      label: 'Titel',
+      type: 'text',
+      required: true,
+    },
+    {
       name: 'date',
       label: 'Datum',
       type: 'date',
       required: true,
+      defaultValue: new Date().toISOString(),
       admin: {
         date: {
           pickerAppearance: 'dayOnly',
@@ -52,15 +59,6 @@ export const PressReleases: CollectionConfig<'pressReleases'> = {
           label: 'Titelseite erstellen',
           type: 'checkbox',
           defaultValue: false,
-        },
-        {
-          name: 'title',
-          label: 'Titel',
-          type: 'text',
-          required: true,
-          admin: {
-            condition: (_, siblingData) => !!siblingData?.createCoverSheet,
-          },
         },
         {
           name: 'coverText',
