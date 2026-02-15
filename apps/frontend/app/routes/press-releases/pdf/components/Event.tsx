@@ -123,7 +123,7 @@ export const Event: React.FC<Props> = ({ event, t }) => {
                 <SupportingFilm filmPrint={filmPrint as FilmPrint} t={t} />
               )
             ) : (
-              <Text>{lexicalToPlainText(info)}</Text>
+              info && <Text>{lexicalToPlainText(info)}</Text>
             )}
           </View>
         ))}
