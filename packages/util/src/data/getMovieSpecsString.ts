@@ -22,13 +22,12 @@ export type Props = GetMovieSpecsProps & {
  * pass either a predefined type or an array of items to get a string of movie specs
  */
 export const getMovieSpecsString = ({
-  filmPrint,
-  t,
   type = 'custom',
   items = [],
   separator = ' | ',
+  ...props
 }: Props) => {
-  const specs = getMovieSpecs({ filmPrint, t })
+  const specs = getMovieSpecs({ ...props })
 
   if (type === 'custom') {
     return items

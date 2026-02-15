@@ -27,6 +27,8 @@ export const getEventSubtitle = ({
       separator: movieSpecsProps.separator ?? ' ',
       filmPrint: event.mainProgramFilmPrint,
       t,
+      hideDCP: true,
+      hideGermanLanguageVersionForGermanMovies: true,
     })
   }
 }
