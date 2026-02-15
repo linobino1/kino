@@ -5,11 +5,12 @@ import { Page as _Page, Text, View } from '@react-pdf/renderer'
 import { pageMargin } from '../util/styles'
 
 type Props = PageProps & {
+  startPageNumber?: number
   children: React.ReactNode
   t: TFunction
 }
 
-export const Page: React.FC<Props> = ({ t, children, ...props }) => {
+export const Page: React.FC<Props> = ({ startPageNumber = 1, t, children, ...props }) => {
   return (
     <_Page
       size="A4"
@@ -32,7 +33,12 @@ export const Page: React.FC<Props> = ({ t, children, ...props }) => {
         }}
       >
         <Text
-          render={({ pageNumber, totalPages }) => t('pdf.pageNumbers', { pageNumber, totalPages })}
+          render={({ pageNumber, totalPages }) =>
+            t('pdf.pageNumbers', {
+              pageNumber: startPageNumber + pageNumber - 1,
+              totalPages: startPageNumber + totalPages - 1,
+            })
+          }
           fixed
         />
       </View>

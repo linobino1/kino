@@ -17,13 +17,13 @@ type Props = {
 
 export const CoverSheet: React.FC<Props> = ({
   pressReleasesConfig: { address, logo },
-  pressRelease: { title, coverText, date, locale },
+  pressRelease: { createCoverSheet, title, coverText, date, locale },
   t,
 }) => {
   const media = logo as Media
   const optimizedMediaUrl = getMediaUrl(media, env)
   return (
-    <Page t={t}>
+    <Page startPageNumber={createCoverSheet ? 1 : 2} t={t}>
       <View
         style={{
           display: 'flex',
