@@ -39,6 +39,7 @@ Font.register({
     },
   ],
 })
+Font.hyphenationCallback = (word) => [word]
 
 export const PressPDF: React.FC<Props> = ({ pressReleasesConfig, pressRelease, events, t }) => {
   return (
