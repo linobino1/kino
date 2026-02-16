@@ -130,7 +130,7 @@
     @apply border-0 border-t border-solid border-gray-400;
   }
   .prose p {
-    line-height: 1.4;
+    line-height: 1.6;
   }
   .hide-scrollbar {
     /*FireFox*/
