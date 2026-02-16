@@ -23,7 +23,7 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
     <div
       {...props}
       className={cn(
-        'relative flex flex-col bg-white text-black shadow-md transition-transform duration-200 ease-in-out',
+        'relative bg-white text-black shadow-md transition-transform duration-200 ease-in-out',
         className,
       )}
     >
@@ -50,7 +50,7 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
           className="xs:aspect-square aspect-[16/9] object-cover"
         />
       </Link>
-      <div className="flex max-w-full flex-col sm:aspect-[3/2]">
+      <div className="flex max-w-full min-w-0 flex-col sm:aspect-[3/2]">
         <div className="flex min-h-6 flex-col items-end gap-y-[1.5px]">
           {((event.series ?? []) as EventSery[]).map(
             ({ id, name, slug }, index) =>
