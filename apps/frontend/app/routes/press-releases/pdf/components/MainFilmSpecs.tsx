@@ -28,8 +28,6 @@ export const MainFilmSpecs: React.FC<Props> = ({ filmPrint, t, ...props }) => {
           filmPrint,
           t,
           type: 'filmPrintInfosShort',
-          hideDCP: true,
-          hideGermanLanguageVersionForGermanMovies: true,
         })}
       </Text>
     </View>
