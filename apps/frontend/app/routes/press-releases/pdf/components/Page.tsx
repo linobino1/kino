@@ -17,16 +17,22 @@ export const Page: React.FC<Props> = ({ startPageNumber = 1, t, children, ...pro
       orientation="portrait"
       wrap
       dpi={72}
-      style={{ padding: pageMargin, ...props.style }}
+      style={{
+        paddingLeft: pageMargin.left,
+        paddingRight: pageMargin.right,
+        paddingTop: pageMargin.top,
+        paddingBottom: pageMargin.bottom,
+        ...props.style,
+      }}
       {...props}
     >
       {children}
       <View
         style={{
           position: 'absolute',
-          bottom: pageMargin,
-          left: pageMargin,
-          right: pageMargin,
+          bottom: pageMargin.bottom,
+          left: pageMargin.left,
+          right: pageMargin.right,
           display: 'flex',
           alignItems: 'flex-start',
           fontSize: 10,

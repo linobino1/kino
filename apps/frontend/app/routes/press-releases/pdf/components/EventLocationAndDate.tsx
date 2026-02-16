@@ -12,17 +12,20 @@ type Props = ViewProps & {
 }
 
 export const EventLocationAndDate: React.FC<Props> = ({ event, t, ...props }) => {
+  const height = 80
+  const bottom = pageMargin.bottom + 20
   return (
     <React.Fragment>
       {/* placeholder for the absolutely positioned content */}
-      <View style={{ height: 200 }} />
+      <View style={{ height: height + bottom }} />
       <View
         style={{
+          height,
           fontSize: 14,
           fontWeight: 'bold',
           position: 'absolute',
-          bottom: pageMargin + 40,
-          right: pageMargin,
+          bottom,
+          right: pageMargin.right,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-end',
