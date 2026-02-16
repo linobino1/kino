@@ -50,13 +50,23 @@ export const Event: React.FC<Props> = ({ event, t }) => {
     // <Page key={event.id} t={t} style={{ paddingBottom: pageMargin + 200 }}>
     <Page key={event.id} t={t}>
       <Text style={{ fontSize: 14, marginTop: 16 }}>{formatDate(event.date, 'dd.MM.yyyy')}</Text>
-      <View style={{ display: 'flex', flexDirection: 'row', fontSize: 16, marginTop: 0 }}>
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: event.isScreeningEvent ? 'row' : 'column',
+          fontSize: 16,
+          marginTop: 0,
+          gap: 0,
+        }}
+      >
         <Text style={{ fontWeight: 700 }}>{event.title}</Text>
-        {subtitle && (
+        {event.isScreeningEvent ? (
           <React.Fragment>
             <Text> </Text>
             <Text>{`(${subtitle})`}</Text>
           </React.Fragment>
+        ) : (
+          <Text style={{ fontSize: 14 }}>{subtitle}</Text>
         )}
       </View>
       <View
