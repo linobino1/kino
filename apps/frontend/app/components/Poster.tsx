@@ -17,7 +17,7 @@ type Props = Omit<ImageProps, 'image'> &
 export const Poster: React.FC<Props> = ({ movie, image, className, ...props }) => (
   <Image
     {...props}
-    className={cn('md:max-w-[260px]', className)}
+    className={cn('max-w-[260px]', className)}
     image={movie ? ((movie as Movie).poster as Media) : image}
     alt={props.alt ?? 'poster'}
     srcSet={[

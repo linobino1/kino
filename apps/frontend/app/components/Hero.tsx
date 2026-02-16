@@ -26,7 +26,7 @@ export const Hero: React.FC<Props> = ({ type, headline, image, children, classNa
   return (
     <div className={className} {...props}>
       {['image', 'overlay'].includes(type) && image && (
-        <div className="relative flex w-full flex-col max-sm:min-h-[56vw] sm:aspect-[16/9] lg:max-h-[55vh]">
+        <div className="relative flex aspect-[3/2] min-h-0 w-full flex-col max-sm:min-h-[100vw] lg:max-h-[55vh]">
           <Image
             image={image as Media}
             srcSet={[
