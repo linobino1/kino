@@ -42,9 +42,9 @@ export const getMovieSpecs = ({
   let languageVersion: LanguageVersion | undefined = filmPrint.languageVersion as LanguageVersion
   if (
     hideGermanLanguageVersionForGermanMovies &&
-    ['ov', 'of'].includes(languageVersion.abbreviation.toLowerCase()) &&
+    ['ov', 'of'].includes(languageVersion.abbreviation?.toLowerCase()) &&
     movie.countries.length === 1 &&
-    (movie.countries[0] as Country).id.toLowerCase() === 'de'
+    (movie.countries[0] as Country).id?.toLowerCase() === 'de'
   ) {
     languageVersion = undefined
   }
