@@ -46,6 +46,9 @@ import { Sitemap } from './collections/Sitemap'
 import { generateSitemap } from './tasks/generateSitemap'
 
 const configPromise: Promise<Config> = (async () => ({
+  admin: {
+    importMap: { autoGenerate: false },
+  },
   cors: {
     origins: [env.FRONTEND_URL ?? 'http://localhost:5173'],
   },
