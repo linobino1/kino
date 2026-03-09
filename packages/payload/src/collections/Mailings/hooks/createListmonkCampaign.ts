@@ -42,11 +42,16 @@ export const createListmonkCampaign: CollectionBeforeChangeHook<Mailing> = async
       })
     } catch (e) {
       console.error(e)
-      throw new CustomAPIError('Fehler beim Erstellen der Kampagne in Listmonk')
+      throw new CustomAPIError('Netzwerkfehler beim Erstellen der Kampagne in Listmonk')
     }
 
     if (!res.ok) {
-      throw new CustomAPIError('Fehler beim Erstellen der Kampagne in Listmonk')
+      let errorMessage = `Fehler beim Erstellen der Kampagne in Listmonk, Status ${res.status}`
+
+      const data = await res.json().catch(() => null)
+      if (data && data.message) errorMessage += `. Listmonk sagt: ${data.message}`
+
+      throw new CustomAPIError(errorMessage)
     }
 
     let resData: PostCampaignResponseBody
