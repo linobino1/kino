@@ -57,6 +57,7 @@ export const loader = async ({ params: { lang: locale }, request: { url } }: Rou
           },
         ],
       },
+      draft: false,
       sort: 'date',
       locale: locale as Locale,
     }),
@@ -82,7 +83,7 @@ export default function EventsPage({ loaderData: { page, events } }: Route.Compo
     <PageLayout type={page.layoutType}>
       <Hero {...page.hero} />
       <Gutter>
-        <EventsList events={events.docs} site={rootLoaderData?.site} className="mb-24 mt-12" />
+        <EventsList events={events.docs} site={rootLoaderData?.site} className="mt-12 mb-24" />
       </Gutter>
     </PageLayout>
   )

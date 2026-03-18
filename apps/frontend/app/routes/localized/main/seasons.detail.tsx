@@ -60,6 +60,7 @@ export const loader = async ({
         },
       ],
     },
+    draft: false,
     locale: locale as Locale,
     depth: 3,
     sort: 'date',
@@ -86,7 +87,7 @@ export default function SeasonsDetailPage({
         <EventsList
           events={events.docs}
           site={rootLoaderData?.site}
-          className="mb-24 mt-12"
+          className="mt-12 mb-24"
           emptyMessage={t('No screenings for this season.')}
         />
         <Pagination {...events} linkProps={{ prefetch: 'intent' }} />

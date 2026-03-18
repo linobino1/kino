@@ -75,6 +75,7 @@ export const loader = async ({
           },
         ],
       },
+      draft: false,
       sort: 'date',
       locale: locale as Locale,
       depth,
@@ -84,6 +85,11 @@ export const loader = async ({
       collection: 'events',
       where: {
         and: [
+          {
+            _status: {
+              equals: 'published',
+            },
+          },
           {
             series: {
               equals: eventSeries.id,
@@ -96,6 +102,7 @@ export const loader = async ({
           },
         ],
       },
+      draft: false,
       sort: '-date',
       locale: locale as Locale,
       depth,

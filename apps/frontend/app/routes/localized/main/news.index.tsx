@@ -47,6 +47,7 @@ export const loader = async ({ params: { lang: locale }, request: { url } }: Rou
           equals: 'published',
         },
       },
+      draft: false,
       sort: '-date',
       locale: locale as Locale,
       pagination: true,
@@ -81,7 +82,7 @@ export default function NewsPage({ loaderData: { page, posts } }: Route.Componen
     <PageLayout type={page.layoutType}>
       <Hero {...page.hero} />
       <Gutter>
-        <PostsList posts={posts} className="mb-24 mt-12" />
+        <PostsList posts={posts} className="mt-12 mb-24" />
       </Gutter>
     </PageLayout>
   )
