@@ -17,6 +17,7 @@ import * as migration_20250317_213826_autoSeasons from './20250317_213826_autoSe
 import * as migration_20250319_132726_eventsTitleLock from './20250319_132726_eventsTitleLock';
 import * as migration_20250612_064720_enable_versions_mailings from './20250612_064720_enable_versions_mailings';
 import * as migration_20250727_095518_postHasDetailPageField from './20250727_095518_postHasDetailPageField';
+import * as migration_20260326_082334_synopsis_richtext from './20260326_082334_synopsis_richtext';
 
 export const migrations = [
   {
@@ -112,6 +113,11 @@ export const migrations = [
   {
     up: migration_20250727_095518_postHasDetailPageField.up,
     down: migration_20250727_095518_postHasDetailPageField.down,
-    name: '20250727_095518_postHasDetailPageField'
+    name: '20250727_095518_postHasDetailPageField',
+  },
+  {
+    up: migration_20260326_082334_synopsis_richtext.up,
+    down: migration_20260326_082334_synopsis_richtext.down,
+    name: '20260326_082334_synopsis_richtext'
   },
 ];

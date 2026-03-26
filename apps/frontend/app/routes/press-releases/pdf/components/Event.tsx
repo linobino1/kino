@@ -127,7 +127,9 @@ export const Event: React.FC<Props> = ({ event, t }) => {
           <View key={index} style={{ marginTop: 12, marginBottom: 0, textAlign: 'justify' }}>
             {type === 'screening' ? (
               isMainProgram ? (
-                <Text>{((filmPrint as FilmPrint).movie as Movie).synopsis}</Text>
+                <Text>
+                  {lexicalToPlainText(((filmPrint as FilmPrint).movie as Movie).synopsis)}
+                </Text>
               ) : (
                 <SupportingFilm filmPrint={filmPrint as FilmPrint} t={t} />
               )

@@ -17,3 +17,13 @@ export type SerializedLexicalNode = {
   text?: string
   [other: string]: any
 }
+
+export type SerializedLexicalEditorState = {
+  root: {
+    type: string
+    format: string
+    indent: number
+    version: number
+    children: SerializedLexicalNode[]
+  }
+}

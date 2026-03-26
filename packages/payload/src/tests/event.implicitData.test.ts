@@ -4,6 +4,7 @@ import { createScreeningEvent } from './createDoc/screeningEvent'
 import { locales } from '@app/i18n'
 import { getDocId } from '@app/util/payload/getDocId'
 import type { Event, FilmPrint, Movie } from '@app/types/payload'
+import { stringToLexicalJson } from '@app/util/lexical/stringToLexicalJson'
 
 const date = new Date().toISOString().substr(0, 10)
 
@@ -51,7 +52,7 @@ test('test implicit data generation', async () => {
       collection: 'movies',
       id: getDocId((doc.mainProgramFilmPrint as FilmPrint).movie),
       data: {
-        synopsis: `synopsis ${locale}`,
+        synopsis: stringToLexicalJson(`synopsis ${locale}`) as any,
       },
       locale,
     })

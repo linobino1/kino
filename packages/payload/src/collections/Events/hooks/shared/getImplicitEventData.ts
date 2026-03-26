@@ -105,11 +105,9 @@ export const getImplicitEventData = async ({ data, doc, originalDoc, locale, req
     })
     if (movie && typeof movie === 'object') {
       res.title = movie.title
-      res.shortDescription = hasManyMainProgramItems
-        ? event.intro
-          ? lexicalToPlainText(event.intro)
-          : ''
-        : movie.synopsis
+      res.shortDescription = lexicalToPlainText(
+        hasManyMainProgramItems ? event.intro : movie.synopsis,
+      )
       res.header = movie.still
 
       res.slug = formatSlug(

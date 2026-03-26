@@ -1,9 +1,8 @@
 import type { SerializedLexicalNode } from './types'
 
 export function lexicalToPlainText(json: any): string {
-  if (!Array.isArray(json?.root?.children)) {
-    console.error('Invalid JSON structure', json)
-    throw new Error('Invalid JSON structure')
+  if (!json || typeof json !== 'object' || !json.root || !Array.isArray(json.root.children)) {
+    return ''
   }
   return serializeToPlainText(json?.root?.children)
 }

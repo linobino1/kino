@@ -6,6 +6,7 @@ import { Poster } from './Poster'
 import { useRootLoaderData } from '~/util/useRootLoaderData'
 import { getMovieSpecsString } from '@app/util/data/getMovieSpecsString'
 import { TrailerButton } from './TrailerButton'
+import { RichText } from './RichText'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   filmPrint: FilmPrint
@@ -37,9 +38,9 @@ export const FilmPrintDetails: React.FC<Props> = ({
       }
     >
       <div className="mb-4">
-        <h2 className="break-words text-3xl font-semibold uppercase">
+        <h2 className="text-3xl font-semibold break-words uppercase">
           {!isMainProgram && (
-            <span className="mr-2 text-nowrap text-sm max-sm:block">{`${t('Supporting Film')}: `}</span>
+            <span className="mr-2 text-sm text-nowrap max-sm:block">{`${t('Supporting Film')}: `}</span>
           )}
           {((filmPrint as FilmPrint).movie as MovieType).title}
         </h2>
@@ -55,23 +56,16 @@ export const FilmPrintDetails: React.FC<Props> = ({
           }}
         ></div>
       </div>
-      <p
-        className="my-4"
-        dangerouslySetInnerHTML={{
-          __html: ((filmPrint as FilmPrint).movie as MovieType).synopsis as string,
-        }}
-      />
+      <RichText content={((filmPrint as FilmPrint).movie as MovieType).synopsis} className="my-4" />
+
       {additionalInfo}
+
       <TrailerButton movie={filmPrint.movie as Movie} className="my-4 sm:hidden" />
       {rental && (
-        <div className="inline-block max-sm:text-sm">
-          <div
-            dangerouslySetInnerHTML={{
-              __html: rental.credits as string,
-            }}
-          />
+        <p className="mt-4 inline-block max-sm:text-sm">
+          {rental.credits}
           {rental.logo && <Image className="my-2 h-12 w-auto" image={rental.logo as Media} />}
-        </div>
+        </p>
       )}
     </AsideLayout>
   )

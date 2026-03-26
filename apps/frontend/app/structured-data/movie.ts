@@ -1,4 +1,5 @@
 import type { Media, Movie, Person } from '@app/types/payload'
+import { lexicalToPlainText } from '@app/util/lexical/lexicalToPlainText'
 import type { Movie as SchemaOrgMovie } from 'schema-dts'
 
 export const movieSchema = (movie: Movie): SchemaOrgMovie | null => {
@@ -9,7 +10,7 @@ export const movieSchema = (movie: Movie): SchemaOrgMovie | null => {
   const res: SchemaOrgMovie = {
     '@type': 'Movie',
     name: movie.title,
-    description: movie.synopsis,
+    description: lexicalToPlainText(movie.synopsis),
     image: movie.poster && encodeURI((movie.poster as Media).url as string),
     duration: `PT${movie.duration}M`,
     dateCreated: movie.year.toString(),

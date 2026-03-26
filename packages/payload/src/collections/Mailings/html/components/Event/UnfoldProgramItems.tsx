@@ -58,11 +58,9 @@ const UnfoldProgramItems: React.FC<EventProps> = ({ event, color, additionalText
               : undefined
           }
           url={url}
-          description={
-            type === 'screening'
-              ? ((filmPrint as FilmPrint).movie as Movie).synopsis
-              : lexicalToPlainText(info)
-          }
+          description={lexicalToPlainText(
+            type === 'screening' ? ((filmPrint as FilmPrint).movie as Movie).synopsis : info,
+          )}
           color={color}
         >
           {type === 'screening' && info && (

@@ -3,6 +3,8 @@ import type { Movie } from '@app/types/payload'
 import { isAdminOrEditor } from '#payload/access'
 import { ageRatingAges } from '@app/util/config'
 import { slugField } from '#payload/fields/slug'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { minimalEditorConfig } from '@app/util/lexical/editorConfig'
 
 export const Movies: CollectionConfig<'movies'> = {
   slug: 'movies',
@@ -241,7 +243,8 @@ export const Movies: CollectionConfig<'movies'> = {
     {
       name: 'synopsis',
       label: 'Synopsis',
-      type: 'textarea',
+      type: 'richText',
+      editor: lexicalEditor(minimalEditorConfig),
       localized: true,
       admin: {
         description: 'Kurze Inhaltsangabe, maximal 350 Zeichen',

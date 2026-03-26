@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Image } from '~/components/Image'
 import { Icon } from '@iconify/react'
 import arrow from '@iconify-icons/material-symbols/arrow-forward-ios-rounded'
+import { RichText } from './RichText'
 
 type Props = {
   item: FilmPrint
@@ -36,9 +37,10 @@ export const FilmPrintCard: React.FC<Props> = ({ item }) => {
         </div>
       </div>
       <div className="grid grid-cols-1 grid-rows-[auto_min-content] gap-y-4 p-4 text-sm max-sm:aspect-[32/9]">
-        <div className="relative overflow-hidden leading-normal after:absolute after:bottom-0 after:left-0 after:z-10 after:h-[5rem] after:w-full after:bg-[linear-gradient(transparent,#FFFFFF)] after:content-['_'] sm:h-[25vw] lg:h-[20em]">
-          {movie.synopsis}
-        </div>
+        <RichText
+          className="relative overflow-hidden leading-normal after:absolute after:bottom-0 after:left-0 after:z-10 after:h-[5rem] after:w-full after:bg-[linear-gradient(transparent,#FFFFFF)] after:content-['_'] sm:h-[25vw] lg:h-[20em]"
+          content={movie.synopsis}
+        />
         <div className="flex items-center gap-1 justify-self-end text-xs font-medium text-neutral-200 uppercase">
           {t('More Info')}
           <Icon icon={arrow} />

@@ -5,6 +5,7 @@ import { fetchData } from '../fetchData'
 import { defaultLanguage } from '../index'
 import { locales } from '@app/i18n'
 import { formatSlug } from '@app/util/formatSlug'
+import { stringToLexicalJson } from '@app/util/lexical/stringToLexicalJson'
 
 export const migrateMovieBase = async (
   payload: Payload,
@@ -69,7 +70,7 @@ export const migrateMovieBase = async (
       title: data.title,
       internationalTitle: data.title,
       isHfgProduction: false,
-      synopsis: data.overview,
+      synopsis: stringToLexicalJson(data.overview) as any,
       year: parseInt(data.release_date?.split('-')[0] || '0') ?? undefined,
       countries: data.production_countries.map((country: any) => country.iso_3166_1.toUpperCase()),
       tmdbId: data.id,
@@ -96,7 +97,7 @@ export const migrateMovieBase = async (
       draft: true,
       data: {
         title: dataTranslated.title,
-        synopsis: dataTranslated.overview,
+        synopsis: stringToLexicalJson(dataTranslated.overview) as any
       },
       locale,
     })

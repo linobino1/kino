@@ -4,6 +4,7 @@ import { SerializeLexicalToEmail } from '../lexical/SerializeLexicalToEmail'
 import { env } from '@app/util/env/backend.server'
 import { getMovieSpecsString } from '@app/util/data/getMovieSpecsString'
 import Section from './Section'
+import { lexicalToPlainText } from '@app/util/lexical/lexicalToPlainText'
 
 type MovieProps = {
   filmPrint: FilmPrintType
@@ -33,7 +34,7 @@ const FilmPrint: React.FC<MovieProps> = ({ filmPrint, color, additionalText, loc
       header={movie.still as Media}
       title={movie.title}
       subtitle={subtitle}
-      description={movie.synopsis}
+      description={lexicalToPlainText(movie.synopsis)}
       url={url}
       color={color}
     >

@@ -9,12 +9,13 @@ import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { Gutter } from '~/components/Gutter'
 import { FilmPrintDetails } from '~/components/FilmPrintDetails'
+import { lexicalToPlainText } from '@app/util/lexical/lexicalToPlainText'
 
 export const meta: Route.MetaFunction = ({ data, matches }) =>
   generateMetadata({
     // TODO: title and description should clarify that this is a film print
     title: (data?.filmPrint.movie as MovieType).title,
-    description: (data?.filmPrint.movie as MovieType).synopsis,
+    description: lexicalToPlainText((data?.filmPrint.movie as MovieType).synopsis),
     image: (data?.filmPrint.movie as MovieType).still as Media,
     env: getEnvFromMatches(matches),
   })
