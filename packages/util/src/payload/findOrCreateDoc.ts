@@ -6,6 +6,7 @@ import type {
   Where,
 } from 'payload'
 import type { Locale } from '@app/i18n'
+import { DraftDataFromCollectionSlug } from 'node_modules/payload/dist/collections/config/types'
 
 export const findOrCreateDoc = async <T extends CollectionSlug>({
   collection,
@@ -18,7 +19,7 @@ export const findOrCreateDoc = async <T extends CollectionSlug>({
   collection: T
   payload: BasePayload
   where: Where
-  data: Partial<RequiredDataFromCollectionSlug<T>>
+  data: DraftDataFromCollectionSlug<T>
   locale?: Locale
 } & (
   | {
@@ -27,7 +28,7 @@ export const findOrCreateDoc = async <T extends CollectionSlug>({
     }
   | {
       draft?: true | undefined
-      data: Partial<DataFromCollectionSlug<T>>
+      data: DraftDataFromCollectionSlug<T>
     }
 )): Promise<{
   wasCreated: boolean
