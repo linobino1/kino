@@ -12,11 +12,8 @@ export async function up({ payload, session }: MigrateUpArgs): Promise<void> {
       de: stringToLexicalJson(movie.synopsis?.de || ''),
     }
 
-    console.info(`Updating movie ${movie.id} with synopsis:`, JSON.stringify(synopsis, null, 2))
-
     await payload.db.collections.movies.updateOne({ _id: movie._id }, { $set: { synopsis } })
   }
-
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
