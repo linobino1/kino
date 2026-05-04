@@ -22,7 +22,8 @@ const Compact: React.FC<EventProps> = ({ event, color, additionalText, locale, t
   const subtitle = getEventSubtitle({
     event,
     t,
-    movieSpecsProps: { type: 'newsletterSubtitle', separator: ', ' },
+    type: 'newsletterSubtitle',
+    separator: ', ',
   })
 
   const url = `${env.FRONTEND_URL}${event.url}`

@@ -24,7 +24,7 @@ const imageUpscaleFactor = 4
 const imageHeight = imageWidth / imageAspectRatio
 
 export const Event: React.FC<Props> = ({ event, t }) => {
-  const subtitle = getEventSubtitle({ event, t })
+  const subtitle = getEventSubtitle({ event, t, hideDCP: true })
   const media = event.header as Media
   const optimizedMediaUrl = getOptimizedImageUrl(media, env, {
     width: imageUpscaleFactor * imageWidth,
