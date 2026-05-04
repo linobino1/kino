@@ -19,7 +19,7 @@ export const getMediaUrl = (
     return media.url
   }
 
-  const baseUrl = env?.MEDIA_URL ?? env?.BACKEND_URL
+  const baseUrl = env?.MEDIA_URL ?? env?.BACKEND_URL ?? 'http://localhost:3000'
 
   return `${baseUrl}${media.url}`
 }
