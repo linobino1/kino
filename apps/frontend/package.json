@@ -56,7 +56,6 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@types/react-slick": "^0.23.13",
-    "@vercel/react-router": "^1.0.2",
     "tailwindcss": "^4.1.18",
     "vite": "^7.1.7",
     "vite-tsconfig-paths": "^5.1.4"

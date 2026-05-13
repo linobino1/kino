@@ -1,0 +1,30 @@
+name: Deploy apps
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  fly:
+    name: Deploy ${{ matrix.app-name }} to fly.io
+    runs-on: ubuntu-latest
+    concurrency: deploy-group # optional: ensure only one action runs at a time
+    strategy:
+      matrix:
+        include:
+          - app-name: backend
+            config: fly.backend.toml
+            token_secret: FLY_API_TOKEN_BACKEND
+          - app-name: frontend
+            config: fly.frontend.toml
+            token_secret: FLY_API_TOKEN_FRONTEND
+    steps:
+      - uses: actions/checkout@v4
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy . --config ${{ matrix.config }} --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets[matrix.token_secret] }}

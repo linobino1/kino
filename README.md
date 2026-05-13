@@ -27,7 +27,12 @@ pnpm seed
 
 ## Deployment
 
-The frontend is running on [vercel](https://vercel.com), the CMS on [fly.io](https://fly.io) using the Dockerfile in the project root.
+Both apps are deployed on [fly.io](https://fly.io) from the monorepo root using root-level app-specific config files:
+
+```bash
+fly deploy . --config fly.backend.toml
+fly deploy . --config fly.frontend.toml
+```
 
 ## Listmonk Integration
 

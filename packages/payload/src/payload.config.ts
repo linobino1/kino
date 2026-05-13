@@ -128,6 +128,11 @@ const configPromise: Promise<Config> = (async () => ({
   },
   db: mongooseAdapter({
     url: env.DATABASE_URI || '',
+    connectOptions: {
+      maxPoolSize: env.DB_MAX_POOL_SIZE ? parseInt(env.DB_MAX_POOL_SIZE) : 10,
+      minPoolSize: env.DB_MIN_POOL_SIZE ? parseInt(env.DB_MIN_POOL_SIZE) : 2,
+      maxIdleTimeMS: env.DB_MAX_IDLE_TIME_MS ? parseInt(env.DB_MAX_IDLE_TIME_MS) : 30000,
+    },
   }),
   telemetry: false,
   plugins: [

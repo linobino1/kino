@@ -35,6 +35,10 @@ const variables = z.object({
   ZEPTOMAIL_API_KEY: z.string().optional(),
   EMAIL_FROM_ADDRESS: z.string().optional(),
   EMAIL_FROM_NAME: z.string().optional(),
+
+  DB_MAX_POOL_SIZE: z.string().optional(),
+  DB_MIN_POOL_SIZE: z.string().optional(),
+  DB_MAX_IDLE_TIME_MS: z.string().optional(),
 })
 
 const backendServerEnv = variables
@@ -47,9 +51,7 @@ const backendBrowserEnv = variables.pick({
   CDN_CGI_IMAGE_URL: true,
 })
 
-const frontendServerEnv = variables.extend({
-  CRON_SECRET: z.string().optional(),
-})
+const frontendServerEnv = variables
 
 const frontendBrowserEnv = variables.pick({
   NODE_ENV: true,
