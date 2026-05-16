@@ -1,31 +1,31 @@
 packages:
-  - 'apps/*'
-  - 'packages/*'
-
+  - apps/*
+  - packages/*
+allowBuilds:
+  esbuild: true
+  mongodb-memory-server: true
+  msw: true
+  sharp: true
 catalog:
-  i18next: '^24.2.1'
-  msw: '^2.7.0'
-  next: '16.2.1'
-
-  payload: '3.80.0'
-  '@payloadcms/db-mongodb': '3.80.0'
-  '@payloadcms/email-nodemailer': '3.80.0'
-  '@payloadcms/live-preview-react': '3.80.0'
-  '@payloadcms/next': '3.80.0'
-  '@payloadcms/plugin-seo': '3.80.0'
-  '@payloadcms/richtext-lexical': '3.80.0'
-  '@payloadcms/storage-s3': '3.80.0'
-  '@payloadcms/translations': '3.80.0'
-  '@payloadcms/ui': '3.80.0'
-  'monaco-editor': '^0.25.0'
-
-  'react': '19.2.3'
-  'react-dom': '19.2.3'
-
-  '@types/react': '^19.2.3'
-  '@types/react-dom': '^19.2.3'
-
-  'react-router': '7.13.2'
-  '@react-router/node': '7.13.2'
-  '@react-router/serve': '7.13.2'
-  '@react-router/dev': '7.13.2'
+  i18next: ^24.2.1
+  msw: ^2.7.0
+  next: 16.2.6
+  payload: 3.84.1
+  '@payloadcms/db-mongodb': 3.84.1
+  '@payloadcms/email-nodemailer': 3.84.1
+  '@payloadcms/live-preview-react': 3.84.1
+  '@payloadcms/next': 3.84.1
+  '@payloadcms/plugin-seo': 3.84.1
+  '@payloadcms/richtext-lexical': 3.84.1
+  '@payloadcms/storage-s3': 3.84.1
+  '@payloadcms/translations': 3.84.1
+  '@payloadcms/ui': 3.84.1
+  monaco-editor: ^0.25.0
+  react: 19.2.6
+  react-dom: 19.2.6
+  '@types/react': ^19.2.6
+  '@types/react-dom': ^19.2.3
+  react-router: 7.15.1
+  '@react-router/node': 7.15.1
+  '@react-router/serve': 7.15.1
+  '@react-router/dev': 7.15.1
