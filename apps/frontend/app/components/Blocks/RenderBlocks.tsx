@@ -19,7 +19,7 @@ const RenderBlock: React.FC<BlockProps> = ({ block }) => {
     case 'content':
       return (
         <Gutter size="small">
-          <RichText content={block.content} />
+          <RichText content={block.content} className="prose prose-white" />
         </Gutter>
       )
 

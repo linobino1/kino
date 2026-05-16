@@ -53,7 +53,7 @@ export const PostPreview: React.FC<Props> = ({ className, ...props }) => {
       <div className="max-sm:mt-4">
         <Date className="text-sm" date={post.date} format="PPP" />
         <h2 className="mb-4 mt-1 break-words text-2xl font-semibold uppercase">{post.title}</h2>
-        <RichText content={post.content} />
+        <RichText content={post.content} className="prose prose-white" />
         {post.hasDetailPage && (
           <Link
             to={post.url ?? ''}

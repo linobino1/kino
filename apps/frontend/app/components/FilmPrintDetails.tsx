@@ -38,9 +38,9 @@ export const FilmPrintDetails: React.FC<Props> = ({
       }
     >
       <div className="mb-4">
-        <h2 className="text-3xl font-semibold break-words uppercase">
+        <h2 className="break-words text-3xl font-semibold uppercase">
           {!isMainProgram && (
-            <span className="mr-2 text-sm text-nowrap max-sm:block">{`${t('Supporting Film')}: `}</span>
+            <span className="mr-2 text-nowrap text-sm max-sm:block">{`${t('Supporting Film')}: `}</span>
           )}
           {((filmPrint as FilmPrint).movie as MovieType).title}
         </h2>
@@ -56,7 +56,10 @@ export const FilmPrintDetails: React.FC<Props> = ({
           }}
         ></div>
       </div>
-      <RichText content={((filmPrint as FilmPrint).movie as MovieType).synopsis} className="my-4" />
+      <RichText
+        content={((filmPrint as FilmPrint).movie as MovieType).synopsis}
+        className="prose prose-white my-4"
+      />
 
       {additionalInfo}
 

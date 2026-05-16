@@ -21,7 +21,7 @@ export const Footer: React.FC<Props> = ({ site, navigations }) => {
       >
         <RichText
           content={site.footerContent}
-          className="max-md:order-3 max-md:text-center"
+          className="prose prose-white max-md:order-3 max-md:text-center"
           enableMarginBlock={false}
         />
         <Navigation

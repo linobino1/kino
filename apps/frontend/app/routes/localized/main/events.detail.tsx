@@ -126,7 +126,7 @@ export default function EventPage({ loaderData: { event } }: Route.ComponentProp
 
       {event.intro && (
         <Gutter className="mt-4">
-          <RichText content={event.intro} />
+          <RichText content={event.intro} className="prose prose-white" />
         </Gutter>
       )}
 
@@ -138,11 +138,11 @@ export default function EventPage({ loaderData: { event } }: Route.ComponentProp
               <FilmPrintDetails
                 filmPrint={filmPrint as FilmPrint}
                 isMainProgram={isMainProgram}
-                additionalInfo={<RichText content={info} />}
+                additionalInfo={<RichText content={info} className="prose prose-white" />}
               />
             ) : (
               <AsideLayout aside={poster && <Poster image={poster as Media} />}>
-                <RichText content={info} enableMarginBlock={false} />
+                <RichText content={info} enableMarginBlock={false} className="prose prose-white" />
               </AsideLayout>
             )}
           </React.Fragment>

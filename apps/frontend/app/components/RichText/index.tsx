@@ -1,6 +1,5 @@
 import React from 'react'
 import { serializeLexical } from './serialize'
-import { cn } from '@app/util/cn'
 import { useTranslation } from 'react-i18next'
 import type { Locale } from '@app/i18n'
 
@@ -8,16 +7,10 @@ type Props = {
   className?: string
   content: any
   enableGutter?: boolean
-  enableProse?: boolean
   enableMarginBlock?: boolean
 }
 
-export const RichText: React.FC<Props> = ({
-  className,
-  content,
-  enableProse = true,
-  enableMarginBlock = true,
-}) => {
+export const RichText: React.FC<Props> = ({ className, content, enableMarginBlock = true }) => {
   if (!content) {
     return null
   }
@@ -27,12 +20,7 @@ export const RichText: React.FC<Props> = ({
 
   return (
     <div className={className}>
-      <div
-        className={cn('!max-w-none', {
-          // prose: enableProse,
-          'prose prose-white': enableProse,
-        })}
-      >
+      <div className="!max-w-none">
         {content &&
           !Array.isArray(content) &&
           typeof content === 'object' &&
