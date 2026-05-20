@@ -1,7 +1,7 @@
 import type { Media } from '@app/types/payload'
 import type { BackendServerEnvironment } from '@app/util/env/index'
 import { getMediaUrl } from '@app/util/media/getMediaUrl'
-import { type ImgProps, Img as _Img } from '@react-email/components'
+import { type ImgProps, Img as _Img } from 'react-email'
 
 type Props = Omit<ImgProps, 'src'> & {
   media: Media

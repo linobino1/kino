@@ -14,7 +14,7 @@
     "cross-env": "7.0.3",
     "deepmerge": "^4.3.1",
     "dotenv-cli": "8.0.0",
-    "glob": "11.0.1",
+    "glob": "^13.0.6",
     "payload": "catalog:",
     "tsx": "^4.19.2"
   }

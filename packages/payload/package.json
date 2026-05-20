@@ -27,18 +27,17 @@
     "@payloadcms/richtext-lexical": "catalog:",
     "@payloadcms/storage-s3": "catalog:",
     "@payloadcms/translations": "catalog:",
-    "@react-email/components": "^0.4.0",
     "cross-env": "^7.0.3",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "escape-html": "^1.0.3",
     "monaco-editor": "catalog:",
-    "nodemailer": "^6.9.16",
+    "nodemailer": "^7.0.7",
     "nodemailer-zeptomail-transport": "^1.0.13",
     "payload": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "react-email": "^4.2.3"
+    "react-email": "^6.1.5"
   },
   "devDependencies": {
     "@app/types": "workspace:*",

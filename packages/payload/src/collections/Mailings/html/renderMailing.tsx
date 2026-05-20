@@ -1,6 +1,6 @@
 import { getPayloadClient } from '#payload/util/getPayloadClient'
 import Newsletter from './templates/Newsletter'
-import { render } from '@react-email/components'
+import { render } from 'react-email'
 import { getFixedT } from '@app/i18n/getFixedT'
 
 export const renderMailing = async (mailingId: string, draft: boolean = false): Promise<string> => {

@@ -8,7 +8,7 @@ import {
   Text,
   Font,
   Tailwind,
-} from '@react-email/components'
+} from 'react-email'
 import type { Mailing, Media } from '@app/types/payload'
 import { SerializeLexicalToEmail } from '../lexical/SerializeLexicalToEmail'
 import { getObjectPosition } from '@app/util/media/getObjectPosition'

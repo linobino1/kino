@@ -9,6 +9,7 @@ export default [
   { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
   {
     ignores: [
+      '.next/**/*',
       'apps/backend/.next/**/*',
       'apps/frontend/build/**/*',
       'apps/frontend/.react-router/**/*',

@@ -1,7 +1,7 @@
 import type { FilmPrint, Media, Movie, Event as EventType } from '@app/types/payload'
 import type { Locale, TFunction } from '@app/i18n'
 import React from 'react'
-import { Text } from '@react-email/components'
+import { Text } from 'react-email'
 import { SerializeLexicalToEmail } from '../../lexical/SerializeLexicalToEmail'
 import { fontSize } from '../../templates/Newsletter'
 import { env } from '@app/util/env/backend.server'

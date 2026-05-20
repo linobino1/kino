@@ -1,4 +1,4 @@
-import { type ContainerProps, Container, Head } from '@react-email/components'
+import { type ContainerProps, Container, Head } from 'react-email'
 import { cn } from '@app/util/cn'
 
 const Gutter: React.FC<ContainerProps> = ({ className, ...props }) => {

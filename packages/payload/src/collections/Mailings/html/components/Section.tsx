@@ -1,6 +1,6 @@
 import type { Media } from '@app/types/payload'
 import { mailingsLocale } from '@app/i18n'
-import { Container, Heading, Section as _Section, Text, Link } from '@react-email/components'
+import { Container, Heading, Section as _Section, Text, Link } from 'react-email'
 import { bgGrey, fontSize } from '../templates/Newsletter'
 import Img from './Img'
 import Shorten from './Shorten'

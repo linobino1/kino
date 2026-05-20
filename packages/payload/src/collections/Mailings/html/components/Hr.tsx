@@ -1,4 +1,4 @@
-import { type HrProps, Hr as _Hr } from '@react-email/components'
+import { type HrProps, Hr as _Hr } from 'react-email'
 
 type Props = HrProps & {
   color?: string

@@ -12,7 +12,7 @@ import {
 import type { SerializedLexicalNode } from './types'
 import type { Locale, TFunction } from '@app/i18n'
 import { env } from '@app/util/env/backend.server'
-import { Heading, Text } from '@react-email/components'
+import { Heading, Text } from 'react-email'
 import Event from '../components/Event'
 import Gutter from '../components/Gutter'
 import FilmPrint from '../components/FilmPrint'

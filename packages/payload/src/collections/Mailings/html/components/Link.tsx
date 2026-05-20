@@ -1,4 +1,4 @@
-import { type LinkProps, Link as _Link } from '@react-email/components'
+import { type LinkProps, Link as _Link } from 'react-email'
 
 type Props = LinkProps & {
   color?: string
