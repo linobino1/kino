@@ -12,7 +12,6 @@ const ns = 'auth'
 export const handle = { i18n: 'auth' }
 
 export const action = async ({ request }: Route.ActionArgs) => {
-  const payload = await getPayload()
   const t = await i18next.getFixedT(request, ns)
 
   return {
@@ -20,6 +19,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
     message: t('Registration is disabled!'),
   }
 
+  const payload = await getPayload()
   const form = await request.formData()
 
   // create user

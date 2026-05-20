@@ -1,7 +1,6 @@
 import { translate } from '@app/i18n'
 import type { DocGenerator } from '../types'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const openAirCinemaPage: DocGenerator<'pages'> = ({
   context: { media, events },
   locale,

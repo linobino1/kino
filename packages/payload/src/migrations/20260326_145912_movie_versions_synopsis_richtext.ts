@@ -1,7 +1,7 @@
-import type { MigrateDownArgs, MigrateUpArgs } from '@payloadcms/db-mongodb'
+import type { MigrateUpArgs } from '@payloadcms/db-mongodb'
 import { stringToLexicalJson } from '@app/util/lexical/stringToLexicalJson'
 
-export async function up({ payload, req, session }: MigrateUpArgs): Promise<void> {
+export async function up({ payload }: MigrateUpArgs): Promise<void> {
   // fix broken movie docs
   for await (const language of ['en', 'de']) {
     const movies = await payload.db.collections.movies.find({
@@ -41,6 +41,6 @@ export async function up({ payload, req, session }: MigrateUpArgs): Promise<void
   }
 }
 
-export async function down({ payload, req, session }: MigrateDownArgs): Promise<void> {
+export async function down(): Promise<void> {
   // Migration code
 }

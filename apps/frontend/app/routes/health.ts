@@ -1,6 +1,4 @@
-import type { Route } from './+types/health'
-
-export const loader = async (_args: Route.LoaderArgs) =>
+export const loader = async () =>
   new Response('OK', {
     status: 200,
     headers: {
