@@ -2,11 +2,19 @@ import type {
   BasePayload,
   CollectionSlug,
   DataFromCollectionSlug,
+  JsonObject,
   RequiredDataFromCollectionSlug,
   Where,
 } from 'payload'
 import type { Locale } from '@app/i18n'
-import { DraftDataFromCollectionSlug } from 'node_modules/payload/dist/collections/config/types'
+
+export type DraftDataFromCollection<TData extends JsonObject> = Partial<
+  Omit<TData, 'collection' | 'createdAt' | 'deletedAt' | 'id' | 'sizes' | 'updatedAt'>
+> &
+  Partial<Pick<TData, 'collection' | 'createdAt' | 'deletedAt' | 'id' | 'sizes' | 'updatedAt'>>
+export type DraftDataFromCollectionSlug<TSlug extends CollectionSlug> = DraftDataFromCollection<
+  DataFromCollectionSlug<TSlug>
+>
 
 export const findOrCreateDoc = async <T extends CollectionSlug>({
   collection,
