@@ -11,11 +11,11 @@
     "@app/themoviedb": "workspace:*",
     "@app/types": "workspace:*",
     "@app/util": "workspace:*",
-    "cross-env": "7.0.3",
+    "cross-env": "10.1.0",
     "deepmerge": "^4.3.1",
-    "dotenv-cli": "8.0.0",
+    "dotenv-cli": "11.0.0",
     "glob": "^13.0.6",
     "payload": "catalog:",
-    "tsx": "^4.19.2"
+    "tsx": "^4.22.4"
   }
 }

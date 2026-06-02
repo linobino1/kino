@@ -22,6 +22,7 @@ export const seedGlobal = async <T extends GlobalSlug>({
   const data = generator({ context, locale: defaultLocale })
   payload.logger.info(`— Seeding global ${slug}`)
 
+  // eslint-disable-next-line no-useless-assignment
   let global: DataFromGlobalSlug<T> | null = null
   try {
     global = await payload.updateGlobal({

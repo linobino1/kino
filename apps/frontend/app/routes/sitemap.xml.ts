@@ -12,6 +12,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   const page = new URL(request.url).searchParams.get('page')
   const isIndex = page === null
 
+  // eslint-disable-next-line no-useless-assignment
   let content = ''
 
   if (isIndex) {

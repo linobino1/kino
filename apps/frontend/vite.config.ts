@@ -1,11 +1,9 @@
 import { reactRouter } from '@react-router/dev/vite'
 import { defineConfig } from 'vite'
-import tsconfigPaths from 'vite-tsconfig-paths'
 import tailwindcss from '@tailwindcss/vite'
-import nextFont from '@next-font/plugin-vite'
 
 export default defineConfig(({ command }) => ({
-  plugins: [reactRouter(), tsconfigPaths(), tailwindcss(), nextFont()],
+  plugins: [reactRouter(), tailwindcss()],
   optimizeDeps: {
     exclude: [
       '@app/payload',
@@ -26,5 +24,8 @@ export default defineConfig(({ command }) => ({
   },
   server: {
     allowedHosts: true,
+  },
+  resolve: {
+    tsconfigPaths: true,
   },
 }))

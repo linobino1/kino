@@ -33,6 +33,7 @@ export const seedDoc = async <T extends CollectionSlug>({
           : `${data.id}`
   payload.logger.info(`— Seeding ${collection} doc: ${contextID}`)
 
+  // eslint-disable-next-line no-useless-assignment
   let doc: DataFromCollectionSlug<T> | null = null
   try {
     doc = await payload.create<T, any>({
