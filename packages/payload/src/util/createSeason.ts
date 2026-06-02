@@ -1,4 +1,5 @@
 import {
+  summerSemesterDefaultSlug,
   summerSemesterEnd,
   summerSemesterStart,
   winterSemesterDefaultSlug,
@@ -42,7 +43,7 @@ export const createSeason = async ({
       name: t(`seasons.${isWinterSemester ? 'winterSemester' : 'summerSemester'}`, { year }),
       slug: isWinterSemester
         ? winterSemesterDefaultSlug.replace('yy', yearTwoDigits)
-        : winterSemesterDefaultSlug.replace('yy', yearTwoDigits),
+        : summerSemesterDefaultSlug.replace('yy', yearTwoDigits),
       slugLock: false,
       header,
     },
