@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import type React from 'react'
+import { useEffect, useState } from 'react'
 import type { Media, Site, Navigation as NavigationType } from '@app/types/payload'
 import { Navigation, navItemClassName } from './Navigation'
 import { useLocation } from 'react-router'

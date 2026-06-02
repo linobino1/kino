@@ -1,5 +1,5 @@
 import type { Event, EventSery, Site } from '@app/types/payload'
-import React from 'react'
+import type React from 'react'
 import { useTranslation } from 'react-i18next'
 import { JsonLd } from '~/structured-data'
 import { eventsListSchema } from '~/structured-data/event'

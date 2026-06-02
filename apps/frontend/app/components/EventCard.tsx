@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import type { Media, Event, EventSery } from '@app/types/payload'
 import { Date as DateComponent } from '~/components/Date'
 import { useTranslation } from 'react-i18next'

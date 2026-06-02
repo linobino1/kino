@@ -1,9 +1,8 @@
 import { Gutter } from '@payloadcms/ui'
-import React from 'react'
 
 export const HowTo = () => {
   return (
-    <Gutter className="mb-8 mt-4 opacity-70">
+    <Gutter className="mt-4 mb-8 opacity-70">
       <h3>Anleitung</h3>
       <p>Um einen neuen Newsletter zu verfassen, folge diesen Schritten:</p>
       <ol className="my-2 max-w-[600px] space-y-2 leading-tight">

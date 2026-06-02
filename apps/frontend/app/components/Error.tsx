@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import { isRouteErrorResponse } from 'react-router'
 import { useEnv } from '~/util/useEnv'
 import { useTranslation } from 'react-i18next'

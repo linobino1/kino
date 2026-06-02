@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import type { Event as EventType, PressRelease, PressReleasesConfig } from '@app/types/payload'
 import type { TFunction } from '@app/i18n'
 import { Document, Font } from '@react-pdf/renderer'

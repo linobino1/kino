@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import { cn } from '@app/util/cn'
 import type { Page } from '@app/types/payload'
 

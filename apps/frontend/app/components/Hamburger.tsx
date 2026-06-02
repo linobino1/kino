@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import { cn } from '@app/util/cn'
 
 const lineClassName = 'origin-center fill-none stroke-current transition-all duration-300'

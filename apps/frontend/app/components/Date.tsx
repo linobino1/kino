@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import { useTranslation } from 'react-i18next'
 import { formatDate } from '@app/util/formatDate'
 import type { Locale } from '@app/i18n'

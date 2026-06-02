@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import type { TFunction } from '@app/i18n'
 import type { FilmPrint, Movie } from '@app/types/payload'
 import type { ViewProps } from '@react-pdf/renderer'

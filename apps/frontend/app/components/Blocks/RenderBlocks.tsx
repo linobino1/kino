@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import type { Media, Page } from '@app/types/payload'
 import { Gallery } from '../Gallery'
 import { VideoEmbed } from '../VideoEmbed'

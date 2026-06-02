@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import type { Media } from '@app/types/payload'
 import { Image } from '~/components/Image'
 import { Slider } from './Slider'

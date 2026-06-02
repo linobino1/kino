@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import type { Country, FilmPrint, Media, Movie, Person } from '@app/types/payload'
 import { useTranslation } from 'react-i18next'
 import { Image } from '~/components/Image'

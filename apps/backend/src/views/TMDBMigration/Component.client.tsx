@@ -2,7 +2,8 @@
 
 import type { MigratedMovie, tmdbImages, tmdbMovie } from '@app/themoviedb/types'
 import type { Locale } from '@app/i18n'
-import React, { useActionState, useEffect, useRef, useState } from 'react'
+import type React from 'react';
+import { useActionState, useEffect, useRef, useState } from 'react'
 import { Button, useLocale } from '@payloadcms/ui'
 import { search } from './actions/search'
 import { migrate as migrateAction } from './actions/migrate'

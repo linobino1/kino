@@ -1,6 +1,6 @@
 import type { Event as EventType } from '@app/types/payload'
 import type { Locale, TFunction } from '@app/i18n'
-import React from 'react'
+import type React from 'react'
 import Compact from './Compact'
 import UnfoldProgramItems from './UnfoldProgramItems'
 

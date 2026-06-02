@@ -2,7 +2,6 @@
 
 import type { Mailing } from '@app/types/payload'
 import type { TextFieldClientProps } from 'payload'
-import React from 'react'
 import { Button, FieldLabel, useField, useForm } from '@payloadcms/ui'
 
 type Props = TextFieldClientProps & {

@@ -1,5 +1,5 @@
 import type { Media } from '@app/types/payload'
-import React from 'react'
+import type React from 'react'
 import { getMediaUrl } from '@app/util/media/getMediaUrl'
 import { getOptimizedImageUrl } from '@app/util/media/getOptimizedImageUrl'
 import { getObjectPosition } from '@app/util/media/getObjectPosition'

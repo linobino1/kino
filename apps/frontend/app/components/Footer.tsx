@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import { Navigation } from './Navigation'
 import { RichText } from './RichText'
 import type { Navigation as NavigationType, Site } from '@app/types/payload'

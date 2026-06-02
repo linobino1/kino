@@ -1,6 +1,7 @@
 import type { Settings } from 'react-slick'
 import SlickSlider from 'react-slick'
-import React, { useRef } from 'react'
+import type React from 'react';
+import { useRef } from 'react'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { cn } from '@app/util/cn'

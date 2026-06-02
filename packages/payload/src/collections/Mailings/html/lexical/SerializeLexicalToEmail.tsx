@@ -1,4 +1,5 @@
-import React, { Fragment } from 'react'
+import type React from 'react';
+import { Fragment } from 'react'
 import escapeHTML from 'escape-html'
 import {
   IS_BOLD,

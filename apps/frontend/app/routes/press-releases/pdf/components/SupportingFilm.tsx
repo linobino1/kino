@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import type { TFunction } from '@app/i18n'
 import type { FilmPrint, Movie, Person } from '@app/types/payload'
 import { getMovieSpecsString } from '@app/util/data/getMovieSpecsString'

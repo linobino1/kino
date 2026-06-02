@@ -1,5 +1,5 @@
 import type { Post, Media } from '@app/types/payload'
-import React from 'react'
+import type React from 'react'
 import { Date } from '~/components/Date'
 import { Image } from '~/components/Image'
 import { RichText } from '~/components/RichText'

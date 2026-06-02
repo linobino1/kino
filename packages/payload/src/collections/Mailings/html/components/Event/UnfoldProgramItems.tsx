@@ -1,6 +1,6 @@
 import type { FilmPrint, Media, Movie, Event as EventType } from '@app/types/payload'
 import type { Locale, TFunction } from '@app/i18n'
-import React from 'react'
+import type React from 'react'
 import { SerializeLexicalToEmail } from '../../lexical/SerializeLexicalToEmail'
 import { env } from '@app/util/env/backend.server'
 import { lexicalToPlainText } from '@app/util/lexical/lexicalToPlainText'

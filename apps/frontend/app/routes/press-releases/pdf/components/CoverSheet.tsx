@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import type { TFunction } from '@app/i18n'
 import type { Media, PressRelease, PressReleasesConfig } from '@app/types/payload'
 import { Image, Text, View } from '@react-pdf/renderer'

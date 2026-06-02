@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import type { TFunction } from '@app/i18n'
 import type { PageProps } from '@react-pdf/renderer'
 import { Page as _Page, Text, View } from '@react-pdf/renderer'
