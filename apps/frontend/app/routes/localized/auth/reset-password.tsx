@@ -1,21 +1,18 @@
 import type { Route } from './+types/reset-password'
 import { Form } from 'react-router'
 import { useTranslation } from 'react-i18next'
-import i18next from '~/i18next.server'
+import { getInstance } from '~/middleware/i18next'
 import { Link } from '~/components/localized-link'
 import { getPayload } from '~/util/getPayload.server'
 import { Label } from '~/components/auth/Label'
 import { Input } from '~/components/auth/Input'
 import { Button } from '~/components/Button'
 
-// i18n namespace
-const ns = 'auth'
-
-export const action = async ({ request }: Route.ActionArgs) => {
+export const action = async ({ request, context }: Route.ActionArgs) => {
   const payload = await getPayload()
   const url = new URL(request.url)
   const form = await request.formData()
-  const t = await i18next.getFixedT(request, ns)
+  const { t } = getInstance(context)
 
   try {
     await payload.resetPassword({
@@ -29,18 +26,18 @@ export const action = async ({ request }: Route.ActionArgs) => {
   } catch {
     return {
       success: false,
-      message: t('either your password reset token or the new password is invalid'),
+      message: t('auth:either your password reset token or the new password is invalid'),
     }
   }
 
   return {
     success: true,
-    message: t('your new password has been saved!'),
+    message: t('auth:your new password has been saved!'),
   }
 }
 
 export default function VerifyEmail({ actionData: data }: Route.ComponentProps) {
-  const { t } = useTranslation(ns)
+  const { t } = useTranslation('auth')
 
   return (
     <>

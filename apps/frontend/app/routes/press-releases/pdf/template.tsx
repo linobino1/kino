@@ -1,6 +1,6 @@
 import type React from 'react'
 import type { Event as EventType, PressRelease, PressReleasesConfig } from '@app/types/payload'
-import type { TFunction } from '@app/i18n'
+import type { TFunction } from 'i18next'
 import { Document, Font } from '@react-pdf/renderer'
 import { Event } from './components/Event'
 import { CoverSheet } from './components/CoverSheet'

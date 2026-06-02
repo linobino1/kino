@@ -2,21 +2,18 @@ import type { Route } from './+types/signin'
 import { Form } from 'react-router'
 import { replace } from 'react-router'
 import { useTranslation } from 'react-i18next'
-import i18next from '~/i18next.server'
 import { Link } from '~/components/localized-link'
 import { getPayload } from '~/util/getPayload.server'
 import { Label } from '~/components/auth/Label'
 import { Input } from '~/components/auth/Input'
 import { Button } from '~/components/Button'
 import { env } from '@app/util/env/backend.server'
+import { getInstance } from '~/middleware/i18next'
 
-// i18n namespace
-const ns = 'auth'
-
-export const action = async ({ request }: Route.ActionArgs) => {
+export const action = async ({ request, context }: Route.ActionArgs) => {
   const payload = await getPayload()
   const form = await request.formData()
-  const t = await i18next.getFixedT(request, ns)
+  const { t } = getInstance(context)
 
   try {
     const result = await payload.login({
@@ -39,13 +36,13 @@ export const action = async ({ request }: Route.ActionArgs) => {
     })
   } catch {
     return {
-      error: t('email and/or password invalid'),
+      error: t('auth:email and/or password invalid'),
     }
   }
 }
 
 export default function SignIn({ actionData }: Route.ComponentProps) {
-  const { t } = useTranslation(ns)
+  const { t } = useTranslation('auth')
 
   return (
     <>

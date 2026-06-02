@@ -1,16 +1,13 @@
 import type { Route } from './+types/verify-email'
 import { useTranslation } from 'react-i18next'
-import i18next from '~/i18next.server'
+import { getInstance } from '~/middleware/i18next'
 import { Link } from '~/components/localized-link'
 import { getPayload } from '~/util/getPayload.server'
 
-// i18n namespace
-const ns = 'auth'
-
-export const loader = async ({ request }: Route.LoaderArgs) => {
+export const loader = async ({ request, context }: Route.LoaderArgs) => {
   const payload = await getPayload()
   const url = new URL(request.url)
-  const t = await i18next.getFixedT(request, ns)
+  const { t } = getInstance(context)
 
   try {
     await payload.verifyEmail({
@@ -20,18 +17,18 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   } catch {
     return {
       success: false,
-      message: t('your email address could not be verified'),
+      message: t('auth:your email address could not be verified'),
     }
   }
 
   return {
     success: true,
-    message: t('your email address has been verified!'),
+    message: t('auth:your email address has been verified!'),
   }
 }
 
 export default function VerifyEmail({ loaderData: data }: Route.ComponentProps) {
-  const { t } = useTranslation(ns)
+  const { t } = useTranslation('auth')
 
   return (
     <>

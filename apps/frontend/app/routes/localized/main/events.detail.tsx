@@ -5,7 +5,7 @@ import type { Locale } from '@app/i18n'
 import { Link } from '~/components/localized-link'
 import { useRouteLoaderData } from 'react-router'
 import { getPayload } from '~/util/getPayload.server'
-import i18next from '~/i18next.server'
+import { getInstance } from '~/middleware/i18next'
 import { PageLayout } from '~/components/PageLayout'
 import { Hero } from '~/components/Hero'
 import { generateMetadata } from '~/util/generateMetadata'
@@ -33,23 +33,22 @@ export const meta: Route.MetaFunction = ({ data, matches }) =>
 
 export const loader = async ({
   params: { lang: locale, slug },
-  request: { url },
+  url,
+  context,
 }: Route.LoaderArgs) => {
   // throw new Error('Not implemented')
   const payload = await getPayload()
-  const [res, t] = await Promise.all([
-    payload.find({
-      collection: 'events',
-      where: {
-        slug: {
-          equals: slug,
-        },
+  const { t } = getInstance(context)
+  const res = await payload.find({
+    collection: 'events',
+    where: {
+      slug: {
+        equals: slug,
       },
-      depth: 8,
-      locale: locale as Locale,
-    }),
-    i18next.getFixedT(locale as string),
-  ])
+    },
+    depth: 8,
+    locale: locale as Locale,
+  })
 
   const event = res.docs[0]
 

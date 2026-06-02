@@ -19,7 +19,7 @@ export const UserStatus: React.FC<Props> = ({ className }) => {
   return (
     <div className={cn('', className)}>
       {user ? (
-        <div className="flex flex-col gap-1 whitespace-nowrap text-center lowercase">
+        <div className="flex flex-col gap-1 text-center whitespace-nowrap lowercase">
           <Link to="/auth/me" className="hover:text-black">
             {t('signed in as {{name}}', { name: user.name })}
           </Link>

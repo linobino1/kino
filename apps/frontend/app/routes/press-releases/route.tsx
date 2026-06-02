@@ -1,10 +1,10 @@
-import { getPayload } from '~/util/getPayload.server'
 import type { Route } from './+types/route'
+import { getPayload } from '~/util/getPayload.server'
 import { renderPressPDF } from './pdf/render'
-import { getFixedT } from '@app/i18n/getFixedT'
 import { formatDate } from '@app/util/formatDate'
+import { getInstance } from '~/middleware/i18next'
 
-export const loader = async ({ params: { id }, request: { url } }: Route.LoaderArgs) => {
+export const loader = async ({ params: { id }, url, context }: Route.LoaderArgs) => {
   const preview = !!new URL(url).searchParams.get('preview')
 
   const payload = await getPayload()
@@ -18,7 +18,7 @@ export const loader = async ({ params: { id }, request: { url } }: Route.LoaderA
     throw new Response('Not Found', { status: 404 })
   }
 
-  const t = await getFixedT(pressRelease.locale)
+  const { t } = getInstance(context)
   const filename = t('pdf.filename', { date: formatDate(pressRelease.date, 'dd_MM_yyyy') })
 
   let buffer

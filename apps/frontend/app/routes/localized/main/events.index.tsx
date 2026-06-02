@@ -3,7 +3,7 @@ import type { loader as rootLoader } from '~/root'
 import type { Locale } from '@app/i18n'
 import { useRouteLoaderData } from 'react-router'
 import { getPayload } from '~/util/getPayload.server'
-import i18next from '~/i18next.server'
+import { getInstance } from '~/middleware/i18next'
 import { PageLayout } from '~/components/PageLayout'
 import { Hero } from '~/components/Hero'
 import { generateMetadata } from '~/util/generateMetadata'
@@ -19,8 +19,9 @@ export const meta: Route.MetaFunction = ({ data, matches }) =>
     env: getEnvFromMatches(matches),
   })
 
-export const loader = async ({ params: { lang: locale }, request: { url } }: Route.LoaderArgs) => {
-  const [payload, t] = await Promise.all([getPayload(), i18next.getFixedT(locale as string)])
+export const loader = async ({ params: { lang: locale }, url, context }: Route.LoaderArgs) => {
+  const { t } = getInstance(context)
+  const payload = await getPayload()
 
   // Get today's date at midnight
   const today = new Date()

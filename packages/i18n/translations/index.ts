@@ -1,9 +1,9 @@
-import commonDE from './de/common.json'
-import backendDE from './de/backend.json'
-import authDE from './de/auth.json'
-import commonEN from './en/common.json'
-import backendEN from './en/backend.json'
-import authEN from './en/auth.json'
+import commonDE from './de/common'
+import backendDE from './de/backend'
+import authDE from './de/auth'
+import commonEN from './en/common'
+import backendEN from './en/backend'
+import authEN from './en/auth'
 
 export const translations = {
   de: {

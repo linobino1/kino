@@ -1,19 +1,16 @@
 import type { Route } from './+types/forgot-password'
 import { Form } from 'react-router'
 import { useTranslation } from 'react-i18next'
-import i18next from '~/i18next.server'
+import { getInstance } from '~/middleware/i18next'
 import { getPayload } from '~/util/getPayload.server'
 import { Label } from '~/components/auth/Label'
 import { Input } from '~/components/auth/Input'
 import { Button } from '~/components/Button'
 
-// i18n namespace
-const ns = 'auth'
-
-export const action = async ({ request }: Route.ActionArgs) => {
+export const action = async ({ request, context }: Route.ActionArgs) => {
   const payload = await getPayload()
   const form = await request.formData()
-  const t = await i18next.getFixedT(request, ns)
+  const { t } = getInstance(context)
 
   try {
     await payload.forgotPassword({
@@ -24,18 +21,18 @@ export const action = async ({ request }: Route.ActionArgs) => {
     })
     return {
       success: true,
-      message: t('please check your inbox'),
+      message: t('auth:please check your inbox'),
     }
   } catch {
     return {
       success: false,
-      message: t('invalid email address given'),
+      message: t('auth:invalid email address given'),
     }
   }
 }
 
 export default function ForgotPassword({ actionData: data }: Route.ComponentProps) {
-  const { t } = useTranslation(ns)
+  const { t } = useTranslation('auth')
 
   return (
     <>

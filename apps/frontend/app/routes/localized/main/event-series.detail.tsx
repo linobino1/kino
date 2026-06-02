@@ -3,7 +3,7 @@ import type { loader as rootLoader } from '~/root'
 import type { Locale } from '@app/i18n'
 import { useRouteLoaderData } from 'react-router'
 import { getPayload } from '~/util/getPayload.server'
-import i18next from '~/i18next.server'
+import { getInstance } from '~/middleware/i18next'
 import { PageLayout } from '~/components/PageLayout'
 import { Hero } from '~/components/Hero'
 import { generateMetadata } from '~/util/generateMetadata'
@@ -23,9 +23,11 @@ export const meta: Route.MetaFunction = ({ data, matches }) =>
 
 export const loader = async ({
   params: { lang: locale, slug },
-  request: { url },
+  url,
+  context,
 }: Route.LoaderArgs) => {
-  const [payload, t] = await Promise.all([getPayload(), i18next.getFixedT(locale as string)])
+  const { t } = getInstance(context)
+  const payload = await getPayload()
 
   const eventSeries = (
     await payload.find({
@@ -41,7 +43,7 @@ export const loader = async ({
   ).docs[0]
 
   if (!eventSeries) {
-    throw new Response(t('eventSeries not found.'), { status: 404 })
+    throw new Response(t('eventSeries.notFound'), { status: 404 })
   }
 
   const page = parseInt(new URL(url).searchParams.get('page') || '1')

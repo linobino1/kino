@@ -1,0 +1,7 @@
+export default {
+  rentals: {
+    credits: {
+      default: 'Loan of the film print with kind support of XXX.',
+    },
+  },
+}

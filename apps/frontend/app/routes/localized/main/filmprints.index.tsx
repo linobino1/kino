@@ -4,7 +4,7 @@ import type { Payload, Where } from 'payload'
 import { redirect } from 'react-router'
 import { Form, useNavigate, useSearchParams } from 'react-router'
 import { getPayload } from '~/util/getPayload.server'
-import i18next from '~/i18next.server'
+import { getInstance } from '~/middleware/i18next'
 import { PageLayout } from '~/components/PageLayout'
 import { Hero } from '~/components/Hero'
 import { generateMetadata } from '~/util/generateMetadata'
@@ -31,14 +31,15 @@ export const meta: Route.MetaFunction = ({ data, matches }) =>
     env: getEnvFromMatches(matches),
   })
 
-export const loader = async ({ params: { lang: locale }, request: { url } }: Route.LoaderArgs) => {
+export const loader = async ({ params: { lang: locale }, url, context }: Route.LoaderArgs) => {
+  const { t } = getInstance(context)
+  const payload = await getPayload()
   const params = new URL(url).searchParams
   const pageNumber = parseInt(params.get('page') || '1')
   const query = params.get('query') || ''
-  const [payload, t] = await Promise.all([getPayload(), i18next.getFixedT(locale as string)])
 
   // this route is used for both the filmprints page and the hfg-archive page, so we need to check which one it is
-  const isHfgArchivePage = url.includes('hfg-archive')
+  const isHfgArchivePage = url.pathname.includes('hfg-archive')
   if (isHfgArchivePage) {
     params.set('movie.isHfgProduction', 'true')
   }
@@ -219,7 +220,7 @@ const getFilters = ({
       },
       {
         name: 'movie.isHfgProduction',
-        label: 'filter.isHfgProduction',
+        label: 'filter.isHfgProduction.label',
         labelTrue: 'filter.isHfgProduction.true',
         labelFalse: 'filter.isHfgProduction.false',
       },
@@ -287,7 +288,8 @@ export default function FilmprintsPage({
             >
               {filter.options.map((option, j) => (
                 <option key={j} value={option.value}>{`${t(
-                  option.label || '',
+                  // @ts-expect-error option.label is not typed as a translation key
+                  option.label ?? '',
                 )} (${option.count})`}</option>
               ))}
             </select>
@@ -313,7 +315,7 @@ export default function FilmprintsPage({
             ))}
           </ul>
         ) : (
-          <div>{t('No films matching your search.')}</div>
+          <div>{t('No films matching your search')}</div>
         )}
       </Gutter>
       <Pagination {...filmPrints} linkProps={{ prefetch: 'intent' }} className="mt-8" />

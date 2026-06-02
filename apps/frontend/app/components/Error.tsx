@@ -33,7 +33,7 @@ export const ErrorComponent: React.FC<Props> = ({ error }) => {
           )}
         </>
       ) : (
-        <p>{t('error.unkown')}</p>
+        <p>{t('error.unknown')}</p>
       )}
     </Gutter>
   )

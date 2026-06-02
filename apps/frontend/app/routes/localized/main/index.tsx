@@ -8,16 +8,17 @@ import { Gutter } from '~/components/Gutter'
 import { Link } from '~/components/localized-link'
 import { getPayload } from '~/util/getPayload.server'
 import { PageLayout } from '~/components/PageLayout'
-import i18next from '~/i18next.server'
 import { Hero } from '~/components/Hero'
 import { cn } from '@app/util/cn'
 import { CTAButton } from '~/components/CTAButton'
 import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { PostsList } from '~/components/PostsList'
+import { getInstance } from '~/middleware/i18next'
 
-export const loader = async ({ params: { lang: locale } }: Route.LoaderArgs) => {
-  const [payload, t] = await Promise.all([getPayload(), i18next.getFixedT(locale as string)])
+export const loader = async ({ params: { lang: locale }, context }: Route.LoaderArgs) => {
+  const payload = await getPayload()
+  const { t } = getInstance(context)
 
   // compare date for upcoming events
   const today = new Date()

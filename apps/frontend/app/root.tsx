@@ -2,6 +2,7 @@ import type { MetaFunction } from 'react-router'
 import type { Route } from './+types/root'
 import type { Media } from '@app/types/payload'
 import {
+  data,
   Links,
   Meta,
   Outlet,
@@ -12,8 +13,9 @@ import {
 } from 'react-router'
 import './global.css'
 import '@fontsource-variable/dm-sans'
+import { getLocale, i18nextMiddleware } from '~/middleware/i18next'
 import { useTranslation } from 'react-i18next'
-import { defaultLocale, locales } from '@app/i18n'
+import { defaultLocale, type Locale, locales } from '@app/i18n'
 import { siteTitle } from '@app/util/config'
 import { getPayload } from './util/getPayload.server'
 import { generateMetadata } from './util/generateMetadata'
@@ -21,12 +23,14 @@ import { setCachedUser } from './util/userCache.server'
 import { getOptimizedImageUrl } from '@app/util/media/getOptimizedImageUrl'
 import { getCanonicalLink, getHreflangLinks } from './util/i18n/getHreflangLinks'
 import { parseFrontendBrowserEnv, type FrontendBrowserEnvironment } from '@app/util/env'
-import { getUrlLanguage } from './util/i18n/getUrlLanguage'
 import { ErrorComponent } from './components/Error'
+import { useEffect } from 'react'
+import { i18nCookie } from './cookies'
 
-export async function loader({ request }: Route.LoaderArgs) {
-  // get the locale from the URL
-  const locale = getUrlLanguage(request) ?? defaultLocale
+export const middleware = [i18nextMiddleware]
+
+export async function loader({ request, context }: Route.LoaderArgs) {
+  const locale = getLocale(context) as Locale
 
   const payload = await getPayload()
 
@@ -42,12 +46,17 @@ export async function loader({ request }: Route.LoaderArgs) {
   // save the user globally
   setCachedUser(user)
 
-  return {
-    locale,
-    user: user,
-    env: parseFrontendBrowserEnv(process.env),
-    site,
-  }
+  const serializedI18nCookie = await i18nCookie.serialize(locale)
+
+  return data(
+    {
+      locale,
+      user: user,
+      env: parseFrontendBrowserEnv(process.env),
+      site,
+    },
+    { headers: { 'Set-Cookie': serializedI18nCookie } },
+  )
 }
 
 // fallback meta
@@ -63,7 +72,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const { i18n } = useTranslation()
 
   return (
-    <html lang={i18n.language} dir={i18n.dir()}>
+    <html lang={i18n.language} dir={i18n.dir(i18n.language)}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -94,7 +103,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
   )
 }
 
-export default function App() {
+export default function App({ loaderData: { locale } }: Route.ComponentProps) {
+  const { i18n } = useTranslation()
+
+  useEffect(() => {
+    if (i18n.language !== locale) {
+      void i18n.changeLanguage(locale)
+    }
+  }, [locale, i18n])
+
   return <Outlet />
 }
 

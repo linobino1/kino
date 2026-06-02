@@ -2,7 +2,7 @@ import type { Route } from './+types/filmprints.detail'
 import type { Locale } from '@app/i18n'
 import type { Media, Movie as MovieType } from '@app/types/payload'
 import { getPayload } from '~/util/getPayload.server'
-import i18next from '~/i18next.server'
+import { getInstance } from '~/middleware/i18next'
 import { PageLayout } from '~/components/PageLayout'
 import { Hero } from '~/components/Hero'
 import { generateMetadata } from '~/util/generateMetadata'
@@ -22,22 +22,21 @@ export const meta: Route.MetaFunction = ({ data, matches }) =>
 
 export const loader = async ({
   params: { lang: locale, slug },
-  request: { url },
+  url,
+  context,
 }: Route.LoaderArgs) => {
+  const { t } = getInstance(context)
   const payload = await getPayload()
-  const [res, t] = await Promise.all([
-    payload.find({
-      collection: 'filmPrints',
-      where: {
-        slug: {
-          equals: slug,
-        },
+  const res = await payload.find({
+    collection: 'filmPrints',
+    where: {
+      slug: {
+        equals: slug,
       },
-      depth: 2,
-      locale: locale as Locale,
-    }),
-    i18next.getFixedT(locale as string),
-  ])
+    },
+    depth: 2,
+    locale: locale as Locale,
+  })
 
   const filmPrint = res.docs[0]
 

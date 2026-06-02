@@ -14,7 +14,10 @@ const input =
 
 export const NewsletterSignup: React.FC<Props> = ({ className, ...props }) => {
   const env = useEnv()
-  const { t } = useTranslation()
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation()
   const [key, setKey] = useState<string>(() => Math.random().toString())
   function reset() {
     setKey(Math.random().toString())
@@ -50,6 +53,7 @@ export const NewsletterSignup: React.FC<Props> = ({ className, ...props }) => {
           method="post"
           className="flex w-full flex-col gap-2"
         >
+          <input type="hidden" name="language" value={language} />
           <label htmlFor="name" className="sr-only">
             {t('newsletter.name')}
           </label>

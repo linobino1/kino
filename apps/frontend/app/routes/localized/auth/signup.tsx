@@ -1,22 +1,18 @@
 import type { Route } from './+types/signup'
 import { Form } from 'react-router'
 import { useTranslation } from 'react-i18next'
-import i18next from '~/i18next.server'
+import { getInstance } from '~/middleware/i18next'
 import { getPayload } from '~/util/getPayload.server'
 import { Label } from '~/components/auth/Label'
 import { Input } from '~/components/auth/Input'
 import { Button } from '~/components/Button'
 
-// i18n namespace
-const ns = 'auth'
-export const handle = { i18n: 'auth' }
-
-export const action = async ({ request }: Route.ActionArgs) => {
-  const t = await i18next.getFixedT(request, ns)
+export const action = async ({ request, context }: Route.ActionArgs) => {
+  const { t } = getInstance(context)
 
   return {
     success: false,
-    message: t('Registration is disabled!'),
+    message: t('auth:Registration is disabled!'),
   }
 
   const payload = await getPayload()
@@ -36,18 +32,18 @@ export const action = async ({ request }: Route.ActionArgs) => {
   } catch {
     return Response.json({
       success: false,
-      message: t('could not create account, maybe you are already registered?'),
+      message: t('auth:could not create account, maybe you are already registered?'),
     })
   }
 
   return Response.json({
     success: true,
-    message: t('your account has been created, please check your inbox now'),
+    message: t('auth:your account has been created, please check your inbox now'),
   })
 }
 
 export default function SignUp({ actionData: data }: Route.ComponentProps) {
-  const { t } = useTranslation(ns)
+  const { t } = useTranslation('auth')
 
   return (
     <>

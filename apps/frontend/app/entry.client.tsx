@@ -1,5 +1,5 @@
 import { HydratedRouter } from 'react-router/dom'
-import { startTransition } from 'react'
+import { startTransition, StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
 import i18n from './i18n'
 import i18next from 'i18next'
@@ -8,22 +8,16 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 import { getInitialNamespaces } from 'remix-i18next/client'
 import { translations } from '@app/i18n/translations'
 
-async function hydrate() {
+async function main() {
   await i18next
     .use(initReactI18next) // Tell i18next to use the react-i18next plugin
     .use(LanguageDetector) // Setup a client-side language detector
     .init({
-      ...i18n, // spread the configuration
+      ...i18n,
       ns: getInitialNamespaces(),
       resources: {
-        de: {
-          common: translations.de.common,
-          auth: translations.de.auth,
-        },
-        en: {
-          common: translations.en.common,
-          auth: translations.en.auth,
-        },
+        de: translations.de,
+        en: translations.en,
       },
       detection: {
         // Here only enable htmlTag detection, we'll detect the language only
@@ -40,16 +34,12 @@ async function hydrate() {
     hydrateRoot(
       document,
       <I18nextProvider i18n={i18next}>
-        <HydratedRouter />
+        <StrictMode>
+          <HydratedRouter />
+        </StrictMode>
       </I18nextProvider>,
     )
   })
 }
 
-if (window.requestIdleCallback) {
-  window.requestIdleCallback(hydrate)
-} else {
-  // Safari doesn't support requestIdleCallback
-  // https://caniuse.com/requestidlecallback
-  window.setTimeout(hydrate, 1)
-}
+main().catch((error) => console.error(error))

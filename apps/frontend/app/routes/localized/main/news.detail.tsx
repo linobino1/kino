@@ -2,7 +2,7 @@ import type { Route } from './+types/news.detail'
 import type { Media } from '@app/types/payload'
 import type { Locale } from '@app/i18n'
 import { getPayload } from '~/util/getPayload.server'
-import i18next from '~/i18next.server'
+import { getInstance } from '~/middleware/i18next'
 import { PageLayout } from '~/components/PageLayout'
 import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
@@ -28,9 +28,11 @@ export const meta: Route.MetaFunction = ({ data, matches }) =>
 
 export const loader = async ({
   params: { lang: locale, slug },
-  request: { url },
+  url,
+  context,
 }: Route.LoaderArgs) => {
-  const [payload, t] = await Promise.all([getPayload(), i18next.getFixedT(locale as string)])
+  const { t } = getInstance(context)
+  const payload = await getPayload()
 
   const post = (
     await payload.find({
@@ -51,7 +53,7 @@ export const loader = async ({
       },
       locale: locale as Locale,
       depth: 2,
-      draft: isPreview(url),
+      draft: isPreview(url.toString()),
     })
   ).docs[0]
 
@@ -73,7 +75,7 @@ export default function PostDetailPage({ loaderData: { post } }: Route.Component
       <JsonLd {...postSchema(post)} />
       <Gutter size="small" className="mt-12">
         <Date date={post.date} format="PPP" className="text-sm text-neutral-100" />
-        <h1 className="mt-6 text-3xl font-semibold uppercase tracking-widest">{post.title}</h1>
+        <h1 className="mt-6 text-3xl font-semibold tracking-widest uppercase">{post.title}</h1>
         <Image
           className="mt-6 aspect-[16/9] w-full object-contain object-left"
           image={post.header as Media}

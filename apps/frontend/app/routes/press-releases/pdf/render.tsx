@@ -3,7 +3,7 @@ import { getPayloadClient } from '#payload/util/getPayloadClient'
 import { getDocId } from '@app/util/payload/getDocId'
 import { renderToBuffer } from '@react-pdf/renderer'
 import { PressPDF } from './template'
-import { getFixedT } from '@app/i18n/getFixedT'
+import { getTFunction } from '~/util/i18n/getTFunction.server'
 
 type Props = {
   pressRelease: PressRelease
@@ -40,7 +40,7 @@ export const renderPressPDF = async ({ pressRelease }: Props) => {
     locale: pressRelease.locale,
   })
 
-  const t = await getFixedT('de')
+  const t = await getTFunction(pressRelease.locale, 'common')
 
   return await renderToBuffer(
     <PressPDF

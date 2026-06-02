@@ -1,7 +1,8 @@
+import type { Locale } from '@app/i18n'
 import type { Route } from './+types/newsletter-signup'
 import { env } from '@app/util/env/frontend.server'
 import { data } from 'react-router'
-import i18next from '~/i18next.server'
+import { getTFunction } from '~/util/i18n/getTFunction.server'
 
 const validateCaptcha = async (token: string): Promise<boolean> => {
   try {
@@ -24,7 +25,6 @@ const validateCaptcha = async (token: string): Promise<boolean> => {
 }
 
 export const action = async ({ request }: Route.ActionArgs) => {
-  const t = await i18next.getFixedT(request)
   const formData = await request.formData()
 
   // validate captcha
@@ -34,6 +34,10 @@ export const action = async ({ request }: Route.ActionArgs) => {
       message: `The humanity checks could not be validated on the server. Sorry, please try again.`,
     })
   }
+
+  const language = formData.get('language') as Locale
+
+  const t = await getTFunction(language)
 
   const res = await fetch(`${env.LISTMONK_URL}/api/public/subscription`, {
     method: 'post',
