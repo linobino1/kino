@@ -12,6 +12,7 @@ export default [
     route('/ics', './routes/api/ics.ts'),
   ]),
   route('/press-releases/:id.pdf', './routes/press-releases/route.tsx'),
+  route('/press-releases/:id.zip', './routes/press-releases/zip.ts'),
   layout('./routes/localized/_layout.tsx', [
     layout('./routes/localized/auth/_layout.tsx', [
       ...prefix('/:lang?/auth', [

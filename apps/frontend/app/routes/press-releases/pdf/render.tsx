@@ -1,9 +1,9 @@
 import type { PressRelease } from '@app/types/payload'
 import { getPayloadClient } from '#payload/util/getPayloadClient'
-import { getDocId } from '@app/util/payload/getDocId'
 import { renderToBuffer } from '@react-pdf/renderer'
 import { PressPDF } from './template'
 import { getTFunction } from '~/util/i18n/getTFunction.server'
+import { getPressReleaseEvents } from '../data.server'
 
 type Props = {
   pressRelease: PressRelease
@@ -12,27 +12,7 @@ type Props = {
 export const renderPressPDF = async ({ pressRelease }: Props) => {
   const payload = await getPayloadClient()
 
-  // fetch the events
-  const events = (
-    await payload.find({
-      collection: 'events',
-      where: {
-        and: [
-          { _status: { equals: 'published' } },
-          {
-            season: {
-              equals: getDocId(pressRelease.season),
-            },
-          },
-        ],
-      },
-      depth: 5,
-      locale: pressRelease.locale,
-      draft: false,
-      limit: 100,
-      sort: 'date',
-    })
-  ).docs
+  const events = await getPressReleaseEvents({ pressRelease })
 
   // fetch the global press releases config
   const pressReleasesConfig = await payload.findGlobal({

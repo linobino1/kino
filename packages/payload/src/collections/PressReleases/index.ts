@@ -94,6 +94,25 @@ export const PressReleases: CollectionConfig<'pressReleases'> = {
       },
     },
     {
+      name: 'linkToStillsZip',
+      label: 'Download Filmstills ZIP',
+      type: 'text',
+      hooks: {
+        afterRead: [
+          ({ data }) => (data ? `${env.FRONTEND_URL}/press-releases/${data.id}.zip` : ''),
+        ],
+      },
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+        components: {
+          Field: {
+            path: '/components/DownloadButton#DownloadButton',
+          },
+        },
+      },
+    },
+    {
       name: 'locale',
       label: 'Sprache',
       type: 'select',
