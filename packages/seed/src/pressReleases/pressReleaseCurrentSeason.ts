@@ -1,5 +1,5 @@
-import { getCurrentSeasonName } from 'src/seasons'
 import type { DocGenerator } from '../types'
+import { getCurrentSeasonName } from '../seasons'
 
 export const pressReleaseCurrentSeason: DocGenerator<'pressReleases'> = ({ context }) => {
   const season = context.seasons.get(getCurrentSeasonName())?.id as string
