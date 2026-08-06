@@ -57,7 +57,9 @@ export const Footer: React.FC<Props> = ({ site, navigations }) => {
             className="contents"
           >
             <img
-              src="/img/riemschneider.svg"
+              src="/img/riemschneider.png"
+              width={640}
+              height={145}
               alt="Riemschneider Stiftung"
               className="h-[40px] w-auto"
             />
