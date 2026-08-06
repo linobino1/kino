@@ -125,7 +125,7 @@ export default function EventPage({ loaderData: { event } }: Route.ComponentProp
 
       {event.intro && (
         <Gutter className="mt-4">
-          <RichText content={event.intro} className="prose prose-white" />
+          <RichText content={event.intro} className="prose prose-white max-w-none" />
         </Gutter>
       )}
 
@@ -141,7 +141,11 @@ export default function EventPage({ loaderData: { event } }: Route.ComponentProp
               />
             ) : (
               <AsideLayout aside={poster && <Poster image={poster as Media} />}>
-                <RichText content={info} enableMarginBlock={false} className="prose prose-white" />
+                <RichText
+                  content={info}
+                  enableMarginBlock={false}
+                  className="prose prose-white max-w-none"
+                />
               </AsideLayout>
             )}
           </React.Fragment>
