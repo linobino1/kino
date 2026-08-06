@@ -7,6 +7,7 @@ import { getEnabledNodes } from '@payloadcms/richtext-lexical'
 import { $getRoot } from '@payloadcms/richtext-lexical/lexical'
 import { formatSlug } from '@app/util/formatSlug'
 import { lexicalToPlainText } from '@app/util/lexical/lexicalToPlainText'
+import { hasMainScreeningProgramItem } from './hasMainScreeningProgramItem'
 
 type Props = {
   locale: Locale
@@ -28,9 +29,7 @@ type Props = {
 export const getImplicitEventData = async ({ data, doc, originalDoc, locale, req }: Props) => {
   const event = data ?? doc
 
-  const isScreeningEvent = event.programItems?.some(
-    (item) => item.type === 'screening' && item.isMainProgram,
-  )
+  const isScreeningEvent = hasMainScreeningProgramItem(event.programItems)
 
   const mainProgramItem = event.programItems?.findLast((item) => item.isMainProgram)
   const mainProgramFilmPrint =

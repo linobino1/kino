@@ -5,9 +5,9 @@ import { generateImplicitData } from './hooks/generateImplicitData'
 import { translateImplicitData } from './hooks/translateImplicitData'
 import { slugField } from '#payload/fields/slug'
 import { setSeason } from './hooks/setSeason'
+import { hasMainScreeningProgramItem } from './hooks/shared/hasMainScreeningProgramItem'
 
-const isScreening = (data: any) =>
-  data?.programItems?.some((item: any) => item?.type === 'screening' && item?.isMainProgram)
+const isScreeningEventData = (data: any) => hasMainScreeningProgramItem(data?.programItems)
 
 export const Events: CollectionConfig<'events'> = {
   slug: 'events',
@@ -58,11 +58,11 @@ export const Events: CollectionConfig<'events'> = {
       required: true,
       validate: (value: any, { data }: { data: Partial<Event> }) => {
         if (data._status === 'draft') return true
-        if (isScreening(data)) return true
+        if (isScreeningEventData(data)) return true
         return value ? true : 'Der Titel darf nicht leer sein.'
       },
       admin: {
-        condition: (_, data) => !isScreening(data) || !data.titleLock,
+          condition: (_, data) => !isScreeningEventData(data) || !data.titleLock,
         description:
           'Bei Filmvorstellungen wird der Titel des letzten Films im Hauptprogramm verwendet, wenn dieses Feld leer bleibt. Refresh benötigt.',
       },
@@ -73,7 +73,7 @@ export const Events: CollectionConfig<'events'> = {
       type: 'text',
       virtual: true, // this field is not stored in the database
       admin: {
-        condition: (_, data) => isScreening(data) && data.titleLock,
+          condition: (_, data) => isScreeningEventData(data) && data.titleLock,
         readOnly: true,
       },
       hooks: {
@@ -86,7 +86,7 @@ export const Events: CollectionConfig<'events'> = {
       type: 'checkbox',
       defaultValue: true,
       admin: {
-        condition: (data) => isScreening(data),
+          condition: (data) => isScreeningEventData(data),
       },
     },
     {
@@ -284,11 +284,11 @@ export const Events: CollectionConfig<'events'> = {
               required: true,
               validate: (value: any, { data }: { data: Partial<Event> }) => {
                 if (data._status === 'draft') return true
-                if (isScreening(data)) return true
+                if (isScreeningEventData(data)) return true
                 return value ? true : 'Es muss ein Titelbild ausgewählt werden.'
               },
               admin: {
-                condition: (_, data) => !isScreening(data) || !data.headerLock,
+                  condition: (_, data) => !isScreeningEventData(data) || !data.headerLock,
                 description:
                   'Muss nur für Veranstaltungen ohne Filme gesetzt werden, ansonsten wird das Filmstill verwendet. Refresh benötigt.',
               },
@@ -300,7 +300,7 @@ export const Events: CollectionConfig<'events'> = {
               relationTo: 'media',
               virtual: true, // this field is not stored in the database
               admin: {
-                condition: (_, data) => isScreening(data) && data.headerLock,
+                  condition: (_, data) => isScreeningEventData(data) && data.headerLock,
                 readOnly: true,
               },
               hooks: {
@@ -313,7 +313,7 @@ export const Events: CollectionConfig<'events'> = {
               type: 'checkbox',
               defaultValue: true,
               admin: {
-                condition: (data) => isScreening(data),
+                condition: (data) => isScreeningEventData(data),
               },
             },
             {
