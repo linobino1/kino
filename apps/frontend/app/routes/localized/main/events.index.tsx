@@ -11,11 +11,11 @@ import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { EventsList } from '~/components/EventsList'
 import { Gutter } from '~/components/Gutter'
 
-export const meta: Route.MetaFunction = ({ data, matches }) =>
+export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
-    title: data?.page.meta?.title,
-    description: data?.page.meta?.description,
-    image: data?.page.meta?.image,
+    title: loaderData?.page.meta?.title,
+    description: loaderData?.page.meta?.description,
+    image: loaderData?.page.meta?.image,
     env: getEnvFromMatches(matches),
   })
 

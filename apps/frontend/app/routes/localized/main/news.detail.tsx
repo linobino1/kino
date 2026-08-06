@@ -16,12 +16,12 @@ import { RenderBlocks } from '~/components/Blocks/RenderBlocks'
 import { getMetaDescription } from '~/util/posts/getMetaDescription'
 import { isPreview } from '~/util/isPreview'
 
-export const meta: Route.MetaFunction = ({ data, matches }) =>
-  data?.post
+export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
+  loaderData?.post
     ? generateMetadata({
-        title: data.post.title,
-        description: getMetaDescription(data.post, data.locale),
-        image: data?.post.header,
+        title: loaderData.post.title,
+        description: getMetaDescription(loaderData.post, loaderData.locale),
+        image: loaderData?.post.header,
         env: getEnvFromMatches(matches),
       })
     : []

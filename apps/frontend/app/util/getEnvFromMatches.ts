@@ -7,6 +7,6 @@ import type { Route } from '../+types/root'
 export const getEnvFromMatches = (
   matches: Route.MetaArgs['matches'],
 ): FrontendBrowserEnvironment | undefined => {
-  return (matches.find((match) => match?.id === 'root')?.data as any)
+  return (matches.find((match) => match?.id === 'root')?.loaderData as any)
     ?.env as FrontendBrowserEnvironment
 }

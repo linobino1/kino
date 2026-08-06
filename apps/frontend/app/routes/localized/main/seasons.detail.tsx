@@ -13,10 +13,10 @@ import { Pagination } from '~/components/Pagination'
 import { EventsList } from '~/components/EventsList'
 import { useTranslation } from 'react-i18next'
 
-export const meta: Route.MetaFunction = ({ data, matches }) =>
+export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
-    title: data?.season?.name,
-    image: data?.season?.header,
+    title: loaderData?.season?.name,
+    image: loaderData?.season?.header,
     env: getEnvFromMatches(matches),
   })
 

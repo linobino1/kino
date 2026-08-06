@@ -14,7 +14,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> &
 export const Hero: React.FC<Props> = ({ type, headline, image, children, className, ...props }) => {
   if (!type) type = 'none'
   const matches = useMatches()
-  const layoutData = matches.find((match) => match.id === '($lang)._main')?.data as
+  const layoutData = matches.find((match) => match.id === '($lang)._main')?.loaderData as
     | {
         navigations: NavigationType[]
       }
@@ -50,7 +50,7 @@ export const Hero: React.FC<Props> = ({ type, headline, image, children, classNa
       {['headline', 'image'].includes(type) && headline && (
         <h1
           className={cn(
-            'break-words text-center text-4xl font-semibold uppercase leading-tight tracking-widest',
+            'text-center text-4xl leading-tight font-semibold tracking-widest break-words uppercase',
             {
               'mb-8 bg-white p-2 text-black': type === 'image',
               'my-[1.5em]': type === 'headline',

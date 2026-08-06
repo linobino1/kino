@@ -14,10 +14,10 @@ import { EventsList } from '~/components/EventsList'
 import { useTranslation } from 'react-i18next'
 import { RenderBlocks } from '~/components/Blocks/RenderBlocks'
 
-export const meta: Route.MetaFunction = ({ data, matches }) =>
+export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
-    title: data?.eventSeries?.name,
-    image: data?.eventSeries?.hero?.image,
+    title: loaderData?.eventSeries?.name,
+    image: loaderData?.eventSeries?.hero?.image,
     env: getEnvFromMatches(matches),
   })
 

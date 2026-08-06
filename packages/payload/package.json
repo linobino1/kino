@@ -32,23 +32,23 @@
     "date-fns-tz": "^3.2.0",
     "escape-html": "^1.0.3",
     "monaco-editor": "catalog:",
-    "nodemailer": "^8.0.10",
+    "nodemailer": "^9.0.4",
     "nodemailer-zeptomail-transport": "^1.0.16",
     "payload": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "react-email": "^6.5.0"
+    "react-email": "^6.9.1"
   },
   "devDependencies": {
     "@app/types": "workspace:*",
     "@types/escape-html": "^1.0.4",
-    "@types/node": "^25.9.1",
-    "@types/nodemailer": "^8.0.0",
+    "@types/node": "^26.1.2",
+    "@types/nodemailer": "^8.0.1",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "dotenv-cli": "11.0.0",
     "msw": "catalog:",
-    "vitest": "^4.1.7",
+    "vitest": "^4.1.10",
     "vitest-mongodb": "1.0.3"
   },
   "engines": {

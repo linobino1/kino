@@ -12,7 +12,7 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 export const UserStatus: React.FC<Props> = ({ className }) => {
   const { t } = useTranslation()
-  const rootData = useMatches().find((match) => match.id === 'root')?.data as any
+  const rootData = useMatches().find((match) => match.id === 'root')?.loaderData as any
   const user = rootData?.user as User | undefined
   const env = useEnv()
 

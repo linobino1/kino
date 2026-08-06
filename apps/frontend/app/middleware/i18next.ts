@@ -2,7 +2,7 @@ import type { translations } from '@app/i18n/translations'
 import 'i18next'
 import { initReactI18next } from 'react-i18next'
 import { defaultLocale, locales } from '@app/i18n'
-import { createI18nextMiddleware } from 'remix-i18next/middleware'
+import { createI18nextMiddleware } from 'remix-i18next'
 import { i18nCookie } from '~/cookies'
 import i18nextConfig from '~/i18n'
 
@@ -11,7 +11,7 @@ export const [i18nextMiddleware, getLocale, getInstance] = createI18nextMiddlewa
     supportedLanguages: [...locales],
     fallbackLanguage: defaultLocale,
     cookie: i18nCookie,
-    async findLocale(request) {
+    async findLocale({ request }) {
       const language = new URL(request.url).pathname.split('/').at(1)
       return language ?? defaultLocale
     },

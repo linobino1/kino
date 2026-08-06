@@ -11,14 +11,14 @@ import { PostsList } from '~/components/PostsList'
 import { redirect } from 'react-router'
 import { getMetaDescription } from '~/util/posts/getMetaDescription'
 
-export const meta: Route.MetaFunction = ({ data, matches }) => {
-  const featuredPost = data?.posts.docs[0]
+export const meta: Route.MetaFunction = ({ loaderData, matches }) => {
+  const featuredPost = loaderData?.posts.docs[0]
   return generateMetadata({
-    title: data?.page.meta?.title,
+    title: loaderData?.page.meta?.title,
     description: featuredPost
-      ? getMetaDescription(featuredPost, data.locale)
-      : data?.page.meta?.description,
-    image: featuredPost ? featuredPost.header : data?.page.meta?.image,
+      ? getMetaDescription(featuredPost, loaderData.locale)
+      : loaderData?.page.meta?.description,
+    image: featuredPost ? featuredPost.header : loaderData?.page.meta?.image,
     env: getEnvFromMatches(matches),
   })
 }

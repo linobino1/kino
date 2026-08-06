@@ -11,12 +11,12 @@ import { Gutter } from '~/components/Gutter'
 import { FilmPrintDetails } from '~/components/FilmPrintDetails'
 import { lexicalToPlainText } from '@app/util/lexical/lexicalToPlainText'
 
-export const meta: Route.MetaFunction = ({ data, matches }) =>
+export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
     // TODO: title and description should clarify that this is a film print
-    title: (data?.filmPrint.movie as MovieType).title,
-    description: lexicalToPlainText((data?.filmPrint.movie as MovieType).synopsis),
-    image: (data?.filmPrint.movie as MovieType).still as Media,
+    title: (loaderData?.filmPrint.movie as MovieType).title,
+    description: lexicalToPlainText((loaderData?.filmPrint.movie as MovieType).synopsis),
+    image: (loaderData?.filmPrint.movie as MovieType).still as Media,
     env: getEnvFromMatches(matches),
   })
 

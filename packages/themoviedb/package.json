@@ -11,7 +11,7 @@
   "dependencies": {
     "@app/i18n": "workspace:*",
     "@app/util": "workspace:*",
-    "axios": "^1.16.1"
+    "axios": "^1.19.0"
   },
   "devDependencies": {
     "@app/types": "workspace:*",

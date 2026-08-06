@@ -25,9 +25,9 @@ import { Image } from '~/components/Image'
 import { ICSDownloadButton } from '~/components/ICSDownloadButton'
 import { formatDate } from '@app/util/formatDate'
 
-export const meta: Route.MetaFunction = ({ data, matches }) =>
+export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
-    ...data?.meta,
+    ...loaderData?.meta,
     env: getEnvFromMatches(matches),
   })
 
