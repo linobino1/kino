@@ -139,6 +139,7 @@ export const seed = async (payload: Payload, req?: PayloadRequest): Promise<void
         collection: 'movies',
         id: draft.id,
         data: {
+          currentDistributor: 'Demo-Verleih',
           _status: 'published',
         },
       })

@@ -26,6 +26,9 @@ const imageHeight = imageWidth / imageAspectRatio
 export const Event: React.FC<Props> = ({ event, t }) => {
   const subtitle = getEventSubtitle({ event, t, hideDCP: true })
   const media = event.header as Media
+  const mainMovie = event.isScreeningEvent
+    ? (((event.mainProgramFilmPrint as FilmPrint | null)?.movie as Movie | null) ?? null)
+    : null
   const optimizedMediaUrl = getOptimizedImageUrl(media, env, {
     width: imageUpscaleFactor * imageWidth,
     height: imageUpscaleFactor * imageHeight,
@@ -77,7 +80,7 @@ export const Event: React.FC<Props> = ({ event, t }) => {
           marginTop: 12,
         }}
       >
-        <View style={{ width: imageWidth, height: imageHeight, marginTop: 4 }}>
+        <View style={{ width: imageWidth, marginTop: 4 }}>
           <Image
             src={optimizedMediaUrl}
             style={{
@@ -140,6 +143,19 @@ export const Event: React.FC<Props> = ({ event, t }) => {
         ))}
       </View>
       <EventLocationAndDate event={event} t={t} />
+      {mainMovie?.currentDistributor && (
+        <Text
+          style={{
+            marginTop: 6,
+            marginBottom: 6,
+            fontSize: 8,
+            color: '#666666',
+            textAlign: 'right',
+          }}
+        >
+          {t('pdf.stillRights', { distributor: mainMovie.currentDistributor })}
+        </Text>
+      )}
     </Page>
   )
 }
