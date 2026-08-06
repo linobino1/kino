@@ -117,6 +117,10 @@ export const getImplicitEventData = async ({ data, doc, originalDoc, locale, req
     }
   } else {
     // for non-screenings, get shortDescription from last main program item
+    if (event.title || originalDoc?.title) {
+      res.slug = formatSlug(event.title ?? originalDoc?.title)
+    }
+
     if (mainProgramItem?.info) {
       const headlessEditor = createHeadlessEditor({
         nodes: getEnabledNodes({
@@ -138,8 +142,6 @@ export const getImplicitEventData = async ({ data, doc, originalDoc, locale, req
       }
 
       res.shortDescription = headlessEditor.getEditorState().read(() => $getRoot().getTextContent())
-
-      res.slug = formatSlug(event.title)
     }
   }
 
