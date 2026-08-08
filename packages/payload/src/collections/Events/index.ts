@@ -327,6 +327,16 @@ export const Events: CollectionConfig<'events'> = {
               localized: true,
             },
             {
+              name: 'mainFilmDistributor',
+              label: 'Verleih des Hauptfilms',
+              type: 'text',
+              admin: {
+                condition: (_, data) => isScreeningEventData(data),
+                description:
+                  'Wird in Pressemitteilungen als Fallback fuer den Bildrechtehinweis verwendet, wenn beim Titelbild kein Rechteinhaber gesetzt ist.',
+              },
+            },
+            {
               name: 'comment',
               label: 'Kommentar',
               type: 'textarea',

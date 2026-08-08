@@ -15,6 +15,7 @@ export const createScreeningEvent = async ({ payload }: { payload: Payload }) =>
     data: {
       date: new Date().toISOString(),
       date_tz: timezone,
+      mainFilmDistributor: 'Testverleih',
       title: '',
       header: '',
       season: season.id,

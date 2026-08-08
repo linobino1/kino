@@ -26,9 +26,7 @@ const imageHeight = imageWidth / imageAspectRatio
 export const Event: React.FC<Props> = ({ event, t }) => {
   const subtitle = getEventSubtitle({ event, t, hideDCP: true })
   const media = event.header as Media
-  const mainMovie = event.isScreeningEvent
-    ? (((event.mainProgramFilmPrint as FilmPrint | null)?.movie as Movie | null) ?? null)
-    : null
+  const stillRightsHolder = media.rightsholder?.trim() || event.mainFilmDistributor?.trim()
   const optimizedMediaUrl = getOptimizedImageUrl(media, env, {
     width: imageUpscaleFactor * imageWidth,
     height: imageUpscaleFactor * imageHeight,
@@ -143,7 +141,7 @@ export const Event: React.FC<Props> = ({ event, t }) => {
         ))}
       </View>
       <EventLocationAndDate event={event} t={t} />
-      {mainMovie?.currentDistributor && (
+      {stillRightsHolder && (
         <Text
           style={{
             marginTop: 6,
@@ -153,7 +151,7 @@ export const Event: React.FC<Props> = ({ event, t }) => {
             textAlign: 'right',
           }}
         >
-          {t('pdf.stillRights', { distributor: mainMovie.currentDistributor })}
+          {t('pdf.stillRights', { rightsHolder: stillRightsHolder })}
         </Text>
       )}
     </Page>

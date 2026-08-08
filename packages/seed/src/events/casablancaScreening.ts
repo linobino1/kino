@@ -10,6 +10,7 @@ export const casablancaScreening: DocGenerator<'events'> = ({ context }) => {
 
   return {
     _status: 'published',
+    mainFilmDistributor: 'Demo-Verleih',
     title: '',
     header: '',
     date: date.toISOString(),

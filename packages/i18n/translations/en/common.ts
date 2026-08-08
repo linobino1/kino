@@ -74,6 +74,9 @@ export default {
       add_other: 'Add {{count}} events to my calendar',
     },
   },
+  pdf: {
+    stillRights: 'Rights for the pictured film still: {{rightsHolder}}',
+  },
   seasons: {
     winterSemester: 'Winter term {{year}}',
     summerSemester: 'Sommer term {{year}}',

@@ -148,15 +148,6 @@ export const Movies: CollectionConfig<'movies'> = {
       },
     },
     {
-      name: 'currentDistributor',
-      label: 'Aktueller Verleih',
-      type: 'text',
-      admin: {
-        description:
-          'Verleih, von dem die aktuelle Filmlizenz bezogen wurde. Wird für den Bildrechtehinweis in der Pressemitteilung verwendet.',
-      },
-    },
-    {
       name: 'poster',
       label: 'Filmposter',
       type: 'upload',

@@ -14,7 +14,7 @@ type Props = {
 
 type StillAsset = {
   fileName: string
-  distributor: string
+  rightsHolder: string
   data: Uint8Array
 }
 
@@ -118,7 +118,7 @@ const collectStillAssets = async (events: Event[]) => {
 
     assetsByMediaId.set(media.id, {
       fileName,
-      distributor: movie.currentDistributor?.trim() || 'unbekannt',
+      rightsHolder: media.rightsholder?.trim() || event.mainFilmDistributor?.trim() || 'unbekannt',
       data: new Uint8Array(await readMediaData(media)),
     })
   }
@@ -135,7 +135,7 @@ export const renderPressStillsZip = async ({ pressRelease }: Props) => {
   )
 
   files['bildrechte.txt'] = strToU8(
-    stillAssets.map((asset) => `${asset.fileName}: ${asset.distributor}`).join('\n'),
+    stillAssets.map((asset) => `${asset.fileName}: ${asset.rightsHolder}`).join('\n'),
   )
 
   return Buffer.from(zipSync(files, { level: 0 }))

@@ -18,7 +18,6 @@ export const createMovie = async ({ payload }: { payload: Payload }) => {
     collection,
     id,
     data: {
-      currentDistributor: 'Testverleih',
       _status: 'published',
     },
   })

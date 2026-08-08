@@ -48,5 +48,14 @@ export const Media: CollectionConfig = {
         readOnly: true,
       },
     },
+    {
+      name: 'rightsholder',
+      label: 'Rechteinhaber',
+      type: 'text',
+      admin: {
+        description:
+          'Wird in Pressemitteilungen fuer den Bildrechtehinweis verwendet und ueberschreibt dort den Verleih der Veranstaltung.',
+      },
+    },
   ],
 }
