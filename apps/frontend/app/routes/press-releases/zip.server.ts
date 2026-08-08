@@ -13,6 +13,8 @@ type Props = {
   pressRelease: PressRelease
 }
 
+type ProgramItem = NonNullable<Event['programItems']>[number]
+
 type ImageAsset = {
   fileName: string
   rightsLine: string
@@ -38,6 +40,36 @@ const getHeaderMedia = (event: Event) => {
   }
 
   return event.header as Media
+}
+
+const getProgramItemMovie = (programItem: ProgramItem) => {
+  if (programItem.type !== 'screening' || !programItem.filmPrint || typeof programItem.filmPrint !== 'object') {
+    return null
+  }
+
+  const { movie } = programItem.filmPrint as FilmPrint
+  if (!movie || typeof movie !== 'object') {
+    return null
+  }
+
+  return movie as Movie
+}
+
+const getProgramItemPoster = (programItem: ProgramItem) => {
+  if (programItem.isMainProgram) {
+    return null
+  }
+
+  if (programItem.poster && typeof programItem.poster === 'object') {
+    return programItem.poster as Media
+  }
+
+  const movie = getProgramItemMovie(programItem)
+  if (!movie || !movie.poster || typeof movie.poster !== 'object') {
+    return null
+  }
+
+  return movie.poster as Media
 }
 
 const getFileExtension = (media: Media) => {
@@ -77,7 +109,7 @@ const readMediaData = async (media: Media) => {
   return Buffer.from(await response.arrayBuffer())
 }
 
-const getImageBaseName = (event: Event, media: Media, movie: Movie | null) => {
+const getHeaderImageBaseName = (event: Event, media: Media, movie: Movie | null) => {
   if (event.isScreeningEvent) {
     return movie?.internationalTitle || movie?.title || event.title || media.filename?.replace(/\.[^.]+$/, '') || 'abbildung'
   }
@@ -85,20 +117,39 @@ const getImageBaseName = (event: Event, media: Media, movie: Movie | null) => {
   return [event.title, event.date?.slice(0, 10)].filter(Boolean).join('-') || media.filename?.replace(/\.[^.]+$/, '') || 'abbildung'
 }
 
-const createImageFileName = ({ index, event, media, movie, usedNames }: {
-  index: number
+const getProgramItemImageBaseName = ({
+  event,
+  programItem,
+  movie,
+  index,
+}: {
   event: Event
-  media: Media
+  programItem: ProgramItem
   movie: Movie | null
+  index: number
+}) => {
+  if (programItem.type === 'screening') {
+    return movie?.internationalTitle || movie?.title || `${event.title || 'veranstaltung'}-vorfilm-${index + 1}`
+  }
+
+  return [event.title || 'veranstaltung', event.date?.slice(0, 10), `programmpunkt-${index + 1}`]
+    .filter(Boolean)
+    .join('-')
+}
+
+const createImageFileName = ({ index, media, baseName, usedNames }: {
+  index: number
+  media: Media
+  baseName: string
   usedNames: Set<string>
 }) => {
   const extension = getFileExtension(media)
-  const baseName = formatSlug(getImageBaseName(event, media, movie)) || 'abbildung'
+  const formattedBaseName = formatSlug(baseName) || 'abbildung'
 
-  let fileName = `${String(index).padStart(2, '0')}-${baseName}${extension}`
+  let fileName = `${String(index).padStart(2, '0')}-${formattedBaseName}${extension}`
   let duplicateIndex = 2
   while (usedNames.has(fileName)) {
-    fileName = `${String(index).padStart(2, '0')}-${baseName}-${duplicateIndex}${extension}`
+    fileName = `${String(index).padStart(2, '0')}-${formattedBaseName}-${duplicateIndex}${extension}`
     duplicateIndex += 1
   }
 
@@ -124,32 +175,85 @@ const createRightsLine = (event: Event, movie: Movie | null, rightsHolder: strin
     : `${event.title} © ${rightsHolder}`
 }
 
+const createProgramItemRightsLine = ({
+  event,
+  programItem,
+  movie,
+  rightsHolder,
+  index,
+}: {
+  event: Event
+  programItem: ProgramItem
+  movie: Movie | null
+  rightsHolder: string
+  index: number
+}) => {
+  if (programItem.type === 'screening') {
+    const movieTitle = movie?.internationalTitle?.trim() || movie?.title?.trim() || `Vorfilm ${index + 1}`
+    const year = movie?.year ? `, ${movie.year}` : ''
+
+    return `Poster: ${movieTitle}${year} © ${rightsHolder}`
+  }
+
+  const eventDate = event.date ? formatDate(event.date, 'dd.MM.yyyy') : ''
+  const label = `${event.title || 'Veranstaltung'} Programmpunkt ${index + 1}`
+
+  return eventDate
+    ? `${label} am ${eventDate} © ${rightsHolder}`
+    : `${label} © ${rightsHolder}`
+}
+
 const collectImageAssets = async (events: Event[]) => {
   const assetsByMediaId = new Map<string, ImageAsset>()
   const usedNames = new Set<string>()
 
   for (const event of events) {
     const media = getHeaderMedia(event)
-    if (!media || assetsByMediaId.has(media.id)) {
-      continue
+    if (media && !assetsByMediaId.has(media.id)) {
+      const movie = getMainMovie(event)
+      const rightsHolder = getRightsHolder(event, media)
+
+      const fileName = createImageFileName({
+        index: assetsByMediaId.size + 1,
+        media,
+        baseName: getHeaderImageBaseName(event, media, movie),
+        usedNames,
+      })
+
+      assetsByMediaId.set(media.id, {
+        fileName,
+        rightsLine: createRightsLine(event, movie, rightsHolder),
+        data: new Uint8Array(await readMediaData(media)),
+      })
     }
 
-    const movie = getMainMovie(event)
-    const rightsHolder = getRightsHolder(event, media)
+    for (const [index, programItem] of (event.programItems ?? []).entries()) {
+      const poster = getProgramItemPoster(programItem)
+      if (!poster || assetsByMediaId.has(poster.id)) {
+        continue
+      }
 
-    const fileName = createImageFileName({
-      index: assetsByMediaId.size + 1,
-      event,
-      media,
-      movie,
-      usedNames,
-    })
+      const movie = getProgramItemMovie(programItem)
+      const rightsHolder = poster.rightsholder?.trim() || 'unbekannt'
+      const fileName = createImageFileName({
+        index: assetsByMediaId.size + 1,
+        media: poster,
+        baseName: getProgramItemImageBaseName({ event, programItem, movie, index }),
+        usedNames,
+      })
 
-    assetsByMediaId.set(media.id, {
-      fileName,
-      rightsLine: createRightsLine(event, movie, rightsHolder),
-      data: new Uint8Array(await readMediaData(media)),
-    })
+      assetsByMediaId.set(poster.id, {
+        fileName,
+        rightsLine: createProgramItemRightsLine({
+          event,
+          programItem,
+          movie,
+          rightsHolder,
+          index,
+        }),
+        data: new Uint8Array(await readMediaData(poster)),
+      })
+    }
   }
 
   return [...assetsByMediaId.values()]
@@ -164,7 +268,7 @@ export const renderPressImagesZip = async ({ pressRelease }: Props) => {
   )
 
   files['bildrechte.txt'] = strToU8(
-    imageAssets.map((asset) => asset.rightsLine).join('\n'),
+    imageAssets.map((asset) => `${asset.fileName} - ${asset.rightsLine}`).join('\n'),
   )
 
   return Buffer.from(zipSync(files, { level: 0 }))
