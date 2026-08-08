@@ -26,7 +26,9 @@ const imageHeight = imageWidth / imageAspectRatio
 export const Event: React.FC<Props> = ({ event, t }) => {
   const subtitle = getEventSubtitle({ event, t, hideDCP: true })
   const media = event.header as Media
-  const stillRightsHolder = media.rightsholder?.trim() || event.mainFilmDistributor?.trim()
+  const imageRightsHolder = media.rightsholder?.trim() || event.mainFilmDistributor?.trim()
+  // AVIF and some other source formats do not render in react-pdf during development
+  // because getOptimizedImageUrl returns the original file instead of a transformed JPEG.
   const optimizedMediaUrl = getOptimizedImageUrl(media, env, {
     width: imageUpscaleFactor * imageWidth,
     height: imageUpscaleFactor * imageHeight,
@@ -141,7 +143,7 @@ export const Event: React.FC<Props> = ({ event, t }) => {
         ))}
       </View>
       <EventLocationAndDate event={event} t={t} />
-      {stillRightsHolder && (
+      {imageRightsHolder && (
         <Text
           style={{
             marginTop: 6,
@@ -151,7 +153,7 @@ export const Event: React.FC<Props> = ({ event, t }) => {
             textAlign: 'right',
           }}
         >
-          {t('pdf.stillRights', { rightsHolder: stillRightsHolder })}
+          {t('pdf.stillRights', { rightsHolder: imageRightsHolder })}
         </Text>
       )}
     </Page>

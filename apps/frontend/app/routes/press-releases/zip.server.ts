@@ -2,6 +2,7 @@ import type { Event, FilmPrint, Media, Movie, PressRelease } from '@app/types/pa
 import path from 'node:path'
 import { readFile } from 'node:fs/promises'
 import { zipSync, strToU8 } from 'fflate'
+import { formatDate } from '@app/util/formatDate'
 import { formatSlug } from '@app/util/formatSlug'
 import { env } from '@app/util/env/frontend.server'
 import { getMediaUrl } from '@app/util/media/getMediaUrl'
@@ -12,9 +13,9 @@ type Props = {
   pressRelease: PressRelease
 }
 
-type StillAsset = {
+type ImageAsset = {
   fileName: string
-  rightsHolder: string
+  rightsLine: string
   data: Uint8Array
 }
 
@@ -76,16 +77,23 @@ const readMediaData = async (media: Media) => {
   return Buffer.from(await response.arrayBuffer())
 }
 
-const createStillFileName = ({ index, media, movie, usedNames }: {
+const getImageBaseName = (event: Event, media: Media, movie: Movie | null) => {
+  if (event.isScreeningEvent) {
+    return movie?.internationalTitle || movie?.title || event.title || media.filename?.replace(/\.[^.]+$/, '') || 'abbildung'
+  }
+
+  return [event.title, event.date?.slice(0, 10)].filter(Boolean).join('-') || media.filename?.replace(/\.[^.]+$/, '') || 'abbildung'
+}
+
+const createImageFileName = ({ index, event, media, movie, usedNames }: {
   index: number
+  event: Event
   media: Media
-  movie: Movie
+  movie: Movie | null
   usedNames: Set<string>
 }) => {
   const extension = getFileExtension(media)
-  const baseName =
-    formatSlug(movie.internationalTitle || movie.title || media.filename?.replace(/\.[^.]+$/, '') || 'filmstill') ||
-    'filmstill'
+  const baseName = formatSlug(getImageBaseName(event, media, movie)) || 'abbildung'
 
   let fileName = `${String(index).padStart(2, '0')}-${baseName}${extension}`
   let duplicateIndex = 2
@@ -98,19 +106,40 @@ const createStillFileName = ({ index, media, movie, usedNames }: {
   return fileName
 }
 
-const collectStillAssets = async (events: Event[]) => {
-  const assetsByMediaId = new Map<string, StillAsset>()
+const getRightsHolder = (event: Event, media: Media) =>
+  media.rightsholder?.trim() || (event.isScreeningEvent ? event.mainFilmDistributor?.trim() : '') || 'unbekannt'
+
+const createRightsLine = (event: Event, movie: Movie | null, rightsHolder: string) => {
+  if (event.isScreeningEvent) {
+    const movieTitle = movie?.internationalTitle?.trim() || movie?.title?.trim() || event.title?.trim() || 'Unbekannter Film'
+    const year = movie?.year ? `, ${movie.year}` : ''
+
+    return `Ausschnitt: ${movieTitle}${year} © ${rightsHolder}`
+  }
+
+  const eventDate = event.date ? formatDate(event.date, 'dd.MM.yyyy') : ''
+
+  return eventDate
+    ? `${event.title} am ${eventDate} © ${rightsHolder}`
+    : `${event.title} © ${rightsHolder}`
+}
+
+const collectImageAssets = async (events: Event[]) => {
+  const assetsByMediaId = new Map<string, ImageAsset>()
   const usedNames = new Set<string>()
 
   for (const event of events) {
-    const movie = getMainMovie(event)
     const media = getHeaderMedia(event)
-    if (!movie || !media || assetsByMediaId.has(media.id)) {
+    if (!media || assetsByMediaId.has(media.id)) {
       continue
     }
 
-    const fileName = createStillFileName({
+    const movie = getMainMovie(event)
+    const rightsHolder = getRightsHolder(event, media)
+
+    const fileName = createImageFileName({
       index: assetsByMediaId.size + 1,
+      event,
       media,
       movie,
       usedNames,
@@ -118,7 +147,7 @@ const collectStillAssets = async (events: Event[]) => {
 
     assetsByMediaId.set(media.id, {
       fileName,
-      rightsHolder: media.rightsholder?.trim() || event.mainFilmDistributor?.trim() || 'unbekannt',
+      rightsLine: createRightsLine(event, movie, rightsHolder),
       data: new Uint8Array(await readMediaData(media)),
     })
   }
@@ -126,16 +155,16 @@ const collectStillAssets = async (events: Event[]) => {
   return [...assetsByMediaId.values()]
 }
 
-export const renderPressStillsZip = async ({ pressRelease }: Props) => {
+export const renderPressImagesZip = async ({ pressRelease }: Props) => {
   const events = await getPressReleaseEvents({ pressRelease })
-  const stillAssets = await collectStillAssets(events)
+  const imageAssets = await collectImageAssets(events)
 
   const files = Object.fromEntries(
-    stillAssets.map((asset) => [asset.fileName, asset.data] as const),
+    imageAssets.map((asset) => [asset.fileName, asset.data] as const),
   )
 
   files['bildrechte.txt'] = strToU8(
-    stillAssets.map((asset) => `${asset.fileName}: ${asset.rightsHolder}`).join('\n'),
+    imageAssets.map((asset) => asset.rightsLine).join('\n'),
   )
 
   return Buffer.from(zipSync(files, { level: 0 }))

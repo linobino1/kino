@@ -95,7 +95,7 @@ export const PressReleases: CollectionConfig<'pressReleases'> = {
     },
     {
       name: 'linkToStillsZip',
-      label: 'Download Filmstills ZIP',
+      label: 'Download Abbildungen ZIP',
       type: 'text',
       hooks: {
         afterRead: [

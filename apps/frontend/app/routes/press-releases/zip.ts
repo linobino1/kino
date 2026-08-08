@@ -1,7 +1,7 @@
 import type { Route } from './+types/zip'
 import { formatDate } from '@app/util/formatDate'
 import { getPayload } from '~/util/getPayload.server'
-import { renderPressStillsZip } from './zip.server'
+import { renderPressImagesZip } from './zip.server'
 
 export const loader = async ({ params: { id } }: Route.LoaderArgs) => {
   const payload = await getPayload()
@@ -18,9 +18,9 @@ export const loader = async ({ params: { id } }: Route.LoaderArgs) => {
 
   let buffer
   try {
-    buffer = await renderPressStillsZip({ pressRelease })
+    buffer = await renderPressImagesZip({ pressRelease })
   } catch (error) {
-    payload.logger.error('Failed to generate press still ZIP:')
+    payload.logger.error('Failed to generate press image ZIP:')
     payload.logger.error(error)
     return new Response(`${error}`, { status: 500 })
   }
