@@ -247,6 +247,16 @@ export const Events: CollectionConfig<'events'> = {
                   },
                 },
                 {
+                  name: 'distributor',
+                  label: 'Verleih',
+                  type: 'text',
+                  admin: {
+                    condition: (_, siblingData) => siblingData?.type === 'screening',
+                    description:
+                      'Wird in Pressemitteilungen als Fallback fuer den Bildrechtehinweis verwendet, wenn beim Titelbild oder Poster kein Rechteinhaber gesetzt ist.',
+                  },
+                },
+                {
                   name: 'poster',
                   label: 'Poster',
                   type: 'upload',
@@ -325,16 +335,6 @@ export const Events: CollectionConfig<'events'> = {
                   'Optional. Wird vor den Programmpunkten auf der Veranstaltungsseite angezeigt.',
               },
               localized: true,
-            },
-            {
-              name: 'mainFilmDistributor',
-              label: 'Verleih des Hauptfilms',
-              type: 'text',
-              admin: {
-                condition: (_, data) => isScreeningEventData(data),
-                description:
-                  'Wird in Pressemitteilungen als Fallback fuer den Bildrechtehinweis verwendet, wenn beim Titelbild kein Rechteinhaber gesetzt ist.',
-              },
             },
             {
               name: 'comment',

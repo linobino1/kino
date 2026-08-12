@@ -54,7 +54,7 @@ export const Media: CollectionConfig = {
       type: 'text',
       admin: {
         description:
-          'Wird in Pressemitteilungen fuer den Bildrechtehinweis verwendet und ueberschreibt dort den Verleih der Veranstaltung.',
+          'Wird in Pressemitteilungen fuer den Bildrechtehinweis verwendet und ueberschreibt dort den Verleih des Programmpunkts.',
       },
     },
   ],

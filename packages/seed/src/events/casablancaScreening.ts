@@ -10,7 +10,6 @@ export const casablancaScreening: DocGenerator<'events'> = ({ context }) => {
 
   return {
     _status: 'published',
-    mainFilmDistributor: 'Demo-Verleih',
     title: '',
     header: '',
     date: date.toISOString(),
@@ -21,6 +20,7 @@ export const casablancaScreening: DocGenerator<'events'> = ({ context }) => {
       {
         type: 'screening',
         filmPrint: context.filmPrints.get('Casablanca')?.id as string,
+        distributor: 'Demo-Verleih',
         isMainProgram: true,
       },
     ],

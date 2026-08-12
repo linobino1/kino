@@ -72,6 +72,13 @@ const getProgramItemPoster = (programItem: ProgramItem) => {
   return movie.poster as Media
 }
 
+const getProgramItemDistributor = (programItem: ProgramItem) =>
+  programItem.type === 'screening' ? programItem.distributor?.trim() : ''
+
+const getMainScreeningDistributor = (event: Event) =>
+  event.programItems?.findLast((programItem) => programItem.type === 'screening' && programItem.isMainProgram)
+    ?.distributor?.trim()
+
 const getFileExtension = (media: Media) => {
   const extension = media.filename ? path.extname(media.filename) : ''
   if (extension) {
@@ -158,7 +165,7 @@ const createImageFileName = ({ index, media, baseName, usedNames }: {
 }
 
 const getRightsHolder = (event: Event, media: Media) =>
-  media.rightsholder?.trim() || (event.isScreeningEvent ? event.mainFilmDistributor?.trim() : '') || 'unbekannt'
+  media.rightsholder?.trim() || (event.isScreeningEvent ? getMainScreeningDistributor(event) : '') || 'unbekannt'
 
 const createRightsLine = (event: Event, movie: Movie | null, rightsHolder: string) => {
   if (event.isScreeningEvent) {
@@ -234,7 +241,7 @@ const collectImageAssets = async (events: Event[]) => {
       }
 
       const movie = getProgramItemMovie(programItem)
-      const rightsHolder = poster.rightsholder?.trim() || 'unbekannt'
+      const rightsHolder = poster.rightsholder?.trim() || getProgramItemDistributor(programItem) || 'unbekannt'
       const fileName = createImageFileName({
         index: assetsByMediaId.size + 1,
         media: poster,

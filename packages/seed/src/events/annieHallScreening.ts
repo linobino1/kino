@@ -11,7 +11,6 @@ export const annieHallScreening: DocGenerator<'events'> = ({ context, locale }) 
 
   return {
     _status: 'published',
-    mainFilmDistributor: 'Demo-Verleih',
     title: '',
     header: '',
     date: date.toISOString(),
@@ -30,6 +29,7 @@ export const annieHallScreening: DocGenerator<'events'> = ({ context, locale }) 
       {
         type: 'screening',
         filmPrint: context.filmPrints.get('Casablanca')?.id as string,
+        distributor: 'Demo-Verleih',
         isMainProgram: false,
         info: {
           root: {
@@ -83,6 +83,7 @@ export const annieHallScreening: DocGenerator<'events'> = ({ context, locale }) 
       {
         type: 'screening',
         filmPrint: context.filmPrints.get('Annie Hall')?.id as string,
+        distributor: 'Demo-Verleih',
         isMainProgram: true,
       },
     ],

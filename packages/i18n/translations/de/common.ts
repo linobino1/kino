@@ -92,7 +92,6 @@ export default {
   pdf: {
     pageNumbers: 'Seite {{pageNumber}} von {{totalPages}}',
     supportingFilm: 'Vorfilm',
-    stillRights: 'Rechte am abgebildeten Filmstill: {{rightsHolder}}',
     coverCharge: 'Eintritt frei, Spenden erbeten',
     title: 'Pressemitteilung {{date}}',
     filename: 'Pressemitteilung-{{date}}.pdf',

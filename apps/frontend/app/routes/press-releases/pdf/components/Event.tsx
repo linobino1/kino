@@ -50,10 +50,17 @@ const getProgramItemPoster = (programItem: ProgramItem) => {
   return movie.poster as Media
 }
 
+const getProgramItemDistributor = (programItem: ProgramItem) =>
+  programItem.type === 'screening' ? programItem.distributor?.trim() : ''
+
+const getMainScreeningDistributor = (event: EventType) =>
+  event.programItems?.findLast((programItem) => programItem.type === 'screening' && programItem.isMainProgram)
+    ?.distributor?.trim()
+
 export const Event: React.FC<Props> = ({ event, t }) => {
   const subtitle = getEventSubtitle({ event, t, hideDCP: true })
   const media = getMedia(event.header)
-  const imageRightsHolder = media?.rightsholder?.trim() || event.mainFilmDistributor?.trim()
+  const imageRightsHolder = media?.rightsholder?.trim() || getMainScreeningDistributor(event)
   // AVIF and some other source formats do not render in react-pdf during development
   // because getOptimizedImageUrl returns the original file instead of a transformed JPEG.
   const optimizedMediaUrl = media
@@ -157,7 +164,21 @@ export const Event: React.FC<Props> = ({ event, t }) => {
           <Text>{event.series?.map((s) => (s as EventSery).name).join(', ')}</Text>
         </View>
       )}
-      <View style={{ marginTop: 6, marginBottom: 0 }}>
+      {imageRightsHolder && (
+        <Text
+          style={{
+            width: imageWidth,
+            marginTop: 2,
+            fontSize: 7,
+            lineHeight: 1,
+            color: '#666666',
+            textAlign: 'right',
+          }}
+        >
+          {`© ${imageRightsHolder}`}
+        </Text>
+      )}
+      <View style={{ marginTop: 4, marginBottom: 0 }}>
         {event.intro && <Text>{lexicalToPlainText(event.intro)}</Text>}
         {programItems?.map((programItem, index) => {
           const { type, isMainProgram, info, filmPrint } = programItem
@@ -170,7 +191,7 @@ export const Event: React.FC<Props> = ({ event, t }) => {
                 format: 'jpeg',
               })
             : null
-          const posterRightsHolder = poster?.rightsholder?.trim()
+          const posterRightsHolder = poster?.rightsholder?.trim() || getProgramItemDistributor(programItem)
 
           const content =
             type === 'screening' ? (
@@ -215,10 +236,11 @@ export const Event: React.FC<Props> = ({ event, t }) => {
                     {posterRightsHolder && (
                       <Text
                         style={{
-                          marginTop: 4,
-                          fontSize: 8,
+                          marginTop: 2,
+                          fontSize: 7,
+                          lineHeight: 1,
                           color: '#666666',
-                          textAlign: 'center',
+                          textAlign: 'right',
                         }}
                       >
                         {`© ${posterRightsHolder}`}
@@ -235,19 +257,6 @@ export const Event: React.FC<Props> = ({ event, t }) => {
         })}
       </View>
       <EventLocationAndDate event={event} t={t} />
-      {imageRightsHolder && (
-        <Text
-          style={{
-            marginTop: 6,
-            marginBottom: 6,
-            fontSize: 8,
-            color: '#666666',
-            textAlign: 'right',
-          }}
-        >
-          {t('pdf.stillRights', { rightsHolder: imageRightsHolder })}
-        </Text>
-      )}
     </Page>
   )
 }
