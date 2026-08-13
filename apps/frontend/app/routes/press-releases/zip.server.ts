@@ -167,9 +167,9 @@ const createImageFileName = ({ index, media, baseName, usedNames }: {
 const getRightsHolder = (event: Event, media: Media) =>
   media.rightsholder?.trim() || (event.isScreeningEvent ? getMainScreeningDistributor(event) : '') || 'unbekannt'
 
-const createRightsLine = (event: Event, movie: Movie | null, rightsHolder: string) => {
+const createHeaderRightsLine = (event: Event, movie: Movie | null, rightsHolder: string) => {
   if (event.isScreeningEvent) {
-    const movieTitle = movie?.internationalTitle?.trim() || movie?.title?.trim() || event.title?.trim() || 'Unbekannter Film'
+    const movieTitle = movie?.originalTitle?.trim() || movie?.title?.trim() || event.title?.trim() || 'Unbekannter Film'
     const year = movie?.year ? `, ${movie.year}` : ''
 
     return `Ausschnitt: ${movieTitle}${year} © ${rightsHolder}`
@@ -196,10 +196,10 @@ const createProgramItemRightsLine = ({
   index: number
 }) => {
   if (programItem.type === 'screening') {
-    const movieTitle = movie?.internationalTitle?.trim() || movie?.title?.trim() || `Vorfilm ${index + 1}`
+    const movieTitle = movie?.originalTitle?.trim() || movie?.title?.trim() || `Vorfilm ${index + 1}`
     const year = movie?.year ? `, ${movie.year}` : ''
 
-    return `Poster: ${movieTitle}${year} © ${rightsHolder}`
+    return `Ausschnitt: ${movieTitle}${year} © ${rightsHolder}`
   }
 
   const eventDate = event.date ? formatDate(event.date, 'dd.MM.yyyy') : ''
@@ -229,7 +229,7 @@ const collectImageAssets = async (events: Event[]) => {
 
       assetsByMediaId.set(media.id, {
         fileName,
-        rightsLine: createRightsLine(event, movie, rightsHolder),
+        rightsLine: createHeaderRightsLine(event, movie, rightsHolder),
         data: new Uint8Array(await readMediaData(media)),
       })
     }
