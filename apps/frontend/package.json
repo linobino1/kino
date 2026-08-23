@@ -22,6 +22,7 @@
     "@payloadcms/live-preview-react": "catalog:",
     "@payloadcms/richtext-lexical": "catalog:",
     "@react-pdf/renderer": "^4.5.1",
+    "@marsidev/react-turnstile": "^1.6.0",
     "@react-router/node": "catalog:",
     "@react-router/serve": "catalog:",
     "@unly/universal-language-detector": "^2.0.3",
@@ -41,7 +42,6 @@
     "react-player": "^3.4.0",
     "react-router": "catalog:",
     "react-slick": "^0.31.0",
-    "react-turnstile": "^1.1.5",
     "remix-i18next": "^8.0.0",
     "schema-dts": "^2.0.0",
     "slick-carousel": "^1.8.1"

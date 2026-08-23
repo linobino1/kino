@@ -222,6 +222,9 @@ importers:
       '@iconify/react':
         specifier: ^6.0.2
         version: 6.0.2(react@19.2.8)
+      '@marsidev/react-turnstile':
+        specifier: ^1.6.0
+        version: 1.6.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@payloadcms/db-mongodb':
         specifier: 'catalog:'
         version: 3.87.0(payload@3.87.0(graphql@16.14.2)(typescript@6.0.3))
@@ -291,9 +294,6 @@ importers:
       react-slick:
         specifier: ^0.31.0
         version: 0.31.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
-      react-turnstile:
-        specifier: ^1.1.5
-        version: 1.1.5(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       remix-i18next:
         specifier: ^8.0.0
         version: 8.0.0(i18next@26.3.6(typescript@6.0.3))(react-router@8.3.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))
@@ -1434,6 +1434,12 @@ packages:
     resolution: {integrity: sha512-PaKTxSbVC4fpqUjQ7vUL9RkNF1PjL8TFl5jRe03PqoPYpE33buf3VXX6+cOUEfv9+uknSqLCPHoBS/4jN3a97w==}
     peerDependencies:
       yjs: '>=13.5.22'
+
+  '@marsidev/react-turnstile@1.6.0':
+    resolution: {integrity: sha512-T2Um71ZdBgQBiyS01xgRMvDWk+mEsrLtXLFVhOC917OVEO584wbPOWj1sw35RaM17+q9QoADgLVcH60xr9NRqQ==}
+    peerDependencies:
+      react: ^17.0.2 || ^18.0.0 || ^19.0
+      react-dom: ^17.0.2 || ^18.0.0 || ^19.0
 
   '@monaco-editor/loader@1.7.0':
     resolution: {integrity: sha512-gIwR1HrJrrx+vfyOhYmCZ0/JcWqG5kbfG7+d3f/C1LXk2EvzAbHSg3MQ5lO2sMlo9izoAZ04shohfKLVT6crVA==}
@@ -4798,12 +4804,6 @@ packages:
       react: '>=16.6.0'
       react-dom: '>=16.6.0'
 
-  react-turnstile@1.1.5:
-    resolution: {integrity: sha512-VTL5OeHAatzCEVQxAZox70/TPmhKxEbNgtr++dg+8zm9QrWKuoU9E0+7gqmycOSCDZuJFzvMMLKQb5PVUPLV6w==}
-    peerDependencies:
-      react: '>= 16.13.1'
-      react-dom: '>= 16.13.1'
-
   react@19.2.8:
     resolution: {integrity: sha512-PWaYA1L/q9u2u7xYQi+Y3L3Yfnie7XyLeaJICV1MGD6LprsBxcAqGjYyr0eY3p+QdsA+x/Irkt4Qif8D63+Sbw==}
     engines: {node: '>=0.10.0'}
@@ -6714,6 +6714,11 @@ snapshots:
       '@lexical/selection': 0.41.0
       lexical: 0.41.0
       yjs: 13.6.27
+
+  '@marsidev/react-turnstile@1.6.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+    dependencies:
+      react: 19.2.8
+      react-dom: 19.2.8(react@19.2.8)
 
   '@monaco-editor/loader@1.7.0':
     dependencies:
@@ -10542,11 +10547,6 @@ snapshots:
       dom-helpers: 5.2.1
       loose-envify: 1.4.0
       prop-types: 15.8.1
-      react: 19.2.8
-      react-dom: 19.2.8(react@19.2.8)
-
-  react-turnstile@1.1.5(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
-    dependencies:
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
 

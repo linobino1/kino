@@ -2,7 +2,7 @@ import type { action } from '~/routes/api/newsletter-signup'
 import { useRef, useState, useEffect } from 'react'
 import { useFetcher } from 'react-router'
 import { useTranslation } from 'react-i18next'
-import Turnstile from 'react-turnstile'
+import { Turnstile } from '@marsidev/react-turnstile'
 import { cn } from '@app/util/cn'
 import { Button } from './Button'
 import { useEnv } from '~/util/useEnv'
@@ -82,9 +82,9 @@ export const NewsletterSignup: React.FC<Props> = ({ className, ...props }) => {
           {isActive && (
             <>
               <Turnstile
-                sitekey={env?.TURNSTILE_SITE_KEY ?? ''}
-                execution="render"
-                onVerify={() => setCaptchaState('verified')}
+                siteKey={env?.TURNSTILE_SITE_KEY ?? ''}
+                options={{ execution: 'render' }}
+                onSuccess={() => setCaptchaState('verified')}
                 onError={() => setCaptchaState('error')}
               />
               <p className="text-sm opacity-50">
