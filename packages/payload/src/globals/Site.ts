@@ -20,11 +20,6 @@ export const Site: GlobalConfig = {
       relationTo: 'media',
     },
     {
-      name: 'favicon',
-      type: 'upload',
-      relationTo: 'media',
-    },
-    {
       name: 'footerContent',
       label: 'Inhalt im Footer',
       type: 'richText',

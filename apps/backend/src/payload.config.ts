@@ -48,6 +48,13 @@ export default configurePayload({
     meta: {
       title: siteTitle,
       titleSuffix: ` - ${siteTitle}`,
+      icons: [
+        {
+          rel: 'icon',
+          type: 'image/x-icon',
+          url: '/favicon.ico',
+        },
+      ],
     },
   },
 })

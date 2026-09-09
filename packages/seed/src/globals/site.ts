@@ -3,7 +3,6 @@ import { translate } from '../util/translate'
 
 export const site: GlobalGenerator<'site'> = ({ context: { media, rentals }, locale }) => ({
   title: 'Kino Im Blauen Salon',
-  favicon: media.get('favicon.webp')?.id,
   logo: media.get('logo.png')?.id,
   logoMobile: media.get('logo_mobile.png')?.id,
   defaultRental: rentals.get('HfG Collection')?.id,

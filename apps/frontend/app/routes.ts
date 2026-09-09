@@ -3,7 +3,6 @@ import { index, layout, route, prefix } from '@react-router/dev/routes'
 
 export default [
   route('/health', './routes/health.ts'),
-  route('/favicon.ico', './routes/favicon.ts'),
   ...prefix('/api', [
     route('/events-block-endpoint', './routes/api/events-block-endpoint.ts'),
     route('/listmonk-wakeup', './routes/api/listmonk-wakeup.ts'),

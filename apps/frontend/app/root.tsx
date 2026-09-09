@@ -1,6 +1,5 @@
 import type { MetaFunction } from 'react-router'
 import type { Route } from './+types/root'
-import type { Media } from '@app/types/payload'
 import {
   data,
   Links,
@@ -20,7 +19,6 @@ import { siteTitle } from '@app/util/config'
 import { getPayload } from './util/getPayload.server'
 import { generateMetadata } from './util/generateMetadata'
 import { setCachedUser } from './util/userCache.server'
-import { getOptimizedImageUrl } from '@app/util/media/getOptimizedImageUrl'
 import { getCanonicalLink, getHreflangLinks } from './util/i18n/getHreflangLinks'
 import { parseFrontendBrowserEnv, type FrontendBrowserEnvironment } from '@app/util/env'
 import { ErrorComponent } from './components/Error'
@@ -65,7 +63,7 @@ export const meta: MetaFunction = () => generateMetadata({ title: siteTitle })
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation()
   const data = useRouteLoaderData<typeof loader>('root')
-  const { site, env } = data ?? {
+  const { env } = data ?? {
     env: {} as FrontendBrowserEnvironment,
   }
 
@@ -80,7 +78,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <link key={index} rel="alternate" hrefLang={link.hrefLang} href={link.href} />
         ))}
         <link rel="canonical" href={getCanonicalLink(location, env).href} />
-        <link rel="icon" href={getOptimizedImageUrl(site?.favicon as Media, env)} />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="manifest" href="/site.webmanifest" />
         <Meta />
         <Links />
       </head>
