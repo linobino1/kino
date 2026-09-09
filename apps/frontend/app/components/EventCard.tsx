@@ -52,21 +52,15 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
       </Link>
       <div className="flex max-w-full min-w-0 flex-col sm:aspect-[3/2]">
         <div className="flex min-h-6 flex-col items-end gap-y-[1.5px]">
-          {((event.series ?? []) as EventSery[]).map(
-            ({ id, name, slug }, index) =>
-              activeEventSery?.id !== id && (
-                <Link
-                  key={index}
-                  to={`/event-series/${slug}`}
-                  prefetch="intent"
-                  className="contents"
-                >
-                  <Tag className="inline" key={index}>
-                    {name}
-                  </Tag>
+          {((event.series ?? []) as EventSery[]).map(({ id, name, slug }) => {
+            return (
+              String(activeEventSery?.id) !== String(id) && (
+                <Link key={id} to={`/event-series/${slug}`} prefetch="intent" className="contents">
+                  <Tag className="inline">{name}</Tag>
                 </Link>
-              ),
-          )}
+              )
+            )
+          })}
         </div>
         <div className="flex flex-1 flex-col gap-4 px-4 pb-4">
           <div className="flex items-center gap-2">
