@@ -32,7 +32,7 @@ export const getOptimizedImageUrl = (
 
   // do not optimize in development
   if (env?.NODE_ENV === 'development') {
-    return src
+    return encodeURI(src)
   }
 
   // build the options string
