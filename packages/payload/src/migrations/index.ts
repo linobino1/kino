@@ -19,6 +19,7 @@ import * as migration_20250612_064720_enable_versions_mailings from './20250612_
 import * as migration_20250727_095518_postHasDetailPageField from './20250727_095518_postHasDetailPageField';
 import * as migration_20260326_082334_synopsis_richtext from './20260326_082334_synopsis_richtext';
 import * as migration_20260326_145912_movie_versions_synopsis_richtext from './20260326_145912_movie_versions_synopsis_richtext';
+import * as migration_20260909_120000_event_admin_title from './20260909_120000_event_admin_title';
 
 export const migrations = [
   {
@@ -125,5 +126,10 @@ export const migrations = [
     up: migration_20260326_145912_movie_versions_synopsis_richtext.up,
     down: migration_20260326_145912_movie_versions_synopsis_richtext.down,
     name: '20260326_145912_movie_versions_synopsis_richtext'
+  },
+  {
+    up: migration_20260909_120000_event_admin_title.up,
+    down: migration_20260909_120000_event_admin_title.down,
+    name: '20260909_120000_event_admin_title',
   },
 ];

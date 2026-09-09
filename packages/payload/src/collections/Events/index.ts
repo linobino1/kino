@@ -6,6 +6,7 @@ import { translateImplicitData } from './hooks/translateImplicitData'
 import { slugField } from '#payload/fields/slug'
 import { setSeason } from './hooks/setSeason'
 import { hasMainScreeningProgramItem } from './hooks/shared/hasMainScreeningProgramItem'
+import { formatDate } from '@app/util/formatDate'
 
 const isScreeningEventData = (data: any) => hasMainScreeningProgramItem(data?.programItems)
 
@@ -18,7 +19,7 @@ export const Events: CollectionConfig<'events'> = {
   admin: {
     group: 'Kalender',
     defaultColumns: ['date', 'title', '_status'],
-    useAsTitle: 'title',
+    useAsTitle: '_adminTitle',
   },
   versions: {
     drafts: {
@@ -62,22 +63,40 @@ export const Events: CollectionConfig<'events'> = {
         return value ? true : 'Der Titel darf nicht leer sein.'
       },
       admin: {
-          condition: (_, data) => !isScreeningEventData(data) || !data.titleLock,
+        condition: (_, data) => !isScreeningEventData(data) || !data.titleLock,
         description:
           'Bei Filmvorstellungen wird der Titel des letzten Films im Hauptprogramm verwendet, wenn dieses Feld leer bleibt. Refresh benötigt.',
       },
     },
+    // Displays the generated title read-only when titleLock hides the editable title field.
     {
       name: '_title',
       label: 'Titel',
       type: 'text',
-      virtual: true, // this field is not stored in the database
+      virtual: true,
       admin: {
-          condition: (_, data) => isScreeningEventData(data) && data.titleLock,
+        condition: (_, data) => isScreeningEventData(data) && data.titleLock,
         readOnly: true,
       },
       hooks: {
         afterRead: [({ data }) => data?.title],
+      },
+    },
+    // Stored label used by event relationship selectors to distinguish events with the same title.
+    {
+      name: '_adminTitle',
+      type: 'text',
+      localized: true,
+      admin: {
+        hidden: true,
+      },
+      hooks: {
+        beforeValidate: [
+          ({ siblingData, value }) =>
+            siblingData?.title && siblingData?.date
+              ? `${siblingData.title} - ${formatDate(siblingData.date, 'dd.MM.yyyy')}`
+              : value,
+        ],
       },
     },
     {
@@ -86,7 +105,7 @@ export const Events: CollectionConfig<'events'> = {
       type: 'checkbox',
       defaultValue: true,
       admin: {
-          condition: (data) => isScreeningEventData(data),
+        condition: (data) => isScreeningEventData(data),
       },
     },
     {
@@ -298,7 +317,7 @@ export const Events: CollectionConfig<'events'> = {
                 return value ? true : 'Es muss ein Titelbild ausgewählt werden.'
               },
               admin: {
-                  condition: (_, data) => !isScreeningEventData(data) || !data.headerLock,
+                condition: (_, data) => !isScreeningEventData(data) || !data.headerLock,
                 description:
                   'Muss nur für Veranstaltungen ohne Filme gesetzt werden, ansonsten wird das Filmstill verwendet. Refresh benötigt.',
               },
@@ -310,7 +329,7 @@ export const Events: CollectionConfig<'events'> = {
               relationTo: 'media',
               virtual: true, // this field is not stored in the database
               admin: {
-                  condition: (_, data) => isScreeningEventData(data) && data.headerLock,
+                condition: (_, data) => isScreeningEventData(data) && data.headerLock,
                 readOnly: true,
               },
               hooks: {
