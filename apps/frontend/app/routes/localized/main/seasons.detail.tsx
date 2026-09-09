@@ -1,7 +1,9 @@
 import type { Route } from './+types/seasons.detail'
 import type { loader as rootLoader } from '~/root'
 import type { Locale } from '@app/i18n'
-import { useRouteLoaderData } from 'react-router'
+import type { Event } from '@app/types/payload'
+import { useFetcher, useRouteLoaderData } from 'react-router'
+import { useEffect, useState } from 'react'
 import { getPayload } from '~/util/getPayload.server'
 import { getInstance } from '~/middleware/i18next'
 import { PageLayout } from '~/components/PageLayout'
@@ -9,9 +11,9 @@ import { Hero } from '~/components/Hero'
 import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { Gutter } from '~/components/Gutter'
-import { Pagination } from '~/components/Pagination'
 import { EventsList } from '~/components/EventsList'
 import { useTranslation } from 'react-i18next'
+import { Button } from '~/components/Button'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
@@ -66,9 +68,8 @@ export const loader = async ({
     locale: locale as Locale,
     depth: 3,
     sort: 'date',
-    pagination: true,
     page,
-    limit: 21,
+    limit: 12,
   })
 
   return {
@@ -80,19 +81,48 @@ export const loader = async ({
 export default function SeasonsDetailPage({
   loaderData: { season, events },
 }: Route.ComponentProps) {
+  return <SeasonEvents key={season.id} season={season} events={events} />
+}
+
+function SeasonEvents({ season, events }: Route.ComponentProps['loaderData']) {
   const { t } = useTranslation()
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>('root')
+  const fetcher = useFetcher<typeof loader>()
+  const [loadedEvents, setLoadedEvents] = useState<Event[]>(events.docs)
+
+  useEffect(() => {
+    if (!fetcher.data) return
+
+    const fetchedEvents = fetcher.data.events.docs
+    setLoadedEvents((current) => {
+      const loadedIds = new Set(current.map(({ id }) => id))
+      return [...current, ...fetchedEvents.filter(({ id }) => !loadedIds.has(id))]
+    })
+  }, [fetcher.data])
+
+  const latestPage = fetcher.data?.events ?? events
+
   return (
     <PageLayout type="default">
       <Hero type="image" image={season.header} headline={season.name} />
       <Gutter className="mt-4">
         <EventsList
-          events={events.docs}
+          events={loadedEvents}
           site={rootLoaderData?.site}
-          className="mt-12 mb-24"
+          className={latestPage.hasNextPage ? 'mt-12 mb-8' : 'mt-12 mb-24'}
           emptyMessage={t('No screenings for this season.')}
         />
-        <Pagination {...events} linkProps={{ prefetch: 'intent' }} />
+        {latestPage.hasNextPage ? (
+          <Button
+            type="button"
+            size="lg"
+            className="mx-auto mb-24 disabled:cursor-wait disabled:opacity-50"
+            disabled={fetcher.state !== 'idle'}
+            onClick={() => fetcher.load(`?page=${latestPage.nextPage}`)}
+          >
+            {fetcher.state === 'loading' ? t('Loading...') : t('Load more events')}
+          </Button>
+        ) : null}
       </Gutter>
     </PageLayout>
   )

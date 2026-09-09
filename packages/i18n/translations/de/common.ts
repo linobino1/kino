@@ -48,6 +48,7 @@ export default {
   'Loading...': 'Lade...',
   'More Info': 'Mehr Infos',
   'No screenings for this season.': 'Keine Vorstellungen in dieser Spielzeit.',
+  'Load more events': 'Weitere Vorstellungen laden',
   filter: {
     isHfgProduction: {
       label: 'HfG Produktion',

@@ -29,6 +29,8 @@ export default {
   'More Info': 'More Info',
   'Read more': 'Read more',
   'No screenings for this season.': 'No screenings for this season.',
+  'Load more events': 'Load more events',
+  'Loading...': 'Loading...',
   filter: {
     isHfgProduction: {
       label: 'HfG Production',
