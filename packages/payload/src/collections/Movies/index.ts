@@ -57,7 +57,7 @@ export const Movies: CollectionConfig<'movies'> = {
     listSearchableFields: ['title', 'internationalTitle', 'originalTitle'],
     group: 'Filmdatenbank',
     defaultColumns: ['internationalTitle', 'directors', 'year', '_status'],
-    useAsTitle: 'internationalTitle',
+    useAsTitle: 'originalTitle',
     components: {
       beforeListTable: ['/components/MigrateMovieButton#MigrateMovieButton'],
     },
