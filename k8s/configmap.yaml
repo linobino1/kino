@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kino-env
+  namespace: kino-im-blauen-salon
+data:
+  S3_ENABLED: 'true'
+  S3_BUCKET: kino-im-blauen-salon-media
+  S3_REGION: auto
+  S3_ENDPOINT: https://55c8201ec7bf4e527d5dcc5f5b7e250d.r2.cloudflarestorage.com
+  MEDIA_URL: https://r2.kinoimblauensalon.de
+  FRONTEND_URL: https://kinoimblauensalon.de
+  BACKEND_URL: https://cms.kinoimblauensalon.de
+  CDN_CGI_IMAGE_URL: https://cdn.kinoimblauensalon.de/cdn-cgi/image
+  TURNSTILE_SITE_KEY: 0x4AAAAAAAvLBjUOwyHUASR7
+  LISTMONK_URL: https://news.kinoimblauensalon.de
+  LISTMONK_LIST_ID: '1'
+  LISTMONK_LIST_UUID: 2845a244-4049-4f85-9456-4d73cc4b1740

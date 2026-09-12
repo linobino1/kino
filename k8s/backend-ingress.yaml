@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kino-backend
+  namespace: kino-im-blauen-salon
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - cms.kinoimblauensalon.de
+      secretName: cms-kinoimblauensalon-de-tls
+  rules:
+    - host: cms.kinoimblauensalon.de
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kino-backend
+                port:
+                  name: http

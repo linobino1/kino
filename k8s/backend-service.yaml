@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kino-backend
+  namespace: kino-im-blauen-salon
+spec:
+  selector:
+    app: kino-backend
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

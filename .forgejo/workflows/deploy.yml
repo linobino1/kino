@@ -1,0 +1,81 @@
+name: Deploy to k3s
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-k3s
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      matrix:
+        include:
+          - app-name: backend
+            dockerfile: Dockerfile.backend
+          - app-name: frontend
+            dockerfile: Dockerfile.frontend
+    steps:
+      - uses: actions/checkout@v7
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4
+        with:
+          registry: git.leohilsheimer.com
+          username: ${{ forgejo.actor }}
+          password: ${{ secrets.REGISTRY_WRITE_TOKEN }}
+      - uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          platforms: linux/arm64
+          push: true
+          tags: |
+            git.leohilsheimer.com/leo/kino-im-blauen-salon-${{ matrix.app-name }}:latest
+            git.leohilsheimer.com/leo/kino-im-blauen-salon-${{ matrix.app-name }}:${{ forgejo.sha }}
+          cache-from: type=registry,ref=git.leohilsheimer.com/leo/kino-im-blauen-salon-${{ matrix.app-name }}:buildcache
+          cache-to: type=registry,ref=git.leohilsheimer.com/leo/kino-im-blauen-salon-${{ matrix.app-name }}:buildcache,mode=max
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - uses: azure/setup-kubectl@v5
+      - name: Configure Kubernetes access
+        env:
+          KUBECONFIG_CONTENT: ${{ secrets.KUBECONFIG }}
+        run: |
+          mkdir -p "$HOME/.kube"
+          printf '%s' "$KUBECONFIG_CONTENT" > "$HOME/.kube/config"
+          chmod 600 "$HOME/.kube/config"
+      - name: Deploy images
+        env:
+          REGISTRY_READ_TOKEN: ${{ secrets.REGISTRY_READ_TOKEN }}
+        run: |
+          sed -i "s|git.leohilsheimer.com/leo/kino-im-blauen-salon-backend:latest|git.leohilsheimer.com/leo/kino-im-blauen-salon-backend:${{ forgejo.sha }}|" k8s/backend-deployment.yaml
+          sed -i "s|git.leohilsheimer.com/leo/kino-im-blauen-salon-frontend:latest|git.leohilsheimer.com/leo/kino-im-blauen-salon-frontend:${{ forgejo.sha }}|" k8s/frontend-deployment.yaml
+          kubectl apply -f k8s/namespace.yaml
+          kubectl create secret docker-registry forgejo-registry \
+            --namespace kino-im-blauen-salon \
+            --docker-server git.leohilsheimer.com \
+            --docker-username leo \
+            --docker-password "$REGISTRY_READ_TOKEN" \
+            --dry-run=client \
+            --output yaml | kubectl apply -f -
+          kubectl apply -k k8s
+          kubectl rollout status deployment/kino-backend \
+            --namespace kino-im-blauen-salon \
+            --timeout 10m
+          kubectl rollout status deployment/kino-frontend \
+            --namespace kino-im-blauen-salon \
+            --timeout 10m

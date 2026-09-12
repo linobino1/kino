@@ -27,11 +27,39 @@ pnpm seed
 
 ## Deployment
 
-Both apps are deployed on [fly.io](https://fly.io) from the monorepo root using root-level app-specific config files:
+Both apps run on k3s. Pushes to `main` build arm64 images, publish them to the
+private Forgejo registry, apply the manifests in `k8s/`, and wait for both
+Deployment rollouts.
+
+Non-sensitive runtime variables are committed in `k8s/configmap.yaml`.
+Sensitive values are stored in the `kino-secrets` Kubernetes Secret. Create a
+local `.env.secrets` file containing only the required sensitive values:
+
+```dotenv
+DATABASE_URI=...
+PAYLOAD_SECRET=...
+S3_ACCESS_KEY=...
+S3_SECRET_KEY=...
+TURNSTILE_SECRET_KEY=...
+LISTMONK_API_KEY=...
+```
+
+Create or update the Secrets before the first deployment or after changing
+their values:
 
 ```bash
-fly deploy . --config fly.backend.toml
-fly deploy . --config fly.frontend.toml
+export KUBECONFIG=../infra/k3s-cluster/kubeconfig
+kubectl apply -f k8s/namespace.yaml
+kubectl create secret generic kino-secrets -n kino-im-blauen-salon --from-env-file=.env.secrets --dry-run=client -o yaml | kubectl apply -f -
+kubectl rollout restart deployment/kino-backend -n kino-im-blauen-salon
+kubectl rollout restart deployment/kino-frontend -n kino-im-blauen-salon
+```
+
+After changing the ConfigMap, apply it and restart both Deployments:
+
+```bash
+kubectl apply -f k8s/configmap.yaml
+kubectl rollout restart deployment/kino-backend deployment/kino-frontend -n kino-im-blauen-salon
 ```
 
 ## Listmonk Integration
