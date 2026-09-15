@@ -15,6 +15,7 @@ import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { PostsList } from '~/components/PostsList'
 import { getInstance } from '~/middleware/i18next'
+import { Button } from '~/components/Button'
 
 export const loader = async ({ params: { lang: locale }, context }: Route.LoaderArgs) => {
   const payload = await getPayload()
@@ -112,19 +113,16 @@ export default function LandingPage({ loaderData: { page, posts, events } }: Rou
       <Gutter>
         <h2 className={h2}>{t('Our Next Screenings')}</h2>
         <EventsList events={events.docs} site={site} showICSDownload={false} />
-        <Link to="/events" prefetch="intent" className="contents">
-          <CTAButton className="mx-auto my-12" icon="arrow">
-            {t('See all screenings')}
-          </CTAButton>
-        </Link>
+        <Button as={Link} to={''} />
+        <CTAButton as={Link} to="/events" prefetch="intent" className="mx-auto my-12" icon="arrow">
+          {t('See all screenings')}
+        </CTAButton>
 
         <h2 className={cn(h2, 'mb-0')}>{t('News')}</h2>
         <PostsList posts={posts} pagination={false} />
-        <Link to="/news" prefetch="intent" className="contents">
-          <CTAButton className="mx-auto my-12" icon="arrow">
-            {t('See all posts')}
-          </CTAButton>
-        </Link>
+        <CTAButton as={Link} to="/news" prefetch="intent" className="mx-auto my-12" icon="arrow">
+          {t('See all posts')}
+        </CTAButton>
       </Gutter>
     </PageLayout>
   )

@@ -1,13 +1,23 @@
 import { cn } from '@app/util/cn'
 
-export type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+export type Props<T extends React.ElementType = 'button'> = {
+  as?: T
+} & {
   look?: 'default' | 'white' | 'red' | 'black'
   size?: 'sm' | 'md' | 'lg'
-}
+} & Omit<React.ComponentProps<T>, 'as'>
 
-export const Button: React.FC<Props> = ({ look = 'default', size = 'md', className, ...props }) => {
+export function Button<T extends React.ElementType = 'button'>({
+  as,
+  look = 'default',
+  size = 'md',
+  className,
+  ...props
+}: Props<T>) {
+  const Component = as ?? 'button'
+
   return (
-    <button
+    <Component
       {...props}
       className={cn(
         'flex w-fit cursor-pointer items-center justify-center font-semibold tracking-tight shadow transition-colors',
