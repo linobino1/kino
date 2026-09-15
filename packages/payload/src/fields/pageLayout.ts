@@ -8,9 +8,11 @@ import { Events } from '#payload/blocks/Events'
 
 export type Props = {
   defaultLayout?: any
+  excludeBlocks?: string[]
+  blocksFieldDescription?: string
 }
 
-export const pageLayout: Field = {
+export const pageLayout = ({ blocksFieldDescription, excludeBlocks = [] }: Props = {}): Field => ({
   type: 'tabs',
   tabs: [
     {
@@ -57,16 +59,19 @@ export const pageLayout: Field = {
           name: 'blocks',
           label: false,
           type: 'blocks',
-          blocks: [Content, Gallery, Image, Video, Events, KronolithCalendarEmbed],
+          blocks: [Content, Gallery, Image, Video, Events, KronolithCalendarEmbed].filter(
+            (block) => !excludeBlocks.includes(block.slug),
+          ),
           defaultValue: [
             {
               blockType: Content.slug,
             },
           ],
+          admin: {
+            description: blocksFieldDescription,
+          },
         },
       ],
     },
   ],
-}
-
-export default pageLayout
+})

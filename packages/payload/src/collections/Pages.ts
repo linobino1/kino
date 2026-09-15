@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import pageLayout from '#payload/fields/pageLayout'
+import { pageLayout } from '#payload/fields/pageLayout'
 import { slugField } from '#payload/fields/slug'
 
 export const Pages: CollectionConfig = {
@@ -43,6 +43,6 @@ export const Pages: CollectionConfig = {
         { label: 'Info', value: 'info' },
       ],
     },
-    pageLayout,
+    pageLayout(),
   ],
 }

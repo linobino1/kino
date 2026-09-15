@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import pageLayout from '#payload/fields/pageLayout'
+import { pageLayout } from '#payload/fields/pageLayout'
 import { slugField } from '#payload/fields/slug'
 
 export const EventSeries: CollectionConfig<'eventSeries'> = {
@@ -44,8 +44,13 @@ export const EventSeries: CollectionConfig<'eventSeries'> = {
       tabs: [
         {
           label: 'Seitenlayout',
-
-          fields: [pageLayout],
+          fields: [
+            pageLayout({
+              excludeBlocks: ['events'],
+              blocksFieldDescription:
+                'Die Veranstaltungen der Reihe werden automatisch nach dem Inhalt angezeigt.',
+            }),
+          ],
         },
       ],
     },
