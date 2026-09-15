@@ -1,7 +1,9 @@
 import type { Route } from './+types/events.index'
 import type { loader as rootLoader } from '~/root'
 import type { Locale } from '@app/i18n'
-import { useRouteLoaderData } from 'react-router'
+import type { Event } from '@app/types/payload'
+import { useFetcher, useRouteLoaderData } from 'react-router'
+import { useEffect, useState } from 'react'
 import { getPayload } from '~/util/getPayload.server'
 import { getInstance } from '~/middleware/i18next'
 import { PageLayout } from '~/components/PageLayout'
@@ -10,6 +12,8 @@ import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { EventsList } from '~/components/EventsList'
 import { Gutter } from '~/components/Gutter'
+import { useTranslation } from 'react-i18next'
+import { CTAButton } from '~/components/CTAButton'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
@@ -22,6 +26,7 @@ export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
 export const loader = async ({ params: { lang: locale }, url, context }: Route.LoaderArgs) => {
   const { t } = getInstance(context)
   const payload = await getPayload()
+  const pageNumber = parseInt(new URL(url).searchParams.get('page') || '1')
 
   // Get today's date at midnight
   const today = new Date()
@@ -40,7 +45,8 @@ export const loader = async ({ params: { lang: locale }, url, context }: Route.L
     payload.find({
       collection: 'events',
       depth: 7,
-      limit: 50,
+      limit: 12,
+      page: pageNumber,
       where: {
         _status: {
           equals: 'published',
@@ -79,12 +85,46 @@ export const loader = async ({ params: { lang: locale }, url, context }: Route.L
 }
 
 export default function EventsPage({ loaderData: { page, events } }: Route.ComponentProps) {
+  return <UpcomingEvents key={page.id} page={page} events={events} />
+}
+
+function UpcomingEvents({ page, events }: Route.ComponentProps['loaderData']) {
+  const { t } = useTranslation()
   const rootLoaderData = useRouteLoaderData<typeof rootLoader>('root')
+  const fetcher = useFetcher<typeof loader>()
+  const [loadedEvents, setLoadedEvents] = useState<Event[]>(events.docs)
+
+  useEffect(() => {
+    if (!fetcher.data) return
+
+    const fetchedEvents = fetcher.data.events.docs
+    setLoadedEvents((current) => {
+      const loadedIds = new Set(current.map(({ id }) => id))
+      return [...current, ...fetchedEvents.filter(({ id }) => !loadedIds.has(id))]
+    })
+  }, [fetcher.data])
+
+  const latestPage = fetcher.data?.events ?? events
+
   return (
     <PageLayout type={page.layoutType}>
       <Hero {...page.hero} />
       <Gutter>
-        <EventsList events={events.docs} site={rootLoaderData?.site} className="mt-12 mb-24" />
+        <EventsList
+          events={loadedEvents}
+          site={rootLoaderData?.site}
+          className={latestPage.hasNextPage ? 'mt-12 mb-8' : 'mt-12 mb-24'}
+        />
+        {latestPage.hasNextPage ? (
+          <CTAButton
+            type="button"
+            className="mx-auto mb-24"
+            disabled={fetcher.state !== 'idle'}
+            onClick={() => fetcher.load(`?page=${latestPage.nextPage}`)}
+          >
+            {fetcher.state === 'loading' ? t('Loading...') : t('Load more events')}
+          </CTAButton>
+        ) : null}
       </Gutter>
     </PageLayout>
   )

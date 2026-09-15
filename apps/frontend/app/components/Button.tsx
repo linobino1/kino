@@ -12,10 +12,10 @@ export const Button: React.FC<Props> = ({ look = 'default', size = 'md', classNa
       className={cn(
         'flex w-fit cursor-pointer items-center justify-center font-semibold tracking-tight shadow transition-colors',
         {
-          'bg-theme-400 hover:bg-theme-300 text-white': look === 'default',
-          'bg-red-500 text-white hover:bg-red-400': look === 'red',
-          'hover:bg-theme-800 bg-black text-white': look === 'black',
-          'border-gray-300 bg-white text-black hover:bg-gray-100 hover:text-black':
+          'bg-theme-400 enabled:hover:bg-theme-300 text-white': look === 'default',
+          'bg-red-500 text-white enabled:hover:bg-red-400': look === 'red',
+          'enabled:hover:bg-theme-800 bg-black text-white': look === 'black',
+          'border-gray-300 bg-white text-black enabled:hover:bg-gray-100 enabled:hover:text-black':
             look === 'white',
         },
         {

@@ -13,7 +13,7 @@ import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { Gutter } from '~/components/Gutter'
 import { EventsList } from '~/components/EventsList'
 import { useTranslation } from 'react-i18next'
-import { Button } from '~/components/Button'
+import { CTAButton } from '~/components/CTAButton'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
@@ -113,15 +113,14 @@ function SeasonEvents({ season, events }: Route.ComponentProps['loaderData']) {
           emptyMessage={t('No screenings for this season.')}
         />
         {latestPage.hasNextPage ? (
-          <Button
+          <CTAButton
             type="button"
-            size="lg"
-            className="mx-auto mb-24 disabled:cursor-wait disabled:opacity-50"
+            className="mx-auto mb-24"
             disabled={fetcher.state !== 'idle'}
             onClick={() => fetcher.load(`?page=${latestPage.nextPage}`)}
           >
             {fetcher.state === 'loading' ? t('Loading...') : t('Load more events')}
-          </Button>
+          </CTAButton>
         ) : null}
       </Gutter>
     </PageLayout>

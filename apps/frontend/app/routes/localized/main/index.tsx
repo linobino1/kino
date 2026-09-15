@@ -113,13 +113,17 @@ export default function LandingPage({ loaderData: { page, posts, events } }: Rou
         <h2 className={h2}>{t('Our Next Screenings')}</h2>
         <EventsList events={events.docs} site={site} showICSDownload={false} />
         <Link to="/events" prefetch="intent" className="contents">
-          <CTAButton className="mx-auto my-12">{t('See all screenings')}</CTAButton>
+          <CTAButton className="mx-auto my-12" icon="arrow">
+            {t('See all screenings')}
+          </CTAButton>
         </Link>
 
         <h2 className={cn(h2, 'mb-0')}>{t('News')}</h2>
         <PostsList posts={posts} pagination={false} />
         <Link to="/news" prefetch="intent" className="contents">
-          <CTAButton className="mx-auto my-12">{t('See all posts')}</CTAButton>
+          <CTAButton className="mx-auto my-12" icon="arrow">
+            {t('See all posts')}
+          </CTAButton>
         </Link>
       </Gutter>
     </PageLayout>
