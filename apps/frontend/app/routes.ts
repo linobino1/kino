@@ -5,7 +5,6 @@ export default [
   route('/health', './routes/health.ts'),
   ...prefix('/api', [
     route('/events-block-endpoint', './routes/api/events-block-endpoint.ts'),
-    route('/listmonk-wakeup', './routes/api/listmonk-wakeup.ts'),
     route('/newsletter-signup', './routes/api/newsletter-signup.ts'),
     route('/kronolith.html', './routes/api/kronolith-iframe.ts'),
     route('/ics', './routes/api/ics.ts'),

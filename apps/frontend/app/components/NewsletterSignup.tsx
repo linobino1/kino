@@ -1,5 +1,5 @@
 import type { action } from '~/routes/api/newsletter-signup'
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState } from 'react'
 import { useFetcher } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { Turnstile } from '@marsidev/react-turnstile'
@@ -28,15 +28,7 @@ export const NewsletterSignup: React.FC<Props> = ({ className, ...props }) => {
 
   const [captchaState, setCaptchaState] = useState<'checking' | 'verified' | 'error'>('checking')
 
-  // wake up listmonk when the user interacts with the form
   const [isActive, setIsActive] = useState(false)
-  const [triggeredWakeUp, setTriggeredWakeUp] = useState(false)
-  useEffect(() => {
-    if (!triggeredWakeUp && isActive) {
-      fetch('/api/listmonk-wakeup', { method: 'post' })
-      setTriggeredWakeUp(true)
-    }
-  }, [isActive, triggeredWakeUp])
 
   return (
     <div {...props} className={cn('min-h-[11em]', className)}>
