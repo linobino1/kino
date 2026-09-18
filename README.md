@@ -32,8 +32,17 @@ private Forgejo registry, apply the manifests in `k8s/`, and wait for both
 Deployment rollouts.
 
 Non-sensitive runtime variables are committed in `k8s/configmap.yaml`.
-Sensitive values are stored in the `kino-secrets` Kubernetes Secret. Create a
-local `.env.secrets` file containing only the required sensitive values:
+Production secrets are encrypted with [SOPS](https://github.com/getsops/sops)
+and age in `secrets/*.enc.env`. Install SOPS and configure `SOPS_AGE_KEY_FILE`
+with the age private key matching the recipient in `.sops.yaml`.
+
+Edit the encrypted file in place and commit the encrypted result:
+
+```sh
+sops secrets/prod.enc.env
+```
+
+`secrets/prod.enc.env` must contain:
 
 ```dotenv
 DATABASE_URI=...
@@ -50,10 +59,14 @@ their values:
 ```bash
 export KUBECONFIG=../infra/k3s-cluster/kubeconfig
 kubectl apply -f k8s/namespace.yaml
-kubectl create secret generic kino-secrets -n kino-im-blauen-salon --from-env-file=.env.secrets --dry-run=client -o yaml | kubectl apply -f -
+sops --decrypt secrets/prod.enc.env | kubectl create secret generic kino-secrets -n kino-im-blauen-salon --from-env-file=/dev/stdin --dry-run=client -o yaml | kubectl apply -f -
 kubectl rollout restart deployment/kino-backend -n kino-im-blauen-salon
 kubectl rollout restart deployment/kino-frontend -n kino-im-blauen-salon
 ```
+
+The Forgejo repository needs `KUBECONFIG`, `REGISTRY_WRITE_TOKEN`, and
+`REGISTRY_READ_TOKEN` Actions secrets. The deployment workflow does not decrypt
+the committed SOPS file.
 
 After changing the ConfigMap, apply it and restart both Deployments:
 
