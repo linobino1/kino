@@ -4,7 +4,17 @@ import { env } from '@app/util/env/frontend.server'
 import { data } from 'react-router'
 import { getTFunction } from '~/util/i18n/getTFunction.server'
 
-const validateCaptcha = async (token: string): Promise<boolean> => {
+const validateCaptcha = async (token: string | null): Promise<boolean> => {
+  if (!token) {
+    console.warn('Newsletter signup rejected: Turnstile response is missing')
+    return false
+  }
+
+  if (!env.TURNSTILE_SECRET_KEY) {
+    console.error('Newsletter signup rejected: TURNSTILE_SECRET_KEY is not configured')
+    return false
+  }
+
   try {
     const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
@@ -12,14 +22,22 @@ const validateCaptcha = async (token: string): Promise<boolean> => {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({
-        secret: env.TURNSTILE_SECRET_KEY!,
-        sitekey: env.TURNSTILE_SITE_KEY!,
+        secret: env.TURNSTILE_SECRET_KEY,
         response: token,
       }),
     })
-    const data = await res.json()
-    return !!data.success
-  } catch {
+    const result: { success?: boolean; 'error-codes'?: string[] } = await res.json()
+
+    if (!result.success) {
+      console.warn('Newsletter signup rejected by Turnstile', {
+        status: res.status,
+        errorCodes: result['error-codes'],
+      })
+    }
+
+    return result.success === true
+  } catch (error) {
+    console.error('Newsletter signup Turnstile verification failed', error)
     return false
   }
 }
@@ -28,10 +46,11 @@ export const action = async ({ request }: Route.ActionArgs) => {
   const formData = await request.formData()
 
   // validate captcha
-  if (!(await validateCaptcha(formData.get('cf-turnstile-response') as string))) {
+  const captchaResponse = formData.get('cf-turnstile-response')
+  if (!(await validateCaptcha(typeof captchaResponse === 'string' ? captchaResponse : null))) {
     return data({
       success: false,
-      message: `The humanity checks could not be validated on the server. Sorry, please try again.`,
+      message: 'The humanity checks could not be validated on the server. Sorry, please try again.',
     })
   }
 
@@ -56,11 +75,10 @@ export const action = async ({ request }: Route.ActionArgs) => {
       success: true,
       message: t('newsletter.success'),
     })
-  } else {
-    return data({
-      success: false,
-      // message: `We couldn't sign you up. Please try again.`,
-      message: t('newsletter.error.unknown'),
-    })
   }
+
+  return data({
+    success: false,
+    message: t('newsletter.error.unknown'),
+  })
 }
