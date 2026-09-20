@@ -66,7 +66,8 @@ kubectl rollout restart deployment/kino-frontend -n kino-im-blauen-salon
 
 The Forgejo repository needs `KUBECONFIG`, `REGISTRY_WRITE_TOKEN`, and
 `REGISTRY_READ_TOKEN` Actions secrets. The deployment workflow does not decrypt
-the committed SOPS file.
+the committed SOPS file. These secrets may be defined at the user level instead
+of the repository level.
 
 After changing the ConfigMap, apply it and restart both Deployments:
 
