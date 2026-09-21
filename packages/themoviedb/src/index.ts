@@ -11,6 +11,6 @@ export const defaultLanguage = 'en'
 export const tmdbAxiosClient = new Axios({
   baseURL: 'https://api.themoviedb.org/3',
   params: {
-    api_key: process.env.THEMOVIEDB_API_KEY,
+    api_key: process.env.TMDB_API_KEY,
   },
 })

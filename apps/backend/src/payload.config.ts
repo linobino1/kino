@@ -15,7 +15,7 @@ export default configurePayload({
   onInit() {
     try {
       // set themoviedb.org API key from environment variable
-      tmdbAxiosClient.defaults.params.api_key = process.env.THEMOVIEDB_API_KEY
+      tmdbAxiosClient.defaults.params.api_key = process.env.TMDB_API_KEY
     } catch (e) {
       console.error('Error setting themoviedb.org API key:', e)
     }
