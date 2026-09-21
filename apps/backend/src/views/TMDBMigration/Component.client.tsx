@@ -2,7 +2,7 @@
 
 import type { MigratedMovie, tmdbImages, tmdbMovie } from '@app/themoviedb/types'
 import type { Locale } from '@app/i18n'
-import type React from 'react';
+import type React from 'react'
 import { useActionState, useEffect, useRef, useState } from 'react'
 import { Button, useLocale } from '@payloadcms/ui'
 import { search } from './actions/search'
@@ -130,25 +130,25 @@ export const MigrateMovieComponent: React.FC = () => {
             <br />
             Freitextsuche in der TMDB Datenbank:
           </p>
-          <form action={searchAction} className="w-lg flex shadow-md">
+          <form action={searchAction} className="flex w-lg shadow-md">
             <input
               type="text"
               name="query"
               required={true}
               onChange={(e) => setQuery(e.target.value)}
-              value={query || 'test'}
+              value={query}
               placeholder={'Suchbegriff'}
-              className="border-1 flex-1 border-solid border-gray-300 px-4 py-2 font-sans text-lg"
+              className="flex-1 border-1 border-solid border-gray-300 px-4 py-2 font-sans text-lg"
             />
             <input
               type="submit"
               value={'Suche'}
-              className="border-1 flex cursor-pointer items-center border-solid border-gray-300 p-2 font-sans text-lg outline-none"
+              className="flex cursor-pointer items-center border-1 border-solid border-gray-300 p-2 font-sans text-lg outline-none"
             />
           </form>
           <p>Oder:</p>
           <form
-            className="w-sm flex shadow-md"
+            className="flex w-sm shadow-md"
             onSubmit={(e) => {
               e.preventDefault()
               const value = parseInt(
@@ -160,12 +160,12 @@ export const MigrateMovieComponent: React.FC = () => {
             <input
               type="number"
               placeholder="TMDB ID"
-              className="border-1 flex-1 border-solid border-gray-300 px-4 py-2 font-sans text-lg"
+              className="flex-1 border-1 border-solid border-gray-300 px-4 py-2 font-sans text-lg"
             />
             <input
               type="submit"
               value={'Weiter'}
-              className="border-1 flex cursor-pointer items-center border-solid border-gray-300 p-2 font-sans text-lg outline-none"
+              className="flex cursor-pointer items-center border-1 border-solid border-gray-300 p-2 font-sans text-lg outline-none"
             />
           </form>
           {error && <div className="text-red-500" dangerouslySetInnerHTML={{ __html: error }} />}
