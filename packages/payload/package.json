@@ -42,7 +42,7 @@
   "devDependencies": {
     "@app/types": "workspace:*",
     "@types/escape-html": "^1.0.4",
-    "@types/node": "^26.1.2",
+    "@types/node": "catalog:",
     "@types/nodemailer": "^8.0.1",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",

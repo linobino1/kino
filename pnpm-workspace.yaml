@@ -30,3 +30,4 @@ catalog:
   '@react-router/node': 8.3.0
   '@react-router/serve': 8.3.0
   '@react-router/dev': 8.3.0
+  '@types/node': ^24
