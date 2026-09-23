@@ -11,11 +11,10 @@
   "dependencies": {
     "@app/i18n": "workspace:*",
     "@app/util": "workspace:*",
-    "axios": "^1.19.0"
+    "axios": "^1.20.0"
   },
   "devDependencies": {
     "@app/types": "workspace:*",
-    "msw": "catalog:",
     "payload": "catalog:"
   }
 }

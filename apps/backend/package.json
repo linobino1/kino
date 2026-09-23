@@ -28,14 +28,14 @@
     "date-fns-tz": "^3.2.0",
     "next": "catalog:",
     "payload": "catalog:",
-    "postcss": "^8.5.25",
+    "postcss": "^8.5.28",
     "react": "catalog:",
     "react-dom": "catalog:",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@app/types": "workspace:*",
-    "@types/node": "^26.1.2",
+    "@types/node": "^26.6.2",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:"
   }

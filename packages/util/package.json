@@ -18,8 +18,8 @@
     "date-fns-tz": "^3.2.0",
     "react": "catalog:",
     "slugify": "1.6.9",
-    "tailwind-merge": "^3.6.0",
-    "zod": "^4.4.3"
+    "tailwind-merge": "^3.7.0",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@app/types": "workspace:*",
