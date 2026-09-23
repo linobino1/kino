@@ -216,12 +216,6 @@ importers:
       '@fontsource-variable/dm-sans':
         specifier: ^5.3.0
         version: 5.3.0
-      '@iconify-icons/material-symbols':
-        specifier: ^1.2.58
-        version: 1.2.58
-      '@iconify/react':
-        specifier: ^6.0.2
-        version: 6.0.2(react@19.2.8)
       '@marsidev/react-turnstile':
         specifier: ^1.6.0
         version: 1.6.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -304,9 +298,12 @@ importers:
         specifier: ^1.8.1
         version: 1.8.1(jquery@3.7.1)
     devDependencies:
-      '@iconify-json/material-symbols':
-        specifier: ^1.2.88
-        version: 1.2.88
+      '@iconify-icons/material-symbols':
+        specifier: ^1.2.58
+        version: 1.2.58
+      '@iconify/react':
+        specifier: ^6.0.2
+        version: 6.0.2(react@19.2.8)
       '@react-router/dev':
         specifier: 'catalog:'
         version: 8.3.0(@react-router/serve@8.3.0(react-router@8.3.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(typescript@6.0.3))(babel-plugin-macros@3.1.0)(react-router@8.3.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(typescript@6.0.3)(vite@8.2.0(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0)(sass@1.77.4)(tsx@4.23.7))
@@ -1130,9 +1127,6 @@ packages:
 
   '@iconify-icons/material-symbols@1.2.58':
     resolution: {integrity: sha512-v0ZfPXlmDcDPCejxhg5h2eHCEHClrpn+i44Ev766vkzPIEFRdgT+YK942KzyqBpH0RhKJfel4OZdL1DY1oa5Qg==}
-
-  '@iconify-json/material-symbols@1.2.88':
-    resolution: {integrity: sha512-lx5EwRkKckCkczozRrKiyrtD+K2/tIn+/kf9HFrUez/6DGMQKb2sI7b+/agN7jItLvmY/VYUajs/ZcEjj6xiaA==}
 
   '@iconify/react@6.0.2':
     resolution: {integrity: sha512-SMmC2sactfpJD427WJEDN6PMyznTFMhByK9yLW0gOTtnjzzbsi/Ke/XqsumsavFPwNiXs8jSiYeZTmLCLwO+Fg==}
@@ -6379,10 +6373,6 @@ snapshots:
   '@humanwhocodes/retry@0.4.3': {}
 
   '@iconify-icons/material-symbols@1.2.58':
-    dependencies:
-      '@iconify/types': 2.0.0
-
-  '@iconify-json/material-symbols@1.2.88':
     dependencies:
       '@iconify/types': 2.0.0
 
