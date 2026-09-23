@@ -113,7 +113,6 @@ export default function LandingPage({ loaderData: { page, posts, events } }: Rou
       <Gutter>
         <h2 className={h2}>{t('Our Next Screenings')}</h2>
         <EventsList events={events.docs} site={site} showICSDownload={false} />
-        <Button as={Link} to={''} />
         <CTAButton as={Link} to="/events" prefetch="intent" className="mx-auto my-12" icon="arrow">
           {t('See all screenings')}
         </CTAButton>
