@@ -34,6 +34,7 @@
     "lru-cache": "^11.5.3",
     "monaco-editor": "catalog:",
     "payload": "catalog:",
+    "pdfkit": "^0.20.0",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-i18next": "^17.0.15",
