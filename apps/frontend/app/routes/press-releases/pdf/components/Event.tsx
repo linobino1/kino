@@ -38,7 +38,11 @@ const getProgramItemPoster = (programItem: ProgramItem) => {
     return programItem.poster as Media
   }
 
-  if (programItem.type !== 'screening' || !programItem.filmPrint || typeof programItem.filmPrint !== 'object') {
+  if (
+    programItem.type !== 'screening' ||
+    !programItem.filmPrint ||
+    typeof programItem.filmPrint !== 'object'
+  ) {
     return null
   }
 
@@ -54,7 +58,8 @@ const getProgramItemDistributor = (programItem: ProgramItem) =>
   programItem.type === 'screening' ? programItem.distributor?.trim() : ''
 
 const getMainScreeningDistributor = (event: EventType) =>
-  event.programItems?.findLast((programItem) => programItem.type === 'screening' && programItem.isMainProgram)
+  event.programItems
+    ?.findLast((programItem) => programItem.type === 'screening' && programItem.isMainProgram)
     ?.distributor?.trim()
 
 export const Event: React.FC<Props> = ({ event, t }) => {
@@ -191,7 +196,8 @@ export const Event: React.FC<Props> = ({ event, t }) => {
                 format: 'jpeg',
               })
             : null
-          const posterRightsHolder = poster?.rightsholder?.trim() || getProgramItemDistributor(programItem)
+          const posterRightsHolder =
+            poster?.rightsholder?.trim() || getProgramItemDistributor(programItem)
 
           const content =
             type === 'screening' ? (
@@ -222,15 +228,22 @@ export const Event: React.FC<Props> = ({ event, t }) => {
                     flexDirection: 'row',
                     columnGap: 12,
                     alignItems: 'flex-start',
+                    width: '100%',
                   }}
                 >
-                  <View style={{ width: programItemImageWidth }}>
+                  <View
+                    style={{
+                      width: programItemImageWidth,
+                      flexShrink: 0,
+                    }}
+                  >
                     <Image
                       src={posterUrl}
                       style={{
                         width: programItemImageWidth,
                         height: programItemImageHeight,
                         objectFit: 'contain',
+                        objectPositionY: '0%',
                       }}
                     />
                     {posterRightsHolder && (
@@ -247,7 +260,9 @@ export const Event: React.FC<Props> = ({ event, t }) => {
                       </Text>
                     )}
                   </View>
-                  <View style={{ flexGrow: 1, flexShrink: 1 }}>{content}</View>
+                  <View style={{ width: 0, flexGrow: 1, flexShrink: 1, minWidth: 0 }}>
+                    {content}
+                  </View>
                 </View>
               ) : (
                 content
