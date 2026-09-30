@@ -25,6 +25,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
   const events = (
     await payload.find({
       collection: 'events',
+      pagination: false,
       where: {
         and: [
           {
@@ -44,6 +45,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
         url: true,
       },
       depth: 1,
+      sort: 'date',
       locale,
     })
   ).docs
