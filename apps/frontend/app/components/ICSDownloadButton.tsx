@@ -22,8 +22,8 @@ export const ICSDownloadButton: React.FC<Props> = ({ events, showLabel = true, c
 
   return (
     <Form method="post" action={`/api/ics`} reloadDocument navigate={false} className="contents">
-      {events.map((event, index) => (
-        <input key={index} type="hidden" name="events[]" value={event.id} />
+      {events.map((event) => (
+        <input key={event.id} type="hidden" name="events[]" value={event.id} />
       ))}
       <input type="hidden" name="locale" value={i18n.language} />
       <button
