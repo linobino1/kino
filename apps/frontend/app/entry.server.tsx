@@ -1,14 +1,21 @@
 import { PassThrough } from 'node:stream'
-import type { RouterContextProvider, EntryContext } from 'react-router'
+import type { RouterContextProvider, EntryContext, HandleErrorFunction } from 'react-router'
 import type { RenderToPipeableStreamOptions } from 'react-dom/server'
 import { createReadableStreamFromReadable } from '@react-router/node'
-import { ServerRouter } from 'react-router'
+import { isRouteErrorResponse, ServerRouter } from 'react-router'
 import { isbot } from 'isbot'
 import { renderToPipeableStream } from 'react-dom/server'
 import { I18nextProvider } from 'react-i18next'
 import { getInstance } from '~/middleware/i18next'
 
 export const streamTimeout = 5_000
+
+export const handleError: HandleErrorFunction = (error, { request }) => {
+  if (request.signal.aborted) return
+  if (isRouteErrorResponse(error) && error.status === 405) return
+
+  console.error(error)
+}
 
 export default function handleRequest(
   request: Request,
