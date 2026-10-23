@@ -15,7 +15,6 @@ import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { PostsList } from '~/components/PostsList'
 import { getInstance } from '~/middleware/i18next'
-import { Button } from '~/components/Button'
 
 export const loader = async ({ params: { lang: locale }, context }: Route.LoaderArgs) => {
   const payload = await getPayload()
