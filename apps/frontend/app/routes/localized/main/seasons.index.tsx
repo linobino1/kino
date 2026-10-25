@@ -75,8 +75,8 @@ export default function EventsPage({ loaderData: { page, seasons } }: Route.Comp
       <Gutter className="mt-4">
         {seasons.docs?.length ? (
           <ul className="flex w-full flex-col gap-2 sm:grid sm:grid-cols-[repeat(auto-fill,19rem)] sm:items-center sm:justify-center">
-            {seasons.docs.map((season, index) => (
-              <li key={index} className="relative aspect-[34/22]">
+            {seasons.docs.map((season) => (
+              <li key={season.id} className="relative aspect-[34/22]">
                 <a href={`/seasons/${season.slug}`}>
                   <Image
                     image={season.header as Media}

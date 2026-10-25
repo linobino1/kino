@@ -214,7 +214,7 @@ export const Event: React.FC<Props> = ({ event, t }) => {
 
           return (
             <View
-              key={index}
+              key={programItem.id ?? index}
               style={{
                 marginTop: !isMainProgram && index === firstNonMainProgramItemIndex ? 22 : 12,
                 marginBottom: 0,

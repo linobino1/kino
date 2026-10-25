@@ -21,8 +21,8 @@ export const PostsList: React.FC<Props> = ({ posts, pagination = true, className
     <>
       <ul {...props} className={cn(className)}>
         <JsonLd {...postsListSchema(posts.docs)} />
-        {posts.docs.map((post, index) => (
-          <PostPreview key={index} post={post} className="py-8" />
+        {posts.docs.map((post) => (
+          <PostPreview key={post.id} post={post} className="py-8" />
         ))}
       </ul>
       {pagination && <Pagination className="my-8" {...posts} linkProps={{ prefetch: 'intent' }} />}

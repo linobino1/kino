@@ -82,8 +82,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {getHreflangLinks(location, env).map((link, index) => (
-          <link key={index} rel="alternate" hrefLang={link.hrefLang} href={link.href} />
+        {getHreflangLinks(location, env).map((link) => (
+          <link key={link.hrefLang} rel="alternate" hrefLang={link.hrefLang} href={link.href} />
         ))}
         <link rel="canonical" href={getCanonicalLink(location, env).href} />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />

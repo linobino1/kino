@@ -90,7 +90,7 @@ export const RenderBlocks: React.FC<BlocksProps> = ({ blocks, ...props }) => {
   return (
     <div {...props}>
       {blocks.map((block, index) => (
-        <RenderBlock key={index} block={block} />
+        <RenderBlock key={block.id ?? `${block.blockType}-${index}`} block={block} />
       ))}
     </div>
   )

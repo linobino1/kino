@@ -212,8 +212,8 @@ export default function EventPage({ loaderData: { event } }: Route.ComponentProp
           <div className="mt-4 text-2xl font-semibold uppercase sm:text-4xl">{event.title}</div>
           {event.series?.length ? (
             <div className="my-1 flex gap-2">
-              {((event.series ?? []) as EventSery[]).map(({ slug, name }, index) => (
-                <Link key={index} className="contents" to={`/event-series/${slug}`}>
+              {((event.series ?? []) as EventSery[]).map(({ slug, name }) => (
+                <Link key={slug ?? name} className="contents" to={`/event-series/${slug}`}>
                   <Tag>{name}</Tag>
                 </Link>
               ))}
@@ -231,8 +231,8 @@ export default function EventPage({ loaderData: { event } }: Route.ComponentProp
       )}
 
       <Gutter className="my-4 flex flex-col gap-4">
-        {event.programItems?.map(({ type, isMainProgram, info, filmPrint, poster }, index) => (
-          <React.Fragment key={index}>
+        {event.programItems?.map(({ id, type, isMainProgram, info, filmPrint, poster }, index) => (
+          <React.Fragment key={id ?? index}>
             {index > 0 && <hr className="my-4" />}
             {type === 'screening' ? (
               <FilmPrintDetails
@@ -258,8 +258,12 @@ export default function EventPage({ loaderData: { event } }: Route.ComponentProp
           <hr className="my-4" />
           <h3 className="font-xl my-8">{t('event.page.partners')}</h3>
           <div className="flex justify-center gap-4">
-            {event.partnerLogos.map((logo, index) => (
-              <Image key={index} className="h-24 w-48 object-contain" image={logo as Media} />
+            {event.partnerLogos.map((logo) => (
+              <Image
+                key={typeof logo === 'string' ? logo : logo.id}
+                className="h-24 w-48 object-contain"
+                image={logo as Media}
+              />
             ))}
           </div>
         </Gutter>

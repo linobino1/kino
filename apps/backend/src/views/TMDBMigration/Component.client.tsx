@@ -175,9 +175,9 @@ export const MigrateMovieComponent: React.FC = () => {
         <>
           {!searchResults?.length && <p className="text-red-500">{'Kein Treffer'}</p>}
           <form className="space-y-4">
-            {searchResults?.map((result: any, index: number) => (
+            {searchResults?.map((result: any) => (
               <label
-                key={index}
+                key={result.id}
                 className="flex min-h-[10em] cursor-pointer rounded-lg bg-neutral-50 p-4 hover:bg-neutral-100"
                 onClick={() => selectMovie(result.id)}
               >

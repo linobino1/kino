@@ -365,16 +365,16 @@ export default function FilmprintsPage({
         {filters
           // on the hfg-archive page, we hide the isHfgProduction filter
           .filter((item) => (isHfgArchivePage ? item.name !== 'movie.isHfgProduction' : true))
-          .map((filter, index) => (
+          .map((filter) => (
             <select
-              key={index}
+              key={filter.name}
               name={filter.name}
               onChange={() => form.current?.requestSubmit()}
               value={filter.value || ''}
               className="min-h-[29px] rounded-full border-1 border-r-8 border-neutral-100 bg-neutral-100 px-2 py-1 text-xs text-black"
             >
-              {filter.options.map((option, j) => (
-                <option key={j} value={option.value}>{`${t(
+              {filter.options.map((option) => (
+                <option key={option.value} value={option.value}>{`${t(
                   // @ts-expect-error option.label is not typed as a translation key
                   option.label ?? '',
                 )} (${option.count})`}</option>
@@ -402,9 +402,9 @@ export default function FilmprintsPage({
           </div>
         ) : filmPrints.docs.length ? (
           <ul className="mt-8 flex flex-col gap-8">
-            {filmPrints.docs.map((item, index) => (
-              <li key={index}>
-                <Link key={item.id} to={`${item.slug}`} prefetch="intent">
+            {filmPrints.docs.map((item) => (
+              <li key={item.id}>
+                <Link to={`${item.slug}`} prefetch="intent">
                   <FilmPrintCard item={item} />
                 </Link>
               </li>

@@ -11,9 +11,9 @@ export const Gallery: React.FC<Type> = ({ images }) => {
   return (
     <div className="my-6">
       <Slider>
-        {images.map((image, index) => (
+        {images.map((image) => (
           <Image
-            key={index}
+            key={image.id}
             className="aspect-[3/2] h-full object-contain"
             image={image as Media}
             srcSet={[
