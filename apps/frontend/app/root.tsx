@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next'
 import { type Locale, locales } from '@app/i18n'
 import { siteTitle } from '@app/util/config'
 import { getPayload } from './util/getPayload.server'
+import { cache } from './util/cache.server'
 import { generateMetadata } from './util/generateMetadata'
 import { getCanonicalLink, getHreflangLinks } from './util/i18n/getHreflangLinks'
 import { parseFrontendBrowserEnv, type FrontendBrowserEnvironment } from '@app/util/env'
@@ -37,10 +38,16 @@ export async function loader({ request, context }: Route.LoaderArgs) {
   const [user, site] = await Promise.all([
     userPromise,
     measureServerTiming(request, 'site', () =>
-      payload.findGlobal({
-        slug: 'site',
-        depth: 3,
-        locale,
+      cache({
+        key: `site_${locale}`,
+        ttl: 1000 * 60 * 5,
+        forceFresh: process.env.NODE_ENV === 'development',
+        getFreshValue: () =>
+          payload.findGlobal({
+            slug: 'site',
+            depth: 3,
+            locale,
+          }),
       }),
     ),
   ])
