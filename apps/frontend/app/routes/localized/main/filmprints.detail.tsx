@@ -29,16 +29,69 @@ export const loader = async ({
 }: Route.LoaderArgs) => {
   const { t } = getInstance(context)
   const payload = await getPayload()
-  const res = await measureServerTiming(request, 'filmprint.content', () => payload.find({
-    collection: 'filmPrints',
-    where: {
-      slug: {
-        equals: slug,
+  const res = await measureServerTiming(request, 'filmprint.content', () =>
+    payload.find({
+      collection: 'filmPrints',
+      where: {
+        slug: {
+          equals: slug,
+        },
       },
-    },
-    depth: 2,
-    locale: locale as Locale,
-  }))
+      select: {
+        createdAt: true,
+        updatedAt: true,
+        isRented: true,
+        rental: true,
+        format: true,
+        languageVersion: true,
+        movie: true,
+      },
+      populate: {
+        movies: {
+          title: true,
+          synopsis: true,
+          still: true,
+          poster: true,
+          directors: true,
+          countries: true,
+          year: true,
+          duration: true,
+          cast: true,
+          trailer: true,
+        },
+        formats: {
+          name: true,
+        },
+        languageVersions: {
+          name: true,
+          abbreviation: true,
+        },
+        rentals: {
+          credits: true,
+          logo: true,
+        },
+        media: {
+          filename: true,
+          url: true,
+          alt: true,
+          width: true,
+          height: true,
+          focalX: true,
+          focalY: true,
+        },
+        persons: {
+          name: true,
+        },
+        countries: {
+          name: true,
+        },
+      },
+      depth: 2,
+      limit: 1,
+      pagination: false,
+      locale: locale as Locale,
+    }),
+  )
 
   const filmPrint = res.docs[0]
 
