@@ -16,6 +16,7 @@ import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { PostsList } from '~/components/PostsList'
 import { getInstance } from '~/middleware/i18next'
 import { measureServerTiming } from '~/util/serverTiming.server'
+import { cache } from '~/util/cache.server'
 
 export const loader = async ({ request, params: { lang: locale }, context }: Route.LoaderArgs) => {
   const payload = await getPayload()
@@ -27,61 +28,169 @@ export const loader = async ({ request, params: { lang: locale }, context }: Rou
 
   const [pages, posts, events] = await Promise.all([
     measureServerTiming(request, 'home.page', () =>
-      payload.find({
-        collection: 'pages',
-        where: {
-          slug: {
-            equals: 'home',
-          },
-        },
-        depth: 1,
-        limit: 1,
-        locale: locale as Locale,
+      cache({
+        key: `home-page_${locale}`,
+        ttl: 1000 * 60,
+        forceFresh: process.env.NODE_ENV === 'development',
+        getFreshValue: () =>
+          payload.find({
+            collection: 'pages',
+            select: {
+              layoutType: true,
+              hero: {
+                type: true,
+                headline: true,
+                image: true,
+              },
+              meta: {
+                title: true,
+                description: true,
+                image: true,
+              },
+            },
+            where: {
+              slug: {
+                equals: 'home',
+              },
+            },
+            depth: 1,
+            limit: 1,
+            locale: locale as Locale,
+          }),
       }),
     ),
     measureServerTiming(request, 'home.posts', () =>
-      payload.find({
-        collection: 'posts',
-        where: {
-          _status: {
-            equals: 'published',
-          },
-        },
-        draft: false,
-        sort: '-date',
-        depth: 1,
-        limit: 5,
-        pagination: true,
-        locale: locale as Locale,
-      }),
-    ),
-    measureServerTiming(request, 'home.events', () =>
-      payload.find({
-        collection: 'events',
-        locale: locale as Locale,
-        depth: 3,
-        where: {
-          and: [
-            {
+      cache({
+        key: `home-posts_${locale}`,
+        ttl: 1000 * 60,
+        forceFresh: process.env.NODE_ENV === 'development',
+        getFreshValue: () =>
+          payload.find({
+            collection: 'posts',
+            select: {
+              updatedAt: true,
+              createdAt: true,
+              title: true,
+              date: true,
+              header: true,
+              link: {
+                type: true,
+                doc: true,
+                url: true,
+              },
+              content: true,
+              hasDetailPage: true,
+              url: true,
+            },
+            where: {
               _status: {
                 equals: 'published',
               },
             },
-            {
-              date: {
-                greater_than_equal: today,
+            draft: false,
+            sort: '-date',
+            depth: 1,
+            limit: 5,
+            pagination: false,
+            locale: locale as Locale,
+          }),
+      }),
+    ),
+    measureServerTiming(request, 'home.events', () =>
+      cache({
+        key: `home-events_${locale}_${today.toISOString().slice(0, 10)}`,
+        ttl: 1000 * 60,
+        forceFresh: process.env.NODE_ENV === 'development',
+        getFreshValue: () =>
+          payload.find({
+            collection: 'events',
+            locale: locale as Locale,
+            select: {
+              updatedAt: true,
+              createdAt: true,
+              title: true,
+              subtitle: true,
+              date: true,
+              date_tz: true,
+              season: true,
+              header: true,
+              comment: true,
+              series: true,
+              url: true,
+              isScreeningEvent: true,
+              mainProgramFilmPrint: true,
+              shortDescription: true,
+            },
+            depth: 3,
+            populate: {
+              eventSeries: {
+                name: true,
+                slug: true,
+              },
+              filmPrints: {
+                movie: true,
+                format: true,
+                languageVersion: true,
+              },
+              movies: {
+                title: true,
+                synopsis: true,
+                poster: true,
+                duration: true,
+                year: true,
+                directors: true,
+                countries: true,
+              },
+              persons: {
+                name: true,
+              },
+              countries: {
+                id: true,
+                name: true,
+              },
+              formats: {
+                name: true,
+              },
+              languageVersions: {
+                abbreviation: true,
+              },
+              seasons: {
+                name: true,
+              },
+              media: {
+                filename: true,
+                url: true,
+                alt: true,
+                width: true,
+                height: true,
+                focalX: true,
+                focalY: true,
               },
             },
-            {
-              excludeFromUpcoming: {
-                not_equals: true,
-              },
+            where: {
+              and: [
+                {
+                  _status: {
+                    equals: 'published',
+                  },
+                },
+                {
+                  date: {
+                    greater_than_equal: today,
+                  },
+                },
+                {
+                  excludeFromUpcoming: {
+                    not_equals: true,
+                  },
+                },
+              ],
             },
-          ],
-        },
-        draft: false,
-        sort: 'date',
-        limit: 3,
+            draft: false,
+            sort: 'date',
+            limit: 3,
+            pagination: false,
+          }),
       }),
     ),
   ])
