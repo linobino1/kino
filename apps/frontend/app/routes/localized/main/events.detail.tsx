@@ -41,16 +41,115 @@ export const loader = async ({
   // throw new Error('Not implemented')
   const payload = await getPayload()
   const { t } = getInstance(context)
-  const res = await measureServerTiming(request, 'event.content', () => payload.find({
-    collection: 'events',
-    where: {
-      slug: {
-        equals: slug,
+  const res = await measureServerTiming(request, 'event.content', () =>
+    payload.find({
+      collection: 'events',
+      select: {
+        createdAt: true,
+        updatedAt: true,
+        title: true,
+        subtitle: true,
+        date: true,
+        date_tz: true,
+        location: true,
+        season: true,
+        series: true,
+        programItems: {
+          type: true,
+          isMainProgram: true,
+          info: true,
+          filmPrint: true,
+          poster: true,
+        },
+        header: true,
+        intro: true,
+        comment: true,
+        partnerLogos: true,
+        isScreeningEvent: true,
+        mainProgramFilmPrint: true,
+        shortDescription: true,
+        url: true,
       },
-    },
-    depth: 8,
-    locale: locale as Locale,
-  }))
+      where: {
+        slug: {
+          equals: slug,
+        },
+      },
+      depth: 3,
+      populate: {
+        locations: {
+          name: true,
+        },
+        seasons: {
+          name: true,
+          url: true,
+        },
+        eventSeries: {
+          name: true,
+          slug: true,
+          url: true,
+        },
+        filmPrints: {
+          movie: true,
+          format: true,
+          languageVersion: true,
+          isRented: true,
+          rental: true,
+          url: true,
+        },
+        movies: {
+          title: true,
+          synopsis: true,
+          poster: true,
+          duration: true,
+          year: true,
+          directors: true,
+          countries: true,
+          cast: true,
+          trailer: true,
+        },
+        persons: {
+          name: true,
+        },
+        countries: {
+          id: true,
+          name: true,
+        },
+        formats: {
+          name: true,
+        },
+        languageVersions: {
+          name: true,
+          abbreviation: true,
+        },
+        rentals: {
+          credits: true,
+          logo: true,
+        },
+        media: {
+          filename: true,
+          url: true,
+          alt: true,
+          width: true,
+          height: true,
+          focalX: true,
+          focalY: true,
+        },
+        pages: {
+          url: true,
+        },
+        posts: {
+          url: true,
+        },
+        events: {
+          url: true,
+        },
+      },
+      limit: 1,
+      pagination: false,
+      locale: locale as Locale,
+    }),
+  )
 
   const event = res.docs[0]
 
