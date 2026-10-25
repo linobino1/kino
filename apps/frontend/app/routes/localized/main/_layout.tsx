@@ -16,6 +16,7 @@ export const loader = async ({ request, params: { lang: locale }, context }: Rou
   const navigations = await measureServerTiming(request, 'navigation', () =>
     cache({
       key: `navigations_${locale}`,
+      ttl: 1000 * 60 * 5,
       forceFresh: !!user || process.env.NODE_ENV === 'development',
       async getFreshValue() {
         return (
