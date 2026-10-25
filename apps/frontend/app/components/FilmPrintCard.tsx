@@ -15,7 +15,7 @@ export const FilmPrintCard: React.FC<Props> = ({ item }) => {
   const movie = item.movie as Movie
 
   return (
-    <div className="grid grid-cols-1 bg-white text-black shadow-md transition-transform duration-200 hover:translate-y-[-7px] sm:grid-cols-2 lg:grid-cols-[auto_22rem]">
+    <div className="grid grid-cols-1 bg-white text-black shadow-md transition-transform duration-200 sm:grid-cols-2 lg:grid-cols-[auto_22rem]">
       <Image
         image={movie.still as Media}
         alt={t('movie still') as string}
@@ -41,7 +41,7 @@ export const FilmPrintCard: React.FC<Props> = ({ item }) => {
           className="prose prose-neutral relative overflow-hidden leading-normal after:absolute after:bottom-0 after:left-0 after:z-10 after:h-[5rem] after:w-full after:bg-[linear-gradient(transparent,#FFFFFF)] after:content-['_'] sm:h-[25vw] lg:h-[20em]"
           content={movie.synopsis}
         />
-        <div className="flex items-center gap-1 justify-self-end text-xs font-medium uppercase text-neutral-200">
+        <div className="flex items-center gap-1 justify-self-end text-xs font-medium text-neutral-200 uppercase">
           {t('More Info')}
           <Icon icon={arrow} />
         </div>
