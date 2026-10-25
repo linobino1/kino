@@ -1,6 +1,6 @@
 import type { Route } from './+types/filmprints.index'
 import type { Locale } from '@app/i18n'
-import type { Payload, Where } from 'payload'
+import type { Where } from 'payload'
 import { redirect } from 'react-router'
 import { Form, useNavigate, useSearchParams } from 'react-router'
 import { getPayload } from '~/util/getPayload.server'
@@ -32,7 +32,12 @@ export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
     env: getEnvFromMatches(matches),
   })
 
-export const loader = async ({ request, params: { lang: locale }, url, context }: Route.LoaderArgs) => {
+export const loader = async ({
+  request,
+  params: { lang: locale },
+  url,
+  context,
+}: Route.LoaderArgs) => {
   const { t } = getInstance(context)
   const payload = await getPayload()
   const params = new URL(url).searchParams
@@ -45,19 +50,117 @@ export const loader = async ({ request, params: { lang: locale }, url, context }
     params.set('movie.isHfgProduction', 'true')
   }
 
-  // Get today's date at midnight
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-
-  const pages = await measureServerTiming(request, 'filmprints.page', () => payload.find({
-    collection: 'pages',
-    where: {
-      slug: {
-        equals: isHfgArchivePage ? 'hfg-archive' : 'filmprints',
-      },
-    },
-    locale: locale as Locale,
-  }))
+  const filters = getFilters({ params })
+  const [pages, filmPrints, facetDocs] = await Promise.all([
+    measureServerTiming(request, 'filmprints.page', () =>
+      payload.find({
+        collection: 'pages',
+        select: {
+          layoutType: true,
+          hero: {
+            type: true,
+            headline: true,
+            image: true,
+          },
+          meta: {
+            title: true,
+            description: true,
+            image: true,
+          },
+          blocks: true,
+        },
+        where: {
+          slug: {
+            equals: isHfgArchivePage ? 'hfg-archive' : 'filmprints',
+          },
+        },
+        depth: 1,
+        locale: locale as Locale,
+      }),
+    ),
+    measureServerTiming(request, 'filmprints.list', () =>
+      payload.find({
+        collection: 'filmPrints',
+        locale: locale as Locale,
+        select: {
+          slug: true,
+          movie: true,
+        },
+        populate: {
+          movies: {
+            title: true,
+            still: true,
+            synopsis: true,
+            year: true,
+            directors: true,
+            countries: true,
+          },
+          media: {
+            filename: true,
+            url: true,
+            alt: true,
+            width: true,
+            height: true,
+            focalX: true,
+            focalY: true,
+          },
+          persons: {
+            name: true,
+          },
+          countries: {
+            name: true,
+          },
+        },
+        depth: 2,
+        limit,
+        page: pageNumber,
+        where: filters.getWhereClause(),
+      }),
+    ),
+    measureServerTiming(request, 'filmprints.facet-data', () =>
+      payload.find({
+        collection: 'filmPrints',
+        locale: locale as Locale,
+        where: filters.getGlobalWhereClause(),
+        select: {
+          languageVersion: true,
+          format: true,
+          movie: true,
+          color: true,
+        },
+        populate: {
+          languageVersions: {
+            name: true,
+          },
+          formats: {
+            name: true,
+          },
+          movies: {
+            year: true,
+            isHfgProduction: true,
+            genres: true,
+            countries: true,
+            directors: true,
+          },
+          colors: {
+            name: true,
+          },
+          genres: {
+            name: true,
+          },
+          countries: {
+            id: true,
+          },
+          persons: {
+            name: true,
+          },
+        },
+        depth: 2,
+        limit: 0,
+        pagination: false,
+      }),
+    ),
+  ])
 
   const page = pages.docs[0]
 
@@ -67,47 +170,27 @@ export const loader = async ({ request, params: { lang: locale }, url, context }
     })
   }
 
-  // get all published film prints
-  const filters = getFilters({
-    payload,
-    locale: locale as string,
-    params,
-  })
-  filters.applySearchParams(params)
-  const filmPrints = await measureServerTiming(request, 'filmprints.list', () => payload.find({
-    collection: 'filmPrints',
-    locale: locale as Locale,
-    depth: 7,
-    limit,
-    page: pageNumber,
-    where: filters.getWhereClause(),
-  }))
-
-  // Redirect to the last page if the requested page is greater than the total number of page
+  // Redirect to the last page if the requested page is greater than the total number of pages.
   if (pageNumber > filmPrints.totalPages) {
     throw redirect(`?page=${filmPrints.totalPages}`, {
       status: 302,
     })
   }
 
+  const appliedFilters = await measureServerTiming(request, 'filmprints.filters', async () =>
+    filters.getApplied(facetDocs.docs),
+  )
+
   return {
     page,
     query,
-    filters: await measureServerTiming(request, 'filmprints.filters', () => filters.getApplied()),
+    filters: appliedFilters,
     filmPrints,
     isHfgArchivePage,
   }
 }
 
-const getFilters = ({
-  payload,
-  locale,
-  params,
-}: {
-  payload: Payload
-  locale: string
-  params?: URLSearchParams
-}): Filters => {
+const getFilters = ({ params }: { params?: URLSearchParams }): Filters => {
   const query = params && params.get('query')
   const queryClause: Where | undefined = query
     ? {
@@ -171,9 +254,6 @@ const getFilters = ({
     ],
   }
   const filters = new Filters({
-    collection: 'filmPrints',
-    payload,
-    locale: locale as Locale,
     filters: [
       {
         name: 'languageVersion.name',
@@ -199,6 +279,8 @@ const getFilters = ({
         name: 'movie.decade',
         label: 'filter.decade',
         type: 'number',
+        getValue: (item) =>
+          typeof item.movie?.year === 'number' ? Math.floor(item.movie.year / 10) * 10 : undefined,
         where: (value: any) =>
           typeof value === 'number'
             ? {

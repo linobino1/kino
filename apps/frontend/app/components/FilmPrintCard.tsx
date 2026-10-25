@@ -7,7 +7,7 @@ import arrow from '@iconify-icons/material-symbols/arrow-forward-ios-rounded'
 import { RichText } from './RichText'
 
 type Props = {
-  item: FilmPrint
+  item: Pick<FilmPrint, 'movie'>
 }
 
 export const FilmPrintCard: React.FC<Props> = ({ item }) => {

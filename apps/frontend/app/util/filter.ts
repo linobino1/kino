@@ -1,15 +1,12 @@
-import type { Payload, Where } from 'payload'
-import type { Locale } from '@app/i18n'
+import type { Where } from 'payload'
 
 export type FilterProps = {
   name: string
-  collection: string
-  payload: Payload
-  locale: Locale
   label?: string
   labelTrue?: string
   labelFalse?: string
   where?: (value: any) => Where
+  getValue?: (item: any) => any
   parent: Filters
   type?: 'number' | 'text' | 'boolean'
 }
@@ -21,10 +18,7 @@ export type FilterOption = {
 }
 
 export type FiltersProps = {
-  payload: Payload
-  locale: Locale
-  collection: string
-  filters: Omit<FilterProps, 'payload' | 'locale' | 'collection' | 'parent'>[]
+  filters: Omit<FilterProps, 'parent'>[]
   globalCause?: Where
 }
 
@@ -69,9 +63,11 @@ export class Filter {
    * @returns the value of the field
    */
   getField(item: any): any {
+    if (this.props.getValue) return this.props.getValue(item)
+
     const fields = this.props.name.split('.')
     return fields.reduce((acc, field) => {
-      if (acc === undefined) {
+      if (acc == null) {
         console.warn(`field ${field} is undefined in ${this.props.name}`)
         return undefined
       }
@@ -84,94 +80,79 @@ export class Filter {
     }, item)
   }
 
-  async getPossibleValues(): Promise<any[]> {
-    // get all items in the collection
-    const items = (
-      await this.props.payload.find({
-        // @ts-expect-error this.collection must be a valid collection slug
-        collection: this.props.collection,
-        locale: this.props.locale,
-      })
-    ).docs
-
-    // remove duplicate values
-    const values = items.map((item) => this.getField(item)).flat()
-    const uniqueValues = values.filter((value, index) => {
-      const _value = JSON.stringify(value)
-      return (
-        index ===
-        values.findIndex((obj) => {
-          return JSON.stringify(obj) === _value
-        })
-      )
-    })
-    return uniqueValues
+  matches(item: any, rawValue: any): boolean {
+    const value = this.normalizeValue(rawValue)
+    const values = this.flattenValues(this.getField(item))
+    return values.some((itemValue) => this.normalizeValue(itemValue) === value)
   }
 
-  async getOptions(): Promise<FilterOption[]> {
-    const values = await this.getPossibleValues()
-    return [
-      // please select ...
-      {
-        value: '',
-        label: this.props.label || '',
-        count: await this.getCount(null),
-      },
-      // all possible values
-      ...(await Promise.all(
-        values.map(async (value) => {
-          const label =
+  getApplied(items: any[]): AppliedFilter {
+    // A facet's counts include every active filter except itself.
+    const matchingItems = items.filter((item) =>
+      this.props.parent.filters.every(
+        (filter) =>
+          filter === this ||
+          filter.activeValue === null ||
+          filter.matches(item, filter.activeValue),
+      ),
+    )
+
+    const counts = new Map<string, { value: any; count: number }>()
+    for (const item of matchingItems) {
+      const uniqueItemValues = new Map<string, any>()
+      for (const value of this.flattenValues(this.getField(item))) {
+        uniqueItemValues.set(this.valueKey(value), value)
+      }
+
+      for (const [key, value] of uniqueItemValues) {
+        const entry = counts.get(key)
+        if (entry) entry.count++
+        else counts.set(key, { value, count: 1 })
+      }
+    }
+
+    return {
+      name: this.props.name,
+      value: this.activeValue,
+      options: [
+        {
+          value: '',
+          label: this.props.label || '',
+          count: matchingItems.length,
+        },
+        ...[...counts.values()].map(({ value, count }) => ({
+          value,
+          label:
             value === true
               ? this.props.labelTrue
               : value === false
                 ? this.props.labelFalse
-                : `${value}`
-          return {
-            value,
-            label,
-            count: await this.getCount(value),
-          }
-        }),
-      )),
-    ].filter((option) => option.count > 0)
-  }
-
-  async getCount(value: any): Promise<number> {
-    const where = this.props.parent.getWhereClause({
-      except: this.props.name,
-      add: this.getWhereClause(value),
-    })
-
-    const res = (
-      await this.props.payload.find({
-        // @ts-expect-error this.collection must be a valid collection slug
-        collection: this.props.collection,
-        where,
-        depth: 7,
-        locale: this.props.locale,
-      })
-    ).totalDocs
-    return res
-    // IDEA: use aggregate to get the count, might be faster
-    // const model = this.props.payload.collections[this.props.collection].Model;
-    // const res = await model.aggregate([
-    //   { $match: where },
-    //   { $group: { _id: null, count: { $sum: 1 } } },
-    // ]);
-    // return res[0]?.count || 0;
-    // ------> this won't work with implicit fields like movies.decade
-  }
-
-  async getApplied(): Promise<AppliedFilter> {
-    return {
-      name: this.props.name,
-      value: this.activeValue,
-      options: (await this.getOptions()).map((option) => ({
-        count: option.count,
-        value: option.value,
+                : `${value}`,
+          count,
+        })),
+      ].map((option) => ({
+        ...option,
         label: option.label || `${option.value}`,
       })),
     }
+  }
+
+  private normalizeValue(value: any): any {
+    if (value === 'true') return true
+    if (value === 'false') return false
+    if (this.props.type === 'number' && value !== null && value !== undefined) {
+      return parseInt(value, 10)
+    }
+    return value
+  }
+
+  private flattenValues(value: any): any[] {
+    if (Array.isArray(value)) return value.flatMap((item) => this.flattenValues(item))
+    return value === null || value === undefined ? [] : [value]
+  }
+
+  private valueKey(value: any): string {
+    return `${typeof value}:${JSON.stringify(value)}`
   }
 }
 
@@ -182,16 +163,11 @@ export class Filters {
   constructor(props: FiltersProps) {
     this.props = props
 
-    this.filters = this.props.filters.map(
-      (filter) =>
-        new Filter({
-          ...filter,
-          payload: this.props.payload,
-          locale: this.props.locale,
-          collection: this.props.collection,
-          parent: this,
-        }),
-    )
+    this.filters = this.props.filters.map((filter) => new Filter({ ...filter, parent: this }))
+  }
+
+  getGlobalWhereClause(): Where {
+    return this.props.globalCause ?? {}
   }
 
   getWhereClause({
@@ -242,7 +218,7 @@ export class Filters {
     })
   }
 
-  async getApplied(): Promise<AppliedFilter[]> {
-    return await Promise.all(this.filters.map(async (filter) => filter.getApplied()))
+  getApplied(items: any[]): AppliedFilter[] {
+    return this.filters.map((filter) => filter.getApplied(items))
   }
 }
