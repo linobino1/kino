@@ -1,12 +1,16 @@
 import type React from 'react'
+import { lazy, Suspense } from 'react'
 import type { Media, Page } from '@app/types/payload'
 import { Gallery } from '../Gallery'
-import { VideoEmbed } from '../VideoEmbed'
 import { Image } from '../Image'
 import { RichText } from '../RichText'
 import { Gutter } from '../Gutter'
 import { EventsBlock } from './EventsBlock'
 import { KronolithCalendarEmbed } from './KronolithCalendarEmbed'
+
+const VideoEmbed = lazy(() =>
+  import('../VideoEmbed').then(({ VideoEmbed }) => ({ default: VideoEmbed })),
+)
 
 type Block = NonNullable<Page['blocks']>[number]
 
@@ -51,7 +55,9 @@ const RenderBlock: React.FC<BlockProps> = ({ block }) => {
     case 'video':
       return (
         <Gutter size="small">
-          <VideoEmbed src={block.url} />
+          <Suspense fallback={<div className="aspect-video" aria-hidden="true" />}>
+            <VideoEmbed src={block.url} />
+          </Suspense>
         </Gutter>
       )
 
