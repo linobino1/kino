@@ -2,7 +2,7 @@ import type { Route } from './+types/filmprints.index'
 import type { Locale } from '@app/i18n'
 import type { Where } from 'payload'
 import { redirect } from 'react-router'
-import { Form, useNavigate, useSearchParams } from 'react-router'
+import { Form, useLocation, useNavigate, useNavigation, useSearchParams } from 'react-router'
 import { getPayload } from '~/util/getPayload.server'
 import { getInstance } from '~/middleware/i18next'
 import { PageLayout } from '~/components/PageLayout'
@@ -13,7 +13,7 @@ import { Pagination } from '~/components/Pagination'
 import { useTranslation } from 'react-i18next'
 import { useRef } from 'react'
 import { Filters } from '~/util/filter'
-import { FilmPrintCard } from '~/components/FilmPrintCard'
+import { FilmPrintCard, FilmPrintCardSkeleton } from '~/components/FilmPrintCard'
 import { Button } from '~/components/Button'
 import { Gutter } from '~/components/Gutter'
 import { RenderBlocks } from '~/components/Blocks/RenderBlocks'
@@ -323,8 +323,12 @@ export default function FilmprintsPage({
 }: Route.ComponentProps) {
   const { t } = useTranslation()
   const form = useRef<HTMLFormElement>(null)
+  const location = useLocation()
+  const navigation = useNavigation()
   const navigate = useNavigate()
   const [params] = useSearchParams()
+  const isLoadingList =
+    navigation.state !== 'idle' && navigation.location?.pathname === location.pathname
 
   const resetFilters = () => {
     filters.forEach((filter) => {
@@ -352,7 +356,7 @@ export default function FilmprintsPage({
             className="w-full rounded-full border border-gray-300 bg-white px-2 py-1 text-neutral-700"
           />
           <button
-            onClick={() => form.current?.submit()}
+            type="submit"
             className="bg-theme-500 hover:bg-theme-600 absolute top-0 right-0 bottom-0 flex aspect-square cursor-pointer items-center justify-center rounded-r-full border-1 border-neutral-200 text-white"
           >
             <Icon icon={arrow} />
@@ -365,9 +369,9 @@ export default function FilmprintsPage({
             <select
               key={index}
               name={filter.name}
-              onChange={() => form.current?.submit()}
+              onChange={() => form.current?.requestSubmit()}
               value={filter.value || ''}
-              className="rounded-full border-1 border-r-8 border-neutral-100 bg-neutral-100 px-2 py-1 text-xs text-black"
+              className="min-h-[29px] rounded-full border-1 border-r-8 border-neutral-100 bg-neutral-100 px-2 py-1 text-xs text-black"
             >
               {filter.options.map((option, j) => (
                 <option key={j} value={option.value}>{`${t(
@@ -387,7 +391,16 @@ export default function FilmprintsPage({
         </Button>
       </Form>
       <Gutter>
-        {filmPrints.docs.length ? (
+        {isLoadingList ? (
+          <div role="status" aria-live="polite" className="mt-8 flex flex-col gap-8">
+            <span className="sr-only">{t('Loading...')}</span>
+            {Array.from({ length: Math.min(Math.max(filmPrints.docs.length, 3), limit) }).map(
+              (_, index) => (
+                <FilmPrintCardSkeleton key={index} />
+              ),
+            )}
+          </div>
+        ) : filmPrints.docs.length ? (
           <ul className="mt-8 flex flex-col gap-8">
             {filmPrints.docs.map((item, index) => (
               <li key={index}>
@@ -398,7 +411,7 @@ export default function FilmprintsPage({
             ))}
           </ul>
         ) : (
-          <div>{t('No films matching your search')}</div>
+          <div className="text-center">{t('No films matching your search')}</div>
         )}
       </Gutter>
       <Pagination {...filmPrints} linkProps={{ prefetch: 'intent' }} className="mt-8" />

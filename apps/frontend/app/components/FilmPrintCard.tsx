@@ -49,3 +49,23 @@ export const FilmPrintCard: React.FC<Props> = ({ item }) => {
     </div>
   )
 }
+
+export const FilmPrintCardSkeleton: React.FC = () => (
+  <div
+    aria-hidden="true"
+    className="grid animate-pulse grid-cols-1 bg-white shadow-md sm:grid-cols-2 lg:grid-cols-[auto_22rem]"
+  >
+    <div className="relative aspect-video bg-neutral-50 sm:aspect-auto sm:min-h-[25vw] lg:min-h-[20em]">
+      <div className="absolute top-4 left-4 h-7 w-2/3 rounded bg-neutral-100" />
+      <div className="absolute top-14 left-4 h-4 w-1/3 rounded bg-neutral-100" />
+    </div>
+    <div className="grid grid-rows-[minmax(0,1fr)_min-content] gap-y-4 p-4 max-sm:aspect-[32/9]">
+      <div className="space-y-3 overflow-hidden sm:h-[25vw] lg:h-[20em]">
+        <div className="h-3 rounded bg-neutral-100" />
+        <div className="h-3 rounded bg-neutral-100" />
+        <div className="h-3 w-4/5 rounded bg-neutral-100" />
+      </div>
+      <div className="h-4 w-20 justify-self-end rounded bg-neutral-100" />
+    </div>
+  </div>
+)
