@@ -2,7 +2,7 @@ import type { Route } from './+types/filmprints.index'
 import type { Locale } from '@app/i18n'
 import type { Where } from 'payload'
 import { redirect } from 'react-router'
-import { Form, useLocation, useNavigate, useNavigation, useSearchParams } from 'react-router'
+import { Await, Form, useLocation, useNavigate, useNavigation, useSearchParams } from 'react-router'
 import { getPayload } from '~/util/getPayload.server'
 import { getInstance } from '~/middleware/i18next'
 import { PageLayout } from '~/components/PageLayout'
@@ -11,7 +11,7 @@ import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { Pagination } from '~/components/Pagination'
 import { useTranslation } from 'react-i18next'
-import { useRef } from 'react'
+import { Suspense, useRef } from 'react'
 import { Filters } from '~/util/filter'
 import { FilmPrintCard, FilmPrintCardSkeleton } from '~/components/FilmPrintCard'
 import { Button } from '~/components/Button'
@@ -51,7 +51,49 @@ export const loader = async ({
   }
 
   const filters = getFilters({ params })
-  const [pages, filmPrints, facetDocs] = await Promise.all([
+  const filmPrintsPromise = measureServerTiming(request, 'filmprints.list', () =>
+    payload.find({
+      collection: 'filmPrints',
+      locale: locale as Locale,
+      select: {
+        slug: true,
+        movie: true,
+      },
+      populate: {
+        movies: {
+          title: true,
+          still: true,
+          synopsis: true,
+          year: true,
+          directors: true,
+          countries: true,
+        },
+        media: {
+          filename: true,
+          url: true,
+          alt: true,
+          width: true,
+          height: true,
+          focalX: true,
+          focalY: true,
+        },
+        persons: {
+          name: true,
+        },
+        countries: {
+          name: true,
+        },
+      },
+      depth: 2,
+      limit,
+      page: pageNumber,
+      where: filters.getWhereClause(),
+    }),
+  )
+  // The promise can reject before React Router starts streaming it from the loader.
+  void filmPrintsPromise.catch(() => {})
+
+  const [pages, facetDocs] = await Promise.all([
     measureServerTiming(request, 'filmprints.page', () =>
       payload.find({
         collection: 'pages',
@@ -76,45 +118,6 @@ export const loader = async ({
         },
         depth: 1,
         locale: locale as Locale,
-      }),
-    ),
-    measureServerTiming(request, 'filmprints.list', () =>
-      payload.find({
-        collection: 'filmPrints',
-        locale: locale as Locale,
-        select: {
-          slug: true,
-          movie: true,
-        },
-        populate: {
-          movies: {
-            title: true,
-            still: true,
-            synopsis: true,
-            year: true,
-            directors: true,
-            countries: true,
-          },
-          media: {
-            filename: true,
-            url: true,
-            alt: true,
-            width: true,
-            height: true,
-            focalX: true,
-            focalY: true,
-          },
-          persons: {
-            name: true,
-          },
-          countries: {
-            name: true,
-          },
-        },
-        depth: 2,
-        limit,
-        page: pageNumber,
-        where: filters.getWhereClause(),
       }),
     ),
     measureServerTiming(request, 'filmprints.facet-data', () =>
@@ -170,11 +173,16 @@ export const loader = async ({
     })
   }
 
-  // Redirect to the last page if the requested page is greater than the total number of pages.
-  if (pageNumber > filmPrints.totalPages) {
-    throw redirect(`?page=${filmPrints.totalPages}`, {
-      status: 302,
-    })
+  let filmPrints = filmPrintsPromise
+  // Keep pagination redirects eager; the initial page can stream its list independently.
+  if (pageNumber > 1) {
+    const resolvedFilmPrints = await filmPrintsPromise
+    if (pageNumber > resolvedFilmPrints.totalPages) {
+      throw redirect(`?page=${resolvedFilmPrints.totalPages}`, {
+        status: 302,
+      })
+    }
+    filmPrints = Promise.resolve(resolvedFilmPrints)
   }
 
   const appliedFilters = await measureServerTiming(request, 'filmprints.filters', async () =>
@@ -330,6 +338,15 @@ export default function FilmprintsPage({
   const isLoadingList =
     navigation.state !== 'idle' && navigation.location?.pathname === location.pathname
 
+  const filmPrintsLoading = (
+    <div role="status" aria-live="polite" className="mt-8 flex flex-col gap-8">
+      <span className="sr-only">{t('Loading...')}</span>
+      {Array.from({ length: 3 }, (_, index) => (
+        <FilmPrintCardSkeleton key={index} />
+      ))}
+    </div>
+  )
+
   const resetFilters = () => {
     filters.forEach((filter) => {
       params.delete(filter.name)
@@ -392,29 +409,36 @@ export default function FilmprintsPage({
       </Form>
       <Gutter>
         {isLoadingList ? (
-          <div role="status" aria-live="polite" className="mt-8 flex flex-col gap-8">
-            <span className="sr-only">{t('Loading...')}</span>
-            {Array.from({ length: Math.min(Math.max(filmPrints.docs.length, 3), limit) }).map(
-              (_, index) => (
-                <FilmPrintCardSkeleton key={index} />
-              ),
-            )}
-          </div>
-        ) : filmPrints.docs.length ? (
-          <ul className="mt-8 flex flex-col gap-8">
-            {filmPrints.docs.map((item) => (
-              <li key={item.id}>
-                <Link to={`${item.slug}`} prefetch="intent">
-                  <FilmPrintCard item={item} />
-                </Link>
-              </li>
-            ))}
-          </ul>
+          filmPrintsLoading
         ) : (
-          <div className="text-center">{t('No films matching your search')}</div>
+          <Suspense fallback={filmPrintsLoading}>
+            <Await resolve={filmPrints}>
+              {(loadedFilmPrints) => (
+                <>
+                  {loadedFilmPrints.docs.length ? (
+                    <ul className="mt-8 flex flex-col gap-8">
+                      {loadedFilmPrints.docs.map((item) => (
+                        <li key={item.id}>
+                          <Link to={`${item.slug}`} prefetch="intent">
+                            <FilmPrintCard item={item} />
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <div className="text-center">{t('No films matching your search')}</div>
+                  )}
+                  <Pagination
+                    {...loadedFilmPrints}
+                    linkProps={{ prefetch: 'intent' }}
+                    className="mt-8"
+                  />
+                </>
+              )}
+            </Await>
+          </Suspense>
         )}
       </Gutter>
-      <Pagination {...filmPrints} linkProps={{ prefetch: 'intent' }} className="mt-8" />
     </PageLayout>
   )
 }
