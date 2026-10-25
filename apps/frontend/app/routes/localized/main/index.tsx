@@ -18,6 +18,7 @@ import { getInstance } from '~/middleware/i18next'
 import { measureServerTiming } from '~/util/serverTiming.server'
 import { cache } from '~/util/cache.server'
 import { eventListQuery } from '~/util/eventListQuery.server'
+import { postsListQuery } from '~/util/postsListQuery.server'
 
 export const loader = async ({ request, params: { lang: locale }, context }: Route.LoaderArgs) => {
   const payload = await getPayload()
@@ -65,36 +66,14 @@ export const loader = async ({ request, params: { lang: locale }, context }: Rou
         key: `home-posts_${locale}`,
         ttl: 1000 * 60,
         forceFresh: process.env.NODE_ENV === 'development',
-        getFreshValue: () =>
-          payload.find({
-            collection: 'posts',
-            select: {
-              updatedAt: true,
-              createdAt: true,
-              title: true,
-              date: true,
-              header: true,
-              link: {
-                type: true,
-                doc: true,
-                url: true,
-              },
-              content: true,
-              hasDetailPage: true,
-              url: true,
-            },
-            where: {
-              _status: {
-                equals: 'published',
-              },
-            },
-            draft: false,
-            sort: '-date',
-            depth: 1,
-            limit: 5,
-            pagination: false,
-            locale: locale as Locale,
-          }),
+          getFreshValue: () =>
+            payload.find({
+              collection: 'posts',
+              ...postsListQuery,
+              locale: locale as Locale,
+              limit: 5,
+              pagination: false,
+            }),
       }),
     ),
     measureServerTiming(request, 'home.events', () =>

@@ -11,6 +11,7 @@ import { PostsList } from '~/components/PostsList'
 import { redirect } from 'react-router'
 import { getMetaDescription } from '~/util/posts/getMetaDescription'
 import { measureServerTiming } from '~/util/serverTiming.server'
+import { postsListQuery } from '~/util/postsListQuery.server'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) => {
   const featuredPost = loaderData?.posts.docs[0]
@@ -42,15 +43,8 @@ export const loader = async ({ request, params: { lang: locale }, url, context }
     })),
     measureServerTiming(request, 'news.posts', () => payload.find({
       collection: 'posts',
-      depth: 2,
+      ...postsListQuery,
       limit: 10,
-      where: {
-        _status: {
-          equals: 'published',
-        },
-      },
-      draft: false,
-      sort: '-date',
       locale: locale as Locale,
       pagination: true,
       page: pageNumber,
