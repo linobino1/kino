@@ -17,6 +17,7 @@ import { PostsList } from '~/components/PostsList'
 import { getInstance } from '~/middleware/i18next'
 import { measureServerTiming } from '~/util/serverTiming.server'
 import { cache } from '~/util/cache.server'
+import { eventListQuery } from '~/util/eventListQuery.server'
 
 export const loader = async ({ request, params: { lang: locale }, context }: Route.LoaderArgs) => {
   const payload = await getPayload()
@@ -104,69 +105,8 @@ export const loader = async ({ request, params: { lang: locale }, context }: Rou
         getFreshValue: () =>
           payload.find({
             collection: 'events',
+            ...eventListQuery,
             locale: locale as Locale,
-            select: {
-              updatedAt: true,
-              createdAt: true,
-              title: true,
-              subtitle: true,
-              date: true,
-              date_tz: true,
-              season: true,
-              header: true,
-              comment: true,
-              series: true,
-              url: true,
-              isScreeningEvent: true,
-              mainProgramFilmPrint: true,
-              shortDescription: true,
-            },
-            depth: 3,
-            populate: {
-              eventSeries: {
-                name: true,
-                slug: true,
-              },
-              filmPrints: {
-                movie: true,
-                format: true,
-                languageVersion: true,
-              },
-              movies: {
-                title: true,
-                synopsis: true,
-                poster: true,
-                duration: true,
-                year: true,
-                directors: true,
-                countries: true,
-              },
-              persons: {
-                name: true,
-              },
-              countries: {
-                id: true,
-                name: true,
-              },
-              formats: {
-                name: true,
-              },
-              languageVersions: {
-                abbreviation: true,
-              },
-              seasons: {
-                name: true,
-              },
-              media: {
-                filename: true,
-                url: true,
-                alt: true,
-                width: true,
-                height: true,
-                focalX: true,
-                focalY: true,
-              },
-            },
             where: {
               and: [
                 {

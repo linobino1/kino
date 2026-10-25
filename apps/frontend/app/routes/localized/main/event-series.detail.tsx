@@ -14,6 +14,7 @@ import { EventsList } from '~/components/EventsList'
 import { useTranslation } from 'react-i18next'
 import { RenderBlocks } from '~/components/Blocks/RenderBlocks'
 import { measureServerTiming } from '~/util/serverTiming.server'
+import { eventListQuery, mediaListPopulate } from '~/util/eventListQuery.server'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
@@ -32,16 +33,35 @@ export const loader = async ({
   const payload = await getPayload()
 
   const eventSeries = (
-    await measureServerTiming(request, 'event-series.content', () => payload.find({
-      collection: 'eventSeries',
-      where: {
-        slug: {
-          equals: slug,
+    await measureServerTiming(request, 'event-series.content', () =>
+      payload.find({
+        collection: 'eventSeries',
+        select: {
+          createdAt: true,
+          updatedAt: true,
+          name: true,
+          slug: true,
+          hero: {
+            type: true,
+            headline: true,
+            image: true,
+          },
+          blocks: true,
         },
-      },
-      locale: locale as Locale,
-      depth: 1,
-    }))
+        where: {
+          slug: {
+            equals: slug,
+          },
+        },
+        depth: 1,
+        populate: {
+          media: mediaListPopulate,
+        },
+        limit: 1,
+        pagination: false,
+        locale: locale as Locale,
+      }),
+    )
   ).docs[0]
 
   if (!eventSeries) {
@@ -49,12 +69,12 @@ export const loader = async ({
   }
 
   const page = parseInt(new URL(url).searchParams.get('page') || '1')
-  const depth = 3
   const today = new Date()
   today.setHours(0, 0, 0, 0)
   const [upcoming, past] = await Promise.all([
     measureServerTiming(request, 'event-series.upcoming', () => payload.find({
       collection: 'events',
+      ...eventListQuery,
       where: {
         and: [
           {
@@ -82,11 +102,11 @@ export const loader = async ({
       draft: false,
       sort: 'date',
       locale: locale as Locale,
-      depth,
       pagination: false,
     })),
     measureServerTiming(request, 'event-series.past', () => payload.find({
       collection: 'events',
+      ...eventListQuery,
       where: {
         and: [
           {
@@ -109,7 +129,6 @@ export const loader = async ({
       draft: false,
       sort: '-date',
       locale: locale as Locale,
-      depth,
       pagination: true,
       page,
       limit: 20,

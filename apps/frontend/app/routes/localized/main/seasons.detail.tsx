@@ -15,6 +15,7 @@ import { EventsList } from '~/components/EventsList'
 import { useTranslation } from 'react-i18next'
 import { CTAButton } from '~/components/CTAButton'
 import { measureServerTiming } from '~/util/serverTiming.server'
+import { eventListQuery, mediaListPopulate } from '~/util/eventListQuery.server'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
@@ -33,16 +34,27 @@ export const loader = async ({
   const payload = await getPayload()
 
   const season = (
-    await measureServerTiming(request, 'season.content', () => payload.find({
-      collection: 'seasons',
-      where: {
-        slug: {
-          equals: slug,
+    await measureServerTiming(request, 'season.content', () =>
+      payload.find({
+        collection: 'seasons',
+        select: {
+          name: true,
+          header: true,
         },
-      },
-      locale: locale as Locale,
-      depth: 1,
-    }))
+        where: {
+          slug: {
+            equals: slug,
+          },
+        },
+        depth: 1,
+        populate: {
+          media: mediaListPopulate,
+        },
+        limit: 1,
+        pagination: false,
+        locale: locale as Locale,
+      }),
+    )
   ).docs[0]
 
   if (!season) {
@@ -50,29 +62,31 @@ export const loader = async ({
   }
 
   const page = parseInt(new URL(url).searchParams.get('page') || '1')
-  const events = await measureServerTiming(request, 'season.events', () => payload.find({
-    collection: 'events',
-    where: {
-      and: [
-        {
-          _status: {
-            equals: 'published',
+  const events = await measureServerTiming(request, 'season.events', () =>
+    payload.find({
+      collection: 'events',
+      ...eventListQuery,
+      where: {
+        and: [
+          {
+            _status: {
+              equals: 'published',
+            },
           },
-        },
-        {
-          season: {
-            equals: season.id,
+          {
+            season: {
+              equals: season.id,
+            },
           },
-        },
-      ],
-    },
-    draft: false,
-    locale: locale as Locale,
-    depth: 3,
-    sort: 'date',
-    page,
-    limit: 12,
-  }))
+        ],
+      },
+      draft: false,
+      locale: locale as Locale,
+      sort: 'date',
+      page,
+      limit: 12,
+    }),
+  )
 
   return {
     season,

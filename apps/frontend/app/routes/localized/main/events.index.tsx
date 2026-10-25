@@ -15,6 +15,7 @@ import { Gutter } from '~/components/Gutter'
 import { useTranslation } from 'react-i18next'
 import { CTAButton } from '~/components/CTAButton'
 import { measureServerTiming } from '~/util/serverTiming.server'
+import { eventListQuery, mediaListPopulate } from '~/util/eventListQuery.server'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
@@ -34,41 +35,64 @@ export const loader = async ({ request, params: { lang: locale }, url, context }
   today.setHours(0, 0, 0, 0)
 
   const [pages, events] = await Promise.all([
-    measureServerTiming(request, 'events.page', () => payload.find({
-      collection: 'pages',
-      where: {
-        slug: {
-          equals: 'events',
-        },
-      },
-      locale: locale as Locale,
-    })),
-    measureServerTiming(request, 'events.list', () => payload.find({
-      collection: 'events',
-      depth: 7,
-      limit: 12,
-      page: pageNumber,
-      where: {
-        _status: {
-          equals: 'published',
-        },
-        and: [
-          {
-            date: {
-              greater_than_equal: today,
-            },
+    measureServerTiming(request, 'events.page', () =>
+      payload.find({
+        collection: 'pages',
+        select: {
+          layoutType: true,
+          hero: {
+            type: true,
+            headline: true,
+            image: true,
           },
-          {
-            excludeFromUpcoming: {
-              not_equals: true,
-            },
+          meta: {
+            title: true,
+            description: true,
+            image: true,
           },
-        ],
-      },
-      draft: false,
-      sort: 'date',
-      locale: locale as Locale,
-    })),
+        },
+        where: {
+          slug: {
+            equals: 'events',
+          },
+        },
+        depth: 1,
+        populate: {
+          media: mediaListPopulate,
+        },
+        limit: 1,
+        pagination: false,
+        locale: locale as Locale,
+      }),
+    ),
+    measureServerTiming(request, 'events.list', () =>
+      payload.find({
+        collection: 'events',
+        ...eventListQuery,
+        limit: 12,
+        page: pageNumber,
+        where: {
+          _status: {
+            equals: 'published',
+          },
+          and: [
+            {
+              date: {
+                greater_than_equal: today,
+              },
+            },
+            {
+              excludeFromUpcoming: {
+                not_equals: true,
+              },
+            },
+          ],
+        },
+        draft: false,
+        sort: 'date',
+        locale: locale as Locale,
+      }),
+    ),
   ])
 
   const page = pages.docs[0]
