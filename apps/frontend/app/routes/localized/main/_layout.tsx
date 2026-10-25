@@ -6,17 +6,17 @@ import { Footer } from '~/components/Footer'
 import { Header } from '~/components/Header'
 import { getPayload } from '~/util/getPayload.server'
 import { cache } from '~/util/cache.server'
-import { getCachedUser } from '~/util/userCache.server'
+import { userContext } from '~/util/authContext.server'
 import { ErrorComponent } from '~/components/Error'
 import { PageLayout } from '~/components/PageLayout'
 import { measureServerTiming } from '~/util/serverTiming.server'
 
-export const loader = async ({ request, params: { lang: locale } }: Route.LoaderArgs) => {
-  const payload = await getPayload()
+export const loader = async ({ request, params: { lang: locale }, context }: Route.LoaderArgs) => {
+  const [payload, user] = await Promise.all([getPayload(), context.get(userContext)()])
   const navigations = await measureServerTiming(request, 'navigation', () =>
     cache({
       key: `navigations_${locale}`,
-      forceFresh: !!getCachedUser() || process.env.NODE_ENV === 'development',
+      forceFresh: !!user || process.env.NODE_ENV === 'development',
       async getFreshValue() {
         return (
           await payload.find({

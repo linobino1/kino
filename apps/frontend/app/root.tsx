@@ -18,23 +18,24 @@ import { type Locale, locales } from '@app/i18n'
 import { siteTitle } from '@app/util/config'
 import { getPayload } from './util/getPayload.server'
 import { generateMetadata } from './util/generateMetadata'
-import { setCachedUser } from './util/userCache.server'
 import { getCanonicalLink, getHreflangLinks } from './util/i18n/getHreflangLinks'
 import { parseFrontendBrowserEnv, type FrontendBrowserEnvironment } from '@app/util/env'
 import { ErrorComponent } from './components/Error'
 import { useEffect } from 'react'
 import { i18nCookie } from './cookies'
 import { measureServerTiming, serverTimingMiddleware } from './util/serverTiming.server'
+import { authMiddleware, userContext } from './util/authContext.server'
 
-export const middleware = [serverTimingMiddleware, i18nextMiddleware]
+export const middleware = [serverTimingMiddleware, authMiddleware, i18nextMiddleware]
 
 export async function loader({ request, context }: Route.LoaderArgs) {
   const locale = getLocale(context) as Locale
+  const userPromise = context.get(userContext)()
 
   const payload = await measureServerTiming(request, 'payload.init', getPayload)
 
   const [user, site] = await Promise.all([
-    measureServerTiming(request, 'auth', async () => (await payload.auth(request)).user),
+    userPromise,
     measureServerTiming(request, 'site', () =>
       payload.findGlobal({
         slug: 'site',
@@ -43,9 +44,6 @@ export async function loader({ request, context }: Route.LoaderArgs) {
       }),
     ),
   ])
-
-  // save the user globally
-  setCachedUser(user)
 
   const serializedI18nCookie = await i18nCookie.serialize(locale)
 
