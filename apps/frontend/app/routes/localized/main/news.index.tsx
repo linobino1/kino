@@ -10,6 +10,7 @@ import { Gutter } from '~/components/Gutter'
 import { PostsList } from '~/components/PostsList'
 import { redirect } from 'react-router'
 import { getMetaDescription } from '~/util/posts/getMetaDescription'
+import { measureServerTiming } from '~/util/serverTiming.server'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) => {
   const featuredPost = loaderData?.posts.docs[0]
@@ -23,14 +24,14 @@ export const meta: Route.MetaFunction = ({ loaderData, matches }) => {
   })
 }
 
-export const loader = async ({ params: { lang: locale }, url, context }: Route.LoaderArgs) => {
+export const loader = async ({ request, params: { lang: locale }, url, context }: Route.LoaderArgs) => {
   const { t } = getInstance(context)
   const payload = await getPayload()
 
   const pageNumber = parseInt(new URL(url).searchParams.get('page') || '1')
 
   const [pages, posts] = await Promise.all([
-    payload.find({
+    measureServerTiming(request, 'news.page', () => payload.find({
       collection: 'pages',
       where: {
         slug: {
@@ -38,8 +39,8 @@ export const loader = async ({ params: { lang: locale }, url, context }: Route.L
         },
       },
       locale: locale as Locale,
-    }),
-    payload.find({
+    })),
+    measureServerTiming(request, 'news.posts', () => payload.find({
       collection: 'posts',
       depth: 2,
       limit: 10,
@@ -53,7 +54,7 @@ export const loader = async ({ params: { lang: locale }, url, context }: Route.L
       locale: locale as Locale,
       pagination: true,
       page: pageNumber,
-    }),
+    })),
   ])
 
   const page = pages.docs[0]

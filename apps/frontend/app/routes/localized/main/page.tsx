@@ -7,6 +7,7 @@ import { Hero } from '~/components/Hero'
 import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { RenderBlocks } from '~/components/Blocks/RenderBlocks'
+import { measureServerTiming } from '~/util/serverTiming.server'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
@@ -18,13 +19,14 @@ export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
 
 export const loader = async ({
   params: { lang: locale, slug },
+  request,
   url,
   context,
 }: Route.LoaderArgs) => {
   const payload = await getPayload()
   const { t } = getInstance(context)
 
-  const res = await payload.find({
+  const res = await measureServerTiming(request, 'page.content', () => payload.find({
     collection: 'pages',
     where: {
       slug: {
@@ -33,7 +35,7 @@ export const loader = async ({
     },
     locale: locale as Locale,
     depth: 3,
-  })
+  }))
 
   const page = res.docs[0]
 

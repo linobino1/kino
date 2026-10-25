@@ -13,6 +13,7 @@ import { Pagination } from '~/components/Pagination'
 import { EventsList } from '~/components/EventsList'
 import { useTranslation } from 'react-i18next'
 import { RenderBlocks } from '~/components/Blocks/RenderBlocks'
+import { measureServerTiming } from '~/util/serverTiming.server'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
@@ -23,6 +24,7 @@ export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
 
 export const loader = async ({
   params: { lang: locale, slug },
+  request,
   url,
   context,
 }: Route.LoaderArgs) => {
@@ -30,7 +32,7 @@ export const loader = async ({
   const payload = await getPayload()
 
   const eventSeries = (
-    await payload.find({
+    await measureServerTiming(request, 'event-series.content', () => payload.find({
       collection: 'eventSeries',
       where: {
         slug: {
@@ -39,7 +41,7 @@ export const loader = async ({
       },
       locale: locale as Locale,
       depth: 1,
-    })
+    }))
   ).docs[0]
 
   if (!eventSeries) {
@@ -51,7 +53,7 @@ export const loader = async ({
   const today = new Date()
   today.setHours(0, 0, 0, 0)
   const [upcoming, past] = await Promise.all([
-    payload.find({
+    measureServerTiming(request, 'event-series.upcoming', () => payload.find({
       collection: 'events',
       where: {
         and: [
@@ -82,8 +84,8 @@ export const loader = async ({
       locale: locale as Locale,
       depth,
       pagination: false,
-    }),
-    payload.find({
+    })),
+    measureServerTiming(request, 'event-series.past', () => payload.find({
       collection: 'events',
       where: {
         and: [
@@ -111,7 +113,7 @@ export const loader = async ({
       pagination: true,
       page,
       limit: 20,
-    }),
+    })),
   ])
 
   return {

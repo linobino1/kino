@@ -24,21 +24,24 @@ import { parseFrontendBrowserEnv, type FrontendBrowserEnvironment } from '@app/u
 import { ErrorComponent } from './components/Error'
 import { useEffect } from 'react'
 import { i18nCookie } from './cookies'
+import { measureServerTiming, serverTimingMiddleware } from './util/serverTiming.server'
 
-export const middleware = [i18nextMiddleware]
+export const middleware = [serverTimingMiddleware, i18nextMiddleware]
 
 export async function loader({ request, context }: Route.LoaderArgs) {
   const locale = getLocale(context) as Locale
 
-  const payload = await getPayload()
+  const payload = await measureServerTiming(request, 'payload.init', getPayload)
 
   const [user, site] = await Promise.all([
-    (await payload.auth(request)).user,
-    payload.findGlobal({
-      slug: 'site',
-      depth: 3,
-      locale,
-    }),
+    measureServerTiming(request, 'auth', async () => (await payload.auth(request)).user),
+    measureServerTiming(request, 'site', () =>
+      payload.findGlobal({
+        slug: 'site',
+        depth: 3,
+        locale,
+      }),
+    ),
   ])
 
   // save the user globally

@@ -14,6 +14,7 @@ import { EventsList } from '~/components/EventsList'
 import { Gutter } from '~/components/Gutter'
 import { useTranslation } from 'react-i18next'
 import { CTAButton } from '~/components/CTAButton'
+import { measureServerTiming } from '~/util/serverTiming.server'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
@@ -23,7 +24,7 @@ export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
     env: getEnvFromMatches(matches),
   })
 
-export const loader = async ({ params: { lang: locale }, url, context }: Route.LoaderArgs) => {
+export const loader = async ({ request, params: { lang: locale }, url, context }: Route.LoaderArgs) => {
   const { t } = getInstance(context)
   const payload = await getPayload()
   const pageNumber = parseInt(new URL(url).searchParams.get('page') || '1')
@@ -33,7 +34,7 @@ export const loader = async ({ params: { lang: locale }, url, context }: Route.L
   today.setHours(0, 0, 0, 0)
 
   const [pages, events] = await Promise.all([
-    payload.find({
+    measureServerTiming(request, 'events.page', () => payload.find({
       collection: 'pages',
       where: {
         slug: {
@@ -41,8 +42,8 @@ export const loader = async ({ params: { lang: locale }, url, context }: Route.L
         },
       },
       locale: locale as Locale,
-    }),
-    payload.find({
+    })),
+    measureServerTiming(request, 'events.list', () => payload.find({
       collection: 'events',
       depth: 7,
       limit: 12,
@@ -67,7 +68,7 @@ export const loader = async ({ params: { lang: locale }, url, context }: Route.L
       draft: false,
       sort: 'date',
       locale: locale as Locale,
-    }),
+    })),
   ])
 
   const page = pages.docs[0]

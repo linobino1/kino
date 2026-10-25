@@ -10,6 +10,7 @@ import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { Gutter } from '~/components/Gutter'
 import { FilmPrintDetails } from '~/components/FilmPrintDetails'
 import { lexicalToPlainText } from '@app/util/lexical/lexicalToPlainText'
+import { measureServerTiming } from '~/util/serverTiming.server'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
@@ -22,12 +23,13 @@ export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
 
 export const loader = async ({
   params: { lang: locale, slug },
+  request,
   url,
   context,
 }: Route.LoaderArgs) => {
   const { t } = getInstance(context)
   const payload = await getPayload()
-  const res = await payload.find({
+  const res = await measureServerTiming(request, 'filmprint.content', () => payload.find({
     collection: 'filmPrints',
     where: {
       slug: {
@@ -36,7 +38,7 @@ export const loader = async ({
     },
     depth: 2,
     locale: locale as Locale,
-  })
+  }))
 
   const filmPrint = res.docs[0]
 

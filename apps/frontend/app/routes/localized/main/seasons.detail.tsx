@@ -14,6 +14,7 @@ import { Gutter } from '~/components/Gutter'
 import { EventsList } from '~/components/EventsList'
 import { useTranslation } from 'react-i18next'
 import { CTAButton } from '~/components/CTAButton'
+import { measureServerTiming } from '~/util/serverTiming.server'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
@@ -24,6 +25,7 @@ export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
 
 export const loader = async ({
   params: { lang: locale, slug },
+  request,
   url,
   context,
 }: Route.LoaderArgs) => {
@@ -31,7 +33,7 @@ export const loader = async ({
   const payload = await getPayload()
 
   const season = (
-    await payload.find({
+    await measureServerTiming(request, 'season.content', () => payload.find({
       collection: 'seasons',
       where: {
         slug: {
@@ -40,7 +42,7 @@ export const loader = async ({
       },
       locale: locale as Locale,
       depth: 1,
-    })
+    }))
   ).docs[0]
 
   if (!season) {
@@ -48,7 +50,7 @@ export const loader = async ({
   }
 
   const page = parseInt(new URL(url).searchParams.get('page') || '1')
-  const events = await payload.find({
+  const events = await measureServerTiming(request, 'season.events', () => payload.find({
     collection: 'events',
     where: {
       and: [
@@ -70,7 +72,7 @@ export const loader = async ({
     sort: 'date',
     page,
     limit: 12,
-  })
+  }))
 
   return {
     season,

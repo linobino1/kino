@@ -4,6 +4,8 @@ metadata:
   name: kino-env
   namespace: kino-im-blauen-salon
 data:
+  # Set to 'true' to include Server-Timing response headers while profiling.
+  ENABLE_SERVER_TIMING_HEADER: 'true'
   S3_ENABLED: 'true'
   S3_BUCKET: kino-im-blauen-salon-media
   S3_REGION: auto

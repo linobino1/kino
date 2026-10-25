@@ -15,6 +15,7 @@ import { RichText } from '~/components/RichText'
 import { RenderBlocks } from '~/components/Blocks/RenderBlocks'
 import { getMetaDescription } from '~/util/posts/getMetaDescription'
 import { isPreview } from '~/util/isPreview'
+import { measureServerTiming } from '~/util/serverTiming.server'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   loaderData?.post
@@ -28,6 +29,7 @@ export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
 
 export const loader = async ({
   params: { lang: locale, slug },
+  request,
   url,
   context,
 }: Route.LoaderArgs) => {
@@ -35,7 +37,7 @@ export const loader = async ({
   const payload = await getPayload()
 
   const post = (
-    await payload.find({
+    await measureServerTiming(request, 'post.content', () => payload.find({
       collection: 'posts',
       where: {
         and: [
@@ -54,7 +56,7 @@ export const loader = async ({
       locale: locale as Locale,
       depth: 2,
       draft: isPreview(url.toString()),
-    })
+    }))
   ).docs[0]
 
   if (!post) {

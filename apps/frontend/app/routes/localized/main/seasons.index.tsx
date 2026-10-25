@@ -11,6 +11,7 @@ import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { Gutter } from '~/components/Gutter'
 import { Image } from '~/components/Image'
 import { Pagination } from '~/components/Pagination'
+import { measureServerTiming } from '~/util/serverTiming.server'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
@@ -20,13 +21,13 @@ export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
     env: getEnvFromMatches(matches),
   })
 
-export const loader = async ({ params: { lang: locale }, url, context }: Route.LoaderArgs) => {
+export const loader = async ({ request, params: { lang: locale }, url, context }: Route.LoaderArgs) => {
   const { t } = getInstance(context)
   const payload = await getPayload()
 
   const pageNumber = parseInt(new URL(url).searchParams.get('page') || '1')
   const [pages, seasons] = await Promise.all([
-    payload.find({
+    measureServerTiming(request, 'seasons.page', () => payload.find({
       collection: 'pages',
       where: {
         slug: {
@@ -34,8 +35,8 @@ export const loader = async ({ params: { lang: locale }, url, context }: Route.L
         },
       },
       locale: locale as Locale,
-    }),
-    payload.find({
+    })),
+    measureServerTiming(request, 'seasons.list', () => payload.find({
       collection: 'seasons',
       locale: locale as Locale,
       depth: 3,
@@ -43,7 +44,7 @@ export const loader = async ({ params: { lang: locale }, url, context }: Route.L
       pagination: true,
       sort: '-from',
       page: pageNumber,
-    }),
+    })),
   ])
 
   const page = pages.docs[0]

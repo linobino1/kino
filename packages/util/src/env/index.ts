@@ -4,6 +4,7 @@ const variables = z.object({
   NODE_ENV: z.string().default('development'),
   CI: z.string().optional(),
   SEEDING: z.string().optional(),
+  ENABLE_SERVER_TIMING_HEADER: z.string().default('false'),
 
   FRONTEND_URL: z.string().default('http://localhost:5173'),
   BACKEND_URL: z.string().default('http://localhost:3000'),

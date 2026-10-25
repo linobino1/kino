@@ -24,6 +24,7 @@ import { useTranslation } from 'react-i18next'
 import { Image } from '~/components/Image'
 import { ICSDownloadButton } from '~/components/ICSDownloadButton'
 import { formatDate } from '@app/util/formatDate'
+import { measureServerTiming } from '~/util/serverTiming.server'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
@@ -33,13 +34,14 @@ export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
 
 export const loader = async ({
   params: { lang: locale, slug },
+  request,
   url,
   context,
 }: Route.LoaderArgs) => {
   // throw new Error('Not implemented')
   const payload = await getPayload()
   const { t } = getInstance(context)
-  const res = await payload.find({
+  const res = await measureServerTiming(request, 'event.content', () => payload.find({
     collection: 'events',
     where: {
       slug: {
@@ -48,7 +50,7 @@ export const loader = async ({
     },
     depth: 8,
     locale: locale as Locale,
-  })
+  }))
 
   const event = res.docs[0]
 

@@ -9,32 +9,35 @@ import { cache } from '~/util/cache.server'
 import { getCachedUser } from '~/util/userCache.server'
 import { ErrorComponent } from '~/components/Error'
 import { PageLayout } from '~/components/PageLayout'
+import { measureServerTiming } from '~/util/serverTiming.server'
 
-export const loader = async ({ params: { lang: locale } }: Route.LoaderArgs) => {
+export const loader = async ({ request, params: { lang: locale } }: Route.LoaderArgs) => {
   const payload = await getPayload()
-  const navigations = await cache({
-    key: `navigations_${locale}`,
-    forceFresh: !!getCachedUser() || process.env.NODE_ENV === 'development',
-    async getFreshValue() {
-      return (
-        await payload.find({
-          collection: 'navigations',
-          depth: 1,
-          locale: locale as Locale,
-          select: {
-            items: true,
-            type: true,
-          },
-          populate: {
-            pages: {
-              url: true,
-              slug: true,
+  const navigations = await measureServerTiming(request, 'navigation', () =>
+    cache({
+      key: `navigations_${locale}`,
+      forceFresh: !!getCachedUser() || process.env.NODE_ENV === 'development',
+      async getFreshValue() {
+        return (
+          await payload.find({
+            collection: 'navigations',
+            depth: 1,
+            locale: locale as Locale,
+            select: {
+              items: true,
+              type: true,
             },
-          },
-        })
-      ).docs
-    },
-  })
+            populate: {
+              pages: {
+                url: true,
+                slug: true,
+              },
+            },
+          })
+        ).docs
+      },
+    }),
+  )
 
   return {
     navigations,

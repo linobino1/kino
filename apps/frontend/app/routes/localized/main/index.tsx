@@ -15,8 +15,9 @@ import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { PostsList } from '~/components/PostsList'
 import { getInstance } from '~/middleware/i18next'
+import { measureServerTiming } from '~/util/serverTiming.server'
 
-export const loader = async ({ params: { lang: locale }, context }: Route.LoaderArgs) => {
+export const loader = async ({ request, params: { lang: locale }, context }: Route.LoaderArgs) => {
   const payload = await getPayload()
   const { t } = getInstance(context)
 
@@ -25,58 +26,64 @@ export const loader = async ({ params: { lang: locale }, context }: Route.Loader
   today.setHours(0, 0, 0, 0)
 
   const [pages, posts, events] = await Promise.all([
-    payload.find({
-      collection: 'pages',
-      where: {
-        slug: {
-          equals: 'home',
+    measureServerTiming(request, 'home.page', () =>
+      payload.find({
+        collection: 'pages',
+        where: {
+          slug: {
+            equals: 'home',
+          },
         },
-      },
-      depth: 1,
-      limit: 1,
-      locale: locale as Locale,
-    }),
-    payload.find({
-      collection: 'posts',
-      where: {
-        _status: {
-          equals: 'published',
+        depth: 1,
+        limit: 1,
+        locale: locale as Locale,
+      }),
+    ),
+    measureServerTiming(request, 'home.posts', () =>
+      payload.find({
+        collection: 'posts',
+        where: {
+          _status: {
+            equals: 'published',
+          },
         },
-      },
-      draft: false,
-      sort: '-date',
-      depth: 1,
-      limit: 5,
-      pagination: true,
-      locale: locale as Locale,
-    }),
-    payload.find({
-      collection: 'events',
-      locale: locale as Locale,
-      depth: 3,
-      where: {
-        and: [
-          {
-            _status: {
-              equals: 'published',
+        draft: false,
+        sort: '-date',
+        depth: 1,
+        limit: 5,
+        pagination: true,
+        locale: locale as Locale,
+      }),
+    ),
+    measureServerTiming(request, 'home.events', () =>
+      payload.find({
+        collection: 'events',
+        locale: locale as Locale,
+        depth: 3,
+        where: {
+          and: [
+            {
+              _status: {
+                equals: 'published',
+              },
             },
-          },
-          {
-            date: {
-              greater_than_equal: today,
+            {
+              date: {
+                greater_than_equal: today,
+              },
             },
-          },
-          {
-            excludeFromUpcoming: {
-              not_equals: true,
+            {
+              excludeFromUpcoming: {
+                not_equals: true,
+              },
             },
-          },
-        ],
-      },
-      draft: false,
-      sort: 'date',
-      limit: 3,
-    }),
+          ],
+        },
+        draft: false,
+        sort: 'date',
+        limit: 3,
+      }),
+    ),
   ])
 
   // if we cannot find the page in the database, we throw a 404 error

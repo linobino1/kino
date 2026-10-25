@@ -20,6 +20,7 @@ import { RenderBlocks } from '~/components/Blocks/RenderBlocks'
 import { Link } from '~/components/localized-link'
 import { Icon } from '@iconify/react'
 import arrow from '@iconify-icons/material-symbols/arrow-forward-ios-rounded'
+import { measureServerTiming } from '~/util/serverTiming.server'
 
 const limit = 20
 
@@ -31,7 +32,7 @@ export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
     env: getEnvFromMatches(matches),
   })
 
-export const loader = async ({ params: { lang: locale }, url, context }: Route.LoaderArgs) => {
+export const loader = async ({ request, params: { lang: locale }, url, context }: Route.LoaderArgs) => {
   const { t } = getInstance(context)
   const payload = await getPayload()
   const params = new URL(url).searchParams
@@ -48,7 +49,7 @@ export const loader = async ({ params: { lang: locale }, url, context }: Route.L
   const today = new Date()
   today.setHours(0, 0, 0, 0)
 
-  const pages = await payload.find({
+  const pages = await measureServerTiming(request, 'filmprints.page', () => payload.find({
     collection: 'pages',
     where: {
       slug: {
@@ -56,7 +57,7 @@ export const loader = async ({ params: { lang: locale }, url, context }: Route.L
       },
     },
     locale: locale as Locale,
-  })
+  }))
 
   const page = pages.docs[0]
 
@@ -73,14 +74,14 @@ export const loader = async ({ params: { lang: locale }, url, context }: Route.L
     params,
   })
   filters.applySearchParams(params)
-  const filmPrints = await payload.find({
+  const filmPrints = await measureServerTiming(request, 'filmprints.list', () => payload.find({
     collection: 'filmPrints',
     locale: locale as Locale,
     depth: 7,
     limit,
     page: pageNumber,
     where: filters.getWhereClause(),
-  })
+  }))
 
   // Redirect to the last page if the requested page is greater than the total number of page
   if (pageNumber > filmPrints.totalPages) {
@@ -92,7 +93,7 @@ export const loader = async ({ params: { lang: locale }, url, context }: Route.L
   return {
     page,
     query,
-    filters: await filters.getApplied(),
+    filters: await measureServerTiming(request, 'filmprints.filters', () => filters.getApplied()),
     filmPrints,
     isHfgArchivePage,
   }
