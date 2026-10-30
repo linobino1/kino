@@ -11,6 +11,11 @@ const dirname = path.dirname(filename)
 export default configurePayload({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
+    connectOptions: {
+      maxPoolSize: 10,
+      minPoolSize: 0,
+      maxIdleTimeMS: 30_000,
+    },
   }),
   onInit() {
     try {
