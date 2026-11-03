@@ -12,3 +12,7 @@
 node_modules
 
 tsconfig.tsbuildinfo
+
+# Scraper runtime state and fetched development fixture
+plakat-scraper/.state.json
+plakat-scraper/output.html
