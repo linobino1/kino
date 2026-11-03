@@ -16,8 +16,7 @@ function escapeHtml(value: string): string {
 
 export const sendMail = async (options: { subject: string; text: string }) => {
   if (Deno.env.get('ENV') !== 'production') {
-    console.log('Not in production, skipping email send.')
-    console.log(options)
+    console.info('Not in production, skipping email send.', options)
     return
   }
 
@@ -48,7 +47,7 @@ export const sendMail = async (options: { subject: string; text: string }) => {
       )
     }
 
-    console.log('Email sent successfully')
+    console.info('Email sent successfully')
   } catch (error) {
     console.error('Error sending email through ZeptoMail:', error)
     throw error
