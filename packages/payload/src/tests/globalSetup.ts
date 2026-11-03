@@ -7,7 +7,7 @@ const server = setupServer()
 
 beforeAll(async () => {
   // setup mock server
-  server.listen({ onUnhandledRequest: 'error' })
+  server.listen({ onUnhandledFrame: 'error' })
   server.use(...handlers)
 
   await setup()
