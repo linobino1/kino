@@ -4,6 +4,7 @@
     "start": "deno run -P main.ts"
   },
   "imports": {
+    "@aws-sdk/client-s3": "npm:@aws-sdk/client-s3@^3.1161.0",
     "@b-fuze/deno-dom": "jsr:@b-fuze/deno-dom@^0.1.56",
     "@std/assert": "jsr:@std/assert@1"
   },

@@ -22,6 +22,8 @@ jobs:
             dockerfile: Dockerfile.backend
           - app-name: frontend
             dockerfile: Dockerfile.frontend
+          - app-name: plakat-scraper
+            dockerfile: Dockerfile.plakat-scraper
     steps:
       - uses: actions/checkout@v7
       - uses: docker/setup-buildx-action@v4
@@ -63,6 +65,7 @@ jobs:
         run: |
           sed -i "s|git.leohilsheimer.com/leo/kino-im-blauen-salon-backend:latest|git.leohilsheimer.com/leo/kino-im-blauen-salon-backend:${{ forgejo.sha }}|" k8s/backend-deployment.yaml
           sed -i "s|git.leohilsheimer.com/leo/kino-im-blauen-salon-frontend:latest|git.leohilsheimer.com/leo/kino-im-blauen-salon-frontend:${{ forgejo.sha }}|" k8s/frontend-deployment.yaml
+          sed -i "s|git.leohilsheimer.com/leo/kino-im-blauen-salon-plakat-scraper:latest|git.leohilsheimer.com/leo/kino-im-blauen-salon-plakat-scraper:${{ forgejo.sha }}|" k8s/plakat-scraper-cronjob.yaml
           kubectl apply -f k8s/namespace.yaml
           kubectl create secret docker-registry forgejo-registry \
             --namespace kino-im-blauen-salon \

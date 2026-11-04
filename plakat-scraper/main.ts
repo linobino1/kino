@@ -1,4 +1,5 @@
 import { DOMParser } from '@b-fuze/deno-dom'
+import { reportRun } from './alertmanager.ts'
 import { sendMail } from './mailer.ts'
 import { getState, saveState } from './state.ts'
 
@@ -119,8 +120,21 @@ export async function run() {
 
 // Learn more at https://docs.deno.com/runtime/manual/examples/module_metadata#concepts
 if (import.meta.main) {
-  run().catch((err) => {
+  try {
+    await run()
+  } catch (err) {
     console.error(err)
+    try {
+      await reportRun(false, err)
+    } catch (alertError) {
+      console.error('Failed to notify Alertmanager:', alertError)
+    }
     Deno.exit(1)
-  })
+  }
+
+  try {
+    await reportRun(true)
+  } catch (alertError) {
+    console.error('Failed to resolve the Alertmanager alert:', alertError)
+  }
 }

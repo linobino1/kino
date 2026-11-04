@@ -27,9 +27,9 @@ pnpm seed
 
 ## Deployment
 
-Both apps run on k3s. Pushes to `main` build arm64 images, publish them to the
-private Forgejo registry, apply the manifests in `k8s/`, and wait for both
-Deployment rollouts.
+The apps and plakat scraper run on k3s. Pushes to `main` build arm64 images,
+publish them to the private Forgejo registry, and apply the manifests in `k8s/`.
+The plakat scraper runs every 30 minutes as a Kubernetes CronJob.
 
 Non-sensitive runtime variables are committed in `k8s/configmap.yaml`.
 Production secrets are encrypted with [SOPS](https://github.com/getsops/sops)

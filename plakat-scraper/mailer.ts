@@ -20,9 +20,9 @@ export const sendMail = async (options: { subject: string; text: string }) => {
     return
   }
 
-  const apiKey = Deno.env.get('PLAKAT_SCRAPER_ZEPTOMAIL_API_KEY')
+  const apiKey = Deno.env.get('ZEPTOMAIL_API_KEY')
   if (!apiKey) {
-    throw new Error('Missing PLAKAT_SCRAPER_ZEPTOMAIL_API_KEY environment variable')
+    throw new Error('Missing ZEPTOMAIL_API_KEY environment variable')
   }
 
   try {

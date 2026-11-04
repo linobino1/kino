@@ -10,6 +10,8 @@ data:
   S3_BUCKET: kino-im-blauen-salon-media
   S3_REGION: auto
   S3_ENDPOINT: https://55c8201ec7bf4e527d5dcc5f5b7e250d.r2.cloudflarestorage.com
+  PLAKAT_SCRAPER_STATE_BUCKET: kino-im-blauen-salon-media
+  PLAKAT_SCRAPER_ALERTMANAGER_URL: http://vmalertmanager-victoria-metrics.observability.svc:9093/api/v2
   MEDIA_URL: https://r2.kinoimblauensalon.de
   FRONTEND_URL: https://kinoimblauensalon.de
   BACKEND_URL: https://cms.kinoimblauensalon.de

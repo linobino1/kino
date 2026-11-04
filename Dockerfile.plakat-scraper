@@ -1,0 +1,7 @@
+FROM denoland/deno:2.9.8
+
+WORKDIR /app
+COPY plakat-scraper/ ./
+RUN deno cache main.ts
+
+CMD ["deno", "task", "start"]

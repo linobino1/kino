@@ -1,0 +1,66 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: plakat-scraper
+  namespace: kino-im-blauen-salon
+spec:
+  schedule: "*/30 * * * *"
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 600
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      activeDeadlineSeconds: 600
+      ttlSecondsAfterFinished: 86400
+      template:
+        spec:
+          imagePullSecrets:
+            - name: forgejo-registry
+          restartPolicy: Never
+          automountServiceAccountToken: false
+          containers:
+            - name: scraper
+              image: git.leohilsheimer.com/leo/kino-im-blauen-salon-plakat-scraper:latest
+              imagePullPolicy: Always
+              env:
+                - name: ENV
+                  value: production
+                - name: ZEPTOMAIL_API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: kino-secrets
+                      key: ZEPTOMAIL_API_KEY
+                - name: S3_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: kino-secrets
+                      key: S3_ACCESS_KEY
+                - name: S3_SECRET_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: kino-secrets
+                      key: S3_SECRET_KEY
+                - name: S3_ENDPOINT
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kino-env
+                      key: S3_ENDPOINT
+                - name: PLAKAT_SCRAPER_STATE_BUCKET
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kino-env
+                      key: PLAKAT_SCRAPER_STATE_BUCKET
+                - name: ALERTMANAGER_URL
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kino-env
+                      key: PLAKAT_SCRAPER_ALERTMANAGER_URL
+              resources:
+                requests:
+                  cpu: 25m
+                  memory: 64Mi
+                limits:
+                  cpu: 250m
+                  memory: 256Mi
