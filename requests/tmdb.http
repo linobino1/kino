@@ -1,0 +1,40 @@
+@api = https://api.themoviedb.org/3
+@media_url = https://image.tmdb.org
+// to load the API key in rest.nvim, add TMDB_API_KEY to `../.env` and run `Rest env` once before making requests
+@api_key = {{TMDB_API_KEY}}
+
+### movie
+GET {{api}}/movie/703?language=de&api_key={{api_key}}
+
+### search
+GET {{api}}/search/movie?api_key={{api_key}}
+
+### videos
+GET {{api}}/movie/987/videos?api_key={{api_key}}
+
+### configuration
+GET {{api}}/configuration?api_key={{api_key}}
+
+### movie images
+GET {{api}}/movie/289/images?include_image_language&api_key={{api_key}}
+
+### movie keywords
+GET {{api}}/movie/266/images?include_image_language&api_key={{api_key}}
+
+### movie release dates
+GET {{api}}/movie/266/release_dates?api_key={{api_key}}
+
+### credits
+GET {{api}}/movie/266/credits?language=de&api_key={{api_key}}
+
+### find by imdb_id
+GET {{api}}/find/tt0057345?external_source=imdb_id&api_key={{api_key}}
+
+### backdrop
+GET {{media_url}}/t/p/w500/65VvjEscRHZNCCg63GmRfGU66v9.jpg
+
+### poster
+GET {{media_url}}/t/p/w500/aQUDdxuWQvXMGzZw0VmvGYrPtk9.jpg?language=fr
+
+### genre
+GET {{api}}/genre/movie/list/18?api_key={{api_key}}

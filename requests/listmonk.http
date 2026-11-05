@@ -1,0 +1,60 @@
+@baseUrl = https://news.kinoimblauensalon.de/api
+// to load the API key in rest.nvim, add LISTMONK_API_KEY to `../.env` and run `Rest env` once before making requests
+@api_key = {{LISTMONK_API_KEY}}
+
+### get subscriber
+GET {{baseUrl}}/subscribers/845
+Authorization: token {{api_key}}
+query: 
+
+### update subscriber
+PUT {{baseUrl}}/subscribers/845
+Authorization: token {{api_key}}
+query: 
+Content-Type: application/json
+
+{
+        "id": 845,
+        "created_at": "2025-11-14T10:52:40.705469Z",
+        "updated_at": "2025-11-14T10:52:40.705469Z",
+        "uuid": "d0dc2567-403f-447a-be32-10886a99088f",
+        "email": "studierende@hfg-karlsruhe.de",
+        "name": "Studierende HfG",
+        "attribs": {},
+        "status": "blocklisted",
+        "lists": [
+            6,
+            11
+        ]
+    }
+
+### create campaign
+POST {{baseUrl}}/campaigns
+Authorization: token {{api_key_full}}
+query: 
+Content-Type: application/json
+
+{
+    "name": "Test",
+    "subject": "Test",
+    "send_at": "2027-11-14T10:52:40.705469Z",
+    "lists": [
+        12
+    ]
+}
+
+### update subscriber status
+PUT {{baseUrl}}/subscribers/lists
+Authorization: token {{api_key}}
+Content-Type: application/json
+
+{
+    "ids": [
+        839
+    ],
+    "target_list_ids": [
+        6
+    ],
+    "action": "unsubscribe",
+    "status": "unsubscribed"
+}
