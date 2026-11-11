@@ -3,7 +3,11 @@ const EMAIL_FROM = {
   address: 'noreply@kinoimblauensalon.de',
   name: 'noreply',
 }
-const EMAIL_TO = ['leo.hilsheimer@googlemail.com', 'pl@kinoimblauensalon.de']
+const EMAIL_TO = [
+  'leo.hilsheimer@googlemail.com',
+  'pl@kinoimblauensalon.de',
+  'presse@kinoimblauensalon.de',
+]
 
 function escapeHtml(value: string): string {
   return value
