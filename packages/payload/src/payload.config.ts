@@ -42,8 +42,6 @@ import { createTransport } from 'nodemailer'
 import { projectRoot } from '@app/util/projectRoot'
 import { env } from '@app/util/env/backend.server'
 import { translations } from '@app/i18n/translations/index'
-import { Sitemap } from './collections/Sitemap'
-import { generateSitemap } from './tasks/generateSitemap'
 import { pagePath } from '@app/util/routes'
 
 const configPromise: Promise<Config> = (async () => ({
@@ -114,7 +112,6 @@ const configPromise: Promise<Config> = (async () => ({
     // System
     Navigations,
     Users,
-    Sitemap,
   ],
   globals: [PressReleasesConfig, Site],
   editor: lexicalEditor({
@@ -192,14 +189,6 @@ const configPromise: Promise<Config> = (async () => ({
   },
   graphQL: {
     disable: true,
-  },
-  jobs: {
-    tasks: [
-      {
-        slug: 'generateSitemap',
-        handler: generateSitemap,
-      },
-    ],
   },
 }))()
 
