@@ -3,16 +3,19 @@ import { stringToLexicalJson } from '@app/util/lexical/stringToLexicalJson'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function up({ payload, session }: MigrateUpArgs): Promise<void> {
-  const movies = await payload.db.collections.movies.find({
-    _id: { $exists: true },
-  })
-  for await (const movie of movies) {
-    const synopsis = {
-      en: stringToLexicalJson(movie.synopsis?.en || ''),
-      de: stringToLexicalJson(movie.synopsis?.de || ''),
-    }
+  for await (const language of ['en', 'de']) {
+    const movies = await payload.db.collections.movies.find({
+      [`synopsis.${language}`]: { $type: 'string' },
+    })
 
-    await payload.db.collections.movies.updateOne({ _id: movie._id }, { $set: { synopsis } })
+    for await (const movie of movies) {
+      const lexicalSynopsis = stringToLexicalJson(movie.synopsis?.[language] || '')
+
+      await payload.db.collections.movies.updateOne(
+        { _id: movie._id },
+        { $set: { [`synopsis.${language}`]: lexicalSynopsis } },
+      )
+    }
   }
 }
 
