@@ -6,6 +6,7 @@
   },
   "exports": {
     "./config": "./src/payload.config.ts",
+    "./migrations": "./src/migrations/index.ts",
     "./util/getPayloadClient": "./src/util/getPayloadClient.ts",
     "./seed": "./src/seed/seed.ts",
     "./types": "./src/types.d.ts"

@@ -1,4 +1,5 @@
 import { configurePayload } from '@app/payload/config'
+import { migrations } from '@app/payload/migrations'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { tmdbAxiosClient } from '@app/themoviedb'
 import { siteTitle, timezone } from '@app/util/config'
@@ -11,6 +12,7 @@ const dirname = path.dirname(filename)
 export default configurePayload({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
+    prodMigrations: migrations,
     connectOptions: {
       maxPoolSize: 10,
       minPoolSize: 0,
