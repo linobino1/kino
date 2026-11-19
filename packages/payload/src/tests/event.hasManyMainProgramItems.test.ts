@@ -27,7 +27,7 @@ test('test implicit data of an event with many main program items', async () => 
     id: getDocId((doc.mainProgramFilmPrint as FilmPrint).movie),
   })
 
-  expect(doc.shortDescription).toBe(movie.synopsis)
+  expect(doc.shortDescription).toBe(lexicalToPlainText(movie.synopsis))
 
   // create another main program item
   await payload.update({

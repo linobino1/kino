@@ -5,6 +5,7 @@ import { locales } from '@app/i18n'
 import { getDocId } from '@app/util/payload/getDocId'
 import type { Event, FilmPrint, Movie } from '@app/types/payload'
 import { stringToLexicalJson } from '@app/util/lexical/stringToLexicalJson'
+import { lexicalToPlainText } from '@app/util/lexical/lexicalToPlainText'
 
 const date = new Date().toISOString().substr(0, 10)
 
@@ -25,7 +26,7 @@ const checkIfLocalizedDataMatches = async (doc: Event, payload: any) => {
     })
 
     expect(localizedDoc.title).toBe(localizedMovie.title)
-    expect(localizedDoc.shortDescription).toBe(localizedMovie.synopsis)
+    expect(localizedDoc.shortDescription).toBe(lexicalToPlainText(localizedMovie.synopsis))
   }
 }
 

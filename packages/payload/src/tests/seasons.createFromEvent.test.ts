@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest'
+import { expect, test } from 'vitest'
 import { getPayloadTestClient } from './getPayloadTestClient'
 import { createSeason } from '#payload/util/createSeason'
 import { createMedia } from './createDoc/media'
@@ -13,19 +13,18 @@ test('create/update events and check their season', async () => {
   const season = await createSeason({ date, header: media.id })
 
   let event = await createScreeningEvent({ payload })
-  describe('create an event in a season that already exists', async () => {
-    event = await payload.update({
-      collection: 'events',
-      id: event.id,
-      data: {
-        date: date.toISOString(),
-      },
-      depth: 0,
-    })
-
-    expect(event.season).toBeDefined()
-    expect(event.season).toBe(season.id)
+  // create an event in a season that already exists
+  event = await payload.update({
+    collection: 'events',
+    id: event.id,
+    data: {
+      date: date.toISOString(),
+    },
+    depth: 0,
   })
+
+  expect(event.season).toBeDefined()
+  expect(event.season).toBe(season.id)
 
   // create an event in a season that does not exist
   let event2 = await payload.create({

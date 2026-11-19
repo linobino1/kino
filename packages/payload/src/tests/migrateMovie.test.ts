@@ -3,6 +3,7 @@ import { migrateMovie } from '@app/themoviedb/migrateMovie'
 import { getPayloadTestClient } from './getPayloadTestClient'
 import type { Company, Genre } from '@app/types/payload'
 import { type Person } from '@app/types/payload'
+import { lexicalToPlainText } from '@app/util/lexical/lexicalToPlainText'
 
 test('migrate Casablanca from TMDB', async () => {
   const payload = await getPayloadTestClient()
@@ -78,8 +79,8 @@ test('migrate Casablanca from TMDB', async () => {
   expect(en.year).toBe(1943)
   expect(en.duration).toBe(102)
 
-  expect(en.synopsis).toContain('Morocco')
-  expect(de.synopsis).toContain('Weltkrieg')
+  expect(lexicalToPlainText(en.synopsis)).toContain('Morocco')
+  expect(lexicalToPlainText(de.synopsis)).toContain('Weltkrieg')
 
   expect(en.tags?.length).toBeGreaterThan(5)
   expect(en.tags).toContain('world war ii')
