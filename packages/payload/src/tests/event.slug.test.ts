@@ -3,6 +3,8 @@ import { getPayloadTestClient } from './getPayloadTestClient'
 import { createScreeningEvent } from './createDoc/screeningEvent'
 import { lexicalContent } from './util/lexicalContent'
 import { createMedia } from './createDoc/media'
+import { timezone } from '@app/util/config'
+import { createSeason } from './createDoc/season'
 
 const date = new Date().toISOString().substr(0, 10)
 
@@ -94,3 +96,40 @@ test('event slugs', async () => {
   expect(doc.title).toBe('My Event 2')
   expect(doc.slug).toBe('my-slug')
 }, 10000)
+
+test('new non-screening events copy their title to locales without a translation', async () => {
+  const payload = await getPayloadTestClient()
+  await payload.delete({ collection: 'events', where: { id: { exists: true } } })
+
+  const media = await createMedia({ payload })
+  const season = await createSeason({ payload })
+  const title = 'Jazz in Blue Salon'
+  const doc = await payload.create({
+    collection: 'events',
+    locale: 'en',
+    draft: false,
+    data: {
+      _status: 'published',
+      date: '2025-12-01T19:00:00.000Z',
+      date_tz: timezone,
+      title,
+      header: media.id,
+      season: season.id,
+      programItems: [
+        {
+          type: 'other',
+          isMainProgram: true,
+          poster: media.id,
+        },
+      ],
+    },
+  })
+
+  const germanDoc = await payload.findByID({
+    collection: 'events',
+    id: doc.id,
+    locale: 'de',
+  })
+
+  expect(germanDoc.title).toBe(title)
+})

@@ -27,11 +27,20 @@ export const translateImplicitData: CollectionAfterChangeHook<Event> = async ({ 
       req,
     })
 
+    // Non-screening titles are user-entered rather than generated. On first
+    // creation, a locale may not have its translated title yet (e.g. during
+    // seeding), but the required localized title must still be present while
+    // applying implicit data. Later translation updates can replace this fallback.
+    const translatedData = {
+      ...implicitData,
+      title: implicitData.title ?? localizedDoc.title ?? doc.title,
+    }
+
     await req.payload.update({
       collection: 'events',
       id: doc.id,
       locale,
-      data: implicitData,
+      data: translatedData,
       context: {
         triggerHooks: false,
       },
