@@ -4,9 +4,9 @@ import { Date } from '~/components/Date'
 import { Image } from '~/components/Image'
 import { RichText } from '~/components/RichText'
 import { useTranslation } from 'react-i18next'
-import type { LinkableCollection } from '@app/payload/types'
 import { Link } from '~/components/localized-link'
 import { cn } from '@app/util/cn'
+import { linkableDocumentHref, postHref } from '~/util/routeHrefs'
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   post: Post
@@ -15,14 +15,15 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export const PostPreview: React.FC<Props> = ({ className, ...props }) => {
   const { t } = useTranslation()
   const { post } = props
-  const imageLink =
-    post.link?.type === 'internal'
-      ? (post.link.doc?.value as LinkableCollection)?.url
-      : post.link?.type === 'external'
-        ? post.link?.url
-        : post.hasDetailPage
-          ? post.url
-          : undefined
+  const internalDoc = post.link?.doc
+  const imageLink = (() => {
+    if (post.link?.type === 'internal') {
+      if (!internalDoc || typeof internalDoc.value === 'string') return undefined
+      return linkableDocumentHref(internalDoc.relationTo, internalDoc.value.slug)
+    }
+    if (post.link?.type === 'external') return post.link.url ?? undefined
+    return post.hasDetailPage ? postHref(post.slug) : undefined
+  })()
 
   const image = (
     <Image
@@ -56,7 +57,7 @@ export const PostPreview: React.FC<Props> = ({ className, ...props }) => {
         <RichText content={post.content} className="prose prose-white" />
         {post.hasDetailPage && (
           <Link
-            to={post.url ?? ''}
+            to={postHref(post.slug)}
             prefetch={'intent'}
             className="mt-4 inline-block text-sm underline"
           >

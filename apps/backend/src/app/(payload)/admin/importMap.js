@@ -7,7 +7,6 @@ import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { SlugField as SlugField_2b8867833a34864a02ddf429b0728a40 } from '@payloadcms/next/client'
 import { MigrateMovieButton as MigrateMovieButton_a35a6519bac065a587079eac0f5a72d8 } from '../../../components/MigrateMovieButton'
-import { UrlField as UrlField_7b4e51c9f1241f2d23a5d566952ac202 } from '../../../components/UrlField'
 import { Cell as Cell_72042b244659938c5d2b0bd271aeeaa9 } from '../../../components/date/Cell.tsx'
 import { HorizontalRuleFeatureClient as HorizontalRuleFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { UploadFeatureClient as UploadFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
@@ -53,7 +52,6 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/next/client#SlugField": SlugField_2b8867833a34864a02ddf429b0728a40,
   "/components/MigrateMovieButton#MigrateMovieButton": MigrateMovieButton_a35a6519bac065a587079eac0f5a72d8,
-  "/components/UrlField#UrlField": UrlField_7b4e51c9f1241f2d23a5d566952ac202,
   "/components/date/Cell.tsx#Cell": Cell_72042b244659938c5d2b0bd271aeeaa9,
   "@payloadcms/richtext-lexical/client#HorizontalRuleFeatureClient": HorizontalRuleFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#UploadFeatureClient": UploadFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,

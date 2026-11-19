@@ -5,6 +5,7 @@ import { SerializeLexicalToEmail } from '../../lexical/SerializeLexicalToEmail'
 import { env } from '@app/util/env/backend.server'
 import { lexicalToPlainText } from '@app/util/lexical/lexicalToPlainText'
 import { getMovieSpecsString } from '@app/util/data/getMovieSpecsString'
+import { eventPath } from '@app/util/routes'
 import Section from '../Section'
 
 type EventProps = {
@@ -16,7 +17,7 @@ type EventProps = {
 }
 
 const UnfoldProgramItems: React.FC<EventProps> = ({ event, color, additionalText, locale, t }) => {
-  const url = `${env.FRONTEND_URL}${event.url}`
+  const url = `${env.FRONTEND_URL}${eventPath(event.slug)}`
 
   return (
     <>

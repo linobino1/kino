@@ -20,6 +20,7 @@ import * as migration_20250727_095518_postHasDetailPageField from './20250727_09
 import * as migration_20260326_082334_synopsis_richtext from './20260326_082334_synopsis_richtext';
 import * as migration_20260326_145912_movie_versions_synopsis_richtext from './20260326_145912_movie_versions_synopsis_richtext';
 import * as migration_20260909_120000_event_admin_title from './20260909_120000_event_admin_title';
+import * as migration_20261119_182645_remove_url_field from './20261119_182645_remove_url_field';
 
 export const migrations = [
   {
@@ -125,11 +126,16 @@ export const migrations = [
   {
     up: migration_20260326_145912_movie_versions_synopsis_richtext.up,
     down: migration_20260326_145912_movie_versions_synopsis_richtext.down,
-    name: '20260326_145912_movie_versions_synopsis_richtext'
+    name: '20260326_145912_movie_versions_synopsis_richtext',
   },
   {
     up: migration_20260909_120000_event_admin_title.up,
     down: migration_20260909_120000_event_admin_title.down,
     name: '20260909_120000_event_admin_title',
+  },
+  {
+    up: migration_20261119_182645_remove_url_field.up,
+    down: migration_20261119_182645_remove_url_field.down,
+    name: '20261119_182645_remove_url_field'
   },
 ];

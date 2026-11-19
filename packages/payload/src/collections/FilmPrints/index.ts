@@ -32,11 +32,6 @@ export const FilmPrints: CollectionConfig = {
     },
   },
   timestamps: true,
-  custom: {
-    addUrlField: {
-      hook: (slug?: string) => `/filmprints/${slug || ''}`,
-    },
-  },
   hooks: {
     beforeValidate: [
       // set title and slug from movie.title and movie.format

@@ -8,7 +8,6 @@ const dataDE = [
     slug: 'winter-term-24',
     createdAt: '2024-07-19T10:04:08.830Z',
     updatedAt: '2024-10-26T11:47:06.426Z',
-    url: '/seasons/winter-term-24',
   },
   {
     id: '65e1dfa19c20b8eeace3d251',
@@ -17,7 +16,6 @@ const dataDE = [
     slug: 'sommersemester-2024',
     createdAt: '2024-03-01T14:01:05.991Z',
     updatedAt: '2024-10-26T11:47:06.428Z',
-    url: '/seasons/sommersemester-2024',
   },
   {
     id: '646f41da27c71e1568556960',
@@ -26,7 +24,6 @@ const dataDE = [
     createdAt: '2023-05-25T11:09:14.038Z',
     updatedAt: '2024-10-26T11:47:06.436Z',
     header: '658c23eae16f126e52791e76',
-    url: '/seasons/ws-23',
   },
   {
     id: '646c98cf217a68069c50f50a',
@@ -35,7 +32,6 @@ const dataDE = [
     createdAt: '2023-05-23T10:43:27.687Z',
     updatedAt: '2024-10-26T11:47:06.453Z',
     header: '64ee854665a5ee9ab4232604',
-    url: '/seasons/ss-23',
   },
   {
     id: '646cc6e350a4e646d8ab0e83',
@@ -44,7 +40,6 @@ const dataDE = [
     createdAt: '2023-05-23T14:00:03.494Z',
     updatedAt: '2024-10-26T11:47:06.430Z',
     header: '64fe33bf337dcf25791ac398',
-    url: '/seasons/ws-22',
   },
   {
     id: '646f409027c71e15685568b1',
@@ -53,7 +48,6 @@ const dataDE = [
     createdAt: '2023-05-25T11:03:44.432Z',
     updatedAt: '2024-10-26T11:47:06.437Z',
     header: '64f06d944e5e94abd1f1242c',
-    url: '/seasons/ss-22',
   },
   {
     id: '646f419327c71e1568556934',
@@ -62,7 +56,6 @@ const dataDE = [
     createdAt: '2023-05-25T11:08:03.196Z',
     updatedAt: '2024-10-26T11:47:06.451Z',
     header: '64ef830a86251f521a63f763',
-    url: '/seasons/ws-21',
   },
   {
     id: '646f407227c71e15685568a1',
@@ -71,7 +64,6 @@ const dataDE = [
     createdAt: '2023-05-25T11:03:14.893Z',
     updatedAt: '2024-10-26T11:47:06.433Z',
     header: '64ff51709209194638a8440f',
-    url: '/seasons/ss-21',
   },
   {
     id: '646f412527c71e15685568fd',
@@ -80,7 +72,6 @@ const dataDE = [
     createdAt: '2023-05-25T11:06:13.906Z',
     updatedAt: '2024-10-26T11:47:06.456Z',
     header: '64f0a72f2ebe37a8a7e9d35a',
-    url: '/seasons/ws-20',
   },
   {
     id: '646f3fbb27c71e15685567da',
@@ -89,7 +80,6 @@ const dataDE = [
     createdAt: '2023-05-25T11:00:11.203Z',
     updatedAt: '2024-10-26T11:47:06.459Z',
     header: '64f0a7532ebe37a8a7e9d3a9',
-    url: '/seasons/ss-20',
   },
   {
     id: '646f410d27c71e15685568ed',
@@ -98,7 +88,6 @@ const dataDE = [
     createdAt: '2023-05-25T11:05:49.260Z',
     updatedAt: '2024-11-07T19:53:13.718Z',
     header: '64f0a57aef47cfbd7f1e61b9',
-    url: '/seasons/ws-19',
   },
   {
     id: '646f3f9027c71e15685567c1',
@@ -107,7 +96,6 @@ const dataDE = [
     createdAt: '2023-05-25T10:59:28.433Z',
     updatedAt: '2024-11-07T20:36:47.674Z',
     header: '64f0a54def47cfbd7f1e618d',
-    url: '/seasons/ss-19',
   },
   {
     id: '646f40ec27c71e15685568dd',
@@ -116,7 +104,6 @@ const dataDE = [
     createdAt: '2023-05-25T11:05:16.520Z',
     updatedAt: '2024-11-07T20:36:47.678Z',
     header: '64f0a57eef47cfbd7f1e62a1',
-    url: '/seasons/ws-18',
   },
   {
     id: '646f3f6b27c71e15685567b1',
@@ -125,7 +112,6 @@ const dataDE = [
     createdAt: '2023-05-25T10:58:51.048Z',
     updatedAt: '2024-11-07T20:36:47.682Z',
     header: '64f0a57bef47cfbd7f1e61db',
-    url: '/seasons/ss-18',
   },
   {
     id: '646f40ce27c71e15685568cd',
@@ -134,7 +120,6 @@ const dataDE = [
     createdAt: '2023-05-25T11:04:46.679Z',
     updatedAt: '2024-11-07T20:36:47.684Z',
     header: '6506f2d10553ade548846f73',
-    url: '/seasons/ws-17',
   },
   {
     id: '646f3f4527c71e1568556790',
@@ -143,7 +128,6 @@ const dataDE = [
     createdAt: '2023-05-25T10:58:13.775Z',
     updatedAt: '2024-11-07T20:36:47.690Z',
     header: '65063a311c28249e248d3c9c',
-    url: '/seasons/ss-17',
   },
   {
     id: '6501d6aac56f23e334f102fc',
@@ -152,7 +136,6 @@ const dataDE = [
     createdAt: '2023-09-13T15:35:06.075Z',
     updatedAt: '2024-11-07T20:36:47.703Z',
     header: '64f0a45d0726a7b1a59f013a',
-    url: '/seasons/ws-16',
   },
   {
     id: '6501d590c56f23e334f10121',
@@ -161,7 +144,6 @@ const dataDE = [
     createdAt: '2023-09-13T15:30:24.994Z',
     updatedAt: '2024-11-07T20:36:47.706Z',
     header: '64f0a54eef47cfbd7f1e6193',
-    url: '/seasons/ss-16',
   },
 ]
 const dataEN = [
@@ -172,7 +154,6 @@ const dataEN = [
     slug: 'winter-term-24',
     createdAt: '2024-07-19T10:04:08.830Z',
     updatedAt: '2024-10-26T11:47:06.426Z',
-    url: '/seasons/winter-term-24',
   },
   {
     id: '65e1dfa19c20b8eeace3d251',
@@ -181,7 +162,6 @@ const dataEN = [
     slug: 'sommersemester-2024',
     createdAt: '2024-03-01T14:01:05.991Z',
     updatedAt: '2024-10-26T11:47:06.428Z',
-    url: '/seasons/sommersemester-2024',
   },
   {
     id: '646f41da27c71e1568556960',
@@ -190,7 +170,6 @@ const dataEN = [
     createdAt: '2023-05-25T11:09:14.038Z',
     updatedAt: '2024-10-26T11:47:06.436Z',
     header: '658c23eae16f126e52791e76',
-    url: '/seasons/ws-23',
   },
   {
     id: '646c98cf217a68069c50f50a',
@@ -199,7 +178,6 @@ const dataEN = [
     createdAt: '2023-05-23T10:43:27.687Z',
     updatedAt: '2024-10-26T11:47:06.453Z',
     header: '64ee854665a5ee9ab4232604',
-    url: '/seasons/ss-23',
   },
   {
     id: '646cc6e350a4e646d8ab0e83',
@@ -208,7 +186,6 @@ const dataEN = [
     createdAt: '2023-05-23T14:00:03.494Z',
     updatedAt: '2024-10-26T11:47:06.430Z',
     header: '64fe33bf337dcf25791ac398',
-    url: '/seasons/ws-22',
   },
   {
     id: '646f409027c71e15685568b1',
@@ -217,7 +194,6 @@ const dataEN = [
     createdAt: '2023-05-25T11:03:44.432Z',
     updatedAt: '2024-10-26T11:47:06.437Z',
     header: '64f06d944e5e94abd1f1242c',
-    url: '/seasons/ss-22',
   },
   {
     id: '646f419327c71e1568556934',
@@ -226,7 +202,6 @@ const dataEN = [
     createdAt: '2023-05-25T11:08:03.196Z',
     updatedAt: '2024-10-26T11:47:06.451Z',
     header: '64ef830a86251f521a63f763',
-    url: '/seasons/ws-21',
   },
   {
     id: '646f407227c71e15685568a1',
@@ -235,7 +210,6 @@ const dataEN = [
     createdAt: '2023-05-25T11:03:14.893Z',
     updatedAt: '2024-10-26T11:47:06.433Z',
     header: '64ff51709209194638a8440f',
-    url: '/seasons/ss-21',
   },
   {
     id: '646f412527c71e15685568fd',
@@ -244,7 +218,6 @@ const dataEN = [
     createdAt: '2023-05-25T11:06:13.906Z',
     updatedAt: '2024-10-26T11:47:06.456Z',
     header: '64f0a72f2ebe37a8a7e9d35a',
-    url: '/seasons/ws-20',
   },
   {
     id: '646f3fbb27c71e15685567da',
@@ -253,7 +226,6 @@ const dataEN = [
     createdAt: '2023-05-25T11:00:11.203Z',
     updatedAt: '2024-10-26T11:47:06.459Z',
     header: '64f0a7532ebe37a8a7e9d3a9',
-    url: '/seasons/ss-20',
   },
   {
     id: '646f410d27c71e15685568ed',
@@ -262,7 +234,6 @@ const dataEN = [
     createdAt: '2023-05-25T11:05:49.260Z',
     updatedAt: '2024-11-07T19:53:13.718Z',
     header: '64f0a57aef47cfbd7f1e61b9',
-    url: '/seasons/ws-19',
   },
   {
     id: '646f3f9027c71e15685567c1',
@@ -271,7 +242,6 @@ const dataEN = [
     createdAt: '2023-05-25T10:59:28.433Z',
     updatedAt: '2024-11-07T20:36:47.674Z',
     header: '64f0a54def47cfbd7f1e618d',
-    url: '/seasons/ss-19',
   },
   {
     id: '646f40ec27c71e15685568dd',
@@ -280,7 +250,6 @@ const dataEN = [
     createdAt: '2023-05-25T11:05:16.520Z',
     updatedAt: '2024-11-07T20:36:47.678Z',
     header: '64f0a57eef47cfbd7f1e62a1',
-    url: '/seasons/ws-18',
   },
   {
     id: '646f3f6b27c71e15685567b1',
@@ -289,7 +258,6 @@ const dataEN = [
     createdAt: '2023-05-25T10:58:51.048Z',
     updatedAt: '2024-11-07T20:36:47.682Z',
     header: '64f0a57bef47cfbd7f1e61db',
-    url: '/seasons/ss-18',
   },
   {
     id: '646f40ce27c71e15685568cd',
@@ -298,7 +266,6 @@ const dataEN = [
     createdAt: '2023-05-25T11:04:46.679Z',
     updatedAt: '2024-11-07T20:36:47.684Z',
     header: '6506f2d10553ade548846f73',
-    url: '/seasons/ws-17',
   },
   {
     id: '646f3f4527c71e1568556790',
@@ -307,7 +274,6 @@ const dataEN = [
     createdAt: '2023-05-25T10:58:13.775Z',
     updatedAt: '2024-11-07T20:36:47.690Z',
     header: '65063a311c28249e248d3c9c',
-    url: '/seasons/ss-17',
   },
   {
     id: '6501d6aac56f23e334f102fc',
@@ -316,7 +282,6 @@ const dataEN = [
     createdAt: '2023-09-13T15:35:06.075Z',
     updatedAt: '2024-11-07T20:36:47.703Z',
     header: '64f0a45d0726a7b1a59f013a',
-    url: '/seasons/ws-16',
   },
   {
     id: '6501d590c56f23e334f10121',
@@ -325,7 +290,6 @@ const dataEN = [
     createdAt: '2023-09-13T15:30:24.994Z',
     updatedAt: '2024-11-07T20:36:47.706Z',
     header: '64f0a54eef47cfbd7f1e6193',
-    url: '/seasons/ss-16',
   },
 ]
 

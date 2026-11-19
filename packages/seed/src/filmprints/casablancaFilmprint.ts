@@ -14,5 +14,4 @@ export const casablancaFilmprint: DocGenerator<'filmPrints'> = ({ context }) => 
   languageVersion: context.languageVersions.get('engl. OV')?.id as string,
   numActs: 3,
   soundFormat: context.soundFormats.get('Mono')?.id as string,
-  url: '',
 })

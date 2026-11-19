@@ -12,7 +12,7 @@ export const postsListQuery = {
     },
     content: true,
     hasDetailPage: true,
-    url: true,
+    slug: true,
   },
   where: {
     _status: {

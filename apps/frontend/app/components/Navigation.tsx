@@ -4,6 +4,7 @@ import { Image } from '~/components/Image'
 import { NavLink } from '~/components/localized-link/NavLink'
 import { cn } from '@app/util/cn'
 import type { RequiredDataFromCollection } from 'payload'
+import { pageHref } from '~/util/routeHrefs'
 
 type Props = {
   navigation?: RequiredDataFromCollection<NavigationType>
@@ -32,8 +33,8 @@ export const Navigation: React.FC<Props> = ({
           return null
         }
 
-        const href =
-          item.relPath || ((item.page as Page) ? `/${(item.page as Page).slug}` : item.url)
+        const page = item.page as Page | undefined
+        const href = page ? pageHref(page.slug) : item.url
 
         // image or plain text
         const inner: React.ReactNode = item.icon ? (

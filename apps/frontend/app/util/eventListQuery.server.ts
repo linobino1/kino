@@ -20,7 +20,7 @@ export const eventListQuery = {
     header: true,
     comment: true,
     series: true,
-    url: true,
+    slug: true,
     isScreeningEvent: true,
     mainProgramFilmPrint: true,
     shortDescription: true,

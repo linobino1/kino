@@ -10,6 +10,7 @@ import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { Gutter } from '~/components/Gutter'
 import { Image } from '~/components/Image'
+import { seasonHref } from '~/util/routeHrefs'
 import { Pagination } from '~/components/Pagination'
 import { measureServerTiming } from '~/util/serverTiming.server'
 
@@ -77,7 +78,7 @@ export default function EventsPage({ loaderData: { page, seasons } }: Route.Comp
           <ul className="flex w-full flex-col gap-2 sm:grid sm:grid-cols-[repeat(auto-fill,19rem)] sm:items-center sm:justify-center">
             {seasons.docs.map((season) => (
               <li key={season.id} className="relative aspect-[34/22]">
-                <a href={`/seasons/${season.slug}`}>
+                <a href={seasonHref(season.slug)}>
                   <Image
                     image={season.header as Media}
                     alt={season.name}

@@ -9,6 +9,7 @@ import { getMovieSpecsString } from '@app/util/data/getMovieSpecsString'
 import Hr from '../Hr'
 import Section from '../Section'
 import { getEventSubtitle } from '@app/util/data/getEventSubtitle'
+import { eventPath } from '@app/util/routes'
 
 type EventProps = {
   event: EventType
@@ -26,7 +27,7 @@ const Compact: React.FC<EventProps> = ({ event, color, additionalText, locale, t
     separator: ', ',
   })
 
-  const url = `${env.FRONTEND_URL}${event.url}`
+  const url = `${env.FRONTEND_URL}${eventPath(event.slug)}`
 
   const supportingProgramItems = event.programItems?.filter(
     (x) => !x.isMainProgram && x.type === 'screening',

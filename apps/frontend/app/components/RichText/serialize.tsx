@@ -17,6 +17,7 @@ import {
   IS_SUPERSCRIPT,
 } from '@app/util/lexical/NodeFormat'
 import { localizeTo } from '~/util/i18n/localizeTo'
+import { linkableDocumentHref } from '~/util/routeHrefs'
 
 type Props = {
   nodes: NodeTypes[]
@@ -180,12 +181,23 @@ export function serializeLexical(props: Props): JSX.Element {
             case 'autolink':
             case 'link': {
               const { linkType, newTab, doc, url } = node.fields
+              const internalDoc = doc as
+                | {
+                    relationTo?: Parameters<typeof linkableDocumentHref>[0]
+                    value?: { slug?: string | null } | string
+                  }
+                | null
+                | undefined
+              const internalPath =
+                internalDoc?.relationTo && typeof internalDoc.value === 'object'
+                  ? linkableDocumentHref(internalDoc.relationTo, internalDoc.value?.slug)
+                  : ''
 
               return (
                 <Link
                   to={
                     linkType === 'internal'
-                      ? localizeTo((doc?.value as any).url, locale)
+                      ? localizeTo(internalPath, locale)
                       : (url ?? '')
                   }
                   key={index}

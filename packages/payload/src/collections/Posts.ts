@@ -3,11 +3,12 @@ import { Content } from '#payload/blocks/Content'
 import { Image } from '#payload/blocks/Image'
 import { Gallery } from '#payload/blocks/Gallery'
 import { Video } from '#payload/blocks/Video'
-import { LinkableCollectionSlugs } from '#payload/plugins/addUrlField'
+import { LinkableCollectionSlugs } from '#payload/plugins/linkableCollections'
 import { slugField } from 'payload'
 import { env } from '@app/util/env/backend.server'
 import { postSlugHook } from './Posts/slugHook'
 import { formatSlug } from '@app/util/formatSlug'
+import { postPath } from '@app/util/routes'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
@@ -15,14 +16,10 @@ export const Posts: CollectionConfig<'posts'> = {
     group: 'Blog',
     defaultColumns: ['date', 'title'],
     useAsTitle: 'title',
-    preview: (data) => `${env.FRONTEND_URL}/news/${data.slug}?preview=true`,
+    preview: (data) =>
+      `${env.FRONTEND_URL}${postPath(typeof data.slug === 'string' ? data.slug : undefined)}?preview=true`,
   },
   defaultSort: '-date',
-  custom: {
-    addUrlField: {
-      hook: (slug?: string) => `/news/${slug || ''}`,
-    },
-  },
   versions: {
     drafts: true,
   },

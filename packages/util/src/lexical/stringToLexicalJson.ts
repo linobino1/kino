@@ -4,7 +4,11 @@ import type { SerializedLexicalEditorState } from './types'
  * Generates a Lexical JSON structure from a plain text string. Line breaks are represented as "linebreak" nodes in the resulting JSON.
  **/
 export const stringToLexicalJson = (text: string): SerializedLexicalEditorState => {
-  const lines = text.split(/\r\n|\n|\r/)
+  if (typeof text !== 'string') {
+    console.error(text)
+    throw new Error(`stringToLexicalJson only takes strings, ${typeof text} given`)
+  }
+  const lines = (text ?? '').split(/\r\n|\n|\r/)
 
   return {
     root: {

@@ -5,6 +5,7 @@ import { env } from '@app/util/env/backend.server'
 import { getMovieSpecsString } from '@app/util/data/getMovieSpecsString'
 import Section from './Section'
 import { lexicalToPlainText } from '@app/util/lexical/lexicalToPlainText'
+import { filmPrintPath } from '@app/util/routes'
 
 type MovieProps = {
   filmPrint: FilmPrintType
@@ -27,7 +28,7 @@ const FilmPrint: React.FC<MovieProps> = ({ filmPrint, color, additionalText, loc
     separator: ', ',
   })
 
-  const url = `${env.FRONTEND_URL}${filmPrint.url}`
+  const url = `${env.FRONTEND_URL}${filmPrintPath(filmPrint.slug)}`
 
   return (
     <Section

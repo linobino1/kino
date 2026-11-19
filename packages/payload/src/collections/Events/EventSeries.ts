@@ -17,11 +17,6 @@ export const EventSeries: CollectionConfig<'eventSeries'> = {
   access: {
     read: () => true,
   },
-  custom: {
-    addUrlField: {
-      hook: (slug?: string) => `/event-series/${slug || ''}`,
-    },
-  },
   fields: [
     {
       name: 'name',

@@ -8,6 +8,7 @@ import { cn } from '@app/util/cn'
 import { Link } from './localized-link'
 import { getEventSubtitle } from '@app/util/data/getEventSubtitle'
 import { ICSDownloadButton } from './ICSDownloadButton'
+import { eventHref, eventSeriesHref } from '~/util/routeHrefs'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   event: Event
@@ -37,7 +38,7 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
         />
         {isPast && <DateComponent date={event.date as string} format="yyyy" />}
       </div>
-      <Link to={event.url ?? ''} prefetch="intent" className="contents">
+      <Link to={eventHref(event.slug)} prefetch="intent" className="contents">
         <Image
           image={event.header as Media}
           srcSet={[
@@ -55,7 +56,7 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
           {((event.series ?? []) as EventSery[]).map(({ id, name, slug }) => {
             return (
               String(activeEventSery?.id) !== String(id) && (
-                <Link key={id} to={`/event-series/${slug}`} prefetch="intent" className="contents">
+                <Link key={id} to={eventSeriesHref(slug)} prefetch="intent" className="contents">
                   <Tag className="inline">{name}</Tag>
                 </Link>
               )
@@ -77,7 +78,7 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
               />
             )}
           </div>
-          <Link to={event.url ?? ''} prefetch="intent" className="space-y-1">
+          <Link to={eventHref(event.slug)} prefetch="intent" className="space-y-1">
             <h3 className="leading-tight font-semibold uppercase"> {event.title}</h3>
             <div className="text-sm text-gray-500">{getEventSubtitle({ event, t })}</div>
           </Link>
@@ -85,7 +86,7 @@ export const EventCard: React.FC<Props> = ({ event, activeEventSery, className, 
             {event.comment}
           </div>
           <Link
-            to={event.url ?? ''}
+            to={eventHref(event.slug)}
             prefetch="intent"
             className="flex flex-1 items-end text-sm text-gray-400 uppercase transition-colors hover:text-black"
           >

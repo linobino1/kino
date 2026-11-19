@@ -4,7 +4,7 @@ import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { de } from 'payload/i18n/de'
-import { addUrlField } from './plugins/addUrlField'
+import { linkableCollections } from './plugins/linkableCollections'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Movies } from './collections/Movies'
@@ -44,6 +44,7 @@ import { env } from '@app/util/env/backend.server'
 import { translations } from '@app/i18n/translations/index'
 import { Sitemap } from './collections/Sitemap'
 import { generateSitemap } from './tasks/generateSitemap'
+import { pagePath } from '@app/util/routes'
 
 const configPromise: Promise<Config> = (async () => ({
   admin: {
@@ -136,7 +137,7 @@ const configPromise: Promise<Config> = (async () => ({
   }),
   telemetry: false,
   plugins: [
-    addUrlField,
+    linkableCollections,
     s3Storage({
       enabled: env.S3_ENABLED === 'true' && env.NODE_ENV !== 'test',
       config: {
@@ -161,7 +162,7 @@ const configPromise: Promise<Config> = (async () => ({
       collections: ['pages'],
       generateImage: ({ doc }) => doc.hero?.image,
       generateTitle: ({ doc }) => doc.hero?.headline,
-      generateURL: (doc: any) => doc.url,
+      generateURL: (doc: any) => pagePath(doc.slug),
       uploadsCollection: 'media',
     }),
     seoPlugin({

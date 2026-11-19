@@ -25,6 +25,7 @@ import { Image } from '~/components/Image'
 import { ICSDownloadButton } from '~/components/ICSDownloadButton'
 import { formatDate } from '@app/util/formatDate'
 import { measureServerTiming } from '~/util/serverTiming.server'
+import { eventSeriesHref, seasonHref } from '~/util/routeHrefs'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
@@ -68,7 +69,6 @@ export const loader = async ({
         isScreeningEvent: true,
         mainProgramFilmPrint: true,
         shortDescription: true,
-        url: true,
       },
       where: {
         slug: {
@@ -82,12 +82,11 @@ export const loader = async ({
         },
         seasons: {
           name: true,
-          url: true,
+          slug: true,
         },
         eventSeries: {
           name: true,
           slug: true,
-          url: true,
         },
         filmPrints: {
           movie: true,
@@ -95,7 +94,7 @@ export const loader = async ({
           languageVersion: true,
           isRented: true,
           rental: true,
-          url: true,
+          slug: true,
         },
         movies: {
           title: true,
@@ -136,13 +135,13 @@ export const loader = async ({
           focalY: true,
         },
         pages: {
-          url: true,
+          slug: true,
         },
         posts: {
-          url: true,
+          slug: true,
         },
         events: {
-          url: true,
+          slug: true,
         },
       },
       limit: 1,
@@ -206,14 +205,14 @@ export default function EventPage({ loaderData: { event } }: Route.ComponentProp
           </div>
           <br />
           <div className="text-lg">{(event.location as Location).name}</div>
-          <Link to={(event.season as Season).url ?? ''} prefetch="intent">
+          <Link to={seasonHref((event.season as Season).slug)} prefetch="intent">
             {(event.season as Season).name}
           </Link>
           <div className="mt-4 text-2xl font-semibold uppercase sm:text-4xl">{event.title}</div>
           {event.series?.length ? (
             <div className="my-1 flex gap-2">
               {((event.series ?? []) as EventSery[]).map(({ slug, name }) => (
-                <Link key={slug ?? name} className="contents" to={`/event-series/${slug}`}>
+                <Link key={slug ?? name} className="contents" to={eventSeriesHref(slug)}>
                   <Tag>{name}</Tag>
                 </Link>
               ))}

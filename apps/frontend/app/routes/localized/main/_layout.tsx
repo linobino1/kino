@@ -30,7 +30,6 @@ export const loader = async ({ request, params: { lang: locale }, context }: Rou
             },
             populate: {
               pages: {
-                url: true,
                 slug: true,
               },
             },

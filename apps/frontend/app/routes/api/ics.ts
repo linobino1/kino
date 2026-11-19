@@ -6,6 +6,7 @@ import { siteTitle } from '@app/util/config'
 import { env } from '@app/util/env/backend.server'
 import * as ics from 'ics'
 import { formatSlug } from '@app/util/formatSlug'
+import { eventPath } from '@app/util/routes'
 
 export const action = async ({ request }: Route.ActionArgs) => {
   const formData = await request.formData()
@@ -42,7 +43,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
         title: true,
         date: true,
         location: true,
-        url: true,
+        slug: true,
       },
       depth: 1,
       sort: 'date',
@@ -57,7 +58,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
       start: new Date(event.date).getTime(),
       duration: { hours: 2 },
       location: (event.location as Location | undefined)?.name ?? undefined,
-      url: `${env.FRONTEND_URL}${event.url}`,
+      url: `${env.FRONTEND_URL}${eventPath(event.slug)}`,
     })),
   )
 

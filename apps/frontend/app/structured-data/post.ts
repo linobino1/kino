@@ -2,6 +2,7 @@ import type { Media, Post } from '@app/types/payload'
 import type { ItemList, BlogPosting } from 'schema-dts'
 import { itemList } from '.'
 import { lexicalToPlainText } from '@app/util/lexical/lexicalToPlainText'
+import { postPath } from '@app/util/routes'
 
 export const postSchema = (post: Post): BlogPosting => {
   return {
@@ -9,7 +10,7 @@ export const postSchema = (post: Post): BlogPosting => {
     headline: post.title,
     articleBody: lexicalToPlainText(post.content),
     datePublished: post.date,
-    url: post.url ?? '',
+    url: postPath(post.slug),
     image: (post.header as Media)?.url || undefined,
   }
 }

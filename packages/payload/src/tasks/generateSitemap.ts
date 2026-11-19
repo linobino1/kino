@@ -1,5 +1,14 @@
 import type { Payload, TaskHandler, Where } from 'payload'
 import { locales } from '@app/i18n'
+import {
+  eventPath,
+  eventSeriesPath,
+  filmPrintPath,
+  hfgArchiveFilmPrintPath,
+  pagePath,
+  postPath,
+  seasonPath,
+} from '@app/util/routes'
 
 const defaultPriority = 0.8
 
@@ -33,7 +42,6 @@ export const generateSitemap: TaskHandler<'generateSitemap'> = async ({ req }) =
   }
   const select = {
     slug: true,
-    url: true,
     updatedAt: true,
   } as const
   const eventsWhere: Where = {
@@ -130,51 +138,54 @@ export const generateSitemap: TaskHandler<'generateSitemap'> = async ({ req }) =
   )
 
   const routes = [
-    ...pages.docs.map(({ url, slug, updatedAt }) => ({
-      path: url === '/' ? '' : url, // trim trailing slash from root URL
-      lastmod:
-        slug === 'home'
-          ? landingPageLastUpdatedAt
-          : slug === 'news'
-            ? postsLastUpdatedAt
-            : slug === 'events'
-              ? eventsLastUpdatedAt
-              : slug === 'filmprints'
-                ? filmprintsLastUpdatedAt
-                : slug === 'seasons'
-                  ? seasonsLastUpdatedAt
-                  : slug === 'hfg-archive'
-                    ? hfgArchiveLastUpdatedAt
-                    : new Date(updatedAt),
-      priority: slug === 'home' ? 1.0 : defaultPriority,
-    })),
+    ...pages.docs.map(({ slug, updatedAt }) => {
+      const path = pagePath(slug)
+      return {
+        path: path === '/' ? '' : path, // trim trailing slash from root URL
+        lastmod:
+          slug === 'home'
+            ? landingPageLastUpdatedAt
+            : slug === 'news'
+              ? postsLastUpdatedAt
+              : slug === 'events'
+                ? eventsLastUpdatedAt
+                : slug === 'filmprints'
+                  ? filmprintsLastUpdatedAt
+                  : slug === 'seasons'
+                    ? seasonsLastUpdatedAt
+                    : slug === 'hfg-archive'
+                      ? hfgArchiveLastUpdatedAt
+                      : new Date(updatedAt),
+        priority: slug === 'home' ? 1.0 : defaultPriority,
+      }
+    }),
     ...posts.docs.map((post) => ({
-      path: post.url,
+      path: postPath(post.slug),
       lastmod: new Date(post.updatedAt),
       priority: defaultPriority,
     })),
     ...events.docs.map((event) => ({
-      path: event.url,
+      path: eventPath(event.slug),
       lastmod: new Date(event.updatedAt),
       priority: defaultPriority,
     })),
     ...filmprints.docs.map((filmprint) => ({
-      path: filmprint.url,
+      path: filmPrintPath(filmprint.slug),
       lastmod: new Date(filmprint.updatedAt),
       priority: 0.5,
     })),
     ...seasons.docs.map((season) => ({
-      path: season.url,
+      path: seasonPath(season.slug),
       lastmod: new Date(season.updatedAt),
       priority: defaultPriority,
     })),
     ...eventSeries.docs.map((series) => ({
-      path: series.url,
+      path: eventSeriesPath(series.slug),
       lastmod: new Date(series.updatedAt),
       priority: defaultPriority,
     })),
     ...hfgArchiveFilmprints.docs.map((filmprint) => ({
-      path: filmprint.url?.replace('/filmprints/', '/hfg-archive/'),
+      path: hfgArchiveFilmPrintPath(filmprint.slug),
       lastmod: new Date(filmprint.updatedAt),
       priority: defaultPriority,
     })),

@@ -20,11 +20,6 @@ export const Pages: CollectionConfig = {
       defaultLimit: 20,
     },
   },
-  custom: {
-    addUrlField: {
-      hook: (slug?: string) => (slug === 'home' ? '/' : `/${slug}`),
-    },
-  },
   fields: [
     {
       name: 'title',

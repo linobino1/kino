@@ -39,11 +39,6 @@ export const Events: CollectionConfig<'events'> = {
       }
     },
   },
-  custom: {
-    addUrlField: {
-      hook: (slug?: string) => `/events/${slug || ''}`,
-    },
-  },
   hooks: {
     beforeValidate: [generateImplicitData, setSeason],
     afterChange: [translateImplicitData],

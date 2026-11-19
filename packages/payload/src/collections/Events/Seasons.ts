@@ -17,11 +17,6 @@ export const Seasons: CollectionConfig = {
   access: {
     read: () => true,
   },
-  custom: {
-    addUrlField: {
-      hook: (slug?: string) => `/seasons/${slug || ''}`,
-    },
-  },
   fields: [
     {
       name: 'name',

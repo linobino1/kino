@@ -1,5 +1,6 @@
 import type { RouteConfig } from '@react-router/dev/routes'
 import { index, layout, route, prefix } from '@react-router/dev/routes'
+import { localizedRoutePrefix, routePaths } from '@app/util/routes'
 
 export default [
   route('/health', './routes/health.ts'),
@@ -13,7 +14,7 @@ export default [
   route('/press-releases/:id.zip', './routes/press-releases/zip.ts'),
   layout('./routes/localized/_layout.tsx', [
     layout('./routes/localized/auth/_layout.tsx', [
-      ...prefix('/:lang?/auth', [
+      ...prefix(`${localizedRoutePrefix}/auth`, [
         route('/me', './routes/localized/auth/me.tsx'),
         route('/signin', './routes/localized/auth/signin.tsx'),
         route('/signup', './routes/localized/auth/signup.tsx'),
@@ -24,20 +25,20 @@ export default [
       ]),
     ]),
     layout('./routes/localized/main/_layout.tsx', [
-      ...prefix('/:lang?', [
+      ...prefix(localizedRoutePrefix, [
         index('./routes/localized/main/index.tsx'),
-        route('/:slug', './routes/localized/main/page.tsx'),
-        route('/events', './routes/localized/main/events.index.tsx'),
-        route('/events/:slug', './routes/localized/main/events.detail.tsx'),
-        route('/news', './routes/localized/main/news.index.tsx'),
-        route('/news/:slug', './routes/localized/main/news.detail.tsx'),
-        route('/filmprints', './routes/localized/main/filmprints.index.tsx'),
-        route('/filmprints/:slug', './routes/localized/main/filmprints.detail.tsx'),
-        route('/seasons', './routes/localized/main/seasons.index.tsx'),
-        route('/seasons/:slug', './routes/localized/main/seasons.detail.tsx'),
-        route('/event-series/:slug', './routes/localized/main/event-series.detail.tsx'),
-        route('/hfg-archive', './routes/localized/main/hfg-archive.index.tsx'),
-        route('/hfg-archive/:slug', './routes/localized/main/hfg-archive.detail.tsx'),
+        route(routePaths.page, './routes/localized/main/page.tsx'),
+        route(routePaths.events, './routes/localized/main/events.index.tsx'),
+        route(routePaths.event, './routes/localized/main/events.detail.tsx'),
+        route(routePaths.news, './routes/localized/main/news.index.tsx'),
+        route(routePaths.post, './routes/localized/main/news.detail.tsx'),
+        route(routePaths.filmPrints, './routes/localized/main/filmprints.index.tsx'),
+        route(routePaths.filmPrint, './routes/localized/main/filmprints.detail.tsx'),
+        route(routePaths.seasons, './routes/localized/main/seasons.index.tsx'),
+        route(routePaths.season, './routes/localized/main/seasons.detail.tsx'),
+        route(routePaths.eventSeries, './routes/localized/main/event-series.detail.tsx'),
+        route(routePaths.hfgArchive, './routes/localized/main/hfg-archive.index.tsx'),
+        route(routePaths.hfgArchiveFilmPrint, './routes/localized/main/hfg-archive.detail.tsx'),
       ]),
     ]),
   ]),
