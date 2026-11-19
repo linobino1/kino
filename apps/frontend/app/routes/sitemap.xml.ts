@@ -10,6 +10,7 @@ import {
   seasonPath,
 } from '@app/util/routes'
 import type { Where } from 'payload'
+import { cache } from '~/util/cache.server'
 import { getPayload } from '~/util/getPayload.server'
 import type { Route } from './+types/sitemap.xml'
 
@@ -162,7 +163,12 @@ const getSitemapRoutes = async () => {
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const page = new URL(request.url).searchParams.get('page')
   const isIndex = page === null
-  const routes = await getSitemapRoutes()
+  const routes = await cache({
+    key: 'sitemapRoutes',
+    ttl: 1000 * 60 * 5,
+    forceFresh: process.env.NODE_ENV === 'development',
+    getFreshValue: getSitemapRoutes,
+  })
   let content: string
 
   if (isIndex) {
