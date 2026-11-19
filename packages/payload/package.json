@@ -15,7 +15,7 @@
     "typecheck": "tsc --noEmit",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "clean": "rm -rf .next .turbo node_modules tsconfig.tsbuildinfo",
-    "test": "dotenv -e ../../.env vitest"
+    "test": "cross-env NODE_ENV=test dotenv -e ../../.env vitest"
   },
   "dependencies": {
     "@app/i18n": "workspace:*",
