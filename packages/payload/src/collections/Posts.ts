@@ -6,6 +6,7 @@ import { Video } from '#payload/blocks/Video'
 import { LinkableCollectionSlugs } from '#payload/plugins/addUrlField'
 import { slugField } from '../fields/slug'
 import { env } from '@app/util/env/backend.server'
+import { postSlugHook } from './Posts/slugHook'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
@@ -31,7 +32,7 @@ export const Posts: CollectionConfig<'posts'> = {
       localized: true,
       required: true,
     },
-    ...slugField('title'),
+    ...slugField('title', { generator: postSlugHook }),
     {
       name: 'date',
       type: 'date',
