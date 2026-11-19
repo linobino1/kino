@@ -3,7 +3,8 @@ import type { Event } from '@app/types/payload'
 import { isAdminOrEditor } from '#payload/access'
 import { generateImplicitData } from './hooks/generateImplicitData'
 import { translateImplicitData } from './hooks/translateImplicitData'
-import { slugField } from '#payload/fields/slug'
+import { slugField } from 'payload'
+import { formatSlug } from '@app/util/formatSlug'
 import { setSeason } from './hooks/setSeason'
 import { hasMainScreeningProgramItem } from './hooks/shared/hasMainScreeningProgramItem'
 import { formatDate } from '@app/util/formatDate'
@@ -48,8 +49,23 @@ export const Events: CollectionConfig<'events'> = {
     afterChange: [translateImplicitData],
   },
   fields: [
-    ...slugField(undefined, {
-      generator: () => {}, // we'll handle this in the collection hook
+    slugField({
+      checkboxName: 'slugLock',
+      disableUnique: true,
+      required: false,
+      slugify: ({ data, valueToSlugify }) =>
+        typeof data.slug === 'string' ? data.slug : formatSlug(valueToSlugify),
+      overrides: (field) => {
+        // slug generation is handled by the collection hook
+        const generateSlugField = field.fields[0]
+        if (generateSlugField?.type === 'checkbox') {
+          generateSlugField.hooks = {
+            ...generateSlugField.hooks,
+            beforeChange: [],
+          }
+        }
+        return field
+      },
     }),
     {
       name: 'title',

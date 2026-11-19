@@ -2,7 +2,7 @@ import { expect, test } from 'vitest'
 import { getPayloadTestClient } from './getPayloadTestClient'
 import type { Person } from '@app/types/payload'
 
-test('slug', async () => {
+test('Payload slug field generates and stabilizes slugs', async () => {
   const payload = await getPayloadTestClient()
   const collection = 'persons'
 
@@ -16,8 +16,9 @@ test('slug', async () => {
   })
   expect(doc.name).toBe('Max Mustermann')
   expect(doc.slug).toBe('max-mustermann')
+  expect(doc.slugLock).toBe(false)
 
-  // rename the person
+  // Renaming does not change a generated URL after creation.
   doc = await payload.update({
     collection,
     id: doc.id,
@@ -27,9 +28,22 @@ test('slug', async () => {
   })
 
   expect(doc.name).toBe('Maxi Musterfrau')
-  expect(doc.slug).toBe('maxi-musterfrau')
+  expect(doc.slug).toBe('max-mustermann')
 
-  // unlock the slug
+  // Re-enable generation to explicitly regenerate the slug.
+  doc = await payload.update({
+    collection,
+    id: doc.id,
+    data: {
+      name: 'Maxi Musterfrau',
+      slugLock: true,
+    },
+  })
+
+  expect(doc.slug).toBe('maxi-musterfrau')
+  expect(doc.slugLock).toBe(false)
+
+  // Unlock the slug and set a custom value.
   doc = await payload.update({
     collection,
     id: doc.id,

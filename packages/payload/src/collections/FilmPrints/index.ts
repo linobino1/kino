@@ -3,7 +3,7 @@ import type { Movie, Format } from '@app/types/payload'
 import analogDigitalTypeField from './fields'
 import { isAdminOrEditor } from '#payload/access'
 import { defaultLocale } from '@app/i18n'
-import { slugField } from '#payload/fields/slug'
+import { slugField } from 'payload'
 import { formatSlug } from '@app/util/formatSlug'
 
 export const FilmPrints: CollectionConfig = {
@@ -104,7 +104,13 @@ export const FilmPrints: CollectionConfig = {
         description: 'Wird automatisch generiert, wenn das Feld leer ist.',
       },
     },
-    ...slugField('title'),
+    slugField({
+      useAsSlug: 'title',
+      checkboxName: 'slugLock',
+      disableUnique: true,
+      required: false,
+      slugify: ({ valueToSlugify }) => formatSlug(valueToSlugify),
+    }),
     {
       name: 'movie',
       label: 'Film',

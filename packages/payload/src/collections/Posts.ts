@@ -4,9 +4,10 @@ import { Image } from '#payload/blocks/Image'
 import { Gallery } from '#payload/blocks/Gallery'
 import { Video } from '#payload/blocks/Video'
 import { LinkableCollectionSlugs } from '#payload/plugins/addUrlField'
-import { slugField } from '../fields/slug'
+import { slugField } from 'payload'
 import { env } from '@app/util/env/backend.server'
 import { postSlugHook } from './Posts/slugHook'
+import { formatSlug } from '@app/util/formatSlug'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
@@ -32,7 +33,24 @@ export const Posts: CollectionConfig<'posts'> = {
       localized: true,
       required: true,
     },
-    ...slugField('title', { generator: postSlugHook }),
+    slugField({
+      useAsSlug: 'title',
+      checkboxName: 'slugLock',
+      disableUnique: true,
+      required: false,
+      slugify: ({ valueToSlugify }) => formatSlug(valueToSlugify),
+      overrides: (field) => {
+        // A post's URL is generated once and is independent of localized title edits.
+        const slugTextField = field.fields[1]
+        if (slugTextField?.type === 'text') {
+          slugTextField.hooks = {
+            ...slugTextField.hooks,
+            beforeValidate: [postSlugHook],
+          }
+        }
+        return field
+      },
+    }),
     {
       name: 'date',
       type: 'date',

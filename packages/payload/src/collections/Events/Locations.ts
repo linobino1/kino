@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { defaultField } from '#payload/fields/default'
-import { slugField } from '#payload/fields/slug'
+import { slugField } from 'payload'
+import { formatSlug } from '@app/util/formatSlug'
 
 export const Locations: CollectionConfig = {
   slug: 'locations',
@@ -24,7 +25,13 @@ export const Locations: CollectionConfig = {
       localized: true,
       type: 'text',
     },
-    ...slugField('name'),
+    slugField({
+      useAsSlug: 'name',
+      checkboxName: 'slugLock',
+      disableUnique: true,
+      required: false,
+      slugify: ({ valueToSlugify }) => formatSlug(valueToSlugify),
+    }),
     defaultField('locations'),
     {
       name: 'address',

@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { pageLayout } from '#payload/fields/pageLayout'
-import { slugField } from '#payload/fields/slug'
+import { slugField } from 'payload'
+import { formatSlug } from '@app/util/formatSlug'
 
 export const EventSeries: CollectionConfig<'eventSeries'> = {
   slug: 'eventSeries',
@@ -29,7 +30,13 @@ export const EventSeries: CollectionConfig<'eventSeries'> = {
       localized: true,
       required: true,
     },
-    ...slugField('name'),
+    slugField({
+      useAsSlug: 'name',
+      checkboxName: 'slugLock',
+      disableUnique: true,
+      required: false,
+      slugify: ({ valueToSlugify }) => formatSlug(valueToSlugify),
+    }),
     {
       name: 'description',
       label: 'Beschreibung',

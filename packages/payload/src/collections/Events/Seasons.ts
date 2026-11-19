@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
-import { slugField } from '#payload/fields/slug'
+import { slugField } from 'payload'
+import { formatSlug } from '@app/util/formatSlug'
 
 export const Seasons: CollectionConfig = {
   slug: 'seasons',
@@ -29,7 +30,13 @@ export const Seasons: CollectionConfig = {
       localized: true,
       required: true,
     },
-    ...slugField('name'),
+    slugField({
+      useAsSlug: 'name',
+      checkboxName: 'slugLock',
+      disableUnique: true,
+      required: false,
+      slugify: ({ valueToSlugify }) => formatSlug(valueToSlugify),
+    }),
     {
       name: 'from',
       label: 'Von einschließlich',

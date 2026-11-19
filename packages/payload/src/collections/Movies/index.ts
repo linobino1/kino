@@ -2,7 +2,8 @@ import type { CollectionConfig, PayloadRequest } from 'payload'
 import type { Movie } from '@app/types/payload'
 import { isAdminOrEditor } from '#payload/access'
 import { ageRatingAges } from '@app/util/config'
-import { slugField } from '#payload/fields/slug'
+import { slugField } from 'payload'
+import { formatSlug } from '@app/util/formatSlug'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { minimalEditorConfig } from '@app/util/lexical/editorConfig'
 
@@ -349,6 +350,12 @@ export const Movies: CollectionConfig<'movies'> = {
         },
       ],
     },
-    ...slugField('internationalTitle'),
+    slugField({
+      useAsSlug: 'internationalTitle',
+      checkboxName: 'slugLock',
+      disableUnique: true,
+      required: false,
+      slugify: ({ valueToSlugify }) => formatSlug(valueToSlugify),
+    }),
   ],
 }

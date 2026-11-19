@@ -5,7 +5,7 @@ import { InlineToolbarFeatureClient as InlineToolbarFeatureClient_e70f5e05f09f93
 import { ParagraphFeatureClient as ParagraphFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
-import { SlugComponent as SlugComponent_dd4248bc06cf947c6b45acf9ed54f133 } from '../../../components/SlugComponent'
+import { SlugField as SlugField_2b8867833a34864a02ddf429b0728a40 } from '@payloadcms/next/client'
 import { MigrateMovieButton as MigrateMovieButton_a35a6519bac065a587079eac0f5a72d8 } from '../../../components/MigrateMovieButton'
 import { UrlField as UrlField_7b4e51c9f1241f2d23a5d566952ac202 } from '../../../components/UrlField'
 import { Cell as Cell_72042b244659938c5d2b0bd271aeeaa9 } from '../../../components/date/Cell.tsx'
@@ -38,9 +38,9 @@ import { MagicSlugsExplanation as MagicSlugsExplanation_3000e68c3854ff1d86843355
 import { default as default_fee00efa08d4d6c9be5f886e9971d8c8 } from '../../../components/RowLabelNavigationItem'
 import { Icon as Icon_c6286fbc7f62f2ce3ef9c604e9c02147 } from '../../../components/graphics/Icon'
 import { Logo as Logo_e577ad08317d2e8977edf3e679038fc8 } from '../../../components/graphics/Logo'
-import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 import { TMDBMigration as TMDBMigration_b4543c28c07beb0098fe53a85cee14d7 } from '../../../views/TMDBMigration/index'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
+import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 
 /** @type import('payload').ImportMap */
 export const importMap = {
@@ -51,7 +51,7 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#ParagraphFeatureClient": ParagraphFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#BoldFeatureClient": BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
-  "/components/SlugComponent#SlugComponent": SlugComponent_dd4248bc06cf947c6b45acf9ed54f133,
+  "@payloadcms/next/client#SlugField": SlugField_2b8867833a34864a02ddf429b0728a40,
   "/components/MigrateMovieButton#MigrateMovieButton": MigrateMovieButton_a35a6519bac065a587079eac0f5a72d8,
   "/components/UrlField#UrlField": UrlField_7b4e51c9f1241f2d23a5d566952ac202,
   "/components/date/Cell.tsx#Cell": Cell_72042b244659938c5d2b0bd271aeeaa9,
@@ -84,7 +84,7 @@ export const importMap = {
   "/components/RowLabelNavigationItem#default": default_fee00efa08d4d6c9be5f886e9971d8c8,
   "/components/graphics/Icon#Icon": Icon_c6286fbc7f62f2ce3ef9c604e9c02147,
   "/components/graphics/Logo#Logo": Logo_e577ad08317d2e8977edf3e679038fc8,
-  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
   "/views/TMDBMigration/index#TMDBMigration": TMDBMigration_b4543c28c07beb0098fe53a85cee14d7,
-  "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
+  "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1,
+  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24
 }

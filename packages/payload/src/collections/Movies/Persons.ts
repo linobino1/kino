@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
-import { slugField } from '#payload/fields/slug'
+import { slugField } from 'payload'
+import { formatSlug } from '@app/util/formatSlug'
 
 export const Persons: CollectionConfig = {
   slug: 'persons',
@@ -23,6 +24,12 @@ export const Persons: CollectionConfig = {
       required: true,
       unique: true,
     },
-    ...slugField('name'),
+    slugField({
+      useAsSlug: 'name',
+      checkboxName: 'slugLock',
+      disableUnique: true,
+      required: false,
+      slugify: ({ valueToSlugify }) => formatSlug(valueToSlugify),
+    }),
   ],
 }
