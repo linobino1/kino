@@ -13,6 +13,7 @@ import { Image } from '~/components/Image'
 import { seasonHref } from '~/util/routeHrefs'
 import { Pagination } from '~/components/Pagination'
 import { measureServerTiming } from '~/util/serverTiming.server'
+import { Link } from '~/components/localized-link'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
@@ -78,7 +79,7 @@ export default function EventsPage({ loaderData: { page, seasons } }: Route.Comp
           <ul className="flex w-full flex-col gap-2 sm:grid sm:grid-cols-[repeat(auto-fill,19rem)] sm:items-center sm:justify-center">
             {seasons.docs.map((season) => (
               <li key={season.id} className="relative aspect-[34/22]">
-                <a href={seasonHref(season.slug)}>
+                <Link to={seasonHref(season.slug)}>
                   <Image
                     image={season.header as Media}
                     alt={season.name}
@@ -93,7 +94,7 @@ export default function EventsPage({ loaderData: { page, seasons } }: Route.Comp
                   <div className="upercase absolute inset-0 flex items-end bg-[linear-gradient(0deg,#000000_-50%,#00000000_54%)] p-4 text-xl font-semibold">
                     <h2>{season.name}</h2>
                   </div>
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
