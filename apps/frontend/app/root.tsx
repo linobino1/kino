@@ -26,6 +26,7 @@ import { useEffect } from 'react'
 import { i18nCookie } from './cookies'
 import { measureServerTiming, serverTimingMiddleware } from './util/serverTiming.server'
 import { authMiddleware, userContext } from './util/authContext.server'
+import { mediaPopulate } from './util/mediaPopulate'
 
 export const middleware = [serverTimingMiddleware, authMiddleware, i18nextMiddleware]
 
@@ -46,6 +47,9 @@ export async function loader({ request, context }: Route.LoaderArgs) {
           payload.findGlobal({
             slug: 'site',
             depth: 3,
+            populate: {
+              media: mediaPopulate,
+            },
             locale,
           }),
       }),

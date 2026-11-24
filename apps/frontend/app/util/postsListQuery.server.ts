@@ -1,3 +1,5 @@
+import { mediaPopulate } from './mediaPopulate'
+
 export const postsListQuery = {
   select: {
     updatedAt: true,
@@ -22,4 +24,7 @@ export const postsListQuery = {
   draft: false,
   sort: '-date',
   depth: 1,
+  populate: {
+    media: mediaPopulate,
+  },
 } as const

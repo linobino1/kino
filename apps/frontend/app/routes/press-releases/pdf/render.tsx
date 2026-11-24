@@ -4,6 +4,7 @@ import { renderToBuffer } from '@react-pdf/renderer'
 import { PressPDF } from './template'
 import { getTFunction } from '~/util/i18n/getTFunction.server'
 import { getPressReleaseEvents } from '../data.server'
+import { mediaPopulate } from '~/util/mediaPopulate'
 
 type Props = {
   pressRelease: PressRelease
@@ -17,6 +18,10 @@ export const renderPressPDF = async ({ pressRelease }: Props) => {
   // fetch the global press releases config
   const pressReleasesConfig = await payload.findGlobal({
     slug: 'pressReleasesConfig',
+    depth: 2,
+    populate: {
+      media: mediaPopulate,
+    },
     locale: pressRelease.locale,
   })
 

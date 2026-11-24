@@ -8,6 +8,7 @@ import { generateMetadata } from '~/util/generateMetadata'
 import { getEnvFromMatches } from '~/util/getEnvFromMatches'
 import { RenderBlocks } from '~/components/Blocks/RenderBlocks'
 import { measureServerTiming } from '~/util/serverTiming.server'
+import { mediaPopulate } from '~/util/mediaPopulate'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
@@ -35,6 +36,9 @@ export const loader = async ({
     },
     locale: locale as Locale,
     depth: 3,
+    populate: {
+      media: mediaPopulate,
+    },
   }))
 
   const page = res.docs[0]

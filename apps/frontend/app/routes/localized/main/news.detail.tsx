@@ -16,6 +16,7 @@ import { RenderBlocks } from '~/components/Blocks/RenderBlocks'
 import { getMetaDescription } from '~/util/posts/getMetaDescription'
 import { isPreview } from '~/util/isPreview'
 import { measureServerTiming } from '~/util/serverTiming.server'
+import { mediaPopulate } from '~/util/mediaPopulate'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   loaderData?.post
@@ -55,6 +56,9 @@ export const loader = async ({
       },
       locale: locale as Locale,
       depth: 2,
+      populate: {
+        media: mediaPopulate,
+      },
       draft: isPreview(url.toString()),
     }))
   ).docs[0]

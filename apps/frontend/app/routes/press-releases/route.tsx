@@ -3,6 +3,7 @@ import { getPayload } from '~/util/getPayload.server'
 import { renderPressPDF } from './pdf/render'
 import { formatDate } from '@app/util/formatDate'
 import { getInstance } from '~/middleware/i18next'
+import { mediaPopulate } from '~/util/mediaPopulate'
 
 export const loader = async ({ params: { id }, url, context }: Route.LoaderArgs) => {
   const preview = !!new URL(url).searchParams.get('preview')
@@ -11,6 +12,10 @@ export const loader = async ({ params: { id }, url, context }: Route.LoaderArgs)
   const pressRelease = await payload.findByID({
     collection: 'pressReleases',
     id,
+    depth: 2,
+    populate: {
+      media: mediaPopulate,
+    },
     draft: preview,
   })
 

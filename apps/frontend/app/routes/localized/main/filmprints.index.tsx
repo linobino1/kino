@@ -21,6 +21,7 @@ import { Link } from '~/components/localized-link'
 import { Icon } from '@iconify/react'
 import arrow from '@iconify-icons/material-symbols/arrow-forward-ios-rounded'
 import { measureServerTiming } from '~/util/serverTiming.server'
+import { mediaPopulate } from '~/util/mediaPopulate'
 
 const limit = 20
 
@@ -117,6 +118,9 @@ export const loader = async ({
           },
         },
         depth: 1,
+        populate: {
+          media: mediaPopulate,
+        },
         locale: locale as Locale,
       }),
     ),

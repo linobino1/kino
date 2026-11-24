@@ -15,7 +15,8 @@ import { Gutter } from '~/components/Gutter'
 import { useTranslation } from 'react-i18next'
 import { CTAButton } from '~/components/CTAButton'
 import { measureServerTiming } from '~/util/serverTiming.server'
-import { eventListQuery, mediaListPopulate } from '~/util/eventListQuery.server'
+import { eventListQuery } from '~/util/eventListQuery.server'
+import { mediaPopulate } from '~/util/mediaPopulate'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
@@ -58,7 +59,7 @@ export const loader = async ({ request, params: { lang: locale }, url, context }
         },
         depth: 1,
         populate: {
-          media: mediaListPopulate,
+          media: mediaPopulate,
         },
         limit: 1,
         pagination: false,

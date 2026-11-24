@@ -6,6 +6,8 @@ import { cn } from '@app/util/cn'
 import { Link } from 'react-router'
 import { Image } from '~/components/Image'
 import type { NodeTypes } from '@app/util/lexical/types'
+import type { FrontendBrowserEnvironment } from '@app/util/env'
+import { getMediaUrl } from '@app/util/media/getMediaUrl'
 import { ArrowOutward } from '../icons/ArrowOutward'
 import {
   IS_BOLD,
@@ -23,10 +25,11 @@ type Props = {
   nodes: NodeTypes[]
   enableMarginBlock?: boolean
   locale: Locale
+  env?: FrontendBrowserEnvironment
 }
 
 export function serializeLexical(props: Props): JSX.Element {
-  const { nodes, enableMarginBlock, locale } = props
+  const { nodes, enableMarginBlock, locale, env } = props
   return (
     <Fragment>
       {nodes?.map((node, index): JSX.Element | null => {
@@ -183,15 +186,41 @@ export function serializeLexical(props: Props): JSX.Element {
               const { linkType, newTab, doc, url } = node.fields
               const internalDoc = doc as
                 | {
-                    relationTo?: Parameters<typeof linkableDocumentHref>[0]
-                    value?: { slug?: string | null } | string
+                    relationTo?: Parameters<typeof linkableDocumentHref>[0] | 'media'
+                    value?: { slug?: string | null; url?: string | null } | string
                   }
                 | null
                 | undefined
+
+              if (internalDoc?.relationTo === 'media') {
+                const media =
+                  typeof internalDoc.value === 'object' && internalDoc.value !== null
+                    ? (internalDoc.value as MediaType)
+                    : null
+                const mediaUrl = media?.url ? getMediaUrl(media, env) : null
+
+                return mediaUrl ? (
+                  <a
+                    href={mediaUrl}
+                    key={index}
+                    target={newTab ? '_blank' : undefined}
+                    rel={newTab ? 'noopener noreferrer' : undefined}
+                  >
+                    {serializedChildren}
+                  </a>
+                ) : (
+                  <span key={index}>{serializedChildren}</span>
+                )
+              }
+
               const internalPath =
                 internalDoc?.relationTo && typeof internalDoc.value === 'object'
                   ? linkableDocumentHref(internalDoc.relationTo, internalDoc.value?.slug)
                   : ''
+
+              if (linkType === 'internal' && !internalPath) {
+                return <span key={index}>{serializedChildren}</span>
+              }
 
               return (
                 <Link

@@ -1,12 +1,4 @@
-export const mediaListPopulate = {
-  filename: true,
-  url: true,
-  alt: true,
-  width: true,
-  height: true,
-  focalX: true,
-  focalY: true,
-} as const
+import { mediaPopulate } from './mediaPopulate'
 
 export const eventListQuery = {
   select: {
@@ -56,6 +48,6 @@ export const eventListQuery = {
     seasons: {
       name: true,
     },
-    media: mediaListPopulate,
+    media: mediaPopulate,
   },
 } as const
