@@ -22,7 +22,7 @@ export const loader = async ({ request, params: { lang: locale }, context }: Rou
         return (
           await payload.find({
             collection: 'navigations',
-            depth: 1,
+            depth: 2,
             locale: locale as Locale,
             select: {
               items: true,
