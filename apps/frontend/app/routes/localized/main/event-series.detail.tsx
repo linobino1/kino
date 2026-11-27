@@ -16,6 +16,7 @@ import { RenderBlocks } from '~/components/Blocks/RenderBlocks'
 import { measureServerTiming } from '~/util/serverTiming.server'
 import { eventListQuery } from '~/util/eventListQuery.server'
 import { mediaPopulate } from '~/util/mediaPopulate'
+import { AttachedLinks } from '~/components/AttachedLinks'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   generateMetadata({
@@ -42,6 +43,7 @@ export const loader = async ({
           updatedAt: true,
           name: true,
           slug: true,
+          links: true,
           hero: {
             type: true,
             headline: true,
@@ -73,67 +75,71 @@ export const loader = async ({
   const today = new Date()
   today.setHours(0, 0, 0, 0)
   const [upcoming, past] = await Promise.all([
-    measureServerTiming(request, 'event-series.upcoming', () => payload.find({
-      collection: 'events',
-      ...eventListQuery,
-      where: {
-        and: [
-          {
-            _status: {
-              equals: 'published',
+    measureServerTiming(request, 'event-series.upcoming', () =>
+      payload.find({
+        collection: 'events',
+        ...eventListQuery,
+        where: {
+          and: [
+            {
+              _status: {
+                equals: 'published',
+              },
             },
-          },
-          {
-            series: {
-              equals: eventSeries.id,
+            {
+              series: {
+                equals: eventSeries.id,
+              },
             },
-          },
-          {
-            date: {
-              greater_than_equal: today,
+            {
+              date: {
+                greater_than_equal: today,
+              },
             },
-          },
-          {
-            excludeFromUpcoming: {
-              not_equals: true,
+            {
+              excludeFromUpcoming: {
+                not_equals: true,
+              },
             },
-          },
-        ],
-      },
-      draft: false,
-      sort: 'date',
-      locale: locale as Locale,
-      pagination: false,
-    })),
-    measureServerTiming(request, 'event-series.past', () => payload.find({
-      collection: 'events',
-      ...eventListQuery,
-      where: {
-        and: [
-          {
-            _status: {
-              equals: 'published',
+          ],
+        },
+        draft: false,
+        sort: 'date',
+        locale: locale as Locale,
+        pagination: false,
+      }),
+    ),
+    measureServerTiming(request, 'event-series.past', () =>
+      payload.find({
+        collection: 'events',
+        ...eventListQuery,
+        where: {
+          and: [
+            {
+              _status: {
+                equals: 'published',
+              },
             },
-          },
-          {
-            series: {
-              equals: eventSeries.id,
+            {
+              series: {
+                equals: eventSeries.id,
+              },
             },
-          },
-          {
-            date: {
-              less_than: today,
+            {
+              date: {
+                less_than: today,
+              },
             },
-          },
-        ],
-      },
-      draft: false,
-      sort: '-date',
-      locale: locale as Locale,
-      pagination: true,
-      page,
-      limit: 20,
-    })),
+          ],
+        },
+        draft: false,
+        sort: '-date',
+        locale: locale as Locale,
+        pagination: true,
+        page,
+        limit: 20,
+      }),
+    ),
   ])
 
   return {
@@ -153,8 +159,11 @@ export default function EventSeriesDetailPage({
   return (
     <PageLayout type="default">
       <Hero {...eventSeries.hero} />
+      <RenderBlocks blocks={eventSeries?.blocks ?? []} className="mt-4" />
+      <Gutter size="small" className="mt-4">
+        <AttachedLinks links={eventSeries.links} />
+      </Gutter>
       <Gutter className="mt-4">
-        <RenderBlocks blocks={eventSeries?.blocks ?? []} />
         {upcoming.docs.length > 0 && (
           <>
             <h2 className={h2}>{t('Upcoming Screenings')}</h2>

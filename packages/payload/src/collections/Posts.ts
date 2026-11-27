@@ -3,12 +3,12 @@ import { Content } from '#payload/blocks/Content'
 import { Image } from '#payload/blocks/Image'
 import { Gallery } from '#payload/blocks/Gallery'
 import { Video } from '#payload/blocks/Video'
-import { LinkableCollectionSlugs } from '#payload/plugins/linkableCollections'
 import { slugField } from 'payload'
 import { env } from '@app/util/env/backend.server'
 import { postSlugHook } from './Posts/slugHook'
 import { formatSlug } from '@app/util/formatSlug'
 import { postPath } from '@app/util/routes'
+import { attachedLinksField } from '#payload/fields/attachedLinks'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
@@ -74,62 +74,6 @@ export const Posts: CollectionConfig<'posts'> = {
               required: true,
             },
             {
-              type: 'group',
-              label: false,
-              name: 'link',
-              admin: {
-                style: {
-                  border: 'none',
-                  paddingBlock: 0,
-                },
-              },
-              fields: [
-                {
-                  name: 'type',
-                  label: 'Verlinkung des Titelbilds',
-                  type: 'radio',
-                  defaultValue: 'none',
-                  admin: {
-                    description:
-                      "Wähle 'Keine(r)' um das Titelbild mit der Detailseite zu verlinken, falls diese existiert.",
-                  },
-                  options: [
-                    {
-                      label: 'Keine(r)',
-                      value: 'none',
-                    },
-                    {
-                      label: 'Interner Link',
-                      value: 'internal',
-                    },
-                    {
-                      label: 'Externer Link',
-                      value: 'external',
-                    },
-                  ],
-                },
-                // internal link
-                {
-                  name: 'doc',
-                  type: 'relationship',
-                  relationTo: LinkableCollectionSlugs,
-                  required: true,
-                  admin: {
-                    condition: (siblingData) => siblingData.link?.type === 'internal',
-                  },
-                },
-                // external link
-                {
-                  name: 'url',
-                  type: 'text',
-                  required: true,
-                  admin: {
-                    condition: (siblingData) => siblingData.link?.type === 'external',
-                  },
-                },
-              ],
-            },
-            {
               name: 'content',
               label: 'Text',
               type: 'richText',
@@ -141,6 +85,7 @@ export const Posts: CollectionConfig<'posts'> = {
         {
           label: 'Inhalt',
           fields: [
+            attachedLinksField(),
             {
               name: 'details',
               label: false,
@@ -148,28 +93,12 @@ export const Posts: CollectionConfig<'posts'> = {
               blocks: [Content, Image, Gallery, Video],
               admin: {
                 description:
-                  'Ausführliche Informationen zum Beitrag. Hieraus wird die Detailseite für den Post generiert. Ein Post kann auch ohne Detailseite existieren.',
+                  'Optionale ausführliche Informationen zum Beitrag. Die Detailseite wird auch ohne diese Inhalte angezeigt.',
               },
             },
           ],
         },
       ],
-    },
-    {
-      name: 'hasDetailPage',
-      type: 'checkbox',
-      admin: {
-        hidden: true,
-      },
-      hooks: {
-        beforeChange: [
-          ({ data }) =>
-            data?.details?.length &&
-            !(data.details.length === 1 && !Object.keys(data.details[0]).length)
-              ? true
-              : false,
-        ],
-      },
     },
   ],
 }

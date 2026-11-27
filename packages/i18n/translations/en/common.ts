@@ -53,6 +53,12 @@ export default {
   News: 'News',
   'See all screenings': 'See all screenings',
   'See all posts': 'See all posts',
+  links: {
+    programme: 'View the programme →',
+    download: 'Download the booklet (PDF)',
+    trailer: 'Watch the trailer (YouTube) ↗',
+    event: 'View the event →',
+  },
   event: {
     meta: {
       title: '{{ title }} on {{date}}',

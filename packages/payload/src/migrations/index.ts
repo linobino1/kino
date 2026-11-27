@@ -1,26 +1,27 @@
-import * as migration_20241107_201219_generate_all_urls from './20241107_201219_generate_all_urls';
-import * as migration_20250206_111921_migration from './20250206_111921_migration';
-import * as migration_20250206_190444_localize_media_alt from './20250206_190444_localize_media_alt';
-import * as migration_20250208_164718_events_v3 from './20250208_164718_events_v3';
-import * as migration_20250210_200748_slug_lock from './20250210_200748_slug_lock';
-import * as migration_20250210_215532_enable_drafts_on_posts from './20250210_215532_enable_drafts_on_posts';
-import * as migration_20250210_222846_rename_screeningSeries_eventSeries from './20250210_222846_rename_screeningSeries_eventSeries';
-import * as migration_20250210_224545_rename_screeningSeries_eventSeries_part2 from './20250210_224545_rename_screeningSeries_eventSeries_part2';
-import * as migration_20250211_083006_fix_event_series_links_in_richtext from './20250211_083006_fix_event_series_links_in_richtext';
-import * as migration_20250211_160155_events_series_has_many from './20250211_160155_events_series_has_many';
-import * as migration_20250212_072144_fix_null_values_in_events_series from './20250212_072144_fix_null_values_in_events_series';
-import * as migration_20250212_074118_fix_null_values_in_events_series_versions from './20250212_074118_fix_null_values_in_events_series_versions';
-import * as migration_20250215_181351_add_news_page from './20250215_181351_add_news_page';
-import * as migration_20250306_100232_press_releases from './20250306_100232_press_releases';
-import * as migration_20250317_105110_eventsHeaderLock from './20250317_105110_eventsHeaderLock';
-import * as migration_20250317_213826_autoSeasons from './20250317_213826_autoSeasons';
-import * as migration_20250319_132726_eventsTitleLock from './20250319_132726_eventsTitleLock';
-import * as migration_20250612_064720_enable_versions_mailings from './20250612_064720_enable_versions_mailings';
-import * as migration_20250727_095518_postHasDetailPageField from './20250727_095518_postHasDetailPageField';
-import * as migration_20260326_082334_synopsis_richtext from './20260326_082334_synopsis_richtext';
-import * as migration_20260326_145912_movie_versions_synopsis_richtext from './20260326_145912_movie_versions_synopsis_richtext';
-import * as migration_20260909_120000_event_admin_title from './20260909_120000_event_admin_title';
-import * as migration_20261119_182645_remove_url_field from './20261119_182645_remove_url_field';
+import * as migration_20241107_201219_generate_all_urls from './20241107_201219_generate_all_urls'
+import * as migration_20250206_111921_migration from './20250206_111921_migration'
+import * as migration_20250206_190444_localize_media_alt from './20250206_190444_localize_media_alt'
+import * as migration_20250208_164718_events_v3 from './20250208_164718_events_v3'
+import * as migration_20250210_200748_slug_lock from './20250210_200748_slug_lock'
+import * as migration_20250210_215532_enable_drafts_on_posts from './20250210_215532_enable_drafts_on_posts'
+import * as migration_20250210_222846_rename_screeningSeries_eventSeries from './20250210_222846_rename_screeningSeries_eventSeries'
+import * as migration_20250210_224545_rename_screeningSeries_eventSeries_part2 from './20250210_224545_rename_screeningSeries_eventSeries_part2'
+import * as migration_20250211_083006_fix_event_series_links_in_richtext from './20250211_083006_fix_event_series_links_in_richtext'
+import * as migration_20250211_160155_events_series_has_many from './20250211_160155_events_series_has_many'
+import * as migration_20250212_072144_fix_null_values_in_events_series from './20250212_072144_fix_null_values_in_events_series'
+import * as migration_20250212_074118_fix_null_values_in_events_series_versions from './20250212_074118_fix_null_values_in_events_series_versions'
+import * as migration_20250215_181351_add_news_page from './20250215_181351_add_news_page'
+import * as migration_20250306_100232_press_releases from './20250306_100232_press_releases'
+import * as migration_20250317_105110_eventsHeaderLock from './20250317_105110_eventsHeaderLock'
+import * as migration_20250317_213826_autoSeasons from './20250317_213826_autoSeasons'
+import * as migration_20250319_132726_eventsTitleLock from './20250319_132726_eventsTitleLock'
+import * as migration_20250612_064720_enable_versions_mailings from './20250612_064720_enable_versions_mailings'
+import * as migration_20250727_095518_postHasDetailPageField from './20250727_095518_postHasDetailPageField'
+import * as migration_20260326_082334_synopsis_richtext from './20260326_082334_synopsis_richtext'
+import * as migration_20260326_145912_movie_versions_synopsis_richtext from './20260326_145912_movie_versions_synopsis_richtext'
+import * as migration_20260909_120000_event_admin_title from './20260909_120000_event_admin_title'
+import * as migration_20261119_182645_remove_url_field from './20261119_182645_remove_url_field'
+import * as migration_20261127_114309_post_links from './20261127_114309_post_links'
 
 export const migrations = [
   {
@@ -136,6 +137,11 @@ export const migrations = [
   {
     up: migration_20261119_182645_remove_url_field.up,
     down: migration_20261119_182645_remove_url_field.down,
-    name: '20261119_182645_remove_url_field'
+    name: '20261119_182645_remove_url_field',
   },
-];
+  {
+    up: migration_20261127_114309_post_links.up,
+    down: migration_20261127_114309_post_links.down,
+    name: '20261127_114309_post_links',
+  },
+]

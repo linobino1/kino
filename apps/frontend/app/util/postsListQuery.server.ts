@@ -7,13 +7,7 @@ export const postsListQuery = {
     title: true,
     date: true,
     header: true,
-    link: {
-      type: true,
-      doc: true,
-      url: true,
-    },
     content: true,
-    hasDetailPage: true,
     slug: true,
   },
   where: {

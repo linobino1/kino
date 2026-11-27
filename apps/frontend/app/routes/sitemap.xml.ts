@@ -54,7 +54,7 @@ const getSitemapRoutes = async () => {
     payload.find({ collection: 'pages', select, pagination: false }),
     payload.find({
       collection: 'posts',
-      select: { ...select, hasDetailPage: true },
+      select,
       where: publishedOnly,
       pagination: false,
     }),
@@ -112,13 +112,11 @@ const getSitemapRoutes = async () => {
         priority: slug === 'home' ? 1.0 : defaultPriority,
       }
     }),
-    ...posts.docs
-      .filter(({ hasDetailPage }) => hasDetailPage)
-      .map(({ slug, updatedAt }) => ({
-        path: postPath(slug),
-        lastmod: new Date(updatedAt || 0),
-        priority: defaultPriority,
-      })),
+    ...posts.docs.map(({ slug, updatedAt }) => ({
+      path: postPath(slug),
+      lastmod: new Date(updatedAt || 0),
+      priority: defaultPriority,
+    })),
     ...events.docs.map(({ slug, updatedAt }) => ({
       path: eventPath(slug),
       lastmod: new Date(updatedAt || 0),

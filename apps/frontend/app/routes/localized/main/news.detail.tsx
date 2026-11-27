@@ -17,6 +17,7 @@ import { getMetaDescription } from '~/util/posts/getMetaDescription'
 import { isPreview } from '~/util/isPreview'
 import { measureServerTiming } from '~/util/serverTiming.server'
 import { mediaPopulate } from '~/util/mediaPopulate'
+import { AttachedLinks } from '~/components/AttachedLinks'
 
 export const meta: Route.MetaFunction = ({ loaderData, matches }) =>
   loaderData?.post
@@ -38,29 +39,26 @@ export const loader = async ({
   const payload = await getPayload()
 
   const post = (
-    await measureServerTiming(request, 'post.content', () => payload.find({
-      collection: 'posts',
-      where: {
-        and: [
-          {
-            slug: {
-              equals: slug,
+    await measureServerTiming(request, 'post.content', () =>
+      payload.find({
+        collection: 'posts',
+        where: {
+          and: [
+            {
+              slug: {
+                equals: slug,
+              },
             },
-          },
-          {
-            hasDetailPage: {
-              equals: true,
-            },
-          },
-        ],
-      },
-      locale: locale as Locale,
-      depth: 2,
-      populate: {
-        media: mediaPopulate,
-      },
-      draft: isPreview(url.toString()),
-    }))
+          ],
+        },
+        locale: locale as Locale,
+        depth: 2,
+        populate: {
+          media: mediaPopulate,
+        },
+        draft: isPreview(url.toString()),
+      }),
+    )
   ).docs[0]
 
   if (!post) {
@@ -96,6 +94,11 @@ export default function PostDetailPage({ loaderData: { post } }: Route.Component
         <RichText content={post.content} className="prose prose-white mt-6 text-lg font-normal" />
       </Gutter>
       <RenderBlocks blocks={post.details as []} className="mt-4" />
+      {post.links?.length ? (
+        <Gutter size="small" className="mt-8">
+          <AttachedLinks links={post.links} />
+        </Gutter>
+      ) : null}
     </PageLayout>
   )
 }

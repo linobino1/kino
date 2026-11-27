@@ -71,6 +71,12 @@ export default {
   News: 'Neuigkeiten',
   'See all screenings': 'Alle Vorstellungen',
   'See all posts': 'Alle Beiträge',
+  links: {
+    programme: 'Zum Programm →',
+    download: 'Programmheft herunterladen (PDF)',
+    trailer: 'Trailer ansehen (YouTube) ↗',
+    event: 'Zur Veranstaltung →',
+  },
   event: {
     meta: {
       title: '{{ title }} am {{date}}',

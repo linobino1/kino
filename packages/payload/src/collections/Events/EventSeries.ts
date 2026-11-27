@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { pageLayout } from '#payload/fields/pageLayout'
 import { slugField } from 'payload'
 import { formatSlug } from '@app/util/formatSlug'
+import { attachedLinksField } from '#payload/fields/attachedLinks'
 
 export const EventSeries: CollectionConfig<'eventSeries'> = {
   slug: 'eventSeries',
@@ -41,6 +42,7 @@ export const EventSeries: CollectionConfig<'eventSeries'> = {
         description: 'Beschreibung der Veranstaltungsreihe für das Presse-PDF.',
       },
     },
+    attachedLinksField({ excludeEvent: true }),
     {
       type: 'tabs',
       tabs: [
