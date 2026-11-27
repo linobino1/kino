@@ -4,6 +4,8 @@
 
 /media
 
+/dump
+
 .DS_Store
 
 .env*
