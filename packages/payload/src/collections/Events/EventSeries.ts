@@ -3,6 +3,8 @@ import { pageLayout } from '#payload/fields/pageLayout'
 import { slugField } from 'payload'
 import { formatSlug } from '@app/util/formatSlug'
 import { attachedLinksField } from '#payload/fields/attachedLinks'
+import { env } from '@app/util/env/backend.server'
+import { eventSeriesPath } from '@app/util/routes'
 
 export const EventSeries: CollectionConfig<'eventSeries'> = {
   slug: 'eventSeries',
@@ -14,6 +16,8 @@ export const EventSeries: CollectionConfig<'eventSeries'> = {
     group: 'Kalender',
     useAsTitle: 'name',
     defaultColumns: ['name'],
+    preview: (data) =>
+      `${env.FRONTEND_URL}${eventSeriesPath(typeof data.slug === 'string' ? data.slug : undefined)}?preview=true`,
   },
   access: {
     read: () => true,
