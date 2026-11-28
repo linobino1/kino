@@ -72,10 +72,10 @@ export default {
   'See all screenings': 'Alle Vorstellungen',
   'See all posts': 'Alle Beiträge',
   links: {
-    programme: 'Zum Programm →',
+    programme: 'Zum Programm',
     download: 'Programmheft herunterladen (PDF)',
-    trailer: 'Trailer ansehen (YouTube) ↗',
-    event: 'Zur Veranstaltung →',
+    trailer: 'Trailer ansehen (YouTube)',
+    event: 'Zur Veranstaltung',
   },
   event: {
     meta: {

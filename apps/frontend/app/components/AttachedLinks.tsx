@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { CTAButton } from '~/components/CTAButton'
+import type { ButtonIconName } from '~/components/ButtonIcon'
 import { Link } from '~/components/localized-link'
 import { eventHref } from '~/util/routeHrefs'
 
@@ -22,24 +23,44 @@ type Props = {
 
 const displayUrl = (url: string) => url.replace(/^https?:\/\//i, '')
 
+const targetByType: Record<
+  NonNullable<AttachedLink['type']>,
+  (link: AttachedLink) => string
+> = {
+  event: ({ event }) =>
+    typeof event === 'object' && event ? eventHref(event.slug) : '',
+  programme: ({ programme }) =>
+    typeof programme === 'object' && programme ? (programme.url ?? '') : '',
+  download: ({ download }) =>
+    typeof download === 'object' && download ? (download.url ?? '') : '',
+  trailer: ({ url }) => url ?? '',
+  custom: ({ url }) => url ?? '',
+}
+
+const iconByType: Partial<
+  Record<NonNullable<AttachedLink['type']>, ButtonIconName>
+> = {
+  programme: 'arrow',
+  download: 'download',
+  trailer: 'play',
+  event: 'arrow',
+}
+
 export const AttachedLinks: React.FC<Props> = ({ links }) => {
   const { t } = useTranslation()
+  const textByType: Record<
+    NonNullable<AttachedLink['type']>,
+    (label: string | null | undefined, target: string) => string
+  > = {
+    programme: () => t('links.programme'),
+    download: () => t('links.download'),
+    trailer: () => t('links.trailer'),
+    event: () => t('links.event'),
+    custom: (label, target) => label?.trim() || displayUrl(target),
+  }
   const validLinks =
     links?.flatMap((link) => {
-      const target =
-        link.type === 'event'
-          ? typeof link.event === 'object' && link.event
-            ? eventHref(link.event.slug)
-            : ''
-          : link.type === 'programme'
-            ? typeof link.programme === 'object' && link.programme
-              ? (link.programme.url ?? '')
-              : ''
-            : link.type === 'download'
-              ? typeof link.download === 'object' && link.download
-                ? (link.download.url ?? '')
-                : ''
-              : (link.url ?? '')
+      const target = link.type ? targetByType[link.type](link) : (link.url ?? '')
       return target ? [{ ...link, target }] : []
     }) ?? []
 
@@ -50,12 +71,9 @@ export const AttachedLinks: React.FC<Props> = ({ links }) => {
       {validLinks.map(({ id, type, target, label }, index) => {
         const external = /^(https?:)?\/\//i.test(target)
         const mediaLink = type === 'programme' || type === 'download'
-        const text =
-          type === 'custom'
-            ? label?.trim() || displayUrl(target)
-            : type
-              ? t(`links.${type}`)
-              : displayUrl(target)
+        let text = displayUrl(target)
+        if (type) text = textByType[type](label, target)
+        const icon = (type && iconByType[type]) || (external ? 'external' : undefined)
 
         return (
           <CTAButton
@@ -66,6 +84,7 @@ export const AttachedLinks: React.FC<Props> = ({ links }) => {
             prefetch={external ? 'none' : 'intent'}
             target={external ? '_blank' : undefined}
             rel={external ? 'noopener noreferrer' : undefined}
+            icon={icon}
           >
             {text}
           </CTAButton>

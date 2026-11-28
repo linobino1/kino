@@ -3,8 +3,7 @@ import { Button, type Props as ButtonProps } from './Button'
 import { Link } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { cn } from '@app/util/cn'
-import { Icon } from '@iconify/react'
-import playIcon from '@iconify-icons/material-symbols/play-arrow'
+import { ButtonIcon } from './ButtonIcon'
 
 type Props = Omit<ButtonProps<typeof Link>, 'as' | 'children' | 'to'> & {
   movie: Movie
@@ -22,10 +21,7 @@ export const TrailerButton: React.FC<Props> = ({ movie, className, ...props }) =
       {...props}
     >
       {t('Trailer')}
-      <Icon
-        icon={playIcon}
-        className="translate-x-[2px] text-lg transition-transform group-hover:scale-[1.1]"
-      />
+      <ButtonIcon icon="play" className="translate-x-[2px] group-hover:scale-[1.1]" />
     </Button>
   ) : null
 }

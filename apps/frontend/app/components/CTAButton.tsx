@@ -1,10 +1,9 @@
 import { cn } from '@app/util/cn'
 import { Button } from './Button'
-import { Icon } from '@iconify/react'
-import arrow from '@iconify-icons/material-symbols/arrow-forward'
+import { ButtonIcon, type ButtonIconName } from './ButtonIcon'
 
 type Props = React.ComponentPropsWithoutRef<typeof Button> & {
-  icon?: 'arrow'
+  icon?: ButtonIconName
 }
 
 export const CTAButton: React.FC<Props> = ({ icon, children, className, ...props }) => (
@@ -13,13 +12,11 @@ export const CTAButton: React.FC<Props> = ({ icon, children, className, ...props
     look="white"
     size="lg"
     className={cn(
-      'flex items-center disabled:opacity-50 [&:enabled:hover_.cta-button-arrow]:translate-x-2',
+      'flex items-center disabled:opacity-50 [&:enabled:hover_.button-icon-arrow]:translate-x-2',
       className,
     )}
   >
     {children}
-    {icon === 'arrow' ? (
-      <Icon icon={arrow} className="cta-button-arrow translate-x-1 text-lg transition-transform" />
-    ) : null}
+    {icon ? <ButtonIcon icon={icon} /> : null}
   </Button>
 )
